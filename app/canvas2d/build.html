@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--html manifest=""  -->
+<html>
+<head>
+<title>PROJECT TITLE</title>
+<intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS" > </intercept-url>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<link type="text/css" rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="manifest/manifest.js"></script>
+</head>
+
+<body style="margin:0;padding:0;border:none;background-color:black;">
+<div id="RTC_HELP" style="display:none;height: 400px;overflow: auto;overflow-x: hidden;    padding-left: 50px;" ></div>
+<div id="UPLOAD_BOX" style="display:block" >
+</div>
+<div id="experiment" style="display:block" >
+<video id="webcam" autoplay width="640" height="480" style="display:none;position:absolute;left:0;top:0;"></video>
+<canvas id="canvas-blended" width="640" height="480" style="position:absolute;left:0;top:0;display:none;"></canvas>
+<canvas id="canvas-render" width="640" height="480" style="position:absolute;left:0;top:0;display:none;"></canvas>
+</div>
+
+<canvas tabindex='1' width="1" height="1" id="HELLO_WORLD"></canvas>
+
+<div style="display:block;position:absolute;bottom:20px;">
+<input  onKeyPress="return TextureEditorHandleInput(event)"  type="text" value="ENTER VISUAL-JS CANVAS2D CODE HERE" style="width:500px;height:15px;background-color:black;color:lime;" />
+</div>
+
+<script type="text/javascript" src="lib/build.js"></script>
+
+
+<script type="text/javascript">
+
+function TextureEditorHandleInput (event){
+
+
+if (event.keyCode == 13) {
+    
+    try{
+    
+      eval(event.currentTarget.value);
+    
+    }
+    catch(e){
+    
+      alert("Error in textureEditor exec line code! Err : " + e)
+    }
+    
+    event.currentTarget.value = '';
+    
+    return false;
+}
+
+
+}
+
+
+</script>
+
+
+</body>
+</html>

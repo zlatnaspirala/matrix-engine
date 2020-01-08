@@ -1,0 +1,425 @@
+
+<script id="triangle-shader-fs" type="x-shader/x-fragment">
+precision mediump float;
+
+varying vec4 vColor;
+
+void main(void) {
+  gl_FragColor = vColor;
+}
+</script>
+
+<script id="triangle-shader-vs" type="x-shader/x-vertex">
+attribute vec3 aVertexPosition;
+attribute vec4 aVertexColor;
+
+uniform mat4 uMVMatrix;
+uniform mat4 uPMatrix;
+
+varying vec4 vColor;
+
+void main(void) {
+  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+  vColor      = aVertexColor;
+}
+</script>
+
+<!--   Square Shader      -->
+<script id="square-shader-fs" type="x-shader/x-fragment">
+precision mediump float;
+
+varying vec4 vColor;
+
+void main(void) {
+  gl_FragColor = vColor;
+}
+</script>
+
+<script id="square-shader-vs" type="x-shader/x-vertex">
+attribute vec3 aVertexPosition;
+attribute vec4 aVertexColor;
+
+uniform mat4 uMVMatrix;
+uniform mat4 uPMatrix;
+
+varying vec4 vColor;
+
+void main(void) {
+  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+  vColor      = aVertexColor;
+}
+</script>
+
+<!--   Cube Shader      -->
+<script id="cube-shader-fs" type="x-shader/x-fragment">
+precision mediump float;
+
+varying vec4 vColor;
+
+void main(void) {
+  gl_FragColor = vColor;
+}
+</script>
+
+<script id="cube-shader-vs" type="x-shader/x-vertex">
+attribute vec3 aVertexPosition;
+attribute vec4 aVertexColor;
+
+uniform mat4 uMVMatrix;
+uniform mat4 uPMatrix;
+
+varying vec4 vColor;
+
+void main(void) {
+  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+  vColor      = aVertexColor;
+}
+</script>
+
+<!--   Cube Texture Shader      -->
+<script id="cubeTex-shader-fs" type="x-shader/x-fragment">
+precision mediump float;
+
+varying vec2 vTextureCoord;
+uniform sampler2D uSampler;
+
+void main(void) {
+  gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+}
+</script>
+
+<script id="cubeTex-shader-vs" type="x-shader/x-vertex">
+#version 300 es
+#define POSITION_LOCATION 0
+
+attribute vec3 aVertexPosition;
+attribute vec2 aTextureCoord;
+
+uniform mat4 uMVMatrix;
+uniform mat4 uPMatrix;
+
+varying vec2 vTextureCoord;
+
+void main(void) {
+  gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+  vTextureCoord = aTextureCoord;
+}
+</script>
+
+<!--   Filter : cubeLightTex   -->
+<script id="cubeLightTex-shader-fs" type="x-shader/x-fragment">
+
+precision mediump float;
+
+varying vec2 vTextureCoord;
+varying vec3 vLightWeighting;
+
+uniform sampler2D uSampler;
+uniform sampler2D uSampler1;
+uniform sampler2D uSampler2;
+uniform sampler2D uSampler3;
+uniform sampler2D uSampler4;
+uniform sampler2D uSampler5;
+uniform sampler2D uSampler6;
+uniform sampler2D uSampler7;
+uniform sampler2D uSampler8;
+uniform sampler2D uSampler9;
+uniform sampler2D uSampler10;
+uniform sampler2D uSampler11;
+uniform sampler2D uSampler12;
+uniform sampler2D uSampler13;
+uniform float numberOfsamplers;
+
+void main(void) {
+
+  vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+  vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+  vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+  //  gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a); COOL
+  gl_FragColor = textureColor;
+
+}
+
+/*
+  vec4 color0 = texture2D(u_image0, v_texCoord);
+  vec4 color1 = texture2D(u_image1, v_texCoord);
+  gl_FragColor = color0 * color1;
+*/
+</script>
+
+<script id="cubeLightTex-shader-vs" type="x-shader/x-vertex">
+//#define POSITION_LOCATION 0 // not in use // this is for drawInstance
+//layout(location = POSITION_LOCATION) in vec2 pos; //not in use
+//flat out int instance; //
+
+attribute vec3 aVertexPosition;
+attribute vec3 aVertexNormal;
+attribute vec2 aTextureCoord;
+
+uniform mat4 uMVMatrix;
+uniform mat4 uPMatrix;
+uniform mat3 uNMatrix;
+
+uniform vec3 uAmbientColor;
+
+uniform vec3 uLightingDirection;
+uniform vec3 uDirectionalColor;
+
+uniform bool uUseLighting;
+
+varying vec2 vTextureCoord;
+varying vec3 vLightWeighting;
+
+void main(void) {
+
+  //instance = gl_InstanceID;
+  //gl_Position = vec4(aVertexPosition + vec2(float(gl_InstanceID) - 0.5, 0.0), 0.0, 1.0);
+
+  gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+  vTextureCoord = aTextureCoord;
+
+  if (!uUseLighting) {
+    vLightWeighting = vec3(1.0, 1.0, 1.0);
+  }
+  else {
+    vec3 transformedNormal          = uNMatrix * aVertexNormal;
+    float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+    vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+  }
+}
+
+</script>
+<!--   end of cube shader   -->
+<!--   Filter : cubeLightTex  CLONE OF -->
+
+<script id="obj-shader-fs" type="x-shader/x-fragment">
+precision mediump float;
+
+varying vec2 vTextureCoord;
+varying vec3 vLightWeighting;
+
+uniform sampler2D uSampler;
+uniform sampler2D uSampler1;
+uniform sampler2D uSampler2;
+
+void main(void) {
+  vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+  gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+}
+</script>
+
+<script id="obj-shader-vs" type="x-shader/x-vertex">
+attribute vec3 aVertexPosition;
+attribute vec3 aVertexNormal;
+attribute vec2 aTextureCoord;
+
+uniform mat4 uMVMatrix;
+uniform mat4 uPMatrix;
+uniform mat3 uNMatrix;
+
+uniform vec3 uAmbientColor;
+
+uniform vec3 uLightingDirection;
+uniform vec3 uDirectionalColor;
+
+uniform bool uUseLighting;
+
+varying vec2 vTextureCoord;
+varying vec3 vLightWeighting;
+
+void main(void) {
+  gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+  vTextureCoord = aTextureCoord;
+
+  if (!uUseLighting) {
+    vLightWeighting = vec3( 1.0, 1.0, 1.0);
+  }
+  else {
+    vec3 transformedNormal          = uNMatrix * aVertexNormal;
+    float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+    vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+  }
+}
+</script>
+<!--   end of cube shader  CLONE OF -->
+
+<!--   Pyramid Shader      -->
+<script id="pyramid-shader-fs" type="x-shader/x-fragment">
+precision mediump float;
+
+varying vec4 vColor;
+
+void main(void) {
+  gl_FragColor = vColor;
+}
+</script>
+
+<script id="pyramid-shader-vs" type="x-shader/x-vertex">
+attribute vec3 aVertexPosition;
+attribute vec4 aVertexColor;
+
+uniform mat4 uMVMatrix;
+uniform mat4 uPMatrix;
+
+varying vec4 vColor;
+
+void main(void) {
+
+  // instance = gl_InstanceID;
+  // gl_Position = vec4(aVertexPosition + vec2(float(gl_InstanceID) - 0.5, 0.0), 0.0, 1.0);
+  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+  vColor      = aVertexColor;
+
+}
+</script>
+
+<!--   Filter : cubeLightTex   -->
+<script id="squareTex-shader-fs" type="x-shader/x-fragment">
+
+precision mediump float;
+
+varying vec2 vTextureCoord;
+varying vec3 vLightWeighting;
+
+uniform sampler2D uSampler;
+uniform sampler2D uSampler1;
+uniform sampler2D uSampler2;
+uniform sampler2D uSampler3;
+uniform sampler2D uSampler4;
+uniform sampler2D uSampler5;
+uniform sampler2D uSampler6;
+uniform sampler2D uSampler7;
+uniform sampler2D uSampler8;
+uniform sampler2D uSampler9;
+uniform sampler2D uSampler10;
+uniform sampler2D uSampler11;
+uniform sampler2D uSampler12;
+uniform sampler2D uSampler13;
+uniform float numberOfsamplers;
+
+void main(void) {
+
+  vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+  vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+  vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+  // gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+  gl_FragColor = textureColor;
+
+}
+
+/*
+  vec4 color0 = texture2D(u_image0, v_texCoord);
+  vec4 color1 = texture2D(u_image1, v_texCoord);
+  gl_FragColor = color0 * color1;
+*/
+</script>
+
+<script id="squareTex-shader-vs" type="x-shader/x-vertex">
+attribute vec3 aVertexPosition;
+attribute vec3 aVertexNormal;
+attribute vec2 aTextureCoord;
+
+uniform mat4 uMVMatrix;
+uniform mat4 uPMatrix;
+uniform mat3 uNMatrix;
+
+uniform vec3 uAmbientColor;
+
+uniform vec3 uLightingDirection;
+uniform vec3 uDirectionalColor;
+
+uniform bool uUseLighting;
+
+varying vec2 vTextureCoord;
+varying vec3 vLightWeighting;
+
+void main(void) {
+  gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+  vTextureCoord = aTextureCoord;
+
+  if (!uUseLighting) {
+    vLightWeighting = vec3(1.0, 1.0, 1.0);
+  }
+  else {
+    vec3 transformedNormal          = uNMatrix * aVertexNormal;
+    float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+    vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+  }
+}
+</script>
+<!--   end of cube shader   -->
+
+<!-- duplicate cubeLightTex -->
+<!--   Filter :  sphereLightTex   -->
+<script id="sphereLightTex-shader-fs" type="x-shader/x-fragment">
+precision mediump float;
+
+varying vec2 vTextureCoord;
+varying vec3 vLightWeighting;
+
+uniform sampler2D uSampler;
+uniform sampler2D uSampler1;
+uniform sampler2D uSampler2;
+uniform sampler2D uSampler3;
+uniform sampler2D uSampler4;
+uniform sampler2D uSampler5;
+uniform sampler2D uSampler6;
+uniform sampler2D uSampler7;
+uniform sampler2D uSampler8;
+uniform sampler2D uSampler9;
+uniform sampler2D uSampler10;
+uniform sampler2D uSampler11;
+uniform sampler2D uSampler12;
+uniform sampler2D uSampler13;
+uniform float numberOfsamplers;
+
+void main(void) {
+
+  vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+  vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+  vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+  gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+
+}
+
+/*
+  vec4 color0 = texture2D(u_image0, v_texCoord);
+  vec4 color1 = texture2D(u_image1, v_texCoord);
+  gl_FragColor = color0 * color1;vertexPositionAttribute
+*/
+</script>
+
+<script id="sphereLightTex-shader-vs" type="x-shader/x-vertex">
+attribute vec3 aVertexPosition;
+attribute vec3 aVertexNormal;
+attribute vec2 aTextureCoord;
+
+uniform mat4 uMVMatrix;
+uniform mat4 uPMatrix;
+uniform mat3 uNMatrix;
+
+uniform vec3 uAmbientColor;
+
+uniform vec3 uLightingDirection;
+uniform vec3 uDirectionalColor;
+
+uniform bool uUseLighting;
+
+varying vec2 vTextureCoord;
+varying vec3 vLightWeighting;
+
+void main(void) {
+  gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+  vTextureCoord = aTextureCoord;
+
+  if (!uUseLighting) {
+    vLightWeighting = vec3(1.0, 1.0, 1.0);
+  }
+  else {
+    vec3 transformedNormal          = uNMatrix * aVertexNormal;
+    float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+    vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+  }
+}
+</script>
+<!--   end of cube shader   -->
