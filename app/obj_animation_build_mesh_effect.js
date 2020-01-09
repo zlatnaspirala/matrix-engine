@@ -105,12 +105,12 @@ function onLoadObj(meshes){
 
     } else {
 
-      App.scene.halfCircle2.position.y = oscillator2.UPDATE()
-      App.scene.halfCircle.position.y = oscillator1.UPDATE()
-      App.scene.halfCircle.rotationSpeed =  App.scene.halfCircle.rotationSpeed + 1
-      App.scene.halfCircle.rotationSpeed =  App.scene.halfCircle.rotationSpeed - 1
-      App.scene.female.rotationSpeed = App.scene.female.rotationSpeed - 1
-      App.scene.female.glDrawElements.numberOfIndicesRender = App.scene.female.glDrawElements.numberOfIndicesRender+15
+      App.scene.halfCircle2.position.y = oscillator2.UPDATE();
+      App.scene.halfCircle.position.y = oscillator1.UPDATE();
+      App.scene.halfCircle.rotationSpeed =  App.scene.halfCircle.rotationSpeed + 1;
+      App.scene.halfCircle.rotationSpeed =  App.scene.halfCircle.rotationSpeed - 1;
+      App.scene.female.rotationSpeed = App.scene.female.rotationSpeed - 1;
+      App.scene.female.glDrawElements.numberOfIndicesRender = App.scene.female.glDrawElements.numberOfIndicesRender + 15;
 
     }
   }, 1);
