@@ -1,24 +1,50 @@
+![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/webgl2glmatrix2.jpg)
 
-## About webgl2glmatrix2 ##
+## About webgl2-glmatrix2 project ##
 
 The benefits of this project is offering an overview of the entire application logic,
- easy native implementations, object structural.
+ easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
+ (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in opengles 1.1.
+ First level of customisation is texture part of code. In example custom_texture.js
 
-Thanks to Mr.Keestu i use (gl-program-structure) new version of glmatrix ( 2.0 ).
- Push&Pop matrix just like in opengles 1.1.
+### List of examples : ###
 
-First level of customisation is texture part of code . In example custom_texture.js
+ - Adding color cube
+ - Adding color pyramyde
+ - Adding color square
+ - Adding color triangle
+ - Adding geometry
+ - Adding multi (compose) textures
+ - Adding square texture
+ - Blending
+ - Audion amnipulation
+ - Camera texture (stream texture)
+ - Cube
+ - Cube Geometry
+ - Cube Light & texture
+ - Cube light dynamic
+ - Custom texture
+ - First Person controller
+ - Load obj files
+ - Object animation -morh sequence
+ - Object animation mesh indices calculation
+ - JS1Kilo examples implementation
+ - Porting 2D canvas (Active textures)
+ - Sphere geometry
+ - Texture uv manipulation
+ - Videos textures
 
-![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/webgl2glmatrix2.jpg)
+We just override function for texture executing code.
+ Next level is full custom opportunity , geometry , collision , networking etc.
 
 ### Custom textures ###
 
 ```
   App.scene.MySquareTexure1.custom.gl_texture = function ( object , t ) {
+
   world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t] );
   world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.LINEAR);
   world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.LINEAR);
-
   world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.CLAMP_TO_EDGE);
   world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.CLAMP_TO_EDGE);
 
@@ -36,8 +62,6 @@ First level of customisation is texture part of code . In example custom_texture
   }
 ```
 
-We just override function for texture executing code.
- Next level is full custom opportunity , geometry , collision , networking etc.
 
 ### First person controller: ###
 
@@ -46,7 +70,14 @@ We just override function for texture executing code.
   App.camera.FirstPersonController = true;
 
   // Look in manifest.js
-  camera : { viewAngle : 45,  nearViewpoint : 0.1 ,farViewpoint : 1000 , edgeMarginValue : 100 , FirstPersonController : false }
+
+  camera : {
+    viewAngle: 45,
+    nearViewpoint: 0.1,
+    farViewpoint: 1000,
+    edgeMarginValue: 100,
+    FirstPersonController: false
+  }
 ```
 
 ### Animated female droid: ###
@@ -54,8 +85,9 @@ We just override function for texture executing code.
 ```
   // LOAD MESH FROM OBJ FILES...
   // if you dont use obj or complex mesh you no need for this func
+  // Must be improved loading sequences
 
-  function onLoadObj(meshes){
+  function onLoadObj(meshes) {
 
       App.meshes = meshes;
       OBJ.initMeshBuffers(world.GL.gl, App.meshes.female);
@@ -79,8 +111,8 @@ We just override function for texture executing code.
       OBJ.initMeshBuffers(world.GL.gl, App.meshes.female18);
 
       textuteImageSamplers2 = {
-        source : [    "res/images/RustPaint.jpg"        ] ,
-        mix_operation : "multiply" , // ENUM : multiply , divide ,
+        source : ["res/images/RustPaint.jpg"],
+        mix_operation : "multiply",             // ENUM: multiply, divide
       };
 
       setTimeout( function() {
@@ -89,62 +121,63 @@ We just override function for texture executing code.
             id : "female",
             sumOfAniFrames : 18 ,
             currentAni : 0 ,
-            speed : 3,
+            speed : 3
         };
 
-      world.Add("obj" , 1 ,"female" , textuteImageSamplers2 , App.meshes.female , animation_construct );
+        world.Add("obj" , 1 ,"female" , textuteImageSamplers2 , App.meshes.female , animation_construct );
 
-      App.scene.female.position.y = -3;
-      App.scene.female.rotationSpeed = 20;
-      App.scene.female.position.z = -13;
+        App.scene.female.position.y = -3;
+        App.scene.female.rotationSpeed = 20;
+        App.scene.female.position.z = -13;
 
       },100)
 
   }
 
   OBJ.downloadMeshes({
-                    'female': 'res/3d-objects/female/female_000001.obj',
-                    'female1': 'res/3d-objects/female/female_000003.obj',
-                    'female2': 'res/3d-objects/female/female_000005.obj',
-                    'female3': 'res/3d-objects/female/female_000007.obj',
-                    'female4': 'res/3d-objects/female/female_000009.obj',
-                    'female5': 'res/3d-objects/female/female_000011.obj',
-                    'female6': 'res/3d-objects/female/female_000013.obj',
-                    'female7': 'res/3d-objects/female/female_000015.obj',
-                    'female8': 'res/3d-objects/female/female_000017.obj',
-                    'female9': 'res/3d-objects/female/female_000019.obj',
-                    'female10': 'res/3d-objects/female/female_000021.obj',
-                    'female11': 'res/3d-objects/female/female_000023.obj',
-                    'female12': 'res/3d-objects/female/female_000025.obj',
-                    'female13': 'res/3d-objects/female/female_000027.obj',
-                    'female14': 'res/3d-objects/female/female_000029.obj',
-                    'female15': 'res/3d-objects/female/female_000031.obj',
-                    'female16': 'res/3d-objects/female/female_000033.obj',
-                    'female17': 'res/3d-objects/female/female_000035.obj',
-                    'female18': 'res/3d-objects/female/female_000037.obj',
-                    } , onLoadObj  );
+    'female': 'res/3d-objects/female/female_000001.obj',
+    'female1': 'res/3d-objects/female/female_000003.obj',
+    'female2': 'res/3d-objects/female/female_000005.obj',
+    'female3': 'res/3d-objects/female/female_000007.obj',
+    'female4': 'res/3d-objects/female/female_000009.obj',
+    'female5': 'res/3d-objects/female/female_000011.obj',
+    'female6': 'res/3d-objects/female/female_000013.obj',
+    'female7': 'res/3d-objects/female/female_000015.obj',
+    'female8': 'res/3d-objects/female/female_000017.obj',
+    'female9': 'res/3d-objects/female/female_000019.obj',
+    'female10': 'res/3d-objects/female/female_000021.obj',
+    'female11': 'res/3d-objects/female/female_000023.obj',
+    'female12': 'res/3d-objects/female/female_000025.obj',
+    'female13': 'res/3d-objects/female/female_000027.obj',
+    'female14': 'res/3d-objects/female/female_000029.obj',
+    'female15': 'res/3d-objects/female/female_000031.obj',
+    'female16': 'res/3d-objects/female/female_000033.obj',
+    'female17': 'res/3d-objects/female/female_000035.obj',
+    'female18': 'res/3d-objects/female/female_000037.obj',
+  } , onLoadObj  );
 
 ```
 
 ### Blending: ###
 
 ```
-  //use it
+  // Use it
   App.scene.female.glBlend.blendEnabled = true;
   App.scene.female.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
   App.scene.female.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
 ```
 
-- Load Obj with UV map (Blender export tested) :
+- Load Obj with UV map (Blender export tested):
 
 For more details dee this example script: `load_obj_file.js`
 
 ### Video texture : ###
 
 ```
-world.Add("cubeLightTex" , 1 ,"TV" , textuteImageSamplers , App.meshes.TV );
 
+world.Add("cubeLightTex" , 1 ,"TV" , textuteImageSamplers , App.meshes.TV );
 App.scene.TV.streamTextures = new VIDEO_TEXTURE( "Galactic Expansion Fractal Morph [Official Video]" );
+
 ```
 
 ### Camera texture: ###
