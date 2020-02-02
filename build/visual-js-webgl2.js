@@ -2152,7 +2152,7 @@ class Point {
 
 }
 
-class rotationVector {
+class RotationVector {
 
         constructor(x, y, z) {
 
@@ -5974,7 +5974,7 @@ function defineworld(cavnas) {
                         triangleObject.position = new Position(0, 0, -5.0);
                         triangleObject.rotationSpeed = 90;
                         triangleObject.rotValue = 1;
-                        triangleObject.rotDirection = new rotationVector(1, 0, 0);
+                        triangleObject.rotDirection = new RotationVector(1, 0, 0);
                         triangleObject.color = new GeoOfColor("triangle")
                         triangleObject.mvMatrix = mat4.create();
                         triangleObject.geometry = new TriangleVertex(triangleObject);
@@ -6008,7 +6008,7 @@ function defineworld(cavnas) {
                         squareObject.position = new Position(0, 0, -5.0);
                         squareObject.rotationSpeed = 75;
                         squareObject.rotValue = 0;
-                        squareObject.rotDirection = new rotationVector(1, 0, 0);
+                        squareObject.rotDirection = new RotationVector(1, 0, 0);
                         squareObject.color = new GeoOfColor("4x4");
                         squareObject.mvMatrix = mat4.create();
                         squareObject.geometry = new SquareVertex(squareObject);
@@ -6044,7 +6044,7 @@ function defineworld(cavnas) {
                         squareObject.position = new Position(0, 0, -5.0);
                         squareObject.rotationSpeed = 0;
                         squareObject.rotValue = 0;
-                        squareObject.rotDirection = new rotationVector(1, 0, 0);
+                        squareObject.rotDirection = new RotationVector(1, 0, 0);
                         //squareObject.color         = new GeoOfColor("4x4");
                         squareObject.mvMatrix = mat4.create();
                         squareObject.geometry = new SquareVertex(squareObject);
@@ -6139,7 +6139,7 @@ function defineworld(cavnas) {
                         cubeObject.position = new Position(0, 0, -5.0);
                         cubeObject.rotationSpeed = 75;
                         cubeObject.rotValue = 1;
-                        cubeObject.rotDirection = new rotationVector(1, 0, 0);
+                        cubeObject.rotDirection = new RotationVector(1, 0, 0);
                         cubeObject.color = true;
                         cubeObject.mvMatrix = mat4.create();
                         cubeObject.geometry = new CubeVertex(cubeObject);
@@ -6189,7 +6189,7 @@ function defineworld(cavnas) {
                         sphereObject.sides = 12;
                         sphereObject.rotationSpeed = 0;
                         sphereObject.rotValue = 1;
-                        sphereObject.rotDirection = new rotationVector(0, 1, 0);
+                        sphereObject.rotDirection = new RotationVector(0, 1, 0);
 
 
                         //lights
@@ -6334,7 +6334,7 @@ function defineworld(cavnas) {
                         pyramidObject.position = new Position(0, 0, -5.0);
                         pyramidObject.rotationSpeed = 0;
                         pyramidObject.rotValue = 0;
-                        pyramidObject.rotDirection = new rotationVector(1, 0, 0);
+                        pyramidObject.rotDirection = new RotationVector(1, 0, 0);
                         //pyramidObject.color         = new GeoOfColor ("Piramide4");
                         pyramidObject.mvMatrix = mat4.create();
                         pyramidObject.geometry = new PiramideVertex(pyramidObject);
@@ -6382,7 +6382,7 @@ function defineworld(cavnas) {
                         objObject.position = new Position(0, -5, -8.0);
                         objObject.rotationSpeed = 0;
                         objObject.rotValue = 0;
-                        objObject.rotDirection = new rotationVector(0, 1, 0);
+                        objObject.rotDirection = new RotationVector(0, 1, 0);
                         objObject.color = new GeoOfColor("4x4");
 
                         //custom textures
@@ -6518,7 +6518,7 @@ function defineworld(cavnas) {
                         cubeObject.sides = 12;
                         cubeObject.rotationSpeed = 0;
                         cubeObject.rotValue = 1;
-                        cubeObject.rotDirection = new rotationVector(0, 1, 0);
+                        cubeObject.rotDirection = new RotationVector(0, 1, 0);
 
 
                         //lights
@@ -6632,7 +6632,7 @@ function defineworld(cavnas) {
                         customObject.sides = 12;
                         customObject.rotationSpeed = 0;
                         customObject.rotValue = 1;
-                        customObject.rotDirection = new rotationVector(0, 1, 0);
+                        customObject.rotDirection = new RotationVector(0, 1, 0);
 
 
                         //lights
