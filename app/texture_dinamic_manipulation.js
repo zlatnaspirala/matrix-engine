@@ -1,6 +1,6 @@
 /*
   Nikola Lukic
-  webGl2 api example
+  webGl2GLmatrix2 api example
 */
 /* globals world App */
 // LOAD MESH FROM OBJ FILES...
@@ -16,7 +16,7 @@ world.Add("squareTex", 1 , "MySquareTexure1" ,  textuteImageSamplers );
 // ROTATING
 // Stop
 App.scene.MySquareTexure1.rotValue = 0;
-App.scene.MySquareTexure1.rotationSpeed = 0;
+App.scene.MySquareTexure1.rotation.rotationSpeed.z = 0;
 
 App.scene.MySquareTexure1.custom.gl_texture = function ( object , t ) {
 

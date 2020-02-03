@@ -3,7 +3,7 @@
 
 /*
   Nikola Lukic
-  webGl2 api example
+  webGl2GLmatrix2 api example
   app/canvas2d/build.html is visual-js 2d part program instance
 */
 
@@ -35,7 +35,7 @@ var textuteImageSamplers2 = {
 };
 
 world.Add("squareTex", 60 , "floor" , textuteImageSamplers2);
-App.scene.floor.rotationSpeed = 0;
+App.scene.floor.rotation.rotationSpeed.z = 0;
 App.scene.floor.position.y = -2
 App.scene.floor.rotValue = 90;
 
@@ -80,7 +80,7 @@ world.Add("cube", 1 , "tree1_");
 App.scene.tree1_.position.SetX(50);
 App.scene.tree1_.position.SetY(0);
 App.scene.tree1_.position.SetZ(-50);
-App.scene.tree1_.rotationSpeed = 0;
+App.scene.tree1_.rotation.rotationSpeed.z = 0;
 App.scene.tree1_.geometry.setScaleByY(2)
 App.scene.tree1_.geometry.setScaleByX(0.1)
 App.scene.tree1_.geometry.setScaleByZ(0.1)
@@ -193,12 +193,12 @@ var O2 = new OSCILLATOR(2 , 6 , 0.000001);
 var LONG = new OSCILLATOR(1 , 20 , 1);
 var LANG = new OSCILLATOR(1 , 25 , 1);
 world.Add("generatorLightTex" , 1  , "generator1" , textuteImageSamplers1 , data_for_custom);
-App.scene.generator1.rotDirection.z = 1;
+App.scene.generator1.rotation.z = 1;
 App.scene.generator1.position.y = 7 ;
 App.scene.generator1.position.z = -10;
 //App.scene.generator1.geometry.setRadius(2)
 App.scene.generator1.glDrawElements.mode = ENUMERATORS.glDrawElements.mode[5];
-App.scene.generator1.rotationSpeed = 0;
+App.scene.generator1.rotation.rotationSpeed.z = 0;
 App.scene.TEST.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
 App.scene.generator1.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[3];
 App.scene.TEST.glBlend.blendEnabled = true;
@@ -208,14 +208,14 @@ App.scene.generator1.rotValue = - 90;
 
 world.Add("generatorLightTex" , 1  , "generator2" , textuteImageSamplers1 , data_for_custom);
 
-App.scene.generator2.rotDirection.x = 0;
+App.scene.generator2.rotation.x = 0;
 
-App.scene.generator2.rotDirection.y = 1;
+App.scene.generator2.rotation.y = 1;
 App.scene.generator2.rotValue =- 90;
 App.scene.generator2.position.y = 7 ;
 App.scene.generator2.position.z = -10;
 App.scene.generator2.glDrawElements.mode = ENUMERATORS.glDrawElements.mode[5];
-App.scene.generator2.rotationSpeed = 0;
+App.scene.generator2.rotation.rotationSpeed.z = 0;
 App.scene.generator2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[3];
 App.scene.generator2.glBlend.blendEnabled = true;
 

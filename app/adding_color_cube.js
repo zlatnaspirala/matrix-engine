@@ -1,6 +1,6 @@
 /**
  *@Author Nikola Lukic
- *@Description webGl2 api example
+ *@Description webGl2GLmatrix2 api example
  */
 
 /* globals world App */
@@ -14,14 +14,6 @@ App.scene.MyColoredCube1.position.SetX(0);
 App.scene.MyColoredCube2.position.SetX(-2.5);
 App.scene.MyColoredCube3.position.SetX(2.5);
 
-// ROTATING
-// Stop
-//App.scene.MyCubeTex.rotationSpeed = 0;
-
-// Rotate
-//App.scene.MyCubeTex.rotationSpeed = 50;
-
-// Direction of rotating
-//App.scene.MyCubeTex.rotDirection.SetDirectionZ()
-//App.scene.MyCubeTex.rotDirection.SetDirectionX()
-//App.scene.MyCubeTex.rotDirection.SetDirectionY()
+App.scene.MyColoredCube1.rotation.rotationSpeed.x = 15;
+App.scene.MyColoredCube2.rotation.rotationSpeed.y = 15;
+App.scene.MyColoredCube3.rotation.rotationSpeed.z = 15;

@@ -2,13 +2,12 @@
 
 /*
   Nikola Lukic
-  webGl2 api example
+  webGl2GLmatrix2 api example
   app/canvas2d/build.html is visual-js 2d part program instance
 */
+
 /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
 
-// LOAD MESH FROM OBJ FILES...
-// if you dont use obj or complex mesh you no need for this func
 var textuteImageSamplers = {
   source : [    "res/images/complex_texture_1/diffuse.png"   ] ,
   mix_operation : "multiply"
@@ -16,10 +15,8 @@ var textuteImageSamplers = {
 
 world.Add("squareTex", 1 , "MySquareTexure1" ,  textuteImageSamplers );
 
-// ROTATING
-// Stop
 App.scene.MySquareTexure1.rotValue = 0;
-App.scene.MySquareTexure1.rotationSpeed = 0;
+App.scene.MySquareTexure1.rotation.rotationSpeed.z = 0;
 
 App.scene.MySquareTexure1.custom.gl_texture = function ( object , t ) {
 

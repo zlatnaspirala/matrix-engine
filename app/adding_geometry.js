@@ -1,6 +1,6 @@
 /**
  *@Author Nikola Lukic
- *@Description webGl2 api example
+ *@Description webGl2GLmatrix2 api example
  */
 
 /* globals world App OBJ */

@@ -84,3 +84,12 @@ textarea {
   background-color: black;
   color: lime;
 }
+
+.textureCanvas2d {
+  display:none;
+  position:absolute;
+  left:-3000px;
+  top:0px;
+  width:512px;
+  height:512px;
+}

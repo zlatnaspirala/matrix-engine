@@ -2,7 +2,7 @@
 
 /*
   Nikola Lukic
-  webGl2 api example
+  webGl2GLmatrix2 api example
   app/canvas2d/build.html is visual-js 2d part program instance
 */
 
@@ -92,6 +92,6 @@ App.scene.MyPyramid4.position.SetY(-1);
 
 // ROTATING
 // Stop
-App.scene.MyPyramid2.rotationSpeed = 0;
+App.scene.MyPyramid2.rotation.rotationSpeed.z = 0;
 // SET POSITION
 delete textuteImageSamplers;

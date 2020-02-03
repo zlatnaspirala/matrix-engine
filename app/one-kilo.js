@@ -1,6 +1,6 @@
 /*
   Nikola Lukic
-  webGl2 api example
+  webGl2GLmatrix2 api example
 */
 /* globals world App ENUMERATORS E CANVAS2d_SURFACE_TEXTURE */
 /* eslint-disable no-unused-vars */
@@ -56,7 +56,7 @@ App.scene.floor.custom.gl_texture = function ( object , t ) {
   }
 };
 
-App.scene.floor.rotValue = 90;
+App.scene.floor.rotation.rotateX(90);
 
 /**
  * Test for scale texCoords for CubeVertex;
@@ -109,6 +109,8 @@ App.scene.zid.position.z = 50;
 App.scene.zid.geometry.setScaleByX(60);
 App.scene.zid.geometry.setScaleByY(10);
 
+App.scene.zid.custom.gl_texture = App.scene.test.custom.gl_texture;
+
 world.Add("cubeLightTex", 1, "zid2",  {
   source: ["res/images/texture_metalic1.jpg"],
   mix_operation: "multiply"
@@ -129,17 +131,18 @@ App.scene.zid3.position.z = 0;
 App.scene.zid3.geometry.setScaleByZ(60);
 App.scene.zid3.geometry.setScaleByY(10);
 
-world.Add("cubeLightTex", 1, "zid4",  {
+world.Add("cubeLightTex", 1, "zid4", {
   source: ["res/images/texture_metalic1.jpg"],
   mix_operation: "multiply"
 });
+
 App.scene.zid4.position.y = 8;
 App.scene.zid4.position.x = -50;
 App.scene.zid4.position.z = 0;
 App.scene.zid4.geometry.setScaleByZ(60);
 App.scene.zid4.geometry.setScaleByY(10);
 
-for (var hor = -50;hor < 50;hor=hor+10) {
+for (var hor = -40;hor < 50;hor=hor+10) {
 
   var name = "zid_" + hor;
 
@@ -153,6 +156,25 @@ for (var hor = -50;hor < 50;hor=hor+10) {
     });
   App.scene[name].position.y = 8;
   App.scene[name].position.x = hor;
+  App.scene[name].position.z = 48;
+  // App.scene[name].glBlend.blendEnabled = true;
+  // App.scene[name].glBlend.blendParamSrc =  ENUMERATORS.glBlend.param[4];
+  // App.scene[name].glBlend.blendParamDest =  ENUMERATORS.glBlend.param[4];
+  App.scene[name].geometry.setScaleByY(10);
+
+  name = "zid_2_" + hor;
+
+  world.Add(
+    "cubeLightTex",
+    1,
+    name,
+    {
+      source: ["res/images/texture_metalic1.jpg"],
+      mix_operation: "multiply"
+    });
+  App.scene[name].position.y = 8;
+  App.scene[name].position.x = hor;
+  App.scene[name].position.z = -48;
   // App.scene[name].glBlend.blendEnabled = true;
   // App.scene[name].glBlend.blendParamSrc =  ENUMERATORS.glBlend.param[4];
   // App.scene[name].glBlend.blendParamDest =  ENUMERATORS.glBlend.param[4];
@@ -184,20 +206,20 @@ App.scene.MyPyramid1.position.SetY(-1);
 App.scene.MyPyramid2.position.SetY(-1);
 App.scene.MyPyramid3.position.SetY(-1);
 App.scene.MyPyramid4.position.SetY(-1);
-App.scene.MyPyramid2.rotationSpeed = 0;
+App.scene.MyPyramid2.rotation.rotationSpeed.z = 0;
 
 world.Add("squareTex", 5, "outsideBox", textuteImageSamplers);
 App.scene.outsideBox.position.y = 4;
 App.scene.outsideBox.position.x = 0;
 App.scene.outsideBox.position.z = -45;
-// App.scene.outsideBox.rotationSpeed = 50;
+// App.scene.outsideBox.rotation.rotationSpeed.z = 50;
 // App.scene.outsideBox.rotValue = 90;
 App.scene.outsideBox.LightsData.ambientLight.set(1,1,1);
 App.scene.outsideBox.glBlend.blendEnabled = true;
 App.scene.outsideBox.glBlend.blendParamSrc =  ENUMERATORS.glBlend.param[4];
 App.scene.outsideBox.glBlend.blendParamDest =  ENUMERATORS.glBlend.param[4];
 
-App.scene.outsideBox.rotDirection.SetDirection(1,1,0);
+App.scene.outsideBox.rotation.SetDirection(1,1,0);
 
 // CANVAS2D_SURFACE - IS TEXTURE EDITOR
 E("HOLDER_STREAMS").style.display = "block";

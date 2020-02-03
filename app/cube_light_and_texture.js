@@ -2,17 +2,17 @@
 
 /*
   Nikola Lukic
-  webGl2 api example
+  webGl2GLmatrix2 api example
 */
 
 /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
 
 var textuteImageSamplers = {
-  source : [    "res/images/complex_texture_1/diffuse.png"   ] ,
-  mix_operation : "multiply" , // ENUM : multiply , divide ,
+  source: ["res/images/complex_texture_1/diffuse.png"],
+  mix_operation: "multiply"
 };
 
-world.Add("cubeLightTex", 1 , "MyCubeTex" ,  textuteImageSamplers );
+world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
 
 App.scene.MyCubeTex.LightsData.ambientLight.r = 0.1;
 App.scene.MyCubeTex.LightsData.ambientLight.g = 0.2;

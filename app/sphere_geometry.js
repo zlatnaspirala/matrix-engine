@@ -1,6 +1,6 @@
 /*
   Nikola Lukic
-  webGl2 api example
+  webGl2GLmatrix2 api example
 */
 
 /* globals App world */

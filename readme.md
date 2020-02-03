@@ -127,7 +127,7 @@ We just override function for texture executing code.
         world.Add("obj" , 1 ,"female" , textuteImageSamplers2 , App.meshes.female , animation_construct );
 
         App.scene.female.position.y = -3;
-        App.scene.female.rotationSpeed = 20;
+        App.scene.female.rotation.rotationSpeed.z = 20;
         App.scene.female.position.z = -13;
 
       },100)
