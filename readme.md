@@ -215,13 +215,6 @@ Access to the canvas2d program:
   App.scene.outsideBox.streamTextures.iframe.contentWindow.
 ```
 
-### External Licence: ###
-
- - Video material used from :From youtube.com : Electric sheep - a facinating animated flame fractal
-
- - TheMrNgaard
-   Creative Commons Attribution licence (reuse allowed)
-
 Live demo:
 Video and webcam works at:
 
@@ -229,5 +222,18 @@ https://maximumroulette.com/webgl2/examples.html
 
 ### Credits & Used Licence: ###
 
- - Copyright (C) 2014 Tappali Ekanathan Keestu (keestu@gmail.com) GNU General Public License
+
+ - Video material used from :From youtube.com : Electric sheep - a facinating animated flame fractal
+   TheMrNgaard Creative Commons Attribution licence (reuse allowed)
+ - Project Base Structure inspired by
+   Copyright (C) 2014 Tappali Ekanathan Keestu (keestu@gmail.com) GNU General Public License
  - Textures download from http://textures.com
+ - Dinamic texture `bitcoin` used from:
+   Author:Ioannis Cherouvim
+    GitHub:cherouvim
+    Reddit:/r/cherouvim
+    Website:cherouvim.com
+    Compo:canvas
+    Demo link:https://js1k.com/2017-magic/demo/2853
+    Shortlink:https://js1k.com/2853
+    
