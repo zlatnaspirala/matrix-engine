@@ -1,11 +1,18 @@
 ![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/webgl2glmatrix2.jpg)
 
 ## About webgl2-glmatrix2 project ##
+### Name of library `MATRIX-ENGINE`
+
+### STATUS - [NPM WIP INTEGRATION] npm import/export index staff.
+### Not ready for npm users.
 
 The benefits of this project is offering an overview of the entire application logic,
  easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
  (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in opengles 1.1.
  First level of customisation is texture part of code. In example custom_texture.js
+
+### Live Demo -> https://maximumroulette.com/apps/webgl-glmatrix
+
 
 ### List of examples : ###
 
@@ -217,11 +224,10 @@ Access to the canvas2d program:
 
 Live demo:
 Video and webcam works at:
-
 https://maximumroulette.com/webgl2/examples.html
 
-### Credits & Used Licence: ###
 
+### Credits && Licence: ###
 
  - Video material used from :From youtube.com : Electric sheep - a facinating animated flame fractal
    TheMrNgaard Creative Commons Attribution licence (reuse allowed)
