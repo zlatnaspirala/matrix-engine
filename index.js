@@ -7,21 +7,27 @@
  */
 
 import App from "./program/manifest";
-import defineworld from "./lib/matrix-world";
-
-import GLMATRIX2 from "./lib/gl-matrix-min";
-import ENGINE_ from "./lib/engine";
-import EVENTS_ from "./lib/events";
-import LOADER_OBJ_ from "./lib/loader-obj";
-import MATRIX_BUFFERS from "./lib/matrix-buffers";
-import MATRIX_DRAWS from "./lib/matrix-draws";
-import MATRIX_GEO from "./lib/matrix-geometry";
-import MATRIX_RENDER from "./lib/matrix-render";
-import MATRIX_TEXTURE from "./lib/matrix-textures";
-import UTILITY from "./lib/utility";
+import * as MATRIX_WORLD from "./lib/matrix-world";
+import * as ENGINE from "./lib/engine";
+import * as EVENTS from "./lib/events";
+import OBJ from "./lib/loader-obj";
+import operation from "./lib/matrix-buffers";
+// import MATRIX_DRAWS from "./lib/matrix-draws";
+import * as MATRIX_GEO from "./lib/matrix-geometry";
+import * as MATRIX_RENDER from "./lib/matrix-render";
+import textools from "./lib/matrix-textures";
+import * as UTILITY from "./lib/utility";
 
 export {
   App,
-  defineworld,
-  ENGINE_
+  ENGINE,
+  EVENTS,
+  OBJ,
+  MATRIX_WORLD,
+  MATRIX_GEO,
+  MATRIX_RENDER,
+  textools,
+  UTILITY,
+  operation // test this 
+  
 };
