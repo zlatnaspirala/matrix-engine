@@ -15,8 +15,10 @@ easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu
 First level of customisation is texture part of code. Best view in example custom_texture.js.
 
 
-### Not updated
+### Represent old 
 ### Live Demo -> https://maximumroulette.com/apps/webgl-glmatrix
+
+New link will be added...
 
 
 ### List of examples : ###
