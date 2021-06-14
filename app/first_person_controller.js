@@ -1,5 +1,15 @@
 /* eslint-disable no-unused-vars */
 
+/**
+ * @Author Nikola Lukic
+ * @Description Matrix Engine Api Example.
+ */
+
+/* globals world App world */
+import App from "../program/manifest";
+
+export var runThis = world => {
+
 /*
   Nikola Lukic
   webGl2GLmatrix2 api example
@@ -13,8 +23,8 @@ App.camera.FirstPersonController = true;
 
 // FLOOR
 var textuteImageSamplers = {
-    source : [    "res/images/complex_texture_1/diffuse.png"   ] ,
-    mix_operation : "multiply" , // ENUM : multiply , divide ,
+    source: ["./res/images/beli_andjeo.jpg"],
+    mix_operation: "multiply", // ENUM: multiply, divide,
 };
 
 world.Add("squareTex", 12 , "floor" ,  textuteImageSamplers );
@@ -44,23 +54,25 @@ App.scene.floor.geometry.texCoordsPoints.right_bottom.y = 0 - coeficientSizeOfTe
   world.GL.gl.texImage2D(
                           world.GL.gl.TEXTURE_2D,
                           0, // Level of details
-                          world.GL.gl.RGBA, // Format
-                          world.GL.gl.RGBA,
+                          world.GL.gl.RGB5_A1, // Format
+                          world.GL.gl.RGB5_A1,
                           world.GL.gl.UNSIGNED_BYTE, // Size of each channel
                           object.textures[t].image
                           );
 
-  world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
+  // world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
 
 }
 
 App.scene.floor.position.y = -2;
 App.scene.floor.rotValue = 90;
 
-world.Add("cubeLightTex", 1 , "zid" ,  textuteImageSamplers );
+world.Add("cubeLightTex", 1 , "BeliAndjeo" ,  textuteImageSamplers );
 
-App.scene.zid.position.y = 1;
-App.scene.zid.position.x = 0;
+App.scene.BeliAndjeo.rotation.roty = -90
+
+App.scene.BeliAndjeo.position.y = 1;
+App.scene.BeliAndjeo.position.x = 0;
 
 world.Add("pyramid",1 , "MyPyramid1");
 world.Add("pyramid",1 , "MyPyramid2");
@@ -90,8 +102,6 @@ App.scene.MyPyramid2.position.SetY(-1);
 App.scene.MyPyramid3.position.SetY(-1);
 App.scene.MyPyramid4.position.SetY(-1);
 
-// ROTATING
-// Stop
 App.scene.MyPyramid2.rotation.rotationSpeed.z = 0;
-// SET POSITION
-delete textuteImageSamplers;
+
+};

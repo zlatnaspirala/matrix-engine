@@ -1,6 +1,6 @@
 {
   "name": "matrix-engine",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "TEST npm integration . webgl object oriented gl program writen in ES6 Native manir.",
   "main": "index.js",
   "directories": {

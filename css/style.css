@@ -9,25 +9,6 @@ body {
   overflow: hidden;
 }
 
-#info {
-  position: absolute;
-  top: 0px;
-  width: 100%;
-  padding: 5px;
-}
-
-#description {
-  position: absolute;
-  top: 20px;
-  width: 100%;
-  padding: 5px;
-}
-
-.float {
-  float: left;
-  top: 10px;
-}
-
 a {
   color: #0080ff;
 }
@@ -60,9 +41,10 @@ div.btnShadow:hover {
 .debugBox {
   position:absolute;
   left:0;
-  bottom:0;
-  font-size: 2px;
-  width:650px;
+  top:0;
+  font-size: 12px;
+  width:200px;
+  height: 15px;
   -webkit-box-shadow: inset 0px 0px 22px 2px rgba(0,255,30,1);
   -moz-box-shadow: inset 0px 0px 22px 2px rgba(0,255,30,1);
   box-shadow: inset 0px 0px 22px 1px rgba(0,255,30,1);

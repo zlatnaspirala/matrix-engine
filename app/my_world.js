@@ -1,33 +1,42 @@
-
 /* eslint-disable no-unused-vars */
 
-/*
+/**
+ * @Author Nikola Lukic
+ * @Description Matrix Engine Api Example.
+ */
+
+/* globals world App world */
+import App from "../program/manifest";
+import { ENUMERATORS } from "../lib/utility";
+
+export var runThis = world => {
+  /*
   Nikola Lukic
   webGl2GLmatrix2 api example
   app/canvas2d/build.html is visual-js 2d part program instance
 */
 
-/* globals world App ENUMERATORS SWITCHER OSCILLATOR */
+  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
 
-App.camera.FirstPersonController = true;
+  App.camera.FirstPersonController = true;
 
-var textuteImageSamplers = {
-  source : [    "res/images/sky/blue.jpg"   ] ,
-  mix_operation : "multiply" , // ENUM : multiply , divide ,
-};
+  var textuteImageSamplers = {
+    source: ["res/images/sky/blue.jpg"],
+    mix_operation: "multiply", // ENUM : multiply , divide ,
+  };
 
-var textuteImageSamplers1 = {
-  source : [    "res/images/RustPaint.jpg"   ] ,
-  mix_operation : "multiply" , // ENUM : multiply , divide ,
-};
+  var textuteImageSamplers1 = {
+    source: ["res/images/RustPaint.jpg"],
+    mix_operation: "multiply", // ENUM : multiply , divide ,
+  };
 
-world.Add("sphereLightTex" , 1  , "TEST" , textuteImageSamplers );
-App.scene.TEST.position.z = -20;
+  world.Add("sphereLightTex", 1, "TEST", textuteImageSamplers);
+  App.scene.TEST.position.z = -120;
 
-App.scene.TEST.geometry.setRadius(60);
-App.scene.TEST.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
+  App.scene.TEST.geometry.setRadius(1);
+  App.scene.TEST.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
 
-/*
+  /*
 // floor
 var textuteImageSamplers2 = {
     source : [    "res/images/grass1.jpg"   ] ,
@@ -74,7 +83,7 @@ App.scene.floor.custom.gl_texture = function ( object , t ) {
 }
 */
 
-/*
+  /*
 /////////////////////////////
 world.Add("cube", 1 , "tree1_");
 App.scene.tree1_.position.SetX(50);
@@ -179,80 +188,94 @@ App.scene.tree1.position.z = App.scene.tree1_.position.z
 
 */
 
-var data_for_custom = {
-
-  latitudeBands : 1,
-  longitudeBands : 1,
-  radius : 1 ,
-  custom_type : "spiral",
-};
-////////////////////////////////////////////////////////////////////
-
-var S1 = new SWITCHER();
-var O2 = new OSCILLATOR(2 , 6 , 0.000001);
-var LONG = new OSCILLATOR(1 , 20 , 1);
-var LANG = new OSCILLATOR(1 , 25 , 1);
-world.Add("generatorLightTex" , 1  , "generator1" , textuteImageSamplers1 , data_for_custom);
-App.scene.generator1.rotation.z = 1;
-App.scene.generator1.position.y = 7 ;
-App.scene.generator1.position.z = -10;
-//App.scene.generator1.geometry.setRadius(2)
-App.scene.generator1.glDrawElements.mode = ENUMERATORS.glDrawElements.mode[5];
-App.scene.generator1.rotation.rotationSpeed.z = 0;
-App.scene.TEST.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-App.scene.generator1.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[3];
-App.scene.TEST.glBlend.blendEnabled = true;
-App.scene.generator1.glBlend.blendEnabled = true;
-
-App.scene.generator1.rotValue = - 90;
-
-world.Add("generatorLightTex" , 1  , "generator2" , textuteImageSamplers1 , data_for_custom);
-
-App.scene.generator2.rotation.x = 0;
-
-App.scene.generator2.rotation.y = 1;
-App.scene.generator2.rotValue =- 90;
-App.scene.generator2.position.y = 7 ;
-App.scene.generator2.position.z = -10;
-App.scene.generator2.glDrawElements.mode = ENUMERATORS.glDrawElements.mode[5];
-App.scene.generator2.rotation.rotationSpeed.z = 0;
-App.scene.generator2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[3];
-App.scene.generator2.glBlend.blendEnabled = true;
-
-App.scene.generator1.glBlend.blendParamDest = ENUMERATORS.glBlend.param[8];
-
-App.audioSystem.createVideoAsset ("Galactic" , "Epiclogue.mp3");
-
-var Galactic;
-
-App.onload = function(e){
-
-  Galactic = App.audioSystem.Assets.Galactic;
-
-  var source =  Galactic.context.createMediaElementSource(Galactic.video);
-  source.connect(Galactic.gainNode);
-  Galactic.gainNode.connect(Galactic.filter);
-  Galactic.filter.connect(Galactic.context.destination);
-
-  Galactic.analyser = Galactic.context.createAnalyser();
-  source.connect(Galactic.analyser);
-  Galactic.frequencyData = new Uint8Array(Galactic.analyser.frequencyBinCount);
-
-  Galactic.UPDATE = function () {
-
-    Galactic.analyser.getByteFrequencyData(Galactic.frequencyData);
-    var PARAMETER1 = 2;
-
-    // for (var i=1,j=1;i<1024;i=i+70,j=j+35) {
-    App.scene.generator1.longitudeBands = parseInt( Galactic.frequencyData[5]/PARAMETER1 );
-    App.scene.generator2.longitudeBands = parseInt( Galactic.frequencyData[25]/PARAMETER1 );
-    App.scene.generator1.geometry.setRadius(1);
-    App.scene.generator2.geometry.setRadius(1);
-    //console.log(frequencyData)
-
+  var data_for_custom = {
+    latitudeBands: 1,
+    longitudeBands: 1,
+    radius: 1,
+    custom_type: "spiral",
   };
+  ////////////////////////////////////////////////////////////////////
 
-  Galactic.video.play();
-  App.updateBeforeDraw.push(Galactic);
+  var S1 = new SWITCHER();
+  var O2 = new OSCILLATOR(2, 6, 0.000001);
+  var LONG = new OSCILLATOR(1, 20, 1);
+  var LANG = new OSCILLATOR(1, 25, 1);
+  world.Add(
+    "generatorLightTex",
+    1,
+    "generator1",
+    textuteImageSamplers1,
+    data_for_custom
+  );
+  App.scene.generator1.rotation.z = 1;
+  App.scene.generator1.position.y = 7;
+  App.scene.generator1.position.z = -100;
+  //App.scene.generator1.geometry.setRadius(2)
+  App.scene.generator1.glDrawElements.mode = ENUMERATORS.glDrawElements.mode[5];
+  App.scene.generator1.rotation.rotationSpeed.z = 0;
+  App.scene.TEST.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[2];
+  App.scene.generator1.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[3];
+  App.scene.TEST.glBlend.blendEnabled = true;
+  App.scene.generator1.glBlend.blendEnabled = true;
 
+  App.scene.generator1.rotValue = -90;
+
+  world.Add(
+    "generatorLightTex",
+    1,
+    "generator2",
+    textuteImageSamplers1,
+    data_for_custom
+  );
+
+  App.scene.generator2.rotation.x = 0;
+
+  App.scene.generator2.rotation.y = 1;
+  App.scene.generator2.rotValue = -90;
+  App.scene.generator2.position.y = 7;
+  App.scene.generator2.position.z = -10;
+  App.scene.generator2.glDrawElements.mode = ENUMERATORS.glDrawElements.mode[5];
+  App.scene.generator2.rotation.rotationSpeed.z = 0;
+  App.scene.generator2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[3];
+  App.scene.generator2.glBlend.blendEnabled = true;
+
+  App.scene.generator1.glBlend.blendParamDest = ENUMERATORS.glBlend.param[8];
+
+  App.audioSystem.createVideoAsset("Galactic", "Epiclogue.mp3");
+
+  var Galactic;
+
+  App.onload = function (e) {
+    Galactic = App.audioSystem.Assets.Galactic;
+
+    var source = Galactic.context.createMediaElementSource(Galactic.video);
+    source.connect(Galactic.gainNode);
+    Galactic.gainNode.connect(Galactic.filter);
+    Galactic.filter.connect(Galactic.context.destination);
+
+    Galactic.analyser = Galactic.context.createAnalyser();
+    source.connect(Galactic.analyser);
+    Galactic.frequencyData = new Uint8Array(
+      Galactic.analyser.frequencyBinCount
+    );
+
+    Galactic.UPDATE = function () {
+      Galactic.analyser.getByteFrequencyData(Galactic.frequencyData);
+      var PARAMETER1 = 2;
+
+      // for (var i=1,j=1;i<1024;i=i+70,j=j+35) {
+      App.scene.generator1.longitudeBands = parseInt(
+        Galactic.frequencyData[5] / PARAMETER1
+      );
+      App.scene.generator2.longitudeBands = parseInt(
+        Galactic.frequencyData[25] / PARAMETER1
+      );
+      App.scene.generator1.geometry.setRadius(1);
+      App.scene.generator2.geometry.setRadius(1);
+      //console.log(frequencyData)
+    };
+
+    Galactic.video.play();
+    App.updateBeforeDraw.push(Galactic);
+  };
 };

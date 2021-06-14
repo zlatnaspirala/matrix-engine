@@ -1,16 +1,21 @@
 ![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/webgl2glmatrix2.jpg)
 
-## About webgl2-glmatrix2 project ##
+## About Matrix Engine project ##
 ### Name of library `MATRIX-ENGINE`
 
+
+### Version 
 ### STATUS - [NPM WIP INTEGRATION] npm import/export index staff.
 ### Not ready for npm users.
 
-The benefits of this project is offering an overview of the entire application logic,
- easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
- (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in opengles 1.1.
- First level of customisation is texture part of code. In example custom_texture.js
 
+The benefits of this project is offering an overview of the entire application logic,
+easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
+(gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in opengles 1.1.
+First level of customisation is texture part of code. Best view in example custom_texture.js.
+
+
+### Not updated
 ### Live Demo -> https://maximumroulette.com/apps/webgl-glmatrix
 
 
@@ -44,7 +49,7 @@ The benefits of this project is offering an overview of the entire application l
 We just override function for texture executing code.
  Next level is full custom opportunity , geometry , collision , networking etc.
 
-### Custom textures ###
+### Custom textures
 
 ```
   App.scene.MySquareTexure1.custom.gl_texture = function ( object , t ) {
