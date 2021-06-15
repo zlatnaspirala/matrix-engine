@@ -7,7 +7,9 @@
 
 /* globals world App world */
 import App from "../program/manifest";
-import { ENUMERATORS } from "../lib/utility";
+import * as matrixEngine from "../index.js";
+let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 
 export var runThis = world => {
   /*

@@ -6,6 +6,9 @@
 
 /* globals world App world */
 import App from "../program/manifest";
+import * as matrixEngine from "../index.js";
+
+let ACCESS_CAMERA =  matrixEngine.utility.ACCESS_CAMERA;
 
 export var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA */

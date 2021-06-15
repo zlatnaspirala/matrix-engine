@@ -11,9 +11,14 @@
 
 /* globals world App world */
 import App from "../program/manifest";
+import * as matrixEngine from "../index.js";
+let VIDEO_TEXTURE = matrixEngine.Engine.VIDEO_TEXTURE;
 
 export var runThis = world => {
   // eslint-disable-next-line no-unused-vars
+
+  let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply", // ENUM : multiply , divide ,

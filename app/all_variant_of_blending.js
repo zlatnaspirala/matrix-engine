@@ -5,6 +5,7 @@
 
 /* globals world App world */
 import App from "../program/manifest";
+import * as matrixEngine from "../index.js";
 
 export var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA Galactic*/
@@ -23,10 +24,10 @@ export var runThis = world => {
   App.scene.cube.position.z = -13;
   App.scene.cube.rotation.rotationSpeed.x = 10;
 
-  App.scene.cube.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  App.scene.cube.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
+  App.scene.cube.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+  App.scene.cube.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
 
-  for (var f = 0; f < ENUMERATORS.glBlend.param.length; f++) {
+  for (var f = 0; f < matrixEngine.utility.ENUMERATORS.glBlend.param.length; f++) {
     // for (var d=0;d < ENUMERATORS.glBlend.param.length-5  ; d++) {
     world.Add("cubeLightTex", 0.65, "test" + f, textuteImageSamplers);
     eval("App.scene.test" + f + ".glBlend.blendEnabled = true");
@@ -37,14 +38,14 @@ export var runThis = world => {
     eval(
       "App.scene.test" +
         f +
-        ".glBlend.blendParamSrc =  ENUMERATORS.glBlend.param[" +
+        ".glBlend.blendParamSrc =  matrixEngine.utility.ENUMERATORS.glBlend.param[" +
         f +
         "] "
     );
     eval(
       "App.scene.test" +
         f +
-        ".glBlend.blendParamDest =  ENUMERATORS.glBlend.param[" +
+        ".glBlend.blendParamDest =  matrixEngine.utility.ENUMERATORS.glBlend.param[" +
         4 +
         "] "
     );

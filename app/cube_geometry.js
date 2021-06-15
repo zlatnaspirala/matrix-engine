@@ -7,6 +7,7 @@
 
 /* globals world App world */
 import App from "../program/manifest";
+import * as matrixEngine from "../index.js";
 
 export var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
@@ -19,7 +20,7 @@ export var runThis = world => {
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
   App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
 
-  var oscilltor_variable = new OSCILLATOR(0.05, 2, 0.01);
+  var oscilltor_variable = new matrixEngine.utility.OSCILLATOR(0.05, 2, 0.01);
 
   setInterval(function () {
     App.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());

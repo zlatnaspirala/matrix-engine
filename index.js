@@ -16,7 +16,7 @@ import OBJ from "./lib/loader-obj";
 import operation from "./lib/matrix-buffers";
 // import MATRIX_DRAWS from "./lib/matrix-draws";
 import texTools from "./lib/matrix-textures";
-import * as UTILITY from "./lib/utility";
+import * as utility from "./lib/utility";
 
 export {
   App,
@@ -26,7 +26,7 @@ export {
   matrixGeometry,
   matrixRender,
   texTools,
-  UTILITY,
+  utility,
   operation,
   OBJ,
 };

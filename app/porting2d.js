@@ -5,9 +5,14 @@
 
 /* globals world App world */
 import App from "../program/manifest";
+import * as matrixEngine from "../index.js";
+let CANVAS2d_SURFACE_TEXTURE = matrixEngine.Engine.CANVAS2d_SURFACE_TEXTURE;
 
 export var runThis = world => {
   /* globals ENUMERATORS world App CANVAS2d_SURFACE_TEXTURE E */
+
+  let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+  let E = matrixEngine.utility.E;
 
   // eslint-disable-next-line no-unused-vars
   var textuteImageSamplers = {

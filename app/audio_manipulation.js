@@ -7,6 +7,9 @@
 
 /* globals world App world */
 import App from "../program/manifest";
+import * as matrixEngine from "../index.js";
+let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+let E = matrixEngine.utility.E;
 
 export var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA Galactic*/

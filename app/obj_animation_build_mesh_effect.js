@@ -5,10 +5,11 @@
 
 /* globals world App world */
 import App from "../program/manifest";
+import * as matrixEngine from "../index.js";
 
 export var runThis = world => {
   /* globals world App ENUMERATORS OSCILLATOR OBJ */
-
+  let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
   // LOAD MESH FROM OBJ FILES...
   // if you dont use obj or complex mesh you no need for this func
   function onLoadObj(meshes) {
@@ -91,12 +92,12 @@ export var runThis = world => {
     App.scene.female.position.y = -4;
     App.scene.female.rotation.rotationSpeed.y = 150;
     App.scene.female.position.z = -13;
-    App.scene.halfCircle.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-    App.scene.halfCircle.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
-    App.scene.halfCircle2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-    App.scene.halfCircle2.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
-    App.scene.female.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-    App.scene.female.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
+    App.scene.halfCircle.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    App.scene.halfCircle.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    App.scene.halfCircle2.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    App.scene.halfCircle2.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    App.scene.female.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    App.scene.female.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     App.scene.female.glDrawElements.numberOfIndicesRender = 1;
 
     var TIMER = setInterval(function () {

@@ -62,8 +62,8 @@ var Examples = {
  * @description
  * Little help func.
  */
-const QueryString = matrixEngine.UTILITY.QueryString;
-const scriptManager = matrixEngine.UTILITY.scriptManager;
+const QueryString = matrixEngine.utility.QueryString;
+const scriptManager = matrixEngine.utility.scriptManager;
 
 var world;
 var App = matrixEngine.App;

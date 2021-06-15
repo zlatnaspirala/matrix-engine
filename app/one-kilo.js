@@ -5,6 +5,8 @@
 
 /* globals world App world */
 import App from "../program/manifest";
+import * as matrixEngine from "../index.js";
+let CANVAS2d_SURFACE_TEXTURE = matrixEngine.Engine.CANVAS2d_SURFACE_TEXTURE;
 
 export var runThis = world => {
   /* globals world App ENUMERATORS E CANVAS2d_SURFACE_TEXTURE */
