@@ -10,6 +10,7 @@ import App from "../program/manifest";
 import * as matrixEngine from "../index.js";
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
+let SWITCHER = matrixEngine.utility.SWITCHER;
 
 export var runThis = world => {
   /*
@@ -33,7 +34,7 @@ export var runThis = world => {
   };
 
   world.Add("sphereLightTex", 1, "TEST", textuteImageSamplers);
-  App.scene.TEST.position.z = -120;
+  App.scene.TEST.position.z = -12;
 
   App.scene.TEST.geometry.setRadius(1);
   App.scene.TEST.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
@@ -220,7 +221,7 @@ App.scene.tree1.position.z = App.scene.tree1_.position.z
   App.scene.TEST.glBlend.blendEnabled = true;
   App.scene.generator1.glBlend.blendEnabled = true;
 
-  App.scene.generator1.rotValue = -90;
+  App.scene.generator1.rotation.rotx = -90;
 
   world.Add(
     "generatorLightTex",
@@ -233,7 +234,7 @@ App.scene.tree1.position.z = App.scene.tree1_.position.z
   App.scene.generator2.rotation.x = 0;
 
   App.scene.generator2.rotation.y = 1;
-  App.scene.generator2.rotValue = -90;
+  App.scene.generator2.rotation.rotx = -90;
   App.scene.generator2.position.y = 7;
   App.scene.generator2.position.z = -10;
   App.scene.generator2.glDrawElements.mode = ENUMERATORS.glDrawElements.mode[5];
@@ -263,7 +264,7 @@ App.scene.tree1.position.z = App.scene.tree1_.position.z
 
     Galactic.UPDATE = function () {
       Galactic.analyser.getByteFrequencyData(Galactic.frequencyData);
-      var PARAMETER1 = 2;
+      var PARAMETER1 = 0.1;
 
       // for (var i=1,j=1;i<1024;i=i+70,j=j+35) {
       App.scene.generator1.longitudeBands = parseInt(
