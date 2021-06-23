@@ -1,0 +1,34 @@
+{
+  "name": "Matrix Engine",
+  "short_name": "matrix-engine",
+  "start_url": "build-npm.html",
+  "orientation": "any",
+  "theme_color": "lime",
+  "background_color": "black",
+  "description": "The benefits of this project is offering an overview of the entire application logic, easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use (gl-program-structure) based on new version of glmatrix (2.0). Push&Pop matrix methodology.",
+  "display": "standalone",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "res/icons/512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "res/icons/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "res/icons/apple-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "author": {
+      "name": "Nikola Lukic",
+      "website": "https://maximumroulette.com",
+      "github": "https://github.com/zlatnaspirala",
+      "source-repo": "https://github.com/zlatnaspirala/visual-ts-game-engine"
+  }
+}

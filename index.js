@@ -1,9 +1,10 @@
 
 /**
- * @author Nikola Lukic c 2021
+ * @author Nikola Lukic copyright 2021
  * @email zlatnaspirala@gmail.com
  * @description Gl Program writen in ECMA6.
- * Used glmatrix2 library.
+ * Used glmatrix2 library. Object orientented
+ * render scene draw program.
  */
 
 import App from "./program/manifest";
@@ -14,7 +15,6 @@ import * as Engine from "./lib/engine";
 import * as Events from "./lib/events";
 import OBJ from "./lib/loader-obj";
 import operation from "./lib/matrix-buffers";
-// import MATRIX_DRAWS from "./lib/matrix-draws";
 import texTools from "./lib/matrix-textures";
 import * as utility from "./lib/utility";
 
