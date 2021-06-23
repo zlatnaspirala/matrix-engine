@@ -8,7 +8,7 @@
 import App from "../program/manifest";
 import * as matrixEngine from "../index.js";
 
-let ACCESS_CAMERA =  matrixEngine.utility.ACCESS_CAMERA;
+let ACCESS_CAMERA =  matrixEngine.Engine.ACCESS_CAMERA;
 
 export var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA */

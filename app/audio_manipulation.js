@@ -11,6 +11,8 @@ import * as matrixEngine from "../index.js";
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 let E = matrixEngine.utility.E;
 
+
+
 export var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA Galactic*/
 
@@ -38,9 +40,12 @@ export var runThis = world => {
     mix_operation: "multiply",
   };
 
-  App.audioSystem.createVideoAsset("Galactic", "Epiclogue.mp3");
 
-  App.onload = function (e) {
+
+  App.onload = function () {
+
+    App.audioSystem.createVideoAsset("Galactic", "Epiclogue.mp3");
+    
     window.Galactic = App.audioSystem.Assets.Galactic;
 
     var source = Galactic.context.createMediaElementSource(Galactic.video);
@@ -79,7 +84,30 @@ export var runThis = world => {
       // console.log(frequencyData)
     };
 
-    Galactic.video.play();
+
+ 
+     // Galactic.video.play();
+ 
+    function tryAudio() { 
+
+      return new Promise(function(resolve, reject) {   // return a promise
+     
+        Galactic.video.preload = "auto";                      // intend to play through
+        Galactic.video.autoplay = true;                       // autoplay when loaded
+        Galactic.video.onerror = reject;                      // on error, reject
+        Galactic.video.onended = resolve;                     // when done, resolve
+      });
+
+    }
+
+
     App.updateBeforeDraw.push(Galactic);
+
+    tryAudio()
+
   };
+
+
+  // App.onload();
+
 };

@@ -24,7 +24,7 @@ export var runThis = world => {
   App.scene.outsideBox.position.y = 0;
   App.scene.outsideBox.position.z = -55;
   App.scene.outsideBox.rotation.rotationSpeed.z = 50;
-  App.scene.outsideBox.rotValue = 90;
+  // App.scene.outsideBox.rotValue = 90;
   App.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
   App.scene.outsideBox.glBlend.blendEnabled = true;
   App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
