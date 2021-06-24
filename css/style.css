@@ -1,7 +1,8 @@
 
 body {
   color: lime;
-  font-family: Monospace;
+  background-color:black;
+  font-family: 'Courier New', Courier, monospace;
   font-size: 13px;
   background-color: black;
   margin: 0;

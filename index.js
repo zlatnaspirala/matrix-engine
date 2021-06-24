@@ -2,7 +2,8 @@
 /**
  * @author Nikola Lukic copyright 2021
  * @email zlatnaspirala@gmail.com
- * @description Gl Program writen in ECMA6.
+ * @description 
+ * Gl Program writen in ECMA6.
  * Used glmatrix2 library. Object orientented
  * render scene draw program.
  */

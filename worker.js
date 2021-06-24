@@ -12,27 +12,25 @@ self.addEventListener("install", function (event) {
   event.waitUntil(
     caches.open("static-files-v1").then(function (cache) {
       return cache.addAll([
-        "/",
         offlineUrl,
         "lib/engine.js",
         "lib/events.js",
-        "lib/gl-matrix-min.js",
         "lib/loader-obj.js",
+        "lib/matrix-buffers.js",
+        "lib/matrix-draws.js",
+        "lib/matrix-geometry.js",
+        "lib/matrix-render.js",
+        "lib/matrix-textures.js",
+        "lib/matrix-world.js",
+        "lib/utility.js",
+        "lib/webgl-utils.js",
+        "lib/gl-matrix-min.js",
+        "css/style.css",
       ]);
     })
   );
 });
-/*
-self.addEventListener("fetch", function (event) {
 
-  event.respondWith(
-    caches.match(event.request).then(function (response) {
-      return response || fetch(event.request)
-    })
-  );
-
-});
-*/
 self.addEventListener("fetch", function (event) {
   if (event.request.method === "POST") { return; }
   event.respondWith(
@@ -49,22 +47,5 @@ self.addEventListener("fetch", function (event) {
       });
     })
   );
- /*
-  if (event.request.mode === 'navigate' || (event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html'))) {
-    event.respondWith(
-      fetch(event.request.url).catch(error => {
-        // Return the offline page
-        return caches.match(offlineUrl);
-      })
-    );
-  }
-  else {
-    // Respond with everything else if we can
-    event.respondWith(caches.match(event.request)
-      .then(function(response) {
-        return response || fetch(event.request);
-      })
-    );
-  }*/
 
 });

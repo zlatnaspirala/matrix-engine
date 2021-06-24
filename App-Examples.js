@@ -110,12 +110,7 @@ window.Start = function () {
 matrixEngine.Engine.load_shaders("shaders/shaders.html")
 
 window.addEventListener("load", function () {
-
-  console.log("nikola2222")
-
   matrixEngine.Engine.initApp();
-
-
 });
 
 // Make it global for console easy access.

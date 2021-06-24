@@ -1,17 +1,12 @@
 /* eslint-disable no-unused-vars */
-/**
- * visual-js webgl2 project
- * file : manifest.js
- */
-// "use strict";
 
 var App = {
   name : "webgl2 experimental by default.",
-  version : 0.4,
+  version : "1.0.4",
   events : true,
   logs : false ,
-  draw_interval : 10 ,
-  antialias : false ,
+  draw_interval : 10,
+  antialias : false,
   camera : { viewAngle : 45 ,
     nearViewpoint : 0.1 ,
     farViewpoint : 1000 ,

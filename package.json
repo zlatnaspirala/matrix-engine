@@ -1,7 +1,7 @@
 {
   "name": "matrix-engine",
-  "version": "1.0.4",
-  "description": "Test npm integration - fixed pwa warns to the 100%. ",
+  "version": "1.0.5",
+  "description": "Test npm integration - fixed pwa warns to the 100% fro npm-build.html point. ",
   "main": "index.js",
   "directories": {
     "lib": "lib"
