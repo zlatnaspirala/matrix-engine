@@ -1,64 +1,67 @@
-<!--
- Copyright (C) 2017
- Nikola Lukic - zlatnaspirala@gmail.com
- New program instance for visual-JS Game engine
- Based on :
- Copyright (C) 2014  Tappali Ekanathan Keestu (keestu@gmail.com)
-    GNU General Public License
-    <http://www.gnu.org/licenses/>
--->
 <script>
-
 if (location.href.indexOf("localhost") == -1) {
-
   if (location.protocol != 'https:')
   {
     location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
   }
-
 }
-
 </script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="manifest" href="manifest.web">
   <title>WEBGL2</title>
+  <meta name="description" content="The benefits of this project is offering an overview of the entire application logic, easy native implementations (hybrid app), object structural. ">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" href="css/style.css">
+  <link async rel="stylesheet" href="css/style.css">
+  <link rel="apple-touch-icon" href="res/icons/512.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000"/>
+  <script async src="./lib/gl-matrix-min.js"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimal-ui">
+  <link rel="icon" type="image/png" sizes="96x96" href="res/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="res/icons/android-icon.png">
+  <link rel="icon" href="res/icons/favicon.ico" type="image/x-icon">
+  <intercept-url pattern="res/icons/favicon.ico" access="ROLE_ANONYMOUS"> </intercept-url>
+  <meta name="msapplication-TileImage" content="res/icons/ms-icon.png">
 </head>
 
 <body style="background-color:black">
 
   <div id="menu" style="position:absolute;left:0;top:0;width:15%;height:auto;color:lime;padding:1px;text-align: center;">
+    <div style="width:100%;height:auto;" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=adding_color_cube&i=0' " >adding color cube</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=adding_color_triangle&i=0' " >adding color triangle</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=adding_color_square&i=0' " >adding color square</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=adding_color_piramyde&i=0' " >adding color piramyde</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=adding_square_texture&i=0' " >adding square with texture</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=cube_geometry&i=0' " >adding cube with texture + scale</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=cube_light_dinamic&i=0' " >adding cube light dinamic</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=sphere_geometry&i=0' " >sphere geometry </div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=cube_light_and_texture&i=0' " >cube_light_and_texture</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=load_obj_file&i=0' " >load obj file (UV map-Blender)</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=adding_more_texture_samplers&i=0' " >adding more texture samplers</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=custom_texture&i=0' " >custom_texture</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=texture_dinamic_manipulation&i=0' " >texture_dinamic_manipulation</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=first_person_controller&i=0' " >First person controller </div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=obj_animation&i=0' " >Animation - obj sequence </div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=obj_animation_build_mesh_effect&i=0' " >obj animation build mesh effect</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=all_variant_of_blending&i=0' " >some  variant of blending.js</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=video_texture&i=0' " >video texture (webcam) </div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=camera_texture&i=0' " >camera texture (webcam) </div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=audio_manipulation&i=0' " >audio_manipulation </div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=my_world&i=0' " >dinamic vertex,spiral vs sound.eq </div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=porting2d&i=0' " >visual-js-2d-porting</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=porting2d_text&i=0' " >visual-js-2d-porting Text</div>
+    <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=porting2d_particle&i=0' " >visual-js-2d-porting Particle</div>
+  </div>
 
-  <div style="width:100%;height:auto;" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=adding_color_cube&i=0' " >adding color cube</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=adding_color_triangle&i=0' " >adding color triangle</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=adding_color_square&i=0' " >adding color square</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=adding_color_piramyde&i=0' " >adding color piramyde</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=adding_square_texture&i=0' " >adding square with texture</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=cube_geometry&i=0' " >adding cube with texture + scale</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=cube_light_dinamic&i=0' " >adding cube light dinamic</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=sphere_geometry&i=0' " >sphere geometry </div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=cube_light_and_texture&i=0' " >cube_light_and_texture</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=load_obj_file&i=0' " >load obj file (UV map-Blender)</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=adding_more_texture_samplers&i=0' " >adding more texture samplers</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=custom_texture&i=0' " >custom_texture</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=texture_dinamic_manipulation&i=0' " >texture_dinamic_manipulation</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=first_person_controller&i=0' " >First person controller </div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=obj_animation&i=0' " >Animation - obj sequence </div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=obj_animation_build_mesh_effect&i=0' " >obj animation build mesh effect</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=all_variant_of_blending&i=0' " >some  variant of blending.js</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=video_texture&i=0' " >video texture (webcam) </div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=camera_texture&i=0' " >camera texture (webcam) </div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=audio_manipulation&i=0' " >audio_manipulation </div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=my_world&i=0' " >dinamic vertex,spiral vs sound.eq </div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=porting2d&i=0' " >visual-js-2d-porting</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=porting2d_text&i=0' " >visual-js-2d-porting Text</div>
-  <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='webgl2.html?u=porting2d_particle&i=0' " >visual-js-2d-porting Particle</div>
-
-</div>
-
-<iframe id="iframe1" style="position:absolute;left:15%;top:0;width:85%;height:99%;" class="btnShadow" src="webgl2.html"> </iframe>
+  <iframe id="iframe1"
+          style="position:absolute;left:15%;top:0;width:85%;height:99%;" 
+          class="btnShadow" 
+          src="webgl2.html"
+          title="live"></iframe>
 
 </body>
 

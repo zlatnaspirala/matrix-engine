@@ -12,7 +12,8 @@
     {
       "src": "res/icons/512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "res/icons/favicon-96x96.png",
@@ -29,6 +30,6 @@
       "name": "Nikola Lukic",
       "website": "https://maximumroulette.com",
       "github": "https://github.com/zlatnaspirala",
-      "source-repo": "https://github.com/zlatnaspirala/visual-ts-game-engine"
+      "source-repo": "https://github.com/zlatnaspirala/matrix-engine"
   }
 }

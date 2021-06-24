@@ -68,6 +68,14 @@ const scriptManager = matrixEngine.utility.scriptManager;
 var world;
 var App = matrixEngine.App;
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("worker.js");
+  });
+} else {
+  console.warn("Matrix Engine: No support for web workers in this browser.");
+}
+
 function webGLStart() {
   world = matrixEngine.matrixWorld.defineworld(canvas);
 
@@ -99,15 +107,19 @@ window.Start = function () {
   webGLStart();
 };
 
-matrixEngine.Engine.load_shaders("shaders/shaders.html");
+matrixEngine.Engine.load_shaders("shaders/shaders.html")
+
+window.addEventListener("load", function () {
+
+  console.log("nikola2222")
+
+  matrixEngine.Engine.initApp();
+
+
+});
 
 // Make it global for console easy access.
 window.matrixEngine = matrixEngine;
 
-setTimeout(() => {
-  matrixEngine.Engine.initApp();
-}, 200);
-
 var App = matrixEngine.App;
-
 export default App;

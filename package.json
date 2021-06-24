@@ -1,7 +1,7 @@
 {
   "name": "matrix-engine",
-  "version": "1.0.3",
-  "description": "TEST npm integration . webgl object oriented gl program writen in ES6 Native manir.",
+  "version": "1.0.4",
+  "description": "Test npm integration - fixed pwa warns to the 100%. ",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -17,9 +17,12 @@
     "webgl",
     "webgl2",
     "glmatrix",
-    "opengles2"
+    "opengles2",
+    "3d",
+    "javascript",
+    "opengles3"
   ],
-  "author": "Nikola Lukic Zlatnaspirala",
+  "author": "Nikola Lukic @zlatnaspirala",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/issues"

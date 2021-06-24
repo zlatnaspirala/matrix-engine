@@ -6,6 +6,10 @@ import { runThis } from "./app/video_texture";
 var world;
 var App = matrixEngine.App;
 
+console.log = matrixEngine.Events.SYS.DEBUG.LOG
+
+matrixEngine.Engine.load_shaders("shaders/shaders.html");
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker.register("worker.js");
@@ -22,7 +26,6 @@ function run() {
 }
 
 function webGLStart() {
-  matrixEngine.Engine.load_shaders("shaders/shaders.html");
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
   runThis(world);
