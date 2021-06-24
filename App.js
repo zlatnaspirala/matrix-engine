@@ -6,6 +6,18 @@ import { runThis } from "./app/video_texture";
 var world;
 var App = matrixEngine.App;
 
+console.log = matrixEngine.Events.SYS.DEBUG.LOG
+
+matrixEngine.Engine.load_shaders("shaders/shaders.html");
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("worker.js");
+  });
+} else {
+  console.warn("Matrix Engine: No support for web workers in this browser.");
+}
+
 window.addEventListener("click", run, false);
 
 function run() { 
@@ -25,8 +37,6 @@ window.Start = function () {
   matrixEngine.Engine.drawFPS();
   webGLStart();
 };
-
-matrixEngine.Engine.load_shaders("shaders/shaders.html");
 
 window.matrixEngine = matrixEngine;
 

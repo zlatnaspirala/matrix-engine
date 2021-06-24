@@ -1,24 +1,24 @@
 ![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/webgl2glmatrix2.jpg)
 
-## About Matrix Engine project ##
-### Name of library `MATRIX-ENGINE`
+## About Matrix Engine project
+### Name: `MATRIX-ENGINE`
+### Version 1.0.4
+### STATUS - [NPM FIRST INTEGRATION - BETA]
 
+### For npm users
 
-### Version 
-### STATUS - [NPM WIP INTEGRATION] npm import/export index staff.
-### Not ready for npm users.
+```
+npm i matrix-engine
+```
 
+ - The benefits of this project is offering an overview of the entire application logic,
+  easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
+  (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in opengles 1.1.
+  First level of customisation is texture part of code. Best view in example custom_texture.js.
+  I implemented webcam quick access call with custom active texture (porting canvas2d work to 3d faces)
 
-The benefits of this project is offering an overview of the entire application logic,
-easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
-(gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in opengles 1.1.
-First level of customisation is texture part of code. Best view in example custom_texture.js.
-
-
-### Represent old 
-### Live Demo -> https://maximumroulette.com/apps/webgl-glmatrix
-
-New link will be added...
+### Represent old
+### Live Old Demos -> https://maximumroulette.com/apps/webgl-glmatrix
 
 
 ### List of examples : ###
@@ -53,7 +53,7 @@ We just override function for texture executing code.
 
 ### Custom textures
 
-```
+```js
   App.scene.MySquareTexure1.custom.gl_texture = function ( object , t ) {
 
   world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t] );
@@ -79,7 +79,7 @@ We just override function for texture executing code.
 
 ### First person controller: ###
 
-```
+```js
   //In one line activate also deactivate .
   App.camera.FirstPersonController = true;
 
@@ -96,7 +96,7 @@ We just override function for texture executing code.
 
 ### Animated female droid: ###
 
-```
+```js
   // LOAD MESH FROM OBJ FILES...
   // if you dont use obj or complex mesh you no need for this func
   // Must be improved loading sequences
@@ -126,7 +126,7 @@ We just override function for texture executing code.
 
       textuteImageSamplers2 = {
         source : ["res/images/RustPaint.jpg"],
-        mix_operation : "multiply",             // ENUM: multiply, divide
+        mix_operation : "multiply",
       };
 
       setTimeout( function() {
@@ -172,9 +172,9 @@ We just override function for texture executing code.
 
 ```
 
-### Blending: ###
+### Blending:
 
-```
+```js
   // Use it
   App.scene.female.glBlend.blendEnabled = true;
   App.scene.female.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
@@ -185,7 +185,7 @@ We just override function for texture executing code.
 
 For more details dee this example script: `load_obj_file.js`
 
-### Video texture : ###
+### Video texture:
 
 ```
 
@@ -194,7 +194,7 @@ App.scene.TV.streamTextures = new VIDEO_TEXTURE( "Galactic Expansion Fractal Mor
 
 ```
 
-### Camera texture: ###
+### Camera texture:
 
 ```
   App.scene.TV.streamTextures = new ACCESS_CAMERA( "webcam_beta" );
@@ -218,23 +218,29 @@ To show/hide iframe use:
 
 App.scene.outsideBox - is any object who have streamTextures LOADED with 2DCANVAS .
 
-```
+```js
   App.scene.outsideBox.streamTextures.showTextureEditor()
   E('HOLDER_STREAMS').style.display = 'none';
 ```
 
 Access to the canvas2d program:
 
-```
+```js
   App.scene.outsideBox.streamTextures.iframe.contentWindow.
 ```
 
-Live demo:
+Old Live demo:
 Video and webcam works at:
 https://maximumroulette.com/webgl2/examples.html
 
 
-### Credits && Licence: ###
+### PWA
+  It is good to consult pwa test on page.
+  Best way is to keep it on 100% pass.
+![pwa-powered](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/pwa__test.png)
+
+
+### Credits && Licence:
 
  - Video material used from :From youtube.com : Electric sheep - a facinating animated flame fractal
    TheMrNgaard Creative Commons Attribution licence (reuse allowed)
