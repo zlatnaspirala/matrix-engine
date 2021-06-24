@@ -6,8 +6,6 @@ import { runThis } from "./app/video_texture";
 var world;
 var App = matrixEngine.App;
 
-console.log = matrixEngine.Events.SYS.DEBUG.LOG
-
 matrixEngine.Engine.load_shaders("shaders/shaders.html");
 
 if ("serviceWorker" in navigator) {
