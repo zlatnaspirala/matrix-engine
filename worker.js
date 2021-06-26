@@ -13,6 +13,8 @@ self.addEventListener("install", function (event) {
     caches.open("static-files-v1").then(function (cache) {
       return cache.addAll([
         offlineUrl,
+        "App.js",
+        "App-Examples.js",
         "lib/engine.js",
         "lib/events.js",
         "lib/loader-obj.js",
@@ -26,13 +28,19 @@ self.addEventListener("install", function (event) {
         "lib/webgl-utils.js",
         "lib/gl-matrix-min.js",
         "css/style.css",
+        "build.html",
+        "query.html",
+        "examples.html",
+        "res/videos/Epiclogue.mp3"
       ]);
     })
   );
 });
 
 self.addEventListener("fetch", function (event) {
-  if (event.request.method === "POST") { return; }
+
+  // if (event.request.method === "POST") { return; }
+
   event.respondWith(
     caches.open("dynamic-content-v1").then(function (cache) {
       // check if the requested URL is inside the dynamic-content-v1

@@ -11,8 +11,6 @@ import * as matrixEngine from "../index.js";
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 let E = matrixEngine.utility.E;
 
-
-
 export var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA Galactic*/
 
@@ -40,11 +38,12 @@ export var runThis = world => {
     mix_operation: "multiply",
   };
 
+  App.audioSystem.createVideoAsset("Galactic", "Epiclogue.mp3");
+  
+  App.onload = function (e) {
 
-
-  App.onload = function () {
-
-    App.audioSystem.createVideoAsset("Galactic", "Epiclogue.mp3");
+    console.log(e)
+   
     
     window.Galactic = App.audioSystem.Assets.Galactic;
 
@@ -83,11 +82,14 @@ export var runThis = world => {
 
       // console.log(frequencyData)
     };
+ 
+    var test =  Galactic.video.play();
+    test.then(() => {
+      alert('sssss')
+    })
 
 
- 
-     // Galactic.video.play();
- 
+     /*
     function tryAudio() { 
 
       return new Promise(function(resolve, reject) {   // return a promise
@@ -98,15 +100,11 @@ export var runThis = world => {
         Galactic.video.onended = resolve;                     // when done, resolve
       });
 
-    }
-
+    } */
 
     App.updateBeforeDraw.push(Galactic);
 
-    tryAudio()
-
   };
-
 
   // App.onload();
 

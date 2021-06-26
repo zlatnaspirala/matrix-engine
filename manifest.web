@@ -1,7 +1,7 @@
 {
   "name": "Matrix Engine",
   "short_name": "matrix-engine",
-  "start_url": "build-npm.html",
+  "start_url": "build.html",
   "orientation": "any",
   "theme_color": "lime",
   "background_color": "black",

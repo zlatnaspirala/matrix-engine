@@ -1,5 +1,6 @@
 import * as matrixEngine from "./index";
 
+import {runThis as cube_tex_arrays} from "./app/cube_tex_arrays";
 import {runThis as adding_color_cube} from "./app/adding_color_cube";
 import {runThis as adding_color_piramyde} from "./app/adding_color_piramyde";
 import {runThis as adding_color_triangle} from "./app/adding_color_triangle";
@@ -29,6 +30,7 @@ import {runThis as video_texture} from "./app/video_texture";
 import {runThis as adding_color_square } from "./app/adding_color_square";
 
 var Examples = {
+  cube_tex_arrays: cube_tex_arrays,
   adding_color_cube: adding_color_cube,
   adding_color_piramyde: adding_color_piramyde,
   adding_color_triangle: adding_color_triangle,
@@ -77,6 +79,7 @@ if ("serviceWorker" in navigator) {
 }
 
 function webGLStart() {
+  matrixEngine.Engine.drawFPS();
   world = matrixEngine.matrixWorld.defineworld(canvas);
 
   if (world) {
@@ -101,17 +104,12 @@ function webGLStart() {
   // Make it global for console easy access.
   window.App = App;
 }
-
-window.Start = function () {
-  matrixEngine.Engine.drawFPS();
-  webGLStart();
-};
-
+ 
 matrixEngine.Engine.load_shaders("shaders/shaders.html")
 
-window.addEventListener("load", function () {
-  matrixEngine.Engine.initApp();
-});
+window.addEventListener("load", function (e) {
+  matrixEngine.Engine.initApp(webGLStart);
+}, true);
 
 // Make it global for console easy access.
 window.matrixEngine = matrixEngine;

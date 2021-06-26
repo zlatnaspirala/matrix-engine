@@ -22,14 +22,14 @@
   <meta name="msapplication-TileImage" content="res/icons/ms-icon.png">
 
 </head>
-<body>
+<body allow="autoplay">
   <div id="shaders" ></div>
   <div id="debugBox" class="debugBox" style="display:none;"></div>
   <div id="fps" class="btnShadow debugBox" style="display:none;">
     <button id="stopRender" type="button" >stopRender</button>
     <div color = "white"><b id="fps"></b></div>
   </div>
-  <div id="HOLDER_STREAMS" class="debugBox" style="display:none;position:absolute;left:-3000px;top:0px;width:512px;height:512px" >
+  <div id="HOLDER_STREAMS" class="debugBox" style="display:block;position:absolute;left:0px;top:0px;width:512px;height:512px" >
     <video id="webcam_beta" autoplay width="512" height="512" style="display:none;position:absolute;left:-200px;top:-110px;"></video>
     <audio id="audio_beta" src="#"></audio>
   </div>

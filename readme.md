@@ -11,6 +11,10 @@
 npm i matrix-engine
 ```
 
+Use starter project:
+https://github.com/zlatnaspirala/matrix-engine-starter
+
+
  - The benefits of this project is offering an overview of the entire application logic,
   easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
   (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in opengles 1.1.
@@ -19,6 +23,20 @@ npm i matrix-engine
 
 ### Represent old
 ### Live Old Demos -> https://maximumroulette.com/apps/webgl-glmatrix
+
+
+### Help localhost dev stage
+
+#### Switch example with url params - Usefull also for production for switching
+#### whole pages/apps.
+
+ https://localhost/webgl2-glmatrix2-engine/webgl2.html?u=adding_color_cube
+
+Code access:
+```js
+const QueryString = matrixEngine.utility.QueryString;
+```
+
 
 
 ### List of examples:
