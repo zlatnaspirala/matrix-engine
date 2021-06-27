@@ -32,7 +32,7 @@ export var runThis = world => {
   App.scene.outsideBox.rotValue = 90;
   App.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
   App.scene.outsideBox.streamTextures = new VIDEO_TEXTURE(
-    "Electric_sheep_a_facinating_animated_flame_fractal.mp4"
+    "electric_sheep.mp4"
   );
   App.scene.outsideBox.glBlend.blendEnabled = true;
   App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];

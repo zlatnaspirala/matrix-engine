@@ -1,13 +1,13 @@
 {
   "name": "matrix-engine",
-  "version": "1.0.6",
-  "description": "Test npm integration - fixed pwa warns to the 100% fro npm-build.html point. ",
+  "version": "1.1.0",
+  "description": "PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
   "main": "index.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"no build tradicional view\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,10 @@
     "opengles2",
     "3d",
     "javascript",
-    "opengles3"
+    "opengles3",
+    "matrix",
+    "ECMA6",
+    "no-build"
   ],
   "author": "Nikola Lukic @zlatnaspirala",
   "license": "MIT",

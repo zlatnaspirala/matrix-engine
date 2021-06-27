@@ -5,7 +5,7 @@
   "orientation": "any",
   "theme_color": "lime",
   "background_color": "black",
-  "description": "The benefits of this project is offering an overview of the entire application logic, easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use (gl-program-structure) based on new version of glmatrix (2.0). Push&Pop matrix methodology.",
+  "description": "PWA fully solution with static, dynamic cache, add to home page. The benefits of this project is offering an overview of the entire application logic, easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use (gl-program-structure) based on new version of glmatrix (2.0). Push&Pop matrix methodology.",
   "display": "standalone",
   "lang": "en-US",
   "icons": [

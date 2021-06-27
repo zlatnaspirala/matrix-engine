@@ -2,18 +2,14 @@
 
 ## About Matrix Engine project
 ### Name: `MATRIX-ENGINE`
-### Version 1.0.4
-### STATUS - [NPM FIRST INTEGRATION - BETA]
+### Version 1.1.0
+### STATUS - [Integrated fully pwa addToHomePage/cache]
 
 ### For npm users
 
-```
-npm i matrix-engine
-```
-
+## Recommended
 Use starter project:
 https://github.com/zlatnaspirala/matrix-engine-starter
-
 
  - The benefits of this project is offering an overview of the entire application logic,
   easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
@@ -25,18 +21,17 @@ https://github.com/zlatnaspirala/matrix-engine-starter
 ### Live Old Demos -> https://maximumroulette.com/apps/webgl-glmatrix
 
 
-### Help localhost dev stage
+### Help for localhost dev stage
 
-#### Switch example with url params - Usefull also for production for switching
-#### whole pages/apps.
+#### Switch example with url params - Usefull also for production for switching whole pages/apps.
 
  https://localhost/webgl2-glmatrix2-engine/webgl2.html?u=adding_color_cube
+
 
 Code access:
 ```js
 const QueryString = matrixEngine.utility.QueryString;
 ```
-
 
 
 ### List of examples:
@@ -95,7 +90,7 @@ We just override function for texture executing code.
 ```
 
 
-### First person controller: ###
+### First person controller:
 
 ```js
   //In one line activate also deactivate .
@@ -205,16 +200,14 @@ For more details dee this example script: `load_obj_file.js`
 
 ### Video texture:
 
-```
-
+```js
 world.Add("cubeLightTex" , 1 ,"TV" , textuteImageSamplers , App.meshes.TV );
 App.scene.TV.streamTextures = new VIDEO_TEXTURE( "Galactic Expansion Fractal Morph [Official Video]" );
-
 ```
 
 ### Camera texture:
 
-```
+```js
   App.scene.TV.streamTextures = new ACCESS_CAMERA( "webcam_beta" );
 ```
 
@@ -252,7 +245,10 @@ Video and webcam works at:
 https://maximumroulette.com/webgl2/examples.html
 
 
-### PWA
+### PWA Fully runned
+
+  Integrated `Add to Home page` and `regular html5 page` options.
+  In same time fixed all `autoplay` audio and video context construction.
   It is good to consult pwa test on page.
   Best way is to keep it on 100% pass.
 ![pwa-powered](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/pwa__test.png)
