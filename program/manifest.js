@@ -25,6 +25,9 @@ var App = {
   },
   updateBeforeDraw : [],
   audioSystem : {},
+  pwa: {
+    addToHomePage: true,
+  },
   ready : false,
   onload : function(){},
 };

@@ -12,7 +12,6 @@ if (location.href.indexOf("localhost") == -1) {
 <head>
   <link rel="manifest" href="manifest.web">
   <title>Matrix-Engine-Workspace</title>
-  <script async src="./lib/gl-matrix-min.js"></script>
   <meta name="description" content="The benefits of this project is offering an overview of the entire application logic, easy native implementations (hybrid app), object structural. ">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link async rel="stylesheet" href="css/style.css">
@@ -24,12 +23,9 @@ if (location.href.indexOf("localhost") == -1) {
   <link rel="icon" type="image/png" sizes="96x96" href="res/icons/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="192x192" href="res/icons/android-icon.png">
   <link rel="icon" href="res/icons/favicon.ico" type="image/x-icon">
-  <intercept-url pattern="res/icons/favicon.ico" access="ROLE_ANONYMOUS"></intercept-url>
-  <meta name="msapplication-TileImage" content="res/icons/ms-icon.png">
 </head>
 
 <body>
-
   <div id="menu" style="position:absolute;left:0;top:0;width:15%;height:auto;color:lime;padding:1px;text-align: center;">
     <div style="width:100%;height:auto;" class="btnShadow" onclick="document.getElementById('iframe1').src='query.html?u=adding_color_cube&i=0' " >adding color cube</div>
     <div style="width:100%" class="btnShadow" onclick="document.getElementById('iframe1').src='query.html?u=adding_color_triangle&i=0' " >adding color triangle</div>

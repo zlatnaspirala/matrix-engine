@@ -1,6 +1,6 @@
 {
   "name": "matrix-engine",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
   "main": "index.js",
   "directories": {
