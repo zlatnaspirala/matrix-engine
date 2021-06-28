@@ -25,7 +25,7 @@ https://github.com/zlatnaspirala/matrix-engine-starter
 
 #### Switch example with url params - Usefull also for production for switching whole pages/apps.
 
- https://localhost/webgl2-glmatrix2-engine/webgl2.html?u=adding_color_cube
+ https://localhost/webgl2-glmatrix2-engine/query.html?u=adding_color_cube
 
 
 Code access:
