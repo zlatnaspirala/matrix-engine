@@ -1,6 +1,6 @@
 {
   "name": "matrix-engine",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Improve import export adding bundle build options with browserify, PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
   "main": "index.js",
   "directories": {
