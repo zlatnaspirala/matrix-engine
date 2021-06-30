@@ -1,12 +1,16 @@
 {
   "name": "matrix-engine",
-  "version": "1.1.2",
-  "description": "PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
+  "version": "1.2.0",
+  "description": "Improve import export adding bundle build options with browserify, PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
   "main": "index.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
+    "build.examples": "browserify App-Examples.js -p esmify > builds/examples.me.js",
+    "build.examples.debug": "browserify App-Examples.js -p esmify > builds/examples.me.debug.js",
+    "build.app": "browserify App.js -p esmify > builds/app.js",
+    "build.app.debug": "browserify --debug App.js -p esmify > builds/app.debug.js",
     "test": "echo \"no build tradicional view\" && exit 1"
   },
   "repository": {
@@ -30,5 +34,12 @@
   "bugs": {
     "url": "https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/issues"
   },
-  "homepage": "https://github.com/zlatnaspirala/webgl2-glmatrix2-engine#readme"
+  "homepage": "https://github.com/zlatnaspirala/webgl2-glmatrix2-engine#readme",
+  "dependencies": {
+    "browser-resolve": "^2.0.0",
+    "esmify": "^2.1.1"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.0"
+  }
 }

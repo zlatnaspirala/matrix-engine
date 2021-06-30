@@ -89,8 +89,10 @@ function webGLStart() {
       Examples[QueryString.u](world);
 
     } else {
-
-      Examples["adding_color_cube"](world);
+      setTimeout( () => {
+        Examples["adding_color_cube"](world);
+      } , 100)
+      
 
     }
   } else {

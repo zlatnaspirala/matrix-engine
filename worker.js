@@ -38,8 +38,9 @@ self.addEventListener( "install", function ( event ) {
         "lib/webgl-utils.js",
         "lib/gl-matrix-min.js",
         "css/style.css",
-        "build.html",
+        "app.html",
         "query.html",
+        "query-build.html",
         "examples.html",
         "res/videos/Epiclogue.mp3"
       ] );

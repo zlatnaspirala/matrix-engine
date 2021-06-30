@@ -1,8 +1,7 @@
 ![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/webgl2glmatrix2.jpg)
 
 ## About Matrix Engine project
-### Name: `MATRIX-ENGINE`
-### Version 1.1.0
+### Name: `MATRIX-ENGINE` `1.2.0`
 ### STATUS - [Integrated fully pwa addToHomePage/cache]
 
 ### For npm users
@@ -17,21 +16,42 @@ https://github.com/zlatnaspirala/matrix-engine-starter
   First level of customisation is texture part of code. Best view in example custom_texture.js.
   I implemented webcam quick access call with custom active texture (porting canvas2d work to 3d faces)
 
-### Represent old
-### Live Old Demos -> https://maximumroulette.com/apps/webgl-glmatrix
+
+### Live Demos
+### https://maximumroulette.com/apps/matrix-engine
 
 
-### Help for localhost dev stage
+## Help for localhost dev stage
 
 #### Switch example with url params - Usefull also for production for switching whole pages/apps.
 
- https://localhost/webgl2-glmatrix2-engine/query.html?u=adding_color_cube
+ https://localhost/matrix-engine/query.html?u=adding_color_cube
 
 
 Code access:
 ```js
 const QueryString = matrixEngine.utility.QueryString;
 ```
+
+### Build Application bundle script
+
+- Before any operation install npm deps:
+```js
+  npm i
+```
+
+ - Build entry App.js
+ @Note: If you use unsecured `http` protocol no build needed just navigate to the `app.html`.
+ app.html load App.js like script type `module`.
+```js
+  npm run build.app
+```
+
+- Build entry App-Examples.js
+```js
+  npm run build.app
+```
+
 
 
 ### List of examples:

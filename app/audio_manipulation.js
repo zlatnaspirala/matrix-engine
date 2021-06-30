@@ -6,13 +6,13 @@
  */
 
 /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA Galactic*/
-import App from "../program/manifest";
 import * as matrixEngine from "../index.js";
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 let E = matrixEngine.utility.E;
 
 export var runThis = world => {
 
+  var App = matrixEngine.App;
   console.log("world", world)
   for (var i = 1; i < 1024; i = i + 70) {
     world.Add("pyramid", 0.1 + i / 1000, "MyPyramid" + i);
