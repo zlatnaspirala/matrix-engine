@@ -18,7 +18,8 @@ https://github.com/zlatnaspirala/matrix-engine-starter
 
 
 ### Live Demos
-### https://maximumroulette.com/apps/matrix-engine
+ - https://maximumroulette.com/apps/matrix-engine/examples.html
+ - https://maximumroulette.com/apps/matrix-engine/app.html
 
 
 ## Help for localhost dev stage
