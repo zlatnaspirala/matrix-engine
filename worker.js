@@ -41,8 +41,8 @@ self.addEventListener( "install", function ( event ) {
         "app.html",
         "query.html",
         "query-build.html",
-        "examples.html",
-        "res/videos/Epiclogue.mp3"
+        "examples.html"
+        // "res/videos/Epiclogue.mp3"
       ] );
     } )
   );

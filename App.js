@@ -30,10 +30,10 @@ function webGLStart() {
   window.App = App;
 
   // If you need this , you can prolong loading time
-  // setTimeout(() => { runThis(world) }, 100);
+  setTimeout(() => { runThis(world) }, 100);
 
   // Run example
-  runThis(world);
+  // runThis(world);
 
 }
 

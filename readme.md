@@ -23,10 +23,9 @@ https://github.com/zlatnaspirala/matrix-engine-starter
 
 ## Help for localhost dev stage
 
-#### Switch example with url params - Usefull also for production for switching whole pages/apps.
-
+### Switch example with url params 
+- Usefull also for production for switching whole pages/apps.
  https://localhost/matrix-engine/query.html?u=adding_color_cube
-
 
 Code access:
 ```js
@@ -34,24 +33,34 @@ const QueryString = matrixEngine.utility.QueryString;
 ```
 
 ### Build Application bundle script
-
 - Before any operation install npm deps:
 ```js
   npm i
 ```
 
+@Note: If you use unsecured `http` protocol no build needed at all just navigate to the `app.html`.
+ app.html load App.js like script type `module`. Same roles for all others instance build entries.
+
+ app-build.html , examples-build.html loads javascript type `text/javascript`.
+ app.html , examples.html loads javascript type `module`.
+
  - Build entry App.js
- @Note: If you use unsecured `http` protocol no build needed just navigate to the `app.html`.
- app.html load App.js like script type `module`.
 ```js
   npm run build.app
 ```
+Now navigate to the `app-build.html` page.
 
 - Build entry App-Examples.js
 ```js
-  npm run build.app
+  npm run build.examples
 ```
+Now navigate to the `examples-build.html` page.
 
+- Build just library
+```js
+  npm run build.lib
+```
+Now navigate to the `me-library.html` page , represent empty page with loaded `matrix-engine`.
 
 
 ### List of examples:

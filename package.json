@@ -8,9 +8,8 @@
   },
   "scripts": {
     "build.examples": "browserify App-Examples.js -p esmify > builds/examples.me.js",
-    "build.examples.debug": "browserify App-Examples.js -p esmify > builds/examples.me.debug.js",
     "build.app": "browserify App.js -p esmify > builds/app.js",
-    "build.app.debug": "browserify --debug App.js -p esmify > builds/app.debug.js",
+    "build.lib": "browserify entry-lib-build.js -p esmify > builds/me.lib.js",
     "test": "echo \"no build tradicional view\" && exit 1"
   },
   "repository": {
@@ -27,7 +26,8 @@
     "opengles3",
     "matrix",
     "ECMA6",
-    "no-build"
+    "no-build",
+    "browserify"
   ],
   "author": "Nikola Lukic @zlatnaspirala",
   "license": "MIT",
