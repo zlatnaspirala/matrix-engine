@@ -13,7 +13,6 @@ let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 let SWITCHER = matrixEngine.utility.SWITCHER;
 
 export var runThis = world => {
-
   var S1 = new SWITCHER();
   var S2 = new SWITCHER();
   /*
@@ -24,7 +23,6 @@ export var runThis = world => {
   */
 
   App.camera.FirstPersonController = true;
- 
 
   var textuteImageSamplers1 = {
     source: ["res/images/bark.jpg"],
@@ -81,7 +79,7 @@ export var runThis = world => {
   */
 
   /////////////////////////////
-  world.Add("cubeLightTex", 1, "tree1_", textuteImageSamplers2);
+  world.Add("pyramid", 3, "tree1_", textuteImageSamplers2);
   // App.scene.tree1_.position.SetX(50);
   // App.scene.tree1_.position.SetY(-3);
   // App.scene.tree1_.position.SetZ(-50);
@@ -91,15 +89,23 @@ export var runThis = world => {
   //App.scene.tree1_.geometry.setScaleByX(0.5);
   //App.scene.tree1_.geometry.setScaleByZ(0.5);
 
-  App.scene.tree1_.glDrawElements.mode = App.scene.tree1_.glDrawElements.modes[6]
+  // App.scene.tree1_.geometry.colorData.SetRedForAll(0.1);
+  // App.scene.tree1_.geometry.colorData.SetGreenForAll(0.6);
+
+  // App.scene.tree1_.glDrawElements.mode = App.scene.tree1_.glDrawElements.modes[6]
+  App.scene.tree1_.geometry.colorData.SetRedForAll(0.2);
+  App.scene.tree1_.geometry.colorData.SetGreenForAll(0.5);
+
+  App.scene.tree1_.geometry.setSpitz(5);
+  App.scene.tree1_.position.y = 3.5;
+  App.scene.tree1_.rotation.roty = 90;
 
   App.scene.tree1_.instancedDraws.array_of_local_offset = [0, 0, 0];
-  App.scene.tree1_.instancedDraws.overrideDrawArraysInstance =  function(object) {
-
+  App.scene.tree1_.instancedDraws.overrideDrawArraysInstance = function (
+    object
+  ) {
     for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
-
-
-      object.instancedDraws.array_of_local_offset = [0 , 0, 18];
+      object.instancedDraws.array_of_local_offset = [0, 0, 18];
       mat4.translate(
         object.mvMatrix,
         object.mvMatrix,
@@ -107,42 +113,35 @@ export var runThis = world => {
       );
       world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
 
-      world.GL.gl.drawArrays(
-        world.GL.gl.TRIANGLE, 0,
-        object.glDrawElements.numberOfIndicesRender,
-        // world.GL.gl.UNSIGNED_SHORT,
-      );
-
-
-     //  object.instancedDraws.array_of_local_offset = [18 * S2.GET() , 0, 0];
+      object.instancedDraws.array_of_local_offset = [18 * S1.GET(), 0, 0];
 
       for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
-/*
         mat4.translate(
           object.mvMatrix,
           object.mvMatrix,
           object.instancedDraws.array_of_local_offset
         );
-        world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix); */
+        world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
 
-
-
+        /* world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode],
+                                 object.glDrawElements.numberOfIndicesRender,
+                                 world.GL.gl.UNSIGNED_SHORT, 0); */
+        world.GL.gl.drawArrays(
+          world.GL.gl.TRIANGLE_STRIP,
+          0,
+          object.glDrawElements.numberOfIndicesRender
+        );
       }
     }
-
   };
-
-
-
 
   world.Add("pyramid", 3, "tree1");
   App.scene.tree1.instancedDraws.array_of_local_offset = [0, 0, 0];
-  App.scene.tree1.instancedDraws.overrideDrawArraysInstance = function(object) {
-
+  App.scene.tree1.instancedDraws.overrideDrawArraysInstance = function (
+    object
+  ) {
     for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
-
-
-      object.instancedDraws.array_of_local_offset = [0 , 0, 18];
+      object.instancedDraws.array_of_local_offset = [0, 0, 18];
       mat4.translate(
         object.mvMatrix,
         object.mvMatrix,
@@ -150,10 +149,9 @@ export var runThis = world => {
       );
       world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
 
-      object.instancedDraws.array_of_local_offset = [18 * S1.GET() , 0, 0];
-      
-      for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
+      object.instancedDraws.array_of_local_offset = [18 * S1.GET(), 0, 0];
 
+      for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
         mat4.translate(
           object.mvMatrix,
           object.mvMatrix,
@@ -166,21 +164,14 @@ export var runThis = world => {
           0,
           object.glDrawElements.numberOfIndicesRender
         );
- 
-
       }
     }
-
   };
 
   App.scene.tree1.geometry.colorData.SetRedForAll(0.1);
   App.scene.tree1.geometry.colorData.SetGreenForAll(0.6);
 
-  App.scene.tree1.geometry.setSpitz(3);
+  App.scene.tree1.geometry.setSpitz(5);
 
-  App.scene.tree1.position.y = 4.5;
- 
-
- 
-
+  App.scene.tree1.position.y = 8.5;
 };
