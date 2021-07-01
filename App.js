@@ -1,6 +1,6 @@
 
 import * as matrixEngine from "./index.js";
-import { runThis } from "./app/adding_color_cube.js";
+import { runThis } from "./apps/my_world";
 
 var world;
 var App = matrixEngine.App;
@@ -9,16 +9,17 @@ matrixEngine.Engine.load_shaders("shaders/shaders.html");
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function (e) {
+
     navigator.serviceWorker.register("worker.js");
+
+    App.ready = true;
+    matrixEngine.Engine.initApp(webGLStart);
+
   });
 } else {
   console.warn("Matrix Engine: No support for web workers in this browser.");
 }
 
-window.addEventListener('load', function(e) {
-  App.ready = true;
-  matrixEngine.Engine.initApp(webGLStart);
-});
 
 function webGLStart() {
 
@@ -30,7 +31,7 @@ function webGLStart() {
   window.App = App;
 
   // If you need this , you can prolong loading time
-  setTimeout(() => { runThis(world) }, 100);
+  setTimeout(() => { runThis(world) }, 250);
 
   // Run example
   // runThis(world);

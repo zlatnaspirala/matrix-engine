@@ -1,7 +1,7 @@
 {
   "name": "matrix-engine",
-  "version": "1.2.1",
-  "description": "Improve import export adding bundle build options with browserify, PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
+  "version": "1.2.2",
+  "description": "Adding uglify-js build options, Improve import export adding bundle build options with browserify, PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -10,8 +10,16 @@
     "build.examples": "browserify App-Examples.js -p esmify > builds/examples.me.js",
     "build.app": "browserify App.js -p esmify > builds/app.js",
     "build.lib": "browserify entry-lib-build.js -p esmify > builds/me.lib.js",
+    "build.app.ugly": "browserify App.js -p esmify | uglifyjs -cm > builds/app.ugly.js",
+    "build.all": "npm run build.examples | npm run build.app | npm run build.lib | npm run build.app.ugly",
+    "install.dep": "npm install -g uglify-js browserify",
     "test": "echo \"no build tradicional view\" && exit 1"
   },
+  "dependencies": {
+    "browser-resolve": "^2.0.0",
+    "esmify": "^2.1.1"
+  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zlatnaspirala/webgl2-glmatrix2-engine.git"
@@ -34,12 +42,5 @@
   "bugs": {
     "url": "https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/issues"
   },
-  "homepage": "https://github.com/zlatnaspirala/webgl2-glmatrix2-engine#readme",
-  "dependencies": {
-    "browser-resolve": "^2.0.0",
-    "esmify": "^2.1.1"
-  },
-  "devDependencies": {
-    "browserify": "^17.0.0"
-  }
+  "homepage": "https://github.com/zlatnaspirala/webgl2-glmatrix2-engine#readme"
 }

@@ -7,11 +7,13 @@ var App = {
   logs : false ,
   draw_interval : 10,
   antialias : false,
-  camera : { viewAngle : 45 ,
+  camera : { 
+    viewAngle : 45 ,
     nearViewpoint : 0.1 ,
     farViewpoint : 1000 ,
     edgeMarginValue : 100 ,
-    FirstPersonController : false
+    FirstPersonController : false,
+    speedAmp: 0.5 
   },
   textures : [] ,                         // readOnly in manifest
   tools : {},                             // readOnly in manifest

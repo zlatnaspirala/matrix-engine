@@ -33,6 +33,15 @@ Code access:
 const QueryString = matrixEngine.utility.QueryString;
 ```
 
+### Install dependencies
+ - uglify-js
+ - browserify
+```js
+  npm run install.dep
+```
+@Note: For windows users maybe you will need to
+
+
 ### Build Application bundle script
 - Before any operation install npm deps:
 ```js
@@ -63,6 +72,15 @@ Now navigate to the `examples-build.html` page.
 ```
 Now navigate to the `me-library.html` page , represent empty page with loaded `matrix-engine`.
 
+- Build with uglify
+```js
+  build.app.ugly
+```
+
+- Build ALL
+```js
+  build.all
+```
 
 ### List of examples:
 
@@ -304,3 +322,4 @@ https://maximumroulette.com/webgl2/examples.html
    Creative Commons Attribution 3.0
    http://www.blendswap.com/users/view/AndresCuccaro
 
+ - https://freestocktextures.com/texture/bark-wood-plant,122.html

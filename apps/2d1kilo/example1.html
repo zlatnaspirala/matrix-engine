@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--html manifest=""  -->
+<html>
+<head>
+<title>Texture surface</title>
+<intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS" > </intercept-url>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<script type="text/javascript">
+var SCRIPT = {
+  SCRIPT_ID: 0,
+  SINHRO_LOAD: {},
+  LOAD: function addScript(src) {
+    var s = document.createElement('script');
+    s.onload = function () {
+
+      SCRIPT.SCRIPT_ID++;
+      console.log("Script id loaded : " + SCRIPT.SCRIPT_ID + " with src : " + this.src + ">>>>>>>>>" + this.src);
+
+      var filename = this.src.substring(this.src.lastIndexOf("/") + 1, this.src.lastIndexOf("."));
+      //console.log(filename)
+      filename = filename.replace(".", "_");
+      eval('try{SCRIPT.SINHRO_LOAD._' + filename + '(s)}catch(e){}');
+
+    };
+    s.setAttribute('src', src);
+    document.body.appendChild(s);
+  }
+};
+
+var SYS = {};
+SYS.SCRIPT = SCRIPT;
+
+</script>
+</head>
+
+<body style="margin:0;padding:0;border:none;background-color:black;">
+<canvas tabindex='1' width="512" height="512" id="HELLO_WORLD"></canvas>
+<script type="text/javascript">
+var canvas = document.getElementById("HELLO_WORLD");
+var a = new Image();
+a.src = "data:image/png;base64,cz05MDtvPVtdO189TWF0aDtyPV8ucmFuZG9tO2Y9Xy5mbG9vcjthLndpZHRoPWEuaGVpZ2h0PXg9eT0zMDA7aD14LzI7az0xMyxsPTA7Zm9yKGk9cztpLS07KW8ucHVzaCh7WDpoLFk6aCxpOjB9KTtmdW5jdGlvbiBtKGkpe2MuZmlsbFN0eWxlPSJyZ2JhKDAsMCwwLC4xKSI7aWYobCsrJTQ9PTApYy5maWxsUmVjdCgwLDAseCx5KTtjLmZpbGxTdHlsZT0icmdiYSgyNTUsMjU1LDAsMC4yKSI7Yy5mb250PSdib2xkIDk5cHggQXJpYWwnO2MuZmlsbFRleHQoJ+C4vycsMTE1K3IoKSo0LDE3OCtyKCkqNCk7Yy5mb250PScyOHB4IENvdXJpZXInO2MuZmlsbFRleHQoJ01hZ2ljJywxMDcrcigpKjQsOTArcigpKjQpO2MuZmlsbFRleHQoJ01vbmV5JywxMDcrcigpKjQsMjA4K3IoKSo0KTtjLmZvbnQ9JzEycHggQ291cmllcic7Yy5maWxsU3R5bGU9WyIjZmZmIiwiI2Y5MyIsIiM4ZjgiLCIjOWFmIiwiI2FhYSJdW2YoaS8yMDAwJTUpXTtjLmZpbGxUZXh0KFsnMUExelAxZVA1UUdlZmkyRE1QVGZUTDVTTG12N0RpdmZOYScsJzFYUFRnRFJoTjhSRm56bmlXQ2Rkb2JEOWlLWmF0cnZINCcsJzFIQjVYTUxtekZWajhBTGo2bWZCc2JpZlJvRDRtaVkzNnYnLCcxRUJIQTFja1VXek5LTjdCTWZEd0dUeDZHS0ViQURVb3pYJywnMTVpcnA5bnRiUDU0bXZ6anNTbkJuVGN1eVVKQlY1ZHB3RycsXVtmKGkvMjAwMCU1KV0sMjcsMjgwKTtmb3Ioaj1zO2otLTspe3A9b1tqXTtpZihwLmkrKyVrPDEpZm9yKHE9NztwLmQ9ZihyKCkqNCkscS0tOylpZihjLmdldEltYWdlRGF0YShwLlgrKHAuZC0yKSUyLHAuWSsocC5kLTEpJTIsMSwxKS5kYXRhWzBdPDcpYnJlYWs7aWYocC5YPDB8fHAuWD49eClwLlg9aDtpZihwLlk8MHx8cC5ZPj15KXAuWT1oO3AuWCs9KHAuZC0yKSUyO3AuWSs9KHAuZC0xKSUyO2MuZmlsbFN0eWxlPSIjZmYwIjtjLmZpbGxSZWN0KHAuWCxwLlksMSwxKX1yZXF1ZXN0QW5pbWF0aW9uRnJhbWUobSl9bSgp";
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+var c = canvas.getContext("2d");
+s=90;o=[];_=Math;r=_.random;f=_.floor;
+a.width=a.height=x=y=canvas.height;h=x/2;k=13,l=0;
+  for(i=s;i--;) o.push({X:h,Y:h,i:0});
+    function m(i) {
+      // darken
+      c.fillStyle="rgba(0,0,0,.1)";
+      if(l++%4==0) c.fillRect(0,0,x,y);
+      //logo
+      c.fillStyle="rgba(255,255,0,0.2)";
+      c.font='bold 99px Arial';
+      c.fillText('฿', 115+r()*4, 178+r()*4);
+      c.font='28px Courier';
+      c.fillText('Magic', 107+r()*4, 90+r()*4);
+      c.fillText('Money', 107+r()*4, 208+r()*4);
+
+      c.font='12px Courier';
+      c.fillStyle=["#fff","#f93","#8f8","#9af","#aaa"][f(i/2000%5)];
+      c.fillText(['1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa', // genesis
+                  '1XPTgDRhN8RFnzniWCddobD9iKZatrvH4',  // pizza
+                  '1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v', // wikileaks
+                  '1EBHA1ckUWzNKN7BMfDwGTx6GKEbADUozX', // rich person
+                  '15irp9ntbP54mvzjsSnBnTcuyUJBV5dpwG', // cherouvim <= donate here!!!1
+             ][f(i/2000%5)], 27, 280);
+
+      // points
+    for(j=s;j--;){
+      p=o[j];
+      // collision detection
+      if(p.i++%k<1)
+      for(q=7;p.d=f(r()*4),q--;) if (c.getImageData(p.X+(p.d-2)%2,p.Y+(p.d-1)%2,1,1).data[0]<7) break;
+
+      if (p.X<0||p.X>=x)p.X=h;
+      if (p.Y<0||p.Y>=y)p.Y=h;
+
+      // 0 -2 ^
+      // 1 -1 <
+      // 2 0 \/
+      // 3 1 >
+      p.X+=(p.d-2)%2;
+      p.Y+=(p.d-1)%2;
+      c.fillStyle="#ff0";
+      c.fillRect(p.X,p.Y, 1, 1);
+     }
+
+    requestAnimationFrame(m)
+    }
+    m()
+
+</script>
+</body>
+</html>

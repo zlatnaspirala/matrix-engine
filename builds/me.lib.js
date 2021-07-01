@@ -1277,10 +1277,10 @@ camera.setCamera = function (object) {
 
 
   if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
-    camera.speed = 0.03;
+    camera.speed = _manifest.default.camera.speedAmp;
   } else if (keyboardPress.getKeyStatus(40) || keyboardPress.getKeyStatus(83)) {
     /* Down Key  or S                            */
-    camera.speed = -0.03;
+    camera.speed = -_manifest.default.camera.speedAmp;
   } else {
     camera.speed = 0;
   }
@@ -2349,9 +2349,9 @@ _manifest.default.operation.draws.cube = function (object) {
   // world.GL.gl.drawElements( world.GL.gl.TRIANGLES, object.vertexIndexBuffer.numItems,  world.GL.gl.UNSIGNED_SHORT, 0);
 
 
-  _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0); // object.instancedDraws.overrideDrawArraysInstance(object);
+  _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
 
-
+  object.instancedDraws.overrideDrawArraysInstance(object);
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
 }; //##############################################
 // PIRAMIDE
@@ -2472,6 +2472,7 @@ _manifest.default.operation.draws.square = function (object) {
 
   _matrixWorld.world.GL.gl.drawArrays(_matrixWorld.world.GL.gl[object.glDrawElements.mode], 0, object.vertexPositionBuffer.numItems);
 
+  object.instancedDraws.overrideDrawArraysInstance(object);
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
 }; //##############################################
 // TRIANGLE
@@ -2523,6 +2524,7 @@ _manifest.default.operation.draws.triangle = function (object) {
 
   _matrixWorld.world.GL.gl.drawArrays(_matrixWorld.world.GL.gl[object.glDrawElements.mode], 0, object.vertexPositionBuffer.numItems);
 
+  object.instancedDraws.overrideDrawArraysInstance(object);
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
 }; //##############################################
 // OBJ MESH
@@ -2843,7 +2845,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(1), parseFloat(0), parseFloat(0));
       }
     }
-  } //TEXTURES
+  } // TEX
 
 
   if (object.vertexTexCoordBuffer) {
@@ -2929,6 +2931,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
 
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
 
+  object.instancedDraws.overrideDrawArraysInstance(object);
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
 }; //##############################################
 // sphere
@@ -3129,6 +3132,7 @@ _manifest.default.operation.draws.sphere = function (object) {
 
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
 
+  object.instancedDraws.overrideDrawArraysInstance(object);
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
 };
 
@@ -6372,7 +6376,8 @@ var App = {
     nearViewpoint: 0.1,
     farViewpoint: 1000,
     edgeMarginValue: 100,
-    FirstPersonController: false
+    FirstPersonController: false,
+    speedAmp: 0.5
   },
   textures: [],
   // readOnly in manifest
