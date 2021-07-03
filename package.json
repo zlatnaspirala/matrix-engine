@@ -1,7 +1,7 @@
 {
   "name": "matrix-engine",
-  "version": "1.2.2",
-  "description": "Adding uglify-js build options, Improve import export adding bundle build options with browserify, PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
+  "version": "1.2.4",
+  "description": "Added Adding uglify-js build options, Improve import export adding bundle build options with browserify, PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -35,7 +35,9 @@
     "matrix",
     "ECMA6",
     "no-build",
-    "browserify"
+    "browserify",
+    "matrix-engine",
+    "alternative"
   ],
   "author": "Nikola Lukic @zlatnaspirala",
   "license": "MIT",
