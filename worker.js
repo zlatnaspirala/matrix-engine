@@ -12,7 +12,7 @@ var cacheVersion = 1;
 
 var cacheName = 'static-files-v1';
 var currentCache = {
-  offline: 'offline-cache' + cacheVersion,
+  offline: 'offline-cache' + cacheVersion
 };
 const offlineUrl = 'offline.html';
 
@@ -40,7 +40,7 @@ self.addEventListener('install', function (event) {
         'app.html',
         'query.html',
         'query-build.html',
-        'examples.html',
+        'examples.html'
         // "res/videos/Epiclogue.mp3"
       ]);
     })
@@ -104,11 +104,6 @@ const fireAddToHomeScreenImpression = (event) => {
   self.removeEventListener('beforeinstallprompt', fireAddToHomeScreenImpression);
 };
 self.addEventListener('beforeinstallprompt', fireAddToHomeScreenImpression);
-
-// Track web app install by user
-self.addEventListener('appinstalled', (event) => {
-  fireTracking('PWA app installed by user!!! Hurray');
-});
 
 //Track from where your web app has been opened/browsed
 self.addEventListener('load', () => {

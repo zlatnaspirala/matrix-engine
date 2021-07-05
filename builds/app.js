@@ -1111,6 +1111,7 @@ SYS.MOUSE = {
   BUTTON_PRESSED: '',
   ON_LEFT_BTN_PRESSED: function () {},
   ON_RIGHT_BTN_PRESSED: function () {},
+  ON_MID_BTN_PRESSED: function () {},
   MOUSE_MOVING: false
 };
 SYS.DEBUG = new _utility.LOG();
@@ -1357,18 +1358,17 @@ camera.setCamera = function (object) {
   } else {
     camera.speed = 0;
   }
-  /* Page Up
-    if (keyboardPress.getKeyStatus(33)) {
+  /*
+  // PAGE UP
+  if (keyboardPress.getKeyStatus(33)) {
     camera.pitchRate = 100;
-    }
-    /* Page Down
-    else if (keyboardPress.getKeyStatus(34)) {
+  }
+  // Page Down
+  else if (keyboardPress.getKeyStatus(34)) {
     camera.pitchRate = -100;
-    }
-    else {
+  } else {
     camera.pitchRate = 0;
-    }
-     */
+  } */
 
   /* Calculate yaw, pitch and roll(x,y,z) */
 
@@ -1389,13 +1389,16 @@ camera.setCamera = function (object) {
   camera.pitchRate = 0;
 };
 
+let addBtn = document.querySelector('.button1');
+let regularBtn = document.querySelector('.button2');
+
 if (_manifest.default.pwa.addToHomePage === true) {
   /**
    * @description
    */
-  let deferredPrompt;
-  const addBtn = document.querySelector('.button1');
-  const regularBtn = document.querySelector('.button2'); // addBtn.style.display = 'none';
+  let deferredPrompt; //addBtn = document.querySelector('.button1');
+  //regularBtn = document.querySelector('.button2');
+  // addBtn.style.display = 'none';
 
   window.addEventListener('beforeinstallprompt', e => {
     // Prevent Chrome 67 and earlier from automatically showing the prompt
@@ -1425,6 +1428,11 @@ if (_manifest.default.pwa.addToHomePage === true) {
       });
     });
   });
+} else {
+  try {
+    addBtn.style.display = 'none';
+    regularBtn.style.display = 'none';
+  } catch (err) {}
 }
 
 },{"../program/manifest":15,"./utility":13}],6:[function(require,module,exports){
@@ -4900,7 +4908,6 @@ function modifyFrames(newFrames) {
   exports.frames = frames = newFrames;
 }
 
-;
 var world = {};
 exports.world = world;
 var updateFrames = 0;
@@ -4928,7 +4935,7 @@ function defineworld(cavnas) {
   world.GL = new _engine.defineWebGLWorld(canvas);
   /*  Exit if WEBGL could not initialize            */
 
-  if ("undefined" == typeof world.GL.gl) {
+  if ('undefined' == typeof world.GL.gl) {
     // console.log("  Exception in Base world creation");
     delete this.GL;
     delete this;
@@ -5067,23 +5074,23 @@ function defineworld(cavnas) {
       object.vertexIndexBuffer    =  allocated during buffering
     */
     // console.info("Fill world with:" + filler + " of size:" + size);
-    if ("triangle" == filler) {
+    if ('triangle' == filler) {
       var triangleObject = new Object();
 
-      if (typeof nameUniq != "undefined") {
+      if (typeof nameUniq != 'undefined') {
         triangleObject.name = nameUniq;
       } else {
-        triangleObject.name = "triangle_instance_" + Math.floor(Math.random() * 100000 + 1);
+        triangleObject.name = 'triangle_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
 
       triangleObject.streamTextures = null;
       triangleObject.type = filler;
       triangleObject.size = size;
       triangleObject.sides = 3;
-      triangleObject.shaderProgram = this.initShaders(this.GL.gl, filler + "-shader-fs", filler + "-shader-vs");
+      triangleObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       triangleObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       triangleObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
-      triangleObject.color = new _matrixGeometry.GeoOfColor("triangle");
+      triangleObject.color = new _matrixGeometry.GeoOfColor('triangle');
       triangleObject.mvMatrix = mat4.create();
       triangleObject.geometry = new _matrixGeometry.TriangleVertex(triangleObject);
       triangleObject.glBlend = new _utility._glBlend();
@@ -5097,23 +5104,23 @@ function defineworld(cavnas) {
         }
     }
 
-    if ("square" == filler) {
+    if ('square' == filler) {
       var squareObject = new Object();
 
-      if (typeof nameUniq != "undefined") {
+      if (typeof nameUniq != 'undefined') {
         squareObject.name = nameUniq;
       } else {
-        squareObject.name = "square_instance_" + Math.floor(Math.random() * 100000 + 1);
+        squareObject.name = 'square_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
 
       squareObject.streamTextures = null;
       squareObject.type = filler;
       squareObject.size = size;
       squareObject.sides = 4;
-      squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + "-shader-fs", filler + "-shader-vs");
+      squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       squareObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       squareObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
-      squareObject.color = new _matrixGeometry.GeoOfColor("4x4");
+      squareObject.color = new _matrixGeometry.GeoOfColor('4x4');
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
       squareObject.glBlend = new _utility._glBlend();
@@ -5128,7 +5135,7 @@ function defineworld(cavnas) {
         this.bufferSquare(squareObject);
         squareObject.glDrawElements = new _utility._DrawElements(squareObject.vertexColorBuffer.numItems); // NEED TO LOOK BETTER
 
-        squareObject.glDrawElements.mode = "TRIANGLE_STRIP"; //ONLY FOR SQUARE
+        squareObject.glDrawElements.mode = 'TRIANGLE_STRIP'; //ONLY FOR SQUARE
 
         this.contentList[this.contentList.length] = squareObject;
         _manifest.default.scene[squareObject.name] = squareObject;
@@ -5136,14 +5143,14 @@ function defineworld(cavnas) {
       }
     }
 
-    if ("squareTex" == filler) {
+    if ('squareTex' == filler) {
       // eslint-disable-next-line no-redeclare
       var squareObject = new Object();
 
-      if (typeof nameUniq != "undefined") {
+      if (typeof nameUniq != 'undefined') {
         squareObject.name = nameUniq;
       } else {
-        squareObject.name = "square_instance_" + Math.floor(Math.random() * 100000 + 1);
+        squareObject.name = 'square_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
 
       squareObject.streamTextures = null;
@@ -5162,35 +5169,35 @@ function defineworld(cavnas) {
         lightingDirection: new _matrixGeometry.COLOR(1, 1, 0)
       };
 
-      if (typeof texturesPaths !== "undefined") {
-        if (typeof texturesPaths == "string") {
+      if (typeof texturesPaths !== 'undefined') {
+        if (typeof texturesPaths == 'string') {
           //alert('path is string')
           squareObject.texture = this.initTexture(this.GL.gl, texturesPaths);
           squareObject.textures = [];
           squareObject.textures[0] = squareObject.texture;
-        } else if (typeof texturesPaths == "object") {
+        } else if (typeof texturesPaths == 'object') {
           // console.info("texturesPaths is object...");
           squareObject.textures = [];
           squareObject.texture = true; // cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler+"-shader-fs", filler+"-shader-vs");
 
-          (0, _engine.RegenerateShader)("" + filler + "-shader-fs", texturesPaths.source.length, texturesPaths.mix_operation);
+          (0, _engine.RegenerateShader)('' + filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             squareObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
           }
 
-          squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + "-shader-fs", filler + "-shader-vs");
+          squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
         } else {
-          alert("Exec add obj : texturePaths : path is unknow typeof");
+          alert('Exec add obj : texturePaths : path is unknow typeof');
         }
       } else {
         // no textures , use default single textures
-        squareObject.texture = this.initTexture(this.GL.gl, "res/images/icon2.jpg");
+        squareObject.texture = this.initTexture(this.GL.gl, 'res/images/icon2.jpg');
         squareObject.textures[0] = squareObject.texture;
-        squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + "-shader-fs", filler + "-shader-vs");
+        squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       }
 
-      squareObject.LightMap = new _matrixGeometry.GeoOfColor("square");
+      squareObject.LightMap = new _matrixGeometry.GeoOfColor('square');
       squareObject.custom = new Object();
       squareObject.custom.gl_texture = null;
       squareObject.instancedDraws = {
@@ -5210,20 +5217,20 @@ function defineworld(cavnas) {
       }
     }
 
-    if ("cube" == filler) {
+    if ('cube' == filler) {
       var cubeObject = new Object();
 
-      if (typeof nameUniq != "undefined") {
+      if (typeof nameUniq != 'undefined') {
         cubeObject.name = nameUniq;
       } else {
-        cubeObject.name = "cube_instance_" + Math.floor(Math.random() * 100000 + 1);
+        cubeObject.name = 'cube_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
 
       cubeObject.streamTextures = null;
       cubeObject.type = filler;
       cubeObject.size = size;
       cubeObject.sides = 12;
-      cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + "-shader-fs", filler + "-shader-vs");
+      cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       cubeObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
       cubeObject.color = true; // cubeObject.color = new GeoOfColor("square");
@@ -5247,13 +5254,13 @@ function defineworld(cavnas) {
       }
     }
 
-    if ("sphereTex" == filler || "sphereLightTex" == filler) {
+    if ('sphereTex' == filler || 'sphereLightTex' == filler) {
       var sphereObject = new Object();
 
-      if (typeof nameUniq != "undefined") {
+      if (typeof nameUniq != 'undefined') {
         sphereObject.name = nameUniq;
       } else {
-        sphereObject.name = "sphereObject_instance_" + Math.floor(Math.random() * 100000 + 1);
+        sphereObject.name = 'sphereObject_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
 
       sphereObject.streamTextures = null;
@@ -5270,59 +5277,59 @@ function defineworld(cavnas) {
       };
       sphereObject.textures = [];
 
-      if (typeof texturesPaths !== "undefined") {
-        if (typeof texturesPaths == "string") {
+      if (typeof texturesPaths !== 'undefined') {
+        if (typeof texturesPaths == 'string') {
           //alert('path is string')
           sphereObject.texture = this.initTexture(this.GL.gl, texturesPaths);
           sphereObject.textures.push(cubeObject.texture);
-        } else if (typeof texturesPaths == "object") {
+        } else if (typeof texturesPaths == 'object') {
           // console.log("path is object");
           sphereObject.textures = [];
           sphereObject.texture = true; // cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler+"-shader-fs", filler+"-shader-vs");
 
-          (0, _engine.RegenerateShader)(filler + "-shader-fs", texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             sphereObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
           }
 
-          sphereObject.shaderProgram = this.initShaders(this.GL.gl, filler + "-shader-fs", filler + "-shader-vs");
+          sphereObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
         } else {
-          alert("Exec add obj : texturePaths : path is unknow typeof");
+          alert('Exec add obj : texturePaths : path is unknow typeof');
         }
       } else {
         // no textures , use default single textures
-        sphereObject.texture = this.initTexture(this.GL.gl, "res/images/texture_spiral1.png");
+        sphereObject.texture = this.initTexture(this.GL.gl, 'res/images/texture_spiral1.png');
         sphereObject.textures.push(sphereObject.texture);
         sphereObject.texture = true;
-        sphereObject.shaderProgram = this.initShaders(this.GL.gl, filler + "-shader-fs", filler + "-shader-vs");
+        sphereObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       }
 
       sphereObject.changeMaterial = function (texturesPaths) {
-        (0, _engine.RegenerateShader)(this.type + "-shader-fs", texturesPaths.source.length, texturesPaths.mix_operation);
+        (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
 
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
         }
 
-        this.shaderProgram = world.initShaders(world.GL.gl, this.type + "-shader-fs", this.type + "-shader-vs");
+        this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
       };
 
       sphereObject.changeShader = function (texturesPaths, custom_code) {
-        RegenerateCustomShader(this.type + "-shader-fs", texturesPaths.source.length, texturesPaths.mix_operation, custom_code);
+        RegenerateCustomShader(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, custom_code);
 
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
         }
 
-        this.shaderProgram = world.initShaders(world.GL.gl, this.type + "-shader-fs", this.type + "-shader-vs");
+        this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
       };
 
       sphereObject.mvMatrix = mat4.create(); //sphereObject.LightMap   = new GeoOfColor("cube light");
 
       sphereObject.LightMap = undefined;
 
-      if (typeof mesh_ !== "undefined") {
+      if (typeof mesh_ !== 'undefined') {
         sphereObject.latitudeBands = mesh_.latitudeBands;
         sphereObject.longitudeBands = mesh_.longitudeBands;
         sphereObject.radius = mesh_.radius;
@@ -5351,20 +5358,20 @@ function defineworld(cavnas) {
       }
     }
 
-    if ("pyramid" == filler) {
+    if ('pyramid' == filler) {
       var pyramidObject = new Object();
 
-      if (typeof nameUniq != "undefined") {
+      if (typeof nameUniq != 'undefined') {
         pyramidObject.name = nameUniq;
       } else {
-        pyramidObject.name = "pyramid_instance_" + Math.floor(Math.random() * 100000 + 1);
+        pyramidObject.name = 'pyramid_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
 
       pyramidObject.streamTextures = null;
       pyramidObject.type = filler;
       pyramidObject.size = size;
       pyramidObject.sides = 8;
-      pyramidObject.shaderProgram = this.initShaders(this.GL.gl, filler + "-shader-fs", filler + "-shader-vs");
+      pyramidObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       pyramidObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       pyramidObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0); // pyramidObject.color     = new GeoOfColor ("Piramide4");
 
@@ -5388,23 +5395,23 @@ function defineworld(cavnas) {
       }
     }
 
-    if ("obj" == filler) {
+    if ('obj' == filler) {
       var objObject = new Object();
 
-      if (typeof nameUniq != "undefined") {
+      if (typeof nameUniq != 'undefined') {
         objObject.name = nameUniq;
       } else {
-        objObject.name = "obj_instance_" + Math.floor(Math.random() * 100000 + 1);
+        objObject.name = 'obj_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
 
       objObject.streamTextures = null;
       objObject.type = filler;
       objObject.size = size;
       objObject.sides = 8;
-      objObject.shaderProgram = this.initShaders(this.GL.gl, filler + "-shader-fs", filler + "-shader-vs");
+      objObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       objObject.position = new _matrixGeometry.Position(0, -5, -8.0);
       objObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
-      objObject.color = new _matrixGeometry.GeoOfColor("4x4"); // custom textures
+      objObject.color = new _matrixGeometry.GeoOfColor('4x4'); // custom textures
 
       objObject.custom = new Object();
       objObject.custom.gl_texture = null;
@@ -5416,53 +5423,53 @@ function defineworld(cavnas) {
         lightingDirection: new _matrixGeometry.COLOR(0, 1, 0)
       };
 
-      if (typeof texturesPaths !== "undefined") {
-        if (typeof texturesPaths == "string") {
+      if (typeof texturesPaths !== 'undefined') {
+        if (typeof texturesPaths == 'string') {
           objObject.texture = this.initTexture(this.GL.gl, texturesPaths);
           objObject.textures = [];
           objObject.textures_texParameteri = []; //new
 
           objObject.textures[0] = objObject.texture;
-        } else if (typeof texturesPaths == "object") {
+        } else if (typeof texturesPaths == 'object') {
           // console.info("path is object");
           objObject.textures = [];
           objObject.textures_texParameteri = []; //new
 
           objObject.texture = true;
-          (0, _engine.RegenerateShader)(filler + "-shader-fs", texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             objObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
-            objObject.textures_texParameteri.push(new _utility._glTexParameteri("TEXTURE_2D", "TEXTURE_MAG_FILTER", "LINEAR"));
+            objObject.textures_texParameteri.push(new _utility._glTexParameteri('TEXTURE_2D', 'TEXTURE_MAG_FILTER', 'LINEAR'));
           }
 
-          objObject.shaderProgram = this.initShaders(this.GL.gl, filler + "-shader-fs", filler + "-shader-vs");
+          objObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
         } else {// console.warn("Exec add obj : texturePaths : path is unknow typeof");
         }
       } else {
         // no textures , use default single textures
         //objObject.texture = undefined;
-        objObject.texture = this.initTexture(this.GL.gl, "res/images/black_white.png");
+        objObject.texture = this.initTexture(this.GL.gl, 'res/images/black_white.png');
         objObject.textures = [];
         objObject.textures[0] = objObject.texture;
       }
 
-      objObject.LightMap = new _matrixGeometry.GeoOfColor("square");
+      objObject.LightMap = new _matrixGeometry.GeoOfColor('square');
 
       objObject.changeMaterial = function (texturesPaths) {
-        (0, _engine.RegenerateShader)(this.type + "-shader-fs", texturesPaths.source.length, texturesPaths.mix_operation);
+        (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
 
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
         }
 
-        this.shaderProgram = world.initShaders(world.GL.gl, this.type + "-shader-fs", this.type + "-shader-vs");
+        this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
       };
 
       objObject.mvMatrix = mat4.create(); /// objObject.mesh     = App.meshes.skeleton;
       // eslint-disable-next-line valid-typeof
 
-      if (typeof animationConstruct_ == "undefined" || typeof animationConstruct_ == null) {
+      if (typeof animationConstruct_ == 'undefined' || typeof animationConstruct_ == null) {
         objObject.animation = null;
       } else {
         objObject.animation = {
@@ -5485,14 +5492,14 @@ function defineworld(cavnas) {
       }
     }
 
-    if ("cubeTex" == filler || "cubeLightTex" == filler) {
+    if ('cubeTex' == filler || 'cubeLightTex' == filler) {
       // eslint-disable-next-line no-redeclare
       var cubeObject = new Object();
 
-      if (typeof nameUniq != "undefined") {
+      if (typeof nameUniq != 'undefined') {
         cubeObject.name = nameUniq;
       } else {
-        cubeObject.name = "cube_instance_" + Math.floor(Math.random() * 100000 + 1);
+        cubeObject.name = 'cube_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
 
       cubeObject.streamTextures = null;
@@ -5511,52 +5518,52 @@ function defineworld(cavnas) {
       cubeObject.custom = new Object();
       cubeObject.custom.gl_texture = null;
 
-      if (typeof texturesPaths !== "undefined") {
-        if (typeof texturesPaths == "string") {
+      if (typeof texturesPaths !== 'undefined') {
+        if (typeof texturesPaths == 'string') {
           //alert('path is string')
           cubeObject.texture = this.initTexture(this.GL.gl, texturesPaths);
           cubeObject.textures.push(cubeObject.texture);
-        } else if (typeof texturesPaths == "object") {
+        } else if (typeof texturesPaths == 'object') {
           // console.log("path is object");
           cubeObject.textures = [];
           cubeObject.texture = true; // cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler+"-shader-fs", filler+"-shader-vs");
 
-          (0, _engine.RegenerateShader)(filler + "-shader-fs", texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             cubeObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
           }
 
-          cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + "-shader-fs", filler + "-shader-vs");
+          cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
         } else {// console.warn("Exec add obj : texturePaths : path is unknow typeof");
         }
       } else {
         // no textures , use default single textures
-        cubeObject.texture = this.initTexture(this.GL.gl, "res/images/texture_spiral1.png");
+        cubeObject.texture = this.initTexture(this.GL.gl, 'res/images/texture_spiral1.png');
         cubeObject.textures.push(cubeObject.texture);
         cubeObject.texture = true;
-        cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + "-shader-fs", filler + "-shader-vs");
+        cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       }
 
       cubeObject.changeMaterial = function (texturesPaths) {
-        (0, _engine.RegenerateShader)(this.type + "-shader-fs", texturesPaths.source.length, texturesPaths.mix_operation);
+        (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
 
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
         }
 
-        this.shaderProgram = world.initShaders(world.GL.gl, this.type + "-shader-fs", this.type + "-shader-vs");
+        this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
       };
 
       cubeObject.mvMatrix = mat4.create();
-      cubeObject.LightMap = new _matrixGeometry.GeoOfColor("cube light");
+      cubeObject.LightMap = new _matrixGeometry.GeoOfColor('cube light');
       cubeObject.geometry = new _matrixGeometry.CubeVertex(cubeObject);
       cubeObject.instancedDraws = {
         numberOfInstance: 10,
         array_of_local_offset: [12, 0, 0],
         overrideDrawArraysInstance: function (object_) {}
       };
-      console.log("ADDED"); //draws params
+      console.log('ADDED'); //draws params
 
       cubeObject.glBlend = new _utility._glBlend();
 
@@ -5570,13 +5577,13 @@ function defineworld(cavnas) {
       }
     }
 
-    if ("generatorTex" == filler || "generatorLightTex" == filler) {
+    if ('generatorTex' == filler || 'generatorLightTex' == filler) {
       var customObject = new Object();
 
-      if (typeof nameUniq != "undefined") {
+      if (typeof nameUniq != 'undefined') {
         customObject.name = nameUniq;
       } else {
-        customObject.name = "customObject_instance_" + Math.floor(Math.random() * 100000 + 1);
+        customObject.name = 'customObject_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
 
       customObject.streamTextures = null;
@@ -5593,50 +5600,50 @@ function defineworld(cavnas) {
       };
       customObject.textures = [];
 
-      if (typeof texturesPaths !== "undefined") {
-        if (typeof texturesPaths == "string") {
+      if (typeof texturesPaths !== 'undefined') {
+        if (typeof texturesPaths == 'string') {
           //alert('path is string')
           customObject.texture = this.initTexture(this.GL.gl, texturesPaths);
           customObject.textures.push(customObject.texture);
-        } else if (typeof texturesPaths == "object") {
+        } else if (typeof texturesPaths == 'object') {
           // console.log("path is object");
           customObject.textures = [];
           customObject.texture = true; // cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler+"-shader-fs", filler+"-shader-vs");
 
-          (0, _engine.RegenerateShader)("sphereLightTex" + "-shader-fs", texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
+          (0, _engine.RegenerateShader)('sphereLightTex' + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             customObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
           }
 
-          customObject.shaderProgram = this.initShaders(this.GL.gl, "sphereLightTex" + "-shader-fs", "sphereLightTex" + "-shader-vs"); //hard code
+          customObject.shaderProgram = this.initShaders(this.GL.gl, 'sphereLightTex' + '-shader-fs', 'sphereLightTex' + '-shader-vs'); //hard code
         } else {
-          alert("Exec add obj : texturePaths : path is unknow typeof");
+          alert('Exec add obj : texturePaths : path is unknow typeof');
         }
       } else {
         // no textures , use default single textures
-        customObject.texture = this.initTexture(this.GL.gl, "res/images/texture_spiral1.png");
+        customObject.texture = this.initTexture(this.GL.gl, 'res/images/texture_spiral1.png');
         customObject.textures.push(customObject.texture);
         customObject.texture = true;
-        customObject.shaderProgram = this.initShaders(this.GL.gl, "sphereLightTex" + "-shader-fs", "sphereLightTex" + "-shader-vs");
+        customObject.shaderProgram = this.initShaders(this.GL.gl, 'sphereLightTex' + '-shader-fs', 'sphereLightTex' + '-shader-vs');
       }
 
       customObject.changeMaterial = function (texturesPaths) {
-        (0, _engine.RegenerateShader)("sphereLightTex" + "-shader-fs", texturesPaths.source.length, texturesPaths.mix_operation);
+        (0, _engine.RegenerateShader)('sphereLightTex' + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
 
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
         } //this.shaderProgram = world.initShaders(world.GL.gl, this.type +"-shader-fs", this.type + "-shader-vs");
 
 
-        this.shaderProgram = world.initShaders(world.GL.gl, "sphereLightTex" + "-shader-fs", "sphereLightTex" + "-shader-vs");
+        this.shaderProgram = world.initShaders(world.GL.gl, 'sphereLightTex' + '-shader-fs', 'sphereLightTex' + '-shader-vs');
       };
 
       customObject.mvMatrix = mat4.create(); //sphereObject.LightMap   = new GeoOfColor("cube light");
 
       customObject.LightMap = undefined;
 
-      if (typeof mesh_ !== "undefined") {
+      if (typeof mesh_ !== 'undefined') {
         customObject.latitudeBands = mesh_.latitudeBands;
         customObject.longitudeBands = mesh_.longitudeBands;
         customObject.radius = mesh_.radius;
