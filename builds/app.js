@@ -1391,26 +1391,28 @@ camera.setCamera = function (object) {
 
 let addBtn = document.querySelector('.button1');
 let regularBtn = document.querySelector('.button2');
+regularBtn.addEventListener('click', () => {
+  addBtn.style.display = 'none';
+  regularBtn.style.display = 'none';
+}); // Track web app install by user
+
+document.addEventListener('appinstalled', event => {
+  console.log('PWA app installed by user!!! Hurray');
+});
 
 if (_manifest.default.pwa.addToHomePage === true) {
   /**
    * @description
+   * If we dont reach this scope then we have installed pwa.
    */
-  let deferredPrompt; //addBtn = document.querySelector('.button1');
-  //regularBtn = document.querySelector('.button2');
-  // addBtn.style.display = 'none';
-
+  let deferredPrompt;
   window.addEventListener('beforeinstallprompt', e => {
     // Prevent Chrome 67 and earlier from automatically showing the prompt
     e.preventDefault(); // Stash the event so it can be triggered later.
 
     deferredPrompt = e;
-    regularBtn.addEventListener('click', () => {
-      addBtn.style.display = 'none';
-      regularBtn.style.display = 'none';
-    }); // Update UI to notify the user they can add to home screen
-
     addBtn.style.display = 'block';
+    regularBtn.style.display = 'block';
     addBtn.addEventListener('click', () => {
       // hide our user interface that shows our A2HS button
       addBtn.style.display = 'none'; // Show the prompt
@@ -1420,8 +1422,11 @@ if (_manifest.default.pwa.addToHomePage === true) {
       deferredPrompt.userChoice.then(choiceResult => {
         if (choiceResult.outcome === 'accepted') {
           console.log('User accepted the A2HS prompt');
+          addBtn.style.display = 'none';
+          regularBtn.style.display = 'none';
         } else {
           console.log('User dismissed the A2HS prompt');
+          addBtn.style.display = 'none';
         }
 
         deferredPrompt = null;
@@ -6458,7 +6463,7 @@ exports.default = void 0;
 
 /* eslint-disable no-unused-vars */
 var App = {
-  name: "webgl2 experimental by default.",
+  name: "Matrix engine Manifest",
   version: "1.0.4",
   events: true,
   logs: false,
@@ -6476,9 +6481,9 @@ var App = {
   // readOnly in manifest
   tools: {},
   // readOnly in manifest
-  operation: new Object(),
+  operation: {},
   // readOnly in manifest
-  commonObject: new Object(),
+  commonObject: {},
   // readOnly in manifest
   dynamicBuffer: true,
   scene: {},
