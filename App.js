@@ -17,13 +17,19 @@ if ('serviceWorker' in navigator) {
   console.warn('Matrix Engine: No support for web workers in this browser.');
 }
 
-function webGLStart() {
-  matrixEngine.Engine.drawFPS();
+window.resizeGlPort = () => {
+
+ 
+}
+
+window.webGLStart = () => {
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
 
   // Make it global for dev - for easy console/debugger access
+  window.world = world;
   window.App = App;
+  window.runThis = runThis;
 
   // If you need this , you can prolong loading time
   setTimeout(() => {

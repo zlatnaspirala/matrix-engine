@@ -28,18 +28,21 @@ if ('serviceWorker' in navigator) {
   console.warn('Matrix Engine: No support for web workers in this browser.');
 }
 
-function webGLStart() {
-  matrixEngine.Engine.drawFPS();
+window.resizeGlPort = () => {};
+
+window.webGLStart = () => {
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw(); // Make it global for dev - for easy console/debugger access
 
-  window.App = App; // If you need this , you can prolong loading time
+  window.world = world;
+  window.App = App;
+  window.runThis = _all_variant_of_blending.runThis; // If you need this , you can prolong loading time
 
   setTimeout(() => {
     (0, _all_variant_of_blending.runThis)(world);
   }, 250); // Run example
   // runThis(world);
-}
+};
 
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
@@ -171,6 +174,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.modifyLooper = modifyLooper;
+exports.resizeView = resizeView;
 exports.initApp = initApp;
 exports.isReady = isReady;
 exports.load_shaders = load_shaders;
@@ -178,8 +182,6 @@ exports.loadHtmlPowerAsset = loadHtmlPowerAsset;
 exports.defineWebGLWorld = defineWebGLWorld;
 exports.updateFPS = updateFPS;
 exports.drawCanvas = drawCanvas;
-exports.drawFPS = drawFPS;
-exports.printf = printf;
 exports.degToRad = degToRad;
 exports.initiateFPS = initiateFPS;
 exports.onExit = onExit;
@@ -189,7 +191,7 @@ exports.SET_STREAM = SET_STREAM;
 exports.ACCESS_CAMERA = ACCESS_CAMERA;
 exports.VIDEO_TEXTURE = VIDEO_TEXTURE;
 exports.CANVAS2d_SURFACE_TEXTURE = CANVAS2d_SURFACE_TEXTURE;
-exports.RegenerateShader = exports.looper = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
+exports.webcamError = exports.RegenerateShader = exports.looper = exports.EVENTS_INSTANCE = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
 
 var _events = require("./events");
 
@@ -220,6 +222,8 @@ exports.totalTime = totalTime;
 exports.lastTime = lastTime;
 exports.ht = ht;
 exports.wd = wd;
+let EVENTS_INSTANCE = null;
+exports.EVENTS_INSTANCE = EVENTS_INSTANCE;
 let looper = 0;
 exports.looper = looper;
 
@@ -227,8 +231,7 @@ function modifyLooper(value) {
   exports.looper = looper = value;
 }
 
-function initApp(callback) {
-  /* Calculate Width and Height before rendering       */
+function resizeView() {
   exports.wd = wd = document.body.clientWidth - 4;
 
   if (document.body.clientHeight > document.documentElement.clientHeight) {
@@ -236,15 +239,23 @@ function initApp(callback) {
   } else {
     exports.ht = ht = document.documentElement.clientHeight - 4;
   }
+}
 
+function initApp(callback) {
+  /* Calculate Width and Height before rendering       */
+  resizeView();
   drawCanvas();
   window.canvas = document.getElementById('canvas');
 
-  if (_manifest.default.events == true) {
-    window['EVENTS_INSTANCE'] = new _events.EVENTS((0, _utility.E)('canvas'));
+  if (_manifest.default.events == true && EVENTS_INSTANCE === null) {
+    exports.EVENTS_INSTANCE = EVENTS_INSTANCE = new _events.EVENTS((0, _utility.E)('canvas'));
   }
 
-  callback();
+  if (typeof callback !== 'undefined') {
+    // E('canvas').webGLStartCallBack = callback;
+    window.webGLStartCallBack = callback;
+    callback();
+  }
 }
 
 function isReady() {
@@ -318,10 +329,7 @@ function defineWebGLWorld(cavnas) {
   };
 
   return world;
-} //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-//* Update the frame rate FPS counter
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+} // Update the frame rate FPS counter
 
 
 function updateFPS(elements) {
@@ -344,26 +352,22 @@ function updateFPS(elements) {
 
 function drawCanvas() {
   // console.log("Init the canvas...");
-  // printf("<canvas id=\"canvas\" style=\"border: none;\" width=\"" + wd + "\" height=\"" + ht + "\"></canvas>");
   var canvas = document.createElement('canvas');
   canvas.id = 'canvas';
-  canvas.width = wd; // + "px";
 
-  canvas.height = ht; // + "px";
+  if (_manifest.default.resize.canvas == "full-screen") {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    _events.SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ');
+  } else {
+    canvas.width = window.innerHeight * _manifest.default.resize.aspectRatio;
+    canvas.height = window.innerHeight;
+
+    _events.SYS.DEBUG.LOG('SYS: aspect ration resize is active. ');
+  }
 
   document.body.append(canvas);
-}
-
-function drawFPS() {
-  printf('<button id="stopRender" type="button" >stopRender</button>'); // console.log("  Draw the FPS section");
-
-  printf('<font color = "white"><b id="fps"></b></font>');
-}
-/* Render the text as it is then and there C style   */
-
-
-function printf(text) {// // console.info("deplaced", text);
-  // document.writeln(text);
 }
 /* Degree to Radian converter                        */
 
@@ -391,11 +395,7 @@ window.cancelRequestAnimFrame = function () {
     window.clearTimeout(callback);
   };
 }(); //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 // Dispose off the dangling objects
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
@@ -672,12 +672,8 @@ function initShaders(gl, fragment, vertex) {
       return 0;
     }
   }
-} //##################################
-// END OF SHADERS DYNAMIC
-//##################################
-//##################################
+} // END OF SHADERS DYNAMIC
 // MATRIX OPETARION
-//##################################
 
 
 _manifest.default.operation.PUSH_MATRIX = function (mvMatrix, mvMatrixStack) {
@@ -697,9 +693,7 @@ _manifest.default.operation.POP_MATRIX = function (mvMatrix, mvMatrixStack) {
 _manifest.default.operation.SET_MATRIX_UNIFORMS = function (object, pMatrix) {
   this.GL.gl.uniformMatrix4fv(object.shaderProgram.pMatrixUniform, false, pMatrix);
   this.GL.gl.uniformMatrix4fv(object.shaderProgram.mvMatrixUniform, false, object.mvMatrix);
-}; /////////////////////////////
-//REGENERATORs SHADER
-/////////////////////////////
+}; // REGENERATORs SHADER
 
 
 var RegenerateShader = function (id_elem, numOfSamplerInUse, mixOperand) {
@@ -826,7 +820,7 @@ function generateShaderSrc(numTextures, mixOperand) {
     */
 
     `;
-} //make custom shader
+} // make custom shader
 
 
 function generateCustomShaderSrc(numTextures, mixOperand, code_) {
@@ -950,14 +944,13 @@ function generateCustomShaderSrc(numTextures, mixOperand, code_) {
      */
 
     `;
-} //#############################
-// VIDEO WEB CAM
-//#############################
-
+}
 
 var webcamError = function (e) {
   alert('Webcam error!' + e);
 };
+
+exports.webcamError = webcamError;
 
 function SET_STREAM(video) {
   if (navigator.getUserMedia) {
@@ -1090,6 +1083,8 @@ exports.keyboardPress = exports.camera = exports.SYS = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
+var _matrixWorld = require("./matrix-world");
+
 var _utility = require("./utility");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1211,8 +1206,26 @@ function EVENTS(canvas) {
       ROOT_EVENTS.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN();
     }; //console.log("This is PC desktop device.");
 
-  } //Calculate touch or click event
+  }
 
+  window.addEventListener('resize', function (e) {
+    if (_manifest.default.resize.canvas == "full-screen") {
+      //canvas.width =  window.innerHeight * App.resize.aspectRatio;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ' + _matrixWorld.world);
+    } else {
+      canvas.width = window.innerHeight * _manifest.default.resize.aspectRatio;
+      canvas.height = window.innerHeight;
+      SYS.DEBUG.LOG('SYS: aspect ration resize is active. ' + _matrixWorld.world);
+    }
+
+    if (_manifest.default.resize.reloadWorldOnResize == true && window.resizeGlPort !== 'undefined') {
+      window.resizeGlPort();
+    }
+  }, {
+    passive: true
+  }); //Calculate touch or click event
 
   this.CALCULATE_TOUCH_OR_CLICK = function () {
     SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH CLICK ');
@@ -1440,7 +1453,7 @@ if (_manifest.default.pwa.addToHomePage === true) {
   } catch (err) {}
 }
 
-},{"../program/manifest":15,"./utility":13}],6:[function(require,module,exports){
+},{"../program/manifest":15,"./matrix-world":12,"./utility":13}],6:[function(require,module,exports){
 /* globals module */
 'use strict';
 
@@ -4740,7 +4753,7 @@ _manifest.default.operation.reDrawGlobal = function () {
 };
 
 _manifest.default.operation.CameraPerspective = function () {
-  this.GL.gl.viewport(0, 0, _engine.wd, _engine.ht);
+  this.GL.gl.viewport(0, 0, canvas.width, canvas.height);
   this.GL.gl.clear(this.GL.gl.COLOR_BUFFER_BIT | this.GL.gl.DEPTH_BUFFER_BIT); // mat4.identity( world.mvMatrix )
   // mat4.translate(world.mvMatrix  , world.mvMatrix, [ 10 , 10 , 10] );
 
@@ -4785,7 +4798,6 @@ _manifest.default.tools.loadTextureImage = function (gl, src) {
 };
 
 _manifest.default.tools.BasicTextures = function (texture, gl) {
-  console.log('Bind App.tools.BasicTextures.');
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
@@ -4932,7 +4944,7 @@ var reDraw = null;
 
 exports.reDraw = reDraw;
 
-function defineworld(cavnas) {
+function defineworld(canvas) {
   // console.log("  Define the world");
   exports.world = world = new Object();
   /*  Constructor for a world                       */
@@ -4947,7 +4959,7 @@ function defineworld(cavnas) {
     return 0;
   } else {
     // console.log("  Setting WEBGL base attributes");
-    world.GL.gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    world.GL.gl.clearColor(_manifest.default.glBackgroundColor.r, _manifest.default.glBackgroundColor.g, _manifest.default.glBackgroundColor.b, _manifest.default.glBackgroundColor.a);
     world.GL.gl.enable(world.GL.gl.DEPTH_TEST);
     (0, _engine.initiateFPS)();
   }
@@ -5572,8 +5584,7 @@ function defineworld(cavnas) {
         numberOfInstance: 10,
         array_of_local_offset: [12, 0, 0],
         overrideDrawArraysInstance: function (object_) {}
-      };
-      console.log('ADDED'); //draws params
+      }; //draws params
 
       cubeObject.glBlend = new _utility._glBlend();
 
@@ -6469,7 +6480,7 @@ exports.default = void 0;
 /* eslint-disable no-unused-vars */
 var App = {
   name: "Matrix engine Manifest",
-  version: "1.0.4",
+  version: "1.0.5",
   events: true,
   logs: false,
   draw_interval: 10,
@@ -6481,6 +6492,18 @@ var App = {
     edgeMarginValue: 100,
     FirstPersonController: false,
     speedAmp: 0.5
+  },
+  resize: {
+    canvas: "full-screen",
+    // Change to any to make
+    aspectRatio: 1.8 // aspectRatio system active
+
+  },
+  glBackgroundColor: {
+    r: 0.0,
+    g: 0.0,
+    b: 0.0,
+    a: 1.0
   },
   textures: [],
   // readOnly in manifest

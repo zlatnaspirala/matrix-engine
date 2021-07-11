@@ -2,7 +2,7 @@
 
 var App = {
   name: "Matrix engine Manifest",
-  version: "1.0.4",
+  version: "1.0.5",
   events: true,
   logs: false,
   draw_interval: 10,
@@ -15,6 +15,11 @@ var App = {
     FirstPersonController: false,
     speedAmp: 0.5
   },
+  resize : {
+    canvas: "full-screen",               // Change to any to make
+    aspectRatio: 1.8,                    // aspectRatio system active
+  },
+  glBackgroundColor: { r: 0.0, g: 0.0, b: 0.0, a: 1.0 },
   textures: [],                          // readOnly in manifest
   tools: {},                             // readOnly in manifest
   operation: {},                         // readOnly in manifest
