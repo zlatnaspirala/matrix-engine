@@ -6,2004 +6,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var matrixEngine = _interopRequireWildcard(require("./index"));
-
-var _cube_tex_arrays = require("./apps/cube_tex_arrays");
-
-var _adding_color_cube = require("./apps/adding_color_cube");
-
-var _adding_color_piramyde = require("./apps/adding_color_piramyde");
-
-var _adding_color_triangle = require("./apps/adding_color_triangle");
-
-var _adding_geometry = require("./apps/adding_geometry");
-
-var _adding_more_texture_samplers = require("./apps/adding_more_texture_samplers");
-
-var _adding_square_texture = require("./apps/adding_square_texture");
-
-var _all_variant_of_blending = require("./apps/all_variant_of_blending");
-
-var _audio_manipulation = require("./apps/audio_manipulation");
-
-var _camera_texture = require("./apps/camera_texture");
-
-var _cube_experimental = require("./apps/cube_experimental");
-
-var _cube_geometry = require("./apps/cube_geometry");
-
-var _cube_light_and_texture = require("./apps/cube_light_and_texture");
-
-var _cube_light_dinamic = require("./apps/cube_light_dinamic");
-
-var _custom_texture = require("./apps/custom_texture");
-
-var _first_person_controller = require("./apps/first_person_controller");
-
-var _load_obj_file = require("./apps/load_obj_file");
-
-var _my_world = require("./apps/my_world");
-
-var _obj_animation = require("./apps/obj_animation");
-
-var _obj_animation_build_mesh_effect = require("./apps/obj_animation_build_mesh_effect");
-
-var _oneKilo = require("./apps/one-kilo");
-
-var _porting2d = require("./apps/porting2d");
-
-var _porting2d_particle = require("./apps/porting2d_particle");
-
-var _porting2d_text = require("./apps/porting2d_text");
-
-var _sphere_geometry = require("./apps/sphere_geometry");
-
-var _texture_dinamic_manipulation = require("./apps/texture_dinamic_manipulation");
-
-var _video_texture = require("./apps/video_texture");
-
-var _adding_color_square = require("./apps/adding_color_square");
+var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-var Examples = {
-  cube_tex_arrays: _cube_tex_arrays.runThis,
-  adding_color_cube: _adding_color_cube.runThis,
-  adding_color_piramyde: _adding_color_piramyde.runThis,
-  adding_color_triangle: _adding_color_triangle.runThis,
-  adding_color_square: _adding_color_square.runThis,
-  adding_geometry: _adding_geometry.runThis,
-  adding_more_texture_samplers: _adding_more_texture_samplers.runThis,
-  adding_square_texture: _adding_square_texture.runThis,
-  all_variant_of_blending: _all_variant_of_blending.runThis,
-  audio_manipulation: _audio_manipulation.runThis,
-  camera_texture: _camera_texture.runThis,
-  cube_experimental: _cube_experimental.runThis,
-  cube_geometry: _cube_geometry.runThis,
-  cube_light_and_texture: _cube_light_and_texture.runThis,
-  cube_light_dinamic: _cube_light_dinamic.runThis,
-  custom_texture: _custom_texture.runThis,
-  first_person_controller: _first_person_controller.runThis,
-  load_obj_file: _load_obj_file.runThis,
-  my_world: _my_world.runThis,
-  obj_animation: _obj_animation.runThis,
-  obj_animation_build_mesh_effect: _obj_animation_build_mesh_effect.runThis,
-  one_kilo: _oneKilo.runThis,
-  porting2d: _porting2d.runThis,
-  porting2d_particle: _porting2d_particle.runThis,
-  porting2d_text: _porting2d_text.runThis,
-  sphere_geometry: _sphere_geometry.runThis,
-  texture_dinamic_manipulation: _texture_dinamic_manipulation.runThis,
-  video_texture: _video_texture.runThis
-};
-/**
- * @description
- * Little help func.
- */
-
-const QueryString = matrixEngine.utility.QueryString;
-const scriptManager = matrixEngine.utility.scriptManager;
-var world;
-var App = matrixEngine.App;
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('worker.js');
-  });
-} else {
-  console.warn('Matrix Engine: No support for web workers in this browser.');
-}
-
-function webGLStart() {
-  world = matrixEngine.matrixWorld.defineworld(canvas);
-
-  if (world) {
-    world.callReDraw();
-
-    if (typeof QueryString.u != 'undefined') {
-      setTimeout(() => {
-        Examples[QueryString.u](world);
-      }, 100);
-    } else {
-      setTimeout(() => {
-        Examples['adding_color_cube'](world);
-      }, 100);
-    }
-  } else {
-    console.error(' Canvas has not been initialized, contact your programmer... ');
-  } // Make it global for console easy access.
-
-
-  window.App = App;
-}
-
-matrixEngine.Engine.load_shaders('shaders/shaders.html');
-window.addEventListener('load', function (e) {
-  matrixEngine.Engine.initApp(webGLStart);
-}, true); // Make it global for console easy access.
 
 window.matrixEngine = matrixEngine;
-var App = matrixEngine.App;
-var _default = App;
+var _default = matrixEngine;
 exports.default = _default;
 
-},{"./apps/adding_color_cube":2,"./apps/adding_color_piramyde":3,"./apps/adding_color_square":4,"./apps/adding_color_triangle":5,"./apps/adding_geometry":6,"./apps/adding_more_texture_samplers":7,"./apps/adding_square_texture":8,"./apps/all_variant_of_blending":9,"./apps/audio_manipulation":10,"./apps/camera_texture":11,"./apps/cube_experimental":12,"./apps/cube_geometry":13,"./apps/cube_light_and_texture":14,"./apps/cube_light_dinamic":15,"./apps/cube_tex_arrays":16,"./apps/custom_texture":17,"./apps/first_person_controller":18,"./apps/load_obj_file":19,"./apps/my_world":20,"./apps/obj_animation":21,"./apps/obj_animation_build_mesh_effect":22,"./apps/one-kilo":23,"./apps/porting2d":24,"./apps/porting2d_particle":25,"./apps/porting2d_text":26,"./apps/sphere_geometry":27,"./apps/texture_dinamic_manipulation":28,"./apps/video_texture":29,"./index":30}],2:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- *@Author Nikola Lukic
- *@Description Matrix Engine Api Example
- * Adding default color cube.
- */
-
-/* globals world App */
-var runThis = world => {
-  world.Add("cube", 1, "MyColoredCube1");
-  world.Add("cube", 1, "MyColoredCube2");
-  world.Add("cube", 1, "MyColoredCube3"); // SET POSITION
-
-  _manifest.default.scene.MyColoredCube1.position.SetX(0);
-
-  _manifest.default.scene.MyColoredCube2.position.SetX(-2.5);
-
-  _manifest.default.scene.MyColoredCube3.position.SetX(2.5);
-
-  _manifest.default.scene.MyColoredCube1.rotation.rotationSpeed.x = 15;
-  _manifest.default.scene.MyColoredCube2.rotation.rotationSpeed.y = 15;
-  _manifest.default.scene.MyColoredCube3.rotation.rotationSpeed.z = 15;
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],3:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- *@Author Nikola Lukic
- *@Description Matrix Engine Api Example
- */
-
-/* globals world App world */
-var runThis = world => {
-  world.Add("pyramid", 1, "MyPyramid1");
-  world.Add("pyramid", 1, "MyPyramid2");
-  world.Add("pyramid", 1, "MyPyramid3");
-
-  _manifest.default.scene.MyPyramid1.position.SetX(2.5);
-
-  _manifest.default.scene.MyPyramid2.position.SetX(0);
-
-  _manifest.default.scene.MyPyramid3.position.SetX(-2.5);
-
-  _manifest.default.scene.MyPyramid1.rotation.rotationSpeed.y = 20;
-  _manifest.default.scene.MyPyramid2.rotation.rotationSpeed.y = 20;
-  _manifest.default.scene.MyPyramid3.rotation.rotationSpeed.y = 20;
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],4:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- *@Author Nikola Lukic
- *@Description Matrix Engine Api Example
- */
-
-/* globals world App world */
-var runThis = world => {
-  world.Add("square", 1, "MyColoredSquare1");
-  world.Add("square", 1.1, "MyColoredSquare2");
-  world.Add("square", 1.2, "MyColoredSquare3");
-
-  _manifest.default.scene.MyColoredSquare1.position.SetX(2.5);
-
-  _manifest.default.scene.MyColoredSquare2.position.SetX(0);
-
-  _manifest.default.scene.MyColoredSquare3.position.SetX(-2.5);
-
-  _manifest.default.scene.MyColoredSquare1.rotation.rotationSpeed.x = 15;
-  _manifest.default.scene.MyColoredSquare2.rotation.rotationSpeed.x = 15;
-  _manifest.default.scene.MyColoredSquare3.rotation.rotationSpeed.x = 15;
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],5:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- *@Author Nikola Lukic
- *@Description Matrix Engine Api Example
- */
-
-/* globals world App world */
-var runThis = world => {
-  world.Add("triangle", 1, "MyColoredTriangle1");
-  world.Add("triangle", 1, "MyColoredTriangle2");
-  world.Add("triangle", 1, "MyColoredTriangle3");
-
-  _manifest.default.scene.MyColoredTriangle1.position.SetX(2.5);
-
-  _manifest.default.scene.MyColoredTriangle2.position.SetX(0);
-
-  _manifest.default.scene.MyColoredTriangle3.position.SetX(-2.5);
-
-  _manifest.default.scene.MyColoredTriangle1.rotation.rotationSpeed.z = -10;
-  _manifest.default.scene.MyColoredTriangle2.rotation.rotationSpeed.z = -10;
-  _manifest.default.scene.MyColoredTriangle3.rotation.rotationSpeed.z = -10;
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],6:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- *@Author Nikola Lukic
- *@Description Matrix Engine Api Example
- */
-
-/* globals world App world */
-var runThis = world => {
-  function onLoadObj(meshes) {
-    _manifest.default.meshes = meshes;
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.church);
-
-    do {
-      console.log("...");
-    } while (!_manifest.default.meshes.church.textureBuffer);
-
-    do {
-      console.log("...");
-    } while (typeof _manifest.default.meshes.church.indexBuffer === "undefined");
-
-    var textuteImageSamplers2 = {
-      source: ["res/images/texture_metalic1.jpg"],
-      mix_operation: "multiply" // ENUM : multiply , divide ,
-
-    };
-    setTimeout(function () {
-      world.Add("obj", 1, "objectFileChurch", textuteImageSamplers2, _manifest.default.meshes.church);
-    }, 2000);
-  }
-
-  OBJ.downloadMeshes({
-    "church": "res/3d-objects/monkey.obj"
-  }, onLoadObj); // eslint-disable-next-line no-unused-vars
-
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply" // ENUM : multiply , divide ,
-
-  };
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],7:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- *@Author Nikola Lukic
- *@Description Matrix Engine Api Example
- */
-
-/* globals world App world */
-var runThis = world => {
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png", "res/images/texture_spiral1.png"],
-    mix_operation: "multiply"
-  };
-  world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
-  setTimeout(function () {
-    var textuteImageSamplers = {
-      source: ["res/images/complex_texture_1/diffuse.png", "res/images/texture_spiral1.png", "res/images/icon2.png"],
-      mix_operation: "divide"
-    };
-
-    _manifest.default.scene.MyCubeTex.changeMaterial(textuteImageSamplers);
-  }, 5000);
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],8:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- *@Author Nikola Lukic
- *@Description Matrix Engine Api Example
- */
-
-/* globals world App world */
-var runThis = world => {
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  };
-  world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers);
-  _manifest.default.scene.MySquareTexure1.rotation.rotationSpeed.x = 10;
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],9:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-var runThis = world => {
-  var App = matrixEngine.App;
-  var textuteImageSamplers2 = {
-    source: ['res/images/semi_pack/gradiend_half1.png'],
-    mix_operation: 'multiply'
-  };
-  var textuteImageSamplers = {
-    source: ['res/images/semi_pack/gradiend_half2.png'],
-    mix_operation: 'multiply'
-  };
-  world.Add('cubeLightTex', 15, 'cube', textuteImageSamplers2);
-  App.scene.cube.position.z = -13;
-  App.scene.cube.rotation.rotationSpeed.x = 10;
-  App.scene.cube.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-  App.scene.cube.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-
-  for (var f = 0; f < matrixEngine.utility.ENUMERATORS.glBlend.param.length; f++) {
-    world.Add('cubeLightTex', 0.65, 'test' + f, textuteImageSamplers);
-    App.scene['test' + f].glBlend.blendEnabled = true;
-    App.scene['test' + f].rotation.rotationSpeed.x = 20;
-    App.scene['test' + f].position.y = f - 5.5;
-    App.scene['test' + f].position.z = -13;
-    App.scene['test' + f].position.x = f - 5;
-    App.scene['test' + f].glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[f];
-    App.scene['test' + f].glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-  }
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":30}],10:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/* eslint-disable no-unused-vars */
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA Galactic*/
-let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-let E = matrixEngine.utility.E;
-
-var runThis = world => {
-  var App = matrixEngine.App;
-  console.log("world", world);
-
-  for (var i = 1; i < 1024; i = i + 70) {
-    world.Add("pyramid", 0.1 + i / 1000, "MyPyramid" + i); // eval( "App.scene.MyPyramid"+i+".position.x = 5.5-i/100");
-
-    console.log("App.scene", App.scene);
-  }
-
-  for (var i = 1; i < 1024; i = i + 70) {
-    // world.Add("pyramid", 0.1 + i / 1000, "MyPyramid" + i);
-    // eval( "App.scene.MyPyramid"+i+".position.x = 5.5-i/100");
-    console.log("App.scene", App.scene);
-    App.scene["MyPyramid" + i].position.y = 0;
-    App.scene["MyPyramid" + i].rotation.rotationSpeed.y = 5;
-    App.scene["MyPyramid" + i].glBlend.blendEnabled = true;
-    App.scene["MyPyramid" + i].glBlend.blendParamSrc = ENUMERATORS.glBlend.param[7];
-    App.scene["MyPyramid" + i].glBlend.blendParamDest = ENUMERATORS.glBlend.param[2];
-  }
-
-  App.onload = function (e) {
-    console.log(e);
-    var test = App.audioSystem.createVideoAsset("Galactic", "Epiclogue.mp3");
-    test.then(() => {
-      console.log(test + "<<<<GOOD<<<");
-    }).catch(() => {
-      console.log(test + "BAD");
-    });
-    window.Galactic = App.audioSystem.Assets.Galactic;
-    var source = Galactic.context.createMediaElementSource(Galactic.video);
-    source.connect(Galactic.gainNode);
-    Galactic.gainNode.connect(Galactic.filter);
-    Galactic.filter.connect(Galactic.context.destination);
-    Galactic.analyser = Galactic.context.createAnalyser();
-    source.connect(Galactic.analyser);
-    Galactic.frequencyData = new Uint8Array(Galactic.analyser.frequencyBinCount);
-
-    Galactic.UPDATE = function () {
-      Galactic.analyser.getByteFrequencyData(Galactic.frequencyData);
-      var PARAMETER1 = 0.1;
-
-      for (var i = 1, j = 1; i < 1024; i = i + 70, j = j + 35) {
-        App.scene["MyPyramid" + i].rotation.rotationSpeed.z = Galactic.frequencyData[i] / PARAMETER1;
-      } // console.log(frequencyData)
-
-    };
-
-    App.updateBeforeDraw.push(Galactic);
-  };
-
-  App.onload();
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":30}],11:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* eslint-disable no-unused-vars */
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-let ACCESS_CAMERA = matrixEngine.Engine.ACCESS_CAMERA;
-
-var runThis = world => {
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA */
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  };
-
-  function onLoadObj(meshes) {
-    _manifest.default.meshes = meshes;
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.TV);
-    setTimeout(function () {
-      world.Add("obj", 1, "TV", textuteImageSamplers, _manifest.default.meshes.TV);
-      _manifest.default.scene.TV.position.y = 0;
-      _manifest.default.scene.TV.position.z = -4;
-
-      _manifest.default.scene.TV.rotation.rotateY(90);
-
-      _manifest.default.scene.TV.LightsData.ambientLight.set(1, 1, 1);
-
-      _manifest.default.scene.TV.streamTextures = new ACCESS_CAMERA("webcam_beta");
-    }, 1000);
-  }
-
-  OBJ.downloadMeshes({
-    TV: "res/3d-objects/balltest2.obj"
-  }, onLoadObj);
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":30,"../program/manifest":42}],12:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* eslint-disable no-unused-vars */
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-var runThis = world => {
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  };
-
-  for (var d = -2; d < 3; d++) {
-    for (var t = -1; t < 2; t++) {
-      world.Add("cubeLightTex", 0.3, "MyCubeTex" + Math.abs(d), textuteImageSamplers);
-      eval("App.scene.MyCubeTex" + Math.abs(d) + ".position.x += d*0.8");
-      eval("App.scene.MyCubeTex" + Math.abs(d) + ".position.y += t*0.8");
-      eval("App.scene.MyCubeTex" + Math.abs(d) + ".rotation.rotationSpeed.x = 0;");
-    }
-  }
-
-  world.Add("triangle", 1, "MyColoredTriangle1");
-  world.Add("triangle", 1, "MyColoredTriangle2");
-  world.Add("triangle", 1, "MyColoredTriangle3");
-
-  _manifest.default.scene.MyColoredTriangle1.position.SetX(2.5);
-
-  _manifest.default.scene.MyColoredTriangle2.position.SetX(0);
-
-  _manifest.default.scene.MyColoredTriangle3.position.SetX(-2.5);
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],13:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* eslint-disable no-unused-vars */
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-var runThis = world => {
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  };
-  world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
-  _manifest.default.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
-  var oscilltor_variable = new matrixEngine.utility.OSCILLATOR(0.05, 2, 0.01);
-  setInterval(function () {
-    _manifest.default.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
-  }, 10);
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":30,"../program/manifest":42}],14:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* eslint-disable no-unused-vars */
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-var runThis = world => {
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  };
-  world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
-  _manifest.default.scene.MyCubeTex.LightsData.ambientLight.r = 0.1;
-  _manifest.default.scene.MyCubeTex.LightsData.ambientLight.g = 0.2;
-  _manifest.default.scene.MyCubeTex.LightsData.ambientLight.b = 1;
-
-  _manifest.default.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 0.2, 1);
-
-  _manifest.default.scene.MyCubeTex.LightsData.directionLight.r = 1;
-  _manifest.default.scene.MyCubeTex.LightsData.directionLight.g = 1;
-  _manifest.default.scene.MyCubeTex.LightsData.directionLight.b = 1;
-
-  _manifest.default.scene.MyCubeTex.LightsData.directionLight.set(1, 1, 1);
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],15:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* eslint-disable no-unused-vars */
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
-
-var runThis = world => {
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  };
-  world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
-  var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
-  _manifest.default.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
-
-  _manifest.default.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
-
-  setInterval(function () {
-    _manifest.default.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
-    _manifest.default.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
-  }, 10);
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":30,"../program/manifest":42}],16:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- *@Author Nikola Lukic
- *@Description
- * Matrix Engine Api Example
- * Adding default color cube.
- */
-
-/* globals world App */
-var runThis = world => {
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  };
-
-  for (var j = -4; j < 4; j++) {
-    for (var x = -4; x < 4; x++) {
-      for (var z = 2; z < 5; z++) {
-        world.Add("square", 1, "cube_" + j);
-
-        _manifest.default.scene['cube_' + j].position.SetX(x * 1);
-
-        _manifest.default.scene['cube_' + j].position.SetY(-j * 1);
-
-        _manifest.default.scene['cube_' + j].position.SetZ(-z * 1);
-
-        _manifest.default.scene['cube_' + j].rotation.rotationSpeed.x = 10;
-
-        _manifest.default.scene['cube_' + j].geometry.setScale(0.4);
-      }
-    }
-  }
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],17:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* eslint-disable no-unused-vars */
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-var runThis = world => {
-  /*
-  Nikola Lukic
-  webGl2GLmatrix2 api example
-  app/canvas2d/build.html is visual-js 2d part program instance
-  */
-
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  };
-  world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers);
-  _manifest.default.scene.MySquareTexure1.rotValue = 0;
-  _manifest.default.scene.MySquareTexure1.rotation.rotationSpeed.z = 0;
-
-  _manifest.default.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
-    world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.LINEAR);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.LINEAR);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.CLAMP_TO_EDGE);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.CLAMP_TO_EDGE);
-    world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, // Level of details
-    world.GL.gl.RGBA, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
-    world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-  };
-
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_top.y = 1.1;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_top.x = 1.1;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.left_bottom.x = -0.1;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.left_bottom.y = -0.1;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.left_top.x = -0.1;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.left_top.y = 1.1;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_bottom.x = 1.1;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_bottom.y = -0.1;
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],18:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* eslint-disable no-unused-vars */
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-var runThis = world => {
-  /*
-    Nikola Lukic
-    webGl2GLmatrix2 api example
-    app/canvas2d/build.html is visual-js 2d part program instance
-  */
-
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
-  // ACTIVATE FPController
-  _manifest.default.camera.FirstPersonController = true; // FLOOR
-
-  var textuteImageSamplers = {
-    source: ["./res/images/beli_andjeo.jpg"],
-    mix_operation: "multiply" // ENUM: multiply, divide,
-
-  };
-  world.Add("squareTex", 12, "floor", textuteImageSamplers);
-  _manifest.default.scene.floor.position.z = 0; // only for texture
-
-  var coeficientSizeOfTex = 1.9;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.right_top.y = 1 + coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.right_top.x = 1 + coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.left_bottom.x = 0 - coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.left_bottom.y = 0 - coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.left_top.x = 0 - coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.left_top.y = 1 + coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.right_bottom.x = 1 + coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.right_bottom.y = 0 - coeficientSizeOfTex;
-
-  _manifest.default.scene.floor.custom.gl_texture = function (object, t) {
-    world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.LINEAR);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.LINEAR);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.REPEAT);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.REPEAT);
-    world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, // Level of details
-    world.GL.gl.RGB5_A1, // Format
-    world.GL.gl.RGB5_A1, world.GL.gl.UNSIGNED_BYTE, // Size of each channel
-    object.textures[t].image); // world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-  };
-
-  _manifest.default.scene.floor.position.y = -2;
-  _manifest.default.scene.floor.rotValue = 90;
-  world.Add("cubeLightTex", 1, "BeliAndjeo", textuteImageSamplers);
-  _manifest.default.scene.BeliAndjeo.rotation.roty = -90;
-  _manifest.default.scene.BeliAndjeo.position.y = 1;
-  _manifest.default.scene.BeliAndjeo.position.x = 0;
-  world.Add("pyramid", 1, "MyPyramid1");
-  world.Add("pyramid", 1, "MyPyramid2");
-  world.Add("pyramid", 1, "MyPyramid3");
-  world.Add("pyramid", 1, "MyPyramid4"); // SET POSITION
-
-  _manifest.default.scene.MyPyramid1.geometry.spitz = 10;
-  _manifest.default.scene.MyPyramid2.geometry.spitz = 10;
-  _manifest.default.scene.MyPyramid3.geometry.spitz = 10;
-  _manifest.default.scene.MyPyramid4.geometry.spitz = 10;
-
-  _manifest.default.scene.MyPyramid1.position.SetX(-10);
-
-  _manifest.default.scene.MyPyramid1.position.SetZ(-10);
-
-  _manifest.default.scene.MyPyramid2.position.SetX(10);
-
-  _manifest.default.scene.MyPyramid2.position.SetZ(10);
-
-  _manifest.default.scene.MyPyramid3.position.SetX(10);
-
-  _manifest.default.scene.MyPyramid3.position.SetZ(-10);
-
-  _manifest.default.scene.MyPyramid4.position.SetX(-10);
-
-  _manifest.default.scene.MyPyramid4.position.SetZ(10);
-
-  _manifest.default.scene.MyPyramid1.position.SetY(-1);
-
-  _manifest.default.scene.MyPyramid2.position.SetY(-1);
-
-  _manifest.default.scene.MyPyramid3.position.SetY(-1);
-
-  _manifest.default.scene.MyPyramid4.position.SetY(-1);
-
-  _manifest.default.scene.MyPyramid2.rotation.rotationSpeed.z = 0;
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],19:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* eslint-disable no-unused-vars */
-
-/*
-  Nikola Lukic
-  webGl2GLmatrix2 api example
-  app/canvas2d/build.html is visual-js 2d part program instance
-*/
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-var runThis = world => {
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ */
-  // LOAD MESH FROM OBJ FILES...
-  // if you dont use obj or complex mesh you no need for this func
-  function onLoadObj(meshes) {
-    _manifest.default.meshes = meshes;
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.armor);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.mac);
-    var textuteImageSamplers2 = {
-      source: ["res/images/armor.png"],
-      mix_operation: "multiply"
-    };
-    var textuteImageSamplers = {
-      source: ["res/images/dagger.png"],
-      mix_operation: "multiply"
-    };
-    world.Add("obj", 1, "armor", textuteImageSamplers2, _manifest.default.meshes.armor);
-    _manifest.default.scene.armor.position.y = 1;
-    _manifest.default.scene.armor.rotation.rotationSpeed.y = 20;
-
-    _manifest.default.scene.armor.LightsData.ambientLight.set(1, 1, 1);
-
-    world.Add("obj", 1, "mac", textuteImageSamplers, _manifest.default.meshes.mac);
-    _manifest.default.scene.mac.position.y = 1;
-    _manifest.default.scene.mac.position.x = -2;
-    _manifest.default.scene.mac.rotation.rotationSpeed.y = 20;
-
-    _manifest.default.scene.mac.LightsData.ambientLight.set(1, 1, 1);
-  }
-
-  OBJ.downloadMeshes({
-    armor: "res/3d-objects/armor.obj",
-    mac: "res/3d-objects/mac.obj"
-  }, onLoadObj); //delete images_local_var;
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],20:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* eslint-disable no-unused-vars */
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
-let SWITCHER = matrixEngine.utility.SWITCHER;
-
-var runThis = world => {
-  var S1 = new SWITCHER();
-  _manifest.default.camera.FirstPersonController = true;
-  var textuteImageSamplers1 = {
-    source: ['res/images/bark.jpg'],
-    mix_operation: 'multiply'
-  }; // Floor
-
-  var textuteImageSamplers2 = {
-    source: ['res/images/grass1.jpg'],
-    mix_operation: 'multiply'
-  };
-  world.Add('squareTex', 1, 'floor', textuteImageSamplers2);
-  _manifest.default.scene.floor.rotation.rotationSpeed.z = 0;
-  _manifest.default.scene.floor.position.y = -12;
-  _manifest.default.scene.floor.rotation.rotx = 90;
-
-  _manifest.default.scene.floor.geometry.setScale(213);
-
-  _manifest.default.scene.floor.custom.gl_texture = function (object, t) {
-    var world = matrixEngine.matrixWorld.world;
-    world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.LINEAR);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.LINEAR);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.REPEAT);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.REPEAT);
-    if (!object.textures[t].image.complete) return;
-    world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
-    world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-  };
-
-  world.Add('cubeLightTex', 3, 'tree2_', textuteImageSamplers1);
-
-  _manifest.default.scene.tree2_.geometry.setScale(0.5);
-
-  _manifest.default.scene.tree2_.geometry.setScaleByZ(0.5);
-
-  _manifest.default.scene.tree2_.geometry.setScaleByX(0.5);
-
-  _manifest.default.scene.tree2_.geometry.setScaleByY(5);
-
-  _manifest.default.scene.tree2_.geometry.texCoordsPoints.front = _manifest.default.scene.tree2_.geometry.texCoordsPoints.top;
-  _manifest.default.scene.tree2_.geometry.texCoordsPoints.left = _manifest.default.scene.tree2_.geometry.texCoordsPoints.top;
-  _manifest.default.scene.tree2_.position.y = -4;
-
-  _manifest.default.scene.tree2_.instancedDraws.overrideDrawArraysInstance = function (object) {
-    for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
-      object.instancedDraws.array_of_local_offset = [0, 0, 18];
-      mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-      world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-      object.instancedDraws.array_of_local_offset = [18 * S1.GET(), 0, 0];
-
-      for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
-        mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-        world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-        world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
-      }
-    }
-  };
-
-  world.Add('pyramid', 3, 'tree1_', textuteImageSamplers2);
-
-  _manifest.default.scene.tree1_.geometry.colorData.SetRedForAll(0.2);
-
-  _manifest.default.scene.tree1_.geometry.colorData.SetGreenForAll(0.5);
-
-  _manifest.default.scene.tree1_.geometry.setSpitz(5);
-
-  _manifest.default.scene.tree1_.position.y = 3.5;
-  _manifest.default.scene.tree1_.instancedDraws.array_of_local_offset = [0, 0, 0];
-
-  _manifest.default.scene.tree1_.instancedDraws.overrideDrawArraysInstance = function (object) {
-    for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
-      object.instancedDraws.array_of_local_offset = [0, 0, 18];
-      mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-      world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-      object.instancedDraws.array_of_local_offset = [18 * S1.GET(), 0, 0];
-
-      for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
-        mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-        world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-        world.GL.gl.drawArrays(world.GL.gl.TRIANGLE_STRIP, 0, object.glDrawElements.numberOfIndicesRender);
-      }
-    }
-  };
-
-  world.Add('pyramid', 3, 'tree1');
-  _manifest.default.scene.tree1.instancedDraws.array_of_local_offset = [0, 0, 0];
-
-  _manifest.default.scene.tree1.instancedDraws.overrideDrawArraysInstance = function (object) {
-    for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
-      object.instancedDraws.array_of_local_offset = [0, 0, 18];
-      mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-      world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-      object.instancedDraws.array_of_local_offset = [18 * S1.GET(), 0, 0];
-
-      for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
-        mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-        world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-        world.GL.gl.drawArrays(world.GL.gl.TRIANGLE_STRIP, 0, object.glDrawElements.numberOfIndicesRender);
-      }
-    }
-  };
-
-  _manifest.default.scene.tree1.geometry.colorData.SetRedForAll(0.1);
-
-  _manifest.default.scene.tree1.geometry.colorData.SetGreenForAll(0.6);
-
-  _manifest.default.scene.tree1.geometry.setSpitz(5);
-
-  _manifest.default.scene.tree1.position.y = 8.5;
-  _manifest.default.scene.tree1.instancedDraws.numberOfInstance = 20;
-  _manifest.default.scene.tree1_.instancedDraws.numberOfInstance = 20;
-  _manifest.default.scene.tree2_.instancedDraws.numberOfInstance = 20;
-  _manifest.default.scene.tree2_.position.x = 200;
-  _manifest.default.scene.tree2_.position.z = -200;
-  _manifest.default.scene.tree1.position.x = 200;
-  _manifest.default.scene.tree1.position.z = -200;
-  _manifest.default.scene.tree1_.position.x = 200;
-  _manifest.default.scene.tree1_.position.z = -200;
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":30,"../program/manifest":42}],21:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-var runThis = world => {
-  /* globals world App OBJ */
-  // LOAD MESH FROM OBJ FILES...
-  // if you dont use obj or complex mesh you no need for this func
-  function onLoadObj(meshes) {
-    _manifest.default.meshes = meshes;
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female1);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female2);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female3);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female4);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female5);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female6);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female7);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female8);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female9);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female10);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female11);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female12);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female13);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female14);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female15);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female16);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female17);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female18);
-    var textuteImageSamplers2 = {
-      source: ["res/images/RustPaint.jpg"],
-      mix_operation: "multiply" // ENUM : multiply , divide
-
-    };
-    setTimeout(function () {
-      var animation_construct = {
-        id: "female",
-        sumOfAniFrames: 18,
-        currentAni: 0,
-        speed: 3
-      };
-      world.Add("obj", 1, "female", textuteImageSamplers2, _manifest.default.meshes.female, animation_construct);
-      _manifest.default.scene.female.position.y = -3;
-      _manifest.default.scene.female.rotation.rotationSpeed.z = 20;
-      _manifest.default.scene.female.position.z = -13;
-    }, 100);
-  }
-
-  OBJ.downloadMeshes({
-    female: "res/3d-objects/female/female_000001.obj",
-    female1: "res/3d-objects/female/female_000003.obj",
-    female2: "res/3d-objects/female/female_000005.obj",
-    female3: "res/3d-objects/female/female_000007.obj",
-    female4: "res/3d-objects/female/female_000009.obj",
-    female5: "res/3d-objects/female/female_000011.obj",
-    female6: "res/3d-objects/female/female_000013.obj",
-    female7: "res/3d-objects/female/female_000015.obj",
-    female8: "res/3d-objects/female/female_000017.obj",
-    female9: "res/3d-objects/female/female_000019.obj",
-    female10: "res/3d-objects/female/female_000021.obj",
-    female11: "res/3d-objects/female/female_000023.obj",
-    female12: "res/3d-objects/female/female_000025.obj",
-    female13: "res/3d-objects/female/female_000027.obj",
-    female14: "res/3d-objects/female/female_000029.obj",
-    female15: "res/3d-objects/female/female_000031.obj",
-    female16: "res/3d-objects/female/female_000033.obj",
-    female17: "res/3d-objects/female/female_000035.obj",
-    female18: "res/3d-objects/female/female_000037.obj"
-  }, onLoadObj); //delete images_local_var;
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],22:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-var runThis = world => {
-  /* globals world App ENUMERATORS OSCILLATOR OBJ */
-  let OSCILLATOR = matrixEngine.utility.OSCILLATOR; // LOAD MESH FROM OBJ FILES...
-  // if you dont use obj or complex mesh you no need for this func
-
-  function onLoadObj(meshes) {
-    _manifest.default.meshes = meshes;
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.halfCircle);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female1);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female2);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female3);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female4);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female5);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female6);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female7);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female8);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female9);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female10);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female11);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female12);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female13);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female14);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female15);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female16);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female17);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female18);
-    var textuteImageSamplers = {
-      source: ["res/images/semi_pack/gradiend_half3.png"],
-      mix_operation: "multiply"
-    };
-    world.Add("obj", 1, "halfCircle", textuteImageSamplers, _manifest.default.meshes.halfCircle);
-    _manifest.default.scene.halfCircle.position.y = -12;
-    _manifest.default.scene.halfCircle.position.z = -12;
-    _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = 100;
-    var oscillator1 = new OSCILLATOR(-12, 8, 0.2);
-    world.Add("obj", 1, "halfCircle2", textuteImageSamplers, _manifest.default.meshes.halfCircle);
-    _manifest.default.scene.halfCircle2.position.y = 7;
-    _manifest.default.scene.halfCircle2.position.z = -12;
-    _manifest.default.scene.halfCircle2.rotation.rotationSpeed.y = -100;
-    var oscillator2 = new OSCILLATOR(-12, 8, 0.2);
-    oscillator2.value_ = _manifest.default.scene.halfCircle2.position.y - 1; // FEMALE
-
-    var textuteImageSamplers2 = {
-      source: ["res/images/RustPaint.jpg"],
-      mix_operation: "multiply"
-    };
-    var animation_construct = {
-      id: "female",
-      sumOfAniFrames: 18,
-      currentAni: 0,
-      speed: 3
-    };
-    world.Add("obj", 1, "female", textuteImageSamplers2, _manifest.default.meshes.female, animation_construct);
-    _manifest.default.scene.female.glBlend.blendEnabled = true;
-    _manifest.default.scene.female.position.y = -4;
-    _manifest.default.scene.female.rotation.rotationSpeed.y = 150;
-    _manifest.default.scene.female.position.z = -13;
-    _manifest.default.scene.halfCircle.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    _manifest.default.scene.halfCircle.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    _manifest.default.scene.halfCircle2.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    _manifest.default.scene.halfCircle2.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    _manifest.default.scene.female.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    _manifest.default.scene.female.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = 1;
-    var TIMER = setInterval(function () {
-      if (_manifest.default.scene.female.glDrawElements.numberOfIndicesRender >= _manifest.default.scene.female.mesh.indexBuffer.numItems - 1) {
-        _manifest.default.scene.halfCircle2.position.y = 9;
-        _manifest.default.scene.halfCircle.position.y = -10;
-        _manifest.default.scene.female.rotation.rotationSpeed.y = 10;
-        _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = 10;
-        _manifest.default.scene.halfCircle2.rotation.rotationSpeed.y = -10;
-        _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = _manifest.default.scene.female.mesh.indexBuffer.numItems; // eslint-disable-next-line no-undef
-
-        clearInterval(TIMER);
-        return;
-      } else {
-        _manifest.default.scene.halfCircle2.position.y = oscillator2.UPDATE();
-        _manifest.default.scene.halfCircle.position.y = oscillator1.UPDATE(); // App.scene.halfCircle.rotation.rotationSpeed.z =  App.scene.halfCircle.rotation.rotationSpeed.z + 1;
-
-        _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = _manifest.default.scene.halfCircle.rotation.rotationSpeed.y - 1;
-        _manifest.default.scene.female.rotation.rotationSpeed.y = _manifest.default.scene.female.rotation.rotationSpeed.y - 1;
-        _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = _manifest.default.scene.female.glDrawElements.numberOfIndicesRender + 15;
-      }
-    }, 1);
-  } // Implement recursive load system for next update.
-
-
-  OBJ.downloadMeshes({
-    female: "res/3d-objects/female/female_000001.obj",
-    female1: "res/3d-objects/female/female_000003.obj",
-    female2: "res/3d-objects/female/female_000005.obj",
-    female3: "res/3d-objects/female/female_000007.obj",
-    female4: "res/3d-objects/female/female_000009.obj",
-    female5: "res/3d-objects/female/female_000011.obj",
-    female6: "res/3d-objects/female/female_000013.obj",
-    female7: "res/3d-objects/female/female_000015.obj",
-    female8: "res/3d-objects/female/female_000017.obj",
-    female9: "res/3d-objects/female/female_000019.obj",
-    female10: "res/3d-objects/female/female_000021.obj",
-    female11: "res/3d-objects/female/female_000023.obj",
-    female12: "res/3d-objects/female/female_000025.obj",
-    female13: "res/3d-objects/female/female_000027.obj",
-    female14: "res/3d-objects/female/female_000029.obj",
-    female15: "res/3d-objects/female/female_000031.obj",
-    female16: "res/3d-objects/female/female_000033.obj",
-    female17: "res/3d-objects/female/female_000035.obj",
-    female18: "res/3d-objects/female/female_000037.obj",
-    halfCircle: "res/3d-objects/balltest1.obj"
-  }, onLoadObj);
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":30,"../program/manifest":42}],23:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-let CANVAS2d_SURFACE_TEXTURE = matrixEngine.Engine.CANVAS2d_SURFACE_TEXTURE;
-
-var runThis = world => {
-  /* globals world App ENUMERATORS E CANVAS2d_SURFACE_TEXTURE */
-
-  /* eslint-disable no-unused-vars */
-  var tex = new CANVAS2d_SURFACE_TEXTURE("app/2d1kilo/example1.html", "starter/text.js");
-  _manifest.default.camera.FirstPersonController = true;
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  };
-  world.Add("squareTex", 12, "floor", textuteImageSamplers);
-  _manifest.default.scene.floor.position.z = 0;
-  _manifest.default.scene.floor.position.y = -1;
-  var coeficientSizeOfTex = 20;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.right_top.y = 1 + coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.right_top.x = 1 + coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.left_bottom.x = 0 - coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.left_bottom.y = 0 - coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.left_top.x = 0 - coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.left_top.y = 1 + coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.right_bottom.x = 1 + coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.texCoordsPoints.right_bottom.y = 0 - coeficientSizeOfTex;
-  _manifest.default.scene.floor.geometry.size = 50;
-
-  _manifest.default.scene.floor.custom.gl_texture = function (object, t) {
-    try {
-      world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
-      world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.LINEAR);
-      world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.LINEAR);
-      world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.REPEAT);
-      world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.REPEAT);
-      world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
-      world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-    } catch (e) {//
-    }
-  };
-
-  _manifest.default.scene.floor.rotation.rotateX(90);
-  /**
-   * Test for scale texCoords for CubeVertex;
-   *
-   */
-
-
-  world.Add("cubeLightTex", 1, "test", {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  });
-  _manifest.default.scene.test.position.y = 1;
-  _manifest.default.scene.test.position.x = 0;
-  _manifest.default.scene.test.position.z = 0; // App.scene.zid.geometry.setScaleByX(60);
-  // App.scene.zid.geometry.setScaleByY(10);
-
-  _manifest.default.scene.test.custom.gl_texture = function (object, t) {
-    try {
-      world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
-      world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.LINEAR);
-      world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.LINEAR);
-      world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.REPEAT);
-      world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.REPEAT);
-      world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
-      world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-    } catch (e) {//
-    }
-  };
-
-  world.Add("cubeLightTex", 1, "zid", {
-    source: ["res/images/texture_metalic1.jpg"],
-    mix_operation: "multiply"
-  });
-  _manifest.default.scene.zid.position.y = 7;
-  _manifest.default.scene.zid.position.x = 0;
-  _manifest.default.scene.zid.position.z = 50;
-
-  _manifest.default.scene.zid.geometry.setScaleByX(60);
-
-  _manifest.default.scene.zid.geometry.setScaleByY(10);
-
-  _manifest.default.scene.zid.custom.gl_texture = _manifest.default.scene.test.custom.gl_texture;
-  world.Add("cubeLightTex", 1, "zid2", {
-    source: ["res/images/texture_metalic1.jpg"],
-    mix_operation: "multiply"
-  });
-  _manifest.default.scene.zid2.position.y = 8;
-  _manifest.default.scene.zid2.position.x = 0;
-  _manifest.default.scene.zid2.position.z = -50;
-
-  _manifest.default.scene.zid2.geometry.setScaleByX(60);
-
-  _manifest.default.scene.zid2.geometry.setScaleByY(10);
-
-  world.Add("cubeLightTex", 1, "zid3", {
-    source: ["res/images/texture_metalic1.jpg"],
-    mix_operation: "multiply"
-  });
-  _manifest.default.scene.zid3.position.y = 7;
-  _manifest.default.scene.zid3.position.x = 50;
-  _manifest.default.scene.zid3.position.z = 0;
-
-  _manifest.default.scene.zid3.geometry.setScaleByZ(60);
-
-  _manifest.default.scene.zid3.geometry.setScaleByY(10);
-
-  world.Add("cubeLightTex", 1, "zid4", {
-    source: ["res/images/texture_metalic1.jpg"],
-    mix_operation: "multiply"
-  });
-  _manifest.default.scene.zid4.position.y = 8;
-  _manifest.default.scene.zid4.position.x = -50;
-  _manifest.default.scene.zid4.position.z = 0;
-
-  _manifest.default.scene.zid4.geometry.setScaleByZ(60);
-
-  _manifest.default.scene.zid4.geometry.setScaleByY(10);
-
-  for (var hor = -40; hor < 50; hor = hor + 10) {
-    var name = "zid_" + hor;
-    world.Add("cubeLightTex", 1, name, {
-      source: ["res/images/texture_metalic1.jpg"],
-      mix_operation: "multiply"
-    });
-    _manifest.default.scene[name].position.y = 8;
-    _manifest.default.scene[name].position.x = hor;
-    _manifest.default.scene[name].position.z = 48; // App.scene[name].glBlend.blendEnabled = true;
-    // App.scene[name].glBlend.blendParamSrc =  ENUMERATORS.glBlend.param[4];
-    // App.scene[name].glBlend.blendParamDest =  ENUMERATORS.glBlend.param[4];
-
-    _manifest.default.scene[name].geometry.setScaleByY(10);
-
-    name = "zid_2_" + hor;
-    world.Add("cubeLightTex", 1, name, {
-      source: ["res/images/texture_metalic1.jpg"],
-      mix_operation: "multiply"
-    });
-    _manifest.default.scene[name].position.y = 8;
-    _manifest.default.scene[name].position.x = hor;
-    _manifest.default.scene[name].position.z = -48; // App.scene[name].glBlend.blendEnabled = true;
-    // App.scene[name].glBlend.blendParamSrc =  ENUMERATORS.glBlend.param[4];
-    // App.scene[name].glBlend.blendParamDest =  ENUMERATORS.glBlend.param[4];
-
-    _manifest.default.scene[name].geometry.setScaleByY(10);
-  }
-
-  world.Add("pyramid", 1, "MyPyramid1");
-  world.Add("pyramid", 1, "MyPyramid2");
-  world.Add("pyramid", 1, "MyPyramid3");
-  world.Add("pyramid", 1, "MyPyramid4"); // SET POSITION
-
-  _manifest.default.scene.MyPyramid1.geometry.spitz = 10;
-  _manifest.default.scene.MyPyramid2.geometry.spitz = 10;
-  _manifest.default.scene.MyPyramid3.geometry.spitz = 10;
-  _manifest.default.scene.MyPyramid4.geometry.spitz = 10;
-
-  _manifest.default.scene.MyPyramid1.position.SetX(-10);
-
-  _manifest.default.scene.MyPyramid1.position.SetZ(-10);
-
-  _manifest.default.scene.MyPyramid2.position.SetX(10);
-
-  _manifest.default.scene.MyPyramid2.position.SetZ(10);
-
-  _manifest.default.scene.MyPyramid3.position.SetX(10);
-
-  _manifest.default.scene.MyPyramid3.position.SetZ(-10);
-
-  _manifest.default.scene.MyPyramid4.position.SetX(-10);
-
-  _manifest.default.scene.MyPyramid4.position.SetZ(10);
-
-  _manifest.default.scene.MyPyramid1.position.SetY(-1);
-
-  _manifest.default.scene.MyPyramid2.position.SetY(-1);
-
-  _manifest.default.scene.MyPyramid3.position.SetY(-1);
-
-  _manifest.default.scene.MyPyramid4.position.SetY(-1);
-
-  _manifest.default.scene.MyPyramid2.rotation.rotationSpeed.z = 0;
-  world.Add("squareTex", 5, "outsideBox", textuteImageSamplers);
-  _manifest.default.scene.outsideBox.position.y = 4;
-  _manifest.default.scene.outsideBox.position.x = 0;
-  _manifest.default.scene.outsideBox.position.z = -45; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
-  // App.scene.outsideBox.rotValue = 90;
-
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
-
-  _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
-
-  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-
-
-  E("HOLDER_STREAMS").style.display = "block";
-  _manifest.default.scene.outsideBox.streamTextures = tex;
-  setTimeout(function () {// App.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 1000);
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":30,"../program/manifest":42}],24:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-let CANVAS2d_SURFACE_TEXTURE = matrixEngine.Engine.CANVAS2d_SURFACE_TEXTURE;
-
-var runThis = world => {
-  /* globals ENUMERATORS world App CANVAS2d_SURFACE_TEXTURE E */
-  let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-  let E = matrixEngine.utility.E; // eslint-disable-next-line no-unused-vars
-
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply" // ENUM : multiply , divide ,
-
-  };
-  world.Add("cubeLightTex", 12, "outsideBox");
-  _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55;
-  _manifest.default.scene.outsideBox.rotation.rotationSpeed.z = 50;
-  _manifest.default.scene.outsideBox.rotValue = 90;
-
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
-
-  _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
-
-  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); /////////////////////////////////////////
-  // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-  /////////////////////////////////////////
-
-
-  E("HOLDER_STREAMS").style.display = "block";
-  _manifest.default.scene.outsideBox.streamTextures = new CANVAS2d_SURFACE_TEXTURE("app/canvas2d/build.html", "starter/run.js");
-  setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 1000);
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":30,"../program/manifest":42}],25:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-let CANVAS2d_SURFACE_TEXTURE = matrixEngine.Engine.CANVAS2d_SURFACE_TEXTURE;
-let E = matrixEngine.utility.E;
-
-var runThis = world => {
-  /* globals world App ENUMERATORS E CANVAS2d_SURFACE_TEXTURE */
-  // eslint-disable-next-line no-unused-vars
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  };
-  world.Add("cubeLightTex", 12, "outsideBox");
-  _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55;
-  _manifest.default.scene.outsideBox.rotation.rotationSpeed.z = 50; // App.scene.outsideBox.rotValue = 90;
-
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
-
-  _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
-
-  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-
-
-  E("HOLDER_STREAMS").style.display = "block";
-  _manifest.default.scene.outsideBox.streamTextures = new CANVAS2d_SURFACE_TEXTURE("app/canvas2d/build.html", "starter/particle.js");
-  setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 1000);
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":30,"../program/manifest":42}],26:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-let CANVAS2d_SURFACE_TEXTURE = matrixEngine.Engine.CANVAS2d_SURFACE_TEXTURE;
-let E = matrixEngine.utility.E;
-
-var runThis = world => {
-  /* globals world App ENUMERATORS E CANVAS2d_SURFACE_TEXTURE */
-  // eslint-disable-next-line no-unused-vars
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  };
-  world.Add("cubeLightTex", 12, "outsideBox");
-  _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55;
-  _manifest.default.scene.outsideBox.rotation.rotationSpeed.z = 50;
-  _manifest.default.scene.outsideBox.rotValue = 90;
-
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
-
-  _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
-
-  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-
-
-  E("HOLDER_STREAMS").style.display = "block";
-  _manifest.default.scene.outsideBox.streamTextures = new CANVAS2d_SURFACE_TEXTURE("app/canvas2d/build.html", "starter/text.js");
-  setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 1000);
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":30,"../program/manifest":42}],27:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-var runThis = world => {
-  /* globals App world */
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply" // ENUM : multiply , divide
-
-  };
-  world.Add("sphereLightTex", 2, "MySphere", textuteImageSamplers);
-  _manifest.default.scene.MySphere.position.z = -10;
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],28:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-var runThis = world => {
-  /* globals world App */
-  // LOAD MESH FROM OBJ FILES...
-  // if you dont use obj or complex mesh you no need for this func
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply" // ENUM : multiply , divide ,
-
-  };
-  world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers); // ROTATING
-  // Stop
-
-  _manifest.default.scene.MySquareTexure1.rotValue = 0;
-  _manifest.default.scene.MySquareTexure1.rotation.rotationSpeed.z = 0;
-
-  _manifest.default.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
-    world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.LINEAR);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.LINEAR); //  world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.MIRRORED_REPEAT);
-    //  world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.MIRRORED_REPEAT);
-
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.REPEAT);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.REPEAT); //   world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_SWIZZLE_R, world.GL.gl.ZERO);
-    //   world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_SWIZZLE_G, world.GL.gl.RED);
-    //   world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_SWIZZLE_B, world.GL.gl.ZERO);
-
-    world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, // Level of details
-    world.GL.gl.RGBA, // Format
-    world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, // Size of each channel
-    object.textures[t].image);
-    world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-  };
-
-  _manifest.default.scene.MySquareTexure1.geometry.setScale(2.3);
-
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_top.y = 1.4;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_top.x = 1.4;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.left_bottom.x = -0.4;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.left_bottom.y = -0.4;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.left_top.x = -0.4;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.left_top.y = 1.4;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_bottom.x = 1.4;
-  _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_bottom.y = -0.4;
-  setInterval(function () {
-    _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_top.x += 0.001;
-    _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.left_bottom.x += 0.001;
-    _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.left_top.x += 0.001;
-    _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_bottom.x += 0.001;
-  }, 20);
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":42}],29:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/*
-  Nikola Lukic
-  webGl2GLmatrix2 api example
-*/
-
-/* globals App world VIDEO_TEXTURE ENUMERATORS */
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-let VIDEO_TEXTURE = matrixEngine.Engine.VIDEO_TEXTURE;
-
-var runThis = world => {
-  // eslint-disable-next-line no-unused-vars
-  let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply" // ENUM : multiply , divide ,
-
-  };
-  world.Add("cubeLightTex", 12, "outsideBox");
-  _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -4;
-  _manifest.default.scene.outsideBox.rotation.rotationSpeed.z = 50;
-  _manifest.default.scene.outsideBox.rotValue = 90;
-
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
-
-  _manifest.default.scene.outsideBox.streamTextures = new VIDEO_TEXTURE("electric_sheep.mp4");
-  _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
-
-  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":30,"../program/manifest":42}],30:[function(require,module,exports){
+},{"./index.js":2}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2073,7 +86,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./lib/engine":31,"./lib/events":32,"./lib/loader-obj":33,"./lib/matrix-buffers":34,"./lib/matrix-geometry":36,"./lib/matrix-render":37,"./lib/matrix-textures":38,"./lib/matrix-world":39,"./lib/utility":40,"./program/manifest":42}],31:[function(require,module,exports){
+},{"./lib/engine":3,"./lib/events":4,"./lib/loader-obj":5,"./lib/matrix-buffers":6,"./lib/matrix-geometry":8,"./lib/matrix-render":9,"./lib/matrix-textures":10,"./lib/matrix-world":11,"./lib/utility":12,"./program/manifest":14}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2977,7 +990,7 @@ function CANVAS2d_SURFACE_TEXTURE(path_, path_to_run_script) {
   };
 }
 
-},{"../program/manifest":42,"./events":32,"./matrix-render":37,"./matrix-world":39,"./utility":40,"./webgl-utils":41}],32:[function(require,module,exports){
+},{"../program/manifest":14,"./events":4,"./matrix-render":9,"./matrix-world":11,"./utility":12,"./webgl-utils":13}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3359,7 +1372,7 @@ if (_manifest.default.pwa.addToHomePage === true) {
   } catch (err) {}
 }
 
-},{"../program/manifest":42,"./matrix-world":39,"./utility":40}],33:[function(require,module,exports){
+},{"../program/manifest":14,"./matrix-world":11,"./utility":12}],5:[function(require,module,exports){
 /* globals module */
 'use strict';
 
@@ -3752,7 +1765,7 @@ OBJ.deleteMeshBuffers = function (gl, mesh) {
 var _default = OBJ;
 exports.default = _default;
 
-},{}],34:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3766,6 +1779,7 @@ var _matrixWorld = require("./matrix-world");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* globals App world*/
 _manifest.default.operation.cube_buffer_procedure = function (object) {
   /* Vertex                                        */
   // // console.log("        Buffer the " + object.type + "'s vertex");
@@ -3888,7 +1902,7 @@ _manifest.default.operation.square_buffer_procedure = function (object) {
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, new Float32Array(object.geometry.color), _matrixWorld.world.GL.gl.STATIC_DRAW);
 
   object.vertexColorBuffer.itemSize = 4;
-  object.vertexColorBuffer.numItems = object.geometry.colorData.color.length;
+  object.vertexColorBuffer.numItems = 4;
 };
 
 _manifest.default.operation.triangle_buffer_procedure = function (object) {
@@ -4128,7 +2142,7 @@ _manifest.default.operation.sphere_buffer_procedure = function (object) {
 var _default = _manifest.default.operation;
 exports.default = _default;
 
-},{"../program/manifest":42,"./matrix-world":39}],35:[function(require,module,exports){
+},{"../program/manifest":14,"./matrix-world":11}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5122,10 +3136,12 @@ var drawsOperation = _manifest.default.operation.draws;
 var _default = drawsOperation;
 exports.default = _default;
 
-},{"../program/manifest":42,"./events":32,"./matrix-world":39}],36:[function(require,module,exports){
+},{"../program/manifest":14,"./events":4,"./matrix-world":11}],8:[function(require,module,exports){
 /* eslint-disable no-redeclare */
 
 /* eslint-disable no-unused-vars */
+
+/* global App S1 OSCILLATOR */
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5412,7 +3428,8 @@ class TriangleVertex {
     return "dynamicBuffer is false but i will update vertex array prototypical.";
   }
 
-}
+} // Test dynamic color operation
+
 
 exports.TriangleVertex = TriangleVertex;
 
@@ -5504,21 +3521,6 @@ class SquareVertex {
       local.push(point.ALPHA());
     });
     return new Float32Array(local);
-  }
-
-  setColorSolid(red, green, blue, a) {
-    if (typeof a === 'undefined') {
-      var a = 1;
-    }
-
-    this.colorData.color.forEach((point, index, arr) => {
-      arr[index].r = red;
-      arr[index].g = green;
-      arr[index].b = blue;
-      arr[index].a = a;
-    });
-
-    _manifest.default.operation.square_buffer_procedure(this.root);
   }
 
   setColorComponentRed(red) {
@@ -5672,26 +3674,32 @@ class CubeVertex {
     };
 
     this.colorData.SetRedForAll = function (red_) {
+      // Front face
       this.Front.pointA.r = red_;
       this.Front.pointB.r = red_;
       this.Front.pointC.r = red_;
-      this.Front.pointD.r = red_;
+      this.Front.pointD.r = red_; // Right face
+
       this.Right.pointA.r = red_;
       this.Right.pointB.r = red_;
       this.Right.pointC.r = red_;
-      this.Right.pointD.r = red_;
+      this.Right.pointD.r = red_; // Back face
+
       this.Back.pointA.r = red_;
       this.Back.pointB.r = red_;
       this.Back.pointC.r = red_;
-      this.Back.pointD.r = red_;
+      this.Back.pointD.r = red_; // Left face
+
       this.Left.pointA.r = red_;
       this.Left.pointB.r = red_;
       this.Left.pointC.r = red_;
-      this.Left.pointD.r = red_;
+      this.Left.pointD.r = red_; // Bottom left
+
       this.Bottom.pointA.r = red_;
       this.Bottom.pointB.r = red_;
       this.Bottom.pointC.r = red_;
-      this.Bottom.pointD.r = red_;
+      this.Bottom.pointD.r = red_; // Bottom right BottomRight
+
       this.Top.pointA.r = red_;
       this.Top.pointB.r = red_;
       this.Top.pointC.r = red_;
@@ -5701,26 +3709,32 @@ class CubeVertex {
     };
 
     this.colorData.SetGreenForAll = function (color_) {
+      // Front face
       this.Front.pointA.g = color_;
       this.Front.pointB.g = color_;
       this.Front.pointC.g = color_;
-      this.Front.pointD.g = color_;
+      this.Front.pointD.g = color_; // Right face
+
       this.Right.pointA.g = color_;
       this.Right.pointB.g = color_;
       this.Right.pointC.g = color_;
-      this.Right.pointD.g = color_;
+      this.Right.pointD.g = color_; // Back face
+
       this.Back.pointA.g = color_;
       this.Back.pointB.g = color_;
       this.Back.pointC.g = color_;
-      this.Back.pointD.g = color_;
+      this.Back.pointD.g = color_; // Left face
+
       this.Left.pointA.g = color_;
       this.Left.pointB.g = color_;
       this.Left.pointC.g = color_;
-      this.Left.pointD.g = color_;
+      this.Left.pointD.g = color_; // Bottom left
+
       this.Bottom.pointA.g = color_;
       this.Bottom.pointB.g = color_;
       this.Bottom.pointC.g = color_;
-      this.Bottom.pointD.g = color_;
+      this.Bottom.pointD.g = color_; // Bottom right BottomRight
+
       this.Top.pointA.g = color_;
       this.Top.pointB.g = color_;
       this.Top.pointC.g = color_;
@@ -5730,180 +3744,36 @@ class CubeVertex {
     };
 
     this.colorData.SetBlueForAll = function (color_) {
+      // Front face
       this.Front.pointA.b = color_;
       this.Front.pointB.b = color_;
       this.Front.pointC.b = color_;
-      this.Front.pointD.b = color_;
+      this.Front.pointD.b = color_; // Right face
+
       this.Right.pointA.b = color_;
       this.Right.pointB.b = color_;
       this.Right.pointC.b = color_;
-      this.Right.pointD.b = color_;
+      this.Right.pointD.b = color_; // Back face
+
       this.Back.pointA.b = color_;
       this.Back.pointB.b = color_;
       this.Back.pointC.b = color_;
-      this.Back.pointD.b = color_;
+      this.Back.pointD.b = color_; // Left face
+
       this.Left.pointA.b = color_;
       this.Left.pointB.b = color_;
       this.Left.pointC.b = color_;
-      this.Left.pointD.b = color_;
+      this.Left.pointD.b = color_; // Bottom left
+
       this.Bottom.pointA.b = color_;
       this.Bottom.pointB.b = color_;
       this.Bottom.pointC.b = color_;
-      this.Bottom.pointD.b = color_;
+      this.Bottom.pointD.b = color_; // Bottom right BottomRight
+
       this.Top.pointA.b = color_;
       this.Top.pointB.b = color_;
       this.Top.pointC.b = color_;
       this.Top.pointD.b = color_;
-
-      _manifest.default.operation.cube_buffer_procedure(this.parent);
-    };
-
-    this.colorData.SetFrontSolidColor = function (red, green, blue, a) {
-      if (typeof a === 'undefined') {
-        var a = 1;
-      }
-
-      this.Front.pointA.r = red;
-      this.Front.pointA.g = green;
-      this.Front.pointA.b = blue;
-      this.Front.pointA.a = a;
-      this.Front.pointB.r = color_;
-      this.Front.pointB.g = green;
-      this.Front.pointB.b = blue;
-      this.Front.pointB.a = a;
-      this.Front.pointC.r = color_;
-      this.Front.pointC.g = green;
-      this.Front.pointC.b = blue;
-      this.Front.pointC.a = a;
-      this.Front.pointD.r = color_;
-      this.Front.pointD.g = green;
-      this.Front.pointD.b = blue;
-      this.Front.pointD.a = a;
-
-      _manifest.default.operation.cube_buffer_procedure(this.parent);
-    };
-
-    this.colorData.SetRightSolidColor = function (red, green, blue, a) {
-      if (typeof a === 'undefined') {
-        var a = 1;
-      }
-
-      this.Right.pointA.r = red;
-      this.Right.pointA.g = green;
-      this.Right.pointA.b = blue;
-      this.Right.pointA.a = a;
-      this.Right.pointB.r = color_;
-      this.Right.pointB.g = green;
-      this.Right.pointB.b = blue;
-      this.Right.pointB.a = a;
-      this.Right.pointC.r = color_;
-      this.Right.pointC.g = green;
-      this.Right.pointC.b = blue;
-      this.Right.pointC.a = a;
-      this.Right.pointD.r = color_;
-      this.Right.pointD.g = green;
-      this.Right.pointD.b = blue;
-      this.Right.pointD.a = a;
-
-      _manifest.default.operation.cube_buffer_procedure(this.parent);
-    };
-
-    this.colorData.SetBackSolidColor = function (red, green, blue, a) {
-      if (typeof a === 'undefined') {
-        var a = 1;
-      }
-
-      this.Back.pointA.r = red;
-      this.Back.pointA.g = green;
-      this.Back.pointA.b = blue;
-      this.Back.pointA.a = a;
-      this.Back.pointB.r = color_;
-      this.Back.pointB.g = green;
-      this.Back.pointB.b = blue;
-      this.Back.pointB.a = a;
-      this.Back.pointC.r = color_;
-      this.Back.pointC.g = green;
-      this.Back.pointC.b = blue;
-      this.Back.pointC.a = a;
-      this.Back.pointD.r = color_;
-      this.Back.pointD.g = green;
-      this.Back.pointD.b = blue;
-      this.Back.pointD.a = a;
-
-      _manifest.default.operation.cube_buffer_procedure(this.parent);
-    };
-
-    this.colorData.SetLeftSolidColor = function (red, green, blue, a) {
-      if (typeof a === 'undefined') {
-        var a = 1;
-      }
-
-      this.Left.pointA.r = red;
-      this.Left.pointA.g = green;
-      this.Left.pointA.b = blue;
-      this.Left.pointA.a = a;
-      this.Left.pointB.r = color_;
-      this.Left.pointB.g = green;
-      this.Left.pointB.b = blue;
-      this.Left.pointB.a = a;
-      this.Left.pointC.r = color_;
-      this.Left.pointC.g = green;
-      this.Left.pointC.b = blue;
-      this.Left.pointC.a = a;
-      this.Left.pointD.r = color_;
-      this.Left.pointD.g = green;
-      this.Left.pointD.b = blue;
-      this.Left.pointD.a = a;
-
-      _manifest.default.operation.cube_buffer_procedure(this.parent);
-    };
-
-    this.colorData.SetBottomSolidColor = function (red, green, blue, a) {
-      if (typeof a === 'undefined') {
-        var a = 1;
-      }
-
-      this.Bottom.pointA.r = red;
-      this.Bottom.pointA.g = green;
-      this.Bottom.pointA.b = blue;
-      this.Bottom.pointA.a = a;
-      this.Bottom.pointB.r = color_;
-      this.Bottom.pointB.g = green;
-      this.Bottom.pointB.b = blue;
-      this.Bottom.pointB.a = a;
-      this.Bottom.pointC.r = color_;
-      this.Bottom.pointC.g = green;
-      this.Bottom.pointC.b = blue;
-      this.Bottom.pointC.a = a;
-      this.Bottom.pointD.r = color_;
-      this.Bottom.pointD.g = green;
-      this.Bottom.pointD.b = blue;
-      this.Bottom.pointD.a = a;
-
-      _manifest.default.operation.cube_buffer_procedure(this.parent);
-    };
-
-    this.colorData.SetTopSolidColor = function (red, green, blue, a) {
-      if (typeof a === 'undefined') {
-        var a = 1;
-      }
-
-      this.Top.pointA.r = red;
-      this.Top.pointA.g = green;
-      this.Top.pointA.b = blue;
-      this.Top.pointA.a = a;
-      this.Top.pointB.r = color_;
-      this.Top.pointB.g = green;
-      this.Top.pointB.b = blue;
-      this.Top.pointB.a = a;
-      this.Top.pointC.r = color_;
-      this.Top.pointC.g = green;
-      this.Top.pointC.b = blue;
-      this.Top.pointC.a = a;
-      this.Top.pointD.r = color_;
-      this.Top.pointD.g = green;
-      this.Top.pointD.b = blue;
-      this.Top.pointD.a = a;
 
       _manifest.default.operation.cube_buffer_procedure(this.parent);
     };
@@ -6440,7 +4310,8 @@ class sphereVertex {
     return this.indexData;
   }
 
-}
+} // SPHERE 0 custom
+
 
 exports.sphereVertex = sphereVertex;
 
@@ -6639,6 +4510,21 @@ function COLOR_ALPHA(r_, g_, b_, a_) {
     console.log("color data RGB format : R:" + ROOT.r + "  G:" + ROOT.g + "  B:" + ROOT.b + "  ALPHA:" + ROOT.ALPHA);
   };
 }
+/**
+ * @Source http://math.hws.edu/graphicsbook/source/webgl/cube-camera.html
+ * @description Creates a model of an annulus or disk lying in the xy plane,
+ * centered at the origin.  (This is not a great representation,
+ * since all the normals are the same.)
+ * @param innerRadius the radius of the hole in the radius; a value of
+ *  zero will give a disk rather than a ring.  If not present,
+ *  the default value is 0.25.
+ * @param outerRadius the radius of the ring, from the center to teh
+ *  outer edge.  Must be greater than innerRadius.  If not provided,
+ *  the default value is 2*innerRadius or is 0.5 if innerRadius is 0.
+ * @slices the number of radial subdivisions in the circular approximation
+ *  of an annulus.  If not provided, the value will be 32.
+ */
+
 
 class customVertex_1 {
   createGeoData(root) {
@@ -6731,7 +4617,7 @@ exports.customVertex_1 = customVertex_1;
 
 function ring(innerRadius, outerRadius, slices) {}
 
-},{"../program/manifest":42,"./utility":40}],37:[function(require,module,exports){
+},{"../program/manifest":14,"./utility":12}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6845,7 +4731,7 @@ var callReDraw_ = function () {
 
 exports.callReDraw_ = callReDraw_;
 
-},{"../program/manifest":42,"./engine":31,"./matrix-world":39}],38:[function(require,module,exports){
+},{"../program/manifest":14,"./engine":3,"./matrix-world":11}],10:[function(require,module,exports){
 /* globals App world */
 'use strict';
 
@@ -6938,7 +4824,7 @@ _manifest.default.tools.loadVideoTexture = function (name, image) {
 var _default = _manifest.default.textools;
 exports.default = _default;
 
-},{"../program/manifest":42,"./matrix-world":39}],39:[function(require,module,exports){
+},{"../program/manifest":14,"./matrix-world":11}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6963,6 +4849,36 @@ var _matrixGeometry = require("./matrix-geometry");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable no-unused-vars */
+
+/* globals
+           App
+           world
+           defineWebGLWorld
+           canvas
+           loadShaders
+           Position
+           GeoOfColor
+           mat4
+           TriangleVertex
+           sphereVertex
+           PiramideVertex
+          _glBlend
+          _DrawElements
+          initiateFPS
+          initShaders
+          SquareVertex
+          RotationVector
+          animate
+          reDraw
+          COLOR
+          RegenerateShader
+          RegenerateCustomShader
+          customVertex
+          CubeVertex
+          _glTexParameteri
+          SYS
+          callReDraw_
+*/
 
 /* Width and Height variables of the browser screen  */
 var frames = 0;
@@ -7746,7 +5662,7 @@ function defineworld(canvas) {
 
 /*****************************************************/
 
-},{"../program/manifest":42,"./engine":31,"./matrix-draws":35,"./matrix-geometry":36,"./matrix-render":37,"./utility":40}],40:[function(require,module,exports){
+},{"../program/manifest":14,"./engine":3,"./matrix-draws":7,"./matrix-geometry":8,"./matrix-render":9,"./utility":12}],12:[function(require,module,exports){
 /* eslint-disable no-unused-vars */
 
 /* eslint-disable no-undef */
@@ -8327,7 +6243,7 @@ const BiquadFilterType = {
 };
 exports.BiquadFilterType = BiquadFilterType;
 
-},{"../program/manifest":42,"./events":32}],41:[function(require,module,exports){
+},{"../program/manifest":14,"./events":4}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8516,7 +6432,7 @@ if (!window.requestAnimationFrame) {
   }();
 }
 
-},{}],42:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

@@ -1860,8 +1860,6 @@ var _matrixWorld = require("./matrix-world");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* globals App world*/
-// CUBE BUFFER INIT OR FOR DYNAMIC
 _manifest.default.operation.cube_buffer_procedure = function (object) {
   /* Vertex                                        */
   // // console.log("        Buffer the " + object.type + "'s vertex");
@@ -1939,8 +1937,7 @@ _manifest.default.operation.cube_buffer_procedure = function (object) {
 
   object.vertexIndexBuffer.itemSize = 1;
   object.vertexIndexBuffer.numItems = 36;
-}; // PIRAMIDE BUFFER INIT OR FOR DYNAMIC
-
+};
 
 _manifest.default.operation.piramide_buffer_procedure = function (object) {
   // Vertex
@@ -1964,12 +1961,10 @@ _manifest.default.operation.piramide_buffer_procedure = function (object) {
 
   object.vertexColorBuffer.itemSize = 4;
   object.vertexColorBuffer.numItems = 18;
-}; // SQUARE BUFFER INIT OR FOR DYNAMIC
-
+};
 
 _manifest.default.operation.square_buffer_procedure = function (object) {
-  /* Vertex                                        */
-  // console.log("        Buffer the " + object.type + "'s vertex");
+  /* Vertex */
   object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
 
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -1978,19 +1973,17 @@ _manifest.default.operation.square_buffer_procedure = function (object) {
 
   object.vertexPositionBuffer.itemSize = 3;
   object.vertexPositionBuffer.numItems = 4;
-  /* Color                                         */
-  // console.log("        Buffer the " + object.type + "'s color");
+  /* Color */
 
   object.vertexColorBuffer = _matrixWorld.world.GL.gl.createBuffer();
 
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
 
-  _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, new Float32Array(object.color), _matrixWorld.world.GL.gl.STATIC_DRAW);
+  _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, new Float32Array(object.geometry.color), _matrixWorld.world.GL.gl.STATIC_DRAW);
 
   object.vertexColorBuffer.itemSize = 4;
-  object.vertexColorBuffer.numItems = 4;
-}; // TRIANGLE BUFFER INIT OR FOR DYNAMIC
-
+  object.vertexColorBuffer.numItems = object.geometry.colorData.color.length;
+};
 
 _manifest.default.operation.triangle_buffer_procedure = function (object) {
   /* Vertex                                        */
@@ -2012,8 +2005,7 @@ _manifest.default.operation.triangle_buffer_procedure = function (object) {
 
   object.vertexColorBuffer.itemSize = 4;
   object.vertexColorBuffer.numItems = 3; // console.log("Buffer the " + object.type + "'s color loaded success.");
-}; // OBJ FILE BUFFER INIT OR FOR DYNAMIC
-
+};
 
 _manifest.default.operation.obj_buffer_procedure = function (object) {
   /* Vertex          not here for obj                */
@@ -2072,8 +2064,7 @@ _manifest.default.operation.obj_buffer_procedure = function (object) {
     object.vertexIndexBuffer.numItems = 36;
   */
 
-}; // SQUARE FILE BUFFER INIT OR FOR DYNAMIC
-
+};
 
 _manifest.default.operation.squareTex_buffer_procedure = function (object) {
   /* Vertex                                        */
@@ -2151,12 +2142,10 @@ _manifest.default.operation.squareTex_buffer_procedure = function (object) {
 
   object.vertexIndexBuffer.itemSize = 1;
   object.vertexIndexBuffer.numItems = 6;
-}; // sphere BUFFER INIT OR FOR DYNAMIC
-
+};
 
 _manifest.default.operation.sphere_buffer_procedure = function (object) {
-  /* Vertex                                        */
-  // // console.log("        Buffer the " + object.type + "'s vertex");
+  /* Vertex */
   object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
 
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -2191,11 +2180,10 @@ _manifest.default.operation.sphere_buffer_procedure = function (object) {
     object.vertexColorBuffer.itemSize = 3;
     object.vertexColorBuffer.numItems = object.geometry.normalData.length / 3;
   }
-  /* Texture                                       */
+  /* Texture */
 
 
   if (object.texture) {
-    //     // console.log("        Buffer the " + object.type + "'s texture");
     object.vertexTexCoordBuffer = _matrixWorld.world.GL.gl.createBuffer();
 
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
@@ -2205,11 +2193,10 @@ _manifest.default.operation.sphere_buffer_procedure = function (object) {
     object.vertexTexCoordBuffer.itemSize = 2;
     object.vertexTexCoordBuffer.numItems = object.geometry.textureCoordData.length / 2;
   }
-  /* Normals                                   */
+  /* Normals */
 
 
   if (object.shaderProgram.useLightingUniform) {
-    //     // console.log("        Buffer the " + object.type + "'s normals");
     object.vertexNormalBuffer = _matrixWorld.world.GL.gl.createBuffer();
 
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
@@ -2219,8 +2206,7 @@ _manifest.default.operation.sphere_buffer_procedure = function (object) {
     object.vertexNormalBuffer.itemSize = 3;
     object.vertexNormalBuffer.numItems = object.geometry.normalData.length / 3;
   }
-  /* Indices                                       */
-  //// console.log("        Buffer the " + object.type + "'s indices");
+  /* Indices*/
 
 
   object.vertexIndexBuffer = _matrixWorld.world.GL.gl.createBuffer();
@@ -3234,8 +3220,6 @@ exports.default = _default;
 /* eslint-disable no-redeclare */
 
 /* eslint-disable no-unused-vars */
-
-/* global App S1 OSCILLATOR */
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3522,14 +3506,12 @@ class TriangleVertex {
     return "dynamicBuffer is false but i will update vertex array prototypical.";
   }
 
-} // SQUARE
-
+}
 
 exports.TriangleVertex = TriangleVertex;
 
 class SquareVertex {
   constructor(root) {
-    this.classRoot = this;
     this.root = root;
     this.size = root.size;
     this.pointA = new Point(1, 1, 0);
@@ -3543,6 +3525,10 @@ class SquareVertex {
       right_bottom: new Point(1.0, 0.0, 0),
       left_bottom: new Point(0.0, 0.0, 0)
     };
+    this.colorData = {};
+    this.colorData.parent = this.root; // default
+
+    this.colorData.color = [new COLOR_ALPHA(1.0, 0.0, 0.0, 1.0), new COLOR_ALPHA(0.0, 1.0, 0.0, 1.0), new COLOR_ALPHA(0.5, 0.0, 1.0, 1.0), new COLOR_ALPHA(0.5, 0.5, 1.0, 1.0)];
   }
 
   get vertices() {
@@ -3570,18 +3556,87 @@ class SquareVertex {
     this.texCoordsPoints.right_bottom.y = 0 - newScaleFactror;
   }
 
+  setScaleByX(scale) {
+    this.pointA.x = scale;
+    this.pointB.x = -scale;
+    this.pointC.x = scale;
+    this.pointD.x = -scale;
+    if (this.dynamicBuffer == true) return;
+
+    _manifest.default.operation.square_buffer_procedure(this.root);
+
+    return 'dynamicBuffer is false but i will update vertex array prototypical.';
+  }
+
+  setScaleByY(scale) {
+    this.pointA.y = scale;
+    this.pointB.y = scale;
+    this.pointC.y = -scale;
+    this.pointD.y = -scale;
+    if (this.dynamicBuffer == true) return;
+
+    _manifest.default.operation.square_buffer_procedure(this.root);
+
+    return 'dynamicBuffer is false but i will update vertex array prototypical.';
+  }
+
   setScale(scale) {
     this.size = scale;
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.square_buffer_procedure(this.root);
 
-    return "DynamicBuffer is false but i will update vertex array prototypical.";
+    return 'DynamicBuffer is false but i will update vertex array prototypical.';
   }
 
   get color() {
-    return new Float32Array([// Front face
-    this.colorData.Front.pointA.r, this.colorData.Front.pointA.g, this.colorData.Front.pointA.b, this.colorData.Front.pointA.ALPHA(), this.colorData.Front.pointB.r, this.colorData.Front.pointB.g, this.colorData.Front.pointB.b, this.colorData.Front.pointB.ALPHA(), this.colorData.Front.pointC.r, this.colorData.Front.pointC.g, this.colorData.Front.pointC.b, this.colorData.Front.pointC.ALPHA(), this.colorData.Front.pointD.r, this.colorData.Front.pointD.g, this.colorData.Front.pointD.b, this.colorData.Front.pointD.ALPHA()]);
+    var local = [];
+    this.colorData.color.forEach(point => {
+      local.push(point.r);
+      local.push(point.g);
+      local.push(point.b);
+      local.push(point.ALPHA());
+    });
+    return new Float32Array(local);
+  }
+
+  setColorSolid(red, green, blue, a) {
+    if (typeof a === 'undefined') {
+      var a = 1;
+    }
+
+    this.colorData.color.forEach((point, index, arr) => {
+      arr[index].r = red;
+      arr[index].g = green;
+      arr[index].b = blue;
+      arr[index].a = a;
+    });
+
+    _manifest.default.operation.square_buffer_procedure(this.root);
+  }
+
+  setColorComponentRed(red) {
+    this.colorData.color.forEach((point, index, arr) => {
+      arr[index].r = red;
+    });
+
+    _manifest.default.operation.square_buffer_procedure(this.root);
+  }
+
+  setColorComponentGreen(green) {
+    this.colorData.color.forEach((point, index, arr) => {
+      arr[index].g = green;
+    });
+
+    _manifest.default.operation.square_buffer_procedure(this.root);
+  }
+
+  setColorComponentBlue(blue) {
+    this.colorData.color.forEach((point, index, arr) => {
+      arr[index].b = blue;
+    });
+
+    _manifest.default.operation.square_buffer_procedure(this.root);
   }
 
 }
@@ -3711,32 +3766,26 @@ class CubeVertex {
     };
 
     this.colorData.SetRedForAll = function (red_) {
-      // Front face
       this.Front.pointA.r = red_;
       this.Front.pointB.r = red_;
       this.Front.pointC.r = red_;
-      this.Front.pointD.r = red_; // Right face
-
+      this.Front.pointD.r = red_;
       this.Right.pointA.r = red_;
       this.Right.pointB.r = red_;
       this.Right.pointC.r = red_;
-      this.Right.pointD.r = red_; // Back face
-
+      this.Right.pointD.r = red_;
       this.Back.pointA.r = red_;
       this.Back.pointB.r = red_;
       this.Back.pointC.r = red_;
-      this.Back.pointD.r = red_; // Left face
-
+      this.Back.pointD.r = red_;
       this.Left.pointA.r = red_;
       this.Left.pointB.r = red_;
       this.Left.pointC.r = red_;
-      this.Left.pointD.r = red_; // Bottom left
-
+      this.Left.pointD.r = red_;
       this.Bottom.pointA.r = red_;
       this.Bottom.pointB.r = red_;
       this.Bottom.pointC.r = red_;
-      this.Bottom.pointD.r = red_; // Bottom right BottomRight
-
+      this.Bottom.pointD.r = red_;
       this.Top.pointA.r = red_;
       this.Top.pointB.r = red_;
       this.Top.pointC.r = red_;
@@ -3746,32 +3795,26 @@ class CubeVertex {
     };
 
     this.colorData.SetGreenForAll = function (color_) {
-      // Front face
       this.Front.pointA.g = color_;
       this.Front.pointB.g = color_;
       this.Front.pointC.g = color_;
-      this.Front.pointD.g = color_; // Right face
-
+      this.Front.pointD.g = color_;
       this.Right.pointA.g = color_;
       this.Right.pointB.g = color_;
       this.Right.pointC.g = color_;
-      this.Right.pointD.g = color_; // Back face
-
+      this.Right.pointD.g = color_;
       this.Back.pointA.g = color_;
       this.Back.pointB.g = color_;
       this.Back.pointC.g = color_;
-      this.Back.pointD.g = color_; // Left face
-
+      this.Back.pointD.g = color_;
       this.Left.pointA.g = color_;
       this.Left.pointB.g = color_;
       this.Left.pointC.g = color_;
-      this.Left.pointD.g = color_; // Bottom left
-
+      this.Left.pointD.g = color_;
       this.Bottom.pointA.g = color_;
       this.Bottom.pointB.g = color_;
       this.Bottom.pointC.g = color_;
-      this.Bottom.pointD.g = color_; // Bottom right BottomRight
-
+      this.Bottom.pointD.g = color_;
       this.Top.pointA.g = color_;
       this.Top.pointB.g = color_;
       this.Top.pointC.g = color_;
@@ -3781,36 +3824,180 @@ class CubeVertex {
     };
 
     this.colorData.SetBlueForAll = function (color_) {
-      // Front face
       this.Front.pointA.b = color_;
       this.Front.pointB.b = color_;
       this.Front.pointC.b = color_;
-      this.Front.pointD.b = color_; // Right face
-
+      this.Front.pointD.b = color_;
       this.Right.pointA.b = color_;
       this.Right.pointB.b = color_;
       this.Right.pointC.b = color_;
-      this.Right.pointD.b = color_; // Back face
-
+      this.Right.pointD.b = color_;
       this.Back.pointA.b = color_;
       this.Back.pointB.b = color_;
       this.Back.pointC.b = color_;
-      this.Back.pointD.b = color_; // Left face
-
+      this.Back.pointD.b = color_;
       this.Left.pointA.b = color_;
       this.Left.pointB.b = color_;
       this.Left.pointC.b = color_;
-      this.Left.pointD.b = color_; // Bottom left
-
+      this.Left.pointD.b = color_;
       this.Bottom.pointA.b = color_;
       this.Bottom.pointB.b = color_;
       this.Bottom.pointC.b = color_;
-      this.Bottom.pointD.b = color_; // Bottom right BottomRight
-
+      this.Bottom.pointD.b = color_;
       this.Top.pointA.b = color_;
       this.Top.pointB.b = color_;
       this.Top.pointC.b = color_;
       this.Top.pointD.b = color_;
+
+      _manifest.default.operation.cube_buffer_procedure(this.parent);
+    };
+
+    this.colorData.SetFrontSolidColor = function (red, green, blue, a) {
+      if (typeof a === 'undefined') {
+        var a = 1;
+      }
+
+      this.Front.pointA.r = red;
+      this.Front.pointA.g = green;
+      this.Front.pointA.b = blue;
+      this.Front.pointA.a = a;
+      this.Front.pointB.r = color_;
+      this.Front.pointB.g = green;
+      this.Front.pointB.b = blue;
+      this.Front.pointB.a = a;
+      this.Front.pointC.r = color_;
+      this.Front.pointC.g = green;
+      this.Front.pointC.b = blue;
+      this.Front.pointC.a = a;
+      this.Front.pointD.r = color_;
+      this.Front.pointD.g = green;
+      this.Front.pointD.b = blue;
+      this.Front.pointD.a = a;
+
+      _manifest.default.operation.cube_buffer_procedure(this.parent);
+    };
+
+    this.colorData.SetRightSolidColor = function (red, green, blue, a) {
+      if (typeof a === 'undefined') {
+        var a = 1;
+      }
+
+      this.Right.pointA.r = red;
+      this.Right.pointA.g = green;
+      this.Right.pointA.b = blue;
+      this.Right.pointA.a = a;
+      this.Right.pointB.r = color_;
+      this.Right.pointB.g = green;
+      this.Right.pointB.b = blue;
+      this.Right.pointB.a = a;
+      this.Right.pointC.r = color_;
+      this.Right.pointC.g = green;
+      this.Right.pointC.b = blue;
+      this.Right.pointC.a = a;
+      this.Right.pointD.r = color_;
+      this.Right.pointD.g = green;
+      this.Right.pointD.b = blue;
+      this.Right.pointD.a = a;
+
+      _manifest.default.operation.cube_buffer_procedure(this.parent);
+    };
+
+    this.colorData.SetBackSolidColor = function (red, green, blue, a) {
+      if (typeof a === 'undefined') {
+        var a = 1;
+      }
+
+      this.Back.pointA.r = red;
+      this.Back.pointA.g = green;
+      this.Back.pointA.b = blue;
+      this.Back.pointA.a = a;
+      this.Back.pointB.r = color_;
+      this.Back.pointB.g = green;
+      this.Back.pointB.b = blue;
+      this.Back.pointB.a = a;
+      this.Back.pointC.r = color_;
+      this.Back.pointC.g = green;
+      this.Back.pointC.b = blue;
+      this.Back.pointC.a = a;
+      this.Back.pointD.r = color_;
+      this.Back.pointD.g = green;
+      this.Back.pointD.b = blue;
+      this.Back.pointD.a = a;
+
+      _manifest.default.operation.cube_buffer_procedure(this.parent);
+    };
+
+    this.colorData.SetLeftSolidColor = function (red, green, blue, a) {
+      if (typeof a === 'undefined') {
+        var a = 1;
+      }
+
+      this.Left.pointA.r = red;
+      this.Left.pointA.g = green;
+      this.Left.pointA.b = blue;
+      this.Left.pointA.a = a;
+      this.Left.pointB.r = color_;
+      this.Left.pointB.g = green;
+      this.Left.pointB.b = blue;
+      this.Left.pointB.a = a;
+      this.Left.pointC.r = color_;
+      this.Left.pointC.g = green;
+      this.Left.pointC.b = blue;
+      this.Left.pointC.a = a;
+      this.Left.pointD.r = color_;
+      this.Left.pointD.g = green;
+      this.Left.pointD.b = blue;
+      this.Left.pointD.a = a;
+
+      _manifest.default.operation.cube_buffer_procedure(this.parent);
+    };
+
+    this.colorData.SetBottomSolidColor = function (red, green, blue, a) {
+      if (typeof a === 'undefined') {
+        var a = 1;
+      }
+
+      this.Bottom.pointA.r = red;
+      this.Bottom.pointA.g = green;
+      this.Bottom.pointA.b = blue;
+      this.Bottom.pointA.a = a;
+      this.Bottom.pointB.r = color_;
+      this.Bottom.pointB.g = green;
+      this.Bottom.pointB.b = blue;
+      this.Bottom.pointB.a = a;
+      this.Bottom.pointC.r = color_;
+      this.Bottom.pointC.g = green;
+      this.Bottom.pointC.b = blue;
+      this.Bottom.pointC.a = a;
+      this.Bottom.pointD.r = color_;
+      this.Bottom.pointD.g = green;
+      this.Bottom.pointD.b = blue;
+      this.Bottom.pointD.a = a;
+
+      _manifest.default.operation.cube_buffer_procedure(this.parent);
+    };
+
+    this.colorData.SetTopSolidColor = function (red, green, blue, a) {
+      if (typeof a === 'undefined') {
+        var a = 1;
+      }
+
+      this.Top.pointA.r = red;
+      this.Top.pointA.g = green;
+      this.Top.pointA.b = blue;
+      this.Top.pointA.a = a;
+      this.Top.pointB.r = color_;
+      this.Top.pointB.g = green;
+      this.Top.pointB.b = blue;
+      this.Top.pointB.a = a;
+      this.Top.pointC.r = color_;
+      this.Top.pointC.g = green;
+      this.Top.pointC.b = blue;
+      this.Top.pointC.a = a;
+      this.Top.pointD.r = color_;
+      this.Top.pointD.g = green;
+      this.Top.pointD.b = blue;
+      this.Top.pointD.a = a;
 
       _manifest.default.operation.cube_buffer_procedure(this.parent);
     };
@@ -4347,8 +4534,7 @@ class sphereVertex {
     return this.indexData;
   }
 
-} // SPHERE 0 custom
-
+}
 
 exports.sphereVertex = sphereVertex;
 
@@ -4547,21 +4733,6 @@ function COLOR_ALPHA(r_, g_, b_, a_) {
     console.log("color data RGB format : R:" + ROOT.r + "  G:" + ROOT.g + "  B:" + ROOT.b + "  ALPHA:" + ROOT.ALPHA);
   };
 }
-/**
- * @Source http://math.hws.edu/graphicsbook/source/webgl/cube-camera.html
- * @description Creates a model of an annulus or disk lying in the xy plane,
- * centered at the origin.  (This is not a great representation,
- * since all the normals are the same.)
- * @param innerRadius the radius of the hole in the radius; a value of
- *  zero will give a disk rather than a ring.  If not present,
- *  the default value is 0.25.
- * @param outerRadius the radius of the ring, from the center to teh
- *  outer edge.  Must be greater than innerRadius.  If not provided,
- *  the default value is 2*innerRadius or is 0.5 if innerRadius is 0.
- * @slices the number of radial subdivisions in the circular approximation
- *  of an annulus.  If not provided, the value will be 32.
- */
-
 
 class customVertex_1 {
   createGeoData(root) {
@@ -4887,36 +5058,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* eslint-disable no-unused-vars */
 
-/* globals
-           App
-           world
-           defineWebGLWorld
-           canvas
-           loadShaders
-           Position
-           GeoOfColor
-           mat4
-           TriangleVertex
-           sphereVertex
-           PiramideVertex
-          _glBlend
-          _DrawElements
-          initiateFPS
-          initShaders
-          SquareVertex
-          RotationVector
-          animate
-          reDraw
-          COLOR
-          RegenerateShader
-          RegenerateCustomShader
-          customVertex
-          CubeVertex
-          _glTexParameteri
-          SYS
-          callReDraw_
-*/
-
 /* Width and Height variables of the browser screen  */
 var frames = 0;
 exports.frames = frames;
@@ -5142,7 +5283,7 @@ function defineworld(canvas) {
       squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       squareObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       squareObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
-      squareObject.color = new _matrixGeometry.GeoOfColor('4x4');
+      squareObject.color = true;
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
       squareObject.glBlend = new _utility._glBlend();
@@ -5154,11 +5295,10 @@ function defineworld(canvas) {
 
       if (squareObject.shaderProgram) {
         // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
-        this.bufferSquare(squareObject);
-        squareObject.glDrawElements = new _utility._DrawElements(squareObject.vertexColorBuffer.numItems); // NEED TO LOOK BETTER
+        this.bufferSquare(squareObject); // LOOK BETTER
 
-        squareObject.glDrawElements.mode = 'TRIANGLE_STRIP'; //ONLY FOR SQUARE
-
+        squareObject.glDrawElements = new _utility._DrawElements(squareObject.vertexColorBuffer.numItems);
+        squareObject.glDrawElements.mode = 'TRIANGLE_STRIP';
         this.contentList[this.contentList.length] = squareObject;
         _manifest.default.scene[squareObject.name] = squareObject;
       } else {// console.log("Square shader failure...");
@@ -6093,7 +6233,8 @@ function _glBlend() {
     root_glblend.blendParamSrc = param_;
     root_glblend.blendParamDest = param_;
   };
-}
+} // Tradicional Class
+
 
 function _DrawElements(numberOfItemsIndices) {
   this.mode = 'TRIANGLES';

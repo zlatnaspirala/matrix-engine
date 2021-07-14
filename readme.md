@@ -6,95 +6,82 @@
 
 ### STATUS - [Integrated fully pwa addToHomePage/cache]
 
-### For npm users
+### For npm users recommended
 
-## Recommended
-
-Use starter project:
-https://github.com/zlatnaspirala/matrix-engine-starter
+ - Use starter project:
+   https://github.com/zlatnaspirala/matrix-engine-starter
 
 - The benefits of this project is offering an overview of the entire application logic,
   easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
   (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in opengles 1.1.
   First level of customisation is texture part of code. Best view in example custom_texture.js.
-  I implemented webcam quick access call with custom active texture (porting canvas2d work to 3d faces)
+  I implemented webcam quick access call with custom active texture (porting canvas2d to the 3d faces works fine)
 
 ### Live Demos
 
 - https://maximumroulette.com/apps/matrix-engine/examples-build.html
 - https://maximumroulette.com/apps/matrix-engine/app-build.html
 
-## Help for localhost dev stage
-
-### Switch example with url params
-
-- Usefull also for production for switching whole pages/apps.
-  https://localhost/matrix-engine/query.html?u=adding_color_cube
-
-Code access:
-
-```js
-const QueryString = matrixEngine.utility.QueryString;
-```
-
 ### Install dependencies
+
+  Matrix engine keep minimum dependency.
 
 - uglify-js
 - browserify
 
 ```js
   npm run install.dep
+  npm i
 ```
 
 @Note: For windows users maybe you will need to add `browserify` to the env PATH
 if you got errors on commands `npm run build.*`.
 
-### Build Application bundle script
+## Help for localhost dev stage
 
-- Before any operation install npm deps:
+### Switch example with url params
+- Usefull also for production for switching whole pages/apps.
+  https://localhost/matrix-engine/query.html?u=adding_color_cube
 
+Code access:
 ```js
-  npm i
+const QueryString = matrixEngine.utility.QueryString;
 ```
+
+
+### Build Application bundle script
 
 @Note: If you use unsecured `http` protocol no build needed at all just navigate to the `app.html`.
 app.html load App.js like script type `module`. Same roles for all others instance build entries.
 
-app-build.html , examples-build.html loads javascript type `text/javascript`.
-app.html , examples.html loads javascript type `module`.
+ - `app-build.html` , `examples-build.html` loads javascript type `text/javascript`.
+ - `app.html`, `examples.html` loads javascript type `module`.
 
 - Build entry App.js
 
 ```js
   npm run build.app
 ```
-
 Now navigate to the `app-build.html` page.
 
 - Build entry App-Examples.js
-
 ```js
   npm run build.examples
 ```
-
 Now navigate to the `examples-build.html` page.
 
 - Build just library
-
 ```js
   npm run build.lib
 ```
-
 Now navigate to the `me-library.html` page , represent empty page with loaded `matrix-engine`.
 
 - Build with uglify
-
 ```js
 build.app.ugly;
 ```
 
 - Build ALL
-
 ```js
 build.all;
 ```
@@ -141,8 +128,8 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 
   world.GL.gl.texImage2D(
     world.GL.gl.TEXTURE_2D,
-    0, // Level of details
-    world.GL.gl.RGBA, // Format
+    0,                         // Level of details
+    world.GL.gl.RGBA,          // Format
     world.GL.gl.RGBA,
     world.GL.gl.UNSIGNED_BYTE, // Size of each channel
     object.textures[t].image
@@ -155,11 +142,10 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 ### First person controller:
 
 ```js
-  //In one line activate also deactivate .
+  // In one line activate also deactivate.
   App.camera.FirstPersonController = true;
 
   // Look in manifest.js
-
   camera : {
     viewAngle: 45,
     nearViewpoint: 0.1,
@@ -272,6 +258,8 @@ App.scene.TV.streamTextures = new ACCESS_CAMERA('webcam_beta');
 ```
 
 ### Texture editor (runtime):
+
+ - Imports note we can use any canvas 2d app.
 
 In examples : porting2d.js, porting_text.js, porting2d_particle.js you can found source code.
 It is very powerfull tool but you will need to use visual-js 2d canvas api part of project.
