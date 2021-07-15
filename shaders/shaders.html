@@ -24,7 +24,6 @@ void main(void) {
 }
 </script>
 
-<!--   Square Shader      -->
 <script id="square-shader-fs" type="x-shader/x-fragment">
 precision mediump float;
 
@@ -50,7 +49,6 @@ void main(void) {
 }
 </script>
 
-<!--   Cube Shader      -->
 <script id="cube-shader-fs" type="x-shader/x-fragment">
 precision mediump float;
 
@@ -76,7 +74,6 @@ void main(void) {
 }
 </script>
 
-<!--   Cube Texture Shader      -->
 <script id="cubeTex-shader-fs" type="x-shader/x-fragment">
 precision mediump float;
 
@@ -189,8 +186,6 @@ void main(void) {
 }
 
 </script>
-<!--   end of cube shader   -->
-<!--   Filter : cubeLightTex  CLONE OF -->
 
 <script id="obj-shader-fs" type="x-shader/x-fragment">
 precision mediump float;
@@ -241,12 +236,9 @@ void main(void) {
   }
 }
 </script>
-<!--   end of cube shader  CLONE OF -->
 
-<!--   Pyramid Shader      -->
 <script id="pyramid-shader-fs" type="x-shader/x-fragment">
 precision mediump float;
-
 varying vec4 vColor;
 
 void main(void) {
@@ -273,9 +265,7 @@ void main(void) {
 }
 </script>
 
-<!--   Filter : cubeLightTex   -->
 <script id="squareTex-shader-fs" type="x-shader/x-fragment">
-
 precision mediump float;
 
 varying vec2 vTextureCoord;
@@ -347,10 +337,7 @@ void main(void) {
   }
 }
 </script>
-<!--   end of cube shader   -->
 
-<!-- duplicate cubeLightTex -->
-<!--   Filter :  sphereLightTex   -->
 <script id="sphereLightTex-shader-fs" type="x-shader/x-fragment">
 precision mediump float;
 
@@ -422,4 +409,3 @@ void main(void) {
   }
 }
 </script>
-<!--   end of cube shader   -->
