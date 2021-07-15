@@ -26,6 +26,13 @@
     "url": "git+https://github.com/zlatnaspirala/webgl2-glmatrix2-engine.git"
   },
   "keywords": [
+    "vanilla-js",
+    "webcam-texture",
+    "video-texture",
+    "canvas",
+    "textures",
+    "scene",
+    "opengles",
     "webgl",
     "webgl2",
     "glmatrix",
