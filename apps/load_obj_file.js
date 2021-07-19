@@ -1,23 +1,14 @@
 /* eslint-disable no-unused-vars */
 
-/*
-  Nikola Lukic
-  webGl2GLmatrix2 api example
-  app/canvas2d/build.html is visual-js 2d part program instance
-*/
-
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
-/* globals world App world */
 import App from "../program/manifest";
 
 export var runThis = world => {
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ */
 
-  // LOAD MESH FROM OBJ FILES...
   // if you dont use obj or complex mesh you no need for this func
   function onLoadObj(meshes) {
     App.meshes = meshes;

@@ -5,17 +5,9 @@
  * @Description Matrix Engine Api Example.
  */
 
-/* globals world App world */
 import App from "../program/manifest";
 
 export var runThis = world => {
-  /*
-  Nikola Lukic
-  webGl2GLmatrix2 api example
-  app/canvas2d/build.html is visual-js 2d part program instance
-*/
-
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
 
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],

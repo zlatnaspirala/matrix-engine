@@ -34,7 +34,7 @@ export var runThis = world => {
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   E("HOLDER_STREAMS").style.display = "block";
   App.scene.outsideBox.streamTextures = new CANVAS2d_SURFACE_TEXTURE(
-    "app/canvas2d/build.html",
+    "apps/canvas2d/build.html",
     "starter/particle.js"
   );
 
