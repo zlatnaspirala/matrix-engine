@@ -18,6 +18,7 @@ import OBJ from "./lib/loader-obj";
 import operation from "./lib/matrix-buffers";
 import texTools from "./lib/matrix-textures";
 import * as utility from "./lib/utility";
+import * as raycaster from './lib/raycast';
 
 export {
   App,
@@ -30,4 +31,5 @@ export {
   utility,
   operation,
   OBJ,
+  raycaster
 };

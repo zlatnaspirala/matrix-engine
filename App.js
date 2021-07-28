@@ -1,6 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/adding_color_triangle';
-import * as raycaster from './lib/raycast';
+import {runThis} from './apps/adding_color_square_raycast';
 
 var world;
 var App = matrixEngine.App;
@@ -28,9 +27,7 @@ window.webGLStart = () => {
   window.runThis = runThis;
 
   matrixEngine.utility.E('debugBox').style.display = 'block';
-  canvas.addEventListener('mousedown', (ev) => {
-    raycaster.checkingProcedure(ev);
-  });
+  // canvas.addEventListener('mousedown', (ev) => { raycaster.checkingProcedure(ev); });
 
   // If you need this , you can prolong loading time
   setTimeout(() => {

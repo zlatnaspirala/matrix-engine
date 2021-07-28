@@ -8,9 +8,7 @@ exports.default = void 0;
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _adding_color_triangle = require("./apps/adding_color_triangle");
-
-var raycaster = _interopRequireWildcard(require("./lib/raycast"));
+var _adding_color_square_raycast = require("./apps/adding_color_square_raycast");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -36,14 +34,12 @@ window.webGLStart = () => {
 
   window.world = world;
   window.App = App;
-  window.runThis = _adding_color_triangle.runThis;
-  matrixEngine.utility.E('debugBox').style.display = 'block';
-  canvas.addEventListener('mousedown', ev => {
-    raycaster.checkingProcedure(ev);
-  }); // If you need this , you can prolong loading time
+  window.runThis = _adding_color_square_raycast.runThis;
+  matrixEngine.utility.E('debugBox').style.display = 'block'; // canvas.addEventListener('mousedown', (ev) => { raycaster.checkingProcedure(ev); });
+  // If you need this , you can prolong loading time
 
   setTimeout(() => {
-    (0, _adding_color_triangle.runThis)(world);
+    (0, _adding_color_square_raycast.runThis)(world);
   }, 250); // Run example
   // runThis(world);
 };
@@ -53,7 +49,7 @@ var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/adding_color_triangle":2,"./index.js":3,"./lib/raycast":13}],2:[function(require,module,exports){
+},{"./apps/adding_color_square_raycast":2,"./index.js":3}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -69,23 +65,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
  */
-
-/* globals world App world */
 var runThis = world => {
-  world.Add("triangle", 1, "MyColoredTriangle1"); // world.Add("triangle", 1, "MyColoredTriangle2");
-  // world.Add("triangle", 1, "MyColoredTriangle3");
+  world.Add("square", 1.1, "MyColoredSquareRayObject");
 
-  _manifest.default.scene.MyColoredTriangle1.position.SetZ(-4);
+  _manifest.default.scene.MyColoredSquareRayObject.position.SetX(0);
 
-  _manifest.default.scene.MyColoredTriangle1.position.SetX(0);
-
-  _manifest.default.scene.MyColoredTriangle1.position.SetY(0); // App.scene.MyColoredTriangle1.position.SetX(2.5);
-  // App.scene.MyColoredTriangle2.position.SetX(0);
-  // App.scene.MyColoredTriangle3.position.SetX(-2.5);
-  // App.scene.MyColoredTriangle1.rotation.rotationSpeed.z = -10;
-  // App.scene.MyColoredTriangle2.rotation.rotationSpeed.z = -10;
-  // App.scene.MyColoredTriangle3.rotation.rotationSpeed.z = -10;
-
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  }); // App.scene.MyColoredSquare1.rotation.rotationSpeed.x = 15;
 };
 
 exports.runThis = runThis;
@@ -120,7 +107,7 @@ Object.defineProperty(exports, "texTools", {
     return _matrixTextures.default;
   }
 });
-exports.utility = exports.Events = exports.Engine = exports.matrixRender = exports.matrixGeometry = exports.matrixWorld = void 0;
+exports.raycaster = exports.utility = exports.Events = exports.Engine = exports.matrixRender = exports.matrixGeometry = exports.matrixWorld = void 0;
 
 var _manifest = _interopRequireDefault(require("./program/manifest"));
 
@@ -154,13 +141,17 @@ var utility = _interopRequireWildcard(require("./lib/utility"));
 
 exports.utility = utility;
 
+var raycaster = _interopRequireWildcard(require("./lib/raycast"));
+
+exports.raycaster = raycaster;
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./lib/engine":4,"./lib/events":5,"./lib/loader-obj":6,"./lib/matrix-buffers":7,"./lib/matrix-geometry":9,"./lib/matrix-render":10,"./lib/matrix-textures":11,"./lib/matrix-world":12,"./lib/utility":14,"./program/manifest":16}],4:[function(require,module,exports){
+},{"./lib/engine":4,"./lib/events":5,"./lib/loader-obj":6,"./lib/matrix-buffers":7,"./lib/matrix-geometry":9,"./lib/matrix-render":10,"./lib/matrix-textures":11,"./lib/matrix-world":12,"./lib/raycast":13,"./lib/utility":14,"./program/manifest":16}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2470,14 +2461,14 @@ _manifest.default.operation.draws.square = function (object) {
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  if (raycaster.checkingProcedureCalcAll) raycaster.checkingProcedureCalcAll(object);
 
   if (object.geometry.dynamicBuffer == true) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
 
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
   } else {
-    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer); //ori without if dynamicBuffer
-
+    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
   }
 
   _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.vertexPositionBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
@@ -5881,6 +5872,7 @@ exports.rayIntersectsTriangle = rayIntersectsTriangle;
 exports.unproject = unproject;
 exports.checkingProcedure = checkingProcedure;
 exports.checkingProcedureCalc = checkingProcedureCalc;
+exports.checkingProcedureCalcAll = checkingProcedureCalcAll;
 exports.touchCoordinate = void 0;
 
 /**
@@ -6020,6 +6012,28 @@ function checkingProcedureCalc(object) {
   // mvMatrix // your invert view matrix
   mat4.invert(outp, world.pMatrix), mat4.invert(outv, mvMatrix));
   const intersectionPoint = vec3.create();
+  const triangle = [[object.geometry.vertices[0], object.geometry.vertices[1], object.geometry.vertices[2]], [object.geometry.vertices[3], object.geometry.vertices[4], object.geometry.vertices[5]], [object.geometry.vertices[6], object.geometry.vertices[7], object.geometry.vertices[8]]];
+
+  if (rayIntersectsTriangle(vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos), ray, triangle, intersectionPoint, object.position)) {
+    console.log('hits', intersectionPoint);
+    matrixEngine.utility.E('debugBox').style.background = 'red';
+  } else {
+    matrixEngine.utility.E('debugBox').style.background = 'green';
+  }
+}
+
+function checkingProcedureCalcAll(object) {
+  if (touchCoordinate.enabled == false) return;
+  if (touchCoordinate.enabled == true) touchCoordinate.enabled = false;
+  var mvMatrix = object.mvMatrix;
+  var outp = mat4.create();
+  var outv = mat4.create();
+  const ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], // world.pMatrix, // your invert projection matrix
+  // mvMatrix // your invert view matrix
+  mat4.invert(outp, world.pMatrix), mat4.invert(outv, mvMatrix));
+  const intersectionPoint = vec3.create();
+  console.log(">>>", object.geometry.vertices.length);
+  return;
   const triangle = [[object.geometry.vertices[0], object.geometry.vertices[1], object.geometry.vertices[2]], [object.geometry.vertices[3], object.geometry.vertices[4], object.geometry.vertices[5]], [object.geometry.vertices[6], object.geometry.vertices[7], object.geometry.vertices[8]]];
 
   if (rayIntersectsTriangle(vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos), ray, triangle, intersectionPoint, object.position)) {

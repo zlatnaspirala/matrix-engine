@@ -4,6 +4,7 @@ import {runThis as cube_tex_arrays} from './apps/cube_tex_arrays';
 import {runThis as adding_color_cube} from './apps/adding_color_cube';
 import {runThis as adding_color_piramyde} from './apps/adding_color_piramyde';
 import {runThis as adding_color_triangle} from './apps/adding_color_triangle';
+import {runThis as adding_color_square_raycast} from './apps/adding_color_square_raycast';
 import {runThis as adding_more_texture_samplers} from './apps/adding_more_texture_samplers';
 import {runThis as adding_square_texture} from './apps/adding_square_texture';
 import {runThis as all_variant_of_blending} from './apps/all_variant_of_blending';
@@ -29,6 +30,7 @@ import {runThis as video_texture} from './apps/video_texture';
 import {runThis as adding_color_square} from './apps/adding_color_square';
 
 var Examples = {
+  adding_color_square_raycast: adding_color_square_raycast,
   cube_tex_arrays: cube_tex_arrays,
   adding_color_cube: adding_color_cube,
   adding_color_piramyde: adding_color_piramyde,
