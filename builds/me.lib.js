@@ -86,7 +86,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./lib/engine":3,"./lib/events":4,"./lib/loader-obj":5,"./lib/matrix-buffers":6,"./lib/matrix-geometry":8,"./lib/matrix-render":9,"./lib/matrix-textures":10,"./lib/matrix-world":11,"./lib/utility":12,"./program/manifest":14}],3:[function(require,module,exports){
+},{"./lib/engine":3,"./lib/events":4,"./lib/loader-obj":5,"./lib/matrix-buffers":6,"./lib/matrix-geometry":8,"./lib/matrix-render":9,"./lib/matrix-textures":10,"./lib/matrix-world":11,"./lib/utility":13,"./program/manifest":15}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -990,7 +990,7 @@ function CANVAS2d_SURFACE_TEXTURE(path_, path_to_run_script) {
   };
 }
 
-},{"../program/manifest":14,"./events":4,"./matrix-render":9,"./matrix-world":11,"./utility":12,"./webgl-utils":13}],4:[function(require,module,exports){
+},{"../program/manifest":15,"./events":4,"./matrix-render":9,"./matrix-world":11,"./utility":13,"./webgl-utils":14}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1372,7 +1372,7 @@ if (_manifest.default.pwa.addToHomePage === true) {
   } catch (err) {}
 }
 
-},{"../program/manifest":14,"./matrix-world":11,"./utility":12}],5:[function(require,module,exports){
+},{"../program/manifest":15,"./matrix-world":11,"./utility":13}],5:[function(require,module,exports){
 /* globals module */
 'use strict';
 
@@ -2117,7 +2117,7 @@ _manifest.default.operation.sphere_buffer_procedure = function (object) {
 var _default = _manifest.default.operation;
 exports.default = _default;
 
-},{"../program/manifest":14,"./matrix-world":11}],7:[function(require,module,exports){
+},{"../program/manifest":15,"./matrix-world":11}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2130,6 +2130,12 @@ var _manifest = _interopRequireDefault(require("../program/manifest"));
 var _matrixWorld = require("./matrix-world");
 
 var _events = require("./events");
+
+var raycaster = _interopRequireWildcard(require("./raycast"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2442,6 +2448,7 @@ _manifest.default.operation.draws.triangle = function (object) {
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
 
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
 
@@ -3065,7 +3072,7 @@ var drawsOperation = _manifest.default.operation.draws;
 var _default = drawsOperation;
 exports.default = _default;
 
-},{"../program/manifest":14,"./events":4,"./matrix-world":11}],8:[function(require,module,exports){
+},{"../program/manifest":15,"./events":4,"./matrix-world":11,"./raycast":12}],8:[function(require,module,exports){
 /* eslint-disable no-redeclare */
 
 /* eslint-disable no-unused-vars */
@@ -4774,7 +4781,7 @@ exports.customVertex_1 = customVertex_1;
 
 function ring(innerRadius, outerRadius, slices) {}
 
-},{"../program/manifest":14,"./utility":12}],9:[function(require,module,exports){
+},{"../program/manifest":15,"./utility":13}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4795,14 +4802,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable no-unused-vars */
 
 /* global */
-var animate = function (rotationObject) {
+var animate = function (sceneObject) {
   var timeNow = new Date().getTime();
 
   if (_engine.lastTime != 0) {
     var elapsed = timeNow - _engine.lastTime;
-    rotationObject.rotation.rotx += rotationObject.rotation.rotSpeedX * elapsed / 1000.0;
-    rotationObject.rotation.roty += rotationObject.rotation.rotSpeedY * elapsed / 1000.0;
-    rotationObject.rotation.rotz += rotationObject.rotation.rotSpeedZ * elapsed / 1000.0;
+    sceneObject.rotation.rotx += sceneObject.rotation.rotSpeedX * elapsed / 1000.0;
+    sceneObject.rotation.roty += sceneObject.rotation.rotSpeedY * elapsed / 1000.0;
+    sceneObject.rotation.rotz += sceneObject.rotation.rotSpeedZ * elapsed / 1000.0;
+    sceneObject.position.update();
   }
 };
 
@@ -4888,7 +4896,7 @@ var callReDraw_ = function () {
 
 exports.callReDraw_ = callReDraw_;
 
-},{"../program/manifest":14,"./engine":3,"./matrix-world":11}],10:[function(require,module,exports){
+},{"../program/manifest":15,"./engine":3,"./matrix-world":11}],10:[function(require,module,exports){
 /* globals App world */
 'use strict';
 
@@ -4981,7 +4989,7 @@ _manifest.default.tools.loadVideoTexture = function (name, image) {
 var _default = _manifest.default.textools;
 exports.default = _default;
 
-},{"../program/manifest":14,"./matrix-world":11}],11:[function(require,module,exports){
+},{"../program/manifest":15,"./matrix-world":11}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5789,7 +5797,170 @@ function defineworld(canvas) {
 
 /*****************************************************/
 
-},{"../program/manifest":14,"./engine":3,"./matrix-draws":7,"./matrix-geometry":8,"./matrix-render":9,"./utility":12}],12:[function(require,module,exports){
+},{"../program/manifest":15,"./engine":3,"./matrix-draws":7,"./matrix-geometry":8,"./matrix-render":9,"./utility":13}],12:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.rayIntersectsTriangle = rayIntersectsTriangle;
+exports.unproject = unproject;
+exports.checkingProcedure = checkingProcedure;
+exports.checkingProcedureCalc = checkingProcedureCalc;
+exports.touchCoordinate = void 0;
+
+/**
+ * Ray triangle intersection algorithm
+ * 
+ * @param rayOrigin ray origin point
+ * @param rayVector ray direction
+ * @param triangle three points of triangle, should be ccw order
+ * @param out the intersection point
+ * @return intersects or not
+ * 
+ * Uses Möller–Trumbore intersection algorithm
+ */
+console.log("test vec3 ", window.vec3);
+let touchCoordinate = {
+  enabled: false,
+  x: 0,
+  y: 0
+}; // export let rayVectorPassing = vec3.fromValues( 0, 0, -1)
+// window.rayVectorPassing = rayVectorPassing
+
+exports.touchCoordinate = touchCoordinate;
+
+function rayIntersectsTriangle(rayOrigin, // rayOrigin, // :vec3,
+rayVector, // :vec3,
+triangle, // :vec3[],
+out, //:vec3,
+objPos) // : boolean
+{
+  // rayOrigin =  vec3.fromValues(0, 0, -objPos.z + matrixEngine.Events.camera.zPos);
+  rayOrigin[0] = matrixEngine.Events.camera.xPos;
+  rayOrigin[1] = matrixEngine.Events.camera.yPos;
+  rayOrigin[2] = matrixEngine.Events.camera.zPos + -objPos.z; // rayOrigin =  vec3.fromValues(0, 0, -objPos.z + matrixEngine.Events.camera.zPos);
+  // rayVector = vec3.fromValues(0, 1, -1);
+  // rayVector = rayVectorPassing;
+
+  console.log(rayOrigin);
+  console.log(rayVector);
+  const EPSILON = 0.0000001;
+  const [v0, v1, v2] = triangle;
+  const edge1 = vec3.create();
+  const edge2 = vec3.create();
+  const h = vec3.create();
+  vec3.sub(edge1, v1, v0);
+  vec3.sub(edge2, v2, v0);
+  vec3.cross(h, rayVector, edge2);
+  const a = vec3.dot(edge1, h);
+
+  if (a > -EPSILON && a < EPSILON) {
+    return false;
+  }
+
+  const s = vec3.create();
+  vec3.sub(s, rayOrigin, v0);
+  const u = vec3.dot(s, h);
+
+  if (u < 0 || u > a) {
+    return false;
+  }
+
+  const q = vec3.create();
+  vec3.cross(q, s, edge1);
+  const v = vec3.dot(rayVector, q);
+
+  if (v < 0 || u + v > a) {
+    return false;
+  }
+
+  const t = vec3.dot(edge2, q) / a;
+
+  if (t > EPSILON) {
+    if (out) {
+      vec3.add(out, rayOrigin, [rayVector[0] * t, rayVector[1] * t, rayVector[2] * t]);
+    }
+
+    return true;
+  }
+
+  return false;
+}
+/**
+* Unproject a 2D point into a 3D world.
+* 
+* @param screenCoord [screenX, screenY]
+* @param viewport [left, top, width, height]
+* @param invProjection invert projection matrix
+* @param invView invert view matrix
+* @return 3D point position
+*/
+
+
+function unproject(screenCoord, // :[number, number],
+viewport, //:[number, number, number, number],
+invProjection, // :mat4,
+invView) //:mat4,
+// : vec3 
+{
+  const [left, top, width, height] = viewport;
+  const [x, y] = screenCoord;
+  var x1 = x / width * 2 - 1;
+  var y1 = y / height * 2 - 1; //rayVectorPassing[0] =  (2 * x) / width - 1 - left;
+  //rayVectorPassing[1] =  (2 * (height - y - 1)) / height - 1;
+
+  const out = vec4.fromValues(2 * x / width - 1 - left, 2 * (height - y - 1) / height - 1, 1, 1);
+  vec4.transformMat4(out, out, invProjection);
+  out[3] = 0;
+  vec4.transformMat4(out, out, invView);
+  return vec3.normalize(vec3.create(), out);
+}
+
+function checkingProcedure(ev) {
+  const {
+    clientX,
+    clientY,
+    screenX,
+    screenY
+  } = ev;
+  touchCoordinate.x = clientX;
+  touchCoordinate.y = clientY;
+  touchCoordinate.w = ev.target.width;
+  touchCoordinate.h = ev.target.height;
+  touchCoordinate.enabled = true;
+}
+
+function checkingProcedureCalc(object) {
+  var mvMatrix = object.mvMatrix;
+  if (touchCoordinate.enabled == false) return;
+  if (touchCoordinate.enabled == true) touchCoordinate.enabled = false;
+  var outp = mat4.create();
+  var outv = mat4.create();
+  const ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], // world.pMatrix, // your invert projection matrix
+  // mvMatrix // your invert view matrix
+  mat4.invert(outp, world.pMatrix), // your invert projection matrix
+  mat4.invert(outv, mvMatrix) //your invert view matrix
+  );
+  const intersectionPoint = vec3.create();
+  /* const triangle = [ //example triangle
+    vec3.fromValues(-1, -1, 0),
+    vec3.fromValues(1, 1, 0),
+    vec3.fromValues(-1, 1, 0),
+  ]; */
+
+  const triangle = [[App.scene.MyColoredTriangle1.geometry.vertices[0], App.scene.MyColoredTriangle1.geometry.vertices[1], App.scene.MyColoredTriangle1.geometry.vertices[2]], [App.scene.MyColoredTriangle1.geometry.vertices[3], App.scene.MyColoredTriangle1.geometry.vertices[4], App.scene.MyColoredTriangle1.geometry.vertices[5]], [App.scene.MyColoredTriangle1.geometry.vertices[6], App.scene.MyColoredTriangle1.geometry.vertices[7], App.scene.MyColoredTriangle1.geometry.vertices[8]]];
+
+  if (rayIntersectsTriangle(vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos), // your camera position - rayOrigin
+  ray, triangle, intersectionPoint, object.position)) {
+    console.log('hits', intersectionPoint);
+    matrixEngine.utility.E('debugBox').style.background = 'red';
+  } else {
+    matrixEngine.utility.E('debugBox').style.background = 'green';
+  }
+}
+
+},{}],13:[function(require,module,exports){
 /* eslint-disable no-unused-vars */
 
 /* eslint-disable no-undef */
@@ -6370,7 +6541,7 @@ const BiquadFilterType = {
 };
 exports.BiquadFilterType = BiquadFilterType;
 
-},{"../program/manifest":14,"./events":4}],13:[function(require,module,exports){
+},{"../program/manifest":15,"./events":4}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6559,7 +6730,7 @@ if (!window.requestAnimationFrame) {
   }();
 }
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

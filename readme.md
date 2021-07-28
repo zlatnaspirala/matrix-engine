@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.3.3`
+### Name: `MATRIX-ENGINE` `1.4.0`
 
 ### STATUS - [Integrated fully pwa addToHomePage/cache]
 
@@ -138,6 +138,12 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
   world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
 };
 ```
+
+### Raycast
+
+   - triangle support [1.4.0]
+   Raycast work fine also in firstPersonCamera operation.
+   Bug if walk behind object then turn arround and try raycast but no work for now.
 
 ### First person controller:
 
@@ -317,5 +323,5 @@ Best way is to keep it on 100% pass.
   http://www.blendswap.com/blends/view/26225
   Creative Commons Attribution 3.0
   http://www.blendswap.com/users/view/AndresCuccaro
-
 - https://freestocktextures.com/texture/bark-wood-plant,122.html
+- https://github.com/Necolo/raycaster
