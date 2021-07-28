@@ -7725,7 +7725,6 @@ exports.touchCoordinate = void 0;
  * 
  * Uses Möller–Trumbore intersection algorithm
  */
-console.log("test vec3 ", window.vec3);
 let touchCoordinate = {
   enabled: false,
   x: 0,
@@ -7741,10 +7740,16 @@ triangle, // :vec3[],
 out, //:vec3,
 objPos) // : boolean
 {
-  // rayOrigin =  vec3.fromValues(0, 0, -objPos.z + matrixEngine.Events.camera.zPos);
+  if (matrixEngine.Events.camera.zPos < objPos.z) {
+    console.log("special");
+    rayOrigin[2] = matrixEngine.Events.camera.zPos + -objPos.z;
+  } else {
+    rayOrigin[2] = matrixEngine.Events.camera.zPos + -objPos.z;
+  } // rayOrigin =  vec3.fromValues(0, 0, -objPos.z + matrixEngine.Events.camera.zPos);
+
+
   rayOrigin[0] = matrixEngine.Events.camera.xPos;
-  rayOrigin[1] = matrixEngine.Events.camera.yPos;
-  rayOrigin[2] = matrixEngine.Events.camera.zPos + -objPos.z; // rayOrigin =  vec3.fromValues(0, 0, -objPos.z + matrixEngine.Events.camera.zPos);
+  rayOrigin[1] = matrixEngine.Events.camera.yPos; // rayOrigin =  vec3.fromValues(0, 0, -objPos.z + matrixEngine.Events.camera.zPos);
   // rayVector = vec3.fromValues(0, 1, -1);
   // rayVector = rayVectorPassing;
 
@@ -7837,27 +7842,18 @@ function checkingProcedure(ev) {
 }
 
 function checkingProcedureCalc(object) {
-  var mvMatrix = object.mvMatrix;
   if (touchCoordinate.enabled == false) return;
   if (touchCoordinate.enabled == true) touchCoordinate.enabled = false;
+  var mvMatrix = object.mvMatrix;
   var outp = mat4.create();
   var outv = mat4.create();
   const ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], // world.pMatrix, // your invert projection matrix
   // mvMatrix // your invert view matrix
-  mat4.invert(outp, world.pMatrix), // your invert projection matrix
-  mat4.invert(outv, mvMatrix) //your invert view matrix
-  );
+  mat4.invert(outp, world.pMatrix), mat4.invert(outv, mvMatrix));
   const intersectionPoint = vec3.create();
-  /* const triangle = [ //example triangle
-    vec3.fromValues(-1, -1, 0),
-    vec3.fromValues(1, 1, 0),
-    vec3.fromValues(-1, 1, 0),
-  ]; */
+  const triangle = [[object.geometry.vertices[0], object.geometry.vertices[1], object.geometry.vertices[2]], [object.geometry.vertices[3], object.geometry.vertices[4], object.geometry.vertices[5]], [object.geometry.vertices[6], object.geometry.vertices[7], object.geometry.vertices[8]]];
 
-  const triangle = [[App.scene.MyColoredTriangle1.geometry.vertices[0], App.scene.MyColoredTriangle1.geometry.vertices[1], App.scene.MyColoredTriangle1.geometry.vertices[2]], [App.scene.MyColoredTriangle1.geometry.vertices[3], App.scene.MyColoredTriangle1.geometry.vertices[4], App.scene.MyColoredTriangle1.geometry.vertices[5]], [App.scene.MyColoredTriangle1.geometry.vertices[6], App.scene.MyColoredTriangle1.geometry.vertices[7], App.scene.MyColoredTriangle1.geometry.vertices[8]]];
-
-  if (rayIntersectsTriangle(vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos), // your camera position - rayOrigin
-  ray, triangle, intersectionPoint, object.position)) {
+  if (rayIntersectsTriangle(vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos), ray, triangle, intersectionPoint, object.position)) {
     console.log('hits', intersectionPoint);
     matrixEngine.utility.E('debugBox').style.background = 'red';
   } else {
