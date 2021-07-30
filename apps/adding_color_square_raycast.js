@@ -7,7 +7,7 @@ import App from "../program/manifest";
 
 export var runThis = (world) => {
 
-  world.Add("square", 1.1, "MyColoredSquareRayObject");
+  world.Add("square", 1, "MyColoredSquareRayObject");
   App.scene.MyColoredSquareRayObject.position.SetX(0);
 
   canvas.addEventListener('mousedown', (ev) => {

@@ -11,6 +11,10 @@ export var runThis = world => {
   // world.Add("triangle", 1, "MyColoredTriangle2");
   // world.Add("triangle", 1, "MyColoredTriangle3");
 
+  canvas.addEventListener('mousedown', (ev) => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+  
   App.scene.MyColoredTriangle1.position.SetZ(-4);
   App.scene.MyColoredTriangle1.position.SetX(0);
   App.scene.MyColoredTriangle1.position.SetY(0);

@@ -13,6 +13,10 @@ world.Add("cube", 1, "MyColoredCube1");
 world.Add("cube", 1, "MyColoredCube2");
 world.Add("cube", 1, "MyColoredCube3");
 
+canvas.addEventListener('mousedown', (ev) => {
+  matrixEngine.raycaster.checkingProcedure(ev);
+});
+
 // SET POSITION
 App.scene.MyColoredCube1.position.SetX(0);
 App.scene.MyColoredCube2.position.SetX(-2.5);
