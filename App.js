@@ -30,12 +30,7 @@ window.webGLStart = () => {
   // canvas.addEventListener('mousedown', (ev) => { raycaster.checkingProcedure(ev); });
 
   // If you need this , you can prolong loading time
-  setTimeout(() => {
-    runThis(world);
-  }, 250);
-
-  // Run example
-  // runThis(world);
+  setTimeout(() => { runThis(world); }, 250);
 };
 
 window.matrixEngine = matrixEngine;
