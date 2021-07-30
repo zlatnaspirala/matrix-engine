@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/adding_color_cube';
+import {runThis} from './apps/adding_color_piramyde';
 
 var world;
 var App = matrixEngine.App;
