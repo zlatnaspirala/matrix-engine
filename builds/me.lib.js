@@ -46,7 +46,7 @@ Object.defineProperty(exports, "texTools", {
     return _matrixTextures.default;
   }
 });
-exports.utility = exports.Events = exports.Engine = exports.matrixRender = exports.matrixGeometry = exports.matrixWorld = void 0;
+exports.raycaster = exports.utility = exports.Events = exports.Engine = exports.matrixRender = exports.matrixGeometry = exports.matrixWorld = void 0;
 
 var _manifest = _interopRequireDefault(require("./program/manifest"));
 
@@ -80,13 +80,17 @@ var utility = _interopRequireWildcard(require("./lib/utility"));
 
 exports.utility = utility;
 
+var raycaster = _interopRequireWildcard(require("./lib/raycast"));
+
+exports.raycaster = raycaster;
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./lib/engine":3,"./lib/events":4,"./lib/loader-obj":5,"./lib/matrix-buffers":6,"./lib/matrix-geometry":8,"./lib/matrix-render":9,"./lib/matrix-textures":10,"./lib/matrix-world":11,"./lib/utility":13,"./program/manifest":15}],3:[function(require,module,exports){
+},{"./lib/engine":3,"./lib/events":4,"./lib/loader-obj":5,"./lib/matrix-buffers":6,"./lib/matrix-geometry":8,"./lib/matrix-render":9,"./lib/matrix-textures":10,"./lib/matrix-world":11,"./lib/raycast":12,"./lib/utility":13,"./program/manifest":15}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2396,14 +2400,14 @@ _manifest.default.operation.draws.square = function (object) {
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  if (raycaster.checkingProcedureCalcAll) raycaster.checkingProcedureCalcAll(object);
 
   if (object.geometry.dynamicBuffer == true) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
 
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
   } else {
-    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer); //ori without if dynamicBuffer
-
+    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
   }
 
   _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.vertexPositionBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
@@ -5807,6 +5811,7 @@ exports.rayIntersectsTriangle = rayIntersectsTriangle;
 exports.unproject = unproject;
 exports.checkingProcedure = checkingProcedure;
 exports.checkingProcedureCalc = checkingProcedureCalc;
+exports.checkingProcedureCalcAll = checkingProcedureCalcAll;
 exports.touchCoordinate = void 0;
 
 /**
@@ -5946,6 +5951,28 @@ function checkingProcedureCalc(object) {
   // mvMatrix // your invert view matrix
   mat4.invert(outp, world.pMatrix), mat4.invert(outv, mvMatrix));
   const intersectionPoint = vec3.create();
+  const triangle = [[object.geometry.vertices[0], object.geometry.vertices[1], object.geometry.vertices[2]], [object.geometry.vertices[3], object.geometry.vertices[4], object.geometry.vertices[5]], [object.geometry.vertices[6], object.geometry.vertices[7], object.geometry.vertices[8]]];
+
+  if (rayIntersectsTriangle(vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos), ray, triangle, intersectionPoint, object.position)) {
+    console.log('hits', intersectionPoint);
+    matrixEngine.utility.E('debugBox').style.background = 'red';
+  } else {
+    matrixEngine.utility.E('debugBox').style.background = 'green';
+  }
+}
+
+function checkingProcedureCalcAll(object) {
+  if (touchCoordinate.enabled == false) return;
+  if (touchCoordinate.enabled == true) touchCoordinate.enabled = false;
+  var mvMatrix = object.mvMatrix;
+  var outp = mat4.create();
+  var outv = mat4.create();
+  const ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], // world.pMatrix, // your invert projection matrix
+  // mvMatrix // your invert view matrix
+  mat4.invert(outp, world.pMatrix), mat4.invert(outv, mvMatrix));
+  const intersectionPoint = vec3.create();
+  console.log(">>>", object.geometry.vertices.length);
+  return;
   const triangle = [[object.geometry.vertices[0], object.geometry.vertices[1], object.geometry.vertices[2]], [object.geometry.vertices[3], object.geometry.vertices[4], object.geometry.vertices[5]], [object.geometry.vertices[6], object.geometry.vertices[7], object.geometry.vertices[8]]];
 
   if (rayIntersectsTriangle(vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos), ray, triangle, intersectionPoint, object.position)) {

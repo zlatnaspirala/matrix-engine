@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 
 var App = {
-  name: "Matrix engine Manifest",
-  version: "1.0.5",
+  name: "Matrix Engine Manifest",
+  version: "1.0.6",
   events: true,
   logs: false,
   draw_interval: 10,
@@ -15,6 +15,7 @@ var App = {
     FirstPersonController: false,
     speedAmp: 0.5
   },
+  raycast: true,
   resize : {
     canvas: "full-screen",               // Change to any to make
     aspectRatio: 1.8,                    // aspectRatio system active
