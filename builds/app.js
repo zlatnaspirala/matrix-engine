@@ -8,7 +8,7 @@ exports.default = void 0;
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _adding_color_square_raycast = require("./apps/adding_color_square_raycast");
+var _adding_color_piramyde = require("./apps/adding_color_piramyde");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -34,14 +34,13 @@ window.webGLStart = () => {
 
   window.world = world;
   window.App = App;
-  window.runThis = _adding_color_square_raycast.runThis;
+  window.runThis = _adding_color_piramyde.runThis;
   matrixEngine.utility.E('debugBox').style.display = 'block'; // canvas.addEventListener('mousedown', (ev) => { raycaster.checkingProcedure(ev); });
   // If you need this , you can prolong loading time
 
   setTimeout(() => {
-    (0, _adding_color_square_raycast.runThis)(world);
-  }, 250); // Run example
-  // runThis(world);
+    (0, _adding_color_piramyde.runThis)(world);
+  }, 250);
 };
 
 window.matrixEngine = matrixEngine;
@@ -49,7 +48,7 @@ var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/adding_color_square_raycast":2,"./index.js":3}],2:[function(require,module,exports){
+},{"./apps/adding_color_piramyde":2,"./index.js":3}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -65,14 +64,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
  */
-var runThis = world => {
-  world.Add("square", 1.1, "MyColoredSquareRayObject");
 
-  _manifest.default.scene.MyColoredSquareRayObject.position.SetX(0);
+/* globals world App world */
+var runThis = world => {
+  world.Add("pyramid", 1, "MyPyramid1");
+  world.Add("pyramid", 1, "MyPyramid2");
+  world.Add("pyramid", 1, "MyPyramid3");
+
+  _manifest.default.scene.MyPyramid1.position.SetX(2.5);
+
+  _manifest.default.scene.MyPyramid2.position.SetX(0);
+
+  _manifest.default.scene.MyPyramid3.position.SetX(-2.5); // App.scene.MyPyramid1.rotation.rotationSpeed.y = 20;
+  // App.scene.MyPyramid2.rotation.rotationSpeed.y = 20;
+  // App.scene.MyPyramid3.rotation.rotationSpeed.y = 20;
+
 
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
-  }); // App.scene.MyColoredSquare1.rotation.rotationSpeed.x = 15;
+  });
+  addEventListener("ray.hit.event", function (e) {
+    console.info(e.detail);
+  });
 };
 
 exports.runThis = runThis;
@@ -2219,7 +2232,8 @@ _manifest.default.operation.draws.cube = function (object) {
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); // VERTEX
+  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object); // V
 
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -2233,7 +2247,7 @@ _manifest.default.operation.draws.cube = function (object) {
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexPositionAttribute);
 
     localLooper = localLooper + 1;
-  } // COLOR
+  } // C
 
 
   if (object.vertexColorBuffer) {
@@ -2244,7 +2258,7 @@ _manifest.default.operation.draws.cube = function (object) {
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexColorAttribute);
 
     localLooper = localLooper + 1;
-  } // LIGHT
+  } // L
 
 
   if (lighting && object.shaderProgram.useLightingUniform) {
@@ -2279,7 +2293,6 @@ _manifest.default.operation.draws.cube = function (object) {
       if (document.getElementById('dirLight') && document.getElementById('dirLight').color) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(document.getElementById('dirLight').color.rgb[0]), parseFloat(document.getElementById('dirLight').color.rgb[1]), parseFloat(document.getElementById('dirLight').color.rgb[2]));
       } else {
-        // object.LightsData.lightingDirection
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
       }
     }
@@ -2311,7 +2324,7 @@ _manifest.default.operation.draws.cube = function (object) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(1), parseFloat(0), parseFloat(0));
       }
     }
-  } // TEXTURES
+  } // T
 
 
   if (object.vertexTexCoordBuffer) {
@@ -2326,7 +2339,7 @@ _manifest.default.operation.draws.cube = function (object) {
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
 
     if (object.streamTextures != null) {
-      // video/webcam textures
+      // video/webcam tex
       _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
 
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
@@ -2407,14 +2420,14 @@ _manifest.default.operation.draws.piramide = function (object) {
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
 
   if (object.geometry.dynamicBuffer == true) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
 
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
   } else {
-    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer); //ori without if dynamicBuffer
-
+    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
   }
 
   _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.vertexPositionBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
@@ -2461,7 +2474,7 @@ _manifest.default.operation.draws.square = function (object) {
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
-  if (raycaster.checkingProcedureCalcAll) raycaster.checkingProcedureCalcAll(object);
+  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
 
   if (object.geometry.dynamicBuffer == true) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -2765,7 +2778,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); // VERTEX
+  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); // V
 
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -2779,7 +2792,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexPositionAttribute);
 
     localLooper = localLooper + 1;
-  } // COLOR
+  } // C
 
 
   if (object.vertexColorBuffer) {
@@ -2790,7 +2803,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexColorAttribute);
 
     localLooper = localLooper + 1;
-  } // LIGHT
+  } // L
 
 
   if (lighting && object.shaderProgram.useLightingUniform) {
@@ -2855,7 +2868,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(1), parseFloat(0), parseFloat(0));
       }
     }
-  } // TEXTURE
+  } // T
 
 
   if (object.vertexTexCoordBuffer) {
@@ -2957,7 +2970,7 @@ _manifest.default.operation.draws.sphere = function (object) {
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); // VERTEX
+  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); // V
 
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -2971,7 +2984,7 @@ _manifest.default.operation.draws.sphere = function (object) {
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexPositionAttribute);
 
     localLooper = localLooper + 1;
-  } // COLOR
+  } // C
 
 
   if (object.vertexColorBuffer) {
@@ -3006,7 +3019,6 @@ _manifest.default.operation.draws.sphere = function (object) {
       if (document.getElementById('ambLight') && document.getElementById('ambLight').color) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat(document.getElementById('ambLight').color.rgb[0]), parseFloat(document.getElementById('ambLight').color.rgb[1]), parseFloat(document.getElementById('ambLight').color.rgb[2]));
       } else {
-        //object.LightsData.ambientLight
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, object.LightsData.ambientLight.r, object.LightsData.ambientLight.g, object.LightsData.ambientLight.b);
       }
     }
@@ -3017,7 +3029,6 @@ _manifest.default.operation.draws.sphere = function (object) {
       if (document.getElementById('dirLight') && document.getElementById('dirLight').color) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(document.getElementById('dirLight').color.rgb[0]), parseFloat(document.getElementById('dirLight').color.rgb[1]), parseFloat(document.getElementById('dirLight').color.rgb[2]));
       } else {
-        //object.LightsData.lightingDirection
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
       }
     }
@@ -3049,7 +3060,7 @@ _manifest.default.operation.draws.sphere = function (object) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(1), parseFloat(0), parseFloat(0));
       }
     }
-  } // TEXTURES
+  } // T
 
 
   if (object.vertexTexCoordBuffer) {
@@ -3090,8 +3101,7 @@ _manifest.default.operation.draws.sphere = function (object) {
     localLooper = localLooper + 1;
   }
 
-  _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer); // world.setMatrixUniforms(object,this.pMatrix,object.mvMatrix);
-
+  _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
 
   if (object.vertexNormalBuffer && object.shaderProgram.nMatrixUniform) {
     var normalMatrix = mat3.create();
@@ -3109,12 +3119,10 @@ _manifest.default.operation.draws.sphere = function (object) {
     console.warn('WTF - ERROR10001');
   }
 
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper); // world.disableUnusedAttr( world.GL.gl, 3 );
-
+  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper);
 
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
-      // world.GL.gl.disable(world.GL.gl.DEPTH_TEST);
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
     }
 
@@ -3507,6 +3515,10 @@ class TriangleVertex {
 
   get vertices() {
     return new Float32Array([this.pointA.X, this.pointA.Y * this.root.size, this.pointA.Z, this.pointB.X * this.root.size, this.pointB.Y * this.root.size, this.pointB.Z, this.pointC.X * this.root.size, this.pointC.Y * this.root.size, this.pointC.Z]);
+  }
+
+  get indices() {
+    return [0, 1, 2];
   }
 
   setScale(scale) {
@@ -4860,13 +4872,17 @@ var _matrixWorld = require("./matrix-world");
 
 var _engine = require("./engine");
 
+var raycaster = _interopRequireWildcard(require("./raycast"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable no-undef */
 
 /* eslint-disable no-unused-vars */
-
-/* global */
 var animate = function (sceneObject) {
   var timeNow = new Date().getTime();
 
@@ -4939,19 +4955,18 @@ _manifest.default.operation.reDrawGlobal = function () {
     }
 
     (0, _engine.modifyLooper)(_engine.looper + 1);
-  } // setTimeout(App.operation.reDrawGlobal , 20 )
+  }
 
+  if (_manifest.default.raycast) raycaster.touchCoordinate.enabled = false; // setTimeout(App.operation.reDrawGlobal, 20)
 
   (0, _engine.updateFPS)(1);
 };
+/* Field of view, Width height ratio, min distance of viewpoint, max distance of viewpoint, */
+
 
 _manifest.default.operation.CameraPerspective = function () {
   this.GL.gl.viewport(0, 0, canvas.width, canvas.height);
-  this.GL.gl.clear(this.GL.gl.COLOR_BUFFER_BIT | this.GL.gl.DEPTH_BUFFER_BIT); // mat4.identity( world.mvMatrix )
-  // mat4.translate(world.mvMatrix  , world.mvMatrix, [ 10 , 10 , 10] );
-
-  /* Field of view, Width height ratio, min distance of viewpoint, max distance of viewpoint, */
-
+  this.GL.gl.clear(this.GL.gl.COLOR_BUFFER_BIT | this.GL.gl.DEPTH_BUFFER_BIT);
   mat4.perspective(this.pMatrix, degToRad(_manifest.default.camera.viewAngle), this.GL.gl.viewportWidth / this.GL.gl.viewportHeight, _manifest.default.camera.nearViewpoint, _manifest.default.camera.farViewpoint);
 };
 
@@ -4961,7 +4976,7 @@ var callReDraw_ = function () {
 
 exports.callReDraw_ = callReDraw_;
 
-},{"../program/manifest":16,"./engine":4,"./matrix-world":12}],11:[function(require,module,exports){
+},{"../program/manifest":16,"./engine":4,"./matrix-world":12,"./raycast":13}],11:[function(require,module,exports){
 /* globals App world */
 'use strict';
 
@@ -5102,9 +5117,6 @@ var objListToDispose = new Array();
 
 exports.objListToDispose = objListToDispose;
 var reDraw = null;
-/* Need an iterator in many places                   */
-// var looper = 0;
-
 exports.reDraw = reDraw;
 
 function defineworld(canvas) {
@@ -5858,9 +5870,6 @@ function defineworld(canvas) {
   world.destroy = _manifest.default.operation.destroyWorld;
   return world;
 }
-/* WebGL end of world                */
-
-/*****************************************************/
 
 },{"../program/manifest":16,"./engine":4,"./matrix-draws":8,"./matrix-geometry":9,"./matrix-render":10,"./utility":14}],13:[function(require,module,exports){
 "use strict";
@@ -5872,50 +5881,38 @@ exports.rayIntersectsTriangle = rayIntersectsTriangle;
 exports.unproject = unproject;
 exports.checkingProcedure = checkingProcedure;
 exports.checkingProcedureCalc = checkingProcedureCalc;
-exports.checkingProcedureCalcAll = checkingProcedureCalcAll;
 exports.touchCoordinate = void 0;
-
+let rayHitEvent;
+let touchCoordinate = {
+  enabled: false,
+  x: 0,
+  y: 0
+};
 /**
  * Ray triangle intersection algorithm
- * 
  * @param rayOrigin ray origin point
  * @param rayVector ray direction
  * @param triangle three points of triangle, should be ccw order
  * @param out the intersection point
  * @return intersects or not
- * 
  * Uses Möller–Trumbore intersection algorithm
  */
-let touchCoordinate = {
-  enabled: false,
-  x: 0,
-  y: 0
-}; // export let rayVectorPassing = vec3.fromValues( 0, 0, -1)
-// window.rayVectorPassing = rayVectorPassing
 
 exports.touchCoordinate = touchCoordinate;
 
-function rayIntersectsTriangle(rayOrigin, // rayOrigin, // :vec3,
+function rayIntersectsTriangle(rayOrigin, // :vec3,
 rayVector, // :vec3,
 triangle, // :vec3[],
-out, //:vec3,
-objPos) // : boolean
-{
+out, // :vec3,
+objPos) {
   if (matrixEngine.Events.camera.zPos < objPos.z) {
-    console.log("special");
-    rayOrigin[2] = matrixEngine.Events.camera.zPos + -objPos.z;
+    rayOrigin[2] = matrixEngine.Events.camera.zPos - objPos.z;
   } else {
     rayOrigin[2] = matrixEngine.Events.camera.zPos + -objPos.z;
-  } // rayOrigin =  vec3.fromValues(0, 0, -objPos.z + matrixEngine.Events.camera.zPos);
-
+  }
 
   rayOrigin[0] = matrixEngine.Events.camera.xPos;
-  rayOrigin[1] = matrixEngine.Events.camera.yPos; // rayOrigin =  vec3.fromValues(0, 0, -objPos.z + matrixEngine.Events.camera.zPos);
-  // rayVector = vec3.fromValues(0, 1, -1);
-  // rayVector = rayVectorPassing;
-
-  console.log(rayOrigin);
-  console.log(rayVector);
+  rayOrigin[1] = matrixEngine.Events.camera.yPos;
   const EPSILON = 0.0000001;
   const [v0, v1, v2] = triangle;
   const edge1 = vec3.create();
@@ -5970,17 +5967,13 @@ objPos) // : boolean
 
 
 function unproject(screenCoord, // :[number, number],
-viewport, //:[number, number, number, number],
+viewport, // :[number, number, number, number],
 invProjection, // :mat4,
-invView) //:mat4,
-// : vec3 
+invView) // :mat4,
+// : vec3
 {
   const [left, top, width, height] = viewport;
   const [x, y] = screenCoord;
-  var x1 = x / width * 2 - 1;
-  var y1 = y / height * 2 - 1; //rayVectorPassing[0] =  (2 * x) / width - 1 - left;
-  //rayVectorPassing[1] =  (2 * (height - y - 1)) / height - 1;
-
   const out = vec4.fromValues(2 * x / width - 1 - left, 2 * (height - y - 1) / height - 1, 1, 1);
   vec4.transformMat4(out, out, invProjection);
   out[3] = 0;
@@ -6004,43 +5997,43 @@ function checkingProcedure(ev) {
 
 function checkingProcedureCalc(object) {
   if (touchCoordinate.enabled == false) return;
-  if (touchCoordinate.enabled == true) touchCoordinate.enabled = false;
+  console.info('Raycast hits test...');
   var mvMatrix = object.mvMatrix;
   var outp = mat4.create();
   var outv = mat4.create();
-  const ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], // world.pMatrix, // your invert projection matrix
-  // mvMatrix // your invert view matrix
-  mat4.invert(outp, world.pMatrix), mat4.invert(outv, mvMatrix));
-  const intersectionPoint = vec3.create();
-  const triangle = [[object.geometry.vertices[0], object.geometry.vertices[1], object.geometry.vertices[2]], [object.geometry.vertices[3], object.geometry.vertices[4], object.geometry.vertices[5]], [object.geometry.vertices[6], object.geometry.vertices[7], object.geometry.vertices[8]]];
+  let ray;
+  var myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos);
 
-  if (rayIntersectsTriangle(vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos), ray, triangle, intersectionPoint, object.position)) {
-    console.log('hits', intersectionPoint);
-    matrixEngine.utility.E('debugBox').style.background = 'red';
-  } else {
-    matrixEngine.utility.E('debugBox').style.background = 'green';
+  if (matrixEngine.Events.camera.zPos < object.position.z) {
+    myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, -matrixEngine.Events.camera.zPos);
   }
-}
 
-function checkingProcedureCalcAll(object) {
-  if (touchCoordinate.enabled == false) return;
-  if (touchCoordinate.enabled == true) touchCoordinate.enabled = false;
-  var mvMatrix = object.mvMatrix;
-  var outp = mat4.create();
-  var outv = mat4.create();
-  const ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], // world.pMatrix, // your invert projection matrix
-  // mvMatrix // your invert view matrix
-  mat4.invert(outp, world.pMatrix), mat4.invert(outv, mvMatrix));
+  ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], mat4.invert(outp, world.pMatrix), mat4.invert(outv, mvMatrix));
   const intersectionPoint = vec3.create();
-  console.log(">>>", object.geometry.vertices.length);
-  return;
-  const triangle = [[object.geometry.vertices[0], object.geometry.vertices[1], object.geometry.vertices[2]], [object.geometry.vertices[3], object.geometry.vertices[4], object.geometry.vertices[5]], [object.geometry.vertices[6], object.geometry.vertices[7], object.geometry.vertices[8]]];
 
-  if (rayIntersectsTriangle(vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos), ray, triangle, intersectionPoint, object.position)) {
-    console.log('hits', intersectionPoint);
-    matrixEngine.utility.E('debugBox').style.background = 'red';
-  } else {
-    matrixEngine.utility.E('debugBox').style.background = 'green';
+  for (var f = 0; f < object.geometry.indices.length; f = f + 3) {
+    var a = object.geometry.indices[f];
+    var b = object.geometry.indices[f + 1];
+    var c = object.geometry.indices[f + 2];
+    const triangle = [[object.geometry.vertices[0 + a * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + a * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + a * 3]], [object.geometry.vertices[0 + b * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + b * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + b * 3]], [object.geometry.vertices[0 + c * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + c * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + c * 3]]];
+
+    if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
+      rayHitEvent = new CustomEvent("ray.hit.event", {
+        detail: {
+          touchCoordinate: {
+            x: touchCoordinate.x,
+            y: touchCoordinate.y
+          },
+          hitObject: object,
+          intersectionPoint: intersectionPoint,
+          ray: ray,
+          rayOrigin: myRayOrigin
+        }
+      });
+      dispatchEvent(rayHitEvent);
+      if (touchCoordinate.enabled == true) touchCoordinate.enabled = false;
+      console.info('raycast hits for Object: ' + object.name + '  -> face[/3]  : ' + f + ' -> intersectionPoint: ' + intersectionPoint);
+    }
   }
 }
 
@@ -6824,8 +6817,8 @@ exports.default = void 0;
 
 /* eslint-disable no-unused-vars */
 var App = {
-  name: "Matrix engine Manifest",
-  version: "1.0.5",
+  name: "Matrix Engine Manifest",
+  version: "1.0.6",
   events: true,
   logs: false,
   draw_interval: 10,
@@ -6838,6 +6831,7 @@ var App = {
     FirstPersonController: false,
     speedAmp: 0.5
   },
+  raycast: true,
   resize: {
     canvas: "full-screen",
     // Change to any to make
