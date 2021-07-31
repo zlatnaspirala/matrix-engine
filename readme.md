@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.4.0`
+### Name: `MATRIX-ENGINE` `1.4.5`
 
 ### STATUS - [Integrated fully pwa addToHomePage/cache]
 
@@ -208,6 +208,7 @@ function onLoadObj(meshes) {
     App.scene.female.position.y = -3;
     App.scene.female.rotation.rotationSpeed.z = 20;
     App.scene.female.position.z = -13;
+    // App.scene.armor.mesh.setScale(5)
   }, 100);
 }
 
