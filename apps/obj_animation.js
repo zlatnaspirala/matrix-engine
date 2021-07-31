@@ -14,25 +14,25 @@ export var runThis = world => {
 
   function onLoadObj(meshes) {
     App.meshes = meshes;
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female1);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female2);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female3);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female4);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female5);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female6);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female7);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female8);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female9);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female10);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female11);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female12);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female13);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female14);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female15);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female16);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female17);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female18);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female1);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female2);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female3);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female4);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female5);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female6);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female7);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female8);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female9);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female10);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female11);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female12);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female13);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female14);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female15);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female16);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female17);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female18);
 
     var textuteImageSamplers2 = {
       source: ["res/images/RustPaint.jpg"],
@@ -62,7 +62,7 @@ export var runThis = world => {
     }, 100);
   }
 
-  OBJ.downloadMeshes(
+  matrixEngine.objLoader.downloadMeshes(
     {
       female: "res/3d-objects/female/female_000001.obj",
       female1: "res/3d-objects/female/female_000003.obj",

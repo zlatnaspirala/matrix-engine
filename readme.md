@@ -164,31 +164,12 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 ### Animated female droid:
 
 ```js
-// LOAD MESH FROM OBJ FILES...
-// if you dont use obj or complex mesh you no need for this func
-// Must be improved loading sequences
-
+// Obj Loader
 function onLoadObj(meshes) {
   App.meshes = meshes;
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female1);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female2);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female3);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female4);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female5);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female6);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female7);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female8);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female9);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female10);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female11);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female12);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female13);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female14);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female15);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female16);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female17);
-  OBJ.initMeshBuffers(world.GL.gl, App.meshes.female18);
+  for (const key in App.meshes) {
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes[key]);
+  }
 
   textuteImageSamplers2 = {
     source: ['res/images/RustPaint.jpg'],
@@ -212,7 +193,7 @@ function onLoadObj(meshes) {
   }, 100);
 }
 
-OBJ.downloadMeshes(
+matrixEngine.objLoader.downloadMeshes(
   {
     female: 'res/3d-objects/female/female_000001.obj',
     female1: 'res/3d-objects/female/female_000003.obj',

@@ -8,7 +8,7 @@ exports.default = void 0;
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _load_obj_file = require("./apps/load_obj_file");
+var _obj_animation_build_mesh_effect = require("./apps/obj_animation_build_mesh_effect");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -34,12 +34,12 @@ window.webGLStart = () => {
 
   window.world = world;
   window.App = App;
-  window.runThis = _load_obj_file.runThis;
+  window.runThis = _obj_animation_build_mesh_effect.runThis;
   matrixEngine.utility.E('debugBox').style.display = 'block'; // canvas.addEventListener('mousedown', (ev) => { raycaster.checkingProcedure(ev); });
   // If you need this , you can prolong loading time
 
   setTimeout(() => {
-    (0, _load_obj_file.runThis)(world);
+    (0, _obj_animation_build_mesh_effect.runThis)(world);
   }, 250);
 };
 
@@ -48,7 +48,7 @@ var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/load_obj_file":2,"./index.js":3}],2:[function(require,module,exports){
+},{"./apps/obj_animation_build_mesh_effect":2,"./index.js":3}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -58,51 +58,133 @@ exports.runThis = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var matrixEngine = _interopRequireWildcard(require("../index.js"));
 
-/* eslint-disable no-unused-vars */
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
+
+/* globals world App world */
 var runThis = world => {
+  /* globals world App ENUMERATORS OSCILLATOR OBJ */
+  let OSCILLATOR = matrixEngine.utility.OSCILLATOR; // LOAD MESH FROM OBJ FILES...
   // if you dont use obj or complex mesh you no need for this func
+
   function onLoadObj(meshes) {
     _manifest.default.meshes = meshes;
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.armor);
-    OBJ.initMeshBuffers(world.GL.gl, _manifest.default.meshes.mac);
-    var textuteImageSamplers2 = {
-      source: ["res/images/armor.png"],
-      mix_operation: "multiply"
-    };
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.halfCircle);
+
+    for (const key in _manifest.default.meshes) {
+      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes[key]);
+    }
+
     var textuteImageSamplers = {
-      source: ["res/images/dagger.png"],
+      source: ["res/images/semi_pack/gradiend_half3.png"],
       mix_operation: "multiply"
     };
-    world.Add("obj", 1, "armor", textuteImageSamplers2, _manifest.default.meshes.armor);
-    _manifest.default.scene.armor.position.y = 1;
-    _manifest.default.scene.armor.rotation.rotationSpeed.y = 20;
+    world.Add("obj", 1, "halfCircle", textuteImageSamplers, _manifest.default.meshes.halfCircle);
+    _manifest.default.scene.halfCircle.position.y = -12;
+    _manifest.default.scene.halfCircle.position.z = -12;
+    _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = 100;
+    _manifest.default.scene.halfCircle.glBlend.blendEnabled = true;
+    var oscillator1 = new OSCILLATOR(-12, 8, 0.2);
+    /*
+        world.Add(
+          "obj",
+          1,
+          "halfCircle2",
+          textuteImageSamplers,
+          App.meshes.halfCircle
+        );
+        App.scene.halfCircle2.position.y = 7;
+        App.scene.halfCircle2.position.z = -12;
+        App.scene.halfCircle2.rotation.rotationSpeed.y = -100;
+        App.scene.halfCircle2.glBlend.blendEnabled = true;
+        var oscillator2 = new OSCILLATOR(-12, 8, 0.2);
+        oscillator2.value_ = App.scene.halfCircle2.position.y - 1;
+    */
+    // FEMALE
 
-    _manifest.default.scene.armor.LightsData.ambientLight.set(1, 1, 1);
+    var textuteImageSamplers2 = {
+      source: ["res/images/RustPaint.jpg"],
+      mix_operation: "multiply"
+    };
+    var animation_construct = {
+      id: "female",
+      sumOfAniFrames: 18,
+      currentAni: 0,
+      speed: 3
+    };
+    world.Add("obj", 1, "female", textuteImageSamplers2, _manifest.default.meshes.female, animation_construct);
+    _manifest.default.scene.female.glBlend.blendEnabled = true;
+    _manifest.default.scene.female.position.y = -4;
+    _manifest.default.scene.female.rotation.rotationSpeed.y = 150;
+    _manifest.default.scene.female.position.z = -13;
+    _manifest.default.scene.halfCircle.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    _manifest.default.scene.halfCircle.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4]; //App.scene.halfCircle2.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    //App.scene.halfCircle2.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
 
-    world.Add("obj", 1, "mac", textuteImageSamplers, _manifest.default.meshes.mac);
-    _manifest.default.scene.mac.position.y = 1;
-    _manifest.default.scene.mac.position.x = -2;
-    _manifest.default.scene.mac.rotation.rotationSpeed.y = 20;
+    _manifest.default.scene.female.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    _manifest.default.scene.female.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = 1;
+    var TIMER = setInterval(function () {
+      if (_manifest.default.scene.female.glDrawElements.numberOfIndicesRender >= _manifest.default.scene.female.mesh.indexBuffer.numItems - 1) {
+        // App.scene.halfCircle2.position.y = 9;
+        _manifest.default.scene.halfCircle.position.y = -14;
+        _manifest.default.scene.halfCircle.position.z = -9;
+        _manifest.default.scene.female.rotation.rotationSpeed.y = 10;
+        _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = 10; // App.scene.halfCircle2.rotation.rotationSpeed.y = -10;
 
-    _manifest.default.scene.mac.LightsData.ambientLight.set(1, 1, 1);
-  }
+        _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = _manifest.default.scene.female.mesh.indexBuffer.numItems; // eslint-disable-next-line no-undef
 
-  OBJ.downloadMeshes({
-    armor: "res/3d-objects/armor.obj",
-    mac: "res/3d-objects/mac.obj"
-  }, onLoadObj); //delete images_local_var;
+        clearInterval(TIMER);
+        return;
+      } else {
+        // App.scene.halfCircle2.position.y = oscillator2.UPDATE();
+        _manifest.default.scene.halfCircle.position.y = oscillator1.UPDATE(); // App.scene.halfCircle.rotation.rotationSpeed.z =  App.scene.halfCircle.rotation.rotationSpeed.z + 1;
+
+        _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = _manifest.default.scene.halfCircle.rotation.rotationSpeed.y - 1;
+        _manifest.default.scene.female.rotation.rotationSpeed.y = _manifest.default.scene.female.rotation.rotationSpeed.y - 1;
+        _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = _manifest.default.scene.female.glDrawElements.numberOfIndicesRender + 15;
+      }
+    }, 1);
+  } // Implement recursive load system for next update.
+
+
+  matrixEngine.objLoader.downloadMeshes({
+    female: "res/3d-objects/female/female_000001.obj",
+    female1: "res/3d-objects/female/female_000003.obj",
+    female2: "res/3d-objects/female/female_000005.obj",
+    female3: "res/3d-objects/female/female_000007.obj",
+    female4: "res/3d-objects/female/female_000009.obj",
+    female5: "res/3d-objects/female/female_000011.obj",
+    female6: "res/3d-objects/female/female_000013.obj",
+    female7: "res/3d-objects/female/female_000015.obj",
+    female8: "res/3d-objects/female/female_000017.obj",
+    female9: "res/3d-objects/female/female_000019.obj",
+    female10: "res/3d-objects/female/female_000021.obj",
+    female11: "res/3d-objects/female/female_000023.obj",
+    female12: "res/3d-objects/female/female_000025.obj",
+    female13: "res/3d-objects/female/female_000027.obj",
+    female14: "res/3d-objects/female/female_000029.obj",
+    female15: "res/3d-objects/female/female_000031.obj",
+    female16: "res/3d-objects/female/female_000033.obj",
+    female17: "res/3d-objects/female/female_000035.obj",
+    female18: "res/3d-objects/female/female_000037.obj",
+    halfCircle: "res/3d-objects/balltest1.obj"
+  }, onLoadObj);
 };
 
 exports.runThis = runThis;
 
-},{"../program/manifest":16}],3:[function(require,module,exports){
+},{"../index.js":3,"../program/manifest":16}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -112,12 +194,6 @@ Object.defineProperty(exports, "App", {
   enumerable: true,
   get: function () {
     return _manifest.default;
-  }
-});
-Object.defineProperty(exports, "OBJ", {
-  enumerable: true,
-  get: function () {
-    return _loaderObj.default;
   }
 });
 Object.defineProperty(exports, "operation", {
@@ -132,7 +208,7 @@ Object.defineProperty(exports, "texTools", {
     return _matrixTextures.default;
   }
 });
-exports.raycaster = exports.utility = exports.Events = exports.Engine = exports.matrixRender = exports.matrixGeometry = exports.matrixWorld = void 0;
+exports.raycaster = exports.utility = exports.objLoader = exports.Events = exports.Engine = exports.matrixRender = exports.matrixGeometry = exports.matrixWorld = void 0;
 
 var _manifest = _interopRequireDefault(require("./program/manifest"));
 
@@ -156,7 +232,9 @@ var Events = _interopRequireWildcard(require("./lib/events"));
 
 exports.Events = Events;
 
-var _loaderObj = _interopRequireDefault(require("./lib/loader-obj"));
+var objLoader = _interopRequireWildcard(require("./lib/loader-obj"));
+
+exports.objLoader = objLoader;
 
 var _matrixBuffers = _interopRequireDefault(require("./lib/matrix-buffers"));
 
@@ -1468,15 +1546,10 @@ if (_manifest.default.pwa.addToHomePage === true) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.constructMesh = void 0;
+exports.deleteMeshBuffers = exports.initMeshBuffers = exports.downloadMeshes = exports.constructMesh = void 0;
 
 var _matrixWorld = require("./matrix-world");
 
-/* globals module */
-
-/* remove global from engine */
-var OBJ = {};
-window.OBJ = OBJ;
 /**
  * The main Mesh class. The constructor will parse through the OBJ file data
  * and collect the vertex, vertex normal, texture, and face information. This
@@ -1488,7 +1561,6 @@ window.OBJ = OBJ;
  *
  * @param {String} objectData a string representation of an OBJ file with newlines preserved.
  */
-
 class constructMesh {
   constructor(objectData, inputArg) {
     this.objectData = objectData;
@@ -1732,7 +1804,7 @@ var Ajax = function () {
  */
 
 
-OBJ.downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
+var downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
   // the total number of meshes. this is used to implement "blocking"
   var semaphore = Object.keys(nameAndURLs).length; // if error is true, an alert will given
 
@@ -1741,7 +1813,7 @@ OBJ.downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
   // a new object is created. this will be passed into the completionCallback
 
   if (inputArg === undefined) inputArg = {
-    scale: 2
+    scale: 1
   };
   var meshes = {}; // loop over the mesh_name,url key,value pairs
 
@@ -1776,6 +1848,8 @@ OBJ.downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
     }
   }
 };
+
+exports.downloadMeshes = downloadMeshes;
 
 var _buildBuffer = function (gl, type, data, itemSize) {
   var buffer = gl.createBuffer();
@@ -1862,22 +1936,23 @@ var _buildBuffer = function (gl, type, data, itemSize) {
  */
 
 
-OBJ.initMeshBuffers = function (gl, mesh) {
+var initMeshBuffers = function (gl, mesh) {
   mesh.normalBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.vertexNormals, 3);
   mesh.textureBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.textures, 2);
   mesh.vertexBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.vertices, 3);
   mesh.indexBuffer = _buildBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, mesh.indices, 1);
 };
 
-OBJ.deleteMeshBuffers = function (gl, mesh) {
+exports.initMeshBuffers = initMeshBuffers;
+
+var deleteMeshBuffers = function (gl, mesh) {
   gl.deleteBuffer(mesh.normalBuffer);
   gl.deleteBuffer(mesh.textureBuffer);
   gl.deleteBuffer(mesh.vertexBuffer);
   gl.deleteBuffer(mesh.indexBuffer);
 };
 
-var _default = OBJ;
-exports.default = _default;
+exports.deleteMeshBuffers = deleteMeshBuffers;
 
 },{"./matrix-world":12}],7:[function(require,module,exports){
 "use strict";

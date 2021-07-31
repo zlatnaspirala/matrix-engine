@@ -14,7 +14,7 @@ import * as matrixGeometry from "./lib/matrix-geometry";
 import * as matrixRender from "./lib/matrix-render";
 import * as Engine from "./lib/engine";
 import * as Events from "./lib/events";
-import OBJ from "./lib/loader-obj";
+import * as objLoader from "./lib/loader-obj";
 import operation from "./lib/matrix-buffers";
 import texTools from "./lib/matrix-textures";
 import * as utility from "./lib/utility";
@@ -30,6 +30,6 @@ export {
   texTools,
   utility,
   operation,
-  OBJ,
+  objLoader,
   raycaster
 };

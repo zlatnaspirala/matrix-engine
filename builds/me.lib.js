@@ -28,12 +28,6 @@ Object.defineProperty(exports, "App", {
     return _manifest.default;
   }
 });
-Object.defineProperty(exports, "OBJ", {
-  enumerable: true,
-  get: function () {
-    return _loaderObj.default;
-  }
-});
 Object.defineProperty(exports, "operation", {
   enumerable: true,
   get: function () {
@@ -46,7 +40,7 @@ Object.defineProperty(exports, "texTools", {
     return _matrixTextures.default;
   }
 });
-exports.raycaster = exports.utility = exports.Events = exports.Engine = exports.matrixRender = exports.matrixGeometry = exports.matrixWorld = void 0;
+exports.raycaster = exports.utility = exports.objLoader = exports.Events = exports.Engine = exports.matrixRender = exports.matrixGeometry = exports.matrixWorld = void 0;
 
 var _manifest = _interopRequireDefault(require("./program/manifest"));
 
@@ -70,7 +64,9 @@ var Events = _interopRequireWildcard(require("./lib/events"));
 
 exports.Events = Events;
 
-var _loaderObj = _interopRequireDefault(require("./lib/loader-obj"));
+var objLoader = _interopRequireWildcard(require("./lib/loader-obj"));
+
+exports.objLoader = objLoader;
 
 var _matrixBuffers = _interopRequireDefault(require("./lib/matrix-buffers"));
 
@@ -1382,15 +1378,10 @@ if (_manifest.default.pwa.addToHomePage === true) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.constructMesh = void 0;
+exports.deleteMeshBuffers = exports.initMeshBuffers = exports.downloadMeshes = exports.constructMesh = void 0;
 
 var _matrixWorld = require("./matrix-world");
 
-/* globals module */
-
-/* remove global from engine */
-var OBJ = {};
-window.OBJ = OBJ;
 /**
  * The main Mesh class. The constructor will parse through the OBJ file data
  * and collect the vertex, vertex normal, texture, and face information. This
@@ -1402,7 +1393,6 @@ window.OBJ = OBJ;
  *
  * @param {String} objectData a string representation of an OBJ file with newlines preserved.
  */
-
 class constructMesh {
   constructor(objectData, inputArg) {
     this.objectData = objectData;
@@ -1646,7 +1636,7 @@ var Ajax = function () {
  */
 
 
-OBJ.downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
+var downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
   // the total number of meshes. this is used to implement "blocking"
   var semaphore = Object.keys(nameAndURLs).length; // if error is true, an alert will given
 
@@ -1655,7 +1645,7 @@ OBJ.downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
   // a new object is created. this will be passed into the completionCallback
 
   if (inputArg === undefined) inputArg = {
-    scale: 2
+    scale: 1
   };
   var meshes = {}; // loop over the mesh_name,url key,value pairs
 
@@ -1690,6 +1680,8 @@ OBJ.downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
     }
   }
 };
+
+exports.downloadMeshes = downloadMeshes;
 
 var _buildBuffer = function (gl, type, data, itemSize) {
   var buffer = gl.createBuffer();
@@ -1776,22 +1768,23 @@ var _buildBuffer = function (gl, type, data, itemSize) {
  */
 
 
-OBJ.initMeshBuffers = function (gl, mesh) {
+var initMeshBuffers = function (gl, mesh) {
   mesh.normalBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.vertexNormals, 3);
   mesh.textureBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.textures, 2);
   mesh.vertexBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.vertices, 3);
   mesh.indexBuffer = _buildBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, mesh.indices, 1);
 };
 
-OBJ.deleteMeshBuffers = function (gl, mesh) {
+exports.initMeshBuffers = initMeshBuffers;
+
+var deleteMeshBuffers = function (gl, mesh) {
   gl.deleteBuffer(mesh.normalBuffer);
   gl.deleteBuffer(mesh.textureBuffer);
   gl.deleteBuffer(mesh.vertexBuffer);
   gl.deleteBuffer(mesh.indexBuffer);
 };
 
-var _default = OBJ;
-exports.default = _default;
+exports.deleteMeshBuffers = deleteMeshBuffers;
 
 },{"./matrix-world":11}],6:[function(require,module,exports){
 "use strict";

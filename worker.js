@@ -10,12 +10,15 @@
  * @param cacheVersion
  */
 var cacheVersion = 2;
-
-var oldCacheVersion = cacheVersion--;
 var cacheName = 'static-files-v' + cacheVersion;
-var oldCacheName = 'static-files-v' + oldCacheVersion;
 
-caches.delete(oldCacheName);
+try {
+  for (var j = 0;j < cacheVersion;j++) {
+    var oldCacheName = 'static-files-v' + j;
+    caches.delete(oldCacheName);
+  }
+}
+catch(e) {}
 
 const offlineUrl = 'offline.html';
 

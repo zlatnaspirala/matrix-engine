@@ -15,26 +15,10 @@ export var runThis = world => {
   function onLoadObj(meshes) {
     App.meshes = meshes;
 
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.halfCircle);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female1);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female2);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female3);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female4);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female5);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female6);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female7);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female8);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female9);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female10);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female11);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female12);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female13);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female14);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female15);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female16);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female17);
-    OBJ.initMeshBuffers(world.GL.gl, App.meshes.female18);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.halfCircle);
+    for (const key in App.meshes) {
+      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes[key]);
+    }
 
     var textuteImageSamplers = {
       source: ["res/images/semi_pack/gradiend_half3.png"],
@@ -51,8 +35,9 @@ export var runThis = world => {
     App.scene.halfCircle.position.y = -12;
     App.scene.halfCircle.position.z = -12;
     App.scene.halfCircle.rotation.rotationSpeed.y = 100;
+    App.scene.halfCircle.glBlend.blendEnabled = true;
     var oscillator1 = new OSCILLATOR(-12, 8, 0.2);
-
+/*
     world.Add(
       "obj",
       1,
@@ -63,9 +48,10 @@ export var runThis = world => {
     App.scene.halfCircle2.position.y = 7;
     App.scene.halfCircle2.position.z = -12;
     App.scene.halfCircle2.rotation.rotationSpeed.y = -100;
+    App.scene.halfCircle2.glBlend.blendEnabled = true;
     var oscillator2 = new OSCILLATOR(-12, 8, 0.2);
     oscillator2.value_ = App.scene.halfCircle2.position.y - 1;
-
+*/
     // FEMALE
     var textuteImageSamplers2 = {
       source: ["res/images/RustPaint.jpg"],
@@ -94,8 +80,8 @@ export var runThis = world => {
     App.scene.female.position.z = -13;
     App.scene.halfCircle.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     App.scene.halfCircle.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    App.scene.halfCircle2.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    App.scene.halfCircle2.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    //App.scene.halfCircle2.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    //App.scene.halfCircle2.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     App.scene.female.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     App.scene.female.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     App.scene.female.glDrawElements.numberOfIndicesRender = 1;
@@ -105,11 +91,12 @@ export var runThis = world => {
         App.scene.female.glDrawElements.numberOfIndicesRender >=
         App.scene.female.mesh.indexBuffer.numItems - 1
       ) {
-        App.scene.halfCircle2.position.y = 9;
-        App.scene.halfCircle.position.y = -10;
+        // App.scene.halfCircle2.position.y = 9;
+        App.scene.halfCircle.position.y = -9;
+        App.scene.halfCircle.position.z = -14;
         App.scene.female.rotation.rotationSpeed.y = 10;
         App.scene.halfCircle.rotation.rotationSpeed.y = 10;
-        App.scene.halfCircle2.rotation.rotationSpeed.y = -10;
+        // App.scene.halfCircle2.rotation.rotationSpeed.y = -10;
 
         App.scene.female.glDrawElements.numberOfIndicesRender =
           App.scene.female.mesh.indexBuffer.numItems;
@@ -118,7 +105,7 @@ export var runThis = world => {
         clearInterval(TIMER);
         return;
       } else {
-        App.scene.halfCircle2.position.y = oscillator2.UPDATE();
+       // App.scene.halfCircle2.position.y = oscillator2.UPDATE();
         App.scene.halfCircle.position.y = oscillator1.UPDATE();
         // App.scene.halfCircle.rotation.rotationSpeed.z =  App.scene.halfCircle.rotation.rotationSpeed.z + 1;
         App.scene.halfCircle.rotation.rotationSpeed.y =
@@ -132,7 +119,7 @@ export var runThis = world => {
   }
 
   // Implement recursive load system for next update.
-  OBJ.downloadMeshes(
+  matrixEngine.objLoader.downloadMeshes(
     {
       female: "res/3d-objects/female/female_000001.obj",
       female1: "res/3d-objects/female/female_000003.obj",
