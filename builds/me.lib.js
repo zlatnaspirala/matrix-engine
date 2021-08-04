@@ -2719,9 +2719,9 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
   }
 
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
   if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object); // V
 
   if (object.vertexPositionBuffer) {
@@ -5967,11 +5967,7 @@ function checkingProcedureCalc(object) {
   for (var f = 0; f < object.geometry.indices.length; f = f + 3) {
     var a = object.geometry.indices[f];
     var b = object.geometry.indices[f + 1];
-    var c = object.geometry.indices[f + 2]; // test
-    //mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-    //mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-    //mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); 
-
+    var c = object.geometry.indices[f + 2];
     const triangle = [[object.geometry.vertices[0 + a * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + a * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + a * 3]], [object.geometry.vertices[0 + b * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + b * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + b * 3]], [object.geometry.vertices[0 + c * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + c * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + c * 3]]];
 
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
