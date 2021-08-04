@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/obj_animation_build_mesh_effect';
+import {runThis} from './apps/adding_color_square_raycast';
 
 var world;
 var App = matrixEngine.App;

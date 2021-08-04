@@ -1402,7 +1402,7 @@ class constructMesh {
       var inputArg = {
         scale: s
       };
-      OBJ.initMeshBuffers(_matrixWorld.world.GL.gl, this.create(this.objectData, inputArg));
+      initMeshBuffers(_matrixWorld.world.GL.gl, this.create(this.objectData, inputArg));
     };
   }
 
@@ -2721,7 +2721,8 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); // V
+  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object); // V
 
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -4841,6 +4842,7 @@ var animate = function (sceneObject) {
 exports.animate = animate;
 var reDrawID = 0;
 exports.reDrawID = reDrawID;
+var secondPass = 0;
 
 _manifest.default.operation.reDrawGlobal = function () {
   (0, _engine.modifyLooper)(0);
@@ -4900,7 +4902,14 @@ _manifest.default.operation.reDrawGlobal = function () {
     (0, _engine.modifyLooper)(_engine.looper + 1);
   }
 
-  if (_manifest.default.raycast) raycaster.touchCoordinate.enabled = false; // setTimeout(App.operation.reDrawGlobal, 20)
+  if (_manifest.default.raycast) {
+    if (secondPass <= 2) {
+      raycaster.touchCoordinate.enabled = false;
+      secondPass = 0;
+    }
+  }
+
+  secondPass++; // setTimeout(App.operation.reDrawGlobal, 20)
 
   (0, _engine.updateFPS)(1);
 };
@@ -5829,7 +5838,8 @@ let rayHitEvent;
 let touchCoordinate = {
   enabled: false,
   x: 0,
-  y: 0
+  y: 0,
+  stopOnFirstDetectedHit: false
 };
 /**
  * Ray triangle intersection algorithm
@@ -5957,7 +5967,11 @@ function checkingProcedureCalc(object) {
   for (var f = 0; f < object.geometry.indices.length; f = f + 3) {
     var a = object.geometry.indices[f];
     var b = object.geometry.indices[f + 1];
-    var c = object.geometry.indices[f + 2];
+    var c = object.geometry.indices[f + 2]; // test
+    //mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
+    //mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
+    //mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); 
+
     const triangle = [[object.geometry.vertices[0 + a * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + a * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + a * 3]], [object.geometry.vertices[0 + b * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + b * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + b * 3]], [object.geometry.vertices[0 + c * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + c * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + c * 3]]];
 
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
@@ -5974,7 +5988,11 @@ function checkingProcedureCalc(object) {
         }
       });
       dispatchEvent(rayHitEvent);
-      if (touchCoordinate.enabled == true) touchCoordinate.enabled = false;
+
+      if (touchCoordinate.enabled == true && touchCoordinate.stopOnFirstDetectedHit == true) {
+        touchCoordinate.enabled = false;
+      }
+
       console.info('raycast hits for Object: ' + object.name + '  -> face[/3]  : ' + f + ' -> intersectionPoint: ' + intersectionPoint);
     }
   }

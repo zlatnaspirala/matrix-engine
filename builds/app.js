@@ -8,7 +8,7 @@ exports.default = void 0;
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _obj_animation_build_mesh_effect = require("./apps/obj_animation_build_mesh_effect");
+var _adding_color_square_raycast = require("./apps/adding_color_square_raycast");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -34,12 +34,12 @@ window.webGLStart = () => {
 
   window.world = world;
   window.App = App;
-  window.runThis = _obj_animation_build_mesh_effect.runThis;
+  window.runThis = _adding_color_square_raycast.runThis;
   matrixEngine.utility.E('debugBox').style.display = 'block'; // canvas.addEventListener('mousedown', (ev) => { raycaster.checkingProcedure(ev); });
   // If you need this , you can prolong loading time
 
   setTimeout(() => {
-    (0, _obj_animation_build_mesh_effect.runThis)(world);
+    (0, _adding_color_square_raycast.runThis)(world);
   }, 250);
 };
 
@@ -48,7 +48,7 @@ var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/obj_animation_build_mesh_effect":2,"./index.js":3}],2:[function(require,module,exports){
+},{"./apps/adding_color_square_raycast":2,"./index.js":3}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -58,133 +58,29 @@ exports.runThis = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
+ *@Author Nikola Lukic
+ *@Description Matrix Engine Api Example
  */
-
-/* globals world App world */
 var runThis = world => {
-  /* globals world App ENUMERATORS OSCILLATOR OBJ */
-  let OSCILLATOR = matrixEngine.utility.OSCILLATOR; // LOAD MESH FROM OBJ FILES...
-  // if you dont use obj or complex mesh you no need for this func
+  var textuteImageSamplers = {
+    source: ["res/images/complex_texture_1/diffuse.png", "res/images/texture_spiral1.png"],
+    mix_operation: "multiply"
+  };
+  world.Add("squareTex", 1, "MyColoredSquareRayObject", textuteImageSamplers);
 
-  function onLoadObj(meshes) {
-    _manifest.default.meshes = meshes;
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.halfCircle);
+  _manifest.default.scene.MyColoredSquareRayObject.position.SetX(0);
 
-    for (const key in _manifest.default.meshes) {
-      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes[key]);
-    }
-
-    var textuteImageSamplers = {
-      source: ["res/images/semi_pack/gradiend_half3.png"],
-      mix_operation: "multiply"
-    };
-    world.Add("obj", 1, "halfCircle", textuteImageSamplers, _manifest.default.meshes.halfCircle);
-    _manifest.default.scene.halfCircle.position.y = -12;
-    _manifest.default.scene.halfCircle.position.z = -12;
-    _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = 100;
-    _manifest.default.scene.halfCircle.glBlend.blendEnabled = true;
-    var oscillator1 = new OSCILLATOR(-12, 8, 0.2);
-    /*
-        world.Add(
-          "obj",
-          1,
-          "halfCircle2",
-          textuteImageSamplers,
-          App.meshes.halfCircle
-        );
-        App.scene.halfCircle2.position.y = 7;
-        App.scene.halfCircle2.position.z = -12;
-        App.scene.halfCircle2.rotation.rotationSpeed.y = -100;
-        App.scene.halfCircle2.glBlend.blendEnabled = true;
-        var oscillator2 = new OSCILLATOR(-12, 8, 0.2);
-        oscillator2.value_ = App.scene.halfCircle2.position.y - 1;
-    */
-    // FEMALE
-
-    var textuteImageSamplers2 = {
-      source: ["res/images/RustPaint.jpg"],
-      mix_operation: "multiply"
-    };
-    var animation_construct = {
-      id: "female",
-      sumOfAniFrames: 18,
-      currentAni: 0,
-      speed: 3
-    };
-    world.Add("obj", 1, "female", textuteImageSamplers2, _manifest.default.meshes.female, animation_construct);
-    _manifest.default.scene.female.glBlend.blendEnabled = true;
-    _manifest.default.scene.female.position.y = -4;
-    _manifest.default.scene.female.rotation.rotationSpeed.y = 150;
-    _manifest.default.scene.female.position.z = -13;
-    _manifest.default.scene.halfCircle.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    _manifest.default.scene.halfCircle.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4]; //App.scene.halfCircle2.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    //App.scene.halfCircle2.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-
-    _manifest.default.scene.female.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    _manifest.default.scene.female.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = 1;
-    var TIMER = setInterval(function () {
-      if (_manifest.default.scene.female.glDrawElements.numberOfIndicesRender >= _manifest.default.scene.female.mesh.indexBuffer.numItems - 1) {
-        // App.scene.halfCircle2.position.y = 9;
-        _manifest.default.scene.halfCircle.position.y = -14;
-        _manifest.default.scene.halfCircle.position.z = -9;
-        _manifest.default.scene.female.rotation.rotationSpeed.y = 10;
-        _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = 10; // App.scene.halfCircle2.rotation.rotationSpeed.y = -10;
-
-        _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = _manifest.default.scene.female.mesh.indexBuffer.numItems; // eslint-disable-next-line no-undef
-
-        clearInterval(TIMER);
-        return;
-      } else {
-        // App.scene.halfCircle2.position.y = oscillator2.UPDATE();
-        _manifest.default.scene.halfCircle.position.y = oscillator1.UPDATE(); // App.scene.halfCircle.rotation.rotationSpeed.z =  App.scene.halfCircle.rotation.rotationSpeed.z + 1;
-
-        _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = _manifest.default.scene.halfCircle.rotation.rotationSpeed.y - 1;
-        _manifest.default.scene.female.rotation.rotationSpeed.y = _manifest.default.scene.female.rotation.rotationSpeed.y - 1;
-        _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = _manifest.default.scene.female.glDrawElements.numberOfIndicesRender + 15;
-      }
-    }, 1);
-  } // Implement recursive load system for next update.
-
-
-  matrixEngine.objLoader.downloadMeshes({
-    female: "res/3d-objects/female/female_000001.obj",
-    female1: "res/3d-objects/female/female_000003.obj",
-    female2: "res/3d-objects/female/female_000005.obj",
-    female3: "res/3d-objects/female/female_000007.obj",
-    female4: "res/3d-objects/female/female_000009.obj",
-    female5: "res/3d-objects/female/female_000011.obj",
-    female6: "res/3d-objects/female/female_000013.obj",
-    female7: "res/3d-objects/female/female_000015.obj",
-    female8: "res/3d-objects/female/female_000017.obj",
-    female9: "res/3d-objects/female/female_000019.obj",
-    female10: "res/3d-objects/female/female_000021.obj",
-    female11: "res/3d-objects/female/female_000023.obj",
-    female12: "res/3d-objects/female/female_000025.obj",
-    female13: "res/3d-objects/female/female_000027.obj",
-    female14: "res/3d-objects/female/female_000029.obj",
-    female15: "res/3d-objects/female/female_000031.obj",
-    female16: "res/3d-objects/female/female_000033.obj",
-    female17: "res/3d-objects/female/female_000035.obj",
-    female18: "res/3d-objects/female/female_000037.obj",
-    halfCircle: "res/3d-objects/balltest1.obj"
-  }, onLoadObj);
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  }); // App.scene.MyColoredSquare1.rotation.rotationSpeed.x = 15;
 };
 
 exports.runThis = runThis;
 
-},{"../index.js":3,"../program/manifest":16}],3:[function(require,module,exports){
+},{"../program/manifest":16}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1570,7 +1466,7 @@ class constructMesh {
       var inputArg = {
         scale: s
       };
-      OBJ.initMeshBuffers(_matrixWorld.world.GL.gl, this.create(this.objectData, inputArg));
+      initMeshBuffers(_matrixWorld.world.GL.gl, this.create(this.objectData, inputArg));
     };
   }
 
@@ -2889,7 +2785,8 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); // V
+  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object); // V
 
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -5009,6 +4906,7 @@ var animate = function (sceneObject) {
 exports.animate = animate;
 var reDrawID = 0;
 exports.reDrawID = reDrawID;
+var secondPass = 0;
 
 _manifest.default.operation.reDrawGlobal = function () {
   (0, _engine.modifyLooper)(0);
@@ -5068,7 +4966,14 @@ _manifest.default.operation.reDrawGlobal = function () {
     (0, _engine.modifyLooper)(_engine.looper + 1);
   }
 
-  if (_manifest.default.raycast) raycaster.touchCoordinate.enabled = false; // setTimeout(App.operation.reDrawGlobal, 20)
+  if (_manifest.default.raycast) {
+    if (secondPass <= 2) {
+      raycaster.touchCoordinate.enabled = false;
+      secondPass = 0;
+    }
+  }
+
+  secondPass++; // setTimeout(App.operation.reDrawGlobal, 20)
 
   (0, _engine.updateFPS)(1);
 };
@@ -5997,7 +5902,8 @@ let rayHitEvent;
 let touchCoordinate = {
   enabled: false,
   x: 0,
-  y: 0
+  y: 0,
+  stopOnFirstDetectedHit: false
 };
 /**
  * Ray triangle intersection algorithm
@@ -6125,7 +6031,11 @@ function checkingProcedureCalc(object) {
   for (var f = 0; f < object.geometry.indices.length; f = f + 3) {
     var a = object.geometry.indices[f];
     var b = object.geometry.indices[f + 1];
-    var c = object.geometry.indices[f + 2];
+    var c = object.geometry.indices[f + 2]; // test
+    //mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
+    //mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
+    //mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); 
+
     const triangle = [[object.geometry.vertices[0 + a * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + a * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + a * 3]], [object.geometry.vertices[0 + b * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + b * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + b * 3]], [object.geometry.vertices[0 + c * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + c * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + c * 3]]];
 
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
@@ -6142,7 +6052,11 @@ function checkingProcedureCalc(object) {
         }
       });
       dispatchEvent(rayHitEvent);
-      if (touchCoordinate.enabled == true) touchCoordinate.enabled = false;
+
+      if (touchCoordinate.enabled == true && touchCoordinate.stopOnFirstDetectedHit == true) {
+        touchCoordinate.enabled = false;
+      }
+
       console.info('raycast hits for Object: ' + object.name + '  -> face[/3]  : ' + f + ' -> intersectionPoint: ' + intersectionPoint);
     }
   }
