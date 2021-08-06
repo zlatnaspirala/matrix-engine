@@ -2173,10 +2173,10 @@ _manifest.default.operation.draws.cube = function (object) {
   }
 
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
-  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object); // V
+  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); // V
 
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -2360,10 +2360,10 @@ _manifest.default.operation.draws.piramide = function (object) {
   }
 
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
-  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
 
   if (object.geometry.dynamicBuffer == true) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -2414,10 +2414,10 @@ _manifest.default.operation.draws.square = function (object) {
   }
 
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
-  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
 
   if (object.geometry.dynamicBuffer == true) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -2466,10 +2466,10 @@ _manifest.default.operation.draws.triangle = function (object) {
   }
 
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
-  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
 
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
 
@@ -2719,10 +2719,10 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
   }
 
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object); // V
+  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY()); // V
 
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -5831,6 +5831,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.rayIntersectsTriangle = rayIntersectsTriangle;
 exports.unproject = unproject;
+exports.rotate2dPlot = rotate2dPlot;
 exports.checkingProcedure = checkingProcedure;
 exports.checkingProcedureCalc = checkingProcedureCalc;
 exports.touchCoordinate = void 0;
@@ -5933,6 +5934,19 @@ invView) // :mat4,
   vec4.transformMat4(out, out, invView);
   return vec3.normalize(vec3.create(), out);
 }
+/**
+ * @description Fix local rotation raycast bug test.
+ */
+
+
+function rotate2dPlot(cx, cy, x, y, angle) {
+  var radians = Math.PI / 180 * -angle,
+      cos = Math.cos(radians),
+      sin = Math.sin(radians),
+      nx = cos * (x - cx) + sin * (y - cy) + cx,
+      ny = cos * (y - cy) - sin * (x - cx) + cy;
+  return [nx, ny];
+}
 
 function checkingProcedure(ev) {
   const {
@@ -5950,12 +5964,12 @@ function checkingProcedure(ev) {
 
 function checkingProcedureCalc(object) {
   if (touchCoordinate.enabled == false) return;
-  console.info('Raycast hits test...');
-  var mvMatrix = object.mvMatrix;
-  var outp = mat4.create();
-  var outv = mat4.create();
-  let ray;
-  var myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos);
+  let mvMatrix = [...object.mvMatrix];
+  let ray; // console.info('Raycast hits after test... -> ', mvMatrix)
+
+  let outp = mat4.create();
+  let outv = mat4.create();
+  let myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos);
 
   if (matrixEngine.Events.camera.zPos < object.position.z) {
     myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, -matrixEngine.Events.camera.zPos);
@@ -5968,7 +5982,33 @@ function checkingProcedureCalc(object) {
     var a = object.geometry.indices[f];
     var b = object.geometry.indices[f + 1];
     var c = object.geometry.indices[f + 2];
-    const triangle = [[object.geometry.vertices[0 + a * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + a * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + a * 3]], [object.geometry.vertices[0 + b * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + b * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + b * 3]], [object.geometry.vertices[0 + c * 3] + object.position.worldLocation[0], object.geometry.vertices[1 + c * 3] + object.position.worldLocation[1], object.geometry.vertices[2 + c * 3]]];
+    let triangle = null;
+    const triangleInZero = [[object.geometry.vertices[0 + a * 3], object.geometry.vertices[1 + a * 3], object.geometry.vertices[2 + a * 3]], [object.geometry.vertices[0 + b * 3], object.geometry.vertices[1 + b * 3], object.geometry.vertices[2 + b * 3]], [object.geometry.vertices[0 + c * 3], object.geometry.vertices[1 + c * 3], object.geometry.vertices[2 + c * 3]]];
+
+    if (object.rotation.rx != 0) {
+      var rez0 = rotate2dPlot(0, 0, triangleInZero[0][1], triangleInZero[0][2], object.rotation.rx);
+      var rez1 = rotate2dPlot(0, 0, triangleInZero[1][1], triangleInZero[1][2], object.rotation.rx);
+      var rez2 = rotate2dPlot(0, 0, triangleInZero[2][1], triangleInZero[2][2], object.rotation.rx);
+      triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], rez0[0] + object.position.worldLocation[1], rez0[1]], [triangleInZero[1][0] + object.position.worldLocation[0], rez1[0] + object.position.worldLocation[1], rez1[1]], [triangleInZero[2][0] + object.position.worldLocation[0], rez2[0] + object.position.worldLocation[1], rez2[1]]];
+    }
+
+    if (object.rotation.ry != 0) {
+      var rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], triangleInZero[0][2], -object.rotation.ry);
+      var rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][2], -object.rotation.ry);
+      var rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][2], -object.rotation.ry);
+      triangle = [[rez0[0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], rez0[1]], [rez1[0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], rez1[1]], [rez2[0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], rez2[1]]];
+    }
+
+    if (object.rotation.rz != 0) {
+      var rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], triangleInZero[0][1], object.rotation.rz);
+      var rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][1], object.rotation.rz);
+      var rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][1], object.rotation.rz);
+      triangle = [[rez0[0] + object.position.worldLocation[0], rez0[1] + object.position.worldLocation[1], triangleInZero[0][2]], [rez1[0] + object.position.worldLocation[0], rez1[1] + object.position.worldLocation[1], triangleInZero[1][2]], [rez2[0] + object.position.worldLocation[0], rez2[1] + object.position.worldLocation[1], triangleInZero[2][2]]];
+    }
+
+    if (object.rotation.rx == 0 && object.rotation.ry == 0 && object.rotation.rz == 0) {
+      triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], triangleInZero[0][2]], [triangleInZero[1][0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], triangleInZero[1][2]], [triangleInZero[2][0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], triangleInZero[2][2]]];
+    }
 
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
       rayHitEvent = new CustomEvent("ray.hit.event", {

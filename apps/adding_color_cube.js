@@ -17,7 +17,9 @@ canvas.addEventListener('mousedown', (ev) => {
   matrixEngine.raycaster.checkingProcedure(ev);
 });
 
-addEventListener("ray.hit.event", function(e) { console.info(e.detail) });
+addEventListener("ray.hit.event", function(e) {
+   console.info(e.detail);
+});
 
 App.scene.MyColoredCube1.position.SetX(0);
 App.scene.MyColoredCube2.position.SetX(-2.5);
