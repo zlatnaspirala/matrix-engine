@@ -141,9 +141,20 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 
 ### Raycast
 
-   - triangle support [1.4.0]
-   Raycast work fine also in firstPersonCamera operation.
+   - cube , square, triangle  [1.4.9]
+   Raycast works fine also in firstPersonCamera operation.
+   Raycast work perfect after one local rotation for now.
    Bug if walk behind object then turn arround and try raycast but no work for now.
+   - Usage:
+```js
+  canvas.addEventListener('mousedown', (ev) => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+
+  canvas.addEventListener('ray.hit.event', (ev) => {
+    alert("You shoot the object! Nice")
+  });
+```
 
 ### First person controller:
 
