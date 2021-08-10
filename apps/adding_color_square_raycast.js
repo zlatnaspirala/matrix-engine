@@ -12,7 +12,13 @@ export var runThis = (world) => {
     mix_operation: "multiply",
   };
 
-  world.Add("cubeLightTex", 1, "MyColoredSquareRayObject",textuteImageSamplers );
+  world.Add("squareTex", 1, "MyColoredSquareRayObject",textuteImageSamplers);
+  App.scene.MyColoredSquareRayObject.position.SetX(0);
+
+  world.Add("squareTex", 1, "MyColoredSquareRayObjectHelper", textuteImageSamplers);
+  App.scene.MyColoredSquareRayObject.position.SetX(0);
+
+  world.Add("squareTex", 1, "MyColoredSquareRayObjectHelper2", textuteImageSamplers);
   App.scene.MyColoredSquareRayObject.position.SetX(0);
 
   canvas.addEventListener('mousedown', (ev) => {
