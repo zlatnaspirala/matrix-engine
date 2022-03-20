@@ -19,11 +19,11 @@ export var runThis = world => {
   App.scene.MyColoredTriangle1.position.SetX(0);
   App.scene.MyColoredTriangle1.position.SetY(0);
 
-  // App.scene.MyColoredTriangle1.position.SetX(2.5);
-  // App.scene.MyColoredTriangle2.position.SetX(0);
-  // App.scene.MyColoredTriangle3.position.SetX(-2.5);
+  App.scene.MyColoredTriangle1.position.SetX(2.5);
+  App.scene.MyColoredTriangle2.position.SetX(0);
+  App.scene.MyColoredTriangle3.position.SetX(-2.5);
 
-  // App.scene.MyColoredTriangle1.rotation.rotationSpeed.z = -10;
-  // App.scene.MyColoredTriangle2.rotation.rotationSpeed.z = -10;
-  // App.scene.MyColoredTriangle3.rotation.rotationSpeed.z = -10;
+  App.scene.MyColoredTriangle1.rotation.rotationSpeed.z = -10;
+  App.scene.MyColoredTriangle2.rotation.rotationSpeed.z = -10;
+  App.scene.MyColoredTriangle3.rotation.rotationSpeed.z = -10;
 };

@@ -2,14 +2,26 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.4.5`
+### Name: `MATRIX-ENGINE` `1.4.12`
 
-### STATUS - [Integrated fully pwa addToHomePage/cache]
+### STATUS 
+- [Integrated PWA addToHomePage/cache/]
+- [Integrated raycast]
 
 ### For npm users recommended
 
  - Use starter project:
    https://github.com/zlatnaspirala/matrix-engine-starter
+
+   with command: 
+
+   ```js
+   npm i
+   npm run build.all
+   ```
+
+   Project template in `matrix-engine-starter`
+   - Slot Mashine
 
 - The benefits of this project is offering an overview of the entire application logic,
   easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
@@ -54,6 +66,10 @@ const QueryString = matrixEngine.utility.QueryString;
 @Note: If you use unsecured `http` protocol no build needed at all just navigate to the `app.html`.
 app.html load App.js like script type `module`. Same roles for all others instance build entries.
 
+For develop in localhost you will use `http` protocol and `app.html`.
+For production/public server you will use npm run build.XXX commands. and then upload project to the
+usually `/var/www/html/you-app/`.
+
  - `app-build.html` , `examples-build.html` loads javascript type `text/javascript`.
  - `app.html`, `examples.html` loads javascript type `module`.
 
@@ -91,6 +107,7 @@ build.all;
 - Adding color cube
 - Adding color pyramyde
 - Adding color square
+- Adding tex square with raycast
 - Adding color triangle
 - Adding geometry
 - Adding multi (compose) textures
@@ -141,9 +158,11 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 
 ### Raycast
 
-   - cube , square, triangle  [1.4.9]
+   - cube , square, triangle  [1.4.11]
    Raycast works fine also in firstPersonCamera operation.
-   Raycast work perfect after one local rotation for now.
+   Raycast work perfect after local single rotation x, y, or z.
+   Combination rotx and roty works , roty and rotz only with rotx = 180 for now.
+
    Bug if walk behind object then turn arround and try raycast but no work for now.
    - Usage:
 ```js

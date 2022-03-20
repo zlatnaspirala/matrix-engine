@@ -16,7 +16,7 @@ var _adding_color_piramyde = require("./apps/adding_color_piramyde");
 
 var _adding_color_triangle = require("./apps/adding_color_triangle");
 
-var _adding_color_square_raycast = require("./apps/adding_color_square_raycast");
+var _adding_tex_square_raycast = require("./apps/adding_tex_square_raycast");
 
 var _adding_more_texture_samplers = require("./apps/adding_more_texture_samplers");
 
@@ -69,7 +69,7 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var Examples = {
-  adding_color_square_raycast: _adding_color_square_raycast.runThis,
+  adding_tex_square_raycast: _adding_tex_square_raycast.runThis,
   cube_tex_arrays: _cube_tex_arrays.runThis,
   adding_color_cube: _adding_color_cube.runThis,
   adding_color_piramyde: _adding_color_piramyde.runThis,
@@ -149,7 +149,7 @@ var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/adding_color_cube":2,"./apps/adding_color_piramyde":3,"./apps/adding_color_square":4,"./apps/adding_color_square_raycast":5,"./apps/adding_color_triangle":6,"./apps/adding_more_texture_samplers":7,"./apps/adding_square_texture":8,"./apps/all_variant_of_blending":9,"./apps/audio_manipulation":10,"./apps/camera_texture":11,"./apps/cube_experimental":12,"./apps/cube_geometry":13,"./apps/cube_light_and_texture":14,"./apps/cube_light_dinamic":15,"./apps/cube_tex_arrays":16,"./apps/custom_texture":17,"./apps/first_person_controller":18,"./apps/load_obj_file":19,"./apps/my_world":20,"./apps/obj_animation":21,"./apps/obj_animation_build_mesh_effect":22,"./apps/one-kilo":23,"./apps/porting2d":24,"./apps/porting2d_particle":25,"./apps/porting2d_text":26,"./apps/sphere_geometry":27,"./apps/texture_dinamic_manipulation":28,"./apps/video_texture":29,"./index":30}],2:[function(require,module,exports){
+},{"./apps/adding_color_cube":2,"./apps/adding_color_piramyde":3,"./apps/adding_color_square":4,"./apps/adding_color_triangle":5,"./apps/adding_more_texture_samplers":6,"./apps/adding_square_texture":7,"./apps/adding_tex_square_raycast":8,"./apps/all_variant_of_blending":9,"./apps/audio_manipulation":10,"./apps/camera_texture":11,"./apps/cube_experimental":12,"./apps/cube_geometry":13,"./apps/cube_light_and_texture":14,"./apps/cube_light_dinamic":15,"./apps/cube_tex_arrays":16,"./apps/custom_texture":17,"./apps/first_person_controller":18,"./apps/load_obj_file":19,"./apps/my_world":20,"./apps/obj_animation":21,"./apps/obj_animation_build_mesh_effect":22,"./apps/one-kilo":23,"./apps/porting2d":24,"./apps/porting2d_particle":25,"./apps/porting2d_text":26,"./apps/sphere_geometry":27,"./apps/texture_dinamic_manipulation":28,"./apps/video_texture":29,"./index":30}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -183,10 +183,11 @@ var runThis = world => {
 
   _manifest.default.scene.MyColoredCube2.position.SetX(-2.5);
 
-  _manifest.default.scene.MyColoredCube3.position.SetX(2.5); //App.scene.MyColoredCube1.rotation.rotationSpeed.x = 15;
-  //App.scene.MyColoredCube2.rotation.rotationSpeed.y = 15;
-  //App.scene.MyColoredCube3.rotation.rotationSpeed.z = 15;
+  _manifest.default.scene.MyColoredCube3.position.SetX(2.5);
 
+  _manifest.default.scene.MyColoredCube1.rotation.rotationSpeed.x = 15;
+  _manifest.default.scene.MyColoredCube2.rotation.rotationSpeed.y = 15;
+  _manifest.default.scene.MyColoredCube3.rotation.rotationSpeed.z = 15;
 };
 
 exports.runThis = runThis;
@@ -218,11 +219,11 @@ var runThis = world => {
 
   _manifest.default.scene.MyPyramid2.position.SetX(0);
 
-  _manifest.default.scene.MyPyramid3.position.SetX(-2.5); // App.scene.MyPyramid1.rotation.rotationSpeed.y = 20;
-  // App.scene.MyPyramid2.rotation.rotationSpeed.y = 20;
-  // App.scene.MyPyramid3.rotation.rotationSpeed.y = 20;
+  _manifest.default.scene.MyPyramid3.position.SetX(-2.5);
 
-
+  _manifest.default.scene.MyPyramid1.rotation.rotationSpeed.y = 20;
+  _manifest.default.scene.MyPyramid2.rotation.rotationSpeed.y = 20;
+  _manifest.default.scene.MyPyramid3.rotation.rotationSpeed.y = 20;
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
@@ -285,45 +286,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
  */
-var runThis = world => {
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  };
-  world.Add("squareTex", 1, "MyColoredSquareRayObject", textuteImageSamplers);
-
-  _manifest.default.scene.MyColoredSquareRayObject.position.SetX(0);
-
-  world.Add("squareTex", 1, "MyColoredSquareRayObjectHelper", textuteImageSamplers);
-
-  _manifest.default.scene.MyColoredSquareRayObject.position.SetX(0);
-
-  canvas.addEventListener('mousedown', ev => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
-  canvas.addEventListener('ray.hit.event', ev => {
-    alert("You shoot the object! Nice");
-  }); // App.scene.MyColoredSquare1.rotation.rotationSpeed.x = 15;
-};
-
-exports.runThis = runThis;
-
-},{"../program/manifest":43}],6:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- *@Author Nikola Lukic
- *@Description Matrix Engine Api Example
- */
 
 /* globals world App world */
 var runThis = world => {
@@ -338,18 +300,22 @@ var runThis = world => {
 
   _manifest.default.scene.MyColoredTriangle1.position.SetX(0);
 
-  _manifest.default.scene.MyColoredTriangle1.position.SetY(0); // App.scene.MyColoredTriangle1.position.SetX(2.5);
-  // App.scene.MyColoredTriangle2.position.SetX(0);
-  // App.scene.MyColoredTriangle3.position.SetX(-2.5);
-  // App.scene.MyColoredTriangle1.rotation.rotationSpeed.z = -10;
-  // App.scene.MyColoredTriangle2.rotation.rotationSpeed.z = -10;
-  // App.scene.MyColoredTriangle3.rotation.rotationSpeed.z = -10;
+  _manifest.default.scene.MyColoredTriangle1.position.SetY(0);
 
+  _manifest.default.scene.MyColoredTriangle1.position.SetX(2.5);
+
+  _manifest.default.scene.MyColoredTriangle2.position.SetX(0);
+
+  _manifest.default.scene.MyColoredTriangle3.position.SetX(-2.5);
+
+  _manifest.default.scene.MyColoredTriangle1.rotation.rotationSpeed.z = -10;
+  _manifest.default.scene.MyColoredTriangle2.rotation.rotationSpeed.z = -10;
+  _manifest.default.scene.MyColoredTriangle3.rotation.rotationSpeed.z = -10;
 };
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],7:[function(require,module,exports){
+},{"../program/manifest":43}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -385,7 +351,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],8:[function(require,module,exports){
+},{"../program/manifest":43}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -410,6 +376,47 @@ var runThis = world => {
   };
   world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers);
   _manifest.default.scene.MySquareTexure1.rotation.rotationSpeed.x = 10;
+};
+
+exports.runThis = runThis;
+
+},{"../program/manifest":43}],8:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.runThis = void 0;
+
+var _manifest = _interopRequireDefault(require("../program/manifest"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ *@Author Nikola Lukic
+ *@Description Matrix Engine Api Example
+ */
+var runThis = world => {
+  var textuteImageSamplers = {
+    source: ["res/images/complex_texture_1/diffuse.png"],
+    mix_operation: "multiply"
+  };
+  world.Add("squareTex", 1, "MyColoredSquareRayObject", textuteImageSamplers);
+
+  _manifest.default.scene.MyColoredSquareRayObject.position.SetX(0);
+
+  world.Add("squareTex", 1, "MyColoredSquareRayObjectHelper", textuteImageSamplers);
+
+  _manifest.default.scene.MyColoredSquareRayObject.position.SetX(0); //world.Add("squareTex", 1, "MyColoredSquareRayObjectHelper2", textuteImageSamplers);
+  //App.scene.MyColoredSquareRayObject.position.SetX(0);
+
+
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+  canvas.addEventListener('ray.hit.event', ev => {
+    alert("You shoot the object! Nice");
+  }); // App.scene.MyColoredSquare1.rotation.rotationSpeed.x = 15;
 };
 
 exports.runThis = runThis;
@@ -7796,7 +7803,6 @@ exports.checkingProcedure = checkingProcedure;
 exports.checkingProcedureCalc = checkingProcedureCalc;
 exports.touchCoordinate = void 0;
 let rayHitEvent;
-let nodes = [];
 let touchCoordinate = {
   enabled: false,
   x: 0,
@@ -7946,10 +7952,7 @@ function checkingProcedureCalc(object) {
     var b = object.geometry.indices[f + 1];
     var c = object.geometry.indices[f + 2];
     let triangle = null;
-    let node0 = [object.geometry.vertices[0 + a * 3], object.geometry.vertices[1 + a * 3], object.geometry.vertices[2 + a * 3]];
-    let node1 = [object.geometry.vertices[0 + b * 3], object.geometry.vertices[1 + b * 3], object.geometry.vertices[2 + b * 3]];
-    let node2 = [object.geometry.vertices[0 + c * 3], object.geometry.vertices[1 + c * 3], object.geometry.vertices[2 + c * 3]];
-    const triangleInZero = [node0, node1, node2];
+    const triangleInZero = [[object.geometry.vertices[0 + a * 3], object.geometry.vertices[1 + a * 3], object.geometry.vertices[2 + a * 3]], [object.geometry.vertices[0 + b * 3], object.geometry.vertices[1 + b * 3], object.geometry.vertices[2 + b * 3]], [object.geometry.vertices[0 + c * 3], object.geometry.vertices[1 + c * 3], object.geometry.vertices[2 + c * 3]]];
     var rez0, rez1, rez2;
 
     if (object.rotation.rx != 0) {
@@ -7964,22 +7967,27 @@ function checkingProcedureCalc(object) {
       if (object.rotation.rx != 0) {
         // Y i Z
         // get y
+        rez0 = rotate2dPlot(0, 0, triangleInZero[0][1], triangleInZero[0][2], object.rotation.rx - 90);
+        rez1 = rotate2dPlot(0, 0, triangleInZero[1][1], triangleInZero[1][2], object.rotation.rx - 90);
+        rez2 = rotate2dPlot(0, 0, triangleInZero[2][1], triangleInZero[2][2], object.rotation.rx - 90);
         const detY0 = rez0[0];
         const detY1 = rez1[0];
         const detY2 = rez2[0];
         const detZ0 = rez0[1];
         const detZ1 = rez1[1];
-        const detZ2 = rez2[1]; //rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], triangleInZero[0][2], -object.rotation.ry);
-        //rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][2], -object.rotation.ry);
-        //rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][2], -object.rotation.ry);
-        //                          X INITIAL             Z
+        const detZ2 = rez2[1]; //                          X INITIAL             Z
 
-        rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], detZ0, -object.rotation.ry);
-        rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], detZ1, -object.rotation.ry);
-        rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], detZ2, -object.rotation.ry); // ????
-
-        triangle = [[rez0[0] + object.position.worldLocation[0], detY0 + object.position.worldLocation[1], rez0[1]], [rez1[0] + object.position.worldLocation[0], detY1 + object.position.worldLocation[1], rez1[1]], [rez2[0] + object.position.worldLocation[0], detY2 + object.position.worldLocation[1], rez2[1]]];
-      } else {
+        rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], detZ0, object.rotation.ry - 90);
+        rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], detZ1, object.rotation.ry - 90);
+        rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], detZ2, object.rotation.ry - 90);
+        const detZ00 = rez0[1];
+        const detZ11 = rez1[1];
+        const detZ22 = rez2[1];
+        rez0 = rotate2dPlot(0, 0, rez0[0], detY0, object.rotation.rz - 90);
+        rez1 = rotate2dPlot(0, 0, rez1[0], detY1, object.rotation.rz - 90);
+        rez2 = rotate2dPlot(0, 0, rez2[0], detY2, object.rotation.rz - 90);
+        triangle = [[rez0[0] + object.position.worldLocation[0], rez0[1] + object.position.worldLocation[1], detZ00], [rez1[0] + object.position.worldLocation[0], rez1[1] + object.position.worldLocation[1], detZ11], [rez2[0] + object.position.worldLocation[0], rez2[1] + object.position.worldLocation[1], detZ22]];
+      } else if (object.rotation.rz == 0) {
         rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], triangleInZero[0][2], -object.rotation.ry);
         rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][2], -object.rotation.ry);
         rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][2], -object.rotation.ry);
@@ -7989,24 +7997,41 @@ function checkingProcedureCalc(object) {
 
     if (object.rotation.rz != 0) {
       if (object.rotation.ry != 0) {
-        // x is cheked here
-        rez0 = rotate2dPlot(0, 0, rez0[0], rez0[1], -object.rotation.rz);
-        rez1 = rotate2dPlot(0, 0, rez1[0], rez1[1], -object.rotation.rz);
-        rez2 = rotate2dPlot(0, 0, rez2[0], rez2[1], -object.rotation.rz);
+        if (object.rotation.rx == 180) {
+          rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], triangleInZero[0][2], object.rotation.ry);
+          rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][2], object.rotation.ry);
+          rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][2], object.rotation.ry);
+          let detZ00 = rez0[1];
+          let detZ11 = rez1[1];
+          let detZ22 = rez2[1];
+          rez0 = rotate2dPlot(0, 0, rez0[0], triangleInZero[0][1], object.rotation.rz);
+          rez1 = rotate2dPlot(0, 0, rez1[0], triangleInZero[1][1], object.rotation.rz);
+          rez2 = rotate2dPlot(0, 0, rez2[0], triangleInZero[2][1], object.rotation.rz);
+          const detZ0 = rez0[1];
+          const detZ1 = rez1[1];
+          const detZ2 = rez2[1]; // rez0 = rotate2dPlot(0, 0,rez0[0], detZ00, object.rotation.rx - 180);
+          // rez1 = rotate2dPlot(0, 0,rez0[0], detZ11, object.rotation.rx - 180);
+          // rez2 = rotate2dPlot(0, 0, rez0[0], detZ22, object.rotation.rx - 180);
+          // detZ00 = rez0[1];
+          // detZ11 = rez1[1];
+          // detZ22 = rez2[1];
+
+          triangle = [[rez0[0] + object.position.worldLocation[0], detZ0 + object.position.worldLocation[1], detZ00], [rez1[0] + object.position.worldLocation[0], detZ1 + object.position.worldLocation[1], detZ11], [rez2[0] + object.position.worldLocation[0], detZ2 + object.position.worldLocation[1], detZ22]];
+        } else {
+          console.info('unhandled ray cast');
+        }
       } else {
         if (object.rotation.rx == 0) {
           rez0 = rotate2dPlot(0, +0, triangleInZero[0][0], triangleInZero[0][1], object.rotation.rz);
           rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][1], object.rotation.rz);
           rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][1], object.rotation.rz);
+          triangle = [[rez0[0] + object.position.worldLocation[0], rez0[1] + object.position.worldLocation[1], triangleInZero[0][2]], [rez1[0] + object.position.worldLocation[0], rez1[1] + object.position.worldLocation[1], triangleInZero[1][2]], [rez2[0] + object.position.worldLocation[0], rez2[1] + object.position.worldLocation[1], triangleInZero[2][2]]];
         } else {
-          rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], rez0[1], -object.rotation.rz);
-          rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], rez1[1], -object.rotation.rz);
-          rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], rez2[1], -object.rotation.rz);
+          console.info('must be handled rz vs rx');
         }
       }
+    } // no rot
 
-      triangle = [[rez0[0] + object.position.worldLocation[0], rez0[1] + object.position.worldLocation[1], triangleInZero[0][2]], [rez1[0] + object.position.worldLocation[0], rez1[1] + object.position.worldLocation[1], triangleInZero[1][2]], [rez2[0] + object.position.worldLocation[0], rez2[1] + object.position.worldLocation[1], triangleInZero[2][2]]];
-    }
 
     if (object.rotation.rx == 0 && object.rotation.ry == 0 && object.rotation.rz == 0) {
       triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], triangleInZero[0][2]], [triangleInZero[1][0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], triangleInZero[1][2]], [triangleInZero[2][0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], triangleInZero[2][2]]];
