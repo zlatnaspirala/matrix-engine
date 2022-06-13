@@ -28,8 +28,10 @@ import {runThis as sphere_geometry} from './apps/sphere_geometry';
 import {runThis as texture_dinamic_manipulation} from './apps/texture_dinamic_manipulation';
 import {runThis as video_texture} from './apps/video_texture';
 import {runThis as adding_color_square} from './apps/adding_color_square';
+import {runThis as bvh_loader} from './apps/bvh-loader';
 
 var Examples = {
+  bvh_loader: bvh_loader,
   adding_tex_square_raycast: adding_tex_square_raycast,
   cube_tex_arrays: cube_tex_arrays,
   adding_color_cube: adding_color_cube,
@@ -72,7 +74,7 @@ var App = matrixEngine.App;
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
-    navigator.serviceWorker.register('worker.js');
+    // navigator.serviceWorker.register('worker.js');
   });
 } else {
   console.warn('Matrix Engine: No support for web workers in this browser.');
@@ -89,7 +91,7 @@ function webGLStart() {
       }, 100);
     } else {
       setTimeout(() => {
-        Examples['adding_color_cube'](world);
+        Examples['bvh_loader'](world);
       }, 100);
     }
   } else {

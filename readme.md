@@ -156,6 +156,12 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 };
 ```
 
+### BVH Matrix Skeletal
+ New deps pack `bvh-loader` . It is bvh parser special for matrix-engine.
+```js
+
+```
+
 ### Raycast
 
    - cube , square, triangle  [1.4.11]
