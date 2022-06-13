@@ -29,8 +29,11 @@ import {runThis as texture_dinamic_manipulation} from './apps/texture_dinamic_ma
 import {runThis as video_texture} from './apps/video_texture';
 import {runThis as adding_color_square} from './apps/adding_color_square';
 import {runThis as bvh_loader} from './apps/bvh-loader';
+import {runThis as bvh_animation_class} from './apps/bvh-animation-class';
+
 
 var Examples = {
+  bvh_animation_class: bvh_animation_class,
   bvh_loader: bvh_loader,
   adding_tex_square_raycast: adding_tex_square_raycast,
   cube_tex_arrays: cube_tex_arrays,
@@ -91,7 +94,7 @@ function webGLStart() {
       }, 100);
     } else {
       setTimeout(() => {
-        Examples['bvh_loader'](world);
+        Examples['bvh_animation_class'](world);
       }, 100);
     }
   } else {

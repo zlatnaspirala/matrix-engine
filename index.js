@@ -19,6 +19,7 @@ import operation from "./lib/matrix-buffers";
 import texTools from "./lib/matrix-textures";
 import * as utility from "./lib/utility";
 import * as raycaster from './lib/raycast';
+import MEBvhAnimation from './lib/matrix-bvh';
 
 export {
   App,
@@ -31,5 +32,6 @@ export {
   utility,
   operation,
   objLoader,
-  raycaster
+  raycaster,
+  MEBvhAnimation
 };

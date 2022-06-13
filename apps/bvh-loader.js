@@ -4,6 +4,11 @@
 import MEBvh from '../node_modules/bvh-loader/index';
 import App from '../program/manifest';
 
+/**
+ * @description
+ * First raw idea to make visible skeletal animation
+ * from parsed bvh file.
+ */
 export var runThis = (world) => {
 
   var logHTML = document.createElement('div');

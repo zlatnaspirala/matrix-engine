@@ -29,10 +29,10 @@ var App = {
   scene: {},                             // readOnly in manifest
   meshes: {},                            // readOnly in manifest
   limitations: {                         // readOnly in manifest
-    maxTexturesInFragmentShader: null,
+    maxTexturesInFragmentShader: null,   // readOnly in manifest
   },
   updateBeforeDraw: [],
-  audioSystem: {},
+  audioSystem: {},                        // readOnly in manifest
   pwa: {
     addToHomePage: true,
   },
