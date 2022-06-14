@@ -27,6 +27,7 @@
     "url": "git+https://github.com/zlatnaspirala/webgl2-glmatrix2-engine.git"
   },
   "keywords": [
+    "bvh-glmatrx", "bvh.js",
     "bvh-skeletal", "bvh-webgl",
     "bvh-loader", "bvh-animation",
     "raycast", "raycast-glmatrix",

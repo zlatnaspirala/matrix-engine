@@ -2,18 +2,18 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.4.12`
+### Name: `MATRIX-ENGINE` `1.5.0`
 
 ### STATUS 
 - [Integrated PWA addToHomePage/cache/]
-- [Integrated raycast]
+- [Integrated raycast, bvh loader]
 
 ### For npm users recommended
 
  - Use starter project:
    https://github.com/zlatnaspirala/matrix-engine-starter
 
-   with command: 
+   with command:
 
    ```js
    npm i
@@ -22,6 +22,7 @@
 
    Project template in `matrix-engine-starter`
    - Slot Mashine
+     https://maximumroulette.com/apps/matrix-engine-starter/projects/matrix-slot/index.html
 
 - The benefits of this project is offering an overview of the entire application logic,
   easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
@@ -157,9 +158,25 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 ```
 
 ### BVH Matrix Skeletal
- New deps pack `bvh-loader` . It is bvh parser special for matrix-engine.
+ New deps pack `bvh-loader`. It is bvh parser created for matrix-engine 
+ but can be used for any other graphics language.
 ```js
 
+  const options = {
+    world: world,
+    autoPlay: true,
+    showOnLoad: false, // if autoPLay is true then showOnLoad is not matter.
+    type: 'ANIMATION', // "TPOSE' | 'ANIMATION'
+    loop: 'playInverse', // true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
+    globalOffset: [-30, -150, -355],
+    skeletalBoneScale: 10.35,
+    boneNameBasePrefix: 'backWalk',
+    skeletalBlend: { paramDest: 4, paramSrc: 7 } // remove arg for no blend
+  };
+
+  const filePath = 'https://raw.githubusercontent.com/zlatnaspirala/bvh-loader/main/javascript-bvh/example.bvh';
+
+  var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options);
 ```
 
 ### Raycast
@@ -343,3 +360,5 @@ Best way is to keep it on 100% pass.
   http://www.blendswap.com/users/view/AndresCuccaro
 - https://freestocktextures.com/texture/bark-wood-plant,122.html
 - https://github.com/Necolo/raycaster
+- BVH collections from:
+  `Special thanks to the CMU Graphics Lab Motion Capture Database which provided the   data http://mocap.cs.cmu.edu/`

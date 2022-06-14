@@ -1,5 +1,7 @@
 
-# CREDITS FOR CODE EXAMPLE
+# CREDITS
+
+## OBJECT LOADER
 
 ```js
 /**
@@ -100,9 +102,15 @@ export class customVertex_1 {
 
 ```
 
+## Raycast based on:
+https://www.npmjs.com/package/raycaster
+but adapted special for matrix-engine.
 
-- Also raycast based on :
-  https://www.npmjs.com/package/raycaster
 
-  but adapted special for matrix-engine
+## Bvh Loader
+Original source: https://github.com/dabeschte/npybvh
+
+
+## Bvh Resources folder in resources:
+Special thanks to the CMU Graphics Lab Motion Capture Database which provided the data http://mocap.cs.cmu.edu/
 
