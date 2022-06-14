@@ -4,9 +4,9 @@
 
 ### Name: `MATRIX-ENGINE` `1.5.0`
 
-### STATUS 
+### STATUS
 - [Integrated PWA addToHomePage/cache/]
-- [Integrated raycast, bvh loader]
+- [Integrated raycast, bvh animation]
 
 ### For npm users recommended
 
