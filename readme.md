@@ -157,27 +157,40 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 };
 ```
 
-### BVH Matrix Skeletal
- New deps pack `bvh-loader`. It is bvh parser created for matrix-engine 
- but can be used for any other graphics language.
-```js
+### BVH Matrix Skeletal [1.5.0]
 
+ - New deps pack `bvh-loader`. It is bvh parser created for matrix-engine 
+   but can be used for any other graphics language.
+
+```js
   const options = {
     world: world,
     autoPlay: true,
-    showOnLoad: false, // if autoPLay is true then showOnLoad is not matter.
+    myFrameRate: 10,
+    showOnLoad: false, // if autoPLay is true then showOnLoad is inactive.
     type: 'ANIMATION', // "TPOSE' | 'ANIMATION'
     loop: 'playInverse', // true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
-    globalOffset: [-30, -150, -355],
-    skeletalBoneScale: 10.35,
+    globalOffset: [-30, -180, -155],
+    skeletalBoneScale: 6,
     boneNameBasePrefix: 'backWalk',
-    skeletalBlend: { paramDest: 4, paramSrc: 7 } // remove arg for no blend
+    skeletalBlend: { paramDest: 7, paramSrc: 6 }, // remove arg for no blend
+    boneTex: {
+      source: [
+        "res/icons/512.png"
+      ],
+      mix_operation: "multiply",
+    },
+    // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex'
+    drawTypeBone: 'squareTex' 
   };
 
   const filePath = 'https://raw.githubusercontent.com/zlatnaspirala/bvh-loader/main/javascript-bvh/example.bvh';
 
   var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options);
 ```
+
+#### Live demo https://codepen.io/zlatnaspirala/pen/OJQdGVM
+
 
 ### Raycast
 
