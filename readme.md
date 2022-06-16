@@ -375,3 +375,8 @@ Best way is to keep it on 100% pass.
 - https://github.com/Necolo/raycaster
 - BVH collections from:
   `Special thanks to the CMU Graphics Lab Motion Capture Database which provided the   data http://mocap.cs.cmu.edu/`
+- Used in examples:
+  BLACK FLY by Audionautix | http://audionautix.com
+  Music promoted by https://www.free-stock-music.com
+  Creative Commons Attribution-ShareAlike 3.0 Unported
+  https://creativecommons.org/licenses/by-sa/3.0/deed.en_US

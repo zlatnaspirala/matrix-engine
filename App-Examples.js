@@ -9,6 +9,7 @@ import {runThis as adding_more_texture_samplers} from './apps/adding_more_textur
 import {runThis as adding_square_texture} from './apps/adding_square_texture';
 import {runThis as all_variant_of_blending} from './apps/all_variant_of_blending';
 import {runThis as audio_manipulation} from './apps/audio_manipulation';
+import {runThis as audio_manipulation2} from './apps/audio_manipulation2';
 import {runThis as camera_texture} from './apps/camera_texture';
 import {runThis as cube_experimental} from './apps/cube_experimental';
 import {runThis as cube_geometry} from './apps/cube_geometry';
@@ -45,6 +46,7 @@ var Examples = {
   adding_square_texture: adding_square_texture,
   all_variant_of_blending: all_variant_of_blending,
   audio_manipulation: audio_manipulation,
+  audio_manipulation2: audio_manipulation2,
   camera_texture: camera_texture,
   cube_experimental: cube_experimental,
   cube_geometry: cube_geometry,
@@ -78,6 +80,10 @@ var App = matrixEngine.App;
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
     // navigator.serviceWorker.register('worker.js');
+    matrixEngine.Engine.load_shaders('shaders/shaders.html').then((arg)=> {
+      console.info("Shaders ready.");
+      matrixEngine.Engine.initApp(webGLStart);
+    });
   });
 } else {
   console.warn('Matrix Engine: No support for web workers in this browser.');
@@ -94,7 +100,7 @@ function webGLStart() {
       }, 100);
     } else {
       setTimeout(() => {
-        Examples['bvh_animation_class'](world);
+        Examples['audio_manipulation2'](world);
       }, 100);
     }
   } else {
@@ -104,16 +110,6 @@ function webGLStart() {
   // Make it global for console easy access.
   window.App = App;
 }
-
-matrixEngine.Engine.load_shaders('shaders/shaders.html');
-
-window.addEventListener(
-  'load',
-  function (e) {
-    matrixEngine.Engine.initApp(webGLStart);
-  },
-  true
-);
 
 // Make it global for console easy access.
 window.matrixEngine = matrixEngine;

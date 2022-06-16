@@ -16,23 +16,23 @@ a {
   color: #0080ff;
 }
 
+iframe {
+  border: none;
+}
+
 .btnShadow {
-  -webkit-box-shadow: inset 0px 0px 22px 2px rgba(0,255,30,1);
-  -moz-box-shadow: inset 0px 0px 22px 2px rgba(0,255,30,1);
-  box-shadow: inset 0px 0px 22px 1px rgba(0,255,30,1);
+  -webkit-box-shadow: inset 0px 1px 0px 0px rgb(253, 52, 52);
+  -moz-box-shadow: inset 0px 1px 0px 0px rgb(253, 52, 52);
+  box-shadow: inset 0px 1px 0px 0px rgb(253, 52, 52);
   cursor: pointer; cursor: hand;
-  color: lime;
-  text-shadow: 1px 0px 0px #0BFF03;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 0px 0px #ffffff;
 }
 
 div.btnShadow:hover {
-  background-color: lime;
+  background-color: rgb(255, 255, 255);
   color:black;
-  text-shadow: 1px 1px 1px #0BFF03;
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
-  -webkit-box-shadow: 0 0 10px 3px #47FF19;
-  box-shadow: 0 0 10px 3px #47FF19;
+  font-size:20px;
 }
 
 .debugBox {

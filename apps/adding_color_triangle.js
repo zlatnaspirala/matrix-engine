@@ -8,8 +8,8 @@ import App from "../program/manifest";
 
 export var runThis = world => {
   world.Add("triangle", 1, "MyColoredTriangle1");
-  // world.Add("triangle", 1, "MyColoredTriangle2");
-  // world.Add("triangle", 1, "MyColoredTriangle3");
+  world.Add("triangle", 1, "MyColoredTriangle2");
+  world.Add("triangle", 1, "MyColoredTriangle3");
 
   canvas.addEventListener('mousedown', (ev) => {
     matrixEngine.raycaster.checkingProcedure(ev);

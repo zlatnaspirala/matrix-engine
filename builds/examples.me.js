@@ -26,6 +26,8 @@ var _all_variant_of_blending = require("./apps/all_variant_of_blending");
 
 var _audio_manipulation = require("./apps/audio_manipulation");
 
+var _audio_manipulation2 = require("./apps/audio_manipulation2");
+
 var _camera_texture = require("./apps/camera_texture");
 
 var _cube_experimental = require("./apps/cube_experimental");
@@ -64,11 +66,17 @@ var _video_texture = require("./apps/video_texture");
 
 var _adding_color_square = require("./apps/adding_color_square");
 
+var _bvhLoader = require("./apps/bvh-loader");
+
+var _bvhAnimationClass = require("./apps/bvh-animation-class");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var Examples = {
+  bvh_animation_class: _bvhAnimationClass.runThis,
+  bvh_loader: _bvhLoader.runThis,
   adding_tex_square_raycast: _adding_tex_square_raycast.runThis,
   cube_tex_arrays: _cube_tex_arrays.runThis,
   adding_color_cube: _adding_color_cube.runThis,
@@ -79,6 +87,7 @@ var Examples = {
   adding_square_texture: _adding_square_texture.runThis,
   all_variant_of_blending: _all_variant_of_blending.runThis,
   audio_manipulation: _audio_manipulation.runThis,
+  audio_manipulation2: _audio_manipulation2.runThis,
   camera_texture: _camera_texture.runThis,
   cube_experimental: _cube_experimental.runThis,
   cube_geometry: _cube_geometry.runThis,
@@ -110,7 +119,11 @@ var App = matrixEngine.App;
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
-    navigator.serviceWorker.register('worker.js');
+    // navigator.serviceWorker.register('worker.js');
+    matrixEngine.Engine.load_shaders('shaders/shaders.html').then(arg => {
+      console.info("Shaders ready.");
+      matrixEngine.Engine.initApp(webGLStart);
+    });
   });
 } else {
   console.warn('Matrix Engine: No support for web workers in this browser.');
@@ -128,7 +141,7 @@ function webGLStart() {
       }, 100);
     } else {
       setTimeout(() => {
-        Examples['adding_color_cube'](world);
+        Examples['audio_manipulation2'](world);
       }, 100);
     }
   } else {
@@ -137,19 +150,15 @@ function webGLStart() {
 
 
   window.App = App;
-}
+} // Make it global for console easy access.
 
-matrixEngine.Engine.load_shaders('shaders/shaders.html');
-window.addEventListener('load', function (e) {
-  matrixEngine.Engine.initApp(webGLStart);
-}, true); // Make it global for console easy access.
 
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/adding_color_cube":2,"./apps/adding_color_piramyde":3,"./apps/adding_color_square":4,"./apps/adding_color_triangle":5,"./apps/adding_more_texture_samplers":6,"./apps/adding_square_texture":7,"./apps/adding_tex_square_raycast":8,"./apps/all_variant_of_blending":9,"./apps/audio_manipulation":10,"./apps/camera_texture":11,"./apps/cube_experimental":12,"./apps/cube_geometry":13,"./apps/cube_light_and_texture":14,"./apps/cube_light_dinamic":15,"./apps/cube_tex_arrays":16,"./apps/custom_texture":17,"./apps/first_person_controller":18,"./apps/load_obj_file":19,"./apps/my_world":20,"./apps/obj_animation":21,"./apps/obj_animation_build_mesh_effect":22,"./apps/one-kilo":23,"./apps/porting2d":24,"./apps/porting2d_particle":25,"./apps/porting2d_text":26,"./apps/sphere_geometry":27,"./apps/texture_dinamic_manipulation":28,"./apps/video_texture":29,"./index":30}],2:[function(require,module,exports){
+},{"./apps/adding_color_cube":2,"./apps/adding_color_piramyde":3,"./apps/adding_color_square":4,"./apps/adding_color_triangle":5,"./apps/adding_more_texture_samplers":6,"./apps/adding_square_texture":7,"./apps/adding_tex_square_raycast":8,"./apps/all_variant_of_blending":9,"./apps/audio_manipulation":10,"./apps/audio_manipulation2":11,"./apps/bvh-animation-class":12,"./apps/bvh-loader":13,"./apps/camera_texture":14,"./apps/cube_experimental":15,"./apps/cube_geometry":16,"./apps/cube_light_and_texture":17,"./apps/cube_light_dinamic":18,"./apps/cube_tex_arrays":19,"./apps/custom_texture":20,"./apps/first_person_controller":21,"./apps/load_obj_file":22,"./apps/my_world":23,"./apps/obj_animation":24,"./apps/obj_animation_build_mesh_effect":25,"./apps/one-kilo":26,"./apps/porting2d":27,"./apps/porting2d_particle":28,"./apps/porting2d_text":29,"./apps/sphere_geometry":30,"./apps/texture_dinamic_manipulation":31,"./apps/video_texture":32,"./index":33}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -192,7 +201,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],3:[function(require,module,exports){
+},{"../program/manifest":49}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -234,7 +243,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],4:[function(require,module,exports){
+},{"../program/manifest":49}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -270,7 +279,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],5:[function(require,module,exports){
+},{"../program/manifest":49}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -289,9 +298,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* globals world App world */
 var runThis = world => {
-  world.Add("triangle", 1, "MyColoredTriangle1"); // world.Add("triangle", 1, "MyColoredTriangle2");
-  // world.Add("triangle", 1, "MyColoredTriangle3");
-
+  world.Add("triangle", 1, "MyColoredTriangle1");
+  world.Add("triangle", 1, "MyColoredTriangle2");
+  world.Add("triangle", 1, "MyColoredTriangle3");
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
@@ -315,7 +324,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],6:[function(require,module,exports){
+},{"../program/manifest":49}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -351,7 +360,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],7:[function(require,module,exports){
+},{"../program/manifest":49}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -380,7 +389,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],8:[function(require,module,exports){
+},{"../program/manifest":49}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -421,7 +430,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],9:[function(require,module,exports){
+},{"../program/manifest":49}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -469,7 +478,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":30}],10:[function(require,module,exports){
+},{"../index.js":33}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -550,7 +559,453 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":30}],11:[function(require,module,exports){
+},{"../index.js":33}],11:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.runThis = void 0;
+
+var matrixEngine = _interopRequireWildcard(require("../index.js"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+/**
+ * @Author Nikola Lukic
+ * @Description Matrix Engine Api Example.
+ */
+let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+
+var runThis = world => {
+  // need to be removed from bvh-loader npm package!
+  var logHTML = document.createElement('div');
+  logHTML.id = 'log'; // logHTML.style.position = 'absolute';
+
+  document.body.appendChild(logHTML);
+  var App = matrixEngine.App;
+  var effectOsci = new matrixEngine.utility.OSCILLATOR(3, 10, 1);
+  var effectOsci2 = new matrixEngine.utility.OSCILLATOR(3, 10, 1);
+  effectOsci2.value_ = 6; ///////////////////////////////
+
+  const options = {
+    world: world,
+    // [Required]
+    autoPlay: true,
+    // [Optimal]
+    showOnLoad: false,
+    // [Optimal] if autoPLay is true then showOnLoad is inactive.
+    type: 'ANIMATION',
+    // [Optimal] 'ANIMATION' | "TPOSE'
+    loop: 'playInverse',
+    // [Optimal] true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
+    globalOffset: [-10, -14, -245],
+    // [Optimal]
+    skeletalBoneScale: 2,
+    // [Optimal]
+    skeletalBlend: {
+      // [Optimal] remove arg for no blend
+      paramDest: 3,
+      paramSrc: 4
+    },
+    boneTex: {
+      source: ['res/images/complex_texture_1/diffuse.png'],
+      mix_operation: 'multiply'
+    },
+    drawTypeBone: 'sphereLightTex' // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
+
+  };
+  const filePath = 'https://raw.githubusercontent.com/zlatnaspirala/Matrix-Engine-BVH-test/main/javascript-bvh/example.bvh';
+  var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options); // 2
+
+  const options2 = {
+    world: world,
+    autoPlay: true,
+    myFrameRate: 10,
+    showOnLoad: false,
+    // if autoPLay is true then showOnLoad is inactive.
+    type: 'ANIMATION',
+    // "TPOSE' | 'ANIMATION'
+    loop: 'playInverse',
+    // true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
+    globalOffset: [40, -180, -155],
+    skeletalBoneScale: 6,
+    boneNameBasePrefix: 'backWalk',
+    skeletalBlend: {
+      paramDest: 7,
+      paramSrc: 6
+    },
+    // remove arg for no blend
+    boneTex: {
+      source: ['res/images/512.png'],
+      mix_operation: 'multiply'
+    },
+    drawTypeBone: 'squareTex' // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex'
+
+  };
+  window.myFirstBvhAnimation = myFirstBvhAnimation;
+  const filePath2 = 'res/bvh/Female1_B04_StandToWalkBack.bvh';
+  var myBvhAnimation = new matrixEngine.MEBvhAnimation(filePath2, options2); // 3
+
+  const options3 = {
+    world: world,
+    autoPlay: true,
+    myFrameRate: 10,
+    showOnLoad: false,
+    // if autoPLay is true then showOnLoad is inactive.
+    type: 'ANIMATION',
+    // "TPOSE' | 'ANIMATION'
+    loop: 'playInverse',
+    // true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
+    globalOffset: [-30, -180, -255],
+    skeletalBoneScale: 6,
+    boneNameBasePrefix: 'stand3',
+    skeletalBlend: {
+      paramDest: 7,
+      paramSrc: 6
+    },
+    // remove arg for no blend
+    boneTex: {
+      source: ['res/images/512.png'],
+      mix_operation: 'multiply'
+    },
+    drawTypeBone: 'cubeLightTex' // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex'
+
+  };
+  const filePath3 = 'res/bvh/Female1_A01_Stand.bvh';
+  var myBvhAnimation3 = new matrixEngine.MEBvhAnimation(filePath3, options3);
+  window.myBvhAnimation3 = myBvhAnimation3; // 3
+
+  const options4 = {
+    world: world,
+    autoPlay: true,
+    myFrameRate: 10,
+    showOnLoad: false,
+    // if autoPLay is true then showOnLoad is inactive.
+    type: 'ANIMATION',
+    // "TPOSE' | 'ANIMATION'
+    loop: 'playInverse',
+    // true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
+    globalOffset: [-170, -180, -295],
+    skeletalBoneScale: 6,
+    boneNameBasePrefix: 'standUraban',
+    skeletalBlend: {
+      paramDest: 7,
+      paramSrc: 6
+    },
+    // remove arg for no blend
+    boneTex: {
+      source: ['res/images/512.png'],
+      mix_operation: 'multiply'
+    },
+    drawTypeBone: 'cubeLightTex' // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex'
+
+  };
+  const filePath4 = 'res/bvh/Female1_D1_Urban.bvh';
+  var myBvhAnimation4 = new matrixEngine.MEBvhAnimation(filePath4, options4);
+  var matrixIcon = {
+    source: ['res/images/512.png'],
+    mix_operation: 'multiply'
+  };
+  var matrixIcon2 = {
+    source: ['res/images/semi_pack/gradiend_half1.png'],
+    mix_operation: 'multiply'
+  };
+
+  for (var i = 1; i < 1024; i = i + 80) {
+    world.Add('pyramid', 0.1 + i / 500, 'MyPyramid' + i);
+    world.Add('cubeLightTex', 0.1 + i / 100, 'MyCube' + i, matrixIcon);
+    world.Add('cubeLightTex', 0.1 + i / 100, 'MyCube2__' + i, matrixIcon2);
+  }
+
+  var myMarginY = -5;
+  var mymarginYCube = -10;
+
+  for (var i = 1; i < 1024; i = i + 80) {
+    App.scene['MyPyramid' + i].position.SetY(myMarginY);
+    App.scene['MyPyramid' + i].position.SetZ(-16);
+    App.scene['MyPyramid' + i].rotation.rotationSpeed.y = 15;
+    App.scene['MyPyramid' + i].glBlend.blendEnabled = true;
+    App.scene['MyPyramid' + i].glBlend.blendParamSrc = ENUMERATORS.glBlend.param[6];
+    App.scene['MyPyramid' + i].glBlend.blendParamDest = ENUMERATORS.glBlend.param[6];
+    App.scene['MyCube' + i].glBlend.blendEnabled = true;
+    App.scene['MyCube' + i].glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
+    App.scene['MyCube' + i].glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
+    App.scene['MyCube' + i].position.SetZ(-70);
+    App.scene['MyCube' + i].position.SetX(-32);
+    App.scene['MyCube' + i].rotation.rotateY(45);
+    App.scene['MyCube2__' + i].glBlend.blendEnabled = true;
+    App.scene['MyCube2__' + i].glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
+    App.scene['MyCube2__' + i].glBlend.blendParamDest = ENUMERATORS.glBlend.param[6];
+    App.scene['MyCube2__' + i].position.SetZ(-70);
+    App.scene['MyCube2__' + i].position.SetX(27); // App.scene['MyCube2__' + i].position.SetY(mymarginYCube);
+
+    App.scene['MyCube2__' + i].rotation.rotateY(-45);
+    App.scene['MyCube2__' + i].rotation.rotationSpeed.y = 10;
+  }
+
+  matrixEngine.utility.byId('debugBox').style.display = 'block';
+  matrixEngine.utility.byId('debugBox').style.width = '100%';
+  matrixEngine.utility.byId('debugBox').style.height = '40px';
+  matrixEngine.utility.byId('debugBox').innerHTML = `
+  Music used: BLACK FLY by Audionautix | http://audionautix.com
+  Music promoted by https://www.free-stock-music.com
+  Creative Commons Attribution-ShareAlike 3.0 Unported
+  https://creativecommons.org/licenses/by-sa/3.0/deed.en_US
+  Mix of audio vs bvh operation. @zlatnaspirala
+  `;
+
+  App.onload = function (e) {
+    var test = App.audioSystem.createMusicAsset('blackfly', 'audionautix-black-fly.mp3');
+    test.then(() => {
+      console.log('Audio context access successed!');
+    }).catch(() => {
+      console.log('Ok there is no auto play for audio context. User need to click any where .');
+
+      function userRequest() {
+        App.onload();
+        removeEventListener('click', userRequest);
+      }
+
+      addEventListener('click', userRequest, false);
+    }); // Just for dev
+
+    window.blackfly = App.audioSystem.Assets.blackfly;
+    var source = blackfly.context.createMediaElementSource(blackfly.video);
+    source.connect(blackfly.gainNode);
+    blackfly.gainNode.connect(blackfly.filter);
+    blackfly.filter.connect(blackfly.context.destination);
+    blackfly.analyser = blackfly.context.createAnalyser();
+    source.connect(blackfly.analyser);
+    blackfly.frequencyData = new Uint8Array(blackfly.analyser.frequencyBinCount);
+    var PARAMETER1 = 20;
+    var PARAMETER2 = 6;
+    var mymarginYCubeLeft = 35;
+
+    blackfly.UPDATE = function () {
+      blackfly.analyser.getByteFrequencyData(blackfly.frequencyData);
+
+      for (var i = 1, j = 1; i < 1024; i = i + 80, j = j + 40) {
+        App.scene['MyPyramid' + i].position.SetY(blackfly.frequencyData[i] / PARAMETER1 + myMarginY);
+        App.scene['MyCube' + i].position.SetY(blackfly.frequencyData[i] / PARAMETER2 + mymarginYCube);
+        App.scene['MyCube2__' + i].position.SetY(blackfly.frequencyData[i] / PARAMETER2 + mymarginYCube);
+        App.scene['MyPyramid' + i].glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[effectOsci.value_ - 1];
+        App.scene['MyPyramid' + i].glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[effectOsci2.value_ - 1];
+        App.scene['MyCube' + i].glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[effectOsci.value_];
+        App.scene['MyCube' + i].glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[effectOsci2.value_];
+        App.scene['MyCube2__' + i].glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[effectOsci.value_];
+        App.scene['MyCube2__' + i].glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[effectOsci2.value_];
+      }
+    };
+
+    setInterval(() => {
+      effectOsci.UPDATE();
+      effectOsci2.UPDATE();
+    }, 1000);
+    App.updateBeforeDraw.push(blackfly);
+  };
+
+  App.onload();
+};
+
+exports.runThis = runThis;
+
+},{"../index.js":33}],12:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.runThis = void 0;
+
+/**
+ * @description Usage of MEBvhAnimation
+ * @class MEBvhAnimation
+ * @arg filePath
+ * @arg options
+ */
+var runThis = world => {
+  // need to be removed from bvh-loader npm package!
+  var logHTML = document.createElement('div');
+  logHTML.id = 'log'; // logHTML.style.position = 'absolute';
+
+  document.body.appendChild(logHTML);
+  const options = {
+    world: world,
+    // [Required]
+    autoPlay: true,
+    // [Optimal]
+    showOnLoad: false,
+    // [Optimal] if autoPLay is true then showOnLoad is inactive.
+    type: 'ANIMATION',
+    // [Optimal] 'ANIMATION' | "TPOSE'
+    loop: 'playInverse',
+    // [Optimal] true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
+    globalOffset: [-10, -14, -45],
+    // [Optimal]
+    skeletalBoneScale: 1,
+    // [Optimal]
+
+    /*skeletalBlend: {                // [Optimal] remove arg for no blend
+      paramDest: 4,
+      paramSrc: 4
+    },*/
+    boneTex: {
+      source: ["res/images/sky/blue.jpg"],
+      mix_operation: "multiply"
+    },
+    drawTypeBone: "sphereLightTex" // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
+
+  };
+  const filePath = "https://raw.githubusercontent.com/zlatnaspirala/Matrix-Engine-BVH-test/main/javascript-bvh/example.bvh";
+  var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options);
+  const options2 = {
+    world: world,
+    autoPlay: true,
+    myFrameRate: 10,
+    showOnLoad: false,
+    // if autoPLay is true then showOnLoad is inactive.
+    type: 'ANIMATION',
+    // "TPOSE' | 'ANIMATION'
+    loop: 'playInverse',
+    // true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
+    globalOffset: [-30, -180, -155],
+    skeletalBoneScale: 6,
+    boneNameBasePrefix: 'backWalk',
+    skeletalBlend: {
+      paramDest: 7,
+      paramSrc: 6
+    },
+    // remove arg for no blend
+    boneTex: {
+      source: ["res/icons/512.png"],
+      mix_operation: "multiply"
+    },
+    drawTypeBone: 'squareTex' // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex'
+
+  };
+  window.myFirstBvhAnimation = myFirstBvhAnimation;
+  const filePath2 = "res/bvh/Female1_B04_StandToWalkBack.bvh";
+  var myBvhAnimation = new matrixEngine.MEBvhAnimation(filePath2, options2);
+  var funnySwitch = new matrixEngine.utility.OSCILLATOR(0, 10, 0.01);
+  setTimeout(() => {
+    // make funny staff with matrix-engine
+    myBvhAnimation.accessBonesObject().forEach(bone => {
+      // bone is MEObject [matrix-engine game object],
+      // instancedDraws.overrideDrawArraysInstance is part of webgl2
+      bone.instancedDraws.numberOfInstance = 2;
+
+      bone.instancedDraws.overrideDrawArraysInstance = function (object) {
+        for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
+          // object.instancedDraws.array_of_local_offset = [0, 0, 18];
+          object.instancedDraws.array_of_local_offset = [funnySwitch.UPDATE(), funnySwitch.UPDATE(), 0];
+          mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
+          world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
+
+          for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
+            mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
+            world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
+            world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
+          }
+        }
+      };
+    });
+  }, 250);
+  console.log("<myBvhAnimation> try it => ", myBvhAnimation);
+  window.myBvhAnimation = myBvhAnimation;
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+  addEventListener('ray.hit.event', function (e) {
+    console.info(e.detail.hitObject);
+    e.detail.hitObject.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[2];
+    e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
+  });
+};
+
+exports.runThis = runThis;
+
+},{}],13:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.runThis = void 0;
+
+var _bvhLoader = _interopRequireDefault(require("bvh-loader"));
+
+var _manifest = _interopRequireDefault(require("../program/manifest"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// prodc
+// import MEBvh from '../node_modules/bvh-loader/index';
+
+/**
+ * @description
+ * First raw idea to make visible skeletal animation
+ * from parsed bvh file.
+ */
+var runThis = world => {
+  var logHTML = document.createElement('div');
+  logHTML.id = 'log';
+  document.body.appendChild(logHTML);
+  var anim = new _bvhLoader.default();
+  anim.parse_file('https://raw.githubusercontent.com/zlatnaspirala/bvh-loader/main/javascript-bvh/example.bvh').then(() => {
+    console.info('plot_hierarchy no function');
+    anim.plot_hierarchy();
+    var r = anim.frame_pose(0);
+    var KEYS = anim.joint_names();
+
+    for (var x = 0; x < r[0].length; x++) {
+      console.log('->' + KEYS[x] + '-> position: ' + r[0][x] + ' rotation: ' + r[1][x]);
+      var boneName = 'MatrixSkeletalBone' + KEYS[x];
+      world.Add('cube', 1, boneName);
+    }
+
+    for (var x = 0; x < r[0].length; x++) {
+      var boneName = 'MatrixSkeletalBone' + KEYS[x];
+
+      _manifest.default.scene[boneName].position.SetX(r[0][x][0] - 30);
+
+      _manifest.default.scene[boneName].position.SetY(r[0][x][1] - 10);
+
+      _manifest.default.scene[boneName].position.SetZ(r[0][x][2] - 80);
+    }
+
+    var all = anim.all_frame_poses();
+    console.log("Final animation -> ", all);
+    var countAnim = 0;
+    setInterval(() => {
+      // for (var ANIM_ = countAnim; ANIM_ < 75; ANIM_++) {
+      for (var x = 0; x < all[0][0].length; x++) {
+        var boneName = 'MatrixSkeletalBone' + KEYS[x];
+
+        _manifest.default.scene[boneName].position.SetX(all[0][countAnim][x][0] - 30);
+
+        _manifest.default.scene[boneName].position.SetY(all[0][countAnim][x][1] - 10);
+
+        _manifest.default.scene[boneName].position.SetZ(all[0][countAnim][x][2] - 80);
+      }
+
+      countAnim++;
+      if (countAnim >= all[0].length - 1) countAnim = 0;
+    }, 100);
+  });
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+  addEventListener('ray.hit.event', function (e) {
+    console.info(e.detail);
+  });
+};
+
+exports.runThis = runThis;
+
+},{"../program/manifest":49,"bvh-loader":47}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -608,7 +1063,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":30,"../program/manifest":43}],12:[function(require,module,exports){
+},{"../index.js":33,"../program/manifest":49}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -657,7 +1112,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],13:[function(require,module,exports){
+},{"../program/manifest":49}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -699,7 +1154,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":30,"../program/manifest":43}],14:[function(require,module,exports){
+},{"../index.js":33,"../program/manifest":49}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -741,7 +1196,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],15:[function(require,module,exports){
+},{"../program/manifest":49}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -789,7 +1244,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":30,"../program/manifest":43}],16:[function(require,module,exports){
+},{"../index.js":33,"../program/manifest":49}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -836,7 +1291,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],17:[function(require,module,exports){
+},{"../program/manifest":49}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -886,7 +1341,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],18:[function(require,module,exports){
+},{"../program/manifest":49}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -985,7 +1440,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],19:[function(require,module,exports){
+},{"../program/manifest":49}],22:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1039,7 +1494,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],20:[function(require,module,exports){
+},{"../program/manifest":49}],23:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1193,7 +1648,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":30,"../program/manifest":43}],21:[function(require,module,exports){
+},{"../index.js":33,"../program/manifest":49}],24:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1280,7 +1735,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],22:[function(require,module,exports){
+},{"../program/manifest":49}],25:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1416,7 +1871,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":30,"../program/manifest":43}],23:[function(require,module,exports){
+},{"../index.js":33,"../program/manifest":49}],26:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1643,7 +2098,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":30,"../program/manifest":43}],24:[function(require,module,exports){
+},{"../index.js":33,"../program/manifest":49}],27:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1705,7 +2160,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":30,"../program/manifest":43}],25:[function(require,module,exports){
+},{"../index.js":33,"../program/manifest":49}],28:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1763,7 +2218,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":30,"../program/manifest":43}],26:[function(require,module,exports){
+},{"../index.js":33,"../program/manifest":49}],29:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1822,7 +2277,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":30,"../program/manifest":43}],27:[function(require,module,exports){
+},{"../index.js":33,"../program/manifest":49}],30:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1853,7 +2308,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],28:[function(require,module,exports){
+},{"../program/manifest":49}],31:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1924,7 +2379,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],29:[function(require,module,exports){
+},{"../program/manifest":49}],32:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1983,7 +2438,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":30,"../program/manifest":43}],30:[function(require,module,exports){
+},{"../index.js":33,"../program/manifest":49}],33:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2005,6 +2460,12 @@ Object.defineProperty(exports, "texTools", {
   enumerable: true,
   get: function () {
     return _matrixTextures.default;
+  }
+});
+Object.defineProperty(exports, "MEBvhAnimation", {
+  enumerable: true,
+  get: function () {
+    return _matrixBvh.default;
   }
 });
 exports.raycaster = exports.utility = exports.objLoader = exports.Events = exports.Engine = exports.matrixRender = exports.matrixGeometry = exports.matrixWorld = void 0;
@@ -2047,13 +2508,15 @@ var raycaster = _interopRequireWildcard(require("./lib/raycast"));
 
 exports.raycaster = raycaster;
 
+var _matrixBvh = _interopRequireDefault(require("./lib/matrix-bvh"));
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./lib/engine":31,"./lib/events":32,"./lib/loader-obj":33,"./lib/matrix-buffers":34,"./lib/matrix-geometry":36,"./lib/matrix-render":37,"./lib/matrix-textures":38,"./lib/matrix-world":39,"./lib/raycast":40,"./lib/utility":41,"./program/manifest":43}],31:[function(require,module,exports){
+},{"./lib/engine":34,"./lib/events":35,"./lib/loader-obj":36,"./lib/matrix-buffers":37,"./lib/matrix-bvh":38,"./lib/matrix-geometry":40,"./lib/matrix-render":41,"./lib/matrix-textures":42,"./lib/matrix-world":43,"./lib/raycast":44,"./lib/utility":45,"./program/manifest":49}],34:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2152,21 +2615,23 @@ function isReady() {
   }
 }
 
-function load_shaders(href) {
-  function handler() {
-    if (this.status == 200 && this.responseText != null) {
-      // Success
-      document.getElementById('shaders').innerHTML = this.responseText;
-    } else {
-      // something went wrong
-      console.warn('Something went wrong on shaders load procces!');
+async function load_shaders(href) {
+  new Promise((resolve, reject) => {
+    function handler() {
+      if (this.status == 200 && this.responseText != null) {
+        document.getElementById('shaders').innerHTML = this.responseText;
+        resolve();
+      } else {
+        reject();
+        console.warn('Something went wrong on shaders load procces!');
+      }
     }
-  }
 
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onload = handler;
-  xmlhttp.open('GET', href, true);
-  xmlhttp.send();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onload = handler;
+    xmlhttp.open('GET', href, true);
+    xmlhttp.send();
+  });
 }
 
 function loadHtmlPowerAsset(href, callback) {
@@ -2957,7 +3422,7 @@ function CANVAS2d_SURFACE_TEXTURE(path_, path_to_run_script) {
   };
 }
 
-},{"../program/manifest":43,"./events":32,"./matrix-render":37,"./matrix-world":39,"./utility":41,"./webgl-utils":42}],32:[function(require,module,exports){
+},{"../program/manifest":49,"./events":35,"./matrix-render":41,"./matrix-world":43,"./utility":45,"./webgl-utils":46}],35:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3009,7 +3474,7 @@ function EVENTS(canvas) {
       SYS.MOUSE.y = touchList[0].pageY;
       ROOT_EVENTS.CALCULATE_TOUCH_OR_CLICK();
     }, {
-      passive: true
+      passive: false
     });
     canvas.addEventListener('touchend', function (e) {
       e.preventDefault();
@@ -3019,7 +3484,7 @@ function EVENTS(canvas) {
       SYS.MOUSE.y = touchList[0].pageY;
       ROOT_EVENTS.CALCULATE_TOUCH_UP_OR_MOUSE_UP();
     }, {
-      passive: true
+      passive: false
     });
     canvas.addEventListener('touchcancel', function (e) {
       e.preventDefault();
@@ -3029,7 +3494,7 @@ function EVENTS(canvas) {
       SYS.MOUSE.y = touchList[0].pageY;
       ROOT_EVENTS.CALCULATE_TOUCH_UP_OR_MOUSE_UP();
     }, {
-      passive: true
+      passive: false
     });
     canvas.addEventListener('touchmove', function (e) {
       e.preventDefault();
@@ -3040,7 +3505,7 @@ function EVENTS(canvas) {
       SYS.MOUSE.y = touchList[0].pageY;
       ROOT_EVENTS.CALCULATE_TOUCH_MOVE_OR_MOUSE_MOVE();
     }, {
-      passive: true
+      passive: false
     });
   } else {
     //Desktop device
@@ -3156,12 +3621,10 @@ function EVENTS(canvas) {
   }; // CALCULATE_TOUCH_UP_OR_MOUSE_UP
 
 
-  this.CALCULATE_TOUCH_UP_OR_MOUSE_UP = function () {
-    SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH UP ');
+  this.CALCULATE_TOUCH_UP_OR_MOUSE_UP = function () {// SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH UP ');
   };
 
-  this.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = function () {
-    SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH DOWN ');
+  this.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = function () {// SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH DOWN ');
   };
 }
 
@@ -3339,7 +3802,7 @@ if (_manifest.default.pwa.addToHomePage === true) {
   } catch (err) {}
 }
 
-},{"../program/manifest":43,"./matrix-world":39,"./utility":41}],33:[function(require,module,exports){
+},{"../program/manifest":49,"./matrix-world":43,"./utility":45}],36:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3753,7 +4216,7 @@ var deleteMeshBuffers = function (gl, mesh) {
 
 exports.deleteMeshBuffers = deleteMeshBuffers;
 
-},{"./matrix-world":39}],34:[function(require,module,exports){
+},{"./matrix-world":43}],37:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4105,7 +4568,222 @@ _manifest.default.operation.sphere_buffer_procedure = function (object) {
 var _default = _manifest.default.operation;
 exports.default = _default;
 
-},{"../program/manifest":43,"./matrix-world":39}],35:[function(require,module,exports){
+},{"../program/manifest":49,"./matrix-world":43}],38:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _bvhLoader = _interopRequireDefault(require("bvh-loader"));
+
+var matrixWorld = _interopRequireWildcard(require("./matrix-world"));
+
+var _utility = require("./utility");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @description MatrixEngine BVH animation loader.
+ * MEBvh comes from `npm i bvh-loader`. Package 
+ * `bvh-loader` is created for MatrixEngine but 
+ * can be used for any other projects.
+ * @name `MEBvhAnimation`
+ * @author Nikola Lukic
+ * @async YES
+ */
+// HARDCODE
+// import MEBvh from '../node_modules/bvh-loader/index';
+// https://docs.w3cub.com/dom/webgl2renderingcontext/drawelementsinstanced
+// import * as utility from './utility';
+class MEBvhAnimation {
+  constructor(path_, options) {
+    if (typeof options === "undefined" || typeof options.world === 'undefined') {
+      console.error("MEBvhAnimation class error: No second argument options || possible world is not passed.");
+      return;
+    }
+
+    if (typeof options.skeletalBoneScale === 'undefined') {
+      options.skeletalBoneScale = 0.3;
+    }
+
+    if (typeof options.loop === 'undefined') options.loop = true;
+    if (typeof options.showOnLoad === 'undefined') options.showOnLoad = true;
+    if (typeof options.type === 'undefined') options.type = "ME-SKELETAL_POINT_BASE";
+    if (typeof options.autoPlay === 'undefined') options.autoPlay = true;
+    if (typeof options.boneNameBasePrefix === 'undefined') options.boneNameBasePrefix = "MatrixSkeletalBone";
+    if (typeof options.globalOffset === 'undefined') options.globalOffset = [0, 0, 0];
+    if (typeof options.myFrameRate === 'undefined') options.myFrameRate = 125; // passed
+
+    this.options = options;
+    this.world = options.world;
+    this.globalOffset = options.globalOffset;
+    this.anim = new _bvhLoader.default();
+    this.tPose = null;
+    this.skeletalKeys = null;
+    this.animation = null;
+    this.animationTimer = null;
+    this.actualFrame = 1;
+    this.isConstructed = false;
+    this.anim.parse_file(path_).then(() => {
+      this.tPose = this.anim.frame_pose(0);
+      this.tPosition = this.tPose[0];
+      this.tRotation = this.tPose[1];
+      this.skeletalKeys = this.anim.joint_names();
+      this.animation = this.anim.all_frame_poses();
+      this.sumOfFrames = this.animation[0].length - 1;
+      this.loopInverse = new _utility.OSCILLATOR(1, this.sumOfFrames, 1);
+
+      if (options.autoPlay == true) {
+        switch (options.type) {
+          case 'TPOSE':
+            this.constructSkeletalTPose();
+            break;
+
+          case 'ANIMATION':
+            this.playAnimation();
+            break;
+
+          default:
+            this.playAnimation();
+        }
+      } else {
+        if (options.showOnLoad == true) {
+          switch (options.type) {
+            case 'TPOSE':
+              this.constructSkeletalTPose();
+              break;
+
+            case 'ANIMATION':
+              // console.log("No autoPlay but preview first frame of animation")
+              this.constructFirstFrame(this.options);
+              break;
+
+            default:
+              this.constructFirstFrame(this.options);
+          }
+        }
+      }
+    });
+  }
+
+  constructSkeletalTPose() {
+    if (this.isConstructed == false) this.constructSkeletal(this.options);
+
+    for (var x = 0; x < this.tPosition.length; x++) {
+      var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
+      App.scene[b].position.SetX(this.tPosition[x][0] + this.globalOffset[0]);
+      App.scene[b].position.SetY(this.tPosition[x][1] + this.globalOffset[1]);
+      App.scene[b].position.SetZ(this.tPosition[x][2] + this.globalOffset[2]);
+      App.scene[b].rotation.rotateX(this.tRotation[x][0]);
+      App.scene[b].rotation.rotateY(this.tRotation[x][1]);
+      App.scene[b].rotation.rotateZ(this.tRotation[x][2]);
+    }
+  }
+
+  accessBonesObject() {
+    let onlyMine = [];
+    matrixWorld.objListToDispose[0].contentList.forEach(MEObject => {
+      if (MEObject.name.indexOf(this.options.boneNameBasePrefix) != -1) {
+        // console.log(MEObject)
+        onlyMine.push(MEObject);
+      }
+    });
+    return onlyMine;
+  }
+
+  constructSkeletal() {
+    for (var x = 0; x < this.tPosition.length; x++) {
+      var b = this.options.boneNameBasePrefix + this.skeletalKeys[x]; // boneTex
+
+      if (typeof this.options.boneTex != 'undefined') {
+        // cubeLightTex
+        const detTypeOfMEObject = typeof this.options.drawTypeBone == 'undefined' ? 'cubeLightTex' : this.options.drawTypeBone;
+        this.world.Add(detTypeOfMEObject, this.options.skeletalBoneScale, b, this.options.boneTex);
+      } else {
+        this.world.Add('cube', this.options.skeletalBoneScale, b);
+      }
+    }
+
+    this.isConstructed = true;
+
+    if (typeof this.options.skeletalBlend != 'undefined') {
+      for (var x = 0; x < this.tPosition.length; x++) {
+        var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
+        App.scene[b].glBlend.blendEnabled = true;
+        App.scene[b].glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[this.options.skeletalBlend.paramSrc];
+        App.scene[b].glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[this.options.skeletalBlend.paramDest];
+      }
+    }
+  }
+
+  constructFirstFrame() {
+    if (this.isConstructed == false) this.constructSkeletal();
+
+    for (var x = 0; x < this.tPosition.length; x++) {
+      var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
+      App.scene[b].position.SetX(this.animation[0][1][x][0] + this.globalOffset[0]);
+      App.scene[b].position.SetY(this.animation[0][1][x][1] + this.globalOffset[1]);
+      App.scene[b].position.SetZ(this.animation[0][1][x][2] + this.globalOffset[2]);
+      App.scene[b].rotation.rotateX(this.animation[1][1][x][0]);
+      App.scene[b].rotation.rotateY(this.animation[1][1][x][1]);
+      App.scene[b].rotation.rotateZ(this.animation[1][1][x][2]);
+    }
+  }
+
+  playAnimation() {
+    if (this.isConstructed == false) this.constructFirstFrame(this.options);
+
+    if (this.animationTimer == null) {
+      this.animationTimer = setInterval(() => {
+        for (var x = 0; x < this.tPosition.length; x++) {
+          var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
+          App.scene[b].position.SetX(this.animation[0][this.actualFrame][x][0] + this.globalOffset[0]);
+          App.scene[b].position.SetY(this.animation[0][this.actualFrame][x][1] + this.globalOffset[1]);
+          App.scene[b].position.SetZ(this.animation[0][this.actualFrame][x][2] + this.globalOffset[2]);
+          App.scene[b].rotation.rotateX(this.animation[1][1][x][0]);
+          App.scene[b].rotation.rotateY(this.animation[1][1][x][1]);
+          App.scene[b].rotation.rotateZ(this.animation[1][1][x][2]);
+        }
+
+        if (this.options.loop == 'playInverse') {
+          this.actualFrame = this.loopInverse.UPDATE();
+        } else {
+          this.actualFrame++;
+        }
+
+        if (this.actualFrame >= this.animation[0].length - 1) {
+          if (this.options.loop == true) {
+            this.actualFrame = 1;
+          } else if (this.options.loop == 'stopOnEnd') {
+            this.stopAnimation();
+          } else if (this.options.loop == 'stopAndReset') {
+            this.constructFirstFrame();
+            this.actualFrame = 1;
+            this.stopAnimation();
+          }
+        }
+      }, this.options.myFrameRate);
+    } else {
+      console.warn("MEBvhAnimation: Animation already play.");
+    }
+  }
+
+  stopAnimation() {
+    clearInterval(this.animationTimer);
+    this.animationTimer = null;
+  }
+
+}
+
+exports.default = MEBvhAnimation;
+
+},{"./matrix-world":43,"./utility":45,"bvh-loader":47}],39:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5056,7 +5734,7 @@ var drawsOperation = _manifest.default.operation.draws;
 var _default = drawsOperation;
 exports.default = _default;
 
-},{"../program/manifest":43,"./events":32,"./matrix-world":39,"./raycast":40}],36:[function(require,module,exports){
+},{"../program/manifest":49,"./events":35,"./matrix-world":43,"./raycast":44}],40:[function(require,module,exports){
 /* eslint-disable no-redeclare */
 
 /* eslint-disable no-unused-vars */
@@ -6769,7 +7447,7 @@ exports.customVertex_1 = customVertex_1;
 
 function ring(innerRadius, outerRadius, slices) {}
 
-},{"../program/manifest":43,"./utility":41}],37:[function(require,module,exports){
+},{"../program/manifest":49,"./utility":45}],41:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6895,7 +7573,7 @@ var callReDraw_ = function () {
 
 exports.callReDraw_ = callReDraw_;
 
-},{"../program/manifest":43,"./engine":31,"./matrix-world":39,"./raycast":40}],38:[function(require,module,exports){
+},{"../program/manifest":49,"./engine":34,"./matrix-world":43,"./raycast":44}],42:[function(require,module,exports){
 /* globals App world */
 'use strict';
 
@@ -6988,7 +7666,7 @@ _manifest.default.tools.loadVideoTexture = function (name, image) {
 var _default = _manifest.default.textools;
 exports.default = _default;
 
-},{"../program/manifest":43,"./matrix-world":39}],39:[function(require,module,exports){
+},{"../program/manifest":49,"./matrix-world":43}],43:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7447,11 +8125,11 @@ function defineworld(canvas) {
       if (typeof mesh_ !== 'undefined') {
         sphereObject.latitudeBands = mesh_.latitudeBands;
         sphereObject.longitudeBands = mesh_.longitudeBands;
-        sphereObject.radius = mesh_.radius;
+        sphereObject.radius = mesh_.radius * sphereObject.size;
       } else {
         sphereObject.latitudeBands = 30;
         sphereObject.longitudeBands = 30;
-        sphereObject.radius = 2;
+        sphereObject.radius = sphereObject.size;
       }
 
       sphereObject.geometry = new _matrixGeometry.sphereVertex(sphereObject);
@@ -7790,7 +8468,7 @@ function defineworld(canvas) {
   return world;
 }
 
-},{"../program/manifest":43,"./engine":31,"./matrix-draws":35,"./matrix-geometry":36,"./matrix-render":37,"./utility":41}],40:[function(require,module,exports){
+},{"../program/manifest":49,"./engine":34,"./matrix-draws":39,"./matrix-geometry":40,"./matrix-render":41,"./utility":45}],44:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8017,8 +8695,7 @@ function checkingProcedureCalc(object) {
           // detZ22 = rez2[1];
 
           triangle = [[rez0[0] + object.position.worldLocation[0], detZ0 + object.position.worldLocation[1], detZ00], [rez1[0] + object.position.worldLocation[0], detZ1 + object.position.worldLocation[1], detZ11], [rez2[0] + object.position.worldLocation[0], detZ2 + object.position.worldLocation[1], detZ22]];
-        } else {
-          console.info('unhandled ray cast');
+        } else {// console.info('unhandled ray cast');
         }
       } else {
         if (object.rotation.rx == 0) {
@@ -8063,7 +8740,7 @@ function checkingProcedureCalc(object) {
   }
 }
 
-},{}],41:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 /* eslint-disable no-unused-vars */
 
 /* eslint-disable no-undef */
@@ -8072,6 +8749,7 @@ function checkingProcedureCalc(object) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.isMobile = isMobile;
 exports.LOG = LOG;
 exports.OSCILLATOR = OSCILLATOR;
 exports.SWITCHER = SWITCHER;
@@ -8080,7 +8758,7 @@ exports.randomIntFromTo = randomIntFromTo;
 exports._glBlend = _glBlend;
 exports._DrawElements = _DrawElements;
 exports._glTexParameteri = _glTexParameteri;
-exports.BiquadFilterType = exports.ENUMERATORS = exports.QueryString = exports.E = exports.scriptManager = exports.loadImage = void 0;
+exports.BiquadFilterType = exports.ENUMERATORS = exports.QueryString = exports.byId = exports.E = exports.scriptManager = exports.loadImage = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
@@ -8210,6 +8888,15 @@ window.DETECTBROWSER = function () {
   this.NAME = HREFTXT;
   this.NOMOBILE = NOMOBILE;
 };
+
+function isMobile() {
+  const toMatch = [/Android/i, /webOS/i, /iPhone/i, /iPad/i, /iPod/i, /BlackBerry/i, /Windows Phone/i];
+  return toMatch.some(toMatchItem => {
+    return navigator.userAgent.match(toMatchItem);
+  });
+}
+
+;
 
 const loadImage = function (url, onload) {
   var img = new Image();
@@ -8355,6 +9042,12 @@ var E = function (id) {
 
 exports.E = E;
 
+var byId = function (id) {
+  return document.getElementById(id);
+};
+
+exports.byId = byId;
+
 function RandomFloat(min, max) {
   highlightedNumber = Math.random() * (max - min) + min;
   return highlightedNumber;
@@ -8409,6 +9102,52 @@ _manifest.default.audioSystem.createVideoAsset = function (name_, path_) {
     E('HOLDER_STREAMS').appendChild(videoAudioAsset.video);
     videoAudioAsset.video.setAttribute('playsInline', true);
     videoAudioAsset.video.setAttribute('src', 'res/videos/' + path_);
+
+    try {
+      window.AudioContext = window.AudioContext || window.webkitAudioContext;
+      videoAudioAsset.context = new AudioContext();
+    } catch (e) {
+      alert('Web Audio API is not supported in this browser');
+    }
+
+    videoAudioAsset.gainNode = videoAudioAsset.context.createGain();
+    videoAudioAsset.gainNode.gain.value = 1; // Change Gain Value to test
+
+    videoAudioAsset.filter = videoAudioAsset.context.createBiquadFilter(); // videoAudioAsset.filter.type = 2; // Change Filter type to test // ENUM from UTILITY
+
+    videoAudioAsset.filter.frequency.value = 5040; // Change frequency to test
+
+    if (typeof name_ !== 'undefined' && typeof name_ === 'string') {
+      _manifest.default.audioSystem.Assets[name_] = videoAudioAsset;
+    } else {
+      console.warn('No name argument in createVideoAsset call.');
+    }
+
+    var promise = videoAudioAsset.video.play();
+
+    if (promise !== undefined) {
+      promise.then(_ => {
+        console.info('intromotocooliano autoplay started');
+        resolve(true);
+      }).catch(error => {
+        console.warn('No autoplay ', error);
+        reject(); // Autoplay was prevented.
+      });
+    }
+  });
+};
+
+_manifest.default.audioSystem.createMusicAsset = function (name_, path_) {
+  return new Promise((resolve, reject) => {
+    var videoAudioAsset = {};
+    videoAudioAsset.video = document.createElement('audio');
+    videoAudioAsset.video.controls = true;
+    videoAudioAsset.video.autoplay = true; // videoAudioAsset.video.setAttribute("mute", true);
+    // videoAudioAsset.video.load();
+
+    E('HOLDER_STREAMS').appendChild(videoAudioAsset.video);
+    videoAudioAsset.video.setAttribute('playsInline', true);
+    videoAudioAsset.video.setAttribute('src', 'res/music/' + path_);
 
     try {
       window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -8644,7 +9383,7 @@ const BiquadFilterType = {
 };
 exports.BiquadFilterType = BiquadFilterType;
 
-},{"../program/manifest":43,"./events":32}],42:[function(require,module,exports){
+},{"../program/manifest":49,"./events":35}],46:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8833,7 +9572,733 @@ if (!window.requestAnimationFrame) {
   }();
 }
 
-},{}],43:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _bvhLoader = require("./module/bvh-loader");
+
+var _default = _bvhLoader.MEBvh;
+exports.default = _default;
+
+},{"./module/bvh-loader":48}],48:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.dot3vs1 = dot3vs1;
+exports.multiply = multiply;
+exports.euler2mat = euler2mat;
+exports.mat2euler = mat2euler;
+exports.MEBvh = exports.MEBvhJoint = void 0;
+
+/**
+ * @description Manual convert python script BVH
+ * from https://github.com/dabeschte/npybvh to the JS.
+ * @author Nikola Lukic
+ * @license GPL-V3
+ */
+function arraySum3(a, b) {
+  var rez1 = a[0] + b[0];
+  var rez2 = a[1] + b[1];
+  var rez3 = a[2] + b[2];
+  return [rez1, rez2, rez3];
+}
+
+function deg2rad(degrees) {
+  return degrees * (Math.PI / 180);
+}
+
+function npdeg2rad(degrees) {
+  return [degrees[0] * (Math.PI / 180), degrees[1] * (Math.PI / 180), degrees[2] * (Math.PI / 180)];
+}
+
+function rad2deg(radians) {
+  return radians * (180 / Math.PI);
+}
+
+function byId(id) {
+  return document.getElementById(id);
+} // fix for .dot N-dim vs 1D-dim Array
+
+
+function dot3vs1(a, b) {
+  var aNumRows = a.length,
+      aNumCols = a[0].length,
+      bNumRows = b.length;
+  var REZ1 = 0,
+      REZ2 = 0,
+      REZ3 = 0;
+
+  if (aNumRows == 3 && aNumCols == 3 && bNumRows == 3) {
+    for (var j = 0; j < a.length; j++) {
+      // First root of 3x3 a.
+      REZ1 += a[0][j] * b[j];
+      REZ2 += a[1][j] * b[j];
+      REZ3 += a[2][j] * b[j];
+    }
+
+    var finalRez = [REZ1, REZ2, REZ3];
+    return finalRez;
+  } else {
+    console.error("Bad arguments for dot3vs1");
+  }
+}
+
+function multiply(a, b) {
+  var aNumRows = a.length,
+      aNumCols = a[0].length,
+      bNumRows = b.length,
+      bNumCols = b[0].length,
+      m = new Array(aNumRows);
+
+  for (var r = 0; r < aNumRows; ++r) {
+    m[r] = new Array(bNumCols);
+
+    for (var c = 0; c < bNumCols; ++c) {
+      m[r][c] = 0;
+
+      for (var i = 0; i < aNumCols; ++i) {
+        m[r][c] += a[r][i] * b[i][c];
+      }
+    }
+  }
+
+  return m;
+}
+/**
+ * @description
+ * Euler's rotation theorem tells us that any rotation in 3D can be described by 3
+ * angles.  Let's call the 3 angles the *Euler angle vector* and call the angles
+ * in the vector :Math:`alpha`, :Math:`beta` and :Math:`gamma`.  The vector is [
+ * :Math:`alpha`, :Math:`beta`. :Math:`gamma` ] and, in this description, the
+ * order of the parameters specifies the order in which the rotations occur (so
+ * the rotation corresponding to :Math:`alpha` is applied first).
+ * @source https://github.com/matthew-brett/transforms3d/blob/master/transforms3d/euler.py
+ */
+// map axes strings to/from tuples of inner axis, parity, repetition, frame
+
+
+var _AXES2TUPLE = {
+  'sxyz': [0, 0, 0, 0],
+  'sxyx': [0, 0, 1, 0],
+  'sxzy': [0, 1, 0, 0],
+  'sxzx': [0, 1, 1, 0],
+  'syzx': [1, 0, 0, 0],
+  'syzy': [1, 0, 1, 0],
+  'syxz': [1, 1, 0, 0],
+  'syxy': [1, 1, 1, 0],
+  'szxy': [2, 0, 0, 0],
+  'szxz': [2, 0, 1, 0],
+  'szyx': [2, 1, 0, 0],
+  'szyz': [2, 1, 1, 0],
+  'rzyx': [0, 0, 0, 1],
+  'rxyx': [0, 0, 1, 1],
+  'ryzx': [0, 1, 0, 1],
+  'rxzx': [0, 1, 1, 1],
+  'rxzy': [1, 0, 0, 1],
+  'ryzy': [1, 0, 1, 1],
+  'rzxy': [1, 1, 0, 1],
+  'ryxy': [1, 1, 1, 1],
+  'ryxz': [2, 0, 0, 1],
+  'rzxz': [2, 0, 1, 1],
+  'rxyz': [2, 1, 0, 1],
+  'rzyz': [2, 1, 1, 1]
+}; // axis sequences for Euler angles
+
+var _NEXT_AXIS = [1, 2, 0, 1];
+
+function euler2mat(ai, aj, ak, axes) {
+  if (typeof axes === 'undefined') var axes = 'sxyz'; // Return rotation matrix from Euler angles and axis sequence.
+  // Parameters
+
+  /*
+  ai : float
+      First rotation angle (according to `axes`).
+  aj : float
+      Second rotation angle (according to `axes`).
+  ak : float
+      Third rotation angle (according to `axes`).
+  axes : str, optional
+      Axis specification; one of 24 axis sequences as string or encoded
+      tuple - e.g. ``sxyz`` (the default).
+  Returns
+  -------
+  mat : array (3, 3)
+      Rotation matrix or affine.
+  Examples
+  --------
+  >>> R = euler2mat(1, 2, 3, 'syxz')
+  >>> np.allclose(np.sum(R[0]), -1.34786452)
+  True
+  >>> R = euler2mat(1, 2, 3, (0, 1, 0, 1))
+  >>> np.allclose(np.sum(R[0]), -0.383436184)
+  True */
+
+  try {
+    var firstaxis = _AXES2TUPLE[axes][0],
+        parity = _AXES2TUPLE[axes][1],
+        repetition = _AXES2TUPLE[axes][2],
+        frame = _AXES2TUPLE[axes][3];
+  } catch (AttributeError) {
+    // _TUPLE2AXES[axes]  # validation
+    // firstaxis, parity, repetition, frame = axes
+    console.error("AttributeError: ", AttributeError);
+  }
+
+  var i = firstaxis;
+  var j = _NEXT_AXIS[i + parity];
+  var k = _NEXT_AXIS[i - parity + 1];
+
+  if (frame) {
+    ai = ak;
+    ak = ai;
+  }
+
+  if (parity) {
+    ai = -ai;
+    aj = -aj;
+    ak = -ak;
+  }
+
+  var si = Math.sin(ai);
+  var sj = Math.sin(aj);
+  var sk = Math.sin(ak);
+  var ci = Math.cos(ai);
+  var cj = Math.cos(aj);
+  var ck = Math.cos(ak);
+  var cc = ci * ck;
+  var cs = ci * sk;
+  var sc = si * ck;
+  var ss = si * sk; // M = np.eye(3)
+
+  var M = [[1., 0., 0], [0., 1., 0], [0., 0., 1]];
+
+  if (repetition) {
+    M[i][i] = cj;
+    M[i][j] = sj * si;
+    M[i][k] = sj * ci;
+    M[j][i] = sj * sk;
+    M[j][j] = -cj * ss + cc;
+    M[j][k] = -cj * cs - sc;
+    M[k][i] = -sj * ck;
+    M[k][j] = cj * sc + cs;
+    M[k][k] = cj * cc - ss;
+  } else {
+    M[i][i] = cj * ck;
+    M[i][j] = sj * sc - cs;
+    M[i][k] = sj * cc + ss;
+    M[j][i] = cj * sk;
+    M[j][j] = sj * ss + cc;
+    M[j][k] = sj * cs - sc;
+    M[k][i] = -sj;
+    M[k][j] = cj * si;
+    M[k][k] = cj * ci;
+  }
+
+  return M;
+}
+/**
+ * @description
+ * How to calculate the angle from rotation matrix.
+ */
+
+
+function mat2euler(M, rad2deg_flag) {
+  var pitch_1, pitch_2, roll_1, roll_2, yaw_1, yaw_2, pitch, roll, yaw;
+
+  if (M[2][0] != 1 & M[2][0] != -1) {
+    pitch_1 = -1 * Math.asin(M[2][0]);
+    pitch_2 = Math.PI - pitch_1;
+    roll_1 = Math.atan2(M[2][1] / Math.cos(pitch_1), M[2][2] / Math.cos(pitch_1));
+    roll_2 = Math.atan2(M[2][1] / Math.cos(pitch_2), M[2][2] / Math.cos(pitch_2));
+    yaw_1 = Math.atan2(M[1][0] / Math.cos(pitch_1), M[0][0] / Math.cos(pitch_1));
+    yaw_2 = Math.atan2(M[1][0] / Math.cos(pitch_2), M[0][0] / Math.cos(pitch_2));
+    pitch = pitch_1;
+    roll = roll_1;
+    yaw = yaw_1;
+  } else {
+    yaw = 0;
+
+    if (M[2][0] == -1) {
+      pitch = Math.PI / 2;
+      roll = yaw + Math.atan2(M[0][1], M[0][2]);
+    } else {
+      pitch = -Math.PI / 2;
+      roll = -1 * yaw + Math.atan2(-1 * M[0][1], -1 * M[0][2]);
+    }
+  }
+
+  if (typeof rad2deg_flag !== "undefined") {
+    // convert from radians to degrees
+    roll = roll * 180 / Math.PI;
+    pitch = pitch * 180 / Math.PI;
+    yaw = yaw * 180 / Math.PI;
+  }
+
+  return [roll, pitch, yaw];
+}
+
+class MEBvhJoint {
+  constructor(name, parent) {
+    this.name = name;
+    this.parent = parent;
+    this.offset = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    this.channels = [];
+    this.children = [];
+  }
+
+  add_child(child) {
+    this.children.push(child);
+  }
+
+  __repr__() {
+    return this.name;
+  }
+
+  position_animated() {
+    var detFlag = false;
+
+    for (const item in this.channels) {
+      if (this.channels[item].endsWith("position") == true) {
+        detFlag = true;
+      }
+    }
+
+    return detFlag;
+  }
+
+  rotation_animated() {
+    var detFlag = false;
+
+    for (const item in this.channels) {
+      if (this.channels[item].endsWith("rotation") == true) {
+        detFlag = true;
+      }
+    }
+
+    return detFlag;
+  }
+
+}
+
+exports.MEBvhJoint = MEBvhJoint;
+
+class MEBvh {
+  constructor() {
+    this.joints = {};
+    this.root = null;
+    this.keyframes = null;
+    this.frames = 0;
+    this.fps = 0;
+    this.myName = "MATRIX-ENGINE-BVH";
+  }
+
+  async parse_file(link) {
+    return new Promise((resolve, reject) => {
+      fetch(link).then(event => {
+        event.text().then(text => {
+          var hierarchy = text.split("MOTION")[0];
+          var motion = text.split("MOTION")[1];
+          var newLog = document.createElement("div");
+          newLog.innerHTML += '<h2>Hierarchy</h2>';
+          newLog.innerHTML += '<p>' + hierarchy + '</p>';
+          var newLog2 = document.createElement("span");
+          newLog2.innerHTML += '<h2>Motion</h2>';
+          newLog2.innerHTML += '<p class="paragraf fixHeight" >' + motion + '</p>';
+
+          if (byId && byId('log') !== null) {
+            byId('log').appendChild(newLog2);
+            byId('log').appendChild(newLog);
+          }
+
+          this._parse_hierarchy(hierarchy);
+
+          this.parse_motion(motion);
+          resolve();
+        });
+      });
+    });
+  }
+
+  _parse_hierarchy(text) {
+    var lines = text.split(/\s*\n+\s*/);
+    var joint_stack = [];
+
+    for (var key in lines) {
+      var line = lines[key];
+      var words = line.split(/\s+/);
+      var instruction = words[0];
+      var parent = null;
+
+      if (instruction == "JOINT" || instruction == "ROOT") {
+        if (instruction == "JOINT") {
+          // -1 py -> last item
+          parent = joint_stack[joint_stack.length - 1];
+        } else {
+          parent = null;
+        }
+
+        var joint = new MEBvhJoint(words[1], parent);
+        this.joints[joint.name] = joint;
+
+        if (parent != null) {
+          parent.add_child(joint);
+        }
+
+        joint_stack.push(joint);
+
+        if (instruction == "ROOT") {
+          this.root = joint;
+        }
+      } else if (instruction == "CHANNELS") {
+        for (var j = 2; j < words.length; j++) {
+          joint_stack[joint_stack.length - 1].channels.push(words[j]);
+        }
+      } else if (instruction == "OFFSET") {
+        for (var j = 1; j < words.length; j++) {
+          joint_stack[joint_stack.length - 1].offset[j - 1] = parseFloat(words[j]);
+        }
+      } else if (instruction == "End") {
+        var joint = new MEBvhJoint(joint_stack[joint_stack.length - 1].name + "_end", joint_stack[joint_stack.length - 1]);
+        joint_stack[joint_stack.length - 1].add_child(joint);
+        joint_stack.push(joint);
+        this.joints[joint.name] = joint;
+      } else if (instruction == "}") {
+        joint_stack.pop();
+      }
+    }
+  }
+
+  _add_pose_recursive(joint, offset, poses) {
+    var newLog1 = document.createElement("span");
+    newLog1.innerHTML += '<h2>add_pose_recursive</h2>';
+    newLog1.innerHTML += '<p class="paragraf" >Joint Name: ' + joint.name + '</p>';
+    newLog1.innerHTML += '<p>joint.parent    : ' + (joint.parent != null ? joint.parent.name : 'null') + '</p>';
+    newLog1.innerHTML += '<p>joint.offset    : ' + joint.offset + '</p>';
+    newLog1.innerHTML += '<p>joint.children.length  : ' + joint.children.length + '</p>';
+    joint.children.length != 0 ? newLog1.innerHTML += '<p> Childrens: ' : newLog1.innerHTML += 'No Childrens ';
+    joint.children.forEach(iJoint => {
+      newLog1.innerHTML += ' ' + iJoint['name'] + ' , ';
+    });
+    newLog1.innerHTML += '</p>';
+    newLog1.innerHTML += '<p>Argument offset : ' + offset + '</p>';
+    byId('log').appendChild(newLog1);
+    var pose = arraySum3(joint.offset, offset);
+    poses.push(pose);
+
+    for (var c in joint.children) {
+      this._add_pose_recursive(joint.children[c], pose, poses);
+    }
+  }
+
+  plot_hierarchy() {
+    // import matplotlib.pyplot as plt
+    // from mpl_toolkits.mplot3d import axes3d, Axes3D
+    var poses = [];
+
+    this._add_pose_recursive(this.root, [0, 0, 0], poses); // pos = np.array(poses);
+
+    /* Draw staff DISABLED
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.scatter(pos[:, 0], pos[:, 2], pos[:, 1])
+        ax.set_xlim(-30, 30)
+        ax.set_ylim(-30, 30)
+        ax.set_zlim(-30, 30)
+        plt.show() */
+
+  }
+
+  parse_motion(text) {
+    var lines = text.split(/\s*\n+\s*/);
+    var frame = 0;
+
+    for (var key in lines) {
+      var line = lines[key];
+
+      if (line == "") {
+        continue;
+      }
+
+      var words = line.split(/\s+/);
+
+      if (line.startsWith("Frame Time:")) {
+        this.fps = Math.round(1 / parseFloat(words[2]));
+        continue;
+      }
+
+      if (line.startsWith("Frames:")) {
+        this.frames = parseInt(words[1]);
+        continue;
+      }
+
+      if (this.keyframes == null) {
+        // OK this is just costruction (define) with random values.
+        var localArr = Array.from(Array(this.frames), () => new Array(words.length));
+        this.keyframes = localArr;
+      }
+
+      for (var angle_index = 0; angle_index < words.length; angle_index++) {
+        this.keyframes[frame][angle_index] = parseFloat(words[angle_index]);
+      }
+
+      frame += 1;
+    }
+  }
+
+  _extract_rotation(frame_pose, index_offset, joint) {
+    var local_rotation = [0, 0, 0],
+        M_rotation;
+
+    for (var key in joint.channels) {
+      var channel = joint.channels[key];
+
+      if (channel.endsWith("position")) {
+        continue;
+      }
+
+      if (channel == "Xrotation") {
+        local_rotation[0] = frame_pose[index_offset];
+      } else if (channel == "Yrotation") {
+        local_rotation[1] = frame_pose[index_offset];
+      } else if (channel == "Zrotation") {
+        local_rotation[2] = frame_pose[index_offset];
+      } else {
+        console.warn("Unknown channel {channel}"); // raise Exception(f"Unknown channel {channel}");
+      }
+
+      index_offset += 1;
+    }
+
+    local_rotation = npdeg2rad(local_rotation);
+    M_rotation = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+
+    for (key in joint.channels) {
+      var channel = joint.channels[key];
+
+      if (channel.endsWith("position")) {
+        continue;
+      }
+
+      var euler_rot;
+
+      if (channel == "Xrotation") {
+        // console.warn("local_rotation " + local_rotation);
+        euler_rot = [local_rotation[0], 0., 0.];
+      } else if (channel == "Yrotation") {
+        euler_rot = [0., local_rotation[1], 0.];
+      } else if (channel == "Zrotation") {
+        euler_rot = [0., 0., local_rotation[2]];
+      } else {
+        console.warn("Unknown channel {channel}");
+      }
+
+      var M_channel = euler2mat(euler_rot[0], euler_rot[1], euler_rot[2], euler_rot[3]);
+      var M_rotation = multiply(M_rotation, M_channel);
+    }
+
+    return [M_rotation, index_offset];
+  }
+
+  _extract_position(joint, frame_pose, index_offset) {
+    var offset_position = [0, 0, 0];
+
+    for (var key in joint.channels) {
+      var channel = joint.channels[key];
+
+      if (channel.endsWith("rotation")) {
+        continue;
+      }
+
+      if (channel == "Xposition") {
+        offset_position[0] = frame_pose[index_offset];
+      } else if (channel == "Yposition") {
+        offset_position[1] = frame_pose[index_offset];
+      } else if (channel == "Zposition") {
+        offset_position[2] = frame_pose[index_offset];
+      } else {
+        console.warn("Unknown channel {channel}"); // raise Exception(f"Unknown channel {channel}")
+      }
+
+      index_offset += 1;
+    }
+
+    return [offset_position, index_offset];
+  }
+
+  _recursive_apply_frame(joint, frame_pose, index_offset, p, r, M_parent, p_parent) {
+    var joint_index;
+
+    if (joint.position_animated()) {
+      var local = this._extract_position(joint, frame_pose, index_offset);
+
+      var offset_position = local[0],
+          index_offset = local[1];
+    } else {
+      var offset_position = [0, 0, 0];
+    }
+
+    if (joint.channels.length == 0) {
+      var local2 = 0;
+
+      for (var item in this.joints) {
+        if (joint.name == item) {
+          joint_index = local2;
+        }
+
+        local2++;
+      }
+
+      p[joint_index] = arraySum3(p_parent, dot3vs1(M_parent, joint.offset));
+      r[joint_index] = mat2euler(M_parent);
+      return index_offset;
+    }
+
+    if (joint.rotation_animated()) {
+      var local2 = this._extract_rotation(frame_pose, index_offset, joint);
+
+      var M_rotation = local2[0];
+      index_offset = local2[1];
+    } else {
+      var M_rotation = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+    }
+
+    var M = multiply(M_parent, M_rotation); // https://www.khanacademy.org/math/precalculus/x9e81a4f98389efdf:matrices/x9e81a4f98389efdf:adding-and-subtracting-matrices/e/matrix_addition_and_subtraction
+
+    var position = arraySum3(p_parent, dot3vs1(M_parent, joint.offset));
+    position = arraySum3(position, offset_position);
+    var rotation = mat2euler(M, "rad2deg"); // just find by id
+
+    var local = 0;
+
+    for (const item in this.joints) {
+      if (joint.name == item) {
+        joint_index = local;
+      }
+
+      local++;
+    }
+
+    p[joint_index] = position;
+    r[joint_index] = rotation;
+
+    for (var c in joint.children) {
+      index_offset = this._recursive_apply_frame(joint.children[c], frame_pose, index_offset, p, r, M, position);
+    }
+
+    return index_offset;
+  }
+
+  frame_pose(frame) {
+    var jointLength = 0;
+
+    for (var x in this.joints) {
+      jointLength++;
+    }
+
+    var p = Array.from(Array(jointLength), () => [0, 0, 0]);
+    var r = Array.from(Array(jointLength), () => [0, 0, 0]);
+    var frame_pose = this.keyframes[frame];
+    var M_parent = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    M_parent[0][0] = 1;
+    M_parent[1][1] = 1;
+    M_parent[2][2] = 1;
+
+    this._recursive_apply_frame(this.root, frame_pose, 0, p, r, M_parent, [0, 0, 0]);
+
+    return [p, r];
+  }
+
+  all_frame_poses() {
+    var jointLength = 0;
+
+    for (var x in this.joints) {
+      jointLength++;
+    }
+
+    var p = Array.from({
+      length: this.frames
+    }, () => Array.from({
+      length: jointLength
+    }, () => [0, 0, 0]));
+    var r = Array.from({
+      length: this.frames
+    }, () => Array.from({
+      length: jointLength
+    }, () => [0, 0, 0]));
+
+    for (var frame = 0; frame < this.keyframes.length; frame++) {
+      var local3 = this.frame_pose(frame);
+      p[frame] = local3[0];
+      r[frame] = local3[1];
+    }
+
+    return [p, r];
+  }
+
+  _plot_pose(p, r, fig, ax) {
+    /* 
+      _plot_pose(p, r, fig=None, ax=None) {
+        import matplotlib.pyplot as plt
+        from mpl_toolkits.mplot3d import axes3d, Axes3D
+      if fig is None:
+          fig = plt.figure()
+      if ax is None:
+          ax = fig.add_subplot(111, projection='3d')
+      ax.cla()
+      ax.scatter(p[:, 0], p[:, 2], p[:, 1])
+      ax.set_xlim(-30, 30)
+      ax.set_ylim(-30, 30)
+      ax.set_zlim(-1, 59)
+      plt.draw()
+      plt.pause(0.001)
+    */
+  } // Meybe helps for draw
+  // plot_frame(frame, fig=None, ax=None) {
+
+
+  plot_frame(frame, fig, ax) {// ????
+    // p, (r = this.frame_pose(frame));
+    // this._plot_pose(p, r, fig, ax);
+  }
+
+  joint_names() {
+    var keys = [];
+
+    for (var key in this.joints) {
+      keys.push(key);
+    }
+
+    return keys;
+  }
+
+  plot_all_frames() {
+    /*
+      import matplotlib.pyplot as plt
+      from mpl_toolkits.mplot3d import axes3d, Axes3D
+      fig = plt.figure()
+      ax = fig.add_subplot(111, projection='3d')
+      for i in range(self.frames) {
+          self.plot_frame(i, fig, ax);
+      } 
+    */
+  }
+
+  __repr__() {
+    return `BVH.JS ${this.joints.keys().length} joints, ${this.frames} frames`;
+  }
+
+}
+
+exports.MEBvh = MEBvh;
+
+},{}],49:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8885,10 +10350,12 @@ var App = {
   // readOnly in manifest
   limitations: {
     // readOnly in manifest
-    maxTexturesInFragmentShader: null
+    maxTexturesInFragmentShader: null // readOnly in manifest
+
   },
   updateBeforeDraw: [],
   audioSystem: {},
+  // readOnly in manifest
   pwa: {
     addToHomePage: true
   },
