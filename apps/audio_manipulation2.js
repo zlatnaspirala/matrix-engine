@@ -162,7 +162,7 @@ export var runThis = (world) => {
 
   matrixEngine.utility.byId('debugBox').style.display = 'block';
   matrixEngine.utility.byId('debugBox').style.width = '100%';
-  matrixEngine.utility.byId('debugBox').style.height = '40px';
+  matrixEngine.utility.byId('debugBox').style.height = '37px';
   matrixEngine.utility.byId('debugBox').innerHTML = `
   Music used: BLACK FLY by Audionautix | http://audionautix.com
   Music promoted by https://www.free-stock-music.com
