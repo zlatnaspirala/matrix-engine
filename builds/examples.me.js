@@ -122,7 +122,9 @@ if ('serviceWorker' in navigator) {
     // navigator.serviceWorker.register('worker.js');
     matrixEngine.Engine.load_shaders('shaders/shaders.html').then(arg => {
       console.info("Shaders ready.");
-      matrixEngine.Engine.initApp(webGLStart);
+      setTimeout(() => {
+        matrixEngine.Engine.initApp(webGLStart);
+      }, 1000);
     });
   });
 } else {
@@ -141,7 +143,7 @@ function webGLStart() {
       }, 100);
     } else {
       setTimeout(() => {
-        Examples['audio_manipulation2'](world);
+        Examples['bvh_loader'](world);
       }, 100);
     }
   } else {
@@ -935,14 +937,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.runThis = void 0;
 
+var matrixEngine = _interopRequireWildcard(require("../index.js"));
+
 var _bvhLoader = _interopRequireDefault(require("bvh-loader"));
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 // prodc
 // import MEBvh from '../node_modules/bvh-loader/index';
+// import * as matrixEngine from '../index.js';
 
 /**
  * @description
@@ -1005,7 +1014,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49,"bvh-loader":47}],14:[function(require,module,exports){
+},{"../index.js":33,"../program/manifest":49,"bvh-loader":47}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1520,8 +1529,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App world */
-let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
+//let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+//let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 let SWITCHER = matrixEngine.utility.SWITCHER;
 
 var runThis = world => {

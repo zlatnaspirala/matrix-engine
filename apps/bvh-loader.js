@@ -1,8 +1,10 @@
 
+import * as matrixEngine from '../index.js';
 // prodc
-// import MEBvh from 'bvh-loader';
-import MEBvh from '../node_modules/bvh-loader/index';
+import MEBvh from 'bvh-loader';
+// import MEBvh from '../node_modules/bvh-loader/index';
 import App from '../program/manifest';
+
 // import * as matrixEngine from '../index.js';
 
 /**
