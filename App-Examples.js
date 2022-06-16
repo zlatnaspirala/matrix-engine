@@ -82,7 +82,7 @@ if ('serviceWorker' in navigator) {
     // navigator.serviceWorker.register('worker.js');
     matrixEngine.Engine.load_shaders('shaders/shaders.html').then((arg)=> {
       console.info("Shaders ready.");
-      matrixEngine.Engine.initApp(webGLStart);
+      setTimeout( () => { matrixEngine.Engine.initApp(webGLStart); }, 1000)
     });
   });
 } else {
