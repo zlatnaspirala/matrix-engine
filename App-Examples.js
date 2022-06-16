@@ -100,7 +100,7 @@ function webGLStart() {
       }, 100);
     } else {
       setTimeout(() => {
-        Examples['bvh_loader'](world);
+        Examples['audio_manipulation2'](world);
       }, 100);
     }
   } else {
