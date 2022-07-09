@@ -7,11 +7,11 @@
 import App from "../program/manifest";
 import * as matrixEngine from "../index.js";
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-let CANVAS2d_SURFACE_TEXTURE = matrixEngine.Engine.CANVAS2d_SURFACE_TEXTURE;
+let Vjs3 = matrixEngine.Engine.Vjs3;
 let E = matrixEngine.utility.E;
 
 export var runThis = world => {
-  /* globals world App ENUMERATORS E CANVAS2d_SURFACE_TEXTURE */
+  /* globals world App ENUMERATORS E Vjs3 */
 
   // eslint-disable-next-line no-unused-vars
   var textuteImageSamplers = {
@@ -21,10 +21,11 @@ export var runThis = world => {
 
   world.Add("cubeLightTex", 12, "outsideBox");
 
+  App.scene.outsideBox.rotation.rotz = -90
   App.scene.outsideBox.position.y = 0;
   App.scene.outsideBox.position.z = -55;
-  App.scene.outsideBox.rotation.rotationSpeed.z = 50;
-  App.scene.outsideBox.rotValue = 90;
+  // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
+  // App.scene.outsideBox.rotValue = 90;
   App.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
   App.scene.outsideBox.glBlend.blendEnabled = true;
   App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
@@ -33,12 +34,12 @@ export var runThis = world => {
 
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   E("HOLDER_STREAMS").style.display = "block";
-  App.scene.outsideBox.streamTextures = new CANVAS2d_SURFACE_TEXTURE(
-    "apps/canvas2d/build.html",
-    "starter/text.js"
+  App.scene.outsideBox.streamTextures = new Vjs3(
+    "./2DTextureEditor/tex1.html",
+    "actualTexture"
   );
 
   setTimeout(function () {
     App.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 1000);
+  }, 100);
 };

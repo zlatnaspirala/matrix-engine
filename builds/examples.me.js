@@ -70,11 +70,14 @@ var _bvhLoader = require("./apps/bvh-loader");
 
 var _bvhAnimationClass = require("./apps/bvh-animation-class");
 
+var _active_editor = require("./apps/active_editor");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var Examples = {
+  active_editor: _active_editor.runThis,
   bvh_animation_class: _bvhAnimationClass.runThis,
   bvh_loader: _bvhLoader.runThis,
   adding_tex_square_raycast: _adding_tex_square_raycast.runThis,
@@ -143,7 +146,7 @@ function webGLStart() {
       }, 100);
     } else {
       setTimeout(() => {
-        Examples['bvh_loader'](world);
+        Examples['audio_manipulation2'](world);
       }, 100);
     }
   } else {
@@ -160,7 +163,66 @@ var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/adding_color_cube":2,"./apps/adding_color_piramyde":3,"./apps/adding_color_square":4,"./apps/adding_color_triangle":5,"./apps/adding_more_texture_samplers":6,"./apps/adding_square_texture":7,"./apps/adding_tex_square_raycast":8,"./apps/all_variant_of_blending":9,"./apps/audio_manipulation":10,"./apps/audio_manipulation2":11,"./apps/bvh-animation-class":12,"./apps/bvh-loader":13,"./apps/camera_texture":14,"./apps/cube_experimental":15,"./apps/cube_geometry":16,"./apps/cube_light_and_texture":17,"./apps/cube_light_dinamic":18,"./apps/cube_tex_arrays":19,"./apps/custom_texture":20,"./apps/first_person_controller":21,"./apps/load_obj_file":22,"./apps/my_world":23,"./apps/obj_animation":24,"./apps/obj_animation_build_mesh_effect":25,"./apps/one-kilo":26,"./apps/porting2d":27,"./apps/porting2d_particle":28,"./apps/porting2d_text":29,"./apps/sphere_geometry":30,"./apps/texture_dinamic_manipulation":31,"./apps/video_texture":32,"./index":33}],2:[function(require,module,exports){
+},{"./apps/active_editor":2,"./apps/adding_color_cube":3,"./apps/adding_color_piramyde":4,"./apps/adding_color_square":5,"./apps/adding_color_triangle":6,"./apps/adding_more_texture_samplers":7,"./apps/adding_square_texture":8,"./apps/adding_tex_square_raycast":9,"./apps/all_variant_of_blending":10,"./apps/audio_manipulation":11,"./apps/audio_manipulation2":12,"./apps/bvh-animation-class":13,"./apps/bvh-loader":14,"./apps/camera_texture":15,"./apps/cube_experimental":16,"./apps/cube_geometry":17,"./apps/cube_light_and_texture":18,"./apps/cube_light_dinamic":19,"./apps/cube_tex_arrays":20,"./apps/custom_texture":21,"./apps/first_person_controller":22,"./apps/load_obj_file":23,"./apps/my_world":24,"./apps/obj_animation":25,"./apps/obj_animation_build_mesh_effect":26,"./apps/one-kilo":27,"./apps/porting2d":28,"./apps/porting2d_particle":29,"./apps/porting2d_text":30,"./apps/sphere_geometry":31,"./apps/texture_dinamic_manipulation":32,"./apps/video_texture":33,"./index":34}],2:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.runThis = void 0;
+
+var _manifest = _interopRequireDefault(require("../program/manifest"));
+
+var matrixEngine = _interopRequireWildcard(require("../index.js"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @Author Nikola Lukic
+ * @Description Matrix Engine Api Example.
+ */
+
+/* globals world App world */
+let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+let Vjs3 = matrixEngine.Engine.Vjs3;
+let E = matrixEngine.utility.E;
+
+var runThis = world => {
+  console.log("active editor");
+  /* globals world App ENUMERATORS E Vjs3 */
+  // eslint-disable-next-line no-unused-vars
+
+  var textuteImageSamplers = {
+    source: ["res/images/complex_texture_1/diffuse.png"],
+    mix_operation: "multiply"
+  };
+  world.Add("cubeLightTex", 12, "outsideBox", textuteImageSamplers);
+  _manifest.default.scene.outsideBox.position.y = 0;
+  _manifest.default.scene.outsideBox.position.z = -55; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
+  // App.scene.outsideBox.rotValue = 90;
+
+  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(0, 0, 0); // App.scene.outsideBox.glBlend.blendEnabled = true;
+  // App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
+  // App.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
+
+
+  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
+
+
+  E("HOLDER_STREAMS").style.display = "block";
+  _manifest.default.scene.outsideBox.rotation.rotz = -90;
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("./2DTextureEditor/actual.html", "actualTexture");
+
+  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
+};
+
+exports.runThis = runThis;
+
+},{"../index.js":34,"../program/manifest":51}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -203,7 +265,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],3:[function(require,module,exports){
+},{"../program/manifest":51}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -245,7 +307,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],4:[function(require,module,exports){
+},{"../program/manifest":51}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -281,7 +343,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],5:[function(require,module,exports){
+},{"../program/manifest":51}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -326,7 +388,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],6:[function(require,module,exports){
+},{"../program/manifest":51}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -362,7 +424,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],7:[function(require,module,exports){
+},{"../program/manifest":51}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -391,7 +453,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],8:[function(require,module,exports){
+},{"../program/manifest":51}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -432,7 +494,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],9:[function(require,module,exports){
+},{"../program/manifest":51}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -480,7 +542,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":33}],10:[function(require,module,exports){
+},{"../index.js":34}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -561,7 +623,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":33}],11:[function(require,module,exports){
+},{"../index.js":34}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -590,8 +652,7 @@ var runThis = world => {
   var App = matrixEngine.App;
   var effectOsci = new matrixEngine.utility.OSCILLATOR(3, 10, 1);
   var effectOsci2 = new matrixEngine.utility.OSCILLATOR(3, 10, 1);
-  effectOsci2.value_ = 6; ///////////////////////////////
-
+  effectOsci2.value_ = 6;
   const options = {
     world: world,
     // [Required]
@@ -750,13 +811,13 @@ var runThis = world => {
 
   matrixEngine.utility.byId('debugBox').style.display = 'block';
   matrixEngine.utility.byId('debugBox').style.width = '100%';
-  matrixEngine.utility.byId('debugBox').style.height = '40px';
+  matrixEngine.utility.byId('debugBox').style.height = '37px';
   matrixEngine.utility.byId('debugBox').innerHTML = `
   Music used: BLACK FLY by Audionautix | http://audionautix.com
   Music promoted by https://www.free-stock-music.com
   Creative Commons Attribution-ShareAlike 3.0 Unported
   https://creativecommons.org/licenses/by-sa/3.0/deed.en_US
-  Mix of audio vs bvh operation. @zlatnaspirala
+  <p> Mix of audio vs bvh operation. @zlatnaspirala </p>
   `;
 
   App.onload = function (e) {
@@ -814,7 +875,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":33}],12:[function(require,module,exports){
+},{"../index.js":34}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -929,7 +990,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1014,7 +1075,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":33,"../program/manifest":49,"bvh-loader":47}],14:[function(require,module,exports){
+},{"../index.js":34,"../program/manifest":51,"bvh-loader":49}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1072,7 +1133,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":33,"../program/manifest":49}],15:[function(require,module,exports){
+},{"../index.js":34,"../program/manifest":51}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1121,7 +1182,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],16:[function(require,module,exports){
+},{"../program/manifest":51}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1163,7 +1224,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":33,"../program/manifest":49}],17:[function(require,module,exports){
+},{"../index.js":34,"../program/manifest":51}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1205,7 +1266,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],18:[function(require,module,exports){
+},{"../program/manifest":51}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1253,7 +1314,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":33,"../program/manifest":49}],19:[function(require,module,exports){
+},{"../index.js":34,"../program/manifest":51}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1300,7 +1361,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],20:[function(require,module,exports){
+},{"../program/manifest":51}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1350,7 +1411,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],21:[function(require,module,exports){
+},{"../program/manifest":51}],22:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1449,7 +1510,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],22:[function(require,module,exports){
+},{"../program/manifest":51}],23:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1503,7 +1564,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],23:[function(require,module,exports){
+},{"../program/manifest":51}],24:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1657,7 +1718,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":33,"../program/manifest":49}],24:[function(require,module,exports){
+},{"../index.js":34,"../program/manifest":51}],25:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1744,7 +1805,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],25:[function(require,module,exports){
+},{"../program/manifest":51}],26:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1880,7 +1941,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":33,"../program/manifest":49}],26:[function(require,module,exports){
+},{"../index.js":34,"../program/manifest":51}],27:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1904,13 +1965,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App world */
-let CANVAS2d_SURFACE_TEXTURE = matrixEngine.Engine.CANVAS2d_SURFACE_TEXTURE;
+let Vjs3 = matrixEngine.Engine.Vjs3;
 
 var runThis = world => {
-  /* globals world App ENUMERATORS E CANVAS2d_SURFACE_TEXTURE */
+  /* globals world App ENUMERATORS E Vjs3 */
 
   /* eslint-disable no-unused-vars */
-  var tex = new CANVAS2d_SURFACE_TEXTURE("app/2d1kilo/example1.html", "starter/text.js");
+  var tex = new Vjs3("app/2d1kilo/example1.html", "starter/text.js");
   _manifest.default.camera.FirstPersonController = true;
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
@@ -2107,7 +2168,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":33,"../program/manifest":49}],27:[function(require,module,exports){
+},{"../index.js":34,"../program/manifest":51}],28:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2118,6 +2179,8 @@ exports.runThis = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
+
+var _engine = require("../lib/engine");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -2131,10 +2194,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App world */
-let CANVAS2d_SURFACE_TEXTURE = matrixEngine.Engine.CANVAS2d_SURFACE_TEXTURE;
+let Vjs3 = matrixEngine.Engine.Vjs3;
 
 var runThis = world => {
-  /* globals ENUMERATORS world App CANVAS2d_SURFACE_TEXTURE E */
+  /* globals ENUMERATORS world App Vjs3 E */
   let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
   let E = matrixEngine.utility.E; // eslint-disable-next-line no-unused-vars
 
@@ -2145,31 +2208,33 @@ var runThis = world => {
   };
   world.Add("cubeLightTex", 12, "outsideBox");
   _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55;
-  _manifest.default.scene.outsideBox.rotation.rotationSpeed.z = 50;
+  _manifest.default.scene.outsideBox.position.z = -55; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
+
   _manifest.default.scene.outsideBox.rotValue = 90;
 
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
+  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1); // App.scene.outsideBox.glBlend.blendEnabled = true;
 
-  _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
+
   _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
   _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
 
-  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); /////////////////////////////////////////
+  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
+
+  _manifest.default.scene.outsideBox.rotation.rotz = -90; /////////////////////////////////////////
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   /////////////////////////////////////////
 
-
   E("HOLDER_STREAMS").style.display = "block";
-  _manifest.default.scene.outsideBox.streamTextures = new CANVAS2d_SURFACE_TEXTURE("apps/canvas2d/build.html", "starter/run.js");
   setTimeout(function () {
+    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas("./apps/funny-slot/", "HELLO_WORLD");
+
     _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 1000);
+  }, 100);
 };
 
 exports.runThis = runThis;
 
-},{"../index.js":33,"../program/manifest":49}],28:[function(require,module,exports){
+},{"../index.js":34,"../lib/engine":35,"../program/manifest":51}],29:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2194,40 +2259,41 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* globals world App world */
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-let CANVAS2d_SURFACE_TEXTURE = matrixEngine.Engine.CANVAS2d_SURFACE_TEXTURE;
+let Vjs3 = matrixEngine.Engine.Vjs3;
 let E = matrixEngine.utility.E;
 
 var runThis = world => {
-  /* globals world App ENUMERATORS E CANVAS2d_SURFACE_TEXTURE */
+  console.log("TEST LOAD ");
+  /* globals world App ENUMERATORS E Vjs3 */
   // eslint-disable-next-line no-unused-vars
+
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
-  world.Add("cubeLightTex", 12, "outsideBox");
+  world.Add("cubeLightTex", 12, "outsideBox", textuteImageSamplers);
   _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55;
-  _manifest.default.scene.outsideBox.rotation.rotationSpeed.z = 50; // App.scene.outsideBox.rotValue = 90;
+  _manifest.default.scene.outsideBox.position.z = -55; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
+  // App.scene.outsideBox.rotValue = 90;
 
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
+  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(0, 0, 0); // App.scene.outsideBox.glBlend.blendEnabled = true;
+  // App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
+  // App.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
 
-  _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
 
   _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
 
 
   E("HOLDER_STREAMS").style.display = "block";
-  _manifest.default.scene.outsideBox.streamTextures = new CANVAS2d_SURFACE_TEXTURE("apps/canvas2d/build.html", "starter/particle.js");
-  setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 1000);
+  _manifest.default.scene.outsideBox.rotation.rotz = -90;
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("./2DTextureEditor/tex2.html", "actualTexture");
+
+  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
 };
 
 exports.runThis = runThis;
 
-},{"../index.js":33,"../program/manifest":49}],29:[function(require,module,exports){
+},{"../index.js":34,"../program/manifest":51}],30:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2252,21 +2318,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* globals world App world */
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-let CANVAS2d_SURFACE_TEXTURE = matrixEngine.Engine.CANVAS2d_SURFACE_TEXTURE;
+let Vjs3 = matrixEngine.Engine.Vjs3;
 let E = matrixEngine.utility.E;
 
 var runThis = world => {
-  /* globals world App ENUMERATORS E CANVAS2d_SURFACE_TEXTURE */
+  /* globals world App ENUMERATORS E Vjs3 */
   // eslint-disable-next-line no-unused-vars
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 12, "outsideBox");
+  _manifest.default.scene.outsideBox.rotation.rotz = -90;
   _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55;
-  _manifest.default.scene.outsideBox.rotation.rotationSpeed.z = 50;
-  _manifest.default.scene.outsideBox.rotValue = 90;
+  _manifest.default.scene.outsideBox.position.z = -55; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
+  // App.scene.outsideBox.rotValue = 90;
 
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
 
@@ -2278,15 +2344,15 @@ var runThis = world => {
 
 
   E("HOLDER_STREAMS").style.display = "block";
-  _manifest.default.scene.outsideBox.streamTextures = new CANVAS2d_SURFACE_TEXTURE("apps/canvas2d/build.html", "starter/text.js");
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("./2DTextureEditor/tex1.html", "actualTexture");
   setTimeout(function () {
     _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 1000);
+  }, 100);
 };
 
 exports.runThis = runThis;
 
-},{"../index.js":33,"../program/manifest":49}],30:[function(require,module,exports){
+},{"../index.js":34,"../program/manifest":51}],31:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2317,7 +2383,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],31:[function(require,module,exports){
+},{"../program/manifest":51}],32:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2388,7 +2454,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":49}],32:[function(require,module,exports){
+},{"../program/manifest":51}],33:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2447,7 +2513,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":33,"../program/manifest":49}],33:[function(require,module,exports){
+},{"../index.js":34,"../program/manifest":51}],34:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2525,7 +2591,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./lib/engine":34,"./lib/events":35,"./lib/loader-obj":36,"./lib/matrix-buffers":37,"./lib/matrix-bvh":38,"./lib/matrix-geometry":40,"./lib/matrix-render":41,"./lib/matrix-textures":42,"./lib/matrix-world":43,"./lib/raycast":44,"./lib/utility":45,"./program/manifest":49}],34:[function(require,module,exports){
+},{"./lib/engine":35,"./lib/events":36,"./lib/loader-obj":37,"./lib/matrix-buffers":38,"./lib/matrix-bvh":39,"./lib/matrix-geometry":41,"./lib/matrix-render":42,"./lib/matrix-textures":44,"./lib/matrix-world":45,"./lib/raycast":46,"./lib/utility":47,"./program/manifest":51}],35:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2548,7 +2614,8 @@ exports.initShaders = initShaders;
 exports.SET_STREAM = SET_STREAM;
 exports.ACCESS_CAMERA = ACCESS_CAMERA;
 exports.VIDEO_TEXTURE = VIDEO_TEXTURE;
-exports.CANVAS2d_SURFACE_TEXTURE = CANVAS2d_SURFACE_TEXTURE;
+exports.Vjs3 = Vjs3;
+exports.anyCanvas = anyCanvas;
 exports.webcamError = exports.RegenerateShader = exports.looper = exports.EVENTS_INSTANCE = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
 
 var _events = require("./events");
@@ -3404,24 +3471,25 @@ function VIDEO_TEXTURE(path_) {
   };
 }
 
-function CANVAS2d_SURFACE_TEXTURE(path_, path_to_run_script) {
+function Vjs3(path_, nameOfCanvas) {
   var ROOT = this;
-  ROOT.iframe = document.createElement('iframe');
-  ROOT.iframe.id = 'canvas2dTextureSurface';
-  ROOT.iframe.setAttribute('width', '512');
-  ROOT.iframe.setAttribute('height', '512');
+  ROOT.iframe = document.createElement('object');
+  ROOT.iframe.id = nameOfCanvas;
+  ROOT.iframe.setAttribute('style', 'width:512px;height:512px'); // ROOT.iframe.setAttribute('width', '512');
+  // ROOT.iframe.setAttribute('height', '512');
+
   var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
-  ROOT.iframe.src = path_;
+  ROOT.iframe.data = path_;
   DIV_CONTENT_STREAMS.appendChild(ROOT.iframe);
 
-  document.getElementById(ROOT.iframe.id).onload = function () {
-    ROOT.videoImage = ROOT.iframe.contentDocument.getElementById('HELLO_WORLD');
+  document.getElementById(ROOT.iframe.id).onload = function (event) {
+    ROOT.videoImage = ROOT.iframe.contentDocument.getElementById(nameOfCanvas);
     ROOT.canvasTexture = ROOT.videoImage.getContext('2d');
 
-    _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.SYS.SCRIPT.LOAD(path_to_run_script);
+    _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
 
-    (0, _utility.E)('HOLDER_STREAMS').style.display = 'none';
-    ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage); // console.log("REZULT TEST");
+    (0, _utility.E)('HOLDER_STREAMS').style.display = 'block';
+    ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage);
   };
 
   ROOT.showTextureEditor = function () {
@@ -3431,7 +3499,39 @@ function CANVAS2d_SURFACE_TEXTURE(path_, path_to_run_script) {
   };
 }
 
-},{"../program/manifest":49,"./events":35,"./matrix-render":41,"./matrix-world":43,"./utility":45,"./webgl-utils":46}],35:[function(require,module,exports){
+function anyCanvas(path_, nameOfCanvas) {
+  var ROOT = this;
+  ROOT.iframe = document.createElement('object');
+  ROOT.iframe.id = 'canvas2dTextureSurface' + document.getElementsByTagName('object').length; // ROOT.iframe.setAttribute('style', 'width:512px;height:512px');
+
+  ROOT.iframe.setAttribute('width', '512');
+  ROOT.iframe.setAttribute('height', '512');
+  var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
+  DIV_CONTENT_STREAMS.appendChild(ROOT.iframe);
+
+  document.getElementById(ROOT.iframe.id).onload = event => {
+    ROOT.videoImage = ROOT.iframe.contentDocument.getElementById(nameOfCanvas);
+
+    if (typeof ROOT.iframe.contentWindow.runTextureEditor !== 'undefined') {
+      _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
+    }
+
+    ROOT.canvasTexture = ROOT.videoImage.getContext('2d'); // App.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
+
+    (0, _utility.E)('HOLDER_STREAMS').style.display = 'block';
+    ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage);
+  };
+
+  ROOT.showTextureEditor = function () {
+    var T = (0, _utility.E)('HOLDER_STREAMS').style;
+    T.display = 'block';
+    T.left = '0';
+  };
+
+  ROOT.iframe.data = path_;
+}
+
+},{"../program/manifest":51,"./events":36,"./matrix-render":42,"./matrix-world":45,"./utility":47,"./webgl-utils":48}],36:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3811,7 +3911,7 @@ if (_manifest.default.pwa.addToHomePage === true) {
   } catch (err) {}
 }
 
-},{"../program/manifest":49,"./matrix-world":43,"./utility":45}],36:[function(require,module,exports){
+},{"../program/manifest":51,"./matrix-world":45,"./utility":47}],37:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -4225,7 +4325,7 @@ var deleteMeshBuffers = function (gl, mesh) {
 
 exports.deleteMeshBuffers = deleteMeshBuffers;
 
-},{"./matrix-world":43}],37:[function(require,module,exports){
+},{"./matrix-world":45}],38:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4577,7 +4677,7 @@ _manifest.default.operation.sphere_buffer_procedure = function (object) {
 var _default = _manifest.default.operation;
 exports.default = _default;
 
-},{"../program/manifest":49,"./matrix-world":43}],38:[function(require,module,exports){
+},{"../program/manifest":51,"./matrix-world":45}],39:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4585,7 +4685,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _bvhLoader = _interopRequireDefault(require("bvh-loader"));
+var _index = _interopRequireDefault(require("../node_modules/bvh-loader/index"));
 
 var matrixWorld = _interopRequireWildcard(require("./matrix-world"));
 
@@ -4607,8 +4707,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @async YES
  */
 // HARDCODE
-// import MEBvh from '../node_modules/bvh-loader/index';
 // https://docs.w3cub.com/dom/webgl2renderingcontext/drawelementsinstanced
+// import MEBvh from 'bvh-loader';
 // import * as utility from './utility';
 class MEBvhAnimation {
   constructor(path_, options) {
@@ -4632,7 +4732,7 @@ class MEBvhAnimation {
     this.options = options;
     this.world = options.world;
     this.globalOffset = options.globalOffset;
-    this.anim = new _bvhLoader.default();
+    this.anim = new _index.default();
     this.tPose = null;
     this.skeletalKeys = null;
     this.animation = null;
@@ -4792,7 +4892,7 @@ class MEBvhAnimation {
 
 exports.default = MEBvhAnimation;
 
-},{"./matrix-world":43,"./utility":45,"bvh-loader":47}],39:[function(require,module,exports){
+},{"../node_modules/bvh-loader/index":49,"./matrix-world":45,"./utility":47}],40:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4876,8 +4976,9 @@ _manifest.default.operation.draws.cube = function (object) {
 
 
     if (object.shaderProgram.ambientColorUniform) {
-      if (document.getElementById('ambLight') && document.getElementById('ambLight').color) {
-        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat(document.getElementById('ambLight').color.rgb[0]), parseFloat(document.getElementById('ambLight').color.rgb[1]), parseFloat(document.getElementById('ambLight').color.rgb[2]));
+      if (document.getElementById('ambLightR')) {
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat(document.getElementById('ambLightR').getAttribute('value')), parseFloat(document.getElementById('ambLightG').getAttribute('value')), parseFloat(document.getElementById('ambLightB').getAttribute('value'))); // console.log("LIGHTS UNIFORM AMB  B = ", parseFloat(document.getElementById('ambLightB').value) )
+
       } else {
         // object.LightsData.ambientLight
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, object.LightsData.ambientLight.r, object.LightsData.ambientLight.g, object.LightsData.ambientLight.b);
@@ -4887,8 +4988,8 @@ _manifest.default.operation.draws.cube = function (object) {
 
 
     if (object.shaderProgram.directionalColorUniform) {
-      if (document.getElementById('dirLight') && document.getElementById('dirLight').color) {
-        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(document.getElementById('dirLight').color.rgb[0]), parseFloat(document.getElementById('dirLight').color.rgb[1]), parseFloat(document.getElementById('dirLight').color.rgb[2]));
+      if (document.getElementById('dirLightR')) {
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(document.getElementById('dirLightR').getAttribute('value')), parseFloat(document.getElementById('dirLightG').getAttribute('value')), parseFloat(document.getElementById('dirLightB').getAttribute('value')));
       } else {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
       }
@@ -4900,7 +5001,8 @@ _manifest.default.operation.draws.cube = function (object) {
 
     if (object.shaderProgram.lightingDirectionUniform) {
       if (document.getElementById('dirX') && document.getElementById('dirY') && document.getElementById('dirZ')) {
-        lightingDirection = [parseFloat(document.getElementById('dirX').value), parseFloat(document.getElementById('dirY').value), parseFloat(document.getElementById('dirZ').value)];
+        // console.log("LIGHTS UNIFORM AMB  B = ",  document.getElementById('dirZ').value )
+        lightingDirection = [parseFloat(document.getElementById('dirX').getAttribute('value')), parseFloat(document.getElementById('dirY').getAttribute('value')), parseFloat(document.getElementById('dirZ').getAttribute('value'))];
       } else {
         lightingDirection = [object.LightsData.lightingDirection.r, object.LightsData.lightingDirection.g, object.LightsData.lightingDirection.b];
       }
@@ -5743,7 +5845,7 @@ var drawsOperation = _manifest.default.operation.draws;
 var _default = drawsOperation;
 exports.default = _default;
 
-},{"../program/manifest":49,"./events":35,"./matrix-world":43,"./raycast":44}],40:[function(require,module,exports){
+},{"../program/manifest":51,"./events":36,"./matrix-world":45,"./raycast":46}],41:[function(require,module,exports){
 /* eslint-disable no-redeclare */
 
 /* eslint-disable no-unused-vars */
@@ -7456,7 +7558,7 @@ exports.customVertex_1 = customVertex_1;
 
 function ring(innerRadius, outerRadius, slices) {}
 
-},{"../program/manifest":49,"./utility":45}],41:[function(require,module,exports){
+},{"../program/manifest":51,"./utility":47}],42:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7582,7 +7684,78 @@ var callReDraw_ = function () {
 
 exports.callReDraw_ = callReDraw_;
 
-},{"../program/manifest":49,"./engine":34,"./matrix-world":43,"./raycast":44}],42:[function(require,module,exports){
+},{"../program/manifest":51,"./engine":35,"./matrix-world":45,"./raycast":46}],43:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MatrixButton = exports.MatrixLightDirection = exports.MatrixLightComponent = void 0;
+
+class MatrixLightComponent extends HTMLElement {
+  constructor(...args) {
+    super(...args);
+    const shadowRoot = this.attachShadow({
+      mode: 'open'
+    });
+    let inputElement = document.createElement('input');
+    inputElement.setAttribute('id', this.getAttribute('id'));
+    inputElement.setAttribute('type', this.getAttribute('type'));
+    inputElement.setAttribute('value', this.getAttribute('value'));
+    inputElement.addEventListener('focus', () => {// console.log('focus on spot input');
+    });
+    inputElement.addEventListener('change', e => {
+      console.log('color comp changed', e.path[0].value);
+      this.setAttribute('value', e.path[0].value);
+    });
+    shadowRoot.appendChild(inputElement);
+  }
+
+}
+
+exports.MatrixLightComponent = MatrixLightComponent;
+
+class MatrixLightDirection extends HTMLElement {
+  constructor(...args) {
+    super(...args);
+    const shadowRoot = this.attachShadow({
+      mode: 'open'
+    });
+    let inputElement = document.createElement('input');
+    inputElement.setAttribute('id', this.getAttribute('id'));
+    inputElement.setAttribute('type', this.getAttribute('type')); // inputElement.setAttribute('value', this.getAttribute('value'));
+
+    inputElement.setAttribute('data-r', this.getAttribute('data-r'));
+    inputElement.setAttribute('data-g', this.getAttribute('data-g'));
+    inputElement.setAttribute('data-b', this.getAttribute('data-b'));
+    shadowRoot.appendChild(inputElement);
+  }
+
+}
+
+exports.MatrixLightDirection = MatrixLightDirection;
+
+class MatrixButton extends HTMLButtonElement {
+  constructor(...args) {
+    super(...args); // Attaches a shadow root to your custom element.
+
+    const shadowRoot = this.attachShadow({
+      mode: 'open'
+    }); // Defines the "real" input element.
+
+    let inputElement = document.createElement('input');
+    inputElement.setAttribute('type', this.getAttribute('type'));
+    shadowRoot.appendChild(inputElement);
+    this.addEventListener('focus', () => {
+      console.log('Focus on matrix-engine-btn');
+    });
+  }
+
+}
+
+exports.MatrixButton = MatrixButton;
+
+},{}],44:[function(require,module,exports){
 /* globals App world */
 'use strict';
 
@@ -7675,7 +7848,7 @@ _manifest.default.tools.loadVideoTexture = function (name, image) {
 var _default = _manifest.default.textools;
 exports.default = _default;
 
-},{"../program/manifest":49,"./matrix-world":43}],43:[function(require,module,exports){
+},{"../program/manifest":51,"./matrix-world":45}],45:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7693,6 +7866,8 @@ var _matrixRender = require("./matrix-render");
 
 var _matrixDraws = _interopRequireDefault(require("./matrix-draws"));
 
+var _matrixTags = require("./matrix-tags");
+
 var _utility = require("./utility");
 
 var _matrixGeometry = require("./matrix-geometry");
@@ -7702,7 +7877,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable no-unused-vars */
 
 /* Width and Height variables of the browser screen  */
-var frames = 0;
+var frames = 0; // must be fixed
+
 exports.frames = frames;
 
 function modifyFrames(newFrames) {
@@ -7713,7 +7889,7 @@ var world = {};
 exports.world = world;
 var updateFrames = 0;
 /* Because JavaScript is third class in mouse events */
-// var mouseLoc   = defineMouseLocationObject();
+// var mouseLoc = defineMouseLocationObject();
 
 /* Common sense to object disposition                */
 
@@ -7723,7 +7899,16 @@ var objListToDispose = new Array();
 
 exports.objListToDispose = objListToDispose;
 var reDraw = null;
+/**
+ * @description
+ * Define custom tags for new upgrade for light systems.
+ */
+
 exports.reDraw = reDraw;
+window.customElements.define('matrix-dir-light', _matrixTags.MatrixLightDirection); // window.customElements.define('matrix-light', MatrixLightComponent, {extends:'input'});
+
+window.customElements.define('matrix-light', _matrixTags.MatrixLightComponent); // var X = Object.create(HTMLInputElement.prototype);
+// window.customElements.define('matrix-light', X);
 
 function defineworld(canvas) {
   // console.log("  Define the world");
@@ -8477,7 +8662,7 @@ function defineworld(canvas) {
   return world;
 }
 
-},{"../program/manifest":49,"./engine":34,"./matrix-draws":39,"./matrix-geometry":40,"./matrix-render":41,"./utility":45}],44:[function(require,module,exports){
+},{"../program/manifest":51,"./engine":35,"./matrix-draws":40,"./matrix-geometry":41,"./matrix-render":42,"./matrix-tags":43,"./utility":47}],46:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8749,7 +8934,7 @@ function checkingProcedureCalc(object) {
   }
 }
 
-},{}],45:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 /* eslint-disable no-unused-vars */
 
 /* eslint-disable no-undef */
@@ -9392,7 +9577,7 @@ const BiquadFilterType = {
 };
 exports.BiquadFilterType = BiquadFilterType;
 
-},{"../program/manifest":49,"./events":35}],46:[function(require,module,exports){
+},{"../program/manifest":51,"./events":36}],48:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9581,7 +9766,7 @@ if (!window.requestAnimationFrame) {
   }();
 }
 
-},{}],47:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9594,7 +9779,7 @@ var _bvhLoader = require("./module/bvh-loader");
 var _default = _bvhLoader.MEBvh;
 exports.default = _default;
 
-},{"./module/bvh-loader":48}],48:[function(require,module,exports){
+},{"./module/bvh-loader":50}],50:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10307,7 +10492,7 @@ class MEBvh {
 
 exports.MEBvh = MEBvh;
 
-},{}],49:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

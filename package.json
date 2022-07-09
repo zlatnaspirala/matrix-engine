@@ -1,7 +1,7 @@
 {
   "name": "matrix-engine",
-  "version": "1.5.4",
-  "description": "[1.5.4] Fix sphereObject size/scale input [1.5.0] Comes with bvh loader and skeletal basic bone system draws . Added passive:false for mobile events because e.preventDefault call, Added isMobile func,  fix roty i roty with rotx=180 make raycast fully works. ray fixed for rx and ry, Raycast fixed for one of rx,ry,rz local rotation, setScale implemented for obj loaded meshes, Raycast basic for triangle implemented, auto cache update ref by cache version var ,auto update position translate operation, added translate operation on base class Position, remove esmify to dev dep, added set Solid bg vertex color for cube shema .Fix missing setScaleByY , setScaleByX for square geometry. Added 2 type of resize system. Fixed demo links, Fixed pwa initial status installed or not.Added Adding uglify-js build options, Improve import export adding bundle build options with browserify, PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
+  "version": "1.6.0",
+  "description": "[1.6.0] Removed old visual-js added new version of visual-js versino 3 (from npmservice)  [1.5.4] Fix sphereObject size/scale input [1.5.0] Comes with bvh loader and skeletal basic bone system draws . Added passive:false for mobile events because e.preventDefault call, Added isMobile func,  fix roty i roty with rotx=180 make raycast fully works. ray fixed for rx and ry, Raycast fixed for one of rx,ry,rz local rotation, setScale implemented for obj loaded meshes, Raycast basic for triangle implemented, auto cache update ref by cache version var ,auto update position translate operation, added translate operation on base class Position, remove esmify to dev dep, added set Solid bg vertex color for cube shema .Fix missing setScaleByY , setScaleByX for square geometry. Added 2 type of resize system. Fixed demo links, Fixed pwa initial status installed or not.Added Adding uglify-js build options, Improve import export adding bundle build options with browserify, PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -9,15 +9,23 @@
   "scripts": {
     "build.examples": "browserify App-Examples.js -p esmify > builds/examples.me.js",
     "build.app": "browserify App.js -p esmify > builds/app.js",
+    "build.tex.editor": "browserify ./2DTextureEditor/actual.js -p esmify > ./2DTextureEditor/builds/actual.tex.js",
+    "run.tex.editor": "node ./2DTextureEditor/editor.js",
+    "te": "node ./2DTextureEditor/editor.js",
+    "build.tex1": "browserify ./2DTextureEditor/tex1.js -p esmify > ./2DTextureEditor/builds/tex1.tex.js",
+    "build.tex2": "browserify ./2DTextureEditor/tex2.js -p esmify > ./2DTextureEditor/builds/tex2.tex.js",
     "build.lib": "browserify entry-lib-build.js -p esmify > builds/me.lib.js",
     "build.app.ugly": "browserify App.js -p esmify | uglifyjs -cm > builds/app.ugly.js",
-    "build.all": "npm run build.examples | npm run build.app | npm run build.lib | npm run build.app.ugly",
+    "build.all": "npm run build.tex.editor | npm run build.examples | npm run build.app | npm run build.lib | npm run build.app.ugly",
     "install.dep": "npm install -g uglify-js browserify",
     "test": "echo \"no build tradicional view\" && exit 1"
   },
   "dependencies": {
     "browser-resolve": "^2.0.0",
-    "bvh-loader": "0.0.9"
+    "bvh-loader": "0.0.9",
+    "visual-js": "^3.0.14",
+    "visual-js-server": "3.0.4",
+    "socket.io-client": "^4.5.1"
   },
   "devDependencies": {
     "esmify": "^2.1.1"
@@ -27,21 +35,36 @@
     "url": "git+https://github.com/zlatnaspirala/webgl2-glmatrix2-engine.git"
   },
   "keywords": [
-    "bvh-glmatrx", "bvh.js",
-    "bvh-skeletal", "bvh-webgl",
-    "bvh-loader", "bvh-animation",
-    "raycast", "raycast-glmatrix",
-    "vanilla-js", "webcam-texture",
-    "video-texture", "canvas",
-    "textures", "scene",
-    "opengles", "webgl",
-    "webgl2", "glmatrix",
-    "opengles2", "3d",
-    "javascript", "opengles3",
-    "matrix", "ECMA6",
-    "no-build-dev", "build-prod",
-    "browserify", "matrix-engine",
-    "alternative", "three.js alternative"
+    "bvh-glmatrx",
+    "bvh.js",
+    "bvh-skeletal",
+    "bvh-webgl",
+    "bvh-loader",
+    "bvh-animation",
+    "raycast",
+    "raycast-glmatrix",
+    "vanilla-js",
+    "webcam-texture",
+    "video-texture",
+    "canvas",
+    "textures",
+    "scene",
+    "opengles",
+    "webgl",
+    "webgl2",
+    "glmatrix",
+    "opengles2",
+    "3d",
+    "javascript",
+    "opengles3",
+    "matrix",
+    "ECMA6",
+    "no-build-dev",
+    "build-prod",
+    "browserify",
+    "matrix-engine",
+    "alternative",
+    "three.js alternative"
   ],
   "author": "Nikola Lukic @zlatnaspirala",
   "license": "MIT",

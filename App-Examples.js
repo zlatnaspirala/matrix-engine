@@ -31,9 +31,10 @@ import {runThis as video_texture} from './apps/video_texture';
 import {runThis as adding_color_square} from './apps/adding_color_square';
 import {runThis as bvh_loader} from './apps/bvh-loader';
 import {runThis as bvh_animation_class} from './apps/bvh-animation-class';
-
+import {runThis as active_editor } from './apps/active_editor';
 
 var Examples = {
+  active_editor: active_editor,
   bvh_animation_class: bvh_animation_class,
   bvh_loader: bvh_loader,
   adding_tex_square_raycast: adding_tex_square_raycast,
