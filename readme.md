@@ -364,8 +364,12 @@ Access to the [any] canvas2d program: `anyCanvas(path-of-html,name-of-canvas)`
       "HELLO_WORLD")
 ```
 
+### Live editor [actual.js predefined]
 ![Texture-Editor](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/matrix-engine-tex-editor.png)
 
+
+### Old VJS loading with anyCanvas()
+![Texture-Editor](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/matrix-engine.png)
 
 Old Live demo:
 Video and webcam works at:

@@ -2208,9 +2208,9 @@ var runThis = world => {
   };
   world.Add("cubeLightTex", 12, "outsideBox");
   _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
-
-  _manifest.default.scene.outsideBox.rotValue = 90;
+  _manifest.default.scene.outsideBox.position.z = -55;
+  _manifest.default.scene.outsideBox.rotation.rotationSpeed.x = 20;
+  _manifest.default.scene.outsideBox.rotation.rotationSpeed.y = 5; // App.scene.outsideBox.rotValue = 90;
 
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1); // App.scene.outsideBox.glBlend.blendEnabled = true;
 
@@ -2229,7 +2229,7 @@ var runThis = world => {
     _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas("./apps/funny-slot/", "HELLO_WORLD");
 
     _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 100);
+  }, 500);
 };
 
 exports.runThis = runThis;
