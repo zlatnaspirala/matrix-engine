@@ -14,6 +14,7 @@
     "te": "node ./2DTextureEditor/editor.js",
     "build.tex1": "browserify ./2DTextureEditor/tex1.js -p esmify > ./2DTextureEditor/builds/tex1.tex.js",
     "build.tex2": "browserify ./2DTextureEditor/tex2.js -p esmify > ./2DTextureEditor/builds/tex2.tex.js",
+    "build.tex3": "browserify ./2DTextureEditor/micro-drawing.js -p esmify > ./2DTextureEditor/builds/md.tex.js",
     "build.lib": "browserify entry-lib-build.js -p esmify > builds/me.lib.js",
     "build.app.ugly": "browserify App.js -p esmify | uglifyjs -cm > builds/app.ugly.js",
     "build.all": "npm run build.tex.editor | npm run build.examples | npm run build.app | npm run build.lib | npm run build.app.ugly",
