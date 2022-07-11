@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.5.0`
+### Name: `MATRIX-ENGINE` `1.6.0`
 
 ### STATUS
 - [Integrated PWA addToHomePage/cache/]
