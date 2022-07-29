@@ -6,7 +6,15 @@
 
 ### STATUS
 - [Integrated PWA addToHomePage/cache/]
-- [Integrated raycast, bvh animation]
+- [Integrated raycast (hit trigger detect), bvh animation]
+
+### Next Features
+
+- General improvements in Lights section.
+  Shaders must be improved based on work
+  Links -> https://webglfundamentals.org/webgl/lessons/
+- Implement networking (potencial MultiRTC3)
+- Physics (potencial implementation of cannon.js)
 
 ### For npm users recommended
 
