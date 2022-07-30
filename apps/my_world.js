@@ -8,8 +8,8 @@
 /* globals world App world */
 import App from '../program/manifest';
 import * as matrixEngine from '../index.js';
-let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
+//let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+//let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 let SWITCHER = matrixEngine.utility.SWITCHER;
 
 export var runThis = (world) => {

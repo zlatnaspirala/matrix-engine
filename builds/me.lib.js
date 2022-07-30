@@ -94,7 +94,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./lib/engine":3,"./lib/events":4,"./lib/loader-obj":5,"./lib/matrix-buffers":6,"./lib/matrix-bvh":7,"./lib/matrix-geometry":9,"./lib/matrix-render":10,"./lib/matrix-textures":11,"./lib/matrix-world":12,"./lib/raycast":13,"./lib/utility":14,"./program/manifest":18}],3:[function(require,module,exports){
+},{"./lib/engine":3,"./lib/events":4,"./lib/loader-obj":5,"./lib/matrix-buffers":6,"./lib/matrix-bvh":7,"./lib/matrix-geometry":9,"./lib/matrix-render":10,"./lib/matrix-textures":12,"./lib/matrix-world":13,"./lib/raycast":14,"./lib/utility":15,"./program/manifest":19}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -117,7 +117,8 @@ exports.initShaders = initShaders;
 exports.SET_STREAM = SET_STREAM;
 exports.ACCESS_CAMERA = ACCESS_CAMERA;
 exports.VIDEO_TEXTURE = VIDEO_TEXTURE;
-exports.CANVAS2d_SURFACE_TEXTURE = CANVAS2d_SURFACE_TEXTURE;
+exports.Vjs3 = Vjs3;
+exports.anyCanvas = anyCanvas;
 exports.webcamError = exports.RegenerateShader = exports.looper = exports.EVENTS_INSTANCE = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
 
 var _events = require("./events");
@@ -973,24 +974,25 @@ function VIDEO_TEXTURE(path_) {
   };
 }
 
-function CANVAS2d_SURFACE_TEXTURE(path_, path_to_run_script) {
+function Vjs3(path_, nameOfCanvas) {
   var ROOT = this;
-  ROOT.iframe = document.createElement('iframe');
-  ROOT.iframe.id = 'canvas2dTextureSurface';
-  ROOT.iframe.setAttribute('width', '512');
-  ROOT.iframe.setAttribute('height', '512');
+  ROOT.iframe = document.createElement('object');
+  ROOT.iframe.id = nameOfCanvas;
+  ROOT.iframe.setAttribute('style', 'width:512px;height:512px'); // ROOT.iframe.setAttribute('width', '512');
+  // ROOT.iframe.setAttribute('height', '512');
+
   var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
-  ROOT.iframe.src = path_;
+  ROOT.iframe.data = path_;
   DIV_CONTENT_STREAMS.appendChild(ROOT.iframe);
 
-  document.getElementById(ROOT.iframe.id).onload = function () {
-    ROOT.videoImage = ROOT.iframe.contentDocument.getElementById('HELLO_WORLD');
+  document.getElementById(ROOT.iframe.id).onload = function (event) {
+    ROOT.videoImage = ROOT.iframe.contentDocument.getElementById(nameOfCanvas);
     ROOT.canvasTexture = ROOT.videoImage.getContext('2d');
 
-    _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.SYS.SCRIPT.LOAD(path_to_run_script);
+    _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
 
-    (0, _utility.E)('HOLDER_STREAMS').style.display = 'none';
-    ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage); // console.log("REZULT TEST");
+    (0, _utility.E)('HOLDER_STREAMS').style.display = 'block';
+    ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage);
   };
 
   ROOT.showTextureEditor = function () {
@@ -1000,7 +1002,39 @@ function CANVAS2d_SURFACE_TEXTURE(path_, path_to_run_script) {
   };
 }
 
-},{"../program/manifest":18,"./events":4,"./matrix-render":10,"./matrix-world":12,"./utility":14,"./webgl-utils":15}],4:[function(require,module,exports){
+function anyCanvas(path_, nameOfCanvas) {
+  var ROOT = this;
+  ROOT.iframe = document.createElement('object');
+  ROOT.iframe.id = 'canvas2dTextureSurface' + document.getElementsByTagName('object').length; // ROOT.iframe.setAttribute('style', 'width:512px;height:512px');
+
+  ROOT.iframe.setAttribute('width', '512');
+  ROOT.iframe.setAttribute('height', '512');
+  var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
+  DIV_CONTENT_STREAMS.appendChild(ROOT.iframe);
+
+  document.getElementById(ROOT.iframe.id).onload = event => {
+    ROOT.videoImage = ROOT.iframe.contentDocument.getElementById(nameOfCanvas);
+
+    if (typeof ROOT.iframe.contentWindow.runTextureEditor !== 'undefined') {
+      _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
+    }
+
+    ROOT.canvasTexture = ROOT.videoImage.getContext('2d'); // App.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
+
+    (0, _utility.E)('HOLDER_STREAMS').style.display = 'block';
+    ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage);
+  };
+
+  ROOT.showTextureEditor = function () {
+    var T = (0, _utility.E)('HOLDER_STREAMS').style;
+    T.display = 'block';
+    T.left = '0';
+  };
+
+  ROOT.iframe.data = path_;
+}
+
+},{"../program/manifest":19,"./events":4,"./matrix-render":10,"./matrix-world":13,"./utility":15,"./webgl-utils":16}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1380,7 +1414,7 @@ if (_manifest.default.pwa.addToHomePage === true) {
   } catch (err) {}
 }
 
-},{"../program/manifest":18,"./matrix-world":12,"./utility":14}],5:[function(require,module,exports){
+},{"../program/manifest":19,"./matrix-world":13,"./utility":15}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1794,7 +1828,7 @@ var deleteMeshBuffers = function (gl, mesh) {
 
 exports.deleteMeshBuffers = deleteMeshBuffers;
 
-},{"./matrix-world":12}],6:[function(require,module,exports){
+},{"./matrix-world":13}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2146,7 +2180,7 @@ _manifest.default.operation.sphere_buffer_procedure = function (object) {
 var _default = _manifest.default.operation;
 exports.default = _default;
 
-},{"../program/manifest":18,"./matrix-world":12}],7:[function(require,module,exports){
+},{"../program/manifest":19,"./matrix-world":13}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2154,7 +2188,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _bvhLoader = _interopRequireDefault(require("bvh-loader"));
+var _index = _interopRequireDefault(require("../node_modules/bvh-loader/index"));
 
 var matrixWorld = _interopRequireWildcard(require("./matrix-world"));
 
@@ -2176,8 +2210,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @async YES
  */
 // HARDCODE
-// import MEBvh from '../node_modules/bvh-loader/index';
 // https://docs.w3cub.com/dom/webgl2renderingcontext/drawelementsinstanced
+// import MEBvh from 'bvh-loader';
 // import * as utility from './utility';
 class MEBvhAnimation {
   constructor(path_, options) {
@@ -2201,7 +2235,7 @@ class MEBvhAnimation {
     this.options = options;
     this.world = options.world;
     this.globalOffset = options.globalOffset;
-    this.anim = new _bvhLoader.default();
+    this.anim = new _index.default();
     this.tPose = null;
     this.skeletalKeys = null;
     this.animation = null;
@@ -2361,7 +2395,7 @@ class MEBvhAnimation {
 
 exports.default = MEBvhAnimation;
 
-},{"./matrix-world":12,"./utility":14,"bvh-loader":16}],8:[function(require,module,exports){
+},{"../node_modules/bvh-loader/index":17,"./matrix-world":13,"./utility":15}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2445,8 +2479,9 @@ _manifest.default.operation.draws.cube = function (object) {
 
 
     if (object.shaderProgram.ambientColorUniform) {
-      if (document.getElementById('ambLight') && document.getElementById('ambLight').color) {
-        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat(document.getElementById('ambLight').color.rgb[0]), parseFloat(document.getElementById('ambLight').color.rgb[1]), parseFloat(document.getElementById('ambLight').color.rgb[2]));
+      if (document.getElementById('ambLightR')) {
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat(document.getElementById('ambLightR').getAttribute('value')), parseFloat(document.getElementById('ambLightG').getAttribute('value')), parseFloat(document.getElementById('ambLightB').getAttribute('value'))); // console.log("LIGHTS UNIFORM AMB  B = ", parseFloat(document.getElementById('ambLightB').value) )
+
       } else {
         // object.LightsData.ambientLight
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, object.LightsData.ambientLight.r, object.LightsData.ambientLight.g, object.LightsData.ambientLight.b);
@@ -2456,8 +2491,8 @@ _manifest.default.operation.draws.cube = function (object) {
 
 
     if (object.shaderProgram.directionalColorUniform) {
-      if (document.getElementById('dirLight') && document.getElementById('dirLight').color) {
-        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(document.getElementById('dirLight').color.rgb[0]), parseFloat(document.getElementById('dirLight').color.rgb[1]), parseFloat(document.getElementById('dirLight').color.rgb[2]));
+      if (document.getElementById('dirLightR')) {
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(document.getElementById('dirLightR').getAttribute('value')), parseFloat(document.getElementById('dirLightG').getAttribute('value')), parseFloat(document.getElementById('dirLightB').getAttribute('value')));
       } else {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
       }
@@ -2469,7 +2504,8 @@ _manifest.default.operation.draws.cube = function (object) {
 
     if (object.shaderProgram.lightingDirectionUniform) {
       if (document.getElementById('dirX') && document.getElementById('dirY') && document.getElementById('dirZ')) {
-        lightingDirection = [parseFloat(document.getElementById('dirX').value), parseFloat(document.getElementById('dirY').value), parseFloat(document.getElementById('dirZ').value)];
+        // console.log("LIGHTS UNIFORM AMB  B = ",  document.getElementById('dirZ').value )
+        lightingDirection = [parseFloat(document.getElementById('dirX').getAttribute('value')), parseFloat(document.getElementById('dirY').getAttribute('value')), parseFloat(document.getElementById('dirZ').getAttribute('value'))];
       } else {
         lightingDirection = [object.LightsData.lightingDirection.r, object.LightsData.lightingDirection.g, object.LightsData.lightingDirection.b];
       }
@@ -3312,7 +3348,7 @@ var drawsOperation = _manifest.default.operation.draws;
 var _default = drawsOperation;
 exports.default = _default;
 
-},{"../program/manifest":18,"./events":4,"./matrix-world":12,"./raycast":13}],9:[function(require,module,exports){
+},{"../program/manifest":19,"./events":4,"./matrix-world":13,"./raycast":14}],9:[function(require,module,exports){
 /* eslint-disable no-redeclare */
 
 /* eslint-disable no-unused-vars */
@@ -5025,7 +5061,7 @@ exports.customVertex_1 = customVertex_1;
 
 function ring(innerRadius, outerRadius, slices) {}
 
-},{"../program/manifest":18,"./utility":14}],10:[function(require,module,exports){
+},{"../program/manifest":19,"./utility":15}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5151,7 +5187,78 @@ var callReDraw_ = function () {
 
 exports.callReDraw_ = callReDraw_;
 
-},{"../program/manifest":18,"./engine":3,"./matrix-world":12,"./raycast":13}],11:[function(require,module,exports){
+},{"../program/manifest":19,"./engine":3,"./matrix-world":13,"./raycast":14}],11:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MatrixButton = exports.MatrixLightDirection = exports.MatrixLightComponent = void 0;
+
+class MatrixLightComponent extends HTMLElement {
+  constructor(...args) {
+    super(...args);
+    const shadowRoot = this.attachShadow({
+      mode: 'open'
+    });
+    let inputElement = document.createElement('input');
+    inputElement.setAttribute('id', this.getAttribute('id'));
+    inputElement.setAttribute('type', this.getAttribute('type'));
+    inputElement.setAttribute('value', this.getAttribute('value'));
+    inputElement.addEventListener('focus', () => {// console.log('focus on spot input');
+    });
+    inputElement.addEventListener('change', e => {
+      console.log('color comp changed', e.path[0].value);
+      this.setAttribute('value', e.path[0].value);
+    });
+    shadowRoot.appendChild(inputElement);
+  }
+
+}
+
+exports.MatrixLightComponent = MatrixLightComponent;
+
+class MatrixLightDirection extends HTMLElement {
+  constructor(...args) {
+    super(...args);
+    const shadowRoot = this.attachShadow({
+      mode: 'open'
+    });
+    let inputElement = document.createElement('input');
+    inputElement.setAttribute('id', this.getAttribute('id'));
+    inputElement.setAttribute('type', this.getAttribute('type')); // inputElement.setAttribute('value', this.getAttribute('value'));
+
+    inputElement.setAttribute('data-r', this.getAttribute('data-r'));
+    inputElement.setAttribute('data-g', this.getAttribute('data-g'));
+    inputElement.setAttribute('data-b', this.getAttribute('data-b'));
+    shadowRoot.appendChild(inputElement);
+  }
+
+}
+
+exports.MatrixLightDirection = MatrixLightDirection;
+
+class MatrixButton extends HTMLButtonElement {
+  constructor(...args) {
+    super(...args); // Attaches a shadow root to your custom element.
+
+    const shadowRoot = this.attachShadow({
+      mode: 'open'
+    }); // Defines the "real" input element.
+
+    let inputElement = document.createElement('input');
+    inputElement.setAttribute('type', this.getAttribute('type'));
+    shadowRoot.appendChild(inputElement);
+    this.addEventListener('focus', () => {
+      console.log('Focus on matrix-engine-btn');
+    });
+  }
+
+}
+
+exports.MatrixButton = MatrixButton;
+
+},{}],12:[function(require,module,exports){
 /* globals App world */
 'use strict';
 
@@ -5244,7 +5351,7 @@ _manifest.default.tools.loadVideoTexture = function (name, image) {
 var _default = _manifest.default.textools;
 exports.default = _default;
 
-},{"../program/manifest":18,"./matrix-world":12}],12:[function(require,module,exports){
+},{"../program/manifest":19,"./matrix-world":13}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5262,6 +5369,8 @@ var _matrixRender = require("./matrix-render");
 
 var _matrixDraws = _interopRequireDefault(require("./matrix-draws"));
 
+var _matrixTags = require("./matrix-tags");
+
 var _utility = require("./utility");
 
 var _matrixGeometry = require("./matrix-geometry");
@@ -5271,7 +5380,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable no-unused-vars */
 
 /* Width and Height variables of the browser screen  */
-var frames = 0;
+var frames = 0; // must be fixed
+
 exports.frames = frames;
 
 function modifyFrames(newFrames) {
@@ -5282,7 +5392,7 @@ var world = {};
 exports.world = world;
 var updateFrames = 0;
 /* Because JavaScript is third class in mouse events */
-// var mouseLoc   = defineMouseLocationObject();
+// var mouseLoc = defineMouseLocationObject();
 
 /* Common sense to object disposition                */
 
@@ -5292,7 +5402,16 @@ var objListToDispose = new Array();
 
 exports.objListToDispose = objListToDispose;
 var reDraw = null;
+/**
+ * @description
+ * Define custom tags for new upgrade for light systems.
+ */
+
 exports.reDraw = reDraw;
+window.customElements.define('matrix-dir-light', _matrixTags.MatrixLightDirection); // window.customElements.define('matrix-light', MatrixLightComponent, {extends:'input'});
+
+window.customElements.define('matrix-light', _matrixTags.MatrixLightComponent); // var X = Object.create(HTMLInputElement.prototype);
+// window.customElements.define('matrix-light', X);
 
 function defineworld(canvas) {
   // console.log("  Define the world");
@@ -6046,7 +6165,7 @@ function defineworld(canvas) {
   return world;
 }
 
-},{"../program/manifest":18,"./engine":3,"./matrix-draws":8,"./matrix-geometry":9,"./matrix-render":10,"./utility":14}],13:[function(require,module,exports){
+},{"../program/manifest":19,"./engine":3,"./matrix-draws":8,"./matrix-geometry":9,"./matrix-render":10,"./matrix-tags":11,"./utility":15}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6318,7 +6437,7 @@ function checkingProcedureCalc(object) {
   }
 }
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /* eslint-disable no-unused-vars */
 
 /* eslint-disable no-undef */
@@ -6961,7 +7080,7 @@ const BiquadFilterType = {
 };
 exports.BiquadFilterType = BiquadFilterType;
 
-},{"../program/manifest":18,"./events":4}],15:[function(require,module,exports){
+},{"../program/manifest":19,"./events":4}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7150,7 +7269,7 @@ if (!window.requestAnimationFrame) {
   }();
 }
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7163,7 +7282,7 @@ var _bvhLoader = require("./module/bvh-loader");
 var _default = _bvhLoader.MEBvh;
 exports.default = _default;
 
-},{"./module/bvh-loader":17}],17:[function(require,module,exports){
+},{"./module/bvh-loader":18}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7876,7 +7995,7 @@ class MEBvh {
 
 exports.MEBvh = MEBvh;
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

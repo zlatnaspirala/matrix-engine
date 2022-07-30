@@ -6,13 +6,13 @@
 /* globals world App world */
 import App from "../program/manifest";
 import * as matrixEngine from "../index.js";
-let CANVAS2d_SURFACE_TEXTURE = matrixEngine.Engine.CANVAS2d_SURFACE_TEXTURE;
+let Vjs3 = matrixEngine.Engine.Vjs3;
 
 export var runThis = world => {
-  /* globals world App ENUMERATORS E CANVAS2d_SURFACE_TEXTURE */
+  /* globals world App ENUMERATORS E Vjs3 */
   /* eslint-disable no-unused-vars */
 
-  var tex = new CANVAS2d_SURFACE_TEXTURE(
+  var tex = new Vjs3(
     "app/2d1kilo/example1.html",
     "starter/text.js"
   );

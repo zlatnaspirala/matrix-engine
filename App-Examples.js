@@ -31,9 +31,12 @@ import {runThis as video_texture} from './apps/video_texture';
 import {runThis as adding_color_square} from './apps/adding_color_square';
 import {runThis as bvh_loader} from './apps/bvh-loader';
 import {runThis as bvh_animation_class} from './apps/bvh-animation-class';
-
+import {runThis as active_editor } from './apps/active_editor';
+import {runThis as porting2d_micro_draw } from './apps/porting2d_micro_draw';
 
 var Examples = {
+  porting2d_micro_draw: porting2d_micro_draw,
+  active_editor: active_editor,
   bvh_animation_class: bvh_animation_class,
   bvh_loader: bvh_loader,
   adding_tex_square_raycast: adding_tex_square_raycast,
@@ -82,7 +85,7 @@ if ('serviceWorker' in navigator) {
     // navigator.serviceWorker.register('worker.js');
     matrixEngine.Engine.load_shaders('shaders/shaders.html').then((arg)=> {
       console.info("Shaders ready.");
-      matrixEngine.Engine.initApp(webGLStart);
+      setTimeout( () => { matrixEngine.Engine.initApp(webGLStart); }, 1000)
     });
   });
 } else {

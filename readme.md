@@ -2,11 +2,19 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.5.0`
+### Name: `MATRIX-ENGINE` `1.6.0`
 
 ### STATUS
 - [Integrated PWA addToHomePage/cache/]
-- [Integrated raycast, bvh animation]
+- [Integrated raycast (hit trigger detect), bvh animation]
+
+### Next Features
+
+- General improvements in Lights section.
+  Shaders must be improved based on work
+  Links -> https://webglfundamentals.org/webgl/lessons/
+- Implement networking (potencial MultiRTC3)
+- Physics (potencial implementation of cannon.js)
 
 ### For npm users recommended
 
@@ -313,32 +321,63 @@ App.scene.TV.streamTextures = new ACCESS_CAMERA('webcam_beta');
 
 ### Texture editor (runtime):
 
- - Imports note we can use any canvas 2d app.
+ - Using Vjs3 with Editor use:
 
-In examples : porting2d.js, porting_text.js, porting2d_particle.js you can found source code.
-It is very powerfull tool but you will need to use visual-js 2d canvas api part of project.
-Research 2dcanvas examples at:
-Online code snippet ( jsFiddle )
-https://jsfiddle.net/user/zlatnaspirala/fiddles/
+```js
+  App.scene.outsideBox.streamTextures = new Vjs3(
+  "./2DTextureEditor/actual.html",
+  "actualTexture"
+);
+```
 
-I put 2d program instance intro app/canvas2d folder.
-Than i use iframe for access and preview.
-Code for 2d program you can found at : app/canvas2d/starter/
+ - Running Editor Tool
+```js
+npm run run.tex.editor
+// or 
+npm run te
+```
+
+After creating 2d texture direct on page at the end run:
+```js
+npm run build.tex.editor
+```
+to make build final pack.
+
+ - Imports note we can use any canvas 2d app [anyCanvas] .
+ 
+In examples: 
+  - porting2d.js  [Old VJS] Example of `anyCanvas`
+  - porting_text.js [Vjs3]
+  - porting2d_particle.js [Vjs3]
+
+ It is very powerfull tool!
+
+Research Vjs3 source examples at:
+https://github.com/zlatnaspirala/visualjs
+
+On NPM Service `npm i visual-js` , matrix engine already have
+`visual-js` , `visual-js-server` editor backend part.
 
 To show/hide iframe use:
-
-App.scene.outsideBox - is any object who have streamTextures LOADED with 2DCANVAS .
-
+App.scene.outsideBox - is any object who have streamTextures LOADED with 2DCANVAS.
 ```js
 App.scene.outsideBox.streamTextures.showTextureEditor();
 E('HOLDER_STREAMS').style.display = 'none';
 ```
 
-Access to the canvas2d program:
-
+Access to the [any] canvas2d program: `anyCanvas(path-of-html,name-of-canvas)`
 ```js
-  App.scene.outsideBox.streamTextures.iframe.contentWindow.
+ App.scene.outsideBox.streamTextures = new anyCanvas(
+      "./apps/funny-slot/",
+      "HELLO_WORLD")
 ```
+
+### Live editor [actual.js predefined]
+![Texture-Editor](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/matrix-engine-tex-editor.png)
+
+
+### Old VJS loading with anyCanvas()
+![Texture-Editor](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/matrix-engine.png)
 
 Old Live demo:
 Video and webcam works at:

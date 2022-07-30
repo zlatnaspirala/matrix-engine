@@ -17,10 +17,9 @@ export var runThis = (world) => {
 
   var effectOsci = new matrixEngine.utility.OSCILLATOR(3, 10, 1);
   var effectOsci2 = new matrixEngine.utility.OSCILLATOR(3, 10, 1);
-
   effectOsci2.value_ = 6;
 
-  ///////////////////////////////
+
   const options = {
     world: world, // [Required]
     autoPlay: true, // [Optimal]
@@ -45,7 +44,6 @@ export var runThis = (world) => {
   var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options);
 
   // 2
-
   const options2 = {
     world: world,
     autoPlay: true,
@@ -164,13 +162,13 @@ export var runThis = (world) => {
 
   matrixEngine.utility.byId('debugBox').style.display = 'block';
   matrixEngine.utility.byId('debugBox').style.width = '100%';
-  matrixEngine.utility.byId('debugBox').style.height = '40px';
+  matrixEngine.utility.byId('debugBox').style.height = '37px';
   matrixEngine.utility.byId('debugBox').innerHTML = `
   Music used: BLACK FLY by Audionautix | http://audionautix.com
   Music promoted by https://www.free-stock-music.com
   Creative Commons Attribution-ShareAlike 3.0 Unported
   https://creativecommons.org/licenses/by-sa/3.0/deed.en_US
-  Mix of audio vs bvh operation. @zlatnaspirala
+  <p> Mix of audio vs bvh operation. @zlatnaspirala </p>
   `;
 
   App.onload = function (e) {
