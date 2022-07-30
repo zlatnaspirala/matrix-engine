@@ -129,11 +129,17 @@ textarea {
 
 .matrixTagHolder {
   display:flex;
+  flex-direction: column;
   position: absolute;
   left:0;top:0;
   background-color: black;
   color: #0080ff;
   font-family: stormfaze;
+}
+
+span {
+  cursor: default;
+  width: 100px;
 }
 
 .mLightInput {
@@ -143,7 +149,8 @@ textarea {
 
 .mLightCom {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   text-align: center;
   align-items: center;
+  border: solid #0c2540 3px;
 }
