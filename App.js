@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/adding_tex_square_raycast';
+import {runThis} from './apps/cube_light_and_texture';
 
 var world;
 var App = matrixEngine.App;
@@ -9,7 +9,6 @@ matrixEngine.Engine.load_shaders('shaders/shaders.html');
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function (e) {
     // navigator.serviceWorker.register('worker.js');
-
     App.ready = true;
     matrixEngine.Engine.initApp(webGLStart);
   });

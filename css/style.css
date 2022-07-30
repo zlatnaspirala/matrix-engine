@@ -1,4 +1,9 @@
 
+@font-face {
+  font-family: stormfaze;
+  src: url(../res/fonts/stormfaze.ttf);
+}
+
 body {
   color: lime;
   background-color:black;
@@ -9,6 +14,10 @@ body {
   padding: 0;
   overflow: hidden;
   text-align: center;
+}
+
+textarea:focus, input:focus {
+  outline: none;
 }
 
 a {
@@ -114,4 +123,27 @@ textarea {
 .button2:hover {
   background-color: #95af4c;
   color: white;
+}
+
+/** Style for UI system hud controls */
+
+.matrixTagHolder {
+  display:flex;
+  position: absolute;
+  left:0;top:0;
+  background-color: black;
+  color: #0080ff;
+  font-family: stormfaze;
+}
+
+.mLightInput {
+  width: 150px;
+  font-size: 26px;
+}
+
+.mLightCom {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
 }

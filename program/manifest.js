@@ -13,6 +13,7 @@ var App = {
     farViewpoint: 1000,
     edgeMarginValue: 100,
     FirstPersonController: false,
+    SceneController: false,
     speedAmp: 0.5
   },
   raycast: true,
