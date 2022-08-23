@@ -39,10 +39,11 @@ export var runThis = (world) => {
   // App.scene.CUBE.position.SetY(0);
   //
   var b = new CANNON.Body({
-    mass: 1, // kg
+    mass: 5, // kg
     position: new CANNON.Vec3(0, -15, 2), // m
     shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
   });
+
   physics.world.addBody(b);
   //physisc
   App.scene.CUBE.physics.currentBody = b;
@@ -55,7 +56,7 @@ export var runThis = (world) => {
   var b2 = new CANNON.Body({
     mass: 1, // kg
     linearDamping: 0.01,
-    position: new CANNON.Vec3(1, -13.5, 15), // m
+    position: new CANNON.Vec3(1, -14.5, 15), // m
     shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
   });
 
