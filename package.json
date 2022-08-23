@@ -1,7 +1,7 @@
 {
   "name": "matrix-engine",
-  "version": "1.6.0",
-  "description": "[1.6.0] Removed old Vjs added new version of Vjs3 (npm-service)  [1.5.4] Fix sphereObject size/scale input [1.5.0] Comes with bvh loader and skeletal basic bone system draws . Added passive:false for mobile events because e.preventDefault call, Added isMobile func,  fix roty i roty with rotx=180 make raycast fully works. ray fixed for rx and ry, Raycast fixed for one of rx,ry,rz local rotation, setScale implemented for obj loaded meshes, Raycast basic for triangle implemented, auto cache update ref by cache version var ,auto update position translate operation, added translate operation on base class Position, remove esmify to dev dep, added set Solid bg vertex color for cube shema .Fix missing setScaleByY , setScaleByX for square geometry. Added 2 type of resize system. Fixed demo links, Fixed pwa initial status installed or not.Added Adding uglify-js build options, Improve import export adding bundle build options with browserify, PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
+  "version": "1.7.0",
+  "description": "[1.7.0] Test physics cannon.js implementation .[1.6.0] Removed old Vjs added new version of Vjs3 (npm-service)  [1.5.4] Fix sphereObject size/scale input [1.5.0] Comes with bvh loader and skeletal basic bone system draws . Added passive:false for mobile events because e.preventDefault call, Added isMobile func,  fix roty i roty with rotx=180 make raycast fully works. ray fixed for rx and ry, Raycast fixed for one of rx,ry,rz local rotation, setScale implemented for obj loaded meshes, Raycast basic for triangle implemented, auto cache update ref by cache version var ,auto update position translate operation, added translate operation on base class Position, remove esmify to dev dep, added set Solid bg vertex color for cube shema .Fix missing setScaleByY , setScaleByX for square geometry. Added 2 type of resize system. Fixed demo links, Fixed pwa initial status installed or not.Added Adding uglify-js build options, Improve import export adding bundle build options with browserify, PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction. ",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -24,9 +24,10 @@
   "dependencies": {
     "browser-resolve": "^2.0.0",
     "bvh-loader": "0.0.9",
+    "cannon": "^0.6.2",
+    "socket.io-client": "^4.5.1",
     "visual-js": "^3.0.19",
-    "visual-js-server": "3.0.4",
-    "socket.io-client": "^4.5.1"
+    "visual-js-server": "3.0.4"
   },
   "devDependencies": {
     "esmify": "^2.1.1"
