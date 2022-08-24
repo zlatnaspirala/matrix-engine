@@ -14,6 +14,7 @@ var App = {
     edgeMarginValue: 100,
     FirstPersonController: false,
     SceneController: false,
+    sceneControllerDragAmp: 0.1,
     speedAmp: 0.5
   },
   raycast: true,
