@@ -1,7 +1,9 @@
 /**
- *@Author Nikola Lukic
+ *@Author Nikola Lukic zlatnaspirala
  *@Description Matrix Engine Api Example
  * WORKSHOP SCRIPT
+ * Current theme : SceneController and 
+ * physics (cannon.js) implementation.
  */
 
 /* globals world App world */
@@ -9,62 +11,48 @@ import App from "../program/manifest";
 
 export var runThis = (world) => {
 
-  // Load Physics world!
-  let physics = world.loadPhysics();
+  App.camera.SceneController = true;
 
-  // Create a ground
-  var groundBody = new CANNON.Body({
-    mass: 0, // mass == 0 makes the body static
-    position: new CANNON.Vec3(0, -6, -1)
-  });
-  var groundShape = new CANNON.Plane();
-  groundBody.addShape(groundShape);
-  physics.world.addBody(groundBody);
-  console.log('ground=>', groundBody.position);
-  // matrix engine visual
-  world.Add("square", 1, "FLOOR_STATIC");
-  App.scene.FLOOR_STATIC.geometry.setScaleByX(5);
-  App.scene.FLOOR_STATIC.geometry.setScaleByY(5);
-  App.scene.FLOOR_STATIC.position.SetY(-1);
-  App.scene.FLOOR_STATIC.position.SetZ(-6);
-  App.scene.FLOOR_STATIC.rotation.rotx = 90;
-
-  // DYNAMIC OBJ
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply",
   };
 
+  // Load Physics world!
+  let gravityVector = [0, 0, -9.82];
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
+  physics.addGround(App, world, tex);
   world.Add("cubeLightTex", 1, "CUBE", tex);
-  // App.scene.CUBE.position.SetY(0);
-  //
   var b = new CANNON.Body({
-    mass: 5, // kg
-    position: new CANNON.Vec3(0, -15, 2), // m
+    mass: 5,
+    position: new CANNON.Vec3(0, -15, 2),
     shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
   });
-
   physics.world.addBody(b);
-  //physisc
+  // Physics
   App.scene.CUBE.physics.currentBody = b;
   App.scene.CUBE.physics.enabled = true;
 
+  const objGenerator = (n) => {
+    for(var j = 0;j < n;j++) {
 
-  world.Add("cubeLightTex", 1, "CUBE2", tex);
-  // App.scene.CUBE2.position.SetY(-10);
-  //
-  var b2 = new CANNON.Body({
-    mass: 1, // kg
-    linearDamping: 0.01,
-    position: new CANNON.Vec3(1, -14.5, 15), // m
-    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-  });
+      setTimeout(() => {
+        world.Add("cubeLightTex", 1, "CUBE" + j, tex);
+        var b2 = new CANNON.Body({
+          mass: 1,
+          linearDamping: 0.01,
+          position: new CANNON.Vec3(1, -14.5, 15),
+          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+        });
 
-  console.log("TETS LINEAR ", b2.linearDamping)
+        physics.world.addBody(b2);
+        App.scene['CUBE' + j].physics.currentBody = b2;
+        App.scene['CUBE' + j].physics.enabled = true;
+      }, 1000 * j)
+    }
+  }
 
-  physics.world.addBody(b2);
-  //physisc
-  App.scene.CUBE2.physics.currentBody = b2;
-  App.scene.CUBE2.physics.enabled = true;
+  objGenerator(100)
 
 };
