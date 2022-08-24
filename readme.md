@@ -2,11 +2,13 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.6.0`
+### Name: `MATRIX-ENGINE` `1.7.0`
 
 ### STATUS
 - [Integrated PWA addToHomePage/cache/]
 - [Integrated raycast (hit trigger detect), bvh animation]
+- [Physics implementation based on cannon.js]
+- [FirstPersonController/SceneController Drag and navigation scene]
 
 ### Next Features
 
@@ -14,7 +16,7 @@
   Shaders must be improved based on work
   Links -> https://webglfundamentals.org/webgl/lessons/
 - Implement networking (potencial MultiRTC3)
-- Physics (potencial implementation of cannon.js)
+
 
 ### For npm users recommended
 
