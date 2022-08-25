@@ -8,6 +8,7 @@
 
 /* globals world App world */
 import App from "../program/manifest";
+import * as CANNON from 'cannon';
 
 export var runThis = (world) => {
 
