@@ -15,20 +15,4 @@ export var runThis = (world) => {
   world.Add("squareTex", 1, "MyColoredSquareRayObject",textuteImageSamplers);
   App.scene.MyColoredSquareRayObject.position.SetX(0);
 
-  // world.Add("squareTex", 1, "MyColoredSquareRayObjectHelper", textuteImageSamplers);
-  // App.scene.MyColoredSquareRayObjectHelper.position.SetX(2);
-
-  //world.Add("squareTex", 1, "MyColoredSquareRayObjectHelper2", textuteImageSamplers);
-  //App.scene.MyColoredSquareRayObject.position.SetX(0);
-
-  canvas.addEventListener('mousedown', (ev) => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
-
-  canvas.addEventListener('ray.hit.event', (ev) => {
-    alert("You shoot the object! Nice")
-  });
-
-  // App.scene.MyColoredSquare1.rotation.rotationSpeed.x = 15;
-
 };

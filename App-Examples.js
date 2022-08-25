@@ -33,10 +33,12 @@ import {runThis as bvh_loader} from './apps/bvh-loader';
 import {runThis as bvh_animation_class} from './apps/bvh-animation-class';
 import {runThis as active_editor } from './apps/active_editor';
 import {runThis as porting2d_micro_draw } from './apps/porting2d_micro_draw';
-import {runThis as physics_test } from './apps/physics_test';
+import {runThis as physics_cube } from './apps/physics_cube';
+import {runThis as physics_sphere } from './apps/physics_sphere';
 
 var Examples = {
-  physics_test: physics_test,
+  physics_sphere: physics_sphere,
+  physics_cube: physics_cube,
   porting2d_micro_draw: porting2d_micro_draw,
   active_editor: active_editor,
   bvh_animation_class: bvh_animation_class,

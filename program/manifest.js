@@ -15,7 +15,10 @@ var App = {
     FirstPersonController: false,
     SceneController: false,
     sceneControllerDragAmp: 0.1,
-    speedAmp: 0.5
+    sceneControllerDragAmp: 0.1,
+    speedAmp: 0.5,
+    sceneControllerEdgeCameraYawRate: 3,
+    sceneControllerWASDKeysAmp: 0.1
   },
   raycast: true,
   resize : {

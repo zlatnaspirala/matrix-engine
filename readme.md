@@ -5,10 +5,21 @@
 ### Name: `MATRIX-ENGINE` `1.7.0`
 
 ### STATUS
-- [Integrated PWA addToHomePage/cache/]
-- [Integrated raycast (hit trigger detect), bvh animation]
-- [Physics implementation based on cannon.js]
-- [FirstPersonController/SceneController Drag and navigation scene]
+#### - [Integrated PWA addToHomePage/cache/] 	✔	
+#### - [Integrated raycast (hit trigger detect), bvh animation]	✔	
+#### - [Basic Physics implementation based on cannon.js]	✔	
+#### - [FirstPersonController/SceneController Drag and navigation scene]	✔	
+
+### Description
+  This is small but inspiring project.
+  The benefits of this project is offering an overview of the entire application logic,
+  easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
+  (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in 
+   opengles 1.1. Also can be downgraded to openGLES 1.1. webGL Lightweight library based on glmatrix engine.
+
+### Limitation
+ - Basic implementation for physics (Cube, Sphere)
+ - Raycast not work after walk behind the object in first person mode
 
 ### Next Features
 
@@ -17,9 +28,6 @@
   Links -> https://webglfundamentals.org/webgl/lessons/
 - Implement networking (potencial MultiRTC3)
 
-- The benefits of this project is offering an overview of the entire application logic,
-  easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
-  (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in opengles 1.1.
 
 ### For npm users recommended
 
@@ -84,6 +92,16 @@ usually `/var/www/html/you-app/`.
 
 - Build entry App.js
 
+<b>Note</b>: For  `app.html`, `examples.html` no need to build nut for now needed to replace line:
+```
+This is Production
+// import MEBvh from '../node_modules/bvh-loader/index';
+This is dev testing
+// import MEBvh from 'bvh-loader';
+```
+In future i will find some way to fix this.
+
+
 ```js
   npm run build.app
 ```
@@ -138,11 +156,106 @@ build.all;
 - Sphere geometry
 - Texture uv manipulation
 - Videos textures
+- Physics Cube with force on raycast trigger
+- Physics Sphere
+- BVH loader, animation play
 
-We just override function for texture executing code.
-Next level is full custom opportunity , geometry , collision , networking etc.
+## Features description
+
+### Camera config
+In `./program/manifest.js`. Access is `App.camera`.
+Note: One of params `FirstPersonController` or `SceneController` must be `false`.
+
+- `FirstPersonController` is classic first person view with movement WASD and mouse look.
+- `SceneController` use direct input WASD. To make camera angle view change press `shift` to
+   enable camera angle. Middle mouse button will enable drag scene to left/right/top/down.
+   Mouse middle wheel change work only when `shift` is pressed.
+
+```js
+  camera: {
+    viewAngle: 45,
+    nearViewpoint: 0.1,
+    farViewpoint: 1000,
+    edgeMarginValue: 100,
+    FirstPersonController: false,
+    SceneController: false,
+    sceneControllerDragAmp: 0.1,
+    sceneControllerDragAmp: 0.1,
+    speedAmp: 0.5,
+    sceneControllerEdgeCameraYawRate: 3,
+    sceneControllerWASDKeysAmp: 0.1
+  },
+```
+
+### Physics
+Physics based on cannon.js 
+
+Example with physics and raycast hit detect:
+```js
+
+  App.camera.SceneController = true;
+
+  canvas.addEventListener('mousedown', (ev) => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+
+  window.addEventListener('ray.hit.event', (ev) => {
+    console.log("You shoot the object! Nice!", ev)
+
+    /**
+     * Physics force apply
+     */
+     if (ev.detail.hitObject.physics.enabled == true) {
+      ev.detail.hitObject.physics.currentBody.force.set(0,0,1000)
+     }
+  });
+
+  var tex = {
+    source: ["res/images/complex_texture_1/diffuse.png"],
+    mix_operation: "multiply",
+  };
+
+  // Load Physics world!
+  let gravityVector = [0, 0, -9.82];
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
+  physics.addGround(App, world, tex);
+  world.Add("cubeLightTex", 1, "CUBE", tex);
+  var b = new CANNON.Body({
+    mass: 5,
+    position: new CANNON.Vec3(0, -15, 2),
+    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+  });
+  physics.world.addBody(b);
+  // Physics
+  App.scene.CUBE.physics.currentBody = b;
+  App.scene.CUBE.physics.enabled = true;
+
+  const objGenerator = (n) => {
+    for(var j = 0;j < n;j++) {
+
+      setTimeout(() => {
+        world.Add("cubeLightTex", 1, "CUBE" + j, tex);
+        var b2 = new CANNON.Body({
+          mass: 1,
+          linearDamping: 0.01,
+          position: new CANNON.Vec3(1, -14.5, 15),
+          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+        });
+
+        physics.world.addBody(b2);
+        App.scene['CUBE' + j].physics.currentBody = b2;
+        App.scene['CUBE' + j].physics.enabled = true;
+      }, 1000 * j)
+    }
+  }
+
+  objGenerator(100)
+```
 
 ### Custom textures
+We just override function for texture executing code.
+Next level is full custom opportunity, geometry, collision, networking etc.
 
 ```js
 App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
@@ -224,15 +337,6 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 ```js
   // In one line activate also deactivate.
   App.camera.FirstPersonController = true;
-
-  // Look in manifest.js
-  camera : {
-    viewAngle: 45,
-    nearViewpoint: 0.1,
-    farViewpoint: 1000,
-    edgeMarginValue: 100,
-    FirstPersonController: false
-  }
 ```
 
 ### Animated female droid:
@@ -383,7 +487,7 @@ Old Live demo:
 Video and webcam works at:
 https://maximumroulette.com/webgl2/examples.html
 
-### PWA Fully runned
+## PWA Fully runned
 
 Integrated `Add to Home page` and `regular html5 page` options.
 In same time fixed all `autoplay` audio and video context construction.
@@ -391,7 +495,7 @@ It is good to consult pwa test on page.
 Best way is to keep it on 100% pass.
 ![pwa-powered](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/pwa__test.png)
 
-### Credits && Licence:
+## Credits && Licence:
 
 - Video material used from :From youtube.com : Electric sheep - a facinating animated flame fractal
   TheMrNgaard Creative Commons Attribution licence (reuse allowed)

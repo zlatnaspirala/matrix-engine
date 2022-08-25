@@ -13,6 +13,21 @@ export var runThis = (world) => {
 
   App.camera.SceneController = true;
 
+  canvas.addEventListener('mousedown', (ev) => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+
+  window.addEventListener('ray.hit.event', (ev) => {
+    console.log("You shoot the object! Nice!", ev)
+
+    /**
+     * Physics force apply
+     */
+     if (ev.detail.hitObject.physics.enabled == true) {
+      ev.detail.hitObject.physics.currentBody.force.set(0,0,1000)
+     }
+  });
+
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply",

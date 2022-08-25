@@ -2,7 +2,6 @@
 # CREDITS
 
 ## OBJECT LOADER
-
 ```js
 /**
  * @Source http://math.hws.edu/graphicsbook/source/webgl/cube-camera.html
@@ -106,15 +105,12 @@ export class customVertex_1 {
 https://www.npmjs.com/package/raycaster
 but adapted special for matrix-engine.
 
-
-## Bvh Loader
+## Bvh Loader:
+Converted from python to javascript:
 Original source: https://github.com/dabeschte/npybvh
-
 
 ## Bvh Resources folder in resources:
 Special thanks to the CMU Graphics Lab Motion Capture Database which provided the data http://mocap.cs.cmu.edu/
 
-## Cannon.js used for physics
-
+## Cannon.js used for physics:
 https://schteppe.github.io/cannon.js/
-
