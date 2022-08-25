@@ -17,6 +17,9 @@
   Links -> https://webglfundamentals.org/webgl/lessons/
 - Implement networking (potencial MultiRTC3)
 
+- The benefits of this project is offering an overview of the entire application logic,
+  easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
+  (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in opengles 1.1.
 
 ### For npm users recommended
 
@@ -34,11 +37,6 @@
    - Slot Mashine
      https://maximumroulette.com/apps/matrix-engine-starter/projects/matrix-slot/index.html
 
-- The benefits of this project is offering an overview of the entire application logic,
-  easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
-  (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in opengles 1.1.
-  First level of customisation is texture part of code. Best view in example custom_texture.js.
-  I implemented webcam quick access call with custom active texture (porting canvas2d to the 3d faces works fine)
 
 ### Live Demos
 
