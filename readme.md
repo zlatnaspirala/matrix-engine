@@ -17,11 +17,11 @@
   (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in 
    opengles 1.1. Also can be downgraded to openGLES 1.1. webGL Lightweight library based on glmatrix engine.
 
-### Limitation
+### Limitation ⚠
  - Basic implementation for physics (Cube, Sphere)
  - Raycast not work after walk behind the object in first person mode
 
-### Next Features
+### Next Features 🔜
 
 - General improvements in Lights section.
   Shaders must be improved based on work
@@ -494,6 +494,10 @@ In same time fixed all `autoplay` audio and video context construction.
 It is good to consult pwa test on page.
 Best way is to keep it on 100% pass.
 ![pwa-powered](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/pwa__test.png)
+
+## Secured 🛡
+
+No Dependabot alerts opened.
 
 ## Credits && Licence:
 
