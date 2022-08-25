@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var matrixEngine = _interopRequireWildcard(require("./index"));
+var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
 var _cube_tex_arrays = require("./apps/cube_tex_arrays.js");
 
@@ -172,7 +172,7 @@ var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/active_editor.js":2,"./apps/adding_color_cube.js":3,"./apps/adding_color_piramyde.js":4,"./apps/adding_color_square.js":5,"./apps/adding_color_triangle.js":6,"./apps/adding_more_texture_samplers.js":7,"./apps/adding_square_texture.js":8,"./apps/adding_tex_square_raycast.js":9,"./apps/all_variant_of_blending.js":10,"./apps/audio_manipulation.js":11,"./apps/audio_manipulation2.js":12,"./apps/bvh-animation-class.js":13,"./apps/bvh-loader.js":14,"./apps/camera_texture.js":15,"./apps/cube_experimental.js":16,"./apps/cube_geometry.js":17,"./apps/cube_light_and_texture.js":18,"./apps/cube_light_dinamic.js":19,"./apps/cube_tex_arrays.js":20,"./apps/custom_texture.js":21,"./apps/first_person_controller.js":22,"./apps/load_obj_file.js":23,"./apps/my_world.js":24,"./apps/obj_animation.js":25,"./apps/obj_animation_build_mesh_effect.js":26,"./apps/one-kilo.js":27,"./apps/physics_cube.js":28,"./apps/physics_sphere.js":29,"./apps/porting2d.js":30,"./apps/porting2d_micro_draw.js":31,"./apps/porting2d_particle.js":32,"./apps/porting2d_text.js":33,"./apps/sphere_geometry.js":34,"./apps/texture_dinamic_manipulation.js":35,"./apps/video_texture.js":36,"./index":37}],2:[function(require,module,exports){
+},{"./apps/active_editor.js":2,"./apps/adding_color_cube.js":3,"./apps/adding_color_piramyde.js":4,"./apps/adding_color_square.js":5,"./apps/adding_color_triangle.js":6,"./apps/adding_more_texture_samplers.js":7,"./apps/adding_square_texture.js":8,"./apps/adding_tex_square_raycast.js":9,"./apps/all_variant_of_blending.js":10,"./apps/audio_manipulation.js":11,"./apps/audio_manipulation2.js":12,"./apps/bvh-animation-class.js":13,"./apps/bvh-loader.js":14,"./apps/camera_texture.js":15,"./apps/cube_experimental.js":16,"./apps/cube_geometry.js":17,"./apps/cube_light_and_texture.js":18,"./apps/cube_light_dinamic.js":19,"./apps/cube_tex_arrays.js":20,"./apps/custom_texture.js":21,"./apps/first_person_controller.js":22,"./apps/load_obj_file.js":23,"./apps/my_world.js":24,"./apps/obj_animation.js":25,"./apps/obj_animation_build_mesh_effect.js":26,"./apps/one-kilo.js":27,"./apps/physics_cube.js":28,"./apps/physics_sphere.js":29,"./apps/porting2d.js":30,"./apps/porting2d_micro_draw.js":31,"./apps/porting2d_particle.js":32,"./apps/porting2d_text.js":33,"./apps/sphere_geometry.js":34,"./apps/texture_dinamic_manipulation.js":35,"./apps/video_texture.js":36,"./index.js":37}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

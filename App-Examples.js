@@ -1,4 +1,4 @@
-import * as matrixEngine from './index';
+import * as matrixEngine from './index.js';
 
 import {runThis as cube_tex_arrays} from './apps/cube_tex_arrays.js';
 import {runThis as adding_color_cube} from './apps/adding_color_cube.js';
