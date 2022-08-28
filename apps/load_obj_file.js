@@ -37,9 +37,18 @@ export var runThis = world => {
     App.scene.mac.LightsData.ambientLight.set(1, 1, 1);
   }
 
+  /**
+   * @description
+   * For swap (initial orientation for object) use combination of
+   * swap[0,1]
+   * swap[0,2]
+   * swap[1,3]
+   * to switch x,y,z verts.
+   */
   matrixEngine.objLoader.downloadMeshes(
     {armor: "res/3d-objects/armor.obj", mac: "res/3d-objects/mac.obj"},
-    onLoadObj
+    onLoadObj,
+    { swap: [0, 2] }
   );
 
   //delete images_local_var;

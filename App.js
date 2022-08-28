@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/physics_sphere';
+import {runThis} from './apps/load_obj_file';
 
 var world;
 var App = matrixEngine.App;
