@@ -9,7 +9,7 @@
 /* globals world App world */
 import App from "../program/manifest";
 // import * as CANNON from 'cannon';
-import * as CANNON from '../node_modules/cannon';
+// import * as CANNON from '../node_modules/cannon';
 
 export var runThis = (world) => {
 

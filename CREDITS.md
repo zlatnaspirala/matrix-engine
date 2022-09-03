@@ -114,3 +114,6 @@ Special thanks to the CMU Graphics Lab Motion Capture Database which provided th
 
 ## Cannon.js used for physics:
 https://schteppe.github.io/cannon.js/
+
+## Shadows vs Lights
+https://webglfundamentals.org/webgl/lessons/webgl-3d-lighting-spot.html

@@ -9,6 +9,7 @@
 #### - [Integrated raycast (hit trigger detect), bvh animation]	✔	
 #### - [Basic Physics implementation based on cannon.js]	✔	
 #### - [FirstPersonController/SceneController Drag and navigation scene]	✔	
+#### - [Shadows vs lights (GLSL)]	✔	
 
 ### Description
   This is small but inspiring project.

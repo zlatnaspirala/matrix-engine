@@ -19,6 +19,8 @@ export var runThis = (world) => {
 
   world.Add("cubeLightTex", 1, "MyColoredCube2", textuteImageSamplers);
 
+  world.Add("squareTex", 1, "MyColoredCube3", textuteImageSamplers);
+
   // canvas.addEventListener('mousedown', (ev) => {
   //   matrixEngine.raycaster.checkingProcedure(ev);
   // });
@@ -29,6 +31,7 @@ export var runThis = (world) => {
     App.scene.MyColoredCube1.position.SetZ(-11);
     App.scene.MyColoredCube1.rotation.rotx = 45;
 
+    App.scene.MyColoredCube3.position.SetX(2);
 
     App.scene.MyColoredCube2.position.SetX(0);
     App.scene.MyColoredCube2.position.SetZ(-11);

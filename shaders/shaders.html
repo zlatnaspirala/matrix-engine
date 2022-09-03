@@ -1,487 +1,437 @@
-
 <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
 
 <script id="triangle-shader-fs" type="x-shader/x-fragment">
-precision mediump float;
+  precision mediump float;
 
-varying vec4 vColor;
+  varying vec4 vColor;
 
-void main(void) {
-  gl_FragColor = vColor;
-}
+  void main(void) {
+    gl_FragColor = vColor;
+  }
 </script>
 
 <script id="triangle-shader-vs" type="x-shader/x-vertex">
-attribute vec3 aVertexPosition;
-attribute vec4 aVertexColor;
+  attribute vec3 aVertexPosition;
+  attribute vec4 aVertexColor;
 
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
 
-varying vec4 vColor;
+  varying vec4 vColor;
 
-void main(void) {
-  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-  vColor      = aVertexColor;
-}
+  void main(void) {
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vColor      = aVertexColor;
+  }
 </script>
 
 <script id="square-shader-fs" type="x-shader/x-fragment">
-precision mediump float;
+  precision mediump float;
 
-varying vec4 vColor;
+  varying vec4 vColor;
 
-void main(void) {
-  gl_FragColor = vColor;
-}
+  void main(void) {
+    gl_FragColor = vColor;
+  }
 </script>
 
 <script id="square-shader-vs" type="x-shader/x-vertex">
-attribute vec3 aVertexPosition;
-attribute vec4 aVertexColor;
+  attribute vec3 aVertexPosition;
+  attribute vec4 aVertexColor;
 
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
 
-varying vec4 vColor;
+  varying vec4 vColor;
 
-void main(void) {
-  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-  vColor      = aVertexColor;
-}
+  void main(void) {
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vColor      = aVertexColor;
+  }
 </script>
 
 <script id="cube-shader-fs" type="x-shader/x-fragment">
-precision mediump float;
+  precision mediump float;
 
-varying vec4 vColor;
+  varying vec4 vColor;
 
-void main(void) {
-  gl_FragColor = vColor;
-}
+  void main(void) {
+    gl_FragColor = vColor;
+  }
 </script>
 
 <script id="cube-shader-vs" type="x-shader/x-vertex">
-attribute vec3 aVertexPosition;
-attribute vec4 aVertexColor;
+  attribute vec3 aVertexPosition;
+  attribute vec4 aVertexColor;
 
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
 
-varying vec4 vColor;
+  varying vec4 vColor;
 
-void main(void) {
-  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-  vColor      = aVertexColor;
-}
+  void main(void) {
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vColor      = aVertexColor;
+  }
 </script>
 
 <script id="cubeTex-shader-fs" type="x-shader/x-fragment">
-precision mediump float;
+  precision mediump float;
 
-varying vec2 vTextureCoord;
-uniform sampler2D uSampler;
+  varying vec2 vTextureCoord;
+  uniform sampler2D uSampler;
 
-void main(void) {
-  gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-}
+  void main(void) {
+    gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+  }
 </script>
 
 <script id="cubeTex-shader-vs" type="x-shader/x-vertex">
-#version 300 es
-#define POSITION_LOCATION 0
+  #version 300 es
+  #define POSITION_LOCATION 0
 
-attribute vec3 aVertexPosition;
-attribute vec2 aTextureCoord;
+  attribute vec3 aVertexPosition;
+  attribute vec2 aTextureCoord;
 
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
 
-varying vec2 vTextureCoord;
+  varying vec2 vTextureCoord;
 
-void main(void) {
-  gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-  vTextureCoord = aTextureCoord;
-}
+  void main(void) {
+    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
+  }
 </script>
 
 <!--   Filter : cubeLightTex   -->
 <script id="cubeLightTex-shader-fs" type="x-shader/x-fragment">
 
-precision mediump float;
+  precision mediump float;
 
-varying vec2 vTextureCoord;
-varying vec3 vLightWeighting;
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
 
-uniform sampler2D uSampler;
-uniform sampler2D uSampler1;
-uniform sampler2D uSampler2;
-uniform sampler2D uSampler3;
-uniform sampler2D uSampler4;
-uniform sampler2D uSampler5;
-uniform sampler2D uSampler6;
-uniform sampler2D uSampler7;
-uniform sampler2D uSampler8;
-uniform sampler2D uSampler9;
-uniform sampler2D uSampler10;
-uniform sampler2D uSampler11;
-uniform sampler2D uSampler12;
-uniform sampler2D uSampler13;
-uniform float numberOfsamplers;
+  uniform sampler2D uSampler;
+  uniform sampler2D uSampler1;
+  uniform sampler2D uSampler2;
+  uniform sampler2D uSampler3;
+  uniform sampler2D uSampler4;
+  uniform sampler2D uSampler5;
+  // uniform sampler2D uSampler13;
+  uniform float numberOfsamplers;
 
+  // Spot
+  // Passed in from the vertex shader.
+  varying vec3 v_normal;
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
 
+  uniform vec4 u_color;
+  uniform float u_shininess;
+  uniform vec3 u_lightDirection;
+  uniform float u_innerLimit;          // in dot space
+  uniform float u_outerLimit;          // in dot space
 
-// Passed in from the vertex shader.
-varying vec3 v_normal;
-varying vec3 v_surfaceToLight;
-varying vec3 v_surfaceToView;
+  void main(void) {
 
-uniform vec4 u_color;
-uniform float u_shininess;
-uniform vec3 u_lightDirection;
-uniform float u_innerLimit;          // in dot space
-uniform float u_outerLimit;          // in dot space
-//
+    // because v_normal is a varying it's interpolated
+    // so it will not be a unit vector. Normalizing it
+    // will make it a unit vector again
+    vec3 normal = normalize(v_normal);
 
-void main(void) {
+    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
 
-  //
-  // because v_normal is a varying it's interpolated
-  // so it will not be a unit vector. Normalizing it
-  // will make it a unit vector again
-  vec3 normal = normalize(v_normal);
+    float dotFromDirection = dot(surfaceToLightDirection,
+                                 -u_lightDirection);
+    float limitRange = u_innerLimit - u_outerLimit;
+    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+    float light = inLight * dot(normal, surfaceToLightDirection);
+    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
 
-  vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-  vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-  vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+    // Directioin vs uAmbientColor
+    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
-  float dotFromDirection = dot(surfaceToLightDirection,
-                               -u_lightDirection);
-  float limitRange = u_innerLimit - u_outerLimit;
-  float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-  float light = inLight * dot(normal, surfaceToLightDirection);
-  float specular = inLight * pow(dot(normal, halfVector), u_shininess);
-
-
-
-  //
-
-  vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-  vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-  vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-  gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-  // gl_FragColor = textureColor;
-
-  // Lets multiply just the color portion (not the alpha)
-  // by the light
-  gl_FragColor.rgb *= light;
-
-  // Just add in the specular
-  gl_FragColor.rgb += specular;
-}
-
-}
-
-/*
-  vec4 color0 = texture2D(u_image0, v_texCoord);
-  vec4 color1 = texture2D(u_image1, v_texCoord);
-  gl_FragColor = color0 * color1;
-*/
+    // Lets multiply just the color portion (not the alpha)
+    // by the light
+    gl_FragColor.rgb *= light;
+    // Just add in the specular
+    gl_FragColor.rgb += specular;
+  }
 </script>
 
 <script id="cubeLightTex-shader-vs" type="x-shader/x-vertex">
-//#define POSITION_LOCATION 0 // not in use // this is for drawInstance
-//layout(location = POSITION_LOCATION) in vec2 pos; //not in use
-//flat out int instance; //
 
-attribute vec3 aVertexPosition;
-attribute vec3 aVertexNormal;
-attribute vec2 aTextureCoord;
+  attribute vec3 aVertexPosition;
+  attribute vec3 aVertexNormal;
+  attribute vec2 aTextureCoord;
 
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
-uniform mat3 uNMatrix;
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+  uniform mat3 uNMatrix;
 
-uniform vec3 uAmbientColor;
+  uniform vec3 uAmbientColor;
 
-uniform vec3 uLightingDirection;
-uniform vec3 uDirectionalColor;
+  uniform vec3 uLightingDirection;
+  uniform vec3 uDirectionalColor;
 
-uniform bool uUseLighting;
+  uniform bool uUseLighting;
 
-varying vec2 vTextureCoord;
-varying vec3 vLightWeighting;
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
 
-///
+  // Spot
+  uniform vec3 u_lightWorldPosition;
+  // uniform vec3 u_viewWorldPosition;
 
-uniform vec3 u_lightWorldPosition;
-// uniform vec3 u_viewWorldPosition;
+  // uniform mat4 u_world;
+  // uniform mat4 u_worldViewProjection;
+  // uniform mat4 u_worldInverseTranspose;
 
-// uniform mat4 u_world;
-// uniform mat4 u_worldViewProjection;
-// uniform mat4 u_worldInverseTranspose;
+  varying vec3 v_normal;
 
-varying vec3 v_normal;
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
 
-varying vec3 v_surfaceToLight;
-varying vec3 v_surfaceToView;
+  void main(void) {
 
-void main(void) {
+    // orient the normals and pass to the fragment shader
+    // v_normal = mat3(u_worldInverseTranspose) * aVertexNormal;
+    v_normal = mat3(uPMatrix) * aVertexNormal;
+    // uMVMatrix , uMVMatrix
 
-  // orient the normals and pass to the fragment shader
-  // v_normal = mat3(u_worldInverseTranspose) * aVertexNormal; 
-  v_normal = mat3(uPMatrix) * aVertexNormal;
-  // uMVMatrix , uMVMatrix
+    // compute the world position of the surfoace
+    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
 
-  // compute the world position of the surfoace
-  vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+    // compute the vector of the surface to the light
+    // and pass it to the fragment shader
+    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
 
-  // compute the vector of the surface to the light
-  // and pass it to the fragment shader
-  v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+    // compute the vector of the surface to the view/camera
+    // and pass it to the fragment shader
+    v_surfaceToView = -surfaceWorldPosition;
 
-  // compute the vector of the surface to the view/camera
-  // and pass it to the fragment shader
-  v_surfaceToView = -surfaceWorldPosition;
+    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
 
-
-  //instance = gl_InstanceID;
-  //gl_Position = vec4(aVertexPosition + vec2(float(gl_InstanceID) - 0.5, 0.0), 0.0, 1.0);
-
-  gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-  vTextureCoord = aTextureCoord;
-
-  if (!uUseLighting) {
-    vLightWeighting = vec3(1.0, 1.0, 1.0);
+    if (!uUseLighting) {
+      vLightWeighting = vec3(1.0, 1.0, 1.0);
+    }
+    else {
+      vec3 transformedNormal          = uNMatrix * aVertexNormal;
+      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+    }
   }
-  else {
-    vec3 transformedNormal          = uNMatrix * aVertexNormal;
-    float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-    vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-  }
-}
-
 </script>
 
 <script id="obj-shader-fs" type="x-shader/x-fragment">
-precision mediump float;
+  precision mediump float;
 
-varying vec2 vTextureCoord;
-varying vec3 vLightWeighting;
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
 
-uniform sampler2D uSampler;
-uniform sampler2D uSampler1;
-uniform sampler2D uSampler2;
+  uniform sampler2D uSampler;
+  uniform sampler2D uSampler1;
+  uniform sampler2D uSampler2;
 
-void main(void) {
-  vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-  gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-}
+  void main(void) {
+    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+  }
 </script>
 
 <script id="obj-shader-vs" type="x-shader/x-vertex">
-attribute vec3 aVertexPosition;
-attribute vec3 aVertexNormal;
-attribute vec2 aTextureCoord;
+  attribute vec3 aVertexPosition;
+  attribute vec3 aVertexNormal;
+  attribute vec2 aTextureCoord;
 
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
-uniform mat3 uNMatrix;
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+  uniform mat3 uNMatrix;
 
-uniform vec3 uAmbientColor;
+  uniform vec3 uAmbientColor;
 
-uniform vec3 uLightingDirection;
-uniform vec3 uDirectionalColor;
+  uniform vec3 uLightingDirection;
+  uniform vec3 uDirectionalColor;
 
-uniform bool uUseLighting;
+  uniform bool uUseLighting;
 
-varying vec2 vTextureCoord;
-varying vec3 vLightWeighting;
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
 
-void main(void) {
-  gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-  vTextureCoord = aTextureCoord;
+  void main(void) {
+    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
 
-  if (!uUseLighting) {
-    vLightWeighting = vec3( 1.0, 1.0, 1.0);
+    if (!uUseLighting) {
+      vLightWeighting = vec3( 1.0, 1.0, 1.0);
+    }
+    else {
+      vec3 transformedNormal          = uNMatrix * aVertexNormal;
+      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+    }
   }
-  else {
-    vec3 transformedNormal          = uNMatrix * aVertexNormal;
-    float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-    vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-  }
-}
 </script>
 
 <script id="pyramid-shader-fs" type="x-shader/x-fragment">
-precision mediump float;
-varying vec4 vColor;
+  precision mediump float;
+  varying vec4 vColor;
 
-void main(void) {
-  gl_FragColor = vColor;
-}
+  void main(void) {
+    gl_FragColor = vColor;
+  }
 </script>
 
 <script id="pyramid-shader-vs" type="x-shader/x-vertex">
-attribute vec3 aVertexPosition;
-attribute vec4 aVertexColor;
+  attribute vec3 aVertexPosition;
+  attribute vec4 aVertexColor;
 
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
 
-varying vec4 vColor;
+  varying vec4 vColor;
 
-void main(void) {
+  void main(void) {
 
-  // instance = gl_InstanceID;
-  // gl_Position = vec4(aVertexPosition + vec2(float(gl_InstanceID) - 0.5, 0.0), 0.0, 1.0);
-  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-  vColor      = aVertexColor;
+    // instance = gl_InstanceID;
+    // gl_Position = vec4(aVertexPosition + vec2(float(gl_InstanceID) - 0.5, 0.0), 0.0, 1.0);
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vColor      = aVertexColor;
 
-}
+  }
 </script>
 
 <script id="squareTex-shader-fs" type="x-shader/x-fragment">
-precision mediump float;
+  precision mediump float;
 
-varying vec2 vTextureCoord;
-varying vec3 vLightWeighting;
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
 
-uniform sampler2D uSampler;
-uniform sampler2D uSampler1;
-uniform sampler2D uSampler2;
-uniform sampler2D uSampler3;
-uniform sampler2D uSampler4;
-uniform sampler2D uSampler5;
-uniform sampler2D uSampler6;
-uniform sampler2D uSampler7;
-uniform sampler2D uSampler8;
-uniform sampler2D uSampler9;
-uniform sampler2D uSampler10;
-uniform sampler2D uSampler11;
-uniform sampler2D uSampler12;
-uniform sampler2D uSampler13;
-uniform float numberOfsamplers;
+  uniform sampler2D uSampler;
+  uniform sampler2D uSampler1;
+  uniform sampler2D uSampler2;
+  uniform sampler2D uSampler3;
+  uniform sampler2D uSampler4;
+  uniform sampler2D uSampler5;
+  uniform float numberOfsamplers;
 
-void main(void) {
-
-  vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-  vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-  vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-  // gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-  gl_FragColor = textureColor;
-
-}
-
-/*
-  vec4 color0 = texture2D(u_image0, v_texCoord);
-  vec4 color1 = texture2D(u_image1, v_texCoord);
-  gl_FragColor = color0 * color1;
-*/
+  void main(void) {
+    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+  }
 </script>
 
 <script id="squareTex-shader-vs" type="x-shader/x-vertex">
-attribute vec3 aVertexPosition;
-attribute vec3 aVertexNormal;
-attribute vec2 aTextureCoord;
+  attribute vec3 aVertexPosition;
+  attribute vec3 aVertexNormal;
+  attribute vec2 aTextureCoord;
 
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
-uniform mat3 uNMatrix;
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+  uniform mat3 uNMatrix;
 
-uniform vec3 uAmbientColor;
+  uniform vec3 uAmbientColor;
 
-uniform vec3 uLightingDirection;
-uniform vec3 uDirectionalColor;
+  uniform vec3 uLightingDirection;
+  uniform vec3 uDirectionalColor;
 
-uniform bool uUseLighting;
+  uniform bool uUseLighting;
 
-varying vec2 vTextureCoord;
-varying vec3 vLightWeighting;
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
 
-void main(void) {
-  gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-  vTextureCoord = aTextureCoord;
+  void main(void) {
+    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
 
-  if (!uUseLighting) {
-    vLightWeighting = vec3(1.0, 1.0, 1.0);
+    if (!uUseLighting) {
+      vLightWeighting = vec3(1.0, 1.0, 1.0);
+    }
+    else {
+      vec3 transformedNormal          = uNMatrix * aVertexNormal;
+      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+    }
   }
-  else {
-    vec3 transformedNormal          = uNMatrix * aVertexNormal;
-    float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-    vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-  }
-}
 </script>
 
 <script id="sphereLightTex-shader-fs" type="x-shader/x-fragment">
-precision mediump float;
+  precision mediump float;
 
-varying vec2 vTextureCoord;
-varying vec3 vLightWeighting;
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
 
-uniform sampler2D uSampler;
-uniform sampler2D uSampler1;
-uniform sampler2D uSampler2;
-uniform sampler2D uSampler3;
-uniform sampler2D uSampler4;
-uniform sampler2D uSampler5;
-uniform sampler2D uSampler6;
-uniform sampler2D uSampler7;
-uniform sampler2D uSampler8;
-uniform sampler2D uSampler9;
-uniform sampler2D uSampler10;
-uniform sampler2D uSampler11;
-uniform sampler2D uSampler12;
-uniform sampler2D uSampler13;
-uniform float numberOfsamplers;
+  uniform sampler2D uSampler;
+  uniform sampler2D uSampler1;
+  uniform sampler2D uSampler2;
+  uniform sampler2D uSampler3;
+  uniform sampler2D uSampler4;
+  uniform sampler2D uSampler5;
+  uniform sampler2D uSampler6;
+  uniform sampler2D uSampler7;
+  uniform sampler2D uSampler8;
+  uniform sampler2D uSampler9;
+  uniform sampler2D uSampler10;
+  uniform sampler2D uSampler11;
+  uniform sampler2D uSampler12;
+  uniform sampler2D uSampler13;
+  uniform float numberOfsamplers;
 
-void main(void) {
+  void main(void) {
 
-  vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-  vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-  vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-  gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
-}
+  }
 
-/*
-  vec4 color0 = texture2D(u_image0, v_texCoord);
-  vec4 color1 = texture2D(u_image1, v_texCoord);
-  gl_FragColor = color0 * color1;vertexPositionAttribute
-*/
+  /*
+    vec4 color0 = texture2D(u_image0, v_texCoord);
+    vec4 color1 = texture2D(u_image1, v_texCoord);
+    gl_FragColor = color0 * color1;vertexPositionAttribute
+  */
 </script>
 
 <script id="sphereLightTex-shader-vs" type="x-shader/x-vertex">
-attribute vec3 aVertexPosition;
-attribute vec3 aVertexNormal;
-attribute vec2 aTextureCoord;
+  attribute vec3 aVertexPosition;
+  attribute vec3 aVertexNormal;
+  attribute vec2 aTextureCoord;
 
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
-uniform mat3 uNMatrix;
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+  uniform mat3 uNMatrix;
 
-uniform vec3 uAmbientColor;
+  uniform vec3 uAmbientColor;
 
-uniform vec3 uLightingDirection;
-uniform vec3 uDirectionalColor;
+  uniform vec3 uLightingDirection;
+  uniform vec3 uDirectionalColor;
 
-uniform bool uUseLighting;
+  uniform bool uUseLighting;
 
-varying vec2 vTextureCoord;
-varying vec3 vLightWeighting;
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
 
-void main(void) {
-  gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-  vTextureCoord = aTextureCoord;
+  void main(void) {
+    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
 
-  if (!uUseLighting) {
-    vLightWeighting = vec3(1.0, 1.0, 1.0);
+    if (!uUseLighting) {
+      vLightWeighting = vec3(1.0, 1.0, 1.0);
+    }
+    else {
+      vec3 transformedNormal          = uNMatrix * aVertexNormal;
+      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+    }
   }
-  else {
-    vec3 transformedNormal          = uNMatrix * aVertexNormal;
-    float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-    vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-  }
-}
 </script>
