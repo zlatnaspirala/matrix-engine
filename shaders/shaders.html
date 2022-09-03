@@ -1,4 +1,6 @@
 
+<script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
+
 <script id="triangle-shader-fs" type="x-shader/x-fragment">
 precision mediump float;
 
@@ -127,13 +129,56 @@ uniform sampler2D uSampler12;
 uniform sampler2D uSampler13;
 uniform float numberOfsamplers;
 
+
+
+// Passed in from the vertex shader.
+varying vec3 v_normal;
+varying vec3 v_surfaceToLight;
+varying vec3 v_surfaceToView;
+
+uniform vec4 u_color;
+uniform float u_shininess;
+uniform vec3 u_lightDirection;
+uniform float u_innerLimit;          // in dot space
+uniform float u_outerLimit;          // in dot space
+//
+
 void main(void) {
+
+  //
+  // because v_normal is a varying it's interpolated
+  // so it will not be a unit vector. Normalizing it
+  // will make it a unit vector again
+  vec3 normal = normalize(v_normal);
+
+  vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+  vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+  vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+
+  float dotFromDirection = dot(surfaceToLightDirection,
+                               -u_lightDirection);
+  float limitRange = u_innerLimit - u_outerLimit;
+  float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+  float light = inLight * dot(normal, surfaceToLightDirection);
+  float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+
+
+
+  //
 
   vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
   vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
   vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-  //  gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a); COOL
-  gl_FragColor = textureColor;
+  gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+  // gl_FragColor = textureColor;
+
+  // Lets multiply just the color portion (not the alpha)
+  // by the light
+  gl_FragColor.rgb *= light;
+
+  // Just add in the specular
+  gl_FragColor.rgb += specular;
+}
 
 }
 
@@ -167,7 +212,38 @@ uniform bool uUseLighting;
 varying vec2 vTextureCoord;
 varying vec3 vLightWeighting;
 
+///
+
+uniform vec3 u_lightWorldPosition;
+// uniform vec3 u_viewWorldPosition;
+
+// uniform mat4 u_world;
+// uniform mat4 u_worldViewProjection;
+// uniform mat4 u_worldInverseTranspose;
+
+varying vec3 v_normal;
+
+varying vec3 v_surfaceToLight;
+varying vec3 v_surfaceToView;
+
 void main(void) {
+
+  // orient the normals and pass to the fragment shader
+  // v_normal = mat3(u_worldInverseTranspose) * aVertexNormal; 
+  v_normal = mat3(uPMatrix) * aVertexNormal;
+  // uMVMatrix , uMVMatrix
+
+  // compute the world position of the surfoace
+  vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+
+  // compute the vector of the surface to the light
+  // and pass it to the fragment shader
+  v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+
+  // compute the vector of the surface to the view/camera
+  // and pass it to the fragment shader
+  v_surfaceToView = -surfaceWorldPosition;
+
 
   //instance = gl_InstanceID;
   //gl_Position = vec4(aVertexPosition + vec2(float(gl_InstanceID) - 0.5, 0.0), 0.0, 1.0);
