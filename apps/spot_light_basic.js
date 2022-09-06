@@ -18,20 +18,35 @@ export var runThis = (world) => {
     mix_operation: "multiply",
   };
 
+  var textuteImageSamplersTest = {
+    source: ["res/images/blanko.png"],
+    mix_operation: "multiply",
+  };
+
+  console.log("NNNNN")
+
   // world.Add("cube", 1, "myCube1");
   world.Add("cubeLightTex", 1, "myCube1", textuteImageSamplers);
+  App.scene.myCube1.activateShadows();
   world.Add("cubeLightTex", 1, "myCube2", textuteImageSamplers);
+  App.scene.myCube2.activateShadows();
   world.Add("cubeLightTex", 1, "myCube3", textuteImageSamplers);
-
+  App.scene.myCube3.activateShadows();
   world.Add("cubeLightTex", 1, "myCube11", textuteImageSamplers);
+  App.scene.myCube11.activateShadows();
 
-  world.Add("cube", 1, "CubeVertexColor");
+  world.Add("cubeLightTex", 1, "CubeVertexColor", textuteImageSamplersTest);
   App.scene.CubeVertexColor.position.SetZ(-11);
+  App.scene.CubeVertexColor.activateShadows();
+
+  App.scene.CubeVertexColor.shadows.lightPosition = [0, 3, 3];
+
 
   // CLick event
   canvas.addEventListener('mousedown', (ev) => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
+
   addEventListener("ray.hit.event", function(e) {
     e.detail.hitObject.LightsData.ambientLight.r = 
      matrixEngine.utility.randomFloatFromTo(0, 10);
