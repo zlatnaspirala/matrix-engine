@@ -17,9 +17,35 @@
     <meta name="msapplication-TileImage" content="res/icons/ms-icon.png" />
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
     <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
-    
   </head>
   <body>
+    <div style="display:block" class="matrixTagHolder">
+      <div class="mLightCom">
+        <span>DLight Color</span>
+        <matrix-light max="10000" min="-10000" type="number" id="dirLightR" value="1"></matrix-light>
+        <matrix-light max="10000" min="-10000" type="number" id="dirLightG" value="1"></matrix-light>
+        <matrix-light max="10000" min="-10000" type="number" id="dirLightB" value="1"></matrix-light>
+      </div>
+      <div class="mLightCom">
+        <span>DLight Direction</span>
+        <matrix-light max="10000" min="-10000" type="number" id="dirX" value="1"></matrix-light>
+        <matrix-light max="10000" min="-10000" type="number" id="dirY" value="1"></matrix-light>
+        <matrix-light max="10000" min="-10000" type="number" id="dirZ" value="1"></matrix-light>
+      </div>
+      <!--div class="mLightCom">
+        <span>Amb Lights</span>
+        <matrix-light max="10000" min="-10000" type="number" id="ambLightR" value="1"></matrix-light>
+        <matrix-light max="10000" min="-10000" type="number" id="ambLightG" value="1"></matrix-light>
+        <matrix-light max="10000" min="-10000" type="number" id="ambLightB" value="1"></matrix-light>
+      </div>
+      <div class="mLightCom">
+        <span>Scene Camera</span>
+        <matrix-camera max="10000" min="-10000" type="number" id="cameraX" value="1"></matrix-camera>
+        <matrix-camera max="10000" min="-10000" type="number" id="cameraY" value="1"></matrix-camera>
+        <matrix-camera max="10000" min="-10000" type="number" id="cameraZ" value="1"></matrix-camera>
+      </div-->
+  
+    </div>
     <div id="shaders"></div>
     <div id="debugBox" class="debugBox" style="display: none"></div>
     <div id="fps" class="btnShadow debugBox" style="display: none">

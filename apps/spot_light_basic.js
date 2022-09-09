@@ -19,7 +19,7 @@ export var runThis = (world) => {
   };
 
   var textuteImageSamplersTest = {
-    source: ["res/images/blanko.png"],
+    source: ["res/images/texture_spiral1.png", "res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply",
   };
 
@@ -35,11 +35,27 @@ export var runThis = (world) => {
   world.Add("cubeLightTex", 1, "myCube11", textuteImageSamplers);
   App.scene.myCube11.activateShadows();
 
+  //textuteImageSamplersTest
   world.Add("cubeLightTex", 1, "CubeVertexColor", textuteImageSamplersTest);
   App.scene.CubeVertexColor.position.SetZ(-11);
-  App.scene.CubeVertexColor.activateShadows();
 
-  App.scene.CubeVertexColor.shadows.lightPosition = [0, 3, 3];
+  // App.scene.CubeVertexColor.deactivateTex()
+  // App.scene.CubeVertexColor.geometry.colorData.SetGreenForAll(0.5)
+  // App.scene.CubeVertexColor.geometry.colorData.SetRedForAll(0.5)
+  // App.scene.CubeVertexColor.geometry.colorData.SetBlueForAll(0.5)
+  // App.scene.CubeVertexColor.geometry.colorData.SetTopSolidColor(0.5,0.5,0.5,1)
+  // App.scene.CubeVertexColor.geometry.colorData.SetBackSolidColor(0.5,0.5,0.5,1)
+  // App.scene.CubeVertexColor.geometry.colorData.SetBottomSolidColor(0.5,0.5,0.5,1)
+
+  // App.scene.CubeVertexColor.activateShadows();
+  // App.scene.CubeVertexColor.shadows.activeUpdate();
+  // App.scene.CubeVertexColor.shadows.lightPosition = [0, 3, 3];
+
+  App.scene.myCube11.position.SetY(3);
+  App.scene.myCube11.position.SetZ(-11);
+  App.scene.myCube11.shadows.activeUpdate();
+  App.scene.myCube11.shadows.animatePositionY();
+  App.scene.myCube11.position.SetX(0);
 
 
   // CLick event
@@ -59,19 +75,15 @@ export var runThis = (world) => {
 
   App.scene.myCube1.position.SetY(3);
   App.scene.myCube1.position.SetZ(-11);
+  App.scene.myCube1.position.SetX(-3);
   App.scene.myCube1.shadows.activeUpdate();
   App.scene.myCube1.shadows.animatePositionX();
-  App.scene.myCube1.position.SetX(-2);
 
-  App.scene.myCube11.position.SetY(3);
-  App.scene.myCube11.position.SetZ(-11);
-  App.scene.myCube11.shadows.activeUpdate();
-  App.scene.myCube11.shadows.animatePositionY();
-  App.scene.myCube11.position.SetX(0);
+
 
   App.scene.myCube2.shadows.lightPosition = [0, 0, 3];
   App.scene.myCube2.shadows.innerLimit = 0;
-  App.scene.myCube2.position.SetX(-2);
+  App.scene.myCube2.position.SetX(-3);
   App.scene.myCube2.position.SetZ(-11);
 
   // Local Shadows cast must be activated!
@@ -81,7 +93,7 @@ export var runThis = (world) => {
   App.scene.myCube3.shadows.innerLimit = 0;
   App.scene.myCube3.position.SetY(-3);
   App.scene.myCube3.position.SetZ(-11);
-  App.scene.myCube3.position.SetX(-2);
+  App.scene.myCube3.position.SetX(-3);
   App.scene.myCube3.shadows.lightPosition = [0, 3, 3];
 
   // animate local spot
