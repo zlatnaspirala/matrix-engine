@@ -210,6 +210,25 @@ App.scene.myCube7.geometry.colorData.SetBlueForAll(0.5)
 App.scene.myCube7.deactivateTex();
 ```
 
+Make square pattern
+```js
+  // Custom generic textures. Micro Drawing.
+  // Example for arg shema square for now only.
+  var options = {
+    squareShema: [4,4],
+    pixels: new Uint8Array(4 * 4 * 4),
+    style: {
+      type: 'chessboard',
+      color1: 0,
+      color2: 255
+    }
+  };
+
+  App.scene.myCube9.textures.push(
+    App.scene.myCube9.createPixelsTex(options)
+  );
+```
+
 ![](https://github.com/zlatnaspirala/matrix-engine/blob/dev/non-project-files/1.7.6.png)
 
 
