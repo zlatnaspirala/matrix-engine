@@ -79,7 +79,7 @@ export var runThis = (world) => {
   App.scene.myCube5.activateShadows();
   App.scene.myCube5.shadows.activeUpdate();
   App.scene.myCube5.shadows.animateRadius({from: 15, to: 45, step: 0.05});
-  App.scene.myCube5.textures.push(App.scene.myCube5.activatePixelsTex())
+  App.scene.myCube5.textures.push(App.scene.myCube5.createPixelsTex())
 
   // Created with blanko texture or red, blue or green solid.
   world.Add("cubeLightTex", 1, "myCube6", textuteImageSamplersTest);
@@ -98,7 +98,7 @@ export var runThis = (world) => {
 
   App.scene.myCube6.shadows.flyArround(option);
   App.scene.myCube6.textures.push(
-    App.scene.myCube6.activatePixelsTex()
+    App.scene.myCube6.createPixelsTex()
   );
 
   // Simple direction light
@@ -112,44 +112,53 @@ export var runThis = (world) => {
   world.Add("cubeLightTex", 1, "myCube8", textuteImageSamplersTest);
   App.scene.myCube8.position.setPosition(3,0,-11);
 
+  // Custom generic textures. Micro Drawing.
   // Example for arg shema square for now only.
   var options = {
     squareShema: [8,8],
     pixels: new Uint8Array(8 * 8 * 4)
   };
-  options.pixels.fill(122);
+  // options.pixels.fill(0);
   var I = 0, localCounter = 0;
-  // options.pixels.fill(I ,funny, funny+1);
   for (var funny = 0; funny < 8*8*4; funny+=4) {
     localCounter++;
-    if (I == 50) {I=133} else {I=50}
-    if (parseInt(localCounter) % 8 == 0) {
-      // console.log("TEST CONUTER", localCounter)
-       if (I == 50) {I=133} else {I=50}
-       
-
-    }  else {
-     
-
-
-    }
-
-    options.pixels[funny] = I;
-    options.pixels[funny + 1] = I;
-    options.pixels[funny + 2] = I;
+    options.pixels[funny] = I + localCounter;
+    options.pixels[funny + 1] = I + 1.5* localCounter;
+    options.pixels[funny + 2] = I + 1.2* localCounter;
     options.pixels[funny + 3] = 1;
-
   }
-  
 
   options.pixels[4 * 7] = 255;
   options.pixels[4 * 7 + 1] = 1;
   options.pixels[4 * 7 + 2] = 1;
 
-  console.log(options.pixels)
   App.scene.myCube8.textures.push(
-    App.scene.myCube8.activatePixelsTex(options)
+    App.scene.myCube8.createPixelsTex(options)
   );
+
+  // Custom generic textures
+  world.Add("cubeLightTex", 1, "myCube9", textuteImageSamplersTest);
+  App.scene.myCube9.position.setPosition(3,-3,-11);
+
+  // Custom generic textures. Micro Drawing.
+  // Example for arg shema square for now only.
+  var options = {
+    squareShema: [4,4],
+    pixels: new Uint8Array(4 * 4 * 4),
+    style: {
+      type: 'chessboard',
+      color1: 0,
+      color2: 255
+    }
+  };
+
+  App.scene.myCube9.textures.push(
+    App.scene.myCube9.createPixelsTex(options)
+  );
+
+  // App.scene.myCube9.activateShadows();
+  // App.scene.myCube9.shadows.activeUpdate();
+  // App.scene.myCube9.shadows.animateRadius({from: 15, to: 45, step: 0.05});
 
   // Click event
   canvas.addEventListener('mousedown', (ev) => {
