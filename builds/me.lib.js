@@ -5899,25 +5899,25 @@ _manifest.default.tools.createPixelsTex = function (options) {
     options.pixels[15 + i] = 1;
   }
 
-  if (options?.style == 'chessboard') {
+  if (options?.style?.type == 'chessboard') {
     var I = 0,
         localCounter = 0;
 
-    for (var funny = 0; funny < 8 * 8 * 4; funny += 4) {
+    for (var funny = 0; funny < options.squareShema[0] * options.squareShema[1] * 4; funny += 4) {
       localCounter++;
 
-      if (I == 50) {
-        I = 133;
+      if (I == options?.style.color1) {
+        I = options?.style.color2;
       } else {
-        I = 50;
+        I = options?.style.color1;
       } // if (parseInt(funny) % 32 == 0) { work also
 
 
-      if (parseInt(localCounter - 1) % 8 == 0) {
-        if (I == 50) {
-          I = 133;
+      if (parseInt(localCounter - 1) % options.squareShema[0] == 0) {
+        if (I == options?.style.color1) {
+          I = options?.style.color2;
         } else {
-          I = 50;
+          I = options?.style.color1;
         }
       }
 

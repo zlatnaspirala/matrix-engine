@@ -2833,22 +2833,19 @@ var runThis = world => {
 
 
   var options = {
-    squareShema: [8, 8],
-    pixels: new Uint8Array(8 * 8 * 4),
-    style: 'chessboard'
+    squareShema: [4, 4],
+    pixels: new Uint8Array(4 * 4 * 4),
+    style: {
+      type: 'chessboard',
+      color1: 0,
+      color2: 255
+    }
   };
 
-  _manifest.default.scene.myCube9.textures.push(_manifest.default.scene.myCube9.createPixelsTex(options));
-
-  _manifest.default.scene.myCube9.activateShadows();
-
-  _manifest.default.scene.myCube9.shadows.activeUpdate();
-
-  _manifest.default.scene.myCube9.shadows.animateRadius({
-    from: 15,
-    to: 45,
-    step: 0.05
-  }); // Click event
+  _manifest.default.scene.myCube9.textures.push(_manifest.default.scene.myCube9.createPixelsTex(options)); // App.scene.myCube9.activateShadows();
+  // App.scene.myCube9.shadows.activeUpdate();
+  // App.scene.myCube9.shadows.animateRadius({from: 15, to: 45, step: 0.05});
+  // Click event
 
 
   canvas.addEventListener('mousedown', ev => {
@@ -8873,25 +8870,25 @@ _manifest.default.tools.createPixelsTex = function (options) {
     options.pixels[15 + i] = 1;
   }
 
-  if (options?.style == 'chessboard') {
+  if (options?.style?.type == 'chessboard') {
     var I = 0,
         localCounter = 0;
 
-    for (var funny = 0; funny < 8 * 8 * 4; funny += 4) {
+    for (var funny = 0; funny < options.squareShema[0] * options.squareShema[1] * 4; funny += 4) {
       localCounter++;
 
-      if (I == 50) {
-        I = 133;
+      if (I == options?.style.color1) {
+        I = options?.style.color2;
       } else {
-        I = 50;
+        I = options?.style.color1;
       } // if (parseInt(funny) % 32 == 0) { work also
 
 
-      if (parseInt(localCounter - 1) % 8 == 0) {
-        if (I == 50) {
-          I = 133;
+      if (parseInt(localCounter - 1) % options.squareShema[0] == 0) {
+        if (I == options?.style.color1) {
+          I = options?.style.color2;
         } else {
-          I = 50;
+          I = options?.style.color1;
         }
       }
 
