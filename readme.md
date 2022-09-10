@@ -188,6 +188,31 @@ Note: One of params `FirstPersonController` or `SceneController` must be `false`
   },
 ```
 
+### Light And Shadows [1.7.6]
+
+`activateShadows` works only for cube for now.
+
+```js
+  world.Add("cubeLightTex", 1, "myCube4", textuteImageSamplers);
+  App.scene.myCube4.activateShadows();
+  App.scene.myCube4.shadows.activeUpdate();
+  App.scene.myCube4.shadows.animatePositionY();
+```
+
+If you wanna color vertex but with direction and ambient light then:
+```js
+// Simple direction light
+world.Add("cubeLightTex", 1, "myCube7", textuteImageSamplersTest);
+App.scene.myCube7.position.setPosition(3,3,-11);
+App.scene.myCube7.geometry.colorData.SetGreenForAll(0.5)
+App.scene.myCube7.geometry.colorData.SetRedForAll(0.5)
+App.scene.myCube7.geometry.colorData.SetBlueForAll(0.5)
+App.scene.myCube7.deactivateTex();
+```
+
+![](https://github.com/zlatnaspirala/matrix-engine/blob/dev/non-project-files/1.7.6.png)
+
+
 ### Physics
 Physics based on cannon.js 
 
