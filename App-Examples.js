@@ -103,13 +103,18 @@ function webGLStart() {
 
   if (world) {
     world.callReDraw();
-    if (typeof QueryString.u != 'undefined') {
+    if (typeof QueryString.u != 'undefined' &&
+        typeof Examples[QueryString.u] != 'undefined') {
       setTimeout(() => {
-        Examples[QueryString.u](world);
+        try {
+          Examples[QueryString.u](world);
+        } catch(err) {
+          Examples['adding_color_cube'](world);
+        }
       }, 100);
     } else {
       setTimeout(() => {
-        Examples['audio_manipulation2'](world);
+        Examples['adding_color_cube'](world);
       }, 100);
     }
   } else {
