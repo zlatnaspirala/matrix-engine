@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.7.7`
+### Name: `MATRIX-ENGINE` `1.7.10`
 
 ### STATUS
 #### - [Integrated PWA addToHomePage/cache/] 	✔	
@@ -21,6 +21,8 @@
 ### Limitation ⚠
  - Basic implementation for physics (Cube, Sphere)
  - Raycast not work after walk behind the object in first person mode
+ - Only static object cast spot light in right way for now.
+ - Need general more improvement on GLSL part.
 
 ### Next Features 🔜
 
@@ -51,6 +53,18 @@
 
 - https://maximumroulette.com/apps/matrix-engine/examples-build.html
 - https://maximumroulette.com/apps/matrix-engine/app-build.html
+
+  #### How to use it from npm services [codepen examples]
+
+  [1.7.9] Lights - Who to use matrix-engine on codepen:
+- https://codepen.io/zlatnaspirala/full/OJZXMWR
+
+  BHV Pseudo Skeletal animation:
+- https://codepen.io/zlatnaspirala/full/OJQdGVM
+
+  Physics (cannon.js)
+- https://codepen.io/zlatnaspirala/pen/rNvLGxE?editors=0010
+
 
 ### Install dependencies
 
