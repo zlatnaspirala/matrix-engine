@@ -89,11 +89,11 @@ var App = matrixEngine.App;
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
     // navigator.serviceWorker.register('worker.js');
-    matrixEngine.Engine.load_shaders('shaders/shaders.html').then((arg)=> {
-      console.info("Shaders ready.");
-      setTimeout( () => { matrixEngine.Engine.initApp(webGLStart); }, 1000)
-    });
+
+    setTimeout( () => { matrixEngine.Engine.initApp(webGLStart); }, 1000)
+
   });
+
 } else {
   console.warn('Matrix Engine: No support for web workers in this browser.');
 }
