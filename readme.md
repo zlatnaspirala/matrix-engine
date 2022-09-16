@@ -87,6 +87,8 @@ if you got errors on commands `npm run build.*`.
 - Usefull also for production for switching whole pages/apps.
   https://localhost/matrix-engine/query.html?u=adding_color_cube
 
+  https://localhost/matrix-engine/query-build.html?u=adding_color_cube
+
 Code access:
 ```js
 const QueryString = matrixEngine.utility.QueryString;
@@ -143,6 +145,13 @@ build.app.ugly;
 ```js
 build.all;
 ```
+
+### Changes:
+
+From [1.7.11] No need for:
+ `// matrixEngine.Engine.load_shaders('shaders/shaders.html');`
+ Initial Shaders now loads from code (inside engine). No need any action.
+
 
 ### List of examples:
 

@@ -2124,7 +2124,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _index = _interopRequireDefault(require("../node_modules/bvh-loader/index"));
+var _bvhLoader = _interopRequireDefault(require("bvh-loader"));
 
 var matrixWorld = _interopRequireWildcard(require("./matrix-world"));
 
@@ -2147,7 +2147,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 // https://docs.w3cub.com/dom/webgl2renderingcontext/drawelementsinstanced
 // HARDCODE DEV
-// import MEBvh from 'bvh-loader';
+// import MEBvh from '../node_modules/bvh-loader/index';
 class MEBvhAnimation {
   constructor(path_, options) {
     if (typeof options === "undefined" || typeof options.world === 'undefined') {
@@ -2170,7 +2170,7 @@ class MEBvhAnimation {
     this.options = options;
     this.world = options.world;
     this.globalOffset = options.globalOffset;
-    this.anim = new _index.default();
+    this.anim = new _bvhLoader.default();
     this.tPose = null;
     this.skeletalKeys = null;
     this.animation = null;
@@ -2330,7 +2330,7 @@ class MEBvhAnimation {
 
 exports.default = MEBvhAnimation;
 
-},{"../node_modules/bvh-loader/index":21,"./matrix-world":16,"./utility":19}],8:[function(require,module,exports){
+},{"./matrix-world":16,"./utility":19,"bvh-loader":21}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7444,15 +7444,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var cannon = _interopRequireWildcard(require("../node_modules/cannon/build/cannon"));
+var cannon = _interopRequireWildcard(require("cannon"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 // DEV
+// import * as cannon from '../node_modules/cannon/build/cannon';
+// import * as CANNON from 'cannon';
 // PRODC
-// import * as cannon from 'cannon';
 
 /**
  * @MatrixPhysics
@@ -7520,7 +7521,7 @@ class MatrixPhysics {
 
 exports.default = MatrixPhysics;
 
-},{"../node_modules/cannon/build/cannon":23}],18:[function(require,module,exports){
+},{"cannon":23}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

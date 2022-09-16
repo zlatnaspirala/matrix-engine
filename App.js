@@ -4,8 +4,6 @@ import {runThis} from './apps/adding_color_cube';
 var world;
 var App = matrixEngine.App;
 
-matrixEngine.Engine.load_shaders('shaders/shaders.html');
-
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function (e) {
     // navigator.serviceWorker.register('worker.js');
