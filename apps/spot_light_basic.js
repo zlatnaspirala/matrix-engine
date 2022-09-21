@@ -172,7 +172,7 @@ export var runThis = (world) => {
       matrixEngine.utility.randomFloatFromTo(0, 10);
     e.detail.hitObject.LightsData.ambientLight.b =
       matrixEngine.utility.randomFloatFromTo(0, 10);
-    // console.info(e.detail);
+    console.info(e.detail);
   });
 
 };

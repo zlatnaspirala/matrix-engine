@@ -109,13 +109,16 @@ usually `/var/www/html/you-app/`.
 
 - Build entry App.js
 
-<b>Note</b>: For  `app.html`, `examples.html` no need to build nut for now needed to replace line:
+<b>Note</b>: For  `app.html`, `examples.html` no need to build but for now needed to replace line manual:
+(only for localhost if you dont wanna rebuild for any change in code)
 ```
 This is Production
 // import MEBvh from '../node_modules/bvh-loader/index';
 This is dev testing
 // import MEBvh from 'bvh-loader';
 ```
+Must be done also for cannon.js.
+
 In future i will find some way to fix this.
 
 
