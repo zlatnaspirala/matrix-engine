@@ -1,0 +1,23 @@
+{
+  "name": "matrix-network",
+  "version": "1.0.0",
+  "description": "Networking server part for matrix-engine 1.8.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "matrix-engine",
+    "matrix-networking"
+  ],
+  "author": "Nikola Lukic",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "node-static": "^0.7.11",
+    "path": "^0.12.7",
+    "rtcmulticonnection-server": "^1.3.3",
+    "socket.io": "^4.5.2",
+    "url": "^0.11.0"
+  }
+}
