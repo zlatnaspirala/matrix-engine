@@ -79,7 +79,7 @@
 }
 
 .blue-label {
-  color: #ffffff;
+  color: black;
   font-size: 100%;
   font-family: stormfaze;
   text-transform: none;
@@ -88,7 +88,7 @@
   border-radius: 0.2rem;
   display: block;
   width: 100%;
-  background-color: rgba(19, 102, 180, 0.945);
+  background-color: rgba(255, 255, 255, 0.945);
   border: 1px solid;
 }
 
@@ -112,14 +112,14 @@
 }
 
 .broadcastLabel {
-  color: rgb(255, 255, 255);
+  color: black;
   font-size: 1.15rem;
   width: 50%;
   padding: .5rem 1rem;
   border: 2px solid transparent;
   outline: none;
   border-radius: 0.2rem;
-  background-color: rgba(19, 102, 180, 0.945);
+  background-color: rgba(255, 255, 255, 0.945);
   letter-spacing: 1px;
   border: 1px white solid;
 }
@@ -189,4 +189,8 @@
 
 button {
   font-family: stormfaze;
+}
+
+label {
+  color:white;
 }

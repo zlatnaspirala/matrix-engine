@@ -7,11 +7,14 @@
         Networking
     </h3>
     <section class="make-fill">
+      <label>Uniq channel key:</label>
         <input type="text" id="room-id" value="abcdef"
           autocorrect=off autocapitalize=off size=20 class="blue-label"/>
-        <button id="open-room" class="hide broadcastLabel">Open Room</button>
-        <button id="join-room" class="hide broadcastLabel">Join Room</button>
-        <button id="open-or-join-room" class="broadcastLabel" >Connect</button>
+          <div style="display:flex">
+          <button id="open-room" class="hide broadcastLabel">Open Room</button>
+          <button id="join-room" class="hide broadcastLabel">Join Room</button>
+          <button id="open-or-join-room" class="broadcastLabel" >Connect</button>
+          </div>
         <br>
         <input type="text" id="input-text-chat" placeholder="Send Message" disabled class="blue-label chat-input">
         <button id="share-file" class="broadcastLabel share-btn" disabled>Share File</button>
@@ -23,7 +26,7 @@
             <div id="file-container"></div>
             <div class="chat-output"></div>
         </div>
-        <div style="display:none" id="videos-container"></div>
+        <div style="display:block" id="videos-container"></div>
     </section>
 
 </div>

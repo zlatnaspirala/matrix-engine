@@ -13112,7 +13112,7 @@ class Broadcaster {
       urls: root.engineConfig.getStunList()
     }];
     this.connection.videosContainer = document.getElementById("videos-container");
-    this.connection.videosContainer.setAttribute("style", "position:absolute;left:0;top:-1000px;width:400px;height:300px;");
+    this.connection.videosContainer.setAttribute("style", "position:absolute;left:0;top:0;width:320px;height:auto;");
 
     this.connection.onstream = function (event) {
       event.mediaElement.removeAttribute("src");
