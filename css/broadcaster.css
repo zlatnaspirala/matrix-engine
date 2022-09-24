@@ -63,7 +63,7 @@
 .blue-button {
   color: #ffffff;
   font-size: 120%;
-  font-family: Impact, sans-serif;
+  font-family: stormfaze;
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: .75rem;
@@ -81,7 +81,7 @@
 .blue-label {
   color: #ffffff;
   font-size: 100%;
-  font-family: Impact, sans-serif;
+  font-family: stormfaze;
   text-transform: none;
   letter-spacing: 1px;
   padding: .75rem;
@@ -99,7 +99,7 @@
 .title {
   color: #ffffff;
   font-size: 100%;
-  font-family: Impact, sans-serif;
+  font-family: stormfaze;
   text-transform: none;
   letter-spacing: 1px;
   padding: .75rem;
@@ -185,4 +185,8 @@
   left:50%;
   width:50%;
   z-index: 100;
+}
+
+button {
+  font-family: stormfaze;
 }
