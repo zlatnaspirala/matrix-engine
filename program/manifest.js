@@ -21,6 +21,7 @@ var App = {
     sceneControllerWASDKeysAmp: 0.1
   },
   raycast: true,
+  net: true,
   resize : {
     canvas: "full-screen",               // Change to any to make
     aspectRatio: 1.8,                    // aspectRatio system active
