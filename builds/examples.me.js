@@ -8248,7 +8248,7 @@ function getInitVSCubeTexLight() {
 
   // Spot
   uniform vec3 u_lightWorldPosition;
-  uniform vec3 u_viewWorldPosition;
+  // uniform vec3 u_viewWorldPosition;
 
   // uniform mat4 u_world;
   // uniform mat4 u_worldViewProjection;
@@ -8263,7 +8263,7 @@ function getInitVSCubeTexLight() {
 
     // orient the normals and pass to the fragment shader
     // v_normal = mat3(u_worldInverseTranspose) * aVertexNormal;
-    v_normal = mat3(uMVMatrix) * aVertexNormal;
+    v_normal = mat3(uNMatrix) * aVertexNormal;
     // uniform mat4 uMVMatrix;
     // uniform mat4 uPMatrix;
     // uniform mat3 uNMatrix;
@@ -8277,8 +8277,8 @@ function getInitVSCubeTexLight() {
 
     // compute the vector of the surface to the view/camera
     // and pass it to the fragment shader
-    // v_surfaceToView = u_viewWorldPosition - surfaceWorldPosition;
-    v_surfaceToView = surfaceWorldPosition; 
+    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
+    // v_surfaceToView = surfaceWorldPosition;
     // aVertexPosition; //u_viewWorldPosition; //surfaceWorldPosition;
 
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
