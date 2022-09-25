@@ -20,11 +20,13 @@ export var runThis = world => {
 
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
 
-  var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
-  App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
-  App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
+  matrixEngine.Engine.activateNet();
+  
+  // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
+  // App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
+  // App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
 
-  matrixEngine.utility.scriptManager.LOAD("./")
+  // matrixEngine.utility.scriptManager.LOAD("./")
 
 
   // setInterval(function () {

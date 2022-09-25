@@ -175,7 +175,7 @@
   left:0;
   width:50%;
   z-index: 100;
-  background: url("../imgs/share-files.png");
+  /* background: url("../imgs/share-files.png"); */
   background-repeat: no-repeat;
 }
 

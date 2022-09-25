@@ -29,8 +29,6 @@
 - General improvements in Lights section.
   Shaders must be improved based on work
   Links -> https://webglfundamentals.org/webgl/lessons/
-- Implement networking (potencial MultiRTC3)
-
 
 ### For npm users recommended
 
@@ -150,6 +148,10 @@ build.all;
 ```
 
 ### Changes:
+
+From [1.8.0] We have support for real time connections based on webRTC.
+You must work on https protocol even in localhost.
+Change in program/manifest `net = false` if you dont wanna use networking.
 
 From [1.7.11] No need for:
  `// matrixEngine.Engine.load_shaders('shaders/shaders.html');`
