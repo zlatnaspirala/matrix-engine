@@ -4009,8 +4009,15 @@ var runThis = world => {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
-  world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
-  matrixEngine.Engine.activateNet(); // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
+  world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers); // Must be activate
+
+  matrixEngine.Engine.activateNet(); // Must be activate for scene objects also.
+
+  _manifest.default.scene.MyCubeTex.net.enable = true;
+
+  _manifest.default.scene.MyCubeTex.net.activate();
+
+  _manifest.default.scene.MyCubeTex.position.SetZ(-8); // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
   // App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
   // App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
   // matrixEngine.utility.scriptManager.LOAD("./")
@@ -4018,6 +4025,7 @@ var runThis = world => {
   //   App.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
   //   App.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
   // }, 10);
+
 };
 
 exports.runThis = runThis;
@@ -5773,7 +5781,7 @@ let activateNet = () => {
     // scriptManager.LOAD('./lib/net.js')
     var t = new _clientConfig.default();
     exports.net = net = new _net.Broadcaster(t);
-    console.log("Networking is active.");
+    console.log("Networking is active.", net);
   }
 };
 
@@ -8996,6 +9004,8 @@ var _manifest = _interopRequireDefault(require("../program/manifest"));
 
 var _utility = require("./utility");
 
+var _engine = require("./engine");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Scale {
@@ -9205,6 +9215,8 @@ exports.RotationVector = RotationVector;
 
 class Position {
   constructor(x, y, z) {
+    this.nameUniq = null;
+
     if (typeof x == 'undefined') {
       x = 0;
     }
@@ -9304,10 +9316,18 @@ class Position {
     return [this.x, this.y, this.z];
   }
 
-  SetX(newx) {
+  SetX(newx, emitStatus) {
     this.x = newx;
     this.targetX = newx;
     this.inMove = false;
+    console.log("TEST SEND");
+    if (_engine.net.connection && typeof emitStatus === 'undefined') _engine.net.connection.send({
+      netPos: {
+        x: this.x,
+        y: this.y
+      },
+      netObjId: this.nameUniq
+    });
   }
 
   SetY(newy) {
@@ -10705,7 +10725,7 @@ exports.customVertex_1 = customVertex_1;
 
 function ring(innerRadius, outerRadius, slices) {}
 
-},{"../program/manifest":71,"./utility":66}],52:[function(require,module,exports){
+},{"../program/manifest":71,"./engine":45,"./utility":66}],52:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11341,7 +11361,8 @@ _manifest.default.operation.reDrawGlobal = function (time) {
 
   for (var t = 0; t < _manifest.default.updateBeforeDraw.length; t++) {
     _manifest.default.updateBeforeDraw[t].UPDATE();
-  }
+  } // Physics
+
 
   if (_matrixWorld.world.physics !== null) {
     var dt = (time - lt) / 1000;
@@ -11362,6 +11383,33 @@ _manifest.default.operation.reDrawGlobal = function (time) {
         _matrixWorld.world.contentList[physicsLooper].rotation.x = local.physics.currentBody.quaternion.toAxisAngle()[0].x;
         _matrixWorld.world.contentList[physicsLooper].rotation.y = local.physics.currentBody.quaternion.toAxisAngle()[0].z;
         _matrixWorld.world.contentList[physicsLooper].rotation.z = local.physics.currentBody.quaternion.toAxisAngle()[0].y;
+      }
+
+      physicsLooper++;
+    }
+  } // same
+
+
+  physicsLooper = 0; // Networking
+
+  if (_engine.net !== null) {
+    var dt = (time - lt) / 1000;
+    lt = time;
+
+    while (physicsLooper <= _matrixWorld.world.contentList.length - 1) {
+      var local = _matrixWorld.world.contentList[physicsLooper];
+
+      if (local.net.enable === true) {// emit
+        // console.log(" net.connection.send({  ", net.connection.send );
+        // local.position.SetX(local.physics.currentBody.position.x)
+        // local.position.SetZ(local.physics.currentBody.position.y)
+        // local.position.SetY(local.physics.currentBody.position.z)
+        // world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1])
+        // world.contentList[physicsLooper].rotation.roty = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1])
+        // world.contentList[physicsLooper].rotation.rotz = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1])
+        // world.contentList[physicsLooper].rotation.x = (local.physics.currentBody.quaternion.toAxisAngle()[0].x)
+        // world.contentList[physicsLooper].rotation.y = (local.physics.currentBody.quaternion.toAxisAngle()[0].z)
+        // world.contentList[physicsLooper].rotation.z = (local.physics.currentBody.quaternion.toAxisAngle()[0].y)
       }
 
       physicsLooper++;
@@ -12381,7 +12429,9 @@ function defineworld(canvas) {
       triangleObject.size = size;
       triangleObject.sides = 3;
       triangleObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-      triangleObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      triangleObject.position = new _matrixGeometry.Position(0, 0, -5.0); // update
+
+      triangleObject.position.nameUniq = nameUniq;
       triangleObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
       triangleObject.color = new _matrixGeometry.GeoOfColor('triangle');
       triangleObject.mvMatrix = mat4.create();
@@ -12421,6 +12471,7 @@ function defineworld(canvas) {
       squareObject.sides = 4;
       squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       squareObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      squareObject.position.nameUniq = nameUniq;
       squareObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
       squareObject.color = true;
       squareObject.mvMatrix = mat4.create();
@@ -12463,6 +12514,7 @@ function defineworld(canvas) {
       squareObject.size = size;
       squareObject.sides = 4;
       squareObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      squareObject.position.nameUniq = nameUniq;
       squareObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0); //squareObject.color     = new GeoOfColor("4x4");
 
       squareObject.mvMatrix = mat4.create();
@@ -12545,7 +12597,9 @@ function defineworld(canvas) {
       cubeObject.size = size;
       cubeObject.sides = 12;
       cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0); // update
+
+      cubeObject.position.nameUniq = nameUniq;
       cubeObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
       cubeObject.color = true;
       cubeObject.mvMatrix = mat4.create();
@@ -12568,6 +12622,9 @@ function defineworld(canvas) {
       // Physics
 
       cubeObject.physics = {
+        enabled: false
+      };
+      cubeObject.net = {
         enabled: false
       };
 
@@ -12593,6 +12650,7 @@ function defineworld(canvas) {
       sphereObject.streamTextures = null;
       sphereObject.type = filler;
       sphereObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      sphereObject.position.nameUniq = nameUniq;
       sphereObject.size = size;
       sphereObject.sides = 12;
       sphereObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0); //lights
@@ -12704,6 +12762,7 @@ function defineworld(canvas) {
       pyramidObject.sides = 8;
       pyramidObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       pyramidObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      pyramidObject.position.nameUniq = nameUniq;
       pyramidObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0); // pyramidObject.color     = new GeoOfColor ("Piramide4");
 
       pyramidObject.mvMatrix = mat4.create();
@@ -12746,6 +12805,7 @@ function defineworld(canvas) {
       objObject.sides = 8;
       objObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       objObject.position = new _matrixGeometry.Position(0, -5, -8.0);
+      objObject.position.nameUniq = nameUniq;
       objObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
       objObject.color = false; // new GeoOfColor('4x4');
       // custom textures
@@ -12840,7 +12900,9 @@ function defineworld(canvas) {
 
       cubeObject.streamTextures = null;
       cubeObject.type = filler;
-      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0); // update
+
+      cubeObject.position.nameUniq = nameUniq;
       cubeObject.size = size;
       cubeObject.sides = 12;
       cubeObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0); //lights
@@ -12853,6 +12915,12 @@ function defineworld(canvas) {
 
       cubeObject.physics = {
         enabled: false
+      };
+      cubeObject.net = {
+        enabled: false,
+        activate: () => {
+          _engine.net.activateDataStream();
+        }
       }; // Update others start
 
       cubeObject.useShadows = false;
@@ -12952,6 +13020,7 @@ function defineworld(canvas) {
       customObject.streamTextures = null;
       customObject.type = filler;
       customObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      customObject.position.nameUniq = nameUniq;
       customObject.size = size;
       customObject.sides = 12;
       customObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0); //lights
@@ -13059,6 +13128,8 @@ var RTCMultiConnection3 = _interopRequireWildcard(require("./rtc-multi-connectio
 
 var io = _interopRequireWildcard(require("./rtc-multi-connection/socket.io"));
 
+var _manifest = _interopRequireDefault(require("../program/manifest.js"));
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -13083,6 +13154,35 @@ class Broadcaster {
 
     this.openDataSession = () => {};
 
+    this.multiPlayerRef = {
+      root: this,
+
+      init(rtcEvent) {
+        console.log("rtcEvent addNewPlayer: ", rtcEvent.userid);
+      },
+
+      update(multiplayer) {
+        if (multiplayer.data.netPos) {
+          console.log('INFO ZA UPDATE', multiplayer); // Matter.Body.setPosition(this.root.netBodies["netObject_" + multiplayer.userid], { x: multiplayer.data.netPos.x, y: multiplayer.data.netPos.y });
+
+          _manifest.default.scene[multiplayer.data.netObjId].position.SetX(multiplayer.data.netPos.x, 'noemit');
+
+          if (multiplayer.data.netDir) {}
+        } else if (multiplayer.data.noMoreLives === true) {}
+      },
+
+      /**
+       * If someone leaves all client actions is here
+       * - remove from scene
+       * - clear object from netObject_x
+       */
+      leaveGamePlay(rtcEvent) {
+        console.info("rtcEvent LEAVE GAME: ", rtcEvent.userid);
+        this.root.starter.destroyBody(this.root.netBodies["netObject_" + rtcEvent.userid]);
+        delete this.root.netBodies["netObject_" + rtcEvent.userid];
+      }
+
+    };
     window.io = io;
     this.engineConfig = config;
 
@@ -13103,9 +13203,9 @@ class Broadcaster {
     }
   };
 
-  activateDataStream(multiPlayerRef) {
+  activateDataStream() {
+    this.injector = this.multiPlayerRef;
     setTimeout(() => {
-      this.injector = multiPlayerRef;
       this.openOrJoinBtn.click();
     }, 1000);
   }
@@ -13169,7 +13269,7 @@ class Broadcaster {
       urls: root.engineConfig.getStunList()
     }];
     this.connection.videosContainer = document.getElementById("videos-container");
-    this.connection.videosContainer.setAttribute("style", "position:absolute;left:0;top:0;width:320px;height:auto;");
+    this.connection.videosContainer.setAttribute("style", "position:absolute;left:0;bottom:20%;width:320px;height:auto;");
 
     this.connection.onstream = function (event) {
       event.mediaElement.removeAttribute("src");
@@ -13285,6 +13385,7 @@ class Broadcaster {
 
     const div = document.createElement("div");
     div.innerHTML = event.data || event;
+    div.setAttribute('style', 'width:90%;color:white;');
     const chatContainer = document.querySelector(".chat-output");
     chatContainer.insertBefore(div, chatContainer.firstChild);
     div.tabIndex = 0;
@@ -13453,10 +13554,11 @@ class Broadcaster {
       return res.text();
     }).then(function (html) {
       myInstance.popupUI = (0, _utility.byId)("matrix-net");
+      myInstance.popupUI.style = 'table';
       myInstance.popupUI.innerHTML = html;
 
       if (myInstance.engineConfig.getShowBroadcasterOnInt()) {
-        myInstance.popupUI.style.display = "block";
+        myInstance.popupUI.style.display = "table";
       } else {
         myInstance.popupUI.style.display = "none";
       }
@@ -13476,7 +13578,7 @@ class Broadcaster {
 
 exports.Broadcaster = Broadcaster;
 
-},{"../client-config.js":43,"./rtc-multi-connection/FileBufferReader.js":62,"./rtc-multi-connection/RTCMultiConnection3":63,"./rtc-multi-connection/getHTMLMediaElement":64,"./rtc-multi-connection/socket.io":65,"./utility":66}],60:[function(require,module,exports){
+},{"../client-config.js":43,"../program/manifest.js":71,"./rtc-multi-connection/FileBufferReader.js":62,"./rtc-multi-connection/RTCMultiConnection3":63,"./rtc-multi-connection/getHTMLMediaElement":64,"./rtc-multi-connection/socket.io":65,"./utility":66}],60:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

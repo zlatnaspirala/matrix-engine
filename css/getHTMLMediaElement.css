@@ -24,11 +24,9 @@ Documentation - github.com/muaz-khan/WebRTC-Experiment/tree/master/getMediaEleme
 }
 
 .media-container {
-    position:absolute;
-    left:0;
-    top:0;
-    width:200px;
-    height:200px;
+    max-width:220px;
+    min-width: 120px;
+    height:auto;
     border: 1px solid rgb(0, 0, 0);
     border-radius: 4px;
     overflow: hidden;

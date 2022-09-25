@@ -20,7 +20,15 @@ export var runThis = world => {
 
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
 
+  // Must be activate
   matrixEngine.Engine.activateNet();
+
+
+  // Must be activate for scene objects also.
+  App.scene.MyCubeTex.net.enable = true;
+  App.scene.MyCubeTex.net.activate();
+  
+  App.scene.MyCubeTex.position.SetZ(-8)
   
   // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
   // App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;

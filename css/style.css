@@ -164,9 +164,10 @@ span {
 
 #matrix-net {
   position: absolute;
+  display: none;
   right: 0;
   height: 100%;
-  width: 30%;
+  width: 40vh;
   font-family: stormfaze;
   background-color: crimson;
 }

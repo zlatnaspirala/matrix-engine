@@ -6,7 +6,6 @@
 .broadcaster {
   position: absolute;
   height: 100%;
-  width: 100%;
   margin: 0 auto;
 }
 
@@ -87,7 +86,6 @@
   padding: .75rem;
   border-radius: 0.2rem;
   display: block;
-  width: 100%;
   background-color: rgba(255, 255, 255, 0.945);
   border: 1px solid;
 }
@@ -105,7 +103,6 @@
   padding: .75rem;
   border-radius: 0.2rem;
   display: block;
-  width: 100%;
   background-color: rgba(19, 102, 180, 0.945);
   border: none;
   cursor: default;
@@ -113,7 +110,7 @@
 
 .broadcastLabel {
   color: black;
-  font-size: 1.15rem;
+  font-size: small;
   width: 50%;
   padding: .5rem 1rem;
   border: 2px solid transparent;
@@ -121,7 +118,7 @@
   border-radius: 0.2rem;
   background-color: rgba(255, 255, 255, 0.945);
   letter-spacing: 1px;
-  border: 1px white solid;
+  border:none;
 }
 
 .broadcastLabel:disabled {
@@ -129,12 +126,12 @@
 }
 
 .broadcastLabel:hover {
-  background-color: rgba(19, 102, 170, 0.9);
+  background-color: rgba(170, 19, 72, 0.9);
   color: rgba(0, 0, 0, 0.9);
 }
 
 .broadcastLabel:hover:disabled {
-  background-color: rgba(19, 102, 170, 0.9);
+  background-color: rgba(170, 19, 72, 0.9);
   color: rgba(233, 21, 21, 0.9);
 }
 
@@ -165,7 +162,6 @@
   position:absolute;
   bottom:0;
   left:0;
-  width:100%;
   z-index: 100;
 }
 
