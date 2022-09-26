@@ -5271,41 +5271,7 @@ exports.default = void 0;
  * Class don't have any args passed.
  */
 class ClientConfig {
-  /**
-   * Addson - Role is : "no dependencies scripts only"
-   * All addson are ansync loaded scripts.
-   *  - hackerTimer is for better performace also based on webWorkers. Load this script on top.
-   *  - Cache is based on webWorkers.
-   *  - dragging is script for dragging dom elements taken from stackoverflow.com.
-   *  - facebook addson is simple fb api implementation.
-   *  - adapter is powerfull media/communication fixer(Objective : working on all moder browsers).
-   */
-  addson = [{
-    name: "cache",
-    enabled: false,
-    scriptPath: "externals/cacheInit.ts"
-  }, {
-    name: "hackerTimer",
-    enabled: true,
-    scriptPath: "externals/hack-timer.js"
-  }, {
-    name: "adapter",
-    enabled: true,
-    scriptPath: "externals/adapter.js"
-  }];
-  /**
-   * @description This is main canvas dom
-   * id. Program will handle missing this params.
-   * It is nice to have id for main canvas dom element
-   * to avoid coallision woth other possible programs
-   * who use also canvas element.
-   * IMPLEMENTATION [WIP]
-   * @property canvasId
-   * @type  string
-   */
-
-  canvasId = "vtsge"; // Free to define what ever -> injectCanvas
-
+  // Free to define what ever -> injectCanvas
   recordCanvasOption = {
     injectCanvas: () => document.getElementsByTagName("canvas")[0],
     frameRequestRate: 30,
@@ -5314,22 +5280,6 @@ class ClientConfig {
     mineType: "video/mp4",
     resolutions: '800x600'
   };
-  /**
-   * @description This is main coordinary types of positions
-   * Can be "diametric-fullscreen" or "frame".
-   *  - diametric-fullscreen is simple fullscreen canvas element.
-   *  - frame keeps aspect ratio in any aspect.
-   * @property drawReference
-   * @type  string
-   */
-
-  drawReference = "frame";
-  /**
-   * aspectRatio default value, can be changed in run time.
-   * This is 800x600, 1.78 is also good fit for lot of desktop monitors screens
-   */
-
-  aspectRatio = 1.333;
   /**
    * @description
    * Default setup is `dev`.
@@ -5346,7 +5296,7 @@ class ClientConfig {
    * In other way keep it 'true'.
    */
 
-  appUseNetwork = true;
+  showBroadcasterOnInt = true;
   /**
    * networkDeepLogs control of dev logs for webRTC context only.
    */
@@ -5357,52 +5307,14 @@ class ClientConfig {
    * multimedia server channel.Both multiRTC2/3
    */
 
-  masterServerKey = "maximumroulette.server1";
-  /**
-   * rtcServerPort Port used to connect multimedia server.
-   * Default value is 12034
-   */
-
-  rtcServerPort = 12034;
+  masterServerKey = "maximumroulette.matrix-engine";
   /**
    * @description
-   * Enable Disable coordinator flag
+   * runBroadcasterOnInt load broadcaster
    */
 
-  appUseCoordinator = false;
-  /**
-   * @description
-   * Coordinator rtc3 session init values.
-   * Downgrade to data only.
-   */
-
-  coordinatorSessionDefaults = {
-    sessionAudio: false,
-    sessionVideo: false,
-    sessionData: true,
-    enableFileSharing: false
-  };
-  /**
-   * connectorPort is access port used to connect
-   * session web socket.
-   * Take high number for port to avoid
-   * `code: 'EACCES', errno: -4092, syscall: 'listen'
-   * for localhost usage.
-   */
-
-  connectorPort = 9010;
-  /**
-   * appUseAccountsSystem If you don't want to use session
-   * in your application just setup this variable to the false.
-   */
-
-  appUseAccountsSystem = true;
-  /**
-   * appUseBroadcaster Disable or enable broadcaster for
-   * video chats.
-   */
-
-  appUseBroadcaster = true;
+  runBroadcasterOnInt = true;
+  broadcastAutoConnect = true;
   /**
    * @description
    * broadcasterPort Port used to connect multimedia server MultiRTC3.
@@ -5411,7 +5323,6 @@ class ClientConfig {
    */
 
   broadcasterPort = 9001;
-  showBroadcasterOnInt = true;
   /**
    * @description
    * broadcaster socket.io address.
@@ -5421,19 +5332,13 @@ class ClientConfig {
   broadcastAutoConnect = false;
   /**
    * @description
-   * runBroadcasterOnInt load broadcaster
-   */
-
-  runBroadcasterOnInt = true;
-  /**
-   * @description
    * broadcaster rtc session init values.
    * Change it for production regime
    */
 
   broadcasterSessionDefaults = {
     sessionAudio: true,
-    sessionVideo: true,
+    sessionVideo: false,
     sessionData: true,
     enableFileSharing: true
   };
@@ -5447,89 +5352,19 @@ class ClientConfig {
   stunList = ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302", "stun:stun.l.google.com:19302?transport=udp"];
   /**
    * @description
-   * Possible variant by default:
-   * "register", "login"
-   */
-
-  startUpHtmlForm = "register";
-  controls = {
-    platformerPlayerController: true,
-    enableMobileControlsOnDesktop: true
-  };
-  gameList = [];
-  /**
-   * @description
-   * Implement default gamePlay variable's
-   */
-
-  defaultGamePlayLevelName = "public";
-  autoStartGamePlay = false;
-  /**
-   * @description
    * constructor will save interest data for game platform
    * For now it is just name of the game. I use it in
    * pre gameplay UI game selector.
    */
 
-  constructor(gameList = []) {
-    // Interconnection Network.Connector vs app.ts
-    this.gameList = gameList;
-  }
+  constructor(gameList = []) {}
 
   getRecordCanvasOptions() {
     return this.recordCanvasOption;
   }
 
-  didAppUseCoordinator() {
-    if (this.appUseBroadcaster === true) {
-      console.warn("App already use broadcaster stream. Running double multiPeer connections is extreme situation.");
-    }
-
-    return this.appUseCoordinator;
-  }
-
-  getCoordinatorConfig() {
-    return this.coordinatorSessionDefaults;
-  }
-
-  getcontrols() {
-    return this.controls;
-  }
-
-  getShowBroadcasterOnInt() {
-    return this.showBroadcasterOnInt;
-  }
-
   getRunBroadcasterOnInt() {
     return this.runBroadcasterOnInt;
-  }
-
-  getBroadcastAutoConnect() {
-    return this.broadcastAutoConnect;
-  }
-
-  getAddson() {
-    return this.addson;
-  }
-
-  getAutoStartGamePlay() {
-    return this.autoStartGamePlay;
-  }
-
-  getGamesList() {
-    return this.gameList;
-  }
-
-  getDefaultGamePlayLevelName() {
-    return this.defaultGamePlayLevelName;
-  }
-
-  didAppUseNetwork() {
-    return this.appUseNetwork;
-  }
-
-  didAppUseAccountsSystem() {
-    return this.appUseAccountsSystem;
   }
 
   didAppUseBroadcast() {
@@ -5548,10 +5383,6 @@ class ClientConfig {
     return this.getProtocolFromAddressBar() + this.getDomain() + ":" + this.rtcServerPort + "/";
   }
 
-  getStartUpHtmlForm() {
-    return this.startUpHtmlForm;
-  }
-
   getDomain() {
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
       return window.location.hostname;
@@ -5560,28 +5391,20 @@ class ClientConfig {
     return this.domain;
   }
 
+  getBroadcastAutoConnect() {
+    return this.broadcastAutoConnect;
+  }
+
+  getShowBroadcasterOnInt() {
+    return this.showBroadcasterOnInt;
+  }
+
   getBroadcasterPort() {
     return this.broadcasterPort;
   }
 
   getBroadcasterSessionDefaults() {
     return this.broadcasterSessionDefaults;
-  }
-
-  getConnectorPort() {
-    return this.connectorPort;
-  }
-
-  getDrawRefference() {
-    return this.drawReference;
-  }
-
-  getAspectRatio() {
-    return this.aspectRatio;
-  }
-
-  setAspectRatio(newAspectRatio) {
-    this.aspectRatio = newAspectRatio;
   }
 
   getProtocolFromAddressBar() {
@@ -9079,6 +8902,7 @@ class RotationVector {
       rotz = 0;
     }
 
+    this.nameUniq = null;
     this.x = x;
     this.y = y;
     this.z = z;
@@ -9183,14 +9007,32 @@ class RotationVector {
 
   rotateX(x) {
     this.rotx = x;
+    if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netRot: {
+        x: this.rotx
+      },
+      netObjId: this.nameUniq
+    });
   }
 
   rotateY(y) {
     this.roty = y;
+    if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netRot: {
+        y: this.roty
+      },
+      netObjId: this.nameUniq
+    });
   }
 
   rotateZ(z) {
     this.rotz = z;
+    if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netRot: {
+        z: this.rotz
+      },
+      netObjId: this.nameUniq
+    });
   }
 
   get rx() {
@@ -9208,6 +9050,8 @@ class RotationVector {
 }
 /**
  * @description Base class
+ * Powered for multiplayer feature:
+ * - position ref to x,y,z
  */
 
 
@@ -9290,9 +9134,7 @@ class Position {
     var tx = this.targetX - this.x,
         ty = this.targetY - this.y,
         tz = this.targetZ - this.z,
-        dist = Math.sqrt(tx * tx + ty * ty + tz * tz); // rad = Math.atan2(ty, tx),
-    // angle = (rad / Math.PI) * 180;
-
+        dist = Math.sqrt(tx * tx + ty * ty + tz * tz);
     this.velX = tx / dist * this.thrust;
     this.velY = ty / dist * this.thrust;
     this.velZ = tz / dist * this.thrust;
@@ -9302,12 +9144,28 @@ class Position {
         this.x += this.velX;
         this.y += this.velY;
         this.z += this.velZ;
+        if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+          netPos: {
+            x: this.x,
+            y: this.y,
+            z: this.z
+          },
+          netObjId: this.nameUniq
+        });
       } else {
         this.x = this.targetX;
         this.y = this.targetY;
         this.z = this.targetZ;
         this.inMove = false;
         this.onTargetPositionReach();
+        if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+          netPos: {
+            x: this.x,
+            y: this.y,
+            z: this.z
+          },
+          netObjId: this.nameUniq
+        });
       }
     }
   }
@@ -9316,30 +9174,51 @@ class Position {
     return [this.x, this.y, this.z];
   }
 
-  SetX(newx, emitStatus) {
+  SetX(newx, em) {
     this.x = newx;
     this.targetX = newx;
     this.inMove = false;
-    console.log("TEST SEND");
-    if (_engine.net.connection && typeof emitStatus === 'undefined') _engine.net.connection.send({
+
+    if (_engine.net.connection && typeof em === 'undefined') {
+      _engine.net.connection.send({
+        netPos: {
+          x: this.x,
+          y: this.y,
+          z: this.z
+        },
+        netObjId: this.nameUniq
+      });
+    } else {
+      console.log("TEST PREVENT EMIT");
+    }
+  }
+
+  SetY(newy, em) {
+    this.y = newy;
+    this.targetY = newy;
+    this.inMove = false;
+    if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
       netPos: {
         x: this.x,
-        y: this.y
+        y: this.y,
+        z: this.z
       },
       netObjId: this.nameUniq
     });
   }
 
-  SetY(newy) {
-    this.y = newy;
-    this.targetY = newy;
-    this.inMove = false;
-  }
-
-  SetZ(newz) {
+  SetZ(newz, em) {
     this.z = newz;
     this.targetZ = newz;
     this.inMove = false;
+    if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netPos: {
+        x: this.x,
+        y: this.y,
+        z: this.z
+      },
+      netObjId: this.nameUniq
+    });
   }
 
   setPosition(newx, newy, newz) {
@@ -9350,6 +9229,14 @@ class Position {
     this.targetY = newy;
     this.targetZ = newz;
     this.inMove = false;
+    if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netPos: {
+        x: this.x,
+        y: this.y,
+        z: this.z
+      },
+      netObjId: this.nameUniq
+    });
   }
 
 }
@@ -12433,6 +12320,7 @@ function defineworld(canvas) {
 
       triangleObject.position.nameUniq = nameUniq;
       triangleObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
+      triangleObject.rotation.nameUniq = nameUniq;
       triangleObject.color = new _matrixGeometry.GeoOfColor('triangle');
       triangleObject.mvMatrix = mat4.create();
       triangleObject.geometry = new _matrixGeometry.TriangleVertex(triangleObject);
@@ -12473,6 +12361,7 @@ function defineworld(canvas) {
       squareObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       squareObject.position.nameUniq = nameUniq;
       squareObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
+      squareObject.rotation.nameUniq = nameUniq;
       squareObject.color = true;
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
@@ -12515,8 +12404,8 @@ function defineworld(canvas) {
       squareObject.sides = 4;
       squareObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       squareObject.position.nameUniq = nameUniq;
-      squareObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0); //squareObject.color     = new GeoOfColor("4x4");
-
+      squareObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
+      squareObject.rotation.nameUniq = nameUniq;
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
       squareObject.glBlend = new _utility._glBlend(); // Physics
@@ -12601,6 +12490,7 @@ function defineworld(canvas) {
 
       cubeObject.position.nameUniq = nameUniq;
       cubeObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
+      cubeObject.rotation.nameUniq = nameUniq;
       cubeObject.color = true;
       cubeObject.mvMatrix = mat4.create();
       cubeObject.geometry = new _matrixGeometry.CubeVertex(cubeObject);
@@ -12653,7 +12543,8 @@ function defineworld(canvas) {
       sphereObject.position.nameUniq = nameUniq;
       sphereObject.size = size;
       sphereObject.sides = 12;
-      sphereObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0); //lights
+      sphereObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
+      sphereObject.rotation.nameUniq = nameUniq; //lights
 
       sphereObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
@@ -12763,8 +12654,8 @@ function defineworld(canvas) {
       pyramidObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       pyramidObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       pyramidObject.position.nameUniq = nameUniq;
-      pyramidObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0); // pyramidObject.color     = new GeoOfColor ("Piramide4");
-
+      pyramidObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
+      pyramidObject.rotation.nameUniq = nameUniq;
       pyramidObject.mvMatrix = mat4.create();
       pyramidObject.geometry = new _matrixGeometry.PiramideVertex(pyramidObject); // Physics
 
@@ -12807,6 +12698,7 @@ function defineworld(canvas) {
       objObject.position = new _matrixGeometry.Position(0, -5, -8.0);
       objObject.position.nameUniq = nameUniq;
       objObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
+      objObject.rotation.nameUniq = nameUniq;
       objObject.color = false; // new GeoOfColor('4x4');
       // custom textures
 
@@ -12905,7 +12797,8 @@ function defineworld(canvas) {
       cubeObject.position.nameUniq = nameUniq;
       cubeObject.size = size;
       cubeObject.sides = 12;
-      cubeObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0); //lights
+      cubeObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
+      cubeObject.rotation.nameUniq = nameUniq; //lights
 
       cubeObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
@@ -13023,7 +12916,8 @@ function defineworld(canvas) {
       customObject.position.nameUniq = nameUniq;
       customObject.size = size;
       customObject.sides = 12;
-      customObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0); //lights
+      customObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
+      customObject.rotation.nameUniq = nameUniq; //lights
 
       customObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
@@ -13116,8 +13010,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Broadcaster = void 0;
 
-var _clientConfig = _interopRequireDefault(require("../client-config.js"));
-
 var _utility = require("./utility");
 
 require("./rtc-multi-connection/FileBufferReader.js");
@@ -13130,12 +13022,13 @@ var io = _interopRequireWildcard(require("./rtc-multi-connection/socket.io"));
 
 var _manifest = _interopRequireDefault(require("../program/manifest.js"));
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+// import ClientConfig from "../client-config.js";
 class Broadcaster {
   constructor(config) {
     this.injector;
@@ -13158,17 +13051,23 @@ class Broadcaster {
       root: this,
 
       init(rtcEvent) {
-        console.log("rtcEvent addNewPlayer: ", rtcEvent.userid);
+        console.log("rtcEvent add new net object -> ", rtcEvent.userid);
       },
 
       update(multiplayer) {
         if (multiplayer.data.netPos) {
-          console.log('INFO ZA UPDATE', multiplayer); // Matter.Body.setPosition(this.root.netBodies["netObject_" + multiplayer.userid], { x: multiplayer.data.netPos.x, y: multiplayer.data.netPos.y });
-
-          _manifest.default.scene[multiplayer.data.netObjId].position.SetX(multiplayer.data.netPos.x, 'noemit');
+          console.log('INFO ZA UPDATE', multiplayer);
+          if (multiplayer.data.netPos.x) _manifest.default.scene[multiplayer.data.netObjId].position.SetX(multiplayer.data.netPos.x, 'noemit');
+          if (multiplayer.data.netPos.y) _manifest.default.scene[multiplayer.data.netObjId].position.SetY(multiplayer.data.netPos.y, 'noemit');
+          if (multiplayer.data.netPos.z) _manifest.default.scene[multiplayer.data.netObjId].position.SetZ(multiplayer.data.netPos.z, 'noemit');
 
           if (multiplayer.data.netDir) {}
-        } else if (multiplayer.data.noMoreLives === true) {}
+        } else if (multiplayer.data.netRot) {
+          console.log('ROT INFO ZA UPDATE', multiplayer);
+          if (multiplayer.data.netRot.x) _manifest.default.scene[multiplayer.data.netObjId].rotation.rotateX(multiplayer.data.netRot.x, 'noemit');
+          if (multiplayer.data.netRot.y) _manifest.default.scene[multiplayer.data.netObjId].rotation.rotateY(multiplayer.data.netRot.y, 'noemit');
+          if (multiplayer.data.netRot.z) _manifest.default.scene[multiplayer.data.netObjId].rotation.rotateZ(multiplayer.data.netRot.z, 'noemit');
+        }
       },
 
       /**
@@ -13178,8 +13077,6 @@ class Broadcaster {
        */
       leaveGamePlay(rtcEvent) {
         console.info("rtcEvent LEAVE GAME: ", rtcEvent.userid);
-        this.root.starter.destroyBody(this.root.netBodies["netObject_" + rtcEvent.userid]);
-        delete this.root.netBodies["netObject_" + rtcEvent.userid];
       }
 
     };
@@ -13578,7 +13475,7 @@ class Broadcaster {
 
 exports.Broadcaster = Broadcaster;
 
-},{"../client-config.js":43,"../program/manifest.js":71,"./rtc-multi-connection/FileBufferReader.js":62,"./rtc-multi-connection/RTCMultiConnection3":63,"./rtc-multi-connection/getHTMLMediaElement":64,"./rtc-multi-connection/socket.io":65,"./utility":66}],60:[function(require,module,exports){
+},{"../program/manifest.js":71,"./rtc-multi-connection/FileBufferReader.js":62,"./rtc-multi-connection/RTCMultiConnection3":63,"./rtc-multi-connection/getHTMLMediaElement":64,"./rtc-multi-connection/socket.io":65,"./utility":66}],60:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

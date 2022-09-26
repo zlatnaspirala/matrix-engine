@@ -77,21 +77,34 @@
  background-color: rgba(237, 17, 17, 1);
 }
 
+#room-id{
+
+}
+
 .blue-label {
-  color: black;
+  color: #01222a;
   font-size: 100%;
   font-family: stormfaze;
   text-transform: none;
+  width: 89.2%;
   letter-spacing: 1px;
-  padding: .75rem;
+  padding: 0.75rem;
   border-radius: 0.2rem;
   display: block;
-  background-color: rgba(255, 255, 255, 0.945);
+  background-color: rgb(180 229 255 / 95%);
   border: 1px solid;
+  margin: 0px 10px 15px 8px;
+  height: 8px;
 }
 
 .blue-label:hover {
-  background-color: rgba(19, 102, 170, 0.9);
+  background-color: rgba(191, 219, 241, 0.9);
+}
+
+.leftOrder {
+  text-align: left;
+  color: #5c8494;
+  padding-left: 10px;
 }
 
 .title {
@@ -106,6 +119,7 @@
   background-color: rgba(19, 102, 180, 0.945);
   border: none;
   cursor: default;
+  margin: 10px 10px 26px 10px;
 }
 
 .broadcastLabel {
@@ -168,8 +182,8 @@
 .share-btn {
   position:absolute;
   bottom:8%;
-  left:0;
-  width:50%;
+  left:9px;
+  width:48%;
   z-index: 100;
   /* background: url("../imgs/share-files.png"); */
   background-repeat: no-repeat;
@@ -179,7 +193,7 @@
   position:absolute;
   bottom:8%;
   left:50%;
-  width:50%;
+  width:48%;
   z-index: 100;
 }
 
@@ -189,4 +203,42 @@ button {
 
 label {
   color:white;
+}
+
+
+
+.network-panel-hide-animation {
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-name: rightmove;
+  -webkit-animation-duration: 1.2s;
+  animation-fill-mode: forwards;
+  animation-name: rightmove;
+  animation-duration: 1.2s;
+}
+
+.network-panel-show-animation {
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-name: leftmove;
+  -webkit-animation-duration: 1.2s;
+  animation-fill-mode: forwards;
+  animation-name: leftmove;
+  animation-duration: 1.2s;
+}
+
+.network-panel-hide-ver-animation {
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-name: goBottom;
+  -webkit-animation-duration: 1.2s;
+  animation-fill-mode: forwards;
+  animation-name: goBottom;
+  animation-duration: 1.2s;
+}
+
+.network-panel-show-ver-animation {
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-name: goUp;
+  -webkit-animation-duration: 1.2s;
+  animation-fill-mode: forwards;
+  animation-name: goUp;
+  animation-duration: 1.2s;
 }
