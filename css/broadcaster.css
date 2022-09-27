@@ -98,7 +98,7 @@
 }
 
 .blue-label:hover {
-  background-color: rgba(191, 219, 241, 0.9);
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .leftOrder {
@@ -123,30 +123,34 @@
 }
 
 .broadcastLabel {
-  color: black;
+  color: white;
   font-size: small;
   width: 50%;
-  padding: .5rem 1rem;
-  border: 2px solid transparent;
+  padding: 0.5rem 1rem;
+  border: 2px solid black;
   outline: none;
+  margin: 2px 2px;
   border-radius: 0.2rem;
-  background-color: rgba(255, 255, 255, 0.945);
+  background-color: rgb(12 31 43 / 95%);
   letter-spacing: 1px;
-  border:none;
+  border: 2px solid white;
 }
 
 .broadcastLabel:disabled {
   background-color: #444444;
+  color: rgba(3, 3, 3, 1);
+  border: 2px solid gray;
 }
 
 .broadcastLabel:hover {
-  background-color: rgba(170, 19, 72, 0.9);
-  color: rgba(0, 0, 0, 0.9);
+  /** background-color: rgba(70, 182, 242, 0.9); */
+  color: rgba(99, 203, 255, 0.9);
+  border: 2px solid white;
 }
 
 .broadcastLabel:hover:disabled {
-  background-color: rgba(170, 19, 72, 0.9);
-  color: rgba(233, 21, 21, 0.9);
+  background-color: rgba(104, 104, 104, 0.9);
+  color: rgba(206, 206, 206, 0.9);
 }
 
 .red-link {
@@ -187,6 +191,10 @@
   z-index: 100;
   /* background: url("../imgs/share-files.png"); */
   background-repeat: no-repeat;
+}
+
+.share-btn:hover {
+  background-color: #444444;
 }
 
 .leave-btn {

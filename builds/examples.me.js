@@ -9415,6 +9415,7 @@ class CubeVertex {
     this.basePoint = 1.0 * this.size;
     this.basePointNeg = -1.0 * this.size;
     this.dynamicBuffer = true;
+    this.nameUniq = null;
     this.osciTest = new _utility.OSCILLATOR(0, 2, 0.002);
     this.texCoordsPoints = {
       front: {
@@ -9777,8 +9778,8 @@ class CubeVertex {
     };
   }
 
-  setScaleByX(scale) {
-    //for scale
+  setScaleByX(scale, em) {
+    // for scale
     this.Left.pointA.x = -scale;
     this.Left.pointB.x = -scale;
     this.Left.pointC.x = -scale;
@@ -9803,6 +9804,12 @@ class CubeVertex {
     this.Back.pointB.x = -scale;
     this.Back.pointC.x = scale;
     this.Back.pointD.x = scale;
+    if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netScale: {
+        x: scale
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.cube_buffer_procedure(this.root);
@@ -9810,7 +9817,7 @@ class CubeVertex {
     return "dynamicBuffer is false but i will update vertex array prototypical.";
   }
 
-  setScaleByY(scale) {
+  setScaleByY(scale, em) {
     //for scale
     this.Left.pointA.y = -scale;
     this.Left.pointB.y = -scale;
@@ -9836,6 +9843,12 @@ class CubeVertex {
     this.Back.pointB.y = scale;
     this.Back.pointC.y = scale;
     this.Back.pointD.y = -scale;
+    if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netScale: {
+        y: scale
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.cube_buffer_procedure(this.root);
@@ -9843,7 +9856,7 @@ class CubeVertex {
     return "dynamicBuffer is false but i will update vertex array prototypical.";
   }
 
-  setScaleByZ(scale) {
+  setScaleByZ(scale, em) {
     this.Left.pointA.z = -scale;
     this.Left.pointB.z = scale;
     this.Left.pointC.z = scale;
@@ -9868,6 +9881,12 @@ class CubeVertex {
     this.Back.pointB.z = -scale;
     this.Back.pointC.z = -scale;
     this.Back.pointD.z = -scale;
+    if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netScale: {
+        z: scale
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.cube_buffer_procedure(this.root);
@@ -12874,6 +12893,7 @@ function defineworld(canvas) {
       cubeObject.mvMatrix = mat4.create();
       cubeObject.LightMap = new _matrixGeometry.GeoOfColor('cube light');
       cubeObject.geometry = new _matrixGeometry.CubeVertex(cubeObject);
+      cubeObject.geometry.nameUniq = nameUniq;
       cubeObject.instancedDraws = {
         numberOfInstance: 10,
         array_of_local_offset: [12, 0, 0],
@@ -13053,14 +13073,17 @@ class Broadcaster {
           if (multiplayer.data.netPos.x) _manifest.default.scene[multiplayer.data.netObjId].position.SetX(multiplayer.data.netPos.x, 'noemit');
           if (multiplayer.data.netPos.y) _manifest.default.scene[multiplayer.data.netObjId].position.SetY(multiplayer.data.netPos.y, 'noemit');
           if (multiplayer.data.netPos.z) _manifest.default.scene[multiplayer.data.netObjId].position.SetZ(multiplayer.data.netPos.z, 'noemit');
-
-          if (multiplayer.data.netDir) {}
         } else if (multiplayer.data.netRot) {
           // console.log('ROT INFO ZA UPDATE', multiplayer);
           if (multiplayer.data.netRot.x) _manifest.default.scene[multiplayer.data.netObjId].rotation.rotx = multiplayer.data.netRot.x; // , 'noemit');
 
           if (multiplayer.data.netRot.y) _manifest.default.scene[multiplayer.data.netObjId].rotation.roty = multiplayer.data.netRot.y;
           if (multiplayer.data.netRot.z) _manifest.default.scene[multiplayer.data.netObjId].rotation.rotz = multiplayer.data.netRot.z;
+        } else if (multiplayer.data.netScale) {
+          console.log('netScale INFO ZA UPDATE', multiplayer);
+          if (multiplayer.data.netScale.x) _manifest.default.scene[multiplayer.data.netObjId].geometry.setScaleByX(multiplayer.data.netScale.x, 'noemit');
+          if (multiplayer.data.netScale.y) _manifest.default.scene[multiplayer.data.netObjId].geometry.setScaleByY(multiplayer.data.netScale.y, 'noemit');
+          if (multiplayer.data.netScale.z) _manifest.default.scene[multiplayer.data.netObjId].geometry.setScaleByZ(multiplayer.data.netScale.z, 'noemit');
         }
       },
 
@@ -13269,7 +13292,7 @@ class Broadcaster {
     this.leaveRoomBtn.disabled = false;
   };
   appendDIV = event => {
-    if (event.data && (event.data.netPos || event.data.netRot)) {
+    if (event.data && (event.data.netPos || event.data.netRot || event.data.netScale)) {
       this.injector.update(event);
       return;
     }

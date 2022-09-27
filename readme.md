@@ -136,6 +136,7 @@ Now navigate to the `examples-build.html` page.
   npm run build.lib
 ```
 Now navigate to the `me-library.html` page , represent empty page with loaded `matrix-engine`.
+This is also usefull sometimes (Like common library).
 
 - Build with uglify
 ```js
@@ -147,9 +148,16 @@ build.app.ugly;
 build.all;
 ```
 
+After all for production is recommended to use compressed script.
+- Production Final (bash):
+```bash
+./compress
+```
+
+
 ### Changes:
 
-#### From [1.8.0] 
+#### From [1.8.0]
 We have support for real time connections based on webRTC.
 You must work on https protocol even in localhost.
 Change in program/manifest `net = false` if you dont wanna use networking.
@@ -158,7 +166,7 @@ If you wanna in terminal popup then run (bash/work on win also if you have bash)
 or `dedicated.bat`.
 
 
-#### From [1.7.11] 
+#### From [1.7.11]
  No need for:
  `// matrixEngine.Engine.load_shaders('shaders/shaders.html');`
  Initial Shaders now loads from code (inside engine). No need any action.
@@ -267,7 +275,11 @@ Make square pattern
 
 
 ### Physics
-Physics based on cannon.js 
+Physics based on cannon.js
+
+Support list : 😇
+ - cube
+ - sphere
 
 Example with physics and raycast hit detect:
 ```js
@@ -331,6 +343,22 @@ Example with physics and raycast hit detect:
 
   objGenerator(100)
 ```
+
+### Networking
+
+Networking based on webRTC. If you wanna use `multiplayer mode` you need to run intro
+folder `networking/` next commands:
+```js
+ npm i
+ node matrix-server.js
+```
+
+Support list : 😇
+ - cube (position.SetX SetY SetZ , rotation.rotateX rotateY rotateZ , scale)
+ 
+
+It is perfect solution webGL vs webRTC. Origin code used `broadcaster class` from visual-ts game engine project.
+
 
 ### Custom textures
 We just override function for texture executing code.
