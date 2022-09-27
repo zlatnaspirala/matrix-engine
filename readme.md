@@ -149,13 +149,17 @@ build.all;
 
 ### Changes:
 
-From [1.8.0] We have support for real time connections based on webRTC.
+#### From [1.8.0] 
+We have support for real time connections based on webRTC.
 You must work on https protocol even in localhost.
 Change in program/manifest `net = false` if you dont wanna use networking.
 
+If you wanna in terminal popup then run (bash/work on win also if you have bash) `dedicated.sh./`
+or `dedicated.bat`.
 
 
-From [1.7.11] No need for:
+#### From [1.7.11] 
+ No need for:
  `// matrixEngine.Engine.load_shaders('shaders/shaders.html');`
  Initial Shaders now loads from code (inside engine). No need any action.
 

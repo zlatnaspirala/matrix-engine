@@ -1,3 +1,6 @@
 #!/usr/bin/env node
-cd networking
-node networking/matrix.server.js
+cd networking;
+
+node matrix.server.js;
+
+@echo "Matrix-Server running...";

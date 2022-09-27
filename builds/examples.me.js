@@ -8915,6 +8915,7 @@ class RotationVector {
      */
 
     this.rotationSpeed = {
+      emit: false,
       x: 0,
       y: 0,
       z: 0
@@ -9005,7 +9006,7 @@ class RotationVector {
     this.z = 1;
   }
 
-  rotateX(x) {
+  rotateX(x, em) {
     this.rotx = x;
     if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
       netRot: {
@@ -9015,7 +9016,7 @@ class RotationVector {
     });
   }
 
-  rotateY(y) {
+  rotateY(y, em) {
     this.roty = y;
     if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
       netRot: {
@@ -9025,7 +9026,7 @@ class RotationVector {
     });
   }
 
-  rotateZ(z) {
+  rotateZ(z, em) {
     this.rotz = z;
     if (_engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
       netRot: {
@@ -11226,9 +11227,17 @@ var animate = function (sceneObject) {
 
   if (_engine.lastTime != 0) {
     var elapsed = timeNow - _engine.lastTime;
-    sceneObject.rotation.rotx += sceneObject.rotation.rotSpeedX * elapsed / 1000.0;
-    sceneObject.rotation.roty += sceneObject.rotation.rotSpeedY * elapsed / 1000.0;
-    sceneObject.rotation.rotz += sceneObject.rotation.rotSpeedZ * elapsed / 1000.0;
+
+    if (sceneObject.rotation.rotationSpeed.emit == false) {
+      sceneObject.rotation.rotx += sceneObject.rotation.rotSpeedX * elapsed / 1000.0;
+      sceneObject.rotation.roty += sceneObject.rotation.rotSpeedY * elapsed / 1000.0;
+      sceneObject.rotation.rotz += sceneObject.rotation.rotSpeedZ * elapsed / 1000.0;
+    } else {
+      sceneObject.rotation.rotateX(sceneObject.rotation.rotx + sceneObject.rotation.rotSpeedX * elapsed / 1000.0);
+      sceneObject.rotation.rotateY(sceneObject.rotation.roty + sceneObject.rotation.rotSpeedY * elapsed / 1000.0);
+      sceneObject.rotation.rotateZ(sceneObject.rotation.rotz + sceneObject.rotation.rotSpeedZ * elapsed / 1000.0);
+    }
+
     sceneObject.position.update();
   }
 };
@@ -11261,9 +11270,6 @@ _manifest.default.operation.reDrawGlobal = function (time) {
     while (physicsLooper <= _matrixWorld.world.contentList.length - 1) {
       if (_matrixWorld.world.contentList[physicsLooper].physics.enabled) {
         var local = _matrixWorld.world.contentList[physicsLooper];
-        local.position.SetX(local.physics.currentBody.position.x);
-        local.position.SetZ(local.physics.currentBody.position.y);
-        local.position.SetY(local.physics.currentBody.position.z);
         _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
         _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
         _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
@@ -11278,30 +11284,17 @@ _manifest.default.operation.reDrawGlobal = function (time) {
 
 
   physicsLooper = 0; // Networking
-
-  if (_engine.net !== null) {
-    var dt = (time - lt) / 1000;
-    lt = time;
-
-    while (physicsLooper <= _matrixWorld.world.contentList.length - 1) {
-      var local = _matrixWorld.world.contentList[physicsLooper];
-
-      if (local.net.enable === true) {// emit
-        // console.log(" net.connection.send({  ", net.connection.send );
-        // local.position.SetX(local.physics.currentBody.position.x)
-        // local.position.SetZ(local.physics.currentBody.position.y)
-        // local.position.SetY(local.physics.currentBody.position.z)
-        // world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1])
-        // world.contentList[physicsLooper].rotation.roty = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1])
-        // world.contentList[physicsLooper].rotation.rotz = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1])
-        // world.contentList[physicsLooper].rotation.x = (local.physics.currentBody.quaternion.toAxisAngle()[0].x)
-        // world.contentList[physicsLooper].rotation.y = (local.physics.currentBody.quaternion.toAxisAngle()[0].z)
-        // world.contentList[physicsLooper].rotation.z = (local.physics.currentBody.quaternion.toAxisAngle()[0].y)
-      }
-
-      physicsLooper++;
-    }
-  }
+  // if(net !== null) {
+  //   var dt = (time - lt) / 1000;
+  //   lt = time;
+  //   while(physicsLooper <= world.contentList.length - 1) {
+  //     var local = world.contentList[physicsLooper];
+  //     if(local.net.enable === true) {
+  //       // emit console.log(" ROT ");
+  //     }
+  //     physicsLooper++;
+  //   }
+  // }
 
   while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
     if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
@@ -13056,17 +13049,18 @@ class Broadcaster {
 
       update(multiplayer) {
         if (multiplayer.data.netPos) {
-          console.log('INFO ZA UPDATE', multiplayer);
+          // console.log('INFO ZA UPDATE', multiplayer);
           if (multiplayer.data.netPos.x) _manifest.default.scene[multiplayer.data.netObjId].position.SetX(multiplayer.data.netPos.x, 'noemit');
           if (multiplayer.data.netPos.y) _manifest.default.scene[multiplayer.data.netObjId].position.SetY(multiplayer.data.netPos.y, 'noemit');
           if (multiplayer.data.netPos.z) _manifest.default.scene[multiplayer.data.netObjId].position.SetZ(multiplayer.data.netPos.z, 'noemit');
 
           if (multiplayer.data.netDir) {}
         } else if (multiplayer.data.netRot) {
-          console.log('ROT INFO ZA UPDATE', multiplayer);
-          if (multiplayer.data.netRot.x) _manifest.default.scene[multiplayer.data.netObjId].rotation.rotateX(multiplayer.data.netRot.x, 'noemit');
-          if (multiplayer.data.netRot.y) _manifest.default.scene[multiplayer.data.netObjId].rotation.rotateY(multiplayer.data.netRot.y, 'noemit');
-          if (multiplayer.data.netRot.z) _manifest.default.scene[multiplayer.data.netObjId].rotation.rotateZ(multiplayer.data.netRot.z, 'noemit');
+          // console.log('ROT INFO ZA UPDATE', multiplayer);
+          if (multiplayer.data.netRot.x) _manifest.default.scene[multiplayer.data.netObjId].rotation.rotx = multiplayer.data.netRot.x; // , 'noemit');
+
+          if (multiplayer.data.netRot.y) _manifest.default.scene[multiplayer.data.netObjId].rotation.roty = multiplayer.data.netRot.y;
+          if (multiplayer.data.netRot.z) _manifest.default.scene[multiplayer.data.netObjId].rotation.rotz = multiplayer.data.netRot.z;
         }
       },
 
@@ -13275,7 +13269,7 @@ class Broadcaster {
     this.leaveRoomBtn.disabled = false;
   };
   appendDIV = event => {
-    if (event.data && event.data.netPos) {
+    if (event.data && (event.data.netPos || event.data.netRot)) {
       this.injector.update(event);
       return;
     }
