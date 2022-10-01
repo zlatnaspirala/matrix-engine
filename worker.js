@@ -10,11 +10,11 @@
  * @param cacheVersion
  */
 var cacheVersion = 2;
-var cacheName = 'static-files-v' + cacheVersion;
+var cacheName = 'matrix-engine-' + cacheVersion;
 
 try {
   for (var j = 0;j < cacheVersion;j++) {
-    var oldCacheName = 'static-files-v' + j;
+    var oldCacheName = 'matrix-engine-' + j;
     caches.delete(oldCacheName);
   }
 }
@@ -28,25 +28,7 @@ self.addEventListener('install', function (event) {
     caches.open(cacheName).then(function (cache) {
       return cache.addAll([
         offlineUrl,
-        'App.js',
-        'App-Examples.js',
-        'lib/engine.js',
-        'lib/events.js',
-        'lib/loader-obj.js',
-        'lib/matrix-buffers.js',
-        'lib/matrix-draws.js',
-        'lib/matrix-geometry.js',
-        'lib/matrix-render.js',
-        'lib/matrix-textures.js',
-        'lib/matrix-world.js',
-        'lib/utility.js',
-        'lib/webgl-utils.js',
-        'lib/gl-matrix-min.js',
-        'css/style.css',
-        'app.html',
-        'query.html',
-        'query-build.html',
-        'examples.html'
+        'builds/app.js',
         // "res/videos/Epiclogue.mp3"
       ]);
     })

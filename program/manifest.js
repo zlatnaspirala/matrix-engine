@@ -10,7 +10,7 @@ var App = {
   camera: {
     viewAngle: 45,
     nearViewpoint: 0.1,
-    farViewpoint: 1000,
+    farViewpoint: 5000,
     edgeMarginValue: 100,
     FirstPersonController: false,
     SceneController: false,

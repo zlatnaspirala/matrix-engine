@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/adding_color_cube';
+import {runThis} from './apps/bvh_animations';
 
 var world;
 var App = matrixEngine.App;
@@ -24,8 +24,6 @@ window.webGLStart = () => {
   window.runThis = runThis;
 
   matrixEngine.utility.E('debugBox').style.display = 'block';
-  // canvas.addEventListener('mousedown', (ev) => { raycaster.checkingProcedure(ev); });
-
   // If you need this , you can prolong loading time
   setTimeout(() => { runThis(world); }, 250);
 };

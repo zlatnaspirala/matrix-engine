@@ -1,13 +1,11 @@
 
 /**
- * ClientConfig is config file for whole client part of application.
- * It is a better to not mix with server config staff.
- * All data is defined like default property values.
- * Use mmethod class to get proper.
- * Class don't have any args passed.
+ * @description
+ * ClientConfig is config file for client part of networking.
  */
 class ClientConfig {
 
+  // Not implemented yet
   // Free to define what ever -> injectCanvas
   recordCanvasOption = {
     injectCanvas: () => document.getElementsByTagName("canvas")[0],
@@ -97,7 +95,7 @@ class ClientConfig {
    * For now it is just name of the game. I use it in
    * pre gameplay UI game selector.
    */
-  constructor(gameList = []) {
+  constructor() {
   }
 
   getRecordCanvasOptions() {

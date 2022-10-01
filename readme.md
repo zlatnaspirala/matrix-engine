@@ -1,8 +1,11 @@
-![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/webgl2glmatrix2.jpg)
+![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/webgl2glmatrix2.jpg)
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.7.10`
+### Name: `MATRIX-ENGINE` `1.8.0` beta
+
+#### Logo
+![webGL2GLMatrix2](https://raw.githubusercontent.com/zlatnaspirala/matrix-engine/master/res/icons/favicon-96x96.png)
 
 ### STATUS
 #### - [Integrated PWA addToHomePage/cache/] 	✔	
@@ -11,12 +14,13 @@
 #### - [FirstPersonController/SceneController Drag and navigation scene]	✔	
 #### - [Shadows vs lights (GLSL)]	✔	
 
-### Description
+### Description ℹ
   This is small but inspiring project.
   The benefits of this project is offering an overview of the entire application logic,
   easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
   (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in 
    opengles 1.1. Also can be downgraded to openGLES 1.1. webGL Lightweight library based on glmatrix engine.
+  For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js.
 
 ### Limitation ⚠
  - Basic implementation for physics (Cube, Sphere)
@@ -36,7 +40,6 @@
    https://github.com/zlatnaspirala/matrix-engine-starter
 
    with command:
-
    ```js
    npm i
    npm run build.all
@@ -68,8 +71,8 @@
 
   Matrix engine keep minimum dependency.
 
-- uglify-js
-- browserify
+- uglify-js, minify
+- browserify, watchify
 
 ```js
   npm run install.dep
@@ -81,45 +84,25 @@ if you got errors on commands `npm run build.*`.
 
 ## Help for localhost dev stage
 
-### Switch example with url params
-- Usefull also for production for switching whole pages/apps.
-  https://localhost/matrix-engine/query.html?u=adding_color_cube
-
-  https://localhost/matrix-engine/query-build.html?u=adding_color_cube
-
-Code access:
-```js
-const QueryString = matrixEngine.utility.QueryString;
-```
-
-
 ### Build Application bundle script
 
-@Note: If you use unsecured `http` protocol no build needed at all just navigate to the `app.html`.
-app.html load App.js like script type `module`. Same roles for all others instance build entries.
+From [1.8.0] you can use build for develop with watch task:
+```js
+npm run examples
+```
 
-For develop in localhost you will use `http` protocol and `app.html`.
+```js 
+npm run app
+```
+
+@Note: If you use unsecured `http` protocol no build needed at all just navigate to the `html` file who loade script with type=`module`. No need for this any more but you can use it.
+
 For production/public server you will use npm run build.XXX commands. and then upload project to the
-usually `/var/www/html/you-app/`.
+usually `/var/www/html/`.
 
- - `app-build.html` , `examples-build.html` loads javascript type `text/javascript`.
- - `app.html`, `examples.html` loads javascript type `module`.
+ - `app-build.html` , `examples-build.html` loads compiled javascript type `text/javascript`.
 
 - Build entry App.js
-
-<b>Note</b>: For  `app.html`, `examples.html` no need to build but for now needed to replace line manual:
-(only for localhost if you dont wanna rebuild for any change in code)
-```
-This is Production
-// import MEBvh from '../node_modules/bvh-loader/index';
-This is dev testing
-// import MEBvh from 'bvh-loader';
-```
-Must be done also for cannon.js.
-
-In future i will find some way to fix this.
-
-
 ```js
   npm run build.app
 ```
@@ -135,8 +118,6 @@ Now navigate to the `examples-build.html` page.
 ```js
   npm run build.lib
 ```
-Now navigate to the `me-library.html` page , represent empty page with loaded `matrix-engine`.
-This is also usefull sometimes (Like common library).
 
 - Build with uglify
 ```js
@@ -154,22 +135,17 @@ After all for production is recommended to use compressed script.
 ./compress
 ```
 
+### Switch example with url params
+- Usefull also for production for switching whole pages/apps.
+  https://localhost/matrix-engine/query.html?u=adding_color_cube
 
-### Changes:
+  https://localhost/matrix-engine/query-build.html?u=adding_color_cube
 
-#### From [1.8.0]
-We have support for real time connections based on webRTC.
-You must work on https protocol even in localhost.
-Change in program/manifest `net = false` if you dont wanna use networking.
-
-If you wanna in terminal popup then run (bash/work on win also if you have bash) `dedicated.sh./`
-or `dedicated.bat`.
-
-
-#### From [1.7.11]
- No need for:
- `// matrixEngine.Engine.load_shaders('shaders/shaders.html');`
- Initial Shaders now loads from code (inside engine). No need any action.
+Code access:
+```js
+const QueryString = matrixEngine.utility.QueryString;
+```
+Take a look at query-build.html
 
 
 ### List of examples:
@@ -344,7 +320,7 @@ Example with physics and raycast hit detect:
   objGenerator(100)
 ```
 
-### Networking
+### Networking [1.8.0]
 
 Networking based on webRTC. If you wanna use `multiplayer mode` you need to run intro
 folder `networking/` next commands:
@@ -353,9 +329,46 @@ folder `networking/` next commands:
  node matrix-server.js
 ```
 
-Support list : 😇
- - cube (position.SetX SetY SetZ , rotation.rotateX rotateY rotateZ , scale)
- 
+#### Networking Support Methods list: ✅😇
+ - Any scene object:
+  ➡ position SetX() SetY() SetZ()
+  ➡ rotation.rotateX() rotateY() rotateZ()
+
+ - Cube, Sphere, Square
+  ➡ geometry.setScale()
+  ➡ geometry.setScaleByY()
+  ➡ geometry.setScaleByZ()
+  ➡ geometry.setScaleByZ()
+  ➡ geometry.setTexCoordScaleFactor()
+ - Pyramid
+  ➡ geometry.setScale()
+  ➡ geometry.setSpitz()
+
+#### Networking minimal example
+
+```js
+export var runThis = world => {
+
+  world.Add("pyramid", 1, "MyCubeTex");
+  world.Add("square", 1, "MyColoredSquare1");
+
+  // Must be activate
+  matrixEngine.Engine.activateNet();
+
+  // Must be activate for scene objects also.
+  // This is only to force avoid unnecessary networking emit!
+  App.scene.MyCubeTex.net.enable = true;
+  App.scene.MyCubeTex.net.activate();
+
+  App.scene.MyColoredSquare1.net.enable = true;
+  App.scene.MyColoredSquare1.net.activate();
+
+  // Just call it normally
+  App.scene.MyCubeTex.position.SetZ(-8);
+  App.scene.MyColoredSquare1.position.SetZ(-8);
+
+};
+```
 
 It is perfect solution webGL vs webRTC. Origin code used `broadcaster class` from visual-ts game engine project.
 
@@ -446,7 +459,7 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
   App.camera.FirstPersonController = true;
 ```
 
-### Animated female droid:
+### Animated female droid (morph targets):
 
 ```js
 // Obj Loader
@@ -594,13 +607,39 @@ Old Live demo:
 Video and webcam works at:
 https://maximumroulette.com/webgl2/examples.html
 
+### Changes:
+
+#### From [1.8.0]
+Added watchify.
+We have support for real time connections based on webRTC.
+You must work on https protocol even in localhost.
+Change in program/manifest `net = false` if you dont wanna use networking.
+
+Node.js Multiplayer Server based on webRTC. Take a look at the folder `./netwotking`.
+
+Run it:
+```js
+cd networking
+node matrix.server.js
+```
+
+If you wanna in terminal popup then run (bash/work on win also if you have bash) `dedicated.sh./`
+or `dedicated.bat`.
+
+
+#### From [1.7.11]
+ No need for:
+ `// matrixEngine.Engine.load_shaders('shaders/shaders.html');`
+ Initial Shaders now loads from code (inside engine). No need any action.
+
+
 ## PWA Fully runned
 
 Integrated `Add to Home page` and `regular html5 page` options.
 In same time fixed all `autoplay` audio and video context construction.
 It is good to consult pwa test on page.
 Best way is to keep it on 100% pass.
-![pwa-powered](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/pwa__test.png)
+![pwa-powered](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/pwa__test.png)
 
 ## Secured 🛡
 
@@ -627,10 +666,10 @@ No Dependabot alerts opened.
   http://www.blendswap.com/users/view/AndresCuccaro
 - https://freestocktextures.com/texture/bark-wood-plant,122.html
 - https://github.com/Necolo/raycaster
-- BVH collections from:
-  `Special thanks to the CMU Graphics Lab Motion Capture Database which provided the   data http://mocap.cs.cmu.edu/`
+- BVH collections from: Special thanks to the CMU Graphics Lab Motion Capture Database which provided the data http://mocap.cs.cmu.edu/`
 - Used in examples:
   BLACK FLY by Audionautix | http://audionautix.com
   Music promoted by https://www.free-stock-music.com
   Creative Commons Attribution-ShareAlike 3.0 Unported
   https://creativecommons.org/licenses/by-sa/3.0/deed.en_US
+  - Networking based on https://github.com/muaz-khan/RTCMultiConnection

@@ -14,11 +14,8 @@ echo -e "$(tput bold) Detected Minify. $(tput sgr0)";
 echo
 echo Start compressing javascript files;
 echo Compressing javascript files list;
-
 echo  - start...
-
 minify builds/examples.me.js > builds/matrix-engine.min.js;
-
 echo
 echo -e "$(tput bold) @Zlatnaspirala software architect $(tput sgr0)";
 echo -e "$(tput setaf 2)Compressing javascript files done$(tput sgr0).";

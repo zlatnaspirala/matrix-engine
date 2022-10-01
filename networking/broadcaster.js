@@ -136,7 +136,8 @@ class Broadcaster {
 
     console.log("Broadcaster runned under:");
     console.log(config);
-    console.log("Good luck.");
+    var Reset = '\x1b[0m';
+    console.log('\x1b[42m', `Matrix Server Broadcster ready... 🤘 [Enjoy]`, Reset);
   }
 }
 module.exports = Broadcaster;

@@ -18,25 +18,27 @@ export var runThis = world => {
     mix_operation: "multiply",
   };
 
-  world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
+  world.Add("pyramid", 1, "MyCubeTex");
+
+  world.Add("square", 1, "MyColoredSquare1");
 
   // Must be activate
   matrixEngine.Engine.activateNet();
 
 
   // Must be activate for scene objects also.
+  // This is only to force avoid unnecessary networking emit!
   App.scene.MyCubeTex.net.enable = true;
   App.scene.MyCubeTex.net.activate();
   
+  App.scene.MyColoredSquare1.net.enable = true;
+  App.scene.MyColoredSquare1.net.activate();
+
   App.scene.MyCubeTex.position.SetZ(-8)
   
   // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
   // App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
   // App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
-
-  // matrixEngine.utility.scriptManager.LOAD("./")
-
-
   // setInterval(function () {
   //   App.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
   //   App.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();

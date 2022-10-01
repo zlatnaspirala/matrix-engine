@@ -113,16 +113,14 @@ class ServerConfig {
       console.log("-rtc domain prod", this.domain.prod);
     }
 
-    console.log("-rtc masterServerKey", this.masterServerKey);
-    console.log("-rtc rtcServerPort", this.rtcServerPort);
-    console.log("-rtc rtc3/broadcaster is enabled", this.appUseBroadcaster);
-    console.log("-rtc rtc3ServerPort", this.rtc3ServerPort);
-    console.log("-rtc connectorPort", this.connectorPort);
-    console.log("-rtc protocol", this.protocol);
-    console.log("-rtc isSecure", this.isSecure);
-    console.log("-rtc appUseAccountsSystem", this.appUseAccountsSystem);
-    console.log("-rtc databaseName", this.databaseName);
-
+    var Reset = '\x1b[0m';
+    console.log('\x1b[42m', 'Matrix Server params 🧪 ', Reset);
+    console.log('\x1b[42m', "-rtc masterServerKey", this.masterServerKey, Reset);
+    console.log('\x1b[42m', "-rtc rtcServerPort", this.rtcServerPort, Reset);
+    console.log('\x1b[42m', "-rtc rtc3/broadcaster is enabled", this.appUseBroadcaster, Reset);
+    console.log('\x1b[42m', "-rtc rtc3ServerPort", this.rtc3ServerPort, Reset);
+    console.log('\x1b[42m', "-rtc protocol", this.protocol, Reset);
+    console.log('\x1b[42m', "-rtc isSecure", this.isSecure, Reset);
   }
 
   /**
