@@ -5,7 +5,7 @@
 ### Name: `MATRIX-ENGINE` `1.8.0` beta
 
 #### Logo
-![webGL2GLMatrix2](https://github.com/zlatnaspirala/matrix-engine/blob/master/res/icons/ms-icon.png)
+![webGL2GLMatrix2](https://github.com/zlatnaspirala/matrix-engine/blob/master/res/icons/ms-icon.png =128x128)
 
 ### STATUS
 #### - [Integrated PWA addToHomePage/cache/] 	✔	
