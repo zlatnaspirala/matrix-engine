@@ -1,0 +1,24 @@
+
+# Project: matrix-engine
+# Commpress JS files for production
+
+minify -v >/dev/null 2>&1 || { 
+  echo >&2 "I require minify but it's not installed. ";
+  echo 
+  echo -n "Installing minify globally (npm i -g minify)...";
+  npm i -g minify;
+}
+
+echo
+echo -e "$(tput bold) Detected Minify. $(tput sgr0)";
+echo
+echo Start compressing javascript files;
+echo Compressing javascript files list;
+echo  - start...
+minify builds/examples.me.js > builds/matrix-engine.min.js;
+echo
+echo -e "$(tput bold) @Zlatnaspirala software architect $(tput sgr0)";
+echo -e "$(tput setaf 2)Compressing javascript files done$(tput sgr0).";
+echo -e "$(tput setaf 4)Final bundle script saved at: /matrix-engine.min.js";
+echo -e "Push the tempo! $(tput sgr0).";
+echo

@@ -63,7 +63,7 @@ export var runThis = (world) => {
   const filePath2 = "res/bvh/Female1_B04_StandToWalkBack.bvh";
   var myBvhAnimation = new matrixEngine.MEBvhAnimation(filePath2, options2)
   
-  var funnySwitch = new matrixEngine.utility.OSCILLATOR(0, 10 , 0.01);
+  var funnySwitch = new matrixEngine.utility.OSCILLATOR(0, 0.1 , 0.0001);
 
   setTimeout( () => {
   // make funny staff with matrix-engine

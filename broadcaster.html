@@ -1,0 +1,34 @@
+﻿<link href="css/broadcaster.css" rel="stylesheet">
+<link href="css/animations.css" rel="stylesheet">
+<link href="css/getHTMLMediaElement.css" rel="stylesheet">
+
+<div class="broadcaster" id="broadcasterUI">
+  <div id="rtc3log" class="title">
+    Networking
+  </div>
+  <section class="make-fill">
+    <div class="leftOrder">Uniq channel key:</div>
+    <input type="text" id="room-id" value="abcdef"
+      autocorrect=off autocapitalize=off size=20 class="blue-label" />
+    <div style="display:flex;width: 39vh;padding: 5px 5px 5px 5px;">
+      <button id="open-room" class="hide broadcastLabel">Open Room</button>
+      <button id="join-room" class="hide broadcastLabel">Join Room</button>
+      <button id="open-or-join-room" class="broadcastLabel">Connect</button>
+    </div>
+    <br>
+    <input type="text" id="input-text-chat" placeholder="Send Message" disabled class="blue-label chat-input">
+    <div style="display:flex;width: 39vh;padding: 5px 5px 5px 5px;">
+      <button id="share-file" class="broadcastLabel share-btn" disabled>Share File</button>
+      <button id="btn-leave-room" class="broadcastLabel leave-btn" disabled>Leave room</button>
+    </div>
+
+    <div id="room-urls" class="urlBox"></div>
+
+    <div id="chat-container">
+      <div id="file-container"></div>
+      <div class="chat-output"></div>
+    </div>
+    <div style="display:block" id="videos-container"></div>
+  </section>
+
+</div>

@@ -36,8 +36,10 @@ import {runThis as porting2d_micro_draw } from './apps/porting2d_micro_draw';
 import {runThis as physics_cube } from './apps/physics_cube';
 import {runThis as physics_sphere } from './apps/physics_sphere';
 import {runThis as spot_light_basic } from './apps/spot_light_basic';
+import {runThis as networking_basic } from './apps/networking_basic';
 
 var Examples = {
+  networking_basic: networking_basic,
   spot_light_basic: spot_light_basic,
   physics_sphere: physics_sphere,
   physics_cube: physics_cube,
@@ -107,9 +109,10 @@ function webGLStart() {
         typeof Examples[QueryString.u] != 'undefined') {
       setTimeout(() => {
         try {
+          
           Examples[QueryString.u](world);
         } catch(err) {
-          Examples['adding_color_cube'](world);
+          // Examples['adding_color_cube'](world);
         }
       }, 100);
     } else {

@@ -8,7 +8,7 @@ exports.default = void 0;
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _adding_color_cube = require("./apps/adding_color_cube");
+var _bvh_animations = require("./apps/bvh_animations");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -33,12 +33,11 @@ window.webGLStart = () => {
 
   window.world = world;
   window.App = App;
-  window.runThis = _adding_color_cube.runThis;
-  matrixEngine.utility.E('debugBox').style.display = 'block'; // canvas.addEventListener('mousedown', (ev) => { raycaster.checkingProcedure(ev); });
-  // If you need this , you can prolong loading time
+  window.runThis = _bvh_animations.runThis;
+  matrixEngine.utility.E('debugBox').style.display = 'block'; // If you need this , you can prolong loading time
 
   setTimeout(() => {
-    (0, _adding_color_cube.runThis)(world);
+    (0, _bvh_animations.runThis)(world);
   }, 250);
 };
 
@@ -47,7 +46,19 @@ var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/adding_color_cube":2,"./index.js":3}],2:[function(require,module,exports){
+},{"./apps/bvh_animations":3,"./index.js":5}],2:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.bvhAnimations = void 0;
+
+/** Auto generated file */
+var bvhAnimations = ['./res/bvh/Female1_A01_Stand.bvh', './res/bvh/Female1_A02_Sway.bvh', './res/bvh/Female1_A02_SwayT2.bvh', './res/bvh/Female1_A03_Swing.bvh', './res/bvh/Female1_A03_SwingT2.bvh', './res/bvh/Female1_A04_Look.bvh', './res/bvh/Female1_A05_PickUpBox.bvh', './res/bvh/Female1_A06_LiftBox.bvh', './res/bvh/Female1_A06_LiftBoxT2.bvh', './res/bvh/Female1_A07_Crouch.bvh', './res/bvh/Female1_A08_CrouchToLie.bvh', './res/bvh/Female1_A09_LieT2.bvh', './res/bvh/Female1_A10_LieToCrouch.bvh', './res/bvh/Female1_A11_CrawlForward.bvh', './res/bvh/Female1_A12_CrawlBackwards.bvh', './res/bvh/Female1_A13_Skipping.bvh', './res/bvh/Female1_A14_StandToSkip.bvh', './res/bvh/Female1_A15_SkipToStand.bvh', './res/bvh/Female1_B01_StandToWalk.bvh', './res/bvh/Female1_B02_WalkToStand.bvh', './res/bvh/Female1_B02_WalkToStandT2.bvh', './res/bvh/Female1_B03_Walk1.bvh', './res/bvh/Female1_B04_StandToWalkBack.bvh', './res/bvh/Female1_B05_WalkBackwards.bvh', './res/bvh/Female1_B06_WalkBackwardsToStand.bvh', './res/bvh/Female1_B07_WalkBackwardsTurnForwards.bvh', './res/bvh/Female1_B08_WalkBackwardsStopForwards.bvh', './res/bvh/Female1_B09_WalkTurnLeft90.bvh', './res/bvh/Female1_B10_WalkTurnLeft45.bvh', './res/bvh/Female1_B11_WalkTurnLeft135.bvh', './res/bvh/Female1_B12_WalkTurnRight90.bvh', './res/bvh/Female1_B13_WalkTurnRight45.bvh', './res/bvh/Female1_B14_WalkTurnRight135.bvh', './res/bvh/Female1_B15_WalkTurnAround180.bvh', './res/bvh/Female1_B16_WalkTurnChangeDirection.bvh', './res/bvh/Female1_B17_WalkToHopToWalk1.bvh', './res/bvh/Female1_B18_WalkToLeapToWalk.bvh', './res/bvh/Female1_B19_WalkToPickUpBox.bvh', './res/bvh/Female1_B20_WalkWithBox.bvh', './res/bvh/Female1_B21_PutDownBoxToWalk.bvh', './res/bvh/Female1_B21_S2_PutDownBoxToWalk.bvh', './res/bvh/Female1_B21_S3_PutDownBoxToWalk.bvh', './res/bvh/Female1_B22_SideStepLeft.bvh', './res/bvh/Female1_B23_SideStepRight.bvh', './res/bvh/Female1_B24_WalkToCrouch.bvh', './res/bvh/Female1_B25_CrouchToWalk.bvh', './res/bvh/Female1_B26_WalkToSkip.bvh', './res/bvh/Female1_B27_SkipToWalk1.bvh', './res/bvh/Female1_C02_RunToStand.bvh', './res/bvh/Female1_C03_Run.bvh', './res/bvh/Female1_C04_RunToWalk1.bvh', './res/bvh/Female1_C05_WalkToRun.bvh', './res/bvh/Female1_C06_StandToRunBackwards.bvh', './res/bvh/Female1_C07_RunBackwards.bvh', './res/bvh/Female1_C08_RunBackwardsToStand.bvh', './res/bvh/Female1_C09_RunBackwardsTurnRunForward.bvh', './res/bvh/Female1_C10_RunBackwardsStopRunForward.bvh', './res/bvh/Female1_C11_RunTurnLeft90.bvh', './res/bvh/Female1_C12_RunTurnLeft45.bvh', './res/bvh/Female1_C13_RunTurnLeft135.bvh', './res/bvh/Female1_C14_RunTurnRight90.bvh', './res/bvh/Female1_C15_RunTurnRight45.bvh', './res/bvh/Female1_C16_RunTurnRight135.bvh', './res/bvh/Female1_C17_RunTurnAround.bvh', './res/bvh/Female1_C18_RunChangeDirection.bvh', './res/bvh/Female1_C19_RunToHopToWalk.bvh', './res/bvh/Female1_C20_RunToJumpToWalk.bvh', './res/bvh/Female1_C21_RunToPickUpBox.bvh', './res/bvh/Female1_C21_S2_RunToPickUpBox.bvh', './res/bvh/Female1_C22_RunWithBox.bvh', './res/bvh/Female1_C23_PutDownBoxToRun.bvh', './res/bvh/Female1_C24_SideStepLeft.bvh', './res/bvh/Female1_C25_SideStepRight.bvh', './res/bvh/Female1_C26_RunToCrouch.bvh', './res/bvh/Female1_C27_CrouchToRun1.bvh', './res/bvh/Female1_D1_Urban.bvh', './res/bvh/Female1_D2_Wait.bvh', './res/bvh/Female1_D3_ConversationGestures.bvh', './res/bvh/Female1_D4_RandomStuff.bvh', './res/bvh/Female1_D5_RandomStuff2.bvh', './res/bvh/Female1_D6_CartWheel.bvh', './res/bvh/readme.txt'];
+exports.bvhAnimations = bvhAnimations;
+
+},{}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -57,40 +68,252 @@ exports.runThis = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
+var _animationsList = require("./animations-list");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- *@Author Nikola Lukic
- *@Description Matrix Engine Api Example
- * Adding default color cube.
+ * @description Usage of MEBvhAnimation with switch system.
+ * @class MEBvhAnimation
+ * @arg filePath
+ * @arg options
  */
-
-/* globals world App */
 var runThis = world => {
-  world.Add("cube", 1, "MyColoredCube1");
-  world.Add("cube", 1, "MyColoredCube2");
-  world.Add("cube", 1, "MyColoredCube3");
+  // Camera
+  _manifest.default.camera.SceneController = true; // need to be removed from bvh-loader npm package!
+
+  var logHTML = document.createElement('div');
+  logHTML.id = 'log'; // logHTML.style.position = 'absolute';
+
+  document.body.appendChild(logHTML);
+
+  const createAnimation = index => {
+    const options = {
+      boneNameBasePrefix: 'firstAnim' + index,
+      world: world,
+      // [Required]
+      autoPlay: true,
+      // [Optimal]
+      showOnLoad: false,
+      // [Optimal] if autoPLay is true then showOnLoad is inactive.
+      type: 'ANIMATION',
+      // [Optimal] 'ANIMATION' | "TPOSE'
+      loop: 'playInverse',
+      // [Optimal] true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
+      globalOffset: [0, -220, -100],
+      // [Optimal]
+      skeletalBoneScale: 3,
+      // [Optimal]
+
+      /*skeletalBlend: {             // [Optimal] remove arg for no blend
+        paramDest: 4,
+        paramSrc: 4
+      },*/
+      speed: 5,
+      boneTex: {
+        source: ["res/images/sky/blue.jpg"],
+        mix_operation: "multiply"
+      },
+      drawTypeBone: "pyramid" // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
+
+    }; // window.bvhAnimations = bvhAnimations;
+    // console.log(" @!!!!bvhAnimations[0] 2>>> ",  bvhAnimations);
+
+    return new matrixEngine.MEBvhAnimation(_animationsList.bvhAnimations[index], options);
+  };
+
+  window.createAnimation = createAnimation;
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
-  addEventListener("ray.hit.event", function (e) {
-    console.info(e.detail);
+  addEventListener('ray.hit.event', function (e) {
+    console.info(e.detail.hitObject);
+    e.detail.hitObject.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[2];
+    e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
   });
-
-  _manifest.default.scene.MyColoredCube1.position.SetX(0);
-
-  _manifest.default.scene.MyColoredCube2.position.SetX(-2.5);
-
-  _manifest.default.scene.MyColoredCube3.position.SetX(2.5);
-
-  _manifest.default.scene.MyColoredCube1.rotation.rotationSpeed.x = 15;
-  _manifest.default.scene.MyColoredCube2.rotation.rotationSpeed.y = 15;
-  _manifest.default.scene.MyColoredCube3.rotation.rotationSpeed.z = 15;
 };
 
 exports.runThis = runThis;
 
-},{"../program/manifest":25}],3:[function(require,module,exports){
+},{"../program/manifest":36,"./animations-list":2}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+/**
+ * @description
+ * ClientConfig is config file for client part of networking.
+ */
+class ClientConfig {
+  // Free to define what ever -> injectCanvas
+  recordCanvasOption = {
+    injectCanvas: () => document.getElementsByTagName("canvas")[0],
+    frameRequestRate: 30,
+    videoDuration: 20,
+    outputFilename: "record-gameplay.mp4",
+    mineType: "video/mp4",
+    resolutions: '800x600'
+  };
+  /**
+   * @description
+   * Default setup is `dev`.
+   * recommendent to use for local propose LAN ip
+   * like : 192.168.0.XXX if you wanna run ant test app with server.
+   */
+  // domain = "maximumroulette.com";
+
+  domain = "localhost";
+  /**
+   * @description Important note for this property: if you
+   * disable (false) you can't use Account system or any other
+   * network. Use 'false' if you wanna make single player game.
+   * In other way keep it 'true'.
+   */
+
+  showBroadcasterOnInt = true;
+  /**
+   * networkDeepLogs control of dev logs for webRTC context only.
+   */
+
+  networkDeepLogs = false;
+  /**
+   * masterServerKey is channel access id used to connect
+   * multimedia server channel.Both multiRTC2/3
+   */
+
+  masterServerKey = "maximumroulette.matrix-engine";
+  /**
+   * @description
+   * runBroadcasterOnInt load broadcaster
+   */
+
+  runBroadcasterOnInt = true;
+  broadcastAutoConnect = true;
+  /**
+   * @description
+   * broadcasterPort Port used to connect multimedia server MultiRTC3.
+   * I will use it for explicit video chat multiplatform support.
+   * Default value is 9001
+   */
+
+  broadcasterPort = 9001;
+  /**
+   * @description
+   * broadcaster socket.io address.
+   * Change it for production regime
+   */
+
+  broadcastAutoConnect = false;
+  /**
+   * @description
+   * broadcaster rtc session init values.
+   * Change it for production regime
+   */
+
+  broadcasterSessionDefaults = {
+    sessionAudio: true,
+    sessionVideo: false,
+    sessionData: true,
+    enableFileSharing: true
+  };
+  /**
+   * @description
+   * Optimal for dev stage.
+   * read more about webRtc protocols.
+   * Recommended: coturn open source project.
+   */
+
+  stunList = ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302", "stun:stun.l.google.com:19302?transport=udp"];
+  /**
+   * @description
+   * constructor will save interest data for game platform
+   * For now it is just name of the game. I use it in
+   * pre gameplay UI game selector.
+   */
+
+  constructor() {}
+
+  getRecordCanvasOptions() {
+    return this.recordCanvasOption;
+  }
+
+  getRunBroadcasterOnInt() {
+    return this.runBroadcasterOnInt;
+  }
+
+  didAppUseBroadcast() {
+    return this.appUseBroadcaster;
+  }
+
+  getStunList() {
+    return this.stunList;
+  }
+
+  getBroadcastSockRoute() {
+    return this.getProtocolFromAddressBar() + this.getDomain() + ":" + this.broadcasterPort + "/";
+  }
+
+  getCoordinatorSockRoute() {
+    return this.getProtocolFromAddressBar() + this.getDomain() + ":" + this.rtcServerPort + "/";
+  }
+
+  getDomain() {
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+      return window.location.hostname;
+    }
+
+    return this.domain;
+  }
+
+  getBroadcastAutoConnect() {
+    return this.broadcastAutoConnect;
+  }
+
+  getShowBroadcasterOnInt() {
+    return this.showBroadcasterOnInt;
+  }
+
+  getBroadcasterPort() {
+    return this.broadcasterPort;
+  }
+
+  getBroadcasterSessionDefaults() {
+    return this.broadcasterSessionDefaults;
+  }
+
+  getProtocolFromAddressBar() {
+    return location.protocol === "https:" ? "https://" : "http://";
+  }
+
+  getRemoteServerAddress() {
+    return (location.protocol === "https:" ? "wss" : "ws") + "://" + document.domain + ":" + this.rtcServerPort + "/";
+  }
+
+  getRemoteServerAddressControlller() {
+    return (location.protocol === "https:" ? "wss" : "ws") + "://" + document.domain + ":" + this.getConnectorPort() + "/";
+  }
+
+  setNetworkDeepLog(newState) {
+    this.networkDeepLogs = newState;
+  }
+
+  getNetworkDeepLog() {
+    return this.networkDeepLogs;
+  }
+
+  getMasterServerKey() {
+    return this.masterServerKey;
+  }
+
+}
+
+var _default = ClientConfig;
+exports.default = _default;
+
+},{}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -168,7 +391,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./lib/engine":4,"./lib/events":5,"./lib/loader-obj":6,"./lib/matrix-buffers":7,"./lib/matrix-bvh":8,"./lib/matrix-geometry":10,"./lib/matrix-render":12,"./lib/matrix-textures":16,"./lib/matrix-world":17,"./lib/raycast":19,"./lib/utility":20,"./program/manifest":25}],4:[function(require,module,exports){
+},{"./lib/engine":6,"./lib/events":7,"./lib/loader-obj":8,"./lib/matrix-buffers":9,"./lib/matrix-bvh":10,"./lib/matrix-geometry":12,"./lib/matrix-render":14,"./lib/matrix-textures":18,"./lib/matrix-world":19,"./lib/raycast":22,"./lib/utility":27,"./program/manifest":36}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -193,7 +416,9 @@ exports.ACCESS_CAMERA = ACCESS_CAMERA;
 exports.VIDEO_TEXTURE = VIDEO_TEXTURE;
 exports.Vjs3 = Vjs3;
 exports.anyCanvas = anyCanvas;
-exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateVShaderSimpleDirectionLight = exports.RegenerateShaderSimpleDirectionLight = exports.RegenerateShader = exports.looper = exports.EVENTS_INSTANCE = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
+exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateVShaderSimpleDirectionLight = exports.RegenerateShaderSimpleDirectionLight = exports.RegenerateShader = exports.activateNet = exports.net = exports.looper = exports.EVENTS_INSTANCE = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
+
+var _net = require("./net");
 
 var _events = require("./events");
 
@@ -208,6 +433,8 @@ var _matrixRender = require("./matrix-render");
 var _matrixWorld = require("./matrix-world");
 
 var _matrixShaders = require("./matrix-shaders");
+
+var _clientConfig = _interopRequireDefault(require("../client-config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -244,6 +471,19 @@ function resizeView() {
     exports.ht = ht = document.documentElement.clientHeight - 4;
   }
 }
+
+let net = null;
+exports.net = net;
+
+let activateNet = () => {
+  if (typeof _manifest.default.net !== 'undefinde' && _manifest.default.net === true) {
+    var t = new _clientConfig.default();
+    exports.net = net = new _net.Broadcaster(t);
+    console.log("Networking is active.", net);
+  }
+};
+
+exports.activateNet = activateNet;
 
 function initApp(callback) {
   /* Calculate Width and Height before rendering       */
@@ -929,7 +1169,7 @@ function anyCanvas(path_, nameOfCanvas) {
   ROOT.iframe.data = path_;
 }
 
-},{"../program/manifest":25,"./events":5,"./matrix-render":12,"./matrix-shaders":13,"./matrix-world":17,"./utility":20,"./webgl-utils":21}],5:[function(require,module,exports){
+},{"../client-config":4,"../program/manifest":36,"./events":7,"./matrix-render":14,"./matrix-shaders":15,"./matrix-world":19,"./net":20,"./utility":27,"./webgl-utils":28}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1410,7 +1650,7 @@ if (_manifest.default.pwa.addToHomePage === true) {
   } catch (err) {}
 }
 
-},{"../program/manifest":25,"./matrix-world":17,"./utility":20}],6:[function(require,module,exports){
+},{"../program/manifest":36,"./matrix-world":19,"./utility":27}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1835,7 +2075,7 @@ var deleteMeshBuffers = function (gl, mesh) {
 
 exports.deleteMeshBuffers = deleteMeshBuffers;
 
-},{"./matrix-world":17}],7:[function(require,module,exports){
+},{"./matrix-world":19}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2187,7 +2427,7 @@ _manifest.default.operation.sphere_buffer_procedure = function (object) {
 var _default = _manifest.default.operation;
 exports.default = _default;
 
-},{"../program/manifest":25,"./matrix-world":17}],8:[function(require,module,exports){
+},{"../program/manifest":36,"./matrix-world":19}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2236,7 +2476,8 @@ class MEBvhAnimation {
     if (typeof options.autoPlay === 'undefined') options.autoPlay = true;
     if (typeof options.boneNameBasePrefix === 'undefined') options.boneNameBasePrefix = "MatrixSkeletalBone";
     if (typeof options.globalOffset === 'undefined') options.globalOffset = [0, 0, 0];
-    if (typeof options.myFrameRate === 'undefined') options.myFrameRate = 125; // passed
+    if (typeof options.myFrameRate === 'undefined') options.myFrameRate = 125;
+    if (typeof options.speed === 'undefined') options.speed = 5; // passed
 
     this.options = options;
     this.world = options.world;
@@ -2255,7 +2496,7 @@ class MEBvhAnimation {
       this.skeletalKeys = this.anim.joint_names();
       this.animation = this.anim.all_frame_poses();
       this.sumOfFrames = this.animation[0].length - 1;
-      this.loopInverse = new _utility.OSCILLATOR(1, this.sumOfFrames, 1);
+      this.loopInverse = new _utility.OSCILLATOR(1, this.sumOfFrames, options.speed);
 
       if (options.autoPlay == true) {
         switch (options.type) {
@@ -2287,6 +2528,8 @@ class MEBvhAnimation {
           }
         }
       }
+    }).catch(err => {
+      console.warn("Bvh loader error: ", err);
     });
   }
 
@@ -2401,7 +2644,7 @@ class MEBvhAnimation {
 
 exports.default = MEBvhAnimation;
 
-},{"./matrix-world":17,"./utility":20,"bvh-loader":22}],9:[function(require,module,exports){
+},{"./matrix-world":19,"./utility":27,"bvh-loader":31}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3444,7 +3687,7 @@ var drawsOperation = _manifest.default.operation.draws;
 var _default = drawsOperation;
 exports.default = _default;
 
-},{"../program/manifest":25,"./events":5,"./matrix-world":17,"./raycast":19,"./utility":20}],10:[function(require,module,exports){
+},{"../program/manifest":36,"./events":7,"./matrix-world":19,"./raycast":22,"./utility":27}],12:[function(require,module,exports){
 /* eslint-disable no-redeclare */
 
 /* eslint-disable no-unused-vars */
@@ -3456,11 +3699,13 @@ Object.defineProperty(exports, "__esModule", {
 exports.COLOR = COLOR;
 exports.COLOR_ALPHA = COLOR_ALPHA;
 exports.ring = ring;
-exports.customVertex_1 = exports.customVertex = exports.sphereVertex = exports.PiramideVertex = exports.GeoOfColor = exports.CubeVertex = exports.SquareVertex = exports.TriangleVertex = exports.Position = exports.RotationVector = exports.Point = exports.Scale = void 0;
+exports.GeoOfColor = exports.customVertex_1 = exports.customVertex = exports.sphereVertex = exports.PiramideVertex = exports.CubeVertex = exports.SquareVertex = exports.TriangleVertex = exports.Position = exports.RotationVector = exports.Point = exports.Scale = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
 var _utility = require("./utility");
+
+var _engine = require("./engine");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3535,6 +3780,7 @@ class RotationVector {
       rotz = 0;
     }
 
+    this.nameUniq = null;
     this.x = x;
     this.y = y;
     this.z = z;
@@ -3547,6 +3793,7 @@ class RotationVector {
      */
 
     this.rotationSpeed = {
+      emit: false,
       x: 0,
       y: 0,
       z: 0
@@ -3637,16 +3884,34 @@ class RotationVector {
     this.z = 1;
   }
 
-  rotateX(x) {
+  rotateX(x, em) {
     this.rotx = x;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netRot: {
+        x: this.rotx
+      },
+      netObjId: this.nameUniq
+    });
   }
 
-  rotateY(y) {
+  rotateY(y, em) {
     this.roty = y;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netRot: {
+        y: this.roty
+      },
+      netObjId: this.nameUniq
+    });
   }
 
-  rotateZ(z) {
+  rotateZ(z, em) {
     this.rotz = z;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netRot: {
+        z: this.rotz
+      },
+      netObjId: this.nameUniq
+    });
   }
 
   get rx() {
@@ -3664,6 +3929,8 @@ class RotationVector {
 }
 /**
  * @description Base class
+ * Powered for multiplayer feature:
+ * - position ref to x,y,z
  */
 
 
@@ -3671,6 +3938,8 @@ exports.RotationVector = RotationVector;
 
 class Position {
   constructor(x, y, z) {
+    this.nameUniq = null;
+
     if (typeof x == 'undefined') {
       x = 0;
     }
@@ -3744,9 +4013,7 @@ class Position {
     var tx = this.targetX - this.x,
         ty = this.targetY - this.y,
         tz = this.targetZ - this.z,
-        dist = Math.sqrt(tx * tx + ty * ty + tz * tz); // rad = Math.atan2(ty, tx),
-    // angle = (rad / Math.PI) * 180;
-
+        dist = Math.sqrt(tx * tx + ty * ty + tz * tz);
     this.velX = tx / dist * this.thrust;
     this.velY = ty / dist * this.thrust;
     this.velZ = tz / dist * this.thrust;
@@ -3756,12 +4023,28 @@ class Position {
         this.x += this.velX;
         this.y += this.velY;
         this.z += this.velZ;
+        if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+          netPos: {
+            x: this.x,
+            y: this.y,
+            z: this.z
+          },
+          netObjId: this.nameUniq
+        });
       } else {
         this.x = this.targetX;
         this.y = this.targetY;
         this.z = this.targetZ;
         this.inMove = false;
         this.onTargetPositionReach();
+        if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+          netPos: {
+            x: this.x,
+            y: this.y,
+            z: this.z
+          },
+          netObjId: this.nameUniq
+        });
       }
     }
   }
@@ -3770,22 +4053,49 @@ class Position {
     return [this.x, this.y, this.z];
   }
 
-  SetX(newx) {
+  SetX(newx, em) {
     this.x = newx;
     this.targetX = newx;
     this.inMove = false;
+
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') {
+      _engine.net.connection.send({
+        netPos: {
+          x: this.x,
+          y: this.y,
+          z: this.z
+        },
+        netObjId: this.nameUniq
+      });
+    }
   }
 
-  SetY(newy) {
+  SetY(newy, em) {
     this.y = newy;
     this.targetY = newy;
     this.inMove = false;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netPos: {
+        x: this.x,
+        y: this.y,
+        z: this.z
+      },
+      netObjId: this.nameUniq
+    });
   }
 
-  SetZ(newz) {
+  SetZ(newz, em) {
     this.z = newz;
     this.targetZ = newz;
     this.inMove = false;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netPos: {
+        x: this.x,
+        y: this.y,
+        z: this.z
+      },
+      netObjId: this.nameUniq
+    });
   }
 
   setPosition(newx, newy, newz) {
@@ -3796,6 +4106,14 @@ class Position {
     this.targetY = newy;
     this.targetZ = newz;
     this.inMove = false;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netPos: {
+        x: this.x,
+        y: this.y,
+        z: this.z
+      },
+      netObjId: this.nameUniq
+    });
   }
 
 }
@@ -3822,6 +4140,12 @@ class TriangleVertex {
 
   setScale(scale) {
     this.size = scale;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netScale: {
+        scale: scale
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.triangle_buffer_procedure(this.root);
@@ -3868,7 +4192,7 @@ class SquareVertex {
   } // Setters
 
 
-  setTexCoordScaleFactor(newScaleFactror) {
+  setTexCoordScaleFactor(newScaleFactror, em) {
     this.texCoordsPoints.right_top.y = 1 + newScaleFactror;
     this.texCoordsPoints.right_top.x = 1 + newScaleFactror;
     this.texCoordsPoints.left_bottom.x = 0 - newScaleFactror;
@@ -3877,13 +4201,25 @@ class SquareVertex {
     this.texCoordsPoints.left_top.y = 1 + newScaleFactror;
     this.texCoordsPoints.right_bottom.x = 1 + newScaleFactror;
     this.texCoordsPoints.right_bottom.y = 0 - newScaleFactror;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      texScaleFactor: {
+        newScaleFactror: newScaleFactror
+      },
+      netObjId: this.nameUniq
+    });
   }
 
-  setScaleByX(scale) {
+  setScaleByX(scale, em) {
     this.pointA.x = scale;
     this.pointB.x = -scale;
     this.pointC.x = scale;
     this.pointD.x = -scale;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netScale: {
+        x: scale
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.square_buffer_procedure(this.root);
@@ -3891,11 +4227,17 @@ class SquareVertex {
     return 'dynamicBuffer is false but i will update vertex array prototypical.';
   }
 
-  setScaleByY(scale) {
+  setScaleByY(scale, em) {
     this.pointA.y = scale;
     this.pointB.y = scale;
     this.pointC.y = -scale;
     this.pointD.y = -scale;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netScale: {
+        y: scale
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.square_buffer_procedure(this.root);
@@ -3903,8 +4245,14 @@ class SquareVertex {
     return 'dynamicBuffer is false but i will update vertex array prototypical.';
   }
 
-  setScale(scale) {
+  setScale(scale, em) {
     this.size = scale;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netScale: {
+        scale: scale
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.square_buffer_procedure(this.root);
@@ -3973,6 +4321,7 @@ class CubeVertex {
     this.basePoint = 1.0 * this.size;
     this.basePointNeg = -1.0 * this.size;
     this.dynamicBuffer = true;
+    this.nameUniq = null;
     this.osciTest = new _utility.OSCILLATOR(0, 2, 0.002);
     this.texCoordsPoints = {
       front: {
@@ -4335,8 +4684,8 @@ class CubeVertex {
     };
   }
 
-  setScaleByX(scale) {
-    //for scale
+  setScaleByX(scale, em) {
+    // for scale
     this.Left.pointA.x = -scale;
     this.Left.pointB.x = -scale;
     this.Left.pointC.x = -scale;
@@ -4361,6 +4710,12 @@ class CubeVertex {
     this.Back.pointB.x = -scale;
     this.Back.pointC.x = scale;
     this.Back.pointD.x = scale;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netScale: {
+        x: scale
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.cube_buffer_procedure(this.root);
@@ -4368,7 +4723,7 @@ class CubeVertex {
     return "dynamicBuffer is false but i will update vertex array prototypical.";
   }
 
-  setScaleByY(scale) {
+  setScaleByY(scale, em) {
     //for scale
     this.Left.pointA.y = -scale;
     this.Left.pointB.y = -scale;
@@ -4394,6 +4749,12 @@ class CubeVertex {
     this.Back.pointB.y = scale;
     this.Back.pointC.y = scale;
     this.Back.pointD.y = -scale;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netScale: {
+        y: scale
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.cube_buffer_procedure(this.root);
@@ -4401,7 +4762,7 @@ class CubeVertex {
     return "dynamicBuffer is false but i will update vertex array prototypical.";
   }
 
-  setScaleByZ(scale) {
+  setScaleByZ(scale, em) {
     this.Left.pointA.z = -scale;
     this.Left.pointB.z = scale;
     this.Left.pointC.z = scale;
@@ -4426,6 +4787,12 @@ class CubeVertex {
     this.Back.pointB.z = -scale;
     this.Back.pointC.z = -scale;
     this.Back.pointD.z = -scale;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netScale: {
+        z: scale
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.cube_buffer_procedure(this.root);
@@ -4433,10 +4800,16 @@ class CubeVertex {
     return "dynamicBuffer is false but i will update vertex array prototypical.";
   }
 
-  setScale(scale) {
+  setScale(scale, em) {
     this.size = scale;
     this.basePoint = 1.0 * this.size;
     this.basePointNeg = -1.0 * this.size;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netScale: {
+        scale: scale
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.cube_buffer_procedure(this.root);
@@ -4445,7 +4818,7 @@ class CubeVertex {
   } // Setters
 
 
-  setTexCoordScaleFactor(newScaleFactror) {
+  setTexCoordScaleFactor(newScaleFactror, em) {
     function calculate(checkValue) {
       if (checkValue <= 0) {
         return -1;
@@ -4464,6 +4837,13 @@ class CubeVertex {
       this.texCoordsPoints[key].right_bottom.x = this.texCoordsPoints[key].right_bottom.x + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.x);
       this.texCoordsPoints[key].right_bottom.y = this.texCoordsPoints[key].right_bottom.y + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.y);
     }
+
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      texScaleFactor: {
+        newScaleFactror: newScaleFactror
+      },
+      netObjId: this.nameUniq
+    });
   }
 
   get vertices() {
@@ -4509,73 +4889,6 @@ class CubeVertex {
 }
 
 exports.CubeVertex = CubeVertex;
-
-class GeoOfColor {
-  constructor(type_) {
-    if (typeof type_ != "undefined") {
-      if (type_ == "4x4" || type_ == "square") {
-        return new Float32Array([1.0, 0.0, 0.0, 1.0, //Top right
-        0.0, 1.0, 0.0, 1.0, //Top left
-        0.0, 0.0, 1.0, 1.0, //Bottom right
-        0.5, 1.0, 0.5, 1.0 //Bottom left
-        ]);
-      } else if (type_ == "triangle") {
-        return [1.0, 0.0, 0.0, 1.0, // Top
-        0.0, 1.0, 0.0, 1.0, // Right
-        0.0, 0.0, 1.0, 1.0 // Bottom
-        ];
-      } else if (type_ == "Piramide4") {
-        this.front = "test";
-        return new Float32Array([// Front face
-        1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, // Right face
-        1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, // Back face
-        1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, // Left face
-        1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, // Bottom left
-        0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, // Bottom right
-        0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0]);
-      } else if (type_ == "cube") {
-        return [[1.0, 1.0, 1.0, 1.0], // Front
-        [1.0, 1.0, 0.0, 1.0], // Back
-        [0.0, 1.0, 0.0, 1.0], // Top
-        [1.0, 0.5, 0.5, 1.0], // Bottom
-        [1.0, 0.0, 1.0, 1.0], // Right
-        [0.0, 0.0, 1.0, 1.0] // Left
-        ];
-      } else if (type_ == "cubelight" || type_ == "cube light") {
-        return new Float32Array([// F
-        0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, // B
-        0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, // T
-        0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, // Bo
-        0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, // R
-        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, // L
-        -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0]); // org
-        // return new Float32Array( [
-        //   // Front face
-        //   0.0, 0.0, 1.0, 1, 0.0, 0.0, 1.0, 1, 0.0, 0.0, 1.0, 1, 0.0, 0.0, 1.0, 1,
-        //   // Back face
-        //   0.0, 0.0, -1.0, 1, 0.0, 0.0, -1.0, 1, 0.0, 0.0, -1.0, 1, 0.0, 0.0, -1.0, 1,
-        //   // Top face
-        //   0.0, 1.0, 0.0, 1, 0.0, 1.0, 0.0, 1, 0.0, 1.0, 0.0, 1, 0.0, 1.0, 0.0, 1,
-        //   // Bottom face
-        //   0.0, -1.0, 0.0, 1, 0.0, -1.0, 0.0, 1, 0.0, -1.0, 0.0, 1, 0.0, -1.0, 0.0, 1,
-        //   // Right face
-        //   1.0, 0.0, 0.0, 1, 1.0, 0.0, 0.0, 1, 1.0, 0.0, 0.0, 1, 1.0, 0.0, 0.0, 1,
-        //   // Left face
-        //   -1.0, 0.0, 0.0, 1, -1.0, 0.0, 0.0, 1, -1.0, 0.0, 0.0, 1, -1.0, 0.0, 0.0, 1
-        // ]);
-      }
-    } else {
-      return [1.0, 0.0, 0.0, 1.0, // Top right
-      0.0, 1.0, 0.0, 1.0, // Top left
-      0.0, 0.0, 1.0, 1.0, // Bottom right
-      0.5, 1.0, 0.5, 1.0 // Bottom left
-      ];
-    }
-  }
-
-}
-
-exports.GeoOfColor = GeoOfColor;
 
 class PiramideVertex {
   constructor(root) {
@@ -4706,10 +5019,16 @@ class PiramideVertex {
     };
   }
 
-  setScale(scale) {
+  setScale(scale, em) {
     this.size = scale;
     this.basePoint = 1.0 * this.size;
     this.basePointNeg = -1.0 * this.size;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      netScale: {
+        scale: scale
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.piramide_buffer_procedure(this.root);
@@ -4717,8 +5036,14 @@ class PiramideVertex {
     return "dynamicBuffer is false but i will update vertex array prototypical.";
   }
 
-  setSpitz(newValueFloat) {
+  setSpitz(newValueFloat, em) {
     this.spitz = newValueFloat;
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+      spitz: {
+        newValueFloat: newValueFloat
+      },
+      netObjId: this.nameUniq
+    });
     if (this.dynamicBuffer == true) return;
 
     _manifest.default.operation.piramide_buffer_procedure(this.root);
@@ -5169,9 +5494,76 @@ class customVertex_1 {
 
 exports.customVertex_1 = customVertex_1;
 
+class GeoOfColor {
+  constructor(type_) {
+    if (typeof type_ != "undefined") {
+      if (type_ == "4x4" || type_ == "square") {
+        return new Float32Array([1.0, 0.0, 0.0, 1.0, //Top right
+        0.0, 1.0, 0.0, 1.0, //Top left
+        0.0, 0.0, 1.0, 1.0, //Bottom right
+        0.5, 1.0, 0.5, 1.0 //Bottom left
+        ]);
+      } else if (type_ == "triangle") {
+        return [1.0, 0.0, 0.0, 1.0, // Top
+        0.0, 1.0, 0.0, 1.0, // Right
+        0.0, 0.0, 1.0, 1.0 // Bottom
+        ];
+      } else if (type_ == "Piramide4") {
+        this.front = "test";
+        return new Float32Array([// Front face
+        1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, // Right face
+        1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, // Back face
+        1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, // Left face
+        1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, // Bottom left
+        0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, // Bottom right
+        0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0]);
+      } else if (type_ == "cube") {
+        return [[1.0, 1.0, 1.0, 1.0], // Front
+        [1.0, 1.0, 0.0, 1.0], // Back
+        [0.0, 1.0, 0.0, 1.0], // Top
+        [1.0, 0.5, 0.5, 1.0], // Bottom
+        [1.0, 0.0, 1.0, 1.0], // Right
+        [0.0, 0.0, 1.0, 1.0] // Left
+        ];
+      } else if (type_ == "cubelight" || type_ == "cube light") {
+        return new Float32Array([// F
+        0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, // B
+        0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, // T
+        0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, // Bo
+        0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, // R
+        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, // L
+        -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0]); // org
+        // return new Float32Array( [
+        //   // Front face
+        //   0.0, 0.0, 1.0, 1, 0.0, 0.0, 1.0, 1, 0.0, 0.0, 1.0, 1, 0.0, 0.0, 1.0, 1,
+        //   // Back face
+        //   0.0, 0.0, -1.0, 1, 0.0, 0.0, -1.0, 1, 0.0, 0.0, -1.0, 1, 0.0, 0.0, -1.0, 1,
+        //   // Top face
+        //   0.0, 1.0, 0.0, 1, 0.0, 1.0, 0.0, 1, 0.0, 1.0, 0.0, 1, 0.0, 1.0, 0.0, 1,
+        //   // Bottom face
+        //   0.0, -1.0, 0.0, 1, 0.0, -1.0, 0.0, 1, 0.0, -1.0, 0.0, 1, 0.0, -1.0, 0.0, 1,
+        //   // Right face
+        //   1.0, 0.0, 0.0, 1, 1.0, 0.0, 0.0, 1, 1.0, 0.0, 0.0, 1, 1.0, 0.0, 0.0, 1,
+        //   // Left face
+        //   -1.0, 0.0, 0.0, 1, -1.0, 0.0, 0.0, 1, -1.0, 0.0, 0.0, 1, -1.0, 0.0, 0.0, 1
+        // ]);
+      }
+    } else {
+      return [1.0, 0.0, 0.0, 1.0, // Top right
+      0.0, 1.0, 0.0, 1.0, // Top left
+      0.0, 0.0, 1.0, 1.0, // Bottom right
+      0.5, 1.0, 0.5, 1.0 // Bottom left
+      ];
+    }
+  }
+
+}
+
+exports.GeoOfColor = GeoOfColor;
+
 function ring(innerRadius, outerRadius, slices) {}
 
-},{"../program/manifest":25,"./utility":20}],11:[function(require,module,exports){
+},{"../program/manifest":36,"./engine":6,"./utility":27}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5346,7 +5738,7 @@ function getInitVSCubeTexLight() {
 
   // Spot
   uniform vec3 u_lightWorldPosition;
-  uniform vec3 u_viewWorldPosition;
+  // uniform vec3 u_viewWorldPosition;
 
   // uniform mat4 u_world;
   // uniform mat4 u_worldViewProjection;
@@ -5361,7 +5753,7 @@ function getInitVSCubeTexLight() {
 
     // orient the normals and pass to the fragment shader
     // v_normal = mat3(u_worldInverseTranspose) * aVertexNormal;
-    v_normal = mat3(uMVMatrix) * aVertexNormal;
+    v_normal = mat3(uNMatrix) * aVertexNormal;
     // uniform mat4 uMVMatrix;
     // uniform mat4 uPMatrix;
     // uniform mat3 uNMatrix;
@@ -5375,9 +5767,7 @@ function getInitVSCubeTexLight() {
 
     // compute the vector of the surface to the view/camera
     // and pass it to the fragment shader
-    // v_surfaceToView = u_viewWorldPosition - surfaceWorldPosition;
-    v_surfaceToView = surfaceWorldPosition; 
-    // aVertexPosition; //u_viewWorldPosition; //surfaceWorldPosition;
+    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
 
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vTextureCoord = aTextureCoord;
@@ -5714,7 +6104,7 @@ function getInitFSSphereLightTex() {
   }
   `;
 
-  _utility.scriptManager.LOAD(f, "squareTex-shader-vs", "x-shader/x-vertex", "shaders");
+  _utility.scriptManager.LOAD(f, "sphereLightTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
 
 function getInitVSSphereLightTex() {
@@ -5755,7 +6145,7 @@ function getInitVSSphereLightTex() {
   _utility.scriptManager.LOAD(f, "sphereLightTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
 
-},{"./utility":20}],12:[function(require,module,exports){
+},{"./utility":27}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5787,9 +6177,17 @@ var animate = function (sceneObject) {
 
   if (_engine.lastTime != 0) {
     var elapsed = timeNow - _engine.lastTime;
-    sceneObject.rotation.rotx += sceneObject.rotation.rotSpeedX * elapsed / 1000.0;
-    sceneObject.rotation.roty += sceneObject.rotation.rotSpeedY * elapsed / 1000.0;
-    sceneObject.rotation.rotz += sceneObject.rotation.rotSpeedZ * elapsed / 1000.0;
+
+    if (sceneObject.rotation.rotationSpeed.emit == false) {
+      sceneObject.rotation.rotx += sceneObject.rotation.rotSpeedX * elapsed / 1000.0;
+      sceneObject.rotation.roty += sceneObject.rotation.rotSpeedY * elapsed / 1000.0;
+      sceneObject.rotation.rotz += sceneObject.rotation.rotSpeedZ * elapsed / 1000.0;
+    } else {
+      sceneObject.rotation.rotateX(sceneObject.rotation.rotx + sceneObject.rotation.rotSpeedX * elapsed / 1000.0);
+      sceneObject.rotation.rotateY(sceneObject.rotation.roty + sceneObject.rotation.rotSpeedY * elapsed / 1000.0);
+      sceneObject.rotation.rotateZ(sceneObject.rotation.rotz + sceneObject.rotation.rotSpeedZ * elapsed / 1000.0);
+    }
+
     sceneObject.position.update();
   }
 };
@@ -5809,7 +6207,8 @@ _manifest.default.operation.reDrawGlobal = function (time) {
 
   for (var t = 0; t < _manifest.default.updateBeforeDraw.length; t++) {
     _manifest.default.updateBeforeDraw[t].UPDATE();
-  }
+  } // Physics
+
 
   if (_matrixWorld.world.physics !== null) {
     var dt = (time - lt) / 1000;
@@ -5821,9 +6220,6 @@ _manifest.default.operation.reDrawGlobal = function (time) {
     while (physicsLooper <= _matrixWorld.world.contentList.length - 1) {
       if (_matrixWorld.world.contentList[physicsLooper].physics.enabled) {
         var local = _matrixWorld.world.contentList[physicsLooper];
-        local.position.SetX(local.physics.currentBody.position.x);
-        local.position.SetZ(local.physics.currentBody.position.y);
-        local.position.SetY(local.physics.currentBody.position.z);
         _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
         _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
         _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
@@ -5834,7 +6230,10 @@ _manifest.default.operation.reDrawGlobal = function (time) {
 
       physicsLooper++;
     }
-  }
+  } // same
+
+
+  physicsLooper = 0;
 
   while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
     if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
@@ -5910,7 +6309,7 @@ var callReDraw_ = function () {
 
 exports.callReDraw_ = callReDraw_;
 
-},{"../program/manifest":25,"./engine":4,"./matrix-world":17,"./raycast":19,"./utility":20}],13:[function(require,module,exports){
+},{"../program/manifest":36,"./engine":6,"./matrix-world":19,"./raycast":22,"./utility":27}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6211,7 +6610,7 @@ function generateCustomShaderSrc(numTextures, mixOperand, code_) {
     `;
 }
 
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6365,7 +6764,7 @@ class MatrixShadowSpot {
 
 exports.MatrixShadowSpot = MatrixShadowSpot;
 
-},{"../program/manifest":25,"./utility":20}],15:[function(require,module,exports){
+},{"../program/manifest":36,"./utility":27}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6456,7 +6855,7 @@ class MatrixButton extends HTMLButtonElement {
 
 exports.MatrixButton = MatrixButton;
 
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /* globals App world */
 'use strict';
 
@@ -6604,7 +7003,7 @@ _manifest.default.tools.createPixelsTex = function (options) {
 var _default = _manifest.default.textools;
 exports.default = _default;
 
-},{"../program/manifest":25,"./matrix-world":17}],17:[function(require,module,exports){
+},{"../program/manifest":36,"./matrix-world":19}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6662,7 +7061,7 @@ var objListToDispose = new Array();
 // var reDrawID = 0;
 
 exports.objListToDispose = objListToDispose;
-var reDraw = null;
+var reDraw = 0;
 /**
  * @description
  * Define custom tags for new upgrade for light systems.
@@ -6714,11 +7113,10 @@ function defineworld(canvas) {
   _manifest.default.limitations.MAX_TEXTURE_SIZE = world.GL.gl.getParameter(world.GL.gl.MAX_TEXTURE_SIZE);
   _manifest.default.limitations.MAX_VERTEX_ATTRIBS = world.GL.gl.getParameter(world.GL.gl.MAX_VERTEX_ATTRIBS);
   _manifest.default.limitations.MAX_ELEMENTS_VERTICES = world.GL.gl.getParameter(world.GL.gl.MAX_ELEMENTS_VERTICES);
-  /*****************************************************/
-
-  /*       World base functions                        */
-
-  /* Get the fragment or vertex shader                 */
+  /**
+  * World base functions                        
+  * Get the fragment or vertex shader 
+  */
 
   world.getShader = _engine.loadShaders;
   /* Initialize shader fragment                        */
@@ -6849,15 +7247,25 @@ function defineworld(canvas) {
       triangleObject.size = size;
       triangleObject.sides = 3;
       triangleObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-      triangleObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      triangleObject.position = new _matrixGeometry.Position(0, 0, -5.0); // update
+
+      triangleObject.position.nameUniq = nameUniq;
       triangleObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
+      triangleObject.rotation.nameUniq = nameUniq;
       triangleObject.color = new _matrixGeometry.GeoOfColor('triangle');
       triangleObject.mvMatrix = mat4.create();
       triangleObject.geometry = new _matrixGeometry.TriangleVertex(triangleObject);
+      triangleObject.geometry.nameUniq = nameUniq;
       triangleObject.glBlend = new _utility._glBlend(); // Physics
 
       triangleObject.physics = {
         enabled: false
+      };
+      triangleObject.net = {
+        enabled: false,
+        activate: () => {
+          _engine.net.activateDataStream();
+        }
       };
       triangleObject.instancedDraws = {
         numberOfInstance: 10,
@@ -6889,14 +7297,23 @@ function defineworld(canvas) {
       squareObject.sides = 4;
       squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       squareObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      squareObject.position.nameUniq = nameUniq;
       squareObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
+      squareObject.rotation.nameUniq = nameUniq;
       squareObject.color = true;
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
+      squareObject.geometry.nameUniq = nameUniq;
       squareObject.glBlend = new _utility._glBlend(); // Physics
 
       squareObject.physics = {
         enabled: false
+      };
+      squareObject.net = {
+        enabled: false,
+        activate: () => {
+          _engine.net.activateDataStream();
+        }
       };
       squareObject.instancedDraws = {
         numberOfInstance: 10,
@@ -6931,14 +7348,22 @@ function defineworld(canvas) {
       squareObject.size = size;
       squareObject.sides = 4;
       squareObject.position = new _matrixGeometry.Position(0, 0, -5.0);
-      squareObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0); //squareObject.color     = new GeoOfColor("4x4");
-
+      squareObject.position.nameUniq = nameUniq;
+      squareObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
+      squareObject.rotation.nameUniq = nameUniq;
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
+      squareObject.geometry.nameUniq = nameUniq;
       squareObject.glBlend = new _utility._glBlend(); // Physics
 
       squareObject.physics = {
         enabled: false
+      };
+      squareObject.net = {
+        enabled: false,
+        activate: () => {
+          _engine.net.activateDataStream();
+        }
       };
       squareObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
@@ -7013,11 +7438,15 @@ function defineworld(canvas) {
       cubeObject.size = size;
       cubeObject.sides = 12;
       cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0); // update
+
+      cubeObject.position.nameUniq = nameUniq;
       cubeObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
+      cubeObject.rotation.nameUniq = nameUniq;
       cubeObject.color = true;
       cubeObject.mvMatrix = mat4.create();
       cubeObject.geometry = new _matrixGeometry.CubeVertex(cubeObject);
+      cubeObject.geometry.nameUniq = nameUniq;
       cubeObject.instancedDraws = {
         numberOfInstance: 10,
         array_of_local_offset: [12, 0, 0],
@@ -7037,6 +7466,12 @@ function defineworld(canvas) {
 
       cubeObject.physics = {
         enabled: false
+      };
+      cubeObject.net = {
+        enabled: false,
+        activate: () => {
+          _engine.net.activateDataStream();
+        }
       };
 
       if (cubeObject.shaderProgram && cubeObject.geometry) {
@@ -7061,9 +7496,11 @@ function defineworld(canvas) {
       sphereObject.streamTextures = null;
       sphereObject.type = filler;
       sphereObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      sphereObject.position.nameUniq = nameUniq;
       sphereObject.size = size;
       sphereObject.sides = 12;
-      sphereObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0); //lights
+      sphereObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
+      sphereObject.rotation.nameUniq = nameUniq; //lights
 
       sphereObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
@@ -7073,6 +7510,12 @@ function defineworld(canvas) {
 
       sphereObject.physics = {
         enabled: false
+      };
+      sphereObject.net = {
+        enabled: false,
+        activate: () => {
+          _engine.net.activateDataStream();
+        }
       };
       sphereObject.textures = [];
 
@@ -7139,6 +7582,7 @@ function defineworld(canvas) {
       }
 
       sphereObject.geometry = new _matrixGeometry.sphereVertex(sphereObject);
+      sphereObject.geometry.nameUniq = nameUniq;
       sphereObject.instancedDraws = {
         numberOfInstance: 10,
         array_of_local_offset: [12, 0, 0],
@@ -7172,13 +7616,21 @@ function defineworld(canvas) {
       pyramidObject.sides = 8;
       pyramidObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       pyramidObject.position = new _matrixGeometry.Position(0, 0, -5.0);
-      pyramidObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0); // pyramidObject.color     = new GeoOfColor ("Piramide4");
-
+      pyramidObject.position.nameUniq = nameUniq;
+      pyramidObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
+      pyramidObject.rotation.nameUniq = nameUniq;
       pyramidObject.mvMatrix = mat4.create();
-      pyramidObject.geometry = new _matrixGeometry.PiramideVertex(pyramidObject); // Physics
+      pyramidObject.geometry = new _matrixGeometry.PiramideVertex(pyramidObject);
+      pyramidObject.geometry.nameUniq = nameUniq; // Physics
 
       pyramidObject.physics = {
         enabled: false
+      };
+      pyramidObject.net = {
+        enabled: false,
+        activate: () => {
+          _engine.net.activateDataStream();
+        }
       };
       pyramidObject.instancedDraws = {
         numberOfInstance: 10,
@@ -7214,7 +7666,9 @@ function defineworld(canvas) {
       objObject.sides = 8;
       objObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       objObject.position = new _matrixGeometry.Position(0, -5, -8.0);
+      objObject.position.nameUniq = nameUniq;
       objObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
+      objObject.rotation.nameUniq = nameUniq;
       objObject.color = false; // new GeoOfColor('4x4');
       // custom textures
 
@@ -7226,6 +7680,16 @@ function defineworld(canvas) {
         directionLight: new _matrixGeometry.COLOR(5, 5, 5),
         ambientLight: new _matrixGeometry.COLOR(1, 1, 1),
         lightingDirection: new _matrixGeometry.COLOR(0, 1, 0)
+      }; // Physics
+
+      objObject.physics = {
+        enabled: false
+      };
+      objObject.net = {
+        enabled: false,
+        activate: () => {
+          _engine.net.activateDataStream();
+        }
       };
 
       if (typeof texturesPaths !== 'undefined') {
@@ -7292,7 +7756,8 @@ function defineworld(canvas) {
         this.bufferObj(objObject);
         this.contentList[this.contentList.length] = objObject;
         _manifest.default.scene[objObject.name] = objObject;
-      } else {// console.log("   obj file shader failure");
+      } else {
+        console.log("obj file shader failure");
       }
     }
 
@@ -7308,10 +7773,13 @@ function defineworld(canvas) {
 
       cubeObject.streamTextures = null;
       cubeObject.type = filler;
-      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0); // update
+
+      cubeObject.position.nameUniq = nameUniq;
       cubeObject.size = size;
       cubeObject.sides = 12;
-      cubeObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0); //lights
+      cubeObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
+      cubeObject.rotation.nameUniq = nameUniq; //lights
 
       cubeObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
@@ -7321,6 +7789,12 @@ function defineworld(canvas) {
 
       cubeObject.physics = {
         enabled: false
+      };
+      cubeObject.net = {
+        enabled: false,
+        activate: () => {
+          _engine.net.activateDataStream();
+        }
       }; // Update others start
 
       cubeObject.useShadows = false;
@@ -7388,6 +7862,7 @@ function defineworld(canvas) {
       cubeObject.mvMatrix = mat4.create();
       cubeObject.LightMap = new _matrixGeometry.GeoOfColor('cube light');
       cubeObject.geometry = new _matrixGeometry.CubeVertex(cubeObject);
+      cubeObject.geometry.nameUniq = nameUniq;
       cubeObject.instancedDraws = {
         numberOfInstance: 10,
         array_of_local_offset: [12, 0, 0],
@@ -7405,7 +7880,7 @@ function defineworld(canvas) {
       } else {
         console.log("Cube shader failure");
       }
-    } // no physics for now
+    } // no physics for now - no networking for now
 
 
     if ('generatorTex' == filler || 'generatorLightTex' == filler) {
@@ -7420,9 +7895,11 @@ function defineworld(canvas) {
       customObject.streamTextures = null;
       customObject.type = filler;
       customObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      customObject.position.nameUniq = nameUniq;
       customObject.size = size;
       customObject.sides = 12;
-      customObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0); //lights
+      customObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
+      customObject.rotation.nameUniq = nameUniq; //lights
 
       customObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
@@ -7501,13 +7978,501 @@ function defineworld(canvas) {
   };
 
   world.callReDraw = _matrixRender.callReDraw_;
-  /* Destructor                    */
+  /**
+   * Destructor
+   */
 
   world.destroy = _manifest.default.operation.destroyWorld;
   return world;
 }
 
-},{"../program/manifest":25,"./engine":4,"./matrix-draws":9,"./matrix-geometry":10,"./matrix-init-shaders":11,"./matrix-render":12,"./matrix-shadows":14,"./matrix-tags":15,"./physics":18,"./utility":20}],18:[function(require,module,exports){
+},{"../program/manifest":36,"./engine":6,"./matrix-draws":11,"./matrix-geometry":12,"./matrix-init-shaders":13,"./matrix-render":14,"./matrix-shadows":16,"./matrix-tags":17,"./physics":21,"./utility":27}],20:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Broadcaster = void 0;
+
+var _utility = require("./utility");
+
+require("./rtc-multi-connection/FileBufferReader.js");
+
+var _getHTMLMediaElement = require("./rtc-multi-connection/getHTMLMediaElement");
+
+var RTCMultiConnection3 = _interopRequireWildcard(require("./rtc-multi-connection/RTCMultiConnection3"));
+
+var io = _interopRequireWildcard(require("./rtc-multi-connection/socket.io"));
+
+var _manifest = _interopRequireDefault(require("../program/manifest.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+class Broadcaster {
+  constructor(config) {
+    this.injector;
+    this.openOrJoinBtn;
+    this.connection;
+    this.engineConfig;
+    this.popupUI = null;
+    this.broadcasterUI = null;
+    this.titleStatusthis = null;
+    this.openRoomBtnthis = null;
+    this.joinRoomBtnthis = null;
+    this.leaveRoomBtnthis = null;
+    this.shareFileBtnthis = null;
+    this.inputChatthis = null;
+    this.inputRoomIdthis = null;
+
+    this.openDataSession = () => {};
+
+    this.multiPlayerRef = {
+      root: this,
+
+      init(rtcEvent) {
+        console.log("rtcEvent add new net object -> ", rtcEvent.userid);
+      },
+
+      update(e) {
+        if (e.data.netPos) {
+          // console.log('INFO ZA UPDATE', e);
+          if (e.data.netPos.x) _manifest.default.scene[e.data.netObjId].position.SetX(e.data.netPos.x, 'noemit');
+          if (e.data.netPos.y) _manifest.default.scene[e.data.netObjId].position.SetY(e.data.netPos.y, 'noemit');
+          if (e.data.netPos.z) _manifest.default.scene[e.data.netObjId].position.SetZ(e.data.netPos.z, 'noemit');
+        } else if (e.data.netRot) {
+          // console.log('ROT INFO ZA UPDATE', e);
+          if (e.data.netRot.x) _manifest.default.scene[e.data.netObjId].rotation.rotx = e.data.netRot.x; // , 'noemit');
+
+          if (e.data.netRot.y) _manifest.default.scene[e.data.netObjId].rotation.roty = e.data.netRot.y;
+          if (e.data.netRot.z) _manifest.default.scene[e.data.netObjId].rotation.rotz = e.data.netRot.z;
+        } else if (e.data.netScale) {
+          // console.log('netScale INFO ZA UPDATE', e);
+          if (e.data.netScale.x) _manifest.default.scene[e.data.netObjId].geometry.setScaleByX(e.data.netScale.x, 'noemit');
+          if (e.data.netScale.y) _manifest.default.scene[e.data.netObjId].geometry.setScaleByY(e.data.netScale.y, 'noemit');
+          if (e.data.netScale.z) _manifest.default.scene[e.data.netObjId].geometry.setScaleByZ(e.data.netScale.z, 'noemit');
+          if (e.data.netScale.scale) _manifest.default.scene[e.data.netObjId].geometry.setScale(e.data.netScale.scale, 'noemit');
+        } else if (e.data.texScaleFactor) {
+          // console.log('texScaleFactor INFO ZA UPDATE', e);
+          if (e.data.texScaleFactor.newScaleFactror) {
+            _manifest.default.scene[e.data.netObjId].geometry.setTexCoordScaleFactor(e.data.texScaleFactor.newScaleFactror, 'noemit');
+          }
+        } else if (e.data.spitz) {
+          if (e.data.spitz.newValueFloat) {
+            _manifest.default.scene[e.data.netObjId].geometry.setSpitz(e.data.spitz.newValueFloat, 'noemit');
+          }
+        }
+      },
+
+      /**
+       * If someone leaves all client actions is here
+       * - remove from scene
+       * - clear object from netObject_x
+       */
+      leaveGamePlay(rtcEvent) {
+        console.info("rtcEvent LEAVE GAME: ", rtcEvent.userid);
+      }
+
+    };
+    window.io = io;
+    this.engineConfig = config;
+
+    if (this.engineConfig.getRunBroadcasterOnInt()) {
+      this.runBroadcaster();
+    }
+  }
+
+  closeAllPeers() {
+    this.connection.close();
+  }
+
+  openRoomBtnVisible = visible => {
+    if (visible === true) {
+      (0, _utility.byId)("open-room").classList.remove("hide");
+    } else {
+      (0, _utility.byId)("open-room").classList.add("hide");
+    }
+  };
+
+  activateDataStream() {
+    this.injector = this.multiPlayerRef;
+    setTimeout(() => {
+      this.openOrJoinBtn.click();
+    }, 1000);
+  }
+
+  initDOM() {
+    this.broadcasterUI = (0, _utility.byId)("matrix-net");
+    this.titleStatus = (0, _utility.byId)("rtc3log");
+    this.openRoomBtn = (0, _utility.byId)("open-room");
+    this.joinRoomBtn = (0, _utility.byId)("join-room");
+    this.openOrJoinBtn = (0, _utility.byId)("open-or-join-room");
+    this.leaveRoomBtn = (0, _utility.byId)("btn-leave-room");
+    this.shareFileBtn = (0, _utility.byId)("share-file");
+    this.inputChat = (0, _utility.byId)("input-text-chat");
+    this.inputRoomId = (0, _utility.byId)("room-id");
+    this.openRoomBtnVisible(true);
+  }
+
+  streamLoaded(userId, streamAccess) {
+    const broadcasterStreamLoaded = (0, _utility.createAppEvent)("stream-loaded", {
+      streamId: streamAccess,
+      userId
+    });
+    window.dispatchEvent(broadcasterStreamLoaded);
+    return streamAccess;
+  }
+
+  initWebRtc = options => {
+    const root = this;
+
+    try {
+      this.connection = new RTCMultiConnection3();
+    } catch (err) {
+      this.connection = new RTCMultiConnection3.default();
+    }
+
+    this.connection.socketURL = root.engineConfig.getBroadcastSockRoute();
+    this.connection.socketMessageEvent = "audio-video-file-chat-demo";
+
+    if (typeof options !== "undefined") {
+      // by default, it is "false".
+      this.connection.enableFileSharing = options.enableFileSharing;
+      this.connection.session = {
+        audio: options.session.audio,
+        video: options.session.video,
+        data: options.session.data
+      };
+    } else {
+      this.connection.enableFileSharing = root.engineConfig.getBroadcasterSessionDefaults().enableFileSharing;
+      this.connection.session = {
+        audio: root.engineConfig.getBroadcasterSessionDefaults().sessionAudio,
+        video: root.engineConfig.getBroadcasterSessionDefaults().sessionVideo,
+        data: root.engineConfig.getBroadcasterSessionDefaults().sessionData
+      };
+    }
+
+    this.connection.sdpConstraints.mandatory = {
+      OfferToReceiveAudio: true,
+      OfferToReceiveVideo: true
+    };
+    this.connection.iceServers = [{
+      urls: root.engineConfig.getStunList()
+    }];
+    this.connection.videosContainer = document.getElementById("videos-container");
+    this.connection.videosContainer.setAttribute("style", "position:absolute;left:0;bottom:20%;width:320px;height:auto;");
+
+    this.connection.onstream = function (event) {
+      event.mediaElement.removeAttribute("src");
+      event.mediaElement.removeAttribute("srcObject");
+      const video = document.createElement("video");
+      video.controls = true;
+
+      if (event.type === "local") {
+        video.muted = true;
+      }
+
+      video.srcObject = event.stream;
+      const localNumberCW = root.connection.videosContainer.clientWidth;
+      const width = parseInt(localNumberCW.toString(), 10);
+      const mediaElement = (0, _getHTMLMediaElement.getHTMLMediaElement)(video, {
+        title: event.userid,
+        buttons: ["full-screen"],
+        width,
+        showOnMouseEnter: false
+      });
+      root.connection.videosContainer.appendChild(mediaElement);
+      setTimeout(function () {
+        mediaElement.media.play();
+      }, 2000);
+      mediaElement.id = event.streamid;
+      root.streamLoaded(event.userid, event.streamid);
+    };
+
+    this.connection.onstreamended = function (event) {
+      const mediaElement = document.getElementById(event.streamid);
+
+      if (mediaElement) {
+        mediaElement.parentNode.removeChild(mediaElement);
+      }
+    };
+
+    this.connection.onmessage = root.appendDIV;
+    this.connection.filesContainer = document.getElementById("file-container");
+
+    this.connection.onopen = function (event) {
+      root.shareFileBtn.disabled = false;
+      root.inputChat.disabled = false;
+      root.leaveRoomBtn.disabled = false;
+
+      if (root.injector) {
+        root.injector.init(event);
+      }
+
+      console.info("You are connected with: " + root.connection.getAllParticipants().join(", "));
+      document.querySelector("#rtc3log").innerHTML = "You are connected with: " + root.connection.getAllParticipants().join(", ");
+    };
+
+    this.connection.onclose = function (dataStreamEvent) {
+      root.injector.leaveGamePlay(dataStreamEvent);
+
+      if (root.connection.getAllParticipants().length) {
+        document.querySelector("#rtc3log").value = "You are still connected with:" + root.connection.getAllParticipants().join(", ");
+      } else {
+        document.querySelector("#rtc3log").value = "Seems session has been closed or all participants left.";
+      }
+    };
+
+    this.connection.onUserStatusChanged = function (event) {
+      if (event.status === "offline") {
+        root.injector.leaveGamePlay(event);
+      }
+    };
+
+    this.connection.onEntireSessionClosed = function (event) {
+      root.shareFileBtn.disabled = true;
+      root.inputChat.disabled = true;
+      root.leaveRoomBtn.disabled = true;
+      root.openOrJoinBtn.disabled = false;
+      root.openRoomBtn.disabled = false;
+      root.inputRoomId.disabled = false;
+      root.inputRoomId.disabled = false;
+      root.connection.attachStreams.forEach(function (stream) {
+        stream.stop();
+      }); // don't display alert for moderator
+
+      if (root.connection.userid === event.userid) {
+        return;
+      }
+
+      document.querySelector("#rtc3log").innerHTML = "Entire session has been closed by the moderator: " + event.userid;
+    };
+
+    this.connection.onUserIdAlreadyTaken = function (useridAlreadyTaken) {
+      // seems room is already opened
+      root.connection.join(useridAlreadyTaken);
+    };
+
+    this.postAttach();
+  };
+
+  showRoomURL(roomid) {
+    console.info('B Entering in room: ', roomid);
+    return;
+  }
+
+  disableInputButtons = () => {
+    this.openOrJoinBtn.disabled = true;
+    this.openRoomBtn.disabled = true;
+    this.inputRoomId.disabled = true;
+    this.inputRoomId.disabled = true;
+    this.leaveRoomBtn.disabled = false;
+  };
+  appendDIV = event => {
+    if (event.data && (event.data.netPos || event.data.netRot || event.data.netScale || event.data.spitz || event.data.texScaleFactor)) {
+      this.injector.update(event);
+      return;
+    }
+
+    const div = document.createElement("div");
+    div.innerHTML = event.data || event;
+    div.setAttribute('style', 'width:90%;color:white;');
+    const chatContainer = document.querySelector(".chat-output");
+    chatContainer.insertBefore(div, chatContainer.firstChild);
+    div.tabIndex = 0;
+    div.focus();
+    document.getElementById("input-text-chat").focus();
+  };
+
+  postAttach() {
+    const root = this; // tslint:disable-next-line:no-var-keyword
+
+    var roomid = "";
+
+    if (localStorage.getItem(root.connection.socketMessageEvent)) {
+      roomid = localStorage.getItem(root.connection.socketMessageEvent);
+    } else {
+      roomid = root.connection.token();
+    }
+
+    if (root.engineConfig.getMasterServerKey()) {
+      roomid = root.engineConfig.getMasterServerKey();
+    }
+
+    root.inputRoomId.value = roomid;
+
+    root.inputRoomId.onkeyup = function () {
+      localStorage.setItem(root.connection.socketMessageEvent, this.value);
+    };
+
+    let hashString = location.hash.replace("#", "");
+
+    if (hashString.length && hashString.indexOf("comment-") === 0) {
+      hashString = "";
+    }
+
+    roomid = window.params.roomid;
+
+    if (!roomid && hashString.length) {
+      roomid = hashString;
+    }
+
+    if (roomid && roomid.length) {
+      root.inputRoomId.value = roomid;
+      localStorage.setItem(root.connection.socketMessageEvent, roomid); // auto-join-room
+
+      (function reCheckRoomPresence() {
+        root.connection.checkPresence(roomid, function (isRoomExists) {
+          if (isRoomExists) {
+            root.connection.join(roomid);
+            return;
+          }
+
+          setTimeout(reCheckRoomPresence, 5000);
+        });
+      })();
+
+      root.disableInputButtons();
+    }
+  }
+
+  attachEvents() {
+    const root = this;
+    window.enableAdapter = true; // Hide on start
+
+    root.broadcasterUI.classList.remove("network-panel-show-ver-animation");
+    root.broadcasterUI.classList.add("network-panel-hide-ver-animation"); // hide right box (broadcaster)
+
+    root.titleStatus.onclick = function () {
+      if (root.broadcasterUI.classList.contains("network-panel-show-ver-animation")) {
+        root.broadcasterUI.classList.remove("network-panel-show-ver-animation");
+        root.broadcasterUI.classList.add("network-panel-hide-ver-animation");
+      } else {
+        root.broadcasterUI.classList.add("network-panel-show-ver-animation");
+        root.broadcasterUI.classList.remove("network-panel-ver-hide-animation");
+      }
+    };
+
+    root.openRoomBtn.onclick = function () {
+      root.disableInputButtons();
+      root.connection.open(root.inputRoomId.value, function () {
+        root.showRoomURL(root.connection.sessionid);
+      });
+    };
+
+    root.joinRoomBtn.onclick = function () {
+      root.disableInputButtons();
+      root.connection.join(root.inputRoomId.value);
+    };
+
+    root.openDataSession = function () {
+      root.disableInputButtons();
+      root.connection.openOrJoin(root.inputRoomId.value, function (isRoomExists, roomid) {
+        if (!isRoomExists) {
+          root.showRoomURL(roomid);
+        }
+      });
+    };
+
+    root.openOrJoinBtn.onclick = root.openDataSession;
+
+    root.leaveRoomBtn.onclick = function () {
+      this.disabled = true;
+
+      if (root.connection.isInitiator) {
+        // use this method if you did NOT set "autoCloseEntireSession===true"
+        // for more info: https://github.com/muaz-khan/RTCMultiConnection#closeentiresession
+        root.connection.closeEntireSession(function () {
+          document.querySelector("#rtc3log").innerHTML = "Entire session has been closed.";
+        });
+      } else {
+        root.connection.leave();
+      }
+    }; // ................FileSharing/TextChat Code.............
+
+
+    root.shareFileBtn.onclick = function () {
+      const fileSelector = new window.FileSelector();
+      fileSelector.selectSingleFile(function (file) {
+        root.connection.send(file);
+      });
+    };
+
+    root.inputChat.onkeyup = function (e) {
+      // tslint:disable-next-line:triple-equals
+      if (e.keyCode != 13) {
+        return;
+      } // removing trailing/leading whitespace
+
+
+      this.value = this.value.replace(/^\s+|\s+$/g, "");
+
+      if (!this.value.length) {
+        return;
+      }
+
+      root.connection.send(this.value);
+      root.appendDIV(this.value);
+      this.value = "";
+    }; // Handling Room-ID
+
+
+    (function () {
+      const params = {},
+            r = /([^&=]+)=?([^&]*)/g;
+
+      function d(s) {
+        return decodeURIComponent(s.replace(/\+/g, " "));
+      } // tslint:disable-next-line:prefer-const
+
+
+      let match,
+          search = window.location.search; // tslint:disable-next-line: no-conditional-assignment
+
+      while (match = r.exec(search.substring(1))) {
+        params[d(match[1])] = d(match[2]);
+      }
+
+      window.params = params;
+    })();
+  }
+
+  runBroadcaster = () => {
+    const myInstance = this;
+    fetch("./broadcaster.html", {
+      headers: _utility.htmlHeader
+    }).then(function (res) {
+      return res.text();
+    }).then(function (html) {
+      myInstance.popupUI = (0, _utility.byId)("matrix-net");
+      myInstance.popupUI.style = 'table';
+      myInstance.popupUI.innerHTML = html;
+
+      if (myInstance.engineConfig.getShowBroadcasterOnInt()) {
+        myInstance.popupUI.style.display = "table";
+      } else {
+        myInstance.popupUI.style.display = "none";
+      }
+
+      myInstance.initDOM();
+      myInstance.attachEvents();
+      myInstance.initWebRtc();
+      myInstance.inputRoomId.nodeValue = myInstance.engineConfig.getMasterServerKey();
+
+      if (myInstance.engineConfig.getBroadcastAutoConnect()) {
+        console.log("Try auto connect for broadcaster.");
+        myInstance.openOrJoinBtn.click();
+      }
+    });
+  };
+}
+
+exports.Broadcaster = Broadcaster;
+
+},{"../program/manifest.js":36,"./rtc-multi-connection/FileBufferReader.js":23,"./rtc-multi-connection/RTCMultiConnection3":24,"./rtc-multi-connection/getHTMLMediaElement":25,"./rtc-multi-connection/socket.io":26,"./utility":27}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7592,7 +8557,7 @@ class MatrixPhysics {
 
 exports.default = MatrixPhysics;
 
-},{"cannon":24}],19:[function(require,module,exports){
+},{"cannon":33}],22:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7863,7 +8828,7683 @@ function checkingProcedureCalc(object) {
   }
 }
 
-},{}],20:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
+(function (Buffer){(function (){
+// Last time updated: 2017-08-27 5:48:35 AM UTC
+
+// ________________
+// FileBufferReader
+
+// Open-Sourced: https://github.com/muaz-khan/FileBufferReader
+
+// --------------------------------------------------
+// Muaz Khan     - www.MuazKhan.com
+// MIT License   - www.WebRTC-Experiment.com/licence
+// --------------------------------------------------
+
+'use strict';
+
+(function() {
+
+    function FileBufferReader() {
+        var fbr = this;
+        var fbrHelper = new FileBufferReaderHelper();
+
+        fbr.chunks = {};
+        fbr.users = {};
+
+        fbr.readAsArrayBuffer = function(file, callback, extra) {
+            var options = {
+                file: file,
+                earlyCallback: function(chunk) {
+                    callback(fbrClone(chunk, {
+                        currentPosition: -1
+                    }));
+                },
+                extra: extra || {
+                    userid: 0
+                }
+            };
+
+            if (file.extra && Object.keys(file.extra).length) {
+                Object.keys(file.extra).forEach(function(key) {
+                    options.extra[key] = file.extra[key];
+                });
+            }
+
+            fbrHelper.readAsArrayBuffer(fbr, options);
+        };
+
+        fbr.getNextChunk = function(fileUUID, callback, userid) {
+            var currentPosition;
+
+            if (typeof fileUUID.currentPosition !== 'undefined') {
+                currentPosition = fileUUID.currentPosition;
+                fileUUID = fileUUID.uuid;
+            }
+
+            var allFileChunks = fbr.chunks[fileUUID];
+            if (!allFileChunks) {
+                return;
+            }
+
+            if (typeof userid !== 'undefined') {
+                if (!fbr.users[userid + '']) {
+                    fbr.users[userid + ''] = {
+                        fileUUID: fileUUID,
+                        userid: userid,
+                        currentPosition: -1
+                    };
+                }
+
+                if (typeof currentPosition !== 'undefined') {
+                    fbr.users[userid + ''].currentPosition = currentPosition;
+                }
+
+                fbr.users[userid + ''].currentPosition++;
+                currentPosition = fbr.users[userid + ''].currentPosition;
+            } else {
+                if (typeof currentPosition !== 'undefined') {
+                    fbr.chunks[fileUUID].currentPosition = currentPosition;
+                }
+
+                fbr.chunks[fileUUID].currentPosition++;
+                currentPosition = fbr.chunks[fileUUID].currentPosition;
+            }
+
+            var nextChunk = allFileChunks[currentPosition];
+            if (!nextChunk) {
+                delete fbr.chunks[fileUUID];
+                fbr.convertToArrayBuffer({
+                    chunkMissing: true,
+                    currentPosition: currentPosition,
+                    uuid: fileUUID
+                }, callback);
+                return;
+            }
+
+            nextChunk = fbrClone(nextChunk);
+
+            if (typeof userid !== 'undefined') {
+                nextChunk.remoteUserId = userid + '';
+            }
+
+            if (!!nextChunk.start) {
+                fbr.onBegin(nextChunk);
+            }
+
+            if (!!nextChunk.end) {
+                fbr.onEnd(nextChunk);
+            }
+
+            fbr.onProgress(nextChunk);
+
+            fbr.convertToArrayBuffer(nextChunk, function(buffer) {
+                if (nextChunk.currentPosition == nextChunk.maxChunks) {
+                    callback(buffer, true);
+                    return;
+                }
+
+                callback(buffer, false);
+            });
+        };
+
+        var fbReceiver = new FileBufferReceiver(fbr);
+
+        fbr.addChunk = function(chunk, callback) {
+            if (!chunk) {
+                return;
+            }
+
+            fbReceiver.receive(chunk, function(chunk) {
+                fbr.convertToArrayBuffer({
+                    readyForNextChunk: true,
+                    currentPosition: chunk.currentPosition,
+                    uuid: chunk.uuid
+                }, callback);
+            });
+        };
+
+        fbr.chunkMissing = function(chunk) {
+            delete fbReceiver.chunks[chunk.uuid];
+            delete fbReceiver.chunksWaiters[chunk.uuid];
+        };
+
+        fbr.onBegin = function() {};
+        fbr.onEnd = function() {};
+        fbr.onProgress = function() {};
+
+        fbr.convertToObject = FileConverter.ConvertToObject;
+        fbr.convertToArrayBuffer = FileConverter.ConvertToArrayBuffer
+
+        // for backward compatibility----it is redundant.
+        fbr.setMultipleUsers = function() {};
+
+        // extends 'from' object with members from 'to'. If 'to' is null, a deep clone of 'from' is returned
+        function fbrClone(from, to) {
+            if (from == null || typeof from != "object") return from;
+            if (from.constructor != Object && from.constructor != Array) return from;
+            if (from.constructor == Date || from.constructor == RegExp || from.constructor == Function ||
+                from.constructor == String || from.constructor == Number || from.constructor == Boolean)
+                return new from.constructor(from);
+
+            to = to || new from.constructor();
+
+            for (var name in from) {
+                to[name] = typeof to[name] == "undefined" ? fbrClone(from[name], null) : to[name];
+            }
+
+            return to;
+        }
+    }
+
+    function FileBufferReaderHelper() {
+        var fbrHelper = this;
+
+        function processInWebWorker(_function) {
+            var blob = URL.createObjectURL(new Blob([_function.toString(),
+                'this.onmessage =  function (e) {' + _function.name + '(e.data);}'
+            ], {
+                type: 'application/javascript'
+            }));
+
+            var worker = new Worker(blob);
+            return worker;
+        }
+
+        fbrHelper.readAsArrayBuffer = function(fbr, options) {
+            var earlyCallback = options.earlyCallback;
+            delete options.earlyCallback;
+
+            function processChunk(chunk) {
+                if (!fbr.chunks[chunk.uuid]) {
+                    fbr.chunks[chunk.uuid] = {
+                        currentPosition: -1
+                    };
+                }
+
+                options.extra = options.extra || {
+                    userid: 0
+                };
+
+                chunk.userid = options.userid || options.extra.userid || 0;
+                chunk.extra = options.extra;
+
+                fbr.chunks[chunk.uuid][chunk.currentPosition] = chunk;
+
+                if (chunk.end && earlyCallback) {
+                    earlyCallback(chunk.uuid);
+                    earlyCallback = null;
+                }
+
+                // for huge files
+                if ((chunk.maxChunks > 200 && chunk.currentPosition == 200) && earlyCallback) {
+                    earlyCallback(chunk.uuid);
+                    earlyCallback = null;
+                }
+            }
+            if (false && typeof Worker !== 'undefined') {
+                var webWorker = processInWebWorker(fileReaderWrapper);
+
+                webWorker.onmessage = function(event) {
+                    processChunk(event.data);
+                };
+
+                webWorker.postMessage(options);
+            } else {
+                fileReaderWrapper(options, processChunk);
+            }
+        };
+
+        function fileReaderWrapper(options, callback) {
+            callback = callback || function(chunk) {
+                postMessage(chunk);
+            };
+
+            var file = options.file;
+            if (!file.uuid) {
+                file.uuid = (Math.random() * 100).toString().replace(/\./g, '');
+            }
+
+            var chunkSize = options.chunkSize || 15 * 1000;
+            if (options.extra && options.extra.chunkSize) {
+                chunkSize = options.extra.chunkSize;
+            }
+
+            var sliceId = 0;
+            var cacheSize = chunkSize;
+
+            var chunksPerSlice = Math.floor(Math.min(100000000, cacheSize) / chunkSize);
+            var sliceSize = chunksPerSlice * chunkSize;
+            var maxChunks = Math.ceil(file.size / chunkSize);
+
+            file.maxChunks = maxChunks;
+
+            var numOfChunksInSlice;
+            var currentPosition = 0;
+            var hasEntireFile;
+            var chunks = [];
+
+            callback({
+                currentPosition: currentPosition,
+                uuid: file.uuid,
+                maxChunks: maxChunks,
+                size: file.size,
+                name: file.name,
+                type: file.type,
+                lastModifiedDate: (file.lastModifiedDate || new Date()).toString(),
+                start: true
+            });
+
+            var blob, reader = new FileReader();
+
+            reader.onloadend = function(evt) {
+                if (evt.target.readyState == FileReader.DONE) {
+                    addChunks(file.name, evt.target.result, function() {
+                        sliceId++;
+                        if ((sliceId + 1) * sliceSize < file.size) {
+                            blob = file.slice(sliceId * sliceSize, (sliceId + 1) * sliceSize);
+                            reader.readAsArrayBuffer(blob);
+                        } else if (sliceId * sliceSize < file.size) {
+                            blob = file.slice(sliceId * sliceSize, file.size);
+                            reader.readAsArrayBuffer(blob);
+                        } else {
+                            file.url = URL.createObjectURL(file);
+                            callback({
+                                currentPosition: currentPosition,
+                                uuid: file.uuid,
+                                maxChunks: maxChunks,
+                                size: file.size,
+                                name: file.name,
+                                lastModifiedDate: (file.lastModifiedDate || new Date()).toString(),
+                                url: URL.createObjectURL(file),
+                                type: file.type,
+                                end: true
+                            });
+                        }
+                    });
+                }
+            };
+
+            currentPosition += 1;
+
+            blob = file.slice(sliceId * sliceSize, (sliceId + 1) * sliceSize);
+            reader.readAsArrayBuffer(blob);
+
+            function addChunks(fileName, binarySlice, addChunkCallback) {
+                numOfChunksInSlice = Math.ceil(binarySlice.byteLength / chunkSize);
+                for (var i = 0; i < numOfChunksInSlice; i++) {
+                    var start = i * chunkSize;
+                    chunks[currentPosition] = binarySlice.slice(start, Math.min(start + chunkSize, binarySlice.byteLength));
+
+                    callback({
+                        uuid: file.uuid,
+                        buffer: chunks[currentPosition],
+                        currentPosition: currentPosition,
+                        maxChunks: maxChunks,
+
+                        size: file.size,
+                        name: file.name,
+                        lastModifiedDate: (file.lastModifiedDate || new Date()).toString(),
+                        type: file.type
+                    });
+
+                    currentPosition++;
+                }
+
+                if (currentPosition == maxChunks) {
+                    hasEntireFile = true;
+                }
+
+                addChunkCallback();
+            }
+        }
+    }
+
+    function FileSelector() {
+        var selector = this;
+
+        var noFileSelectedCallback = function() {};
+
+        selector.selectSingleFile = function(callback, failure) {
+            if (failure) {
+                noFileSelectedCallback = failure;
+            }
+
+            selectFile(callback);
+        };
+        selector.selectMultipleFiles = function(callback, failure) {
+            if (failure) {
+                noFileSelectedCallback = failure;
+            }
+
+            selectFile(callback, true);
+        };
+        selector.selectDirectory = function(callback, failure) {
+            if (failure) {
+                noFileSelectedCallback = failure;
+            }
+
+            selectFile(callback, true, true);
+        };
+
+        selector.accept = '*.*';
+
+        function selectFile(callback, multiple, directory) {
+            callback = callback || function() {};
+
+            var file = document.createElement('input');
+            file.type = 'file';
+
+            if (multiple) {
+                file.multiple = true;
+            }
+
+            if (directory) {
+                file.webkitdirectory = true;
+            }
+
+            file.accept = selector.accept;
+
+            file.onclick = function() {
+                file.clickStarted = true;
+            };
+
+            document.body.onfocus = function() {
+                setTimeout(function() {
+                    if (!file.clickStarted) return;
+                    file.clickStarted = false;
+
+                    if (!file.value) {
+                        noFileSelectedCallback();
+                    }
+                }, 500);
+            };
+
+            file.onchange = function() {
+                if (multiple) {
+                    if (!file.files.length) {
+                        console.error('No file selected.');
+                        return;
+                    }
+
+                    var arr = [];
+                    Array.from(file.files).forEach(function(file) {
+                        file.url = file.webkitRelativePath;
+                        arr.push(file);
+                    });
+                    callback(arr);
+                    return;
+                }
+
+                if (!file.files[0]) {
+                    console.error('No file selected.');
+                    return;
+                }
+
+                callback(file.files[0]);
+
+                file.parentNode.removeChild(file);
+            };
+            file.style.display = 'none';
+            (document.body || document.documentElement).appendChild(file);
+            fireClickEvent(file);
+        }
+
+        function getValidFileName(fileName) {
+            if (!fileName) {
+                fileName = 'file' + (new Date).toISOString().replace(/:|\.|-/g, '')
+            }
+
+            var a = fileName;
+            a = a.replace(/^.*[\\\/]([^\\\/]*)$/i, "$1");
+            a = a.replace(/\s/g, "_");
+            a = a.replace(/,/g, '');
+            a = a.toLowerCase();
+            return a;
+        }
+
+        function fireClickEvent(element) {
+            if (typeof element.click === 'function') {
+                element.click();
+                return;
+            }
+
+            if (typeof element.change === 'function') {
+                element.change();
+                return;
+            }
+
+            if (typeof document.createEvent('Event') !== 'undefined') {
+                var event = document.createEvent('Event');
+
+                if (typeof event.initEvent === 'function' && typeof element.dispatchEvent === 'function') {
+                    event.initEvent('click', true, true);
+                    element.dispatchEvent(event);
+                    return;
+                }
+            }
+
+            var event = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: true
+            });
+
+            element.dispatchEvent(event);
+        }
+    }
+
+    function FileBufferReceiver(fbr) {
+        var fbReceiver = this;
+
+        fbReceiver.chunks = {};
+        fbReceiver.chunksWaiters = {};
+
+        function receive(chunk, callback) {
+            if (!chunk.uuid) {
+                fbr.convertToObject(chunk, function(object) {
+                    receive(object);
+                });
+                return;
+            }
+
+            if (chunk.start && !fbReceiver.chunks[chunk.uuid]) {
+                fbReceiver.chunks[chunk.uuid] = {};
+                if (fbr.onBegin) fbr.onBegin(chunk);
+            }
+
+            if (!chunk.end && chunk.buffer) {
+                fbReceiver.chunks[chunk.uuid][chunk.currentPosition] = chunk.buffer;
+            }
+
+            if (chunk.end) {
+                var chunksObject = fbReceiver.chunks[chunk.uuid];
+                var chunksArray = [];
+                Object.keys(chunksObject).forEach(function(item, idx) {
+                    chunksArray.push(chunksObject[item]);
+                });
+
+                var blob = new Blob(chunksArray, {
+                    type: chunk.type
+                });
+                blob = merge(blob, chunk);
+                blob.url = URL.createObjectURL(blob);
+                blob.uuid = chunk.uuid;
+
+                if (!blob.size) console.error('Something went wrong. Blob Size is 0.');
+
+                if (fbr.onEnd) fbr.onEnd(blob);
+
+                // clear system memory
+                delete fbReceiver.chunks[chunk.uuid];
+                delete fbReceiver.chunksWaiters[chunk.uuid];
+            }
+
+            if (chunk.buffer && fbr.onProgress) fbr.onProgress(chunk);
+
+            if (!chunk.end) {
+                callback(chunk);
+
+                fbReceiver.chunksWaiters[chunk.uuid] = function() {
+                    function looper() {
+                        if (!chunk.buffer) {
+                            return;
+                        }
+
+                        if (!fbReceiver.chunks[chunk.uuid]) {
+                            return;
+                        }
+
+                        if (chunk.currentPosition != chunk.maxChunks && !fbReceiver.chunks[chunk.uuid][chunk.currentPosition]) {
+                            callback(chunk);
+                            setTimeout(looper, 5000);
+                        }
+                    }
+                    setTimeout(looper, 5000);
+                };
+
+                fbReceiver.chunksWaiters[chunk.uuid]();
+            }
+        }
+
+        fbReceiver.receive = receive;
+    }
+
+    var FileConverter = {
+        ConvertToArrayBuffer: function(object, callback) {
+            binarize.pack(object, function(dataView) {
+                callback(dataView.buffer);
+            });
+        },
+        ConvertToObject: function(buffer, callback) {
+            binarize.unpack(buffer, callback);
+        }
+    };
+
+    function merge(mergein, mergeto) {
+        if (!mergein) mergein = {};
+        if (!mergeto) return mergein;
+
+        for (var item in mergeto) {
+            try {
+                mergein[item] = mergeto[item];
+            } catch (e) {}
+        }
+        return mergein;
+    }
+
+    var debug = false;
+
+    var BIG_ENDIAN = false,
+        LITTLE_ENDIAN = true,
+        TYPE_LENGTH = Uint8Array.BYTES_PER_ELEMENT,
+        LENGTH_LENGTH = Uint16Array.BYTES_PER_ELEMENT,
+        BYTES_LENGTH = Uint32Array.BYTES_PER_ELEMENT;
+
+    var Types = {
+        NULL: 0,
+        UNDEFINED: 1,
+        STRING: 2,
+        NUMBER: 3,
+        BOOLEAN: 4,
+        ARRAY: 5,
+        OBJECT: 6,
+        INT8ARRAY: 7,
+        INT16ARRAY: 8,
+        INT32ARRAY: 9,
+        UINT8ARRAY: 10,
+        UINT16ARRAY: 11,
+        UINT32ARRAY: 12,
+        FLOAT32ARRAY: 13,
+        FLOAT64ARRAY: 14,
+        ARRAYBUFFER: 15,
+        BLOB: 16,
+        FILE: 16,
+        BUFFER: 17 // Special type for node.js
+    };
+
+    if (debug) {
+        var TypeNames = [
+            'NULL',
+            'UNDEFINED',
+            'STRING',
+            'NUMBER',
+            'BOOLEAN',
+            'ARRAY',
+            'OBJECT',
+            'INT8ARRAY',
+            'INT16ARRAY',
+            'INT32ARRAY',
+            'UINT8ARRAY',
+            'UINT16ARRAY',
+            'UINT32ARRAY',
+            'FLOAT32ARRAY',
+            'FLOAT64ARRAY',
+            'ARRAYBUFFER',
+            'BLOB',
+            'BUFFER'
+        ];
+    }
+
+    var Length = [
+        null, // Types.NULL
+        null, // Types.UNDEFINED
+        'Uint16', // Types.STRING
+        'Float64', // Types.NUMBER
+        'Uint8', // Types.BOOLEAN
+        null, // Types.ARRAY
+        null, // Types.OBJECT
+        'Int8', // Types.INT8ARRAY
+        'Int16', // Types.INT16ARRAY
+        'Int32', // Types.INT32ARRAY
+        'Uint8', // Types.UINT8ARRAY
+        'Uint16', // Types.UINT16ARRAY
+        'Uint32', // Types.UINT32ARRAY
+        'Float32', // Types.FLOAT32ARRAY
+        'Float64', // Types.FLOAT64ARRAY
+        'Uint8', // Types.ARRAYBUFFER
+        'Uint8', // Types.BLOB, Types.FILE
+        'Uint8' // Types.BUFFER
+    ];
+
+    var binary_dump = function(view, start, length) {
+        var table = [],
+            endianness = BIG_ENDIAN,
+            ROW_LENGTH = 40;
+        table[0] = [];
+        for (var i = 0; i < ROW_LENGTH; i++) {
+            table[0][i] = i < 10 ? '0' + i.toString(10) : i.toString(10);
+        }
+        for (i = 0; i < length; i++) {
+            var code = view.getUint8(start + i, endianness);
+            var index = ~~(i / ROW_LENGTH) + 1;
+            if (typeof table[index] === 'undefined') table[index] = [];
+            table[index][i % ROW_LENGTH] = code < 16 ? '0' + code.toString(16) : code.toString(16);
+        }
+        console.log('%c' + table[0].join(' '), 'font-weight: bold;');
+        for (i = 1; i < table.length; i++) {
+            console.log(table[i].join(' '));
+        }
+    };
+
+    var find_type = function(obj) {
+        var type = undefined;
+
+        if (obj === undefined) {
+            type = Types.UNDEFINED;
+
+        } else if (obj === null) {
+            type = Types.NULL;
+
+        } else {
+            var const_name = obj.constructor.name;
+            var const_name_reflection = obj.constructor.toString().match(/\w+/g)[1];
+            if (const_name !== undefined && Types[const_name.toUpperCase()] !== undefined) {
+                // return type by .constructor.name if possible
+                type = Types[const_name.toUpperCase()];
+
+            } else if (const_name_reflection !== undefined && Types[const_name_reflection.toUpperCase()] !== undefined) {
+                type = Types[const_name_reflection.toUpperCase()];
+
+            } else {
+                // Work around when constructor.name is not defined
+                switch (typeof obj) {
+                    case 'string':
+                        type = Types.STRING;
+                        break;
+
+                    case 'number':
+                        type = Types.NUMBER;
+                        break;
+
+                    case 'boolean':
+                        type = Types.BOOLEAN;
+                        break;
+
+                    case 'object':
+                        if (obj instanceof Array) {
+                            type = Types.ARRAY;
+
+                        } else if (obj instanceof Int8Array) {
+                            type = Types.INT8ARRAY;
+
+                        } else if (obj instanceof Int16Array) {
+                            type = Types.INT16ARRAY;
+
+                        } else if (obj instanceof Int32Array) {
+                            type = Types.INT32ARRAY;
+
+                        } else if (obj instanceof Uint8Array) {
+                            type = Types.UINT8ARRAY;
+
+                        } else if (obj instanceof Uint16Array) {
+                            type = Types.UINT16ARRAY;
+
+                        } else if (obj instanceof Uint32Array) {
+                            type = Types.UINT32ARRAY;
+
+                        } else if (obj instanceof Float32Array) {
+                            type = Types.FLOAT32ARRAY;
+
+                        } else if (obj instanceof Float64Array) {
+                            type = Types.FLOAT64ARRAY;
+
+                        } else if (obj instanceof ArrayBuffer) {
+                            type = Types.ARRAYBUFFER;
+
+                        } else if (obj instanceof Blob) { // including File
+                            type = Types.BLOB;
+
+                        } else if (obj instanceof Buffer) { // node.js only
+                            type = Types.BUFFER;
+
+                        } else if (obj instanceof Object) {
+                            type = Types.OBJECT;
+
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+        return type;
+    };
+
+    var utf16_utf8 = function(string) {
+        return unescape(encodeURIComponent(string));
+    };
+
+    var utf8_utf16 = function(bytes) {
+        return decodeURIComponent(escape(bytes));
+    };
+
+    /**
+     * packs seriarized elements array into a packed ArrayBuffer
+     * @param  {Array} serialized Serialized array of elements.
+     * @return {DataView} view of packed binary
+     */
+    var pack = function(serialized) {
+        var cursor = 0,
+            i = 0,
+            j = 0,
+            endianness = BIG_ENDIAN;
+
+        var ab = new ArrayBuffer(serialized[0].byte_length + serialized[0].header_size);
+        var view = new DataView(ab);
+
+        for (i = 0; i < serialized.length; i++) {
+            var start = cursor,
+                header_size = serialized[i].header_size,
+                type = serialized[i].type,
+                length = serialized[i].length,
+                value = serialized[i].value,
+                byte_length = serialized[i].byte_length,
+                type_name = Length[type],
+                unit = type_name === null ? 0 : window[type_name + 'Array'].BYTES_PER_ELEMENT;
+
+            // Set type
+            if (type === Types.BUFFER) {
+                // on node.js Blob is emulated using Buffer type
+                view.setUint8(cursor, Types.BLOB, endianness);
+            } else {
+                view.setUint8(cursor, type, endianness);
+            }
+            cursor += TYPE_LENGTH;
+
+            if (debug) {
+                console.info('Packing', type, TypeNames[type]);
+            }
+
+            // Set length if required
+            if (type === Types.ARRAY || type === Types.OBJECT) {
+                view.setUint16(cursor, length, endianness);
+                cursor += LENGTH_LENGTH;
+
+                if (debug) {
+                    console.info('Content Length', length);
+                }
+            }
+
+            // Set byte length
+            view.setUint32(cursor, byte_length, endianness);
+            cursor += BYTES_LENGTH;
+
+            if (debug) {
+                console.info('Header Size', header_size, 'bytes');
+                console.info('Byte Length', byte_length, 'bytes');
+            }
+
+            switch (type) {
+                case Types.NULL:
+                case Types.UNDEFINED:
+                    // NULL and UNDEFINED doesn't have any payload
+                    break;
+
+                case Types.STRING:
+                    if (debug) {
+                        console.info('Actual Content %c"' + value + '"', 'font-weight:bold;');
+                    }
+                    for (j = 0; j < length; j++, cursor += unit) {
+                        view.setUint16(cursor, value.charCodeAt(j), endianness);
+                    }
+                    break;
+
+                case Types.NUMBER:
+                case Types.BOOLEAN:
+                    if (debug) {
+                        console.info('%c' + value.toString(), 'font-weight:bold;');
+                    }
+                    view['set' + type_name](cursor, value, endianness);
+                    cursor += unit;
+                    break;
+
+                case Types.INT8ARRAY:
+                case Types.INT16ARRAY:
+                case Types.INT32ARRAY:
+                case Types.UINT8ARRAY:
+                case Types.UINT16ARRAY:
+                case Types.UINT32ARRAY:
+                case Types.FLOAT32ARRAY:
+                case Types.FLOAT64ARRAY:
+                    var _view = new Uint8Array(view.buffer, cursor, byte_length);
+                    _view.set(new Uint8Array(value.buffer));
+                    cursor += byte_length;
+                    break;
+
+                case Types.ARRAYBUFFER:
+                case Types.BUFFER:
+                    var _view = new Uint8Array(view.buffer, cursor, byte_length);
+                    _view.set(new Uint8Array(value));
+                    cursor += byte_length;
+                    break;
+
+                case Types.BLOB:
+                case Types.ARRAY:
+                case Types.OBJECT:
+                    break;
+
+                default:
+                    throw 'TypeError: Unexpected type found.';
+            }
+
+            if (debug) {
+                binary_dump(view, start, cursor - start);
+            }
+        }
+
+        return view;
+    };
+
+    /**
+     * Unpack binary data into an object with value and cursor
+     * @param  {DataView} view [description]
+     * @param  {Number} cursor [description]
+     * @return {Object}
+     */
+    var unpack = function(view, cursor) {
+        var i = 0,
+            endianness = BIG_ENDIAN,
+            start = cursor;
+        var type, length, byte_length, value, elem;
+
+        // Retrieve "type"
+        type = view.getUint8(cursor, endianness);
+        cursor += TYPE_LENGTH;
+
+        if (debug) {
+            console.info('Unpacking', type, TypeNames[type]);
+        }
+
+        // Retrieve "length"
+        if (type === Types.ARRAY || type === Types.OBJECT) {
+            length = view.getUint16(cursor, endianness);
+            cursor += LENGTH_LENGTH;
+
+            if (debug) {
+                console.info('Content Length', length);
+            }
+        }
+
+        // Retrieve "byte_length"
+        byte_length = view.getUint32(cursor, endianness);
+        cursor += BYTES_LENGTH;
+
+        if (debug) {
+            console.info('Byte Length', byte_length, 'bytes');
+        }
+
+        var type_name = Length[type];
+        var unit = type_name === null ? 0 : window[type_name + 'Array'].BYTES_PER_ELEMENT;
+
+        switch (type) {
+            case Types.NULL:
+            case Types.UNDEFINED:
+                if (debug) {
+                    binary_dump(view, start, cursor - start);
+                }
+                // NULL and UNDEFINED doesn't have any octet
+                value = null;
+                break;
+
+            case Types.STRING:
+                length = byte_length / unit;
+                var string = [];
+                for (i = 0; i < length; i++) {
+                    var code = view.getUint16(cursor, endianness);
+                    cursor += unit;
+                    string.push(String.fromCharCode(code));
+                }
+                value = string.join('');
+                if (debug) {
+                    console.info('Actual Content %c"' + value + '"', 'font-weight:bold;');
+                    binary_dump(view, start, cursor - start);
+                }
+                break;
+
+            case Types.NUMBER:
+                value = view.getFloat64(cursor, endianness);
+                cursor += unit;
+                if (debug) {
+                    console.info('Actual Content %c"' + value.toString() + '"', 'font-weight:bold;');
+                    binary_dump(view, start, cursor - start);
+                }
+                break;
+
+            case Types.BOOLEAN:
+                value = view.getUint8(cursor, endianness) === 1 ? true : false;
+                cursor += unit;
+                if (debug) {
+                    console.info('Actual Content %c"' + value.toString() + '"', 'font-weight:bold;');
+                    binary_dump(view, start, cursor - start);
+                }
+                break;
+
+            case Types.INT8ARRAY:
+            case Types.INT16ARRAY:
+            case Types.INT32ARRAY:
+            case Types.UINT8ARRAY:
+            case Types.UINT16ARRAY:
+            case Types.UINT32ARRAY:
+            case Types.FLOAT32ARRAY:
+            case Types.FLOAT64ARRAY:
+            case Types.ARRAYBUFFER:
+                elem = view.buffer.slice(cursor, cursor + byte_length);
+                cursor += byte_length;
+
+                // If ArrayBuffer
+                if (type === Types.ARRAYBUFFER) {
+                    value = elem;
+
+                    // If other TypedArray
+                } else {
+                    value = new window[type_name + 'Array'](elem);
+                }
+
+                if (debug) {
+                    binary_dump(view, start, cursor - start);
+                }
+                break;
+
+            case Types.BLOB:
+                if (debug) {
+                    binary_dump(view, start, cursor - start);
+                }
+                // If Blob is available (on browser)
+                if (window.Blob) {
+                    var mime = unpack(view, cursor);
+                    var buffer = unpack(view, mime.cursor);
+                    cursor = buffer.cursor;
+                    value = new Blob([buffer.value], {
+                        type: mime.value
+                    });
+                } else {
+                    // node.js implementation goes here
+                    elem = view.buffer.slice(cursor, cursor + byte_length);
+                    cursor += byte_length;
+                    // node.js implementatino uses Buffer to help Blob
+                    value = new Buffer(elem);
+                }
+                break;
+
+            case Types.ARRAY:
+                if (debug) {
+                    binary_dump(view, start, cursor - start);
+                }
+                value = [];
+                for (i = 0; i < length; i++) {
+                    // Retrieve array element
+                    elem = unpack(view, cursor);
+                    cursor = elem.cursor;
+                    value.push(elem.value);
+                }
+                break;
+
+            case Types.OBJECT:
+                if (debug) {
+                    binary_dump(view, start, cursor - start);
+                }
+                value = {};
+                for (i = 0; i < length; i++) {
+                    // Retrieve object key and value in sequence
+                    var key = unpack(view, cursor);
+                    var val = unpack(view, key.cursor);
+                    cursor = val.cursor;
+                    value[key.value] = val.value;
+                }
+                break;
+
+            default:
+                throw 'TypeError: Type not supported.';
+        }
+        return {
+            value: value,
+            cursor: cursor
+        };
+    };
+
+    /**
+     * deferred function to process multiple serialization in order
+     * @param  {array}   array    [description]
+     * @param  {Function} callback [description]
+     * @return {void} no return value
+     */
+    var deferredSerialize = function(array, callback) {
+        var length = array.length,
+            results = [],
+            count = 0,
+            byte_length = 0;
+        for (var i = 0; i < array.length; i++) {
+            (function(index) {
+                serialize(array[index], function(result) {
+                    // store results in order
+                    results[index] = result;
+                    // count byte length
+                    byte_length += result[0].header_size + result[0].byte_length;
+                    // when all results are on table
+                    if (++count === length) {
+                        // finally concatenate all reuslts into a single array in order
+                        var array = [];
+                        for (var j = 0; j < results.length; j++) {
+                            array = array.concat(results[j]);
+                        }
+                        callback(array, byte_length);
+                    }
+                });
+            })(i);
+        }
+    };
+
+    /**
+     * Serializes object and return byte_length
+     * @param  {mixed} obj JavaScript object you want to serialize
+     * @return {Array} Serialized array object
+     */
+    var serialize = function(obj, callback) {
+        var subarray = [],
+            unit = 1,
+            header_size = TYPE_LENGTH + BYTES_LENGTH,
+            type, byte_length = 0,
+            length = 0,
+            value = obj;
+
+        type = find_type(obj);
+
+        unit = Length[type] === undefined || Length[type] === null ? 0 :
+            window[Length[type] + 'Array'].BYTES_PER_ELEMENT;
+
+        switch (type) {
+            case Types.UNDEFINED:
+            case Types.NULL:
+                break;
+
+            case Types.NUMBER:
+            case Types.BOOLEAN:
+                byte_length = unit;
+                break;
+
+            case Types.STRING:
+                length = obj.length;
+                byte_length += length * unit;
+                break;
+
+            case Types.INT8ARRAY:
+            case Types.INT16ARRAY:
+            case Types.INT32ARRAY:
+            case Types.UINT8ARRAY:
+            case Types.UINT16ARRAY:
+            case Types.UINT32ARRAY:
+            case Types.FLOAT32ARRAY:
+            case Types.FLOAT64ARRAY:
+                length = obj.length;
+                byte_length += length * unit;
+                break;
+
+            case Types.ARRAY:
+                deferredSerialize(obj, function(subarray, byte_length) {
+                    callback([{
+                        type: type,
+                        length: obj.length,
+                        header_size: header_size + LENGTH_LENGTH,
+                        byte_length: byte_length,
+                        value: null
+                    }].concat(subarray));
+                });
+                return;
+
+            case Types.OBJECT:
+                var deferred = [];
+                for (var key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        deferred.push(key);
+                        deferred.push(obj[key]);
+                        length++;
+                    }
+                }
+                deferredSerialize(deferred, function(subarray, byte_length) {
+                    callback([{
+                        type: type,
+                        length: length,
+                        header_size: header_size + LENGTH_LENGTH,
+                        byte_length: byte_length,
+                        value: null
+                    }].concat(subarray));
+                });
+                return;
+
+            case Types.ARRAYBUFFER:
+                byte_length += obj.byteLength;
+                break;
+
+            case Types.BLOB:
+                var mime_type = obj.type;
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    deferredSerialize([mime_type, e.target.result], function(subarray, byte_length) {
+                        callback([{
+                            type: type,
+                            length: length,
+                            header_size: header_size,
+                            byte_length: byte_length,
+                            value: null
+                        }].concat(subarray));
+                    });
+                };
+                reader.onerror = function(e) {
+                    throw 'FileReader Error: ' + e;
+                };
+                reader.readAsArrayBuffer(obj);
+                return;
+
+            case Types.BUFFER:
+                byte_length += obj.length;
+                break;
+
+            default:
+                throw 'TypeError: Type "' + obj.constructor.name + '" not supported.';
+        }
+
+        callback([{
+            type: type,
+            length: length,
+            header_size: header_size,
+            byte_length: byte_length,
+            value: value
+        }].concat(subarray));
+    };
+
+    /**
+     * Deserialize binary and return JavaScript object
+     * @param  ArrayBuffer buffer ArrayBuffer you want to deserialize
+     * @return mixed              Retrieved JavaScript object
+     */
+    var deserialize = function(buffer, callback) {
+        var view = buffer instanceof DataView ? buffer : new DataView(buffer);
+        var result = unpack(view, 0);
+        return result.value;
+    };
+
+    if (debug) {
+        window.Test = {
+            BIG_ENDIAN: BIG_ENDIAN,
+            LITTLE_ENDIAN: LITTLE_ENDIAN,
+            Types: Types,
+            pack: pack,
+            unpack: unpack,
+            serialize: serialize,
+            deserialize: deserialize
+        };
+    }
+
+    var binarize = {
+        pack: function(obj, callback) {
+            try {
+                if (debug) console.info('%cPacking Start', 'font-weight: bold; color: red;', obj);
+                serialize(obj, function(array) {
+                    if (debug) console.info('Serialized Object', array);
+                    callback(pack(array));
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        unpack: function(buffer, callback) {
+            try {
+                if (debug) console.info('%cUnpacking Start', 'font-weight: bold; color: red;', buffer);
+                var result = deserialize(buffer);
+                if (debug) console.info('Deserialized Object', result);
+                callback(result);
+            } catch (e) {
+                throw e;
+            }
+        }
+    };
+
+    window.FileConverter = FileConverter;
+    window.FileSelector = FileSelector;
+    window.FileBufferReader = FileBufferReader;
+})();
+
+}).call(this)}).call(this,require("buffer").Buffer)
+},{"buffer":30}],24:[function(require,module,exports){
+(function (process,global){(function (){
+'use strict';
+
+// Last time updated: 2019-06-15 4:26:11 PM UTC
+
+// _________________________
+// RTCMultiConnection v3.6.9
+
+// Open-Sourced: https://github.com/muaz-khan/RTCMultiConnection
+
+// --------------------------------------------------
+// Muaz Khan     - www.MuazKhan.com
+// MIT License   - www.WebRTC-Experiment.com/licence
+// --------------------------------------------------
+
+var RTCMultiConnection3 = function(roomid, forceOptions) {
+
+    var browserFakeUserAgent = 'Fake/5.0 (FakeOS) AppleWebKit/123 (KHTML, like Gecko) Fake/12.3.4567.89 Fake/123.45';
+
+    (function(that) {
+        if (!that) {
+            return;
+        }
+
+        if (typeof window !== 'undefined') {
+            return;
+        }
+
+        if (typeof global === 'undefined') {
+            return;
+        }
+
+        global.navigator = {
+            userAgent: browserFakeUserAgent,
+            getUserMedia: function() {}
+        };
+
+        if (!global.console) {
+            global.console = {};
+        }
+
+        if (typeof global.console.debug === 'undefined') {
+            global.console.debug = global.console.info = global.console.error = global.console.log = global.console.log || function() {
+                console.log(arguments);
+            };
+        }
+
+        if (typeof document === 'undefined') {
+            /*global document:true */
+            that.document = {};
+
+            document.createElement = document.captureStream = document.mozCaptureStream = function() {
+                var obj = {
+                    getContext: function() {
+                        return obj;
+                    },
+                    play: function() {},
+                    pause: function() {},
+                    drawImage: function() {},
+                    toDataURL: function() {
+                        return '';
+                    }
+                };
+                return obj;
+            };
+
+            document.addEventListener = document.removeEventListener = that.addEventListener = that.removeEventListener = function() {};
+
+            that.HTMLVideoElement = that.HTMLMediaElement = function() {};
+        }
+
+        if (typeof io === 'undefined') {
+            that.io = function() {
+                return {
+                    on: function(eventName, callback) {
+                        callback = callback || function() {};
+
+                        if (eventName === 'connect') {
+                            callback();
+                        }
+                    },
+                    emit: function(eventName, data, callback) {
+                        callback = callback || function() {};
+                        if (eventName === 'open-room' || eventName === 'join-room') {
+                            callback(true, data.sessionid, null);
+                        }
+                    }
+                };
+            };
+        }
+
+        if (typeof location === 'undefined') {
+            /*global location:true */
+            that.location = {
+                protocol: 'file:',
+                href: '',
+                hash: '',
+                origin: 'self'
+            };
+        }
+
+        if (typeof screen === 'undefined') {
+            /*global screen:true */
+            that.screen = {
+                width: 0,
+                height: 0
+            };
+        }
+
+        if (typeof URL === 'undefined') {
+            /*global screen:true */
+            that.URL = {
+                createObjectURL: function() {
+                    return '';
+                },
+                revokeObjectURL: function() {
+                    return '';
+                }
+            };
+        }
+
+        /*global window:true */
+        that.window = global;
+    })(typeof global !== 'undefined' ? global : null);
+
+    function SocketConnection(connection, connectCallback) {
+        function isData(session) {
+            return !session.audio && !session.video && !session.screen && session.data;
+        }
+
+        var parameters = '';
+
+        parameters += '?userid=' + connection.userid;
+        parameters += '&sessionid=' + connection.sessionid;
+        parameters += '&msgEvent=' + connection.socketMessageEvent;
+        parameters += '&socketCustomEvent=' + connection.socketCustomEvent;
+        parameters += '&autoCloseEntireSession=' + !!connection.autoCloseEntireSession;
+
+        if (connection.session.broadcast === true) {
+            parameters += '&oneToMany=true';
+        }
+
+        parameters += '&maxParticipantsAllowed=' + connection.maxParticipantsAllowed;
+
+        if (connection.enableScalableBroadcast) {
+            parameters += '&enableScalableBroadcast=true';
+            parameters += '&maxRelayLimitPerUser=' + (connection.maxRelayLimitPerUser || 2);
+        }
+
+        parameters += '&extra=' + JSON.stringify(connection.extra || {});
+
+        if (connection.socketCustomParameters) {
+            parameters += connection.socketCustomParameters;
+        }
+
+        try {
+            io.sockets = {};
+        } catch (e) {};
+
+        if (!connection.socketURL) {
+            connection.socketURL = '/';
+        }
+
+        if (connection.socketURL.substr(connection.socketURL.length - 1, 1) != '/') {
+            // connection.socketURL = 'https://domain.com:9001/';
+            throw '"socketURL" MUST end with a slash.';
+        }
+
+        if (connection.enableLogs) {
+            if (connection.socketURL == '/') {
+                connection.socketURL = "http://localhost:9001/";
+            }
+        }
+
+        console.info('socket.io url is: ', connection.socketURL);
+
+        try {
+            connection.socket = io(connection.socketURL + parameters, {
+                withCredentials: true });
+        } catch (e) {
+            connection.socket = io.connect(connection.socketURL + parameters, connection.socketOptions, {
+                withCredentials: true });
+        }
+
+        var mPeer = connection.multiPeersHandler;
+
+        connection.socket.on('extra-data-updated', function(remoteUserId, extra) {
+            if (!connection.peers[remoteUserId]) return;
+            connection.peers[remoteUserId].extra = extra;
+
+            connection.onExtraDataUpdated({
+                userid: remoteUserId,
+                extra: extra
+            });
+
+            updateExtraBackup(remoteUserId, extra);
+        });
+
+        function updateExtraBackup(remoteUserId, extra) {
+            if (!connection.peersBackup[remoteUserId]) {
+                connection.peersBackup[remoteUserId] = {
+                    userid: remoteUserId,
+                    extra: {}
+                };
+            }
+
+            connection.peersBackup[remoteUserId].extra = extra;
+        }
+
+        function onMessageEvent(message) {
+            if (message.remoteUserId != connection.userid) return;
+
+            if (connection.peers[message.sender] && connection.peers[message.sender].extra != message.message.extra) {
+                connection.peers[message.sender].extra = message.extra;
+                connection.onExtraDataUpdated({
+                    userid: message.sender,
+                    extra: message.extra
+                });
+
+                updateExtraBackup(message.sender, message.extra);
+            }
+
+            if (message.message.streamSyncNeeded && connection.peers[message.sender]) {
+                var stream = connection.streamEvents[message.message.streamid];
+                if (!stream || !stream.stream) {
+                    return;
+                }
+
+                var action = message.message.action;
+
+                if (action === 'ended' || action === 'inactive' || action === 'stream-removed') {
+                    if (connection.peersBackup[stream.userid]) {
+                        stream.extra = connection.peersBackup[stream.userid].extra;
+                    }
+                    connection.onstreamended(stream);
+                    return;
+                }
+
+                var type = message.message.type != 'both' ? message.message.type : null;
+
+                if (typeof stream.stream[action] == 'function') {
+                    stream.stream[action](type);
+                }
+                return;
+            }
+
+            if (message.message === 'dropPeerConnection') {
+                connection.deletePeer(message.sender);
+                return;
+            }
+
+            if (message.message.allParticipants) {
+                if (message.message.allParticipants.indexOf(message.sender) === -1) {
+                    message.message.allParticipants.push(message.sender);
+                }
+
+                message.message.allParticipants.forEach(function(participant) {
+                    mPeer[!connection.peers[participant] ? 'createNewPeer' : 'renegotiatePeer'](participant, {
+                        localPeerSdpConstraints: {
+                            OfferToReceiveAudio: connection.sdpConstraints.mandatory.OfferToReceiveAudio,
+                            OfferToReceiveVideo: connection.sdpConstraints.mandatory.OfferToReceiveVideo
+                        },
+                        remotePeerSdpConstraints: {
+                            OfferToReceiveAudio: connection.session.oneway ? !!connection.session.audio : connection.sdpConstraints.mandatory.OfferToReceiveAudio,
+                            OfferToReceiveVideo: connection.session.oneway ? !!connection.session.video || !!connection.session.screen : connection.sdpConstraints.mandatory.OfferToReceiveVideo
+                        },
+                        isOneWay: !!connection.session.oneway || connection.direction === 'one-way',
+                        isDataOnly: isData(connection.session)
+                    });
+                });
+                return;
+            }
+
+            if (message.message.newParticipant) {
+                if (message.message.newParticipant == connection.userid) return;
+                if (!!connection.peers[message.message.newParticipant]) return;
+
+                mPeer.createNewPeer(message.message.newParticipant, message.message.userPreferences || {
+                    localPeerSdpConstraints: {
+                        OfferToReceiveAudio: connection.sdpConstraints.mandatory.OfferToReceiveAudio,
+                        OfferToReceiveVideo: connection.sdpConstraints.mandatory.OfferToReceiveVideo
+                    },
+                    remotePeerSdpConstraints: {
+                        OfferToReceiveAudio: connection.session.oneway ? !!connection.session.audio : connection.sdpConstraints.mandatory.OfferToReceiveAudio,
+                        OfferToReceiveVideo: connection.session.oneway ? !!connection.session.video || !!connection.session.screen : connection.sdpConstraints.mandatory.OfferToReceiveVideo
+                    },
+                    isOneWay: !!connection.session.oneway || connection.direction === 'one-way',
+                    isDataOnly: isData(connection.session)
+                });
+                return;
+            }
+
+            if (message.message.readyForOffer) {
+                if (connection.attachStreams.length) {
+                    connection.waitingForLocalMedia = false;
+                }
+
+                if (connection.waitingForLocalMedia) {
+                    // if someone is waiting to join you
+                    // make sure that we've local media before making a handshake
+                    setTimeout(function() {
+                        onMessageEvent(message);
+                    }, 1);
+                    return;
+                }
+            }
+
+            if (message.message.newParticipationRequest && message.sender !== connection.userid) {
+                if (connection.peers[message.sender]) {
+                    connection.deletePeer(message.sender);
+                }
+
+                var userPreferences = {
+                    extra: message.extra || {},
+                    localPeerSdpConstraints: message.message.remotePeerSdpConstraints || {
+                        OfferToReceiveAudio: connection.sdpConstraints.mandatory.OfferToReceiveAudio,
+                        OfferToReceiveVideo: connection.sdpConstraints.mandatory.OfferToReceiveVideo
+                    },
+                    remotePeerSdpConstraints: message.message.localPeerSdpConstraints || {
+                        OfferToReceiveAudio: connection.session.oneway ? !!connection.session.audio : connection.sdpConstraints.mandatory.OfferToReceiveAudio,
+                        OfferToReceiveVideo: connection.session.oneway ? !!connection.session.video || !!connection.session.screen : connection.sdpConstraints.mandatory.OfferToReceiveVideo
+                    },
+                    isOneWay: typeof message.message.isOneWay !== 'undefined' ? message.message.isOneWay : !!connection.session.oneway || connection.direction === 'one-way',
+                    isDataOnly: typeof message.message.isDataOnly !== 'undefined' ? message.message.isDataOnly : isData(connection.session),
+                    dontGetRemoteStream: typeof message.message.isOneWay !== 'undefined' ? message.message.isOneWay : !!connection.session.oneway || connection.direction === 'one-way',
+                    dontAttachLocalStream: !!message.message.dontGetRemoteStream,
+                    connectionDescription: message,
+                    successCallback: function() {}
+                };
+
+                connection.onNewParticipant(message.sender, userPreferences);
+                return;
+            }
+
+            if (message.message.changedUUID) {
+                if (connection.peers[message.message.oldUUID]) {
+                    connection.peers[message.message.newUUID] = connection.peers[message.message.oldUUID];
+                    delete connection.peers[message.message.oldUUID];
+                }
+            }
+
+            if (message.message.userLeft) {
+                mPeer.onUserLeft(message.sender);
+
+                if (!!message.message.autoCloseEntireSession) {
+                    connection.leave();
+                }
+
+                return;
+            }
+
+            mPeer.addNegotiatedMessage(message.message, message.sender);
+        }
+
+        connection.socket.on(connection.socketMessageEvent, onMessageEvent);
+
+        var alreadyConnected = false;
+
+        connection.socket.resetProps = function() {
+            alreadyConnected = false;
+        };
+
+        connection.socket.on('connect', function() {
+            if (alreadyConnected) {
+                return;
+            }
+            alreadyConnected = true;
+
+            if (connection.enableLogs) {
+                console.info('socket.io connection is opened.');
+            }
+
+            setTimeout(function() {
+                connection.socket.emit('extra-data-updated', connection.extra);
+            }, 1000);
+
+            if (connectCallback) {
+                connectCallback(connection.socket);
+            }
+        });
+
+        connection.socket.on('disconnect', function(event) {
+            connection.onSocketDisconnect(event);
+        });
+
+        connection.socket.on('error', function(event) {
+            connection.onSocketError(event);
+        });
+
+        connection.socket.on('user-disconnected', function(remoteUserId) {
+            if (remoteUserId === connection.userid) {
+                return;
+            }
+
+            connection.onUserStatusChanged({
+                userid: remoteUserId,
+                status: 'offline',
+                extra: connection.peers[remoteUserId] ? connection.peers[remoteUserId].extra || {} : {}
+            });
+
+            connection.deletePeer(remoteUserId);
+        });
+
+        connection.socket.on('user-connected', function(userid) {
+            if (userid === connection.userid) {
+                return;
+            }
+
+            connection.onUserStatusChanged({
+                userid: userid,
+                status: 'online',
+                extra: connection.peers[userid] ? connection.peers[userid].extra || {} : {}
+            });
+        });
+
+        connection.socket.on('closed-entire-session', function(sessionid, extra) {
+            connection.leave();
+            connection.onEntireSessionClosed({
+                sessionid: sessionid,
+                userid: sessionid,
+                extra: extra
+            });
+        });
+
+        connection.socket.on('userid-already-taken', function(useridAlreadyTaken, yourNewUserId) {
+            connection.onUserIdAlreadyTaken(useridAlreadyTaken, yourNewUserId);
+        });
+
+        connection.socket.on('logs', function(log) {
+            if (!connection.enableLogs) return;
+            console.debug('server-logs', log);
+        });
+
+        connection.socket.on('number-of-broadcast-viewers-updated', function(data) {
+            connection.onNumberOfBroadcastViewersUpdated(data);
+        });
+
+        connection.socket.on('set-isInitiator-true', function(sessionid) {
+            if (sessionid != connection.sessionid) return;
+            connection.isInitiator = true;
+        });
+    }
+
+    function MultiPeers(connection) {
+        var self = this;
+
+        var skipPeers = ['getAllParticipants', 'getLength', 'selectFirst', 'streams', 'send', 'forEach'];
+        connection.peers = {
+            getLength: function() {
+                var numberOfPeers = 0;
+                for (var peer in this) {
+                    if (skipPeers.indexOf(peer) == -1) {
+                        numberOfPeers++;
+                    }
+                }
+                return numberOfPeers;
+            },
+            selectFirst: function() {
+                var firstPeer;
+                for (var peer in this) {
+                    if (skipPeers.indexOf(peer) == -1) {
+                        firstPeer = this[peer];
+                    }
+                }
+                return firstPeer;
+            },
+            getAllParticipants: function(sender) {
+                var allPeers = [];
+                for (var peer in this) {
+                    if (skipPeers.indexOf(peer) == -1 && peer != sender) {
+                        allPeers.push(peer);
+                    }
+                }
+                return allPeers;
+            },
+            forEach: function(callbcak) {
+                this.getAllParticipants().forEach(function(participant) {
+                    callbcak(connection.peers[participant]);
+                });
+            },
+            send: function(data, remoteUserId) {
+                var that = this;
+
+                if (!isNull(data.size) && !isNull(data.type)) {
+                    if (connection.enableFileSharing) {
+                        self.shareFile(data, remoteUserId);
+                        return;
+                    }
+
+                    if (typeof data !== 'string') {
+                        data = JSON.stringify(data);
+                    }
+                }
+
+                if (data.type !== 'text' && !(data instanceof ArrayBuffer) && !(data instanceof DataView)) {
+                    TextSender.send({
+                        text: data,
+                        channel: this,
+                        connection: connection,
+                        remoteUserId: remoteUserId
+                    });
+                    return;
+                }
+
+                if (data.type === 'text') {
+                    data = JSON.stringify(data);
+                }
+
+                if (remoteUserId) {
+                    var remoteUser = connection.peers[remoteUserId];
+                    if (remoteUser) {
+                        if (!remoteUser.channels.length) {
+                            connection.peers[remoteUserId].createDataChannel();
+                            connection.renegotiate(remoteUserId);
+                            setTimeout(function() {
+                                that.send(data, remoteUserId);
+                            }, 3000);
+                            return;
+                        }
+
+                        remoteUser.channels.forEach(function(channel) {
+                            channel.send(data);
+                        });
+                        return;
+                    }
+                }
+
+                this.getAllParticipants().forEach(function(participant) {
+                    if (!that[participant].channels.length) {
+                        connection.peers[participant].createDataChannel();
+                        connection.renegotiate(participant);
+                        setTimeout(function() {
+                            that[participant].channels.forEach(function(channel) {
+                                channel.send(data);
+                            });
+                        }, 3000);
+                        return;
+                    }
+
+                    that[participant].channels.forEach(function(channel) {
+                        channel.send(data);
+                    });
+                });
+            }
+        };
+
+        this.uuid = connection.userid;
+
+        this.getLocalConfig = function(remoteSdp, remoteUserId, userPreferences) {
+            if (!userPreferences) {
+                userPreferences = {};
+            }
+
+            return {
+                streamsToShare: userPreferences.streamsToShare || {},
+                rtcMultiConnection: connection,
+                connectionDescription: userPreferences.connectionDescription,
+                userid: remoteUserId,
+                localPeerSdpConstraints: userPreferences.localPeerSdpConstraints,
+                remotePeerSdpConstraints: userPreferences.remotePeerSdpConstraints,
+                dontGetRemoteStream: !!userPreferences.dontGetRemoteStream,
+                dontAttachLocalStream: !!userPreferences.dontAttachLocalStream,
+                renegotiatingPeer: !!userPreferences.renegotiatingPeer,
+                peerRef: userPreferences.peerRef,
+                channels: userPreferences.channels || [],
+                onLocalSdp: function(localSdp) {
+                    self.onNegotiationNeeded(localSdp, remoteUserId);
+                },
+                onLocalCandidate: function(localCandidate) {
+                    localCandidate = OnIceCandidateHandler.processCandidates(connection, localCandidate)
+                    if (localCandidate) {
+                        self.onNegotiationNeeded(localCandidate, remoteUserId);
+                    }
+                },
+                remoteSdp: remoteSdp,
+                onDataChannelMessage: function(message) {
+                    if (!connection.fbr && connection.enableFileSharing) initFileBufferReader();
+
+                    if (typeof message == 'string' || !connection.enableFileSharing) {
+                        self.onDataChannelMessage(message, remoteUserId);
+                        return;
+                    }
+
+                    var that = this;
+
+                    if (message instanceof ArrayBuffer || message instanceof DataView) {
+                        connection.fbr.convertToObject(message, function(object) {
+                            that.onDataChannelMessage(object);
+                        });
+                        return;
+                    }
+
+                    if (message.readyForNextChunk) {
+                        connection.fbr.getNextChunk(message, function(nextChunk, isLastChunk) {
+                            connection.peers[remoteUserId].channels.forEach(function(channel) {
+                                channel.send(nextChunk);
+                            });
+                        }, remoteUserId);
+                        return;
+                    }
+
+                    if (message.chunkMissing) {
+                        connection.fbr.chunkMissing(message);
+                        return;
+                    }
+
+                    connection.fbr.addChunk(message, function(promptNextChunk) {
+                        connection.peers[remoteUserId].peer.channel.send(promptNextChunk);
+                    });
+                },
+                onDataChannelError: function(error) {
+                    self.onDataChannelError(error, remoteUserId);
+                },
+                onDataChannelOpened: function(channel) {
+                    self.onDataChannelOpened(channel, remoteUserId);
+                },
+                onDataChannelClosed: function(event) {
+                    self.onDataChannelClosed(event, remoteUserId);
+                },
+                onRemoteStream: function(stream) {
+                    if (connection.peers[remoteUserId]) {
+                        connection.peers[remoteUserId].streams.push(stream);
+                    }
+
+                    self.onGettingRemoteMedia(stream, remoteUserId);
+                },
+                onRemoteStreamRemoved: function(stream) {
+                    self.onRemovingRemoteMedia(stream, remoteUserId);
+                },
+                onPeerStateChanged: function(states) {
+                    self.onPeerStateChanged(states);
+
+                    if (states.iceConnectionState === 'new') {
+                        self.onNegotiationStarted(remoteUserId, states);
+                    }
+
+                    if (states.iceConnectionState === 'connected') {
+                        self.onNegotiationCompleted(remoteUserId, states);
+                    }
+
+                    if (states.iceConnectionState.search(/closed|failed/gi) !== -1) {
+                        self.onUserLeft(remoteUserId);
+                        self.disconnectWith(remoteUserId);
+                    }
+                }
+            };
+        };
+
+        this.createNewPeer = function(remoteUserId, userPreferences) {
+            if (connection.maxParticipantsAllowed <= connection.getAllParticipants().length) {
+                return;
+            }
+
+            userPreferences = userPreferences || {};
+
+            if (connection.isInitiator && !!connection.session.audio && connection.session.audio === 'two-way' && !userPreferences.streamsToShare) {
+                userPreferences.isOneWay = false;
+                userPreferences.isDataOnly = false;
+                userPreferences.session = connection.session;
+            }
+
+            if (!userPreferences.isOneWay && !userPreferences.isDataOnly) {
+                userPreferences.isOneWay = true;
+                this.onNegotiationNeeded({
+                    enableMedia: true,
+                    userPreferences: userPreferences
+                }, remoteUserId);
+                return;
+            }
+
+            userPreferences = connection.setUserPreferences(userPreferences, remoteUserId);
+            var localConfig = this.getLocalConfig(null, remoteUserId, userPreferences);
+            connection.peers[remoteUserId] = new PeerInitiator(localConfig);
+        };
+
+        this.createAnsweringPeer = function(remoteSdp, remoteUserId, userPreferences) {
+            userPreferences = connection.setUserPreferences(userPreferences || {}, remoteUserId);
+
+            var localConfig = this.getLocalConfig(remoteSdp, remoteUserId, userPreferences);
+            connection.peers[remoteUserId] = new PeerInitiator(localConfig);
+        };
+
+        this.renegotiatePeer = function(remoteUserId, userPreferences, remoteSdp) {
+            if (!connection.peers[remoteUserId]) {
+                if (connection.enableLogs) {
+                    console.error('Peer (' + remoteUserId + ') does not exist. Renegotiation skipped.');
+                }
+                return;
+            }
+
+            if (!userPreferences) {
+                userPreferences = {};
+            }
+
+            userPreferences.renegotiatingPeer = true;
+            userPreferences.peerRef = connection.peers[remoteUserId].peer;
+            userPreferences.channels = connection.peers[remoteUserId].channels;
+
+            var localConfig = this.getLocalConfig(remoteSdp, remoteUserId, userPreferences);
+
+            connection.peers[remoteUserId] = new PeerInitiator(localConfig);
+        };
+
+        this.replaceTrack = function(track, remoteUserId, isVideoTrack) {
+            if (!connection.peers[remoteUserId]) {
+                throw 'This peer (' + remoteUserId + ') does not exist.';
+            }
+
+            var peer = connection.peers[remoteUserId].peer;
+
+            if (!!peer.getSenders && typeof peer.getSenders === 'function' && peer.getSenders().length) {
+                peer.getSenders().forEach(function(rtpSender) {
+                    if (isVideoTrack && rtpSender.track.kind === 'video') {
+                        connection.peers[remoteUserId].peer.lastVideoTrack = rtpSender.track;
+                        rtpSender.replaceTrack(track);
+                    }
+
+                    if (!isVideoTrack && rtpSender.track.kind === 'audio') {
+                        connection.peers[remoteUserId].peer.lastAudioTrack = rtpSender.track;
+                        rtpSender.replaceTrack(track);
+                    }
+                });
+                return;
+            }
+
+            console.warn('RTPSender.replaceTrack is NOT supported.');
+            this.renegotiatePeer(remoteUserId);
+        };
+
+        this.onNegotiationNeeded = function(message, remoteUserId) {};
+        this.addNegotiatedMessage = function(message, remoteUserId) {
+            if (message.type && message.sdp) {
+                if (message.type == 'answer') {
+                    if (connection.peers[remoteUserId]) {
+                        connection.peers[remoteUserId].addRemoteSdp(message);
+                    }
+                }
+
+                if (message.type == 'offer') {
+                    if (message.renegotiatingPeer) {
+                        this.renegotiatePeer(remoteUserId, null, message);
+                    } else {
+                        this.createAnsweringPeer(message, remoteUserId);
+                    }
+                }
+
+                if (connection.enableLogs) {
+                    console.log('Remote peer\'s sdp:', message.sdp);
+                }
+                return;
+            }
+
+            if (message.candidate) {
+                if (connection.peers[remoteUserId]) {
+                    connection.peers[remoteUserId].addRemoteCandidate(message);
+                }
+
+                if (connection.enableLogs) {
+                    console.log('Remote peer\'s candidate pairs:', message.candidate);
+                }
+                return;
+            }
+
+            if (message.enableMedia) {
+                connection.session = message.userPreferences.session || connection.session;
+
+                if (connection.session.oneway && connection.attachStreams.length) {
+                    connection.attachStreams = [];
+                }
+
+                if (message.userPreferences.isDataOnly && connection.attachStreams.length) {
+                    connection.attachStreams.length = [];
+                }
+
+                var streamsToShare = {};
+                connection.attachStreams.forEach(function(stream) {
+                    streamsToShare[stream.streamid] = {
+                        isAudio: !!stream.isAudio,
+                        isVideo: !!stream.isVideo,
+                        isScreen: !!stream.isScreen
+                    };
+                });
+                message.userPreferences.streamsToShare = streamsToShare;
+
+                self.onNegotiationNeeded({
+                    readyForOffer: true,
+                    userPreferences: message.userPreferences
+                }, remoteUserId);
+            }
+
+            if (message.readyForOffer) {
+                connection.onReadyForOffer(remoteUserId, message.userPreferences);
+            }
+
+            function cb(stream) {
+                gumCallback(stream, message, remoteUserId);
+            }
+        };
+
+        function gumCallback(stream, message, remoteUserId) {
+            var streamsToShare = {};
+            connection.attachStreams.forEach(function(stream) {
+                streamsToShare[stream.streamid] = {
+                    isAudio: !!stream.isAudio,
+                    isVideo: !!stream.isVideo,
+                    isScreen: !!stream.isScreen
+                };
+            });
+            message.userPreferences.streamsToShare = streamsToShare;
+
+            self.onNegotiationNeeded({
+                readyForOffer: true,
+                userPreferences: message.userPreferences
+            }, remoteUserId);
+        }
+
+        this.onGettingRemoteMedia = function(stream, remoteUserId) {};
+        this.onRemovingRemoteMedia = function(stream, remoteUserId) {};
+        this.onGettingLocalMedia = function(localStream) {};
+        this.onLocalMediaError = function(error, constraints) {
+            connection.onMediaError(error, constraints);
+        };
+
+        function initFileBufferReader() {
+            connection.fbr = new FileBufferReader();
+            connection.fbr.onProgress = function(chunk) {
+                connection.onFileProgress(chunk);
+            };
+            connection.fbr.onBegin = function(file) {
+                connection.onFileStart(file);
+            };
+            connection.fbr.onEnd = function(file) {
+                connection.onFileEnd(file);
+            };
+        }
+
+        this.shareFile = function(file, remoteUserId) {
+            initFileBufferReader();
+
+            connection.fbr.readAsArrayBuffer(file, function(uuid) {
+                var arrayOfUsers = connection.getAllParticipants();
+
+                if (remoteUserId) {
+                    arrayOfUsers = [remoteUserId];
+                }
+
+                arrayOfUsers.forEach(function(participant) {
+                    connection.fbr.getNextChunk(uuid, function(nextChunk) {
+                        connection.peers[participant].channels.forEach(function(channel) {
+                            channel.send(nextChunk);
+                        });
+                    }, participant);
+                });
+            }, {
+                userid: connection.userid,
+                // extra: connection.extra,
+                chunkSize: DetectRTC.browser.name === 'Firefox' ? 15 * 1000 : connection.chunkSize || 0
+            });
+        };
+
+        if (typeof 'TextReceiver' !== 'undefined') {
+            var textReceiver = new TextReceiver(connection);
+        }
+
+        this.onDataChannelMessage = function(message, remoteUserId) {
+            textReceiver.receive(JSON.parse(message), remoteUserId, connection.peers[remoteUserId] ? connection.peers[remoteUserId].extra : {});
+        };
+
+        this.onDataChannelClosed = function(event, remoteUserId) {
+            event.userid = remoteUserId;
+            event.extra = connection.peers[remoteUserId] ? connection.peers[remoteUserId].extra : {};
+            connection.onclose(event);
+        };
+
+        this.onDataChannelError = function(error, remoteUserId) {
+            error.userid = remoteUserId;
+            event.extra = connection.peers[remoteUserId] ? connection.peers[remoteUserId].extra : {};
+            connection.onerror(error);
+        };
+
+        this.onDataChannelOpened = function(channel, remoteUserId) {
+            // keep last channel only; we are not expecting parallel/channels channels
+            if (connection.peers[remoteUserId].channels.length) {
+                connection.peers[remoteUserId].channels = [channel];
+                return;
+            }
+
+            connection.peers[remoteUserId].channels.push(channel);
+            connection.onopen({
+                userid: remoteUserId,
+                extra: connection.peers[remoteUserId] ? connection.peers[remoteUserId].extra : {},
+                channel: channel
+            });
+        };
+
+        this.onPeerStateChanged = function(state) {
+            connection.onPeerStateChanged(state);
+        };
+
+        this.onNegotiationStarted = function(remoteUserId, states) {};
+        this.onNegotiationCompleted = function(remoteUserId, states) {};
+
+        this.getRemoteStreams = function(remoteUserId) {
+            remoteUserId = remoteUserId || connection.peers.getAllParticipants()[0];
+            return connection.peers[remoteUserId] ? connection.peers[remoteUserId].streams : [];
+        };
+    }
+
+    'use strict';
+
+    // Last Updated On: 2019-01-10 5:32:55 AM UTC
+
+    // ________________
+    // DetectRTC v1.3.9
+
+    // Open-Sourced: https://github.com/muaz-khan/DetectRTC
+
+    // --------------------------------------------------
+    // Muaz Khan     - www.MuazKhan.com
+    // MIT License   - www.WebRTC-Experiment.com/licence
+    // --------------------------------------------------
+
+    (function() {
+
+        var browserFakeUserAgent = 'Fake/5.0 (FakeOS) AppleWebKit/123 (KHTML, like Gecko) Fake/12.3.4567.89 Fake/123.45';
+
+        var isNodejs = typeof process === 'object' && typeof process.versions === 'object' && process.versions.node && /*node-process*/ !process.browser;
+        if (isNodejs) {
+            var version = process.versions.node.toString().replace('v', '');
+            browserFakeUserAgent = 'Nodejs/' + version + ' (NodeOS) AppleWebKit/' + version + ' (KHTML, like Gecko) Nodejs/' + version + ' Nodejs/' + version
+        }
+
+        (function(that) {
+            if (typeof window !== 'undefined') {
+                return;
+            }
+
+            if (typeof window === 'undefined' && typeof global !== 'undefined') {
+                global.navigator = {
+                    userAgent: browserFakeUserAgent,
+                    getUserMedia: function() {}
+                };
+
+                /*global window:true */
+                that.window = global;
+            } else if (typeof window === 'undefined') {
+                // window = this;
+            }
+
+            if (typeof location === 'undefined') {
+                /*global location:true */
+                that.location = {
+                    protocol: 'file:',
+                    href: '',
+                    hash: ''
+                };
+            }
+
+            if (typeof screen === 'undefined') {
+                /*global screen:true */
+                that.screen = {
+                    width: 0,
+                    height: 0
+                };
+            }
+        })(typeof global !== 'undefined' ? global : window);
+
+        /*global navigator:true */
+        var navigator = window.navigator;
+
+        if (typeof navigator !== 'undefined') {
+            if (typeof navigator.webkitGetUserMedia !== 'undefined') {
+                navigator.getUserMedia = navigator.webkitGetUserMedia;
+            }
+
+            if (typeof navigator.mozGetUserMedia !== 'undefined') {
+                navigator.getUserMedia = navigator.mozGetUserMedia;
+            }
+        } else {
+            navigator = {
+                getUserMedia: function() {},
+                userAgent: browserFakeUserAgent
+            };
+        }
+
+        var isMobileDevice = !!(/Android|webOS|iPhone|iPad|iPod|BB10|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(navigator.userAgent || ''));
+
+        var isEdge = navigator.userAgent.indexOf('Edge') !== -1 && (!!navigator.msSaveOrOpenBlob || !!navigator.msSaveBlob);
+
+        var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+        var isFirefox = typeof window.InstallTrigger !== 'undefined';
+        var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        var isChrome = !!window.chrome && !isOpera;
+        var isIE = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
+
+        // this one can also be used:
+        // https://www.websocket.org/js/stuff.js (DetectBrowser.js)
+
+        function getBrowserInfo() {
+            var nVer = navigator.appVersion;
+            var nAgt = navigator.userAgent;
+            var browserName = navigator.appName;
+            var fullVersion = '' + parseFloat(navigator.appVersion);
+            var majorVersion = parseInt(navigator.appVersion, 10);
+            var nameOffset, verOffset, ix;
+
+            // both and safri and chrome has same userAgent
+            if (isSafari && !isChrome && nAgt.indexOf('CriOS') !== -1) {
+                isSafari = false;
+                isChrome = true;
+            }
+
+            // In Opera, the true version is after 'Opera' or after 'Version'
+            if (isOpera) {
+                browserName = 'Opera';
+                try {
+                    fullVersion = navigator.userAgent.split('OPR/')[1].split(' ')[0];
+                    majorVersion = fullVersion.split('.')[0];
+                } catch (e) {
+                    fullVersion = '0.0.0.0';
+                    majorVersion = 0;
+                }
+            }
+            // In MSIE version <=10, the true version is after 'MSIE' in userAgent
+            // In IE 11, look for the string after 'rv:'
+            else if (isIE) {
+                verOffset = nAgt.indexOf('rv:');
+                if (verOffset > 0) { //IE 11
+                    fullVersion = nAgt.substring(verOffset + 3);
+                } else { //IE 10 or earlier
+                    verOffset = nAgt.indexOf('MSIE');
+                    fullVersion = nAgt.substring(verOffset + 5);
+                }
+                browserName = 'IE';
+            }
+            // In Chrome, the true version is after 'Chrome'
+            else if (isChrome) {
+                verOffset = nAgt.indexOf('Chrome');
+                browserName = 'Chrome';
+                fullVersion = nAgt.substring(verOffset + 7);
+            }
+            // In Safari, the true version is after 'Safari' or after 'Version'
+            else if (isSafari) {
+                verOffset = nAgt.indexOf('Safari');
+
+                browserName = 'Safari';
+                fullVersion = nAgt.substring(verOffset + 7);
+
+                if ((verOffset = nAgt.indexOf('Version')) !== -1) {
+                    fullVersion = nAgt.substring(verOffset + 8);
+                }
+
+                if (navigator.userAgent.indexOf('Version/') !== -1) {
+                    fullVersion = navigator.userAgent.split('Version/')[1].split(' ')[0];
+                }
+            }
+            // In Firefox, the true version is after 'Firefox'
+            else if (isFirefox) {
+                verOffset = nAgt.indexOf('Firefox');
+                browserName = 'Firefox';
+                fullVersion = nAgt.substring(verOffset + 8);
+            }
+
+            // In most other browsers, 'name/version' is at the end of userAgent
+            else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) < (verOffset = nAgt.lastIndexOf('/'))) {
+                browserName = nAgt.substring(nameOffset, verOffset);
+                fullVersion = nAgt.substring(verOffset + 1);
+
+                if (browserName.toLowerCase() === browserName.toUpperCase()) {
+                    browserName = navigator.appName;
+                }
+            }
+
+            if (isEdge) {
+                browserName = 'Edge';
+                fullVersion = navigator.userAgent.split('Edge/')[1];
+                // fullVersion = parseInt(navigator.userAgent.match(/Edge\/(\d+).(\d+)$/)[2], 10).toString();
+            }
+
+            // trim the fullVersion string at semicolon/space/bracket if present
+            if ((ix = fullVersion.search(/[; \)]/)) !== -1) {
+                fullVersion = fullVersion.substring(0, ix);
+            }
+
+            majorVersion = parseInt('' + fullVersion, 10);
+
+            if (isNaN(majorVersion)) {
+                fullVersion = '' + parseFloat(navigator.appVersion);
+                majorVersion = parseInt(navigator.appVersion, 10);
+            }
+
+            return {
+                fullVersion: fullVersion,
+                version: majorVersion,
+                name: browserName,
+                isPrivateBrowsing: false
+            };
+        }
+
+        // via: https://gist.github.com/cou929/7973956
+
+        function retry(isDone, next) {
+            var currentTrial = 0,
+                maxRetry = 50,
+                interval = 10,
+                isTimeout = false;
+            var id = window.setInterval(
+                function() {
+                    if (isDone()) {
+                        window.clearInterval(id);
+                        next(isTimeout);
+                    }
+                    if (currentTrial++ > maxRetry) {
+                        window.clearInterval(id);
+                        isTimeout = true;
+                        next(isTimeout);
+                    }
+                },
+                10
+            );
+        }
+
+        function isIE10OrLater(userAgent) {
+            var ua = userAgent.toLowerCase();
+            if (ua.indexOf('msie') === 0 && ua.indexOf('trident') === 0) {
+                return false;
+            }
+            var match = /(?:msie|rv:)\s?([\d\.]+)/.exec(ua);
+            if (match && parseInt(match[1], 10) >= 10) {
+                return true;
+            }
+            return false;
+        }
+
+        function detectPrivateMode(callback) {
+            var isPrivate;
+
+            try {
+
+                if (window.webkitRequestFileSystem) {
+                    window.webkitRequestFileSystem(
+                        window.TEMPORARY, 1,
+                        function() {
+                            isPrivate = false;
+                        },
+                        function(e) {
+                            isPrivate = true;
+                        }
+                    );
+                } else if (window.indexedDB && /Firefox/.test(window.navigator.userAgent)) {
+                    var db;
+                    try {
+                        db = window.indexedDB.open('test');
+                        db.onerror = function() {
+                            return true;
+                        };
+                    } catch (e) {
+                        isPrivate = true;
+                    }
+
+                    if (typeof isPrivate === 'undefined') {
+                        retry(
+                            function isDone() {
+                                return db.readyState === 'done' ? true : false;
+                            },
+                            function next(isTimeout) {
+                                if (!isTimeout) {
+                                    isPrivate = db.result ? false : true;
+                                }
+                            }
+                        );
+                    }
+                } else if (isIE10OrLater(window.navigator.userAgent)) {
+                    isPrivate = false;
+                    try {
+                        if (!window.indexedDB) {
+                            isPrivate = true;
+                        }
+                    } catch (e) {
+                        isPrivate = true;
+                    }
+                } else if (window.localStorage && /Safari/.test(window.navigator.userAgent)) {
+                    try {
+                        window.localStorage.setItem('test', 1);
+                    } catch (e) {
+                        isPrivate = true;
+                    }
+
+                    if (typeof isPrivate === 'undefined') {
+                        isPrivate = false;
+                        window.localStorage.removeItem('test');
+                    }
+                }
+
+            } catch (e) {
+                isPrivate = false;
+            }
+
+            retry(
+                function isDone() {
+                    return typeof isPrivate !== 'undefined' ? true : false;
+                },
+                function next(isTimeout) {
+                    callback(isPrivate);
+                }
+            );
+        }
+
+        var isMobile = {
+            Android: function() {
+                return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function() {
+                return navigator.userAgent.match(/BlackBerry|BB10/i);
+            },
+            iOS: function() {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function() {
+                return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function() {
+                return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function() {
+                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+            },
+            getOsName: function() {
+                var osName = 'Unknown OS';
+                if (isMobile.Android()) {
+                    osName = 'Android';
+                }
+
+                if (isMobile.BlackBerry()) {
+                    osName = 'BlackBerry';
+                }
+
+                if (isMobile.iOS()) {
+                    osName = 'iOS';
+                }
+
+                if (isMobile.Opera()) {
+                    osName = 'Opera Mini';
+                }
+
+                if (isMobile.Windows()) {
+                    osName = 'Windows';
+                }
+
+                return osName;
+            }
+        };
+
+        // via: http://jsfiddle.net/ChristianL/AVyND/
+        function detectDesktopOS() {
+            var unknown = '-';
+
+            var nVer = navigator.appVersion;
+            var nAgt = navigator.userAgent;
+
+            var os = unknown;
+            var clientStrings = [{
+                s: 'Windows 10',
+                r: /(Windows 10.0|Windows NT 10.0)/
+            }, {
+                s: 'Windows 8.1',
+                r: /(Windows 8.1|Windows NT 6.3)/
+            }, {
+                s: 'Windows 8',
+                r: /(Windows 8|Windows NT 6.2)/
+            }, {
+                s: 'Windows 7',
+                r: /(Windows 7|Windows NT 6.1)/
+            }, {
+                s: 'Windows Vista',
+                r: /Windows NT 6.0/
+            }, {
+                s: 'Windows Server 2003',
+                r: /Windows NT 5.2/
+            }, {
+                s: 'Windows XP',
+                r: /(Windows NT 5.1|Windows XP)/
+            }, {
+                s: 'Windows 2000',
+                r: /(Windows NT 5.0|Windows 2000)/
+            }, {
+                s: 'Windows ME',
+                r: /(Win 9x 4.90|Windows ME)/
+            }, {
+                s: 'Windows 98',
+                r: /(Windows 98|Win98)/
+            }, {
+                s: 'Windows 95',
+                r: /(Windows 95|Win95|Windows_95)/
+            }, {
+                s: 'Windows NT 4.0',
+                r: /(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/
+            }, {
+                s: 'Windows CE',
+                r: /Windows CE/
+            }, {
+                s: 'Windows 3.11',
+                r: /Win16/
+            }, {
+                s: 'Android',
+                r: /Android/
+            }, {
+                s: 'Open BSD',
+                r: /OpenBSD/
+            }, {
+                s: 'Sun OS',
+                r: /SunOS/
+            }, {
+                s: 'Linux',
+                r: /(Linux|X11)/
+            }, {
+                s: 'iOS',
+                r: /(iPhone|iPad|iPod)/
+            }, {
+                s: 'Mac OS X',
+                r: /Mac OS X/
+            }, {
+                s: 'Mac OS',
+                r: /(MacPPC|MacIntel|Mac_PowerPC|Macintosh)/
+            }, {
+                s: 'QNX',
+                r: /QNX/
+            }, {
+                s: 'UNIX',
+                r: /UNIX/
+            }, {
+                s: 'BeOS',
+                r: /BeOS/
+            }, {
+                s: 'OS/2',
+                r: /OS\/2/
+            }, {
+                s: 'Search Bot',
+                r: /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/
+            }];
+            for (var i = 0, cs; cs = clientStrings[i]; i++) {
+                if (cs.r.test(nAgt)) {
+                    os = cs.s;
+                    break;
+                }
+            }
+
+            var osVersion = unknown;
+
+            if (/Windows/.test(os)) {
+                if (/Windows (.*)/.test(os)) {
+                    osVersion = /Windows (.*)/.exec(os)[1];
+                }
+                os = 'Windows';
+            }
+
+            switch (os) {
+                case 'Mac OS X':
+                    if (/Mac OS X (10[\.\_\d]+)/.test(nAgt)) {
+                        osVersion = /Mac OS X (10[\.\_\d]+)/.exec(nAgt)[1];
+                    }
+                    break;
+                case 'Android':
+                    if (/Android ([\.\_\d]+)/.test(nAgt)) {
+                        osVersion = /Android ([\.\_\d]+)/.exec(nAgt)[1];
+                    }
+                    break;
+                case 'iOS':
+                    if (/OS (\d+)_(\d+)_?(\d+)?/.test(nAgt)) {
+                        osVersion = /OS (\d+)_(\d+)_?(\d+)?/.exec(nVer);
+                        osVersion = osVersion[1] + '.' + osVersion[2] + '.' + (osVersion[3] | 0);
+                    }
+                    break;
+            }
+
+            return {
+                osName: os,
+                osVersion: osVersion
+            };
+        }
+
+        var osName = 'Unknown OS';
+        var osVersion = 'Unknown OS Version';
+
+        function getAndroidVersion(ua) {
+            ua = (ua || navigator.userAgent).toLowerCase();
+            var match = ua.match(/android\s([0-9\.]*)/);
+            return match ? match[1] : false;
+        }
+
+        var osInfo = detectDesktopOS();
+
+        if (osInfo && osInfo.osName && osInfo.osName != '-') {
+            osName = osInfo.osName;
+            osVersion = osInfo.osVersion;
+        } else if (isMobile.any()) {
+            osName = isMobile.getOsName();
+
+            if (osName == 'Android') {
+                osVersion = getAndroidVersion();
+            }
+        }
+
+        var isNodejs = typeof process === 'object' && typeof process.versions === 'object' && process.versions.node;
+
+        if (osName === 'Unknown OS' && isNodejs) {
+            osName = 'Nodejs';
+            osVersion = process.versions.node.toString().replace('v', '');
+        }
+
+        var isCanvasSupportsStreamCapturing = false;
+        var isVideoSupportsStreamCapturing = false;
+        ['captureStream', 'mozCaptureStream', 'webkitCaptureStream'].forEach(function(item) {
+            if (typeof document === 'undefined' || typeof document.createElement !== 'function') {
+                return;
+            }
+
+            if (!isCanvasSupportsStreamCapturing && item in document.createElement('canvas')) {
+                isCanvasSupportsStreamCapturing = true;
+            }
+
+            if (!isVideoSupportsStreamCapturing && item in document.createElement('video')) {
+                isVideoSupportsStreamCapturing = true;
+            }
+        });
+
+        var regexIpv4Local = /^(192\.168\.|169\.254\.|10\.|172\.(1[6-9]|2\d|3[01]))/,
+            regexIpv4 = /([0-9]{1,3}(\.[0-9]{1,3}){3})/,
+            regexIpv6 = /[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7}/;
+
+        // via: https://github.com/diafygi/webrtc-ips
+        function DetectLocalIPAddress(callback, stream) {
+            if (!DetectRTC.isWebRTCSupported) {
+                return;
+            }
+
+            var isPublic = true,
+                isIpv4 = true;
+            getIPs(function(ip) {
+                if (!ip) {
+                    callback(); // Pass nothing to tell that ICE-gathering-ended
+                } else if (ip.match(regexIpv4Local)) {
+                    isPublic = false;
+                    callback('Local: ' + ip, isPublic, isIpv4);
+                } else if (ip.match(regexIpv6)) { //via https://ourcodeworld.com/articles/read/257/how-to-get-the-client-ip-address-with-javascript-only
+                    isIpv4 = false;
+                    callback('Public: ' + ip, isPublic, isIpv4);
+                } else {
+                    callback('Public: ' + ip, isPublic, isIpv4);
+                }
+            }, stream);
+        }
+
+        function getIPs(callback, stream) {
+            if (typeof document === 'undefined' || typeof document.getElementById !== 'function') {
+                return;
+            }
+
+            var ipDuplicates = {};
+
+            var RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+
+            if (!RTCPeerConnection) {
+                var iframe = document.getElementById('iframe');
+                if (!iframe) {
+                    return;
+                }
+                var win = iframe.contentWindow;
+                RTCPeerConnection = win.RTCPeerConnection || win.mozRTCPeerConnection || win.webkitRTCPeerConnection;
+            }
+
+            if (!RTCPeerConnection) {
+                return;
+            }
+
+            var peerConfig = null;
+
+            if (DetectRTC.browser === 'Chrome' && DetectRTC.browser.version < 58) {
+                // todo: add support for older Opera
+                peerConfig = {
+                    optional: [{
+                        RtpDataChannels: true
+                    }]
+                };
+            }
+
+            var servers = {
+                iceServers: [{
+                    urls: 'stun:stun.l.google.com:19302'
+                }]
+            };
+
+            var pc = new RTCPeerConnection(servers, peerConfig);
+
+            if (stream) {
+                if (pc.addStream) {
+                    pc.addStream(stream);
+                } else if (pc.addTrack && stream.getTracks()[0]) {
+                    pc.addTrack(stream.getTracks()[0], stream);
+                }
+            }
+
+            function handleCandidate(candidate) {
+                if (!candidate) {
+                    callback(); // Pass nothing to tell that ICE-gathering-ended
+                    return;
+                }
+
+                var match = regexIpv4.exec(candidate);
+                if (!match) {
+                    return;
+                }
+                var ipAddress = match[1];
+                var isPublic = (candidate.match(regexIpv4Local)),
+                    isIpv4 = true;
+
+                if (ipDuplicates[ipAddress] === undefined) {
+                    callback(ipAddress, isPublic, isIpv4);
+                }
+
+                ipDuplicates[ipAddress] = true;
+            }
+
+            // listen for candidate events
+            pc.onicecandidate = function(event) {
+                if (event.candidate && event.candidate.candidate) {
+                    handleCandidate(event.candidate.candidate);
+                } else {
+                    handleCandidate(); // Pass nothing to tell that ICE-gathering-ended
+                }
+            };
+
+            // create data channel
+            if (!stream) {
+                try {
+                    pc.createDataChannel('sctp', {});
+                } catch (e) {}
+            }
+
+            // create an offer sdp
+            if (DetectRTC.isPromisesSupported) {
+                pc.createOffer().then(function(result) {
+                    pc.setLocalDescription(result).then(afterCreateOffer);
+                });
+            } else {
+                pc.createOffer(function(result) {
+                    pc.setLocalDescription(result, afterCreateOffer, function() {});
+                }, function() {});
+            }
+
+            function afterCreateOffer() {
+                var lines = pc.localDescription.sdp.split('\n');
+
+                lines.forEach(function(line) {
+                    if (line && line.indexOf('a=candidate:') === 0) {
+                        handleCandidate(line);
+                    }
+                });
+            }
+        }
+
+        var MediaDevices = [];
+
+        var audioInputDevices = [];
+        var audioOutputDevices = [];
+        var videoInputDevices = [];
+
+        if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+            // Firefox 38+ seems having support of enumerateDevices
+            // Thanks @xdumaine/enumerateDevices
+            navigator.enumerateDevices = function(callback) {
+                var enumerateDevices = navigator.mediaDevices.enumerateDevices();
+                if (enumerateDevices && enumerateDevices.then) {
+                    navigator.mediaDevices.enumerateDevices().then(callback).catch(function() {
+                        callback([]);
+                    });
+                } else {
+                    callback([]);
+                }
+            };
+        }
+
+        // Media Devices detection
+        var canEnumerate = false;
+
+        /*global MediaStreamTrack:true */
+        if (typeof MediaStreamTrack !== 'undefined' && 'getSources' in MediaStreamTrack) {
+            canEnumerate = true;
+        } else if (navigator.mediaDevices && !!navigator.mediaDevices.enumerateDevices) {
+            canEnumerate = true;
+        }
+
+        var hasMicrophone = false;
+        var hasSpeakers = false;
+        var hasWebcam = false;
+
+        var isWebsiteHasMicrophonePermissions = false;
+        var isWebsiteHasWebcamPermissions = false;
+
+        // http://dev.w3.org/2011/webrtc/editor/getusermedia.html#mediadevices
+        function checkDeviceSupport(callback) {
+            if (!canEnumerate) {
+                if (callback) {
+                    callback();
+                }
+                return;
+            }
+
+            if (!navigator.enumerateDevices && window.MediaStreamTrack && window.MediaStreamTrack.getSources) {
+                navigator.enumerateDevices = window.MediaStreamTrack.getSources.bind(window.MediaStreamTrack);
+            }
+
+            if (!navigator.enumerateDevices && navigator.enumerateDevices) {
+                navigator.enumerateDevices = navigator.enumerateDevices.bind(navigator);
+            }
+
+            if (!navigator.enumerateDevices) {
+                if (callback) {
+                    callback();
+                }
+                return;
+            }
+
+            MediaDevices = [];
+
+            audioInputDevices = [];
+            audioOutputDevices = [];
+            videoInputDevices = [];
+
+            hasMicrophone = false;
+            hasSpeakers = false;
+            hasWebcam = false;
+
+            isWebsiteHasMicrophonePermissions = false;
+            isWebsiteHasWebcamPermissions = false;
+
+            // to prevent duplication
+            var alreadyUsedDevices = {};
+
+            navigator.enumerateDevices(function(devices) {
+                devices.forEach(function(_device) {
+                    var device = {};
+                    for (var d in _device) {
+                        try {
+                            if (typeof _device[d] !== 'function') {
+                                device[d] = _device[d];
+                            }
+                        } catch (e) {}
+                    }
+
+                    if (alreadyUsedDevices[device.deviceId + device.label + device.kind]) {
+                        return;
+                    }
+
+                    // if it is MediaStreamTrack.getSources
+                    if (device.kind === 'audio') {
+                        device.kind = 'audioinput';
+                    }
+
+                    if (device.kind === 'video') {
+                        device.kind = 'videoinput';
+                    }
+
+                    if (!device.deviceId) {
+                        device.deviceId = device.id;
+                    }
+
+                    if (!device.id) {
+                        device.id = device.deviceId;
+                    }
+
+                    if (!device.label) {
+                        device.isCustomLabel = true;
+
+                        if (device.kind === 'videoinput') {
+                            device.label = 'Camera ' + (videoInputDevices.length + 1);
+                        } else if (device.kind === 'audioinput') {
+                            device.label = 'Microphone ' + (audioInputDevices.length + 1);
+                        } else if (device.kind === 'audiooutput') {
+                            device.label = 'Speaker ' + (audioOutputDevices.length + 1);
+                        } else {
+                            device.label = 'Please invoke getUserMedia once.';
+                        }
+
+                        if (typeof DetectRTC !== 'undefined' && DetectRTC.browser.isChrome && DetectRTC.browser.version >= 46 && !/^(https:|chrome-extension:)$/g.test(location.protocol || '')) {
+                            if (typeof document !== 'undefined' && typeof document.domain === 'string' && document.domain.search && document.domain.search(/localhost|127.0./g) === -1) {
+                                device.label = 'HTTPs is required to get label of this ' + device.kind + ' device.';
+                            }
+                        }
+                    } else {
+                        // Firefox on Android still returns empty label
+                        if (device.kind === 'videoinput' && !isWebsiteHasWebcamPermissions) {
+                            isWebsiteHasWebcamPermissions = true;
+                        }
+
+                        if (device.kind === 'audioinput' && !isWebsiteHasMicrophonePermissions) {
+                            isWebsiteHasMicrophonePermissions = true;
+                        }
+                    }
+
+                    if (device.kind === 'audioinput') {
+                        hasMicrophone = true;
+
+                        if (audioInputDevices.indexOf(device) === -1) {
+                            audioInputDevices.push(device);
+                        }
+                    }
+
+                    if (device.kind === 'audiooutput') {
+                        hasSpeakers = true;
+
+                        if (audioOutputDevices.indexOf(device) === -1) {
+                            audioOutputDevices.push(device);
+                        }
+                    }
+
+                    if (device.kind === 'videoinput') {
+                        hasWebcam = true;
+
+                        if (videoInputDevices.indexOf(device) === -1) {
+                            videoInputDevices.push(device);
+                        }
+                    }
+
+                    // there is no 'videoouput' in the spec.
+                    MediaDevices.push(device);
+
+                    alreadyUsedDevices[device.deviceId + device.label + device.kind] = device;
+                });
+
+                if (typeof DetectRTC !== 'undefined') {
+                    // to sync latest outputs
+                    DetectRTC.MediaDevices = MediaDevices;
+                    DetectRTC.hasMicrophone = hasMicrophone;
+                    DetectRTC.hasSpeakers = hasSpeakers;
+                    DetectRTC.hasWebcam = hasWebcam;
+
+                    DetectRTC.isWebsiteHasWebcamPermissions = isWebsiteHasWebcamPermissions;
+                    DetectRTC.isWebsiteHasMicrophonePermissions = isWebsiteHasMicrophonePermissions;
+
+                    DetectRTC.audioInputDevices = audioInputDevices;
+                    DetectRTC.audioOutputDevices = audioOutputDevices;
+                    DetectRTC.videoInputDevices = videoInputDevices;
+                }
+
+                if (callback) {
+                    callback();
+                }
+            });
+        }
+
+        var DetectRTC = window.DetectRTC || {};
+
+        // ----------
+        // DetectRTC.browser.name || DetectRTC.browser.version || DetectRTC.browser.fullVersion
+        DetectRTC.browser = getBrowserInfo();
+
+        detectPrivateMode(function(isPrivateBrowsing) {
+            DetectRTC.browser.isPrivateBrowsing = !!isPrivateBrowsing;
+        });
+
+        // DetectRTC.isChrome || DetectRTC.isFirefox || DetectRTC.isEdge
+        DetectRTC.browser['is' + DetectRTC.browser.name] = true;
+
+        // -----------
+        DetectRTC.osName = osName;
+        DetectRTC.osVersion = osVersion;
+
+        var isNodeWebkit = typeof process === 'object' && typeof process.versions === 'object' && process.versions['node-webkit'];
+
+        // --------- Detect if system supports WebRTC 1.0 or WebRTC 1.1.
+        var isWebRTCSupported = false;
+        ['RTCPeerConnection', 'webkitRTCPeerConnection', 'mozRTCPeerConnection', 'RTCIceGatherer'].forEach(function(item) {
+            if (isWebRTCSupported) {
+                return;
+            }
+
+            if (item in window) {
+                isWebRTCSupported = true;
+            }
+        });
+        DetectRTC.isWebRTCSupported = isWebRTCSupported;
+
+        //-------
+        DetectRTC.isORTCSupported = typeof RTCIceGatherer !== 'undefined';
+
+        // --------- Detect if system supports screen capturing API
+        var isScreenCapturingSupported = false;
+        if (DetectRTC.browser.isChrome && DetectRTC.browser.version >= 35) {
+            isScreenCapturingSupported = true;
+        } else if (DetectRTC.browser.isFirefox && DetectRTC.browser.version >= 34) {
+            isScreenCapturingSupported = true;
+        } else if (DetectRTC.browser.isEdge && DetectRTC.browser.version >= 17) {
+            isScreenCapturingSupported = true; // navigator.getDisplayMedia
+        } else if (DetectRTC.osName === 'Android' && DetectRTC.browser.isChrome) {
+            isScreenCapturingSupported = true;
+        }
+
+        if (!/^(https:|chrome-extension:)$/g.test(location.protocol || '')) {
+            var isNonLocalHost = typeof document !== 'undefined' && typeof document.domain === 'string' && document.domain.search && document.domain.search(/localhost|127.0./g) === -1;
+            if (isNonLocalHost && (DetectRTC.browser.isChrome || DetectRTC.browser.isEdge || DetectRTC.browser.isOpera)) {
+                isScreenCapturingSupported = false;
+            } else if (DetectRTC.browser.isFirefox) {
+                isScreenCapturingSupported = false;
+            }
+        }
+        DetectRTC.isScreenCapturingSupported = isScreenCapturingSupported;
+
+        // --------- Detect if WebAudio API are supported
+        var webAudio = {
+            isSupported: false,
+            isCreateMediaStreamSourceSupported: false
+        };
+
+        ['AudioContext', 'webkitAudioContext', 'mozAudioContext', 'msAudioContext'].forEach(function(item) {
+            if (webAudio.isSupported) {
+                return;
+            }
+
+            if (item in window) {
+                webAudio.isSupported = true;
+
+                if (window[item] && 'createMediaStreamSource' in window[item].prototype) {
+                    webAudio.isCreateMediaStreamSourceSupported = true;
+                }
+            }
+        });
+        DetectRTC.isAudioContextSupported = webAudio.isSupported;
+        DetectRTC.isCreateMediaStreamSourceSupported = webAudio.isCreateMediaStreamSourceSupported;
+
+        // ---------- Detect if SCTP/RTP channels are supported.
+
+        var isRtpDataChannelsSupported = false;
+        if (DetectRTC.browser.isChrome && DetectRTC.browser.version > 31) {
+            isRtpDataChannelsSupported = true;
+        }
+        DetectRTC.isRtpDataChannelsSupported = isRtpDataChannelsSupported;
+
+        var isSCTPSupportd = false;
+        if (DetectRTC.browser.isFirefox && DetectRTC.browser.version > 28) {
+            isSCTPSupportd = true;
+        } else if (DetectRTC.browser.isChrome && DetectRTC.browser.version > 25) {
+            isSCTPSupportd = true;
+        } else if (DetectRTC.browser.isOpera && DetectRTC.browser.version >= 11) {
+            isSCTPSupportd = true;
+        }
+        DetectRTC.isSctpDataChannelsSupported = isSCTPSupportd;
+
+        // ---------
+
+        DetectRTC.isMobileDevice = isMobileDevice; // "isMobileDevice" boolean is defined in "getBrowserInfo.js"
+
+        // ------
+        var isGetUserMediaSupported = false;
+        if (navigator.getUserMedia) {
+            isGetUserMediaSupported = true;
+        } else if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            isGetUserMediaSupported = true;
+        }
+
+        if (DetectRTC.browser.isChrome && DetectRTC.browser.version >= 46 && !/^(https:|chrome-extension:)$/g.test(location.protocol || '')) {
+            if (typeof document !== 'undefined' && typeof document.domain === 'string' && document.domain.search && document.domain.search(/localhost|127.0./g) === -1) {
+                isGetUserMediaSupported = 'Requires HTTPs';
+            }
+        }
+
+        if (DetectRTC.osName === 'Nodejs') {
+            isGetUserMediaSupported = false;
+        }
+        DetectRTC.isGetUserMediaSupported = isGetUserMediaSupported;
+
+        var displayResolution = '';
+        if (screen.width) {
+            var width = (screen.width) ? screen.width : '';
+            var height = (screen.height) ? screen.height : '';
+            displayResolution += '' + width + ' x ' + height;
+        }
+        DetectRTC.displayResolution = displayResolution;
+
+        function getAspectRatio(w, h) {
+            function gcd(a, b) {
+                return (b == 0) ? a : gcd(b, a % b);
+            }
+            var r = gcd(w, h);
+            return (w / r) / (h / r);
+        }
+
+        DetectRTC.displayAspectRatio = getAspectRatio(screen.width, screen.height).toFixed(2);
+
+        // ----------
+        DetectRTC.isCanvasSupportsStreamCapturing = isCanvasSupportsStreamCapturing;
+        DetectRTC.isVideoSupportsStreamCapturing = isVideoSupportsStreamCapturing;
+
+        if (DetectRTC.browser.name == 'Chrome' && DetectRTC.browser.version >= 53) {
+            if (!DetectRTC.isCanvasSupportsStreamCapturing) {
+                DetectRTC.isCanvasSupportsStreamCapturing = 'Requires chrome flag: enable-experimental-web-platform-features';
+            }
+
+            if (!DetectRTC.isVideoSupportsStreamCapturing) {
+                DetectRTC.isVideoSupportsStreamCapturing = 'Requires chrome flag: enable-experimental-web-platform-features';
+            }
+        }
+
+        // ------
+        DetectRTC.DetectLocalIPAddress = DetectLocalIPAddress;
+
+        DetectRTC.isWebSocketsSupported = 'WebSocket' in window && 2 === window.WebSocket.CLOSING;
+        DetectRTC.isWebSocketsBlocked = !DetectRTC.isWebSocketsSupported;
+
+        if (DetectRTC.osName === 'Nodejs') {
+            DetectRTC.isWebSocketsSupported = true;
+            DetectRTC.isWebSocketsBlocked = false;
+        }
+
+        DetectRTC.checkWebSocketsSupport = function(callback) {
+            callback = callback || function() {};
+            try {
+                var starttime;
+                var websocket = new WebSocket('wss://echo.websocket.org:443/');
+                websocket.onopen = function() {
+                    DetectRTC.isWebSocketsBlocked = false;
+                    starttime = (new Date).getTime();
+                    websocket.send('ping');
+                };
+                websocket.onmessage = function() {
+                    DetectRTC.WebsocketLatency = (new Date).getTime() - starttime + 'ms';
+                    callback();
+                    websocket.close();
+                    websocket = null;
+                };
+                websocket.onerror = function() {
+                    DetectRTC.isWebSocketsBlocked = true;
+                    callback();
+                };
+            } catch (e) {
+                DetectRTC.isWebSocketsBlocked = true;
+                callback();
+            }
+        };
+
+        // -------
+        DetectRTC.load = function(callback) {
+            callback = callback || function() {};
+            checkDeviceSupport(callback);
+        };
+
+        // check for microphone/camera support!
+        if (typeof checkDeviceSupport === 'function') {
+            // checkDeviceSupport();
+        }
+
+        if (typeof MediaDevices !== 'undefined') {
+            DetectRTC.MediaDevices = MediaDevices;
+        } else {
+            DetectRTC.MediaDevices = [];
+        }
+
+        DetectRTC.hasMicrophone = hasMicrophone;
+        DetectRTC.hasSpeakers = hasSpeakers;
+        DetectRTC.hasWebcam = hasWebcam;
+
+        DetectRTC.isWebsiteHasWebcamPermissions = isWebsiteHasWebcamPermissions;
+        DetectRTC.isWebsiteHasMicrophonePermissions = isWebsiteHasMicrophonePermissions;
+
+        DetectRTC.audioInputDevices = audioInputDevices;
+        DetectRTC.audioOutputDevices = audioOutputDevices;
+        DetectRTC.videoInputDevices = videoInputDevices;
+
+        // ------
+        var isSetSinkIdSupported = false;
+        if (typeof document !== 'undefined' && typeof document.createElement === 'function' && 'setSinkId' in document.createElement('video')) {
+            isSetSinkIdSupported = true;
+        }
+        DetectRTC.isSetSinkIdSupported = isSetSinkIdSupported;
+
+        // -----
+        var isRTPSenderReplaceTracksSupported = false;
+        if (DetectRTC.browser.isFirefox && typeof mozRTCPeerConnection !== 'undefined' /*&& DetectRTC.browser.version > 39*/ ) {
+            /*global mozRTCPeerConnection:true */
+            if ('getSenders' in mozRTCPeerConnection.prototype) {
+                isRTPSenderReplaceTracksSupported = true;
+            }
+        } else if (DetectRTC.browser.isChrome && typeof webkitRTCPeerConnection !== 'undefined') {
+            /*global webkitRTCPeerConnection:true */
+            if ('getSenders' in webkitRTCPeerConnection.prototype) {
+                isRTPSenderReplaceTracksSupported = true;
+            }
+        }
+        DetectRTC.isRTPSenderReplaceTracksSupported = isRTPSenderReplaceTracksSupported;
+
+        //------
+        var isRemoteStreamProcessingSupported = false;
+        if (DetectRTC.browser.isFirefox && DetectRTC.browser.version > 38) {
+            isRemoteStreamProcessingSupported = true;
+        }
+        DetectRTC.isRemoteStreamProcessingSupported = isRemoteStreamProcessingSupported;
+
+        //-------
+        var isApplyConstraintsSupported = false;
+
+        /*global MediaStreamTrack:true */
+        if (typeof MediaStreamTrack !== 'undefined' && 'applyConstraints' in MediaStreamTrack.prototype) {
+            isApplyConstraintsSupported = true;
+        }
+        DetectRTC.isApplyConstraintsSupported = isApplyConstraintsSupported;
+
+        //-------
+        var isMultiMonitorScreenCapturingSupported = false;
+        if (DetectRTC.browser.isFirefox && DetectRTC.browser.version >= 43) {
+            // version 43 merely supports platforms for multi-monitors
+            // version 44 will support exact multi-monitor selection i.e. you can select any monitor for screen capturing.
+            isMultiMonitorScreenCapturingSupported = true;
+        }
+        DetectRTC.isMultiMonitorScreenCapturingSupported = isMultiMonitorScreenCapturingSupported;
+
+        DetectRTC.isPromisesSupported = !!('Promise' in window);
+
+        // version is generated by "grunt"
+        DetectRTC.version = '1.3.9';
+
+        if (typeof DetectRTC === 'undefined') {
+            window.DetectRTC = {};
+        }
+
+        var MediaStream = window.MediaStream;
+
+        if (typeof MediaStream === 'undefined' && typeof webkitMediaStream !== 'undefined') {
+            MediaStream = webkitMediaStream;
+        }
+
+        if (typeof MediaStream !== 'undefined' && typeof MediaStream === 'function') {
+            DetectRTC.MediaStream = Object.keys(MediaStream.prototype);
+        } else DetectRTC.MediaStream = false;
+
+        if (typeof MediaStreamTrack !== 'undefined') {
+            DetectRTC.MediaStreamTrack = Object.keys(MediaStreamTrack.prototype);
+        } else DetectRTC.MediaStreamTrack = false;
+
+        var RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+
+        if (typeof RTCPeerConnection !== 'undefined') {
+            DetectRTC.RTCPeerConnection = Object.keys(RTCPeerConnection.prototype);
+        } else DetectRTC.RTCPeerConnection = false;
+
+        window.DetectRTC = DetectRTC;
+
+        if (typeof module !== 'undefined' /* && !!module.exports*/ ) {
+            module.exports = DetectRTC;
+        }
+
+        if (typeof define === 'function' && define.amd) {
+            define('DetectRTC', [], function() {
+                return DetectRTC;
+            });
+        }
+    })();
+
+    // globals.js
+
+    if (typeof cordova !== 'undefined') {
+        DetectRTC.isMobileDevice = true;
+        DetectRTC.browser.name = 'Chrome';
+    }
+
+    if (navigator && navigator.userAgent && navigator.userAgent.indexOf('Crosswalk') !== -1) {
+        DetectRTC.isMobileDevice = true;
+        DetectRTC.browser.name = 'Chrome';
+    }
+
+    function fireEvent(obj, eventName, args) {
+        if (typeof CustomEvent === 'undefined') {
+            return;
+        }
+
+        var eventDetail = {
+            arguments: args,
+            __exposedProps__: args
+        };
+
+        var event = new CustomEvent(eventName, eventDetail);
+        obj.dispatchEvent(event);
+    }
+
+    function setHarkEvents(connection, streamEvent) {
+        if (!streamEvent.stream || !getTracks(streamEvent.stream, 'audio').length) return;
+
+        if (!connection || !streamEvent) {
+            throw 'Both arguments are required.';
+        }
+
+        if (!connection.onspeaking || !connection.onsilence) {
+            return;
+        }
+
+        if (typeof hark === 'undefined') {
+            throw 'hark.js not found.';
+        }
+
+        hark(streamEvent.stream, {
+            onspeaking: function() {
+                connection.onspeaking(streamEvent);
+            },
+            onsilence: function() {
+                connection.onsilence(streamEvent);
+            },
+            onvolumechange: function(volume, threshold) {
+                if (!connection.onvolumechange) {
+                    return;
+                }
+                connection.onvolumechange(merge({
+                    volume: volume,
+                    threshold: threshold
+                }, streamEvent));
+            }
+        });
+    }
+
+    function setMuteHandlers(connection, streamEvent) {
+        if (!streamEvent.stream || !streamEvent.stream || !streamEvent.stream.addEventListener) return;
+
+        streamEvent.stream.addEventListener('mute', function(event) {
+            event = connection.streamEvents[streamEvent.streamid];
+
+            event.session = {
+                audio: event.muteType === 'audio',
+                video: event.muteType === 'video'
+            };
+
+            connection.onmute(event);
+        }, false);
+
+        streamEvent.stream.addEventListener('unmute', function(event) {
+            event = connection.streamEvents[streamEvent.streamid];
+
+            event.session = {
+                audio: event.unmuteType === 'audio',
+                video: event.unmuteType === 'video'
+            };
+
+            connection.onunmute(event);
+        }, false);
+    }
+
+    function getRandomString() {
+        if (window.crypto && window.crypto.getRandomValues && navigator.userAgent.indexOf('Safari') === -1) {
+            var a = window.crypto.getRandomValues(new Uint32Array(3)),
+                token = '';
+            for (var i = 0, l = a.length; i < l; i++) {
+                token += a[i].toString(36);
+            }
+            return token;
+        } else {
+            return (Math.random() * new Date().getTime()).toString(36).replace(/\./g, '');
+        }
+    }
+
+    // Get HTMLAudioElement/HTMLVideoElement accordingly
+    // todo: add API documentation for connection.autoCreateMediaElement
+
+    function getRMCMediaElement(stream, callback, connection) {
+        if (!connection.autoCreateMediaElement) {
+            callback({});
+            return;
+        }
+
+        var isAudioOnly = false;
+        if (!getTracks(stream, 'video').length && !stream.isVideo && !stream.isScreen) {
+            isAudioOnly = true;
+        }
+
+        if (DetectRTC.browser.name === 'Firefox') {
+            if (connection.session.video || connection.session.screen) {
+                isAudioOnly = false;
+            }
+        }
+
+        var mediaElement = document.createElement(isAudioOnly ? 'audio' : 'video');
+
+        mediaElement.srcObject = stream;
+
+        mediaElement.setAttribute('autoplay', true);
+        mediaElement.setAttribute('playsinline', true);
+        mediaElement.setAttribute('controls', true);
+        mediaElement.setAttribute('muted', false);
+        mediaElement.setAttribute('volume', 1);
+
+        // http://goo.gl/WZ5nFl
+        // Firefox don't yet support onended for any stream (remote/local)
+        if (DetectRTC.browser.name === 'Firefox') {
+            var streamEndedEvent = 'ended';
+
+            if ('oninactive' in mediaElement) {
+                streamEndedEvent = 'inactive';
+            }
+
+            mediaElement.addEventListener(streamEndedEvent, function() {
+                // fireEvent(stream, streamEndedEvent, stream);
+                currentUserMediaRequest.remove(stream.idInstance);
+
+                if (stream.type === 'local') {
+                    streamEndedEvent = 'ended';
+
+                    if ('oninactive' in stream) {
+                        streamEndedEvent = 'inactive';
+                    }
+
+                    StreamsHandler.onSyncNeeded(stream.streamid, streamEndedEvent);
+
+                    connection.attachStreams.forEach(function(aStream, idx) {
+                        if (stream.streamid === aStream.streamid) {
+                            delete connection.attachStreams[idx];
+                        }
+                    });
+
+                    var newStreamsArray = [];
+                    connection.attachStreams.forEach(function(aStream) {
+                        if (aStream) {
+                            newStreamsArray.push(aStream);
+                        }
+                    });
+                    connection.attachStreams = newStreamsArray;
+
+                    var streamEvent = connection.streamEvents[stream.streamid];
+
+                    if (streamEvent) {
+                        connection.onstreamended(streamEvent);
+                        return;
+                    }
+                    if (this.parentNode) {
+                        this.parentNode.removeChild(this);
+                    }
+                }
+            }, false);
+        }
+
+        var played = mediaElement.play();
+        if (typeof played !== 'undefined') {
+            var cbFired = false;
+            setTimeout(function() {
+                if (!cbFired) {
+                    cbFired = true;
+                    callback(mediaElement);
+                }
+            }, 1000);
+            played.then(function() {
+                if (cbFired) return;
+                cbFired = true;
+                callback(mediaElement);
+            }).catch(function(error) {
+                if (cbFired) return;
+                cbFired = true;
+                callback(mediaElement);
+            });
+        } else {
+            callback(mediaElement);
+        }
+    }
+
+    // if IE
+    if (!window.addEventListener) {
+        window.addEventListener = function(el, eventName, eventHandler) {
+            if (!el.attachEvent) {
+                return;
+            }
+            el.attachEvent('on' + eventName, eventHandler);
+        };
+    }
+
+    function listenEventHandler(eventName, eventHandler) {
+        window.removeEventListener(eventName, eventHandler);
+        window.addEventListener(eventName, eventHandler, false);
+    }
+
+    window.attachEventListener = function(video, type, listener, useCapture) {
+        video.addEventListener(type, listener, useCapture);
+    };
+
+    function removeNullEntries(array) {
+        var newArray = [];
+        array.forEach(function(item) {
+            if (item) {
+                newArray.push(item);
+            }
+        });
+        return newArray;
+    }
+
+
+    function isData(session) {
+        return !session.audio && !session.video && !session.screen && session.data;
+    }
+
+    function isNull(obj) {
+        return typeof obj === 'undefined';
+    }
+
+    function isString(obj) {
+        return typeof obj === 'string';
+    }
+
+    var MediaStream = window.MediaStream;
+
+    if (typeof MediaStream === 'undefined' && typeof webkitMediaStream !== 'undefined') {
+        MediaStream = webkitMediaStream;
+    }
+
+    /*global MediaStream:true */
+    if (typeof MediaStream !== 'undefined') {
+        if (!('stop' in MediaStream.prototype)) {
+            MediaStream.prototype.stop = function() {
+                this.getTracks().forEach(function(track) {
+                    track.stop();
+                });
+            };
+        }
+    }
+
+    function isAudioPlusTab(connection, audioPlusTab) {
+        if (connection.session.audio && connection.session.audio === 'two-way') {
+            return false;
+        }
+
+        if (DetectRTC.browser.name === 'Firefox' && audioPlusTab !== false) {
+            return true;
+        }
+
+        if (DetectRTC.browser.name !== 'Chrome' || DetectRTC.browser.version < 50) return false;
+
+        if (typeof audioPlusTab === true) {
+            return true;
+        }
+
+        if (typeof audioPlusTab === 'undefined' && connection.session.audio && connection.session.screen && !connection.session.video) {
+            audioPlusTab = true;
+            return true;
+        }
+
+        return false;
+    }
+
+    function getAudioScreenConstraints(screen_constraints) {
+        if (DetectRTC.browser.name === 'Firefox') {
+            return true;
+        }
+
+        if (DetectRTC.browser.name !== 'Chrome') return false;
+
+        return {
+            mandatory: {
+                chromeMediaSource: screen_constraints.mandatory.chromeMediaSource,
+                chromeMediaSourceId: screen_constraints.mandatory.chromeMediaSourceId
+            }
+        };
+    }
+
+    window.iOSDefaultAudioOutputDevice = window.iOSDefaultAudioOutputDevice || 'speaker'; // earpiece or speaker
+
+    function getTracks(stream, kind) {
+        if (!stream || !stream.getTracks) {
+            return [];
+        }
+
+        return stream.getTracks().filter(function(t) {
+            return t.kind === (kind || 'audio');
+        });
+    }
+
+    function isUnifiedPlanSupportedDefault() {
+        var canAddTransceiver = false;
+
+        try {
+            if (typeof RTCRtpTransceiver === 'undefined') return false;
+            if (!('currentDirection' in RTCRtpTransceiver.prototype)) return false;
+
+            var tempPc = new RTCPeerConnection();
+
+            try {
+                tempPc.addTransceiver('audio');
+                canAddTransceiver = true;
+            } catch (e) {}
+
+            tempPc.close();
+        } catch (e) {
+            canAddTransceiver = false;
+        }
+
+        return canAddTransceiver && isUnifiedPlanSuppored();
+    }
+
+    function isUnifiedPlanSuppored() {
+        var isUnifiedPlanSupported = false;
+
+        try {
+            var pc = new RTCPeerConnection({
+                sdpSemantics: 'unified-plan'
+            });
+
+            try {
+                var config = pc.getConfiguration();
+                if (config.sdpSemantics == 'unified-plan')
+                    isUnifiedPlanSupported = true;
+                else if (config.sdpSemantics == 'plan-b')
+                    isUnifiedPlanSupported = false;
+                else
+                    isUnifiedPlanSupported = false;
+            } catch (e) {
+                isUnifiedPlanSupported = false;
+            }
+        } catch (e) {
+            isUnifiedPlanSupported = false;
+        }
+
+        return isUnifiedPlanSupported;
+    }
+
+    // ios-hacks.js
+
+    function setCordovaAPIs() {
+        // if (DetectRTC.osName !== 'iOS') return;
+        if (typeof cordova === 'undefined' || typeof cordova.plugins === 'undefined' || typeof cordova.plugins.iosrtc === 'undefined') return;
+
+        var iosrtc = cordova.plugins.iosrtc;
+        window.webkitRTCPeerConnection = iosrtc.RTCPeerConnection;
+        window.RTCSessionDescription = iosrtc.RTCSessionDescription;
+        window.RTCIceCandidate = iosrtc.RTCIceCandidate;
+        window.MediaStream = iosrtc.MediaStream;
+        window.MediaStreamTrack = iosrtc.MediaStreamTrack;
+        navigator.getUserMedia = navigator.webkitGetUserMedia = iosrtc.getUserMedia;
+
+        iosrtc.debug.enable('iosrtc*');
+        if (typeof iosrtc.selectAudioOutput == 'function') {
+            iosrtc.selectAudioOutput(window.iOSDefaultAudioOutputDevice || 'speaker'); // earpiece or speaker
+        }
+        iosrtc.registerGlobals();
+    }
+
+    document.addEventListener('deviceready', setCordovaAPIs, false);
+    setCordovaAPIs();
+
+    // RTCPeerConnection.js
+
+    var defaults = {};
+
+    function setSdpConstraints(config) {
+        var sdpConstraints = {
+            OfferToReceiveAudio: !!config.OfferToReceiveAudio,
+            OfferToReceiveVideo: !!config.OfferToReceiveVideo
+        };
+
+        return sdpConstraints;
+    }
+
+    var RTCPeerConnection;
+    if (typeof window.RTCPeerConnection !== 'undefined') {
+        RTCPeerConnection = window.RTCPeerConnection;
+    } else if (typeof mozRTCPeerConnection !== 'undefined') {
+        RTCPeerConnection = mozRTCPeerConnection;
+    } else if (typeof webkitRTCPeerConnection !== 'undefined') {
+        RTCPeerConnection = webkitRTCPeerConnection;
+    }
+
+    var RTCSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription;
+    var RTCIceCandidate = window.RTCIceCandidate || window.mozRTCIceCandidate;
+    var MediaStreamTrack = window.MediaStreamTrack;
+
+    function PeerInitiator(config) {
+        if (typeof window.RTCPeerConnection !== 'undefined') {
+            RTCPeerConnection = window.RTCPeerConnection;
+        } else if (typeof mozRTCPeerConnection !== 'undefined') {
+            RTCPeerConnection = mozRTCPeerConnection;
+        } else if (typeof webkitRTCPeerConnection !== 'undefined') {
+            RTCPeerConnection = webkitRTCPeerConnection;
+        }
+
+        RTCSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription;
+        RTCIceCandidate = window.RTCIceCandidate || window.mozRTCIceCandidate;
+        MediaStreamTrack = window.MediaStreamTrack;
+
+        if (!RTCPeerConnection) {
+            throw 'WebRTC 1.0 (RTCPeerConnection) API are NOT available in this browser.';
+        }
+
+        var connection = config.rtcMultiConnection;
+
+        this.extra = config.remoteSdp ? config.remoteSdp.extra : connection.extra;
+        this.userid = config.userid;
+        this.streams = [];
+        this.channels = config.channels || [];
+        this.connectionDescription = config.connectionDescription;
+
+        this.addStream = function(session) {
+            connection.addStream(session, self.userid);
+        };
+
+        this.removeStream = function(streamid) {
+            connection.removeStream(streamid, self.userid);
+        };
+
+        var self = this;
+
+        if (config.remoteSdp) {
+            this.connectionDescription = config.remoteSdp.connectionDescription;
+        }
+
+        var allRemoteStreams = {};
+
+        defaults.sdpConstraints = setSdpConstraints({
+            OfferToReceiveAudio: true,
+            OfferToReceiveVideo: true
+        });
+
+        var peer;
+
+        var renegotiatingPeer = !!config.renegotiatingPeer;
+        if (config.remoteSdp) {
+            renegotiatingPeer = !!config.remoteSdp.renegotiatingPeer;
+        }
+
+        var localStreams = [];
+        connection.attachStreams.forEach(function(stream) {
+            if (!!stream) {
+                localStreams.push(stream);
+            }
+        });
+
+        if (!renegotiatingPeer) {
+            var iceTransports = 'all';
+            if (connection.candidates.turn || connection.candidates.relay) {
+                if (!connection.candidates.stun && !connection.candidates.reflexive && !connection.candidates.host) {
+                    iceTransports = 'relay';
+                }
+            }
+
+            try {
+                // ref: developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
+                var params = {
+                    iceServers: connection.iceServers,
+                    iceTransportPolicy: connection.iceTransportPolicy || iceTransports
+                };
+
+                if (typeof connection.iceCandidatePoolSize !== 'undefined') {
+                    params.iceCandidatePoolSize = connection.iceCandidatePoolSize;
+                }
+
+                if (typeof connection.bundlePolicy !== 'undefined') {
+                    params.bundlePolicy = connection.bundlePolicy;
+                }
+
+                if (typeof connection.rtcpMuxPolicy !== 'undefined') {
+                    params.rtcpMuxPolicy = connection.rtcpMuxPolicy;
+                }
+
+                if (!!connection.sdpSemantics) {
+                    params.sdpSemantics = connection.sdpSemantics || 'unified-plan';
+                }
+
+                if (!connection.iceServers || !connection.iceServers.length) {
+                    params = null;
+                    connection.optionalArgument = null;
+                }
+
+                peer = new RTCPeerConnection(params, connection.optionalArgument);
+            } catch (e) {
+                try {
+                    var params = {
+                        iceServers: connection.iceServers
+                    };
+
+                    peer = new RTCPeerConnection(params);
+                } catch (e) {
+                    peer = new RTCPeerConnection();
+                }
+            }
+        } else {
+            peer = config.peerRef;
+        }
+
+        if (!peer.getRemoteStreams && peer.getReceivers) {
+            peer.getRemoteStreams = function() {
+                var stream = new MediaStream();
+                peer.getReceivers().forEach(function(receiver) {
+                    stream.addTrack(receiver.track);
+                });
+                return [stream];
+            };
+        }
+
+        if (!peer.getLocalStreams && peer.getSenders) {
+            peer.getLocalStreams = function() {
+                var stream = new MediaStream();
+                peer.getSenders().forEach(function(sender) {
+                    stream.addTrack(sender.track);
+                });
+                return [stream];
+            };
+        }
+
+        peer.onicecandidate = function(event) {
+            if (!event.candidate) {
+                if (!connection.trickleIce) {
+                    var localSdp = peer.localDescription;
+                    config.onLocalSdp({
+                        type: localSdp.type,
+                        sdp: localSdp.sdp,
+                        remotePeerSdpConstraints: config.remotePeerSdpConstraints || false,
+                        renegotiatingPeer: !!config.renegotiatingPeer || false,
+                        connectionDescription: self.connectionDescription,
+                        dontGetRemoteStream: !!config.dontGetRemoteStream,
+                        extra: connection ? connection.extra : {},
+                        streamsToShare: streamsToShare
+                    });
+                }
+                return;
+            }
+
+            if (!connection.trickleIce) return;
+            config.onLocalCandidate({
+                candidate: event.candidate.candidate,
+                sdpMid: event.candidate.sdpMid,
+                sdpMLineIndex: event.candidate.sdpMLineIndex
+            });
+        };
+
+        localStreams.forEach(function(localStream) {
+            if (config.remoteSdp && config.remoteSdp.remotePeerSdpConstraints && config.remoteSdp.remotePeerSdpConstraints.dontGetRemoteStream) {
+                return;
+            }
+
+            if (config.dontAttachLocalStream) {
+                return;
+            }
+
+            localStream = connection.beforeAddingStream(localStream, self);
+
+            if (!localStream) return;
+
+            peer.getLocalStreams().forEach(function(stream) {
+                if (localStream && stream.id == localStream.id) {
+                    localStream = null;
+                }
+            });
+
+            if (localStream && localStream.getTracks) {
+                localStream.getTracks().forEach(function(track) {
+                    try {
+                        // last parameter is redundant for unified-plan
+                        // starting from chrome version 72
+                        peer.addTrack(track, localStream);
+                    } catch (e) {}
+                });
+            }
+        });
+
+        peer.oniceconnectionstatechange = peer.onsignalingstatechange = function() {
+            var extra = self.extra;
+            if (connection.peers[self.userid]) {
+                extra = connection.peers[self.userid].extra || extra;
+            }
+
+            if (!peer) {
+                return;
+            }
+
+            config.onPeerStateChanged({
+                iceConnectionState: peer.iceConnectionState,
+                iceGatheringState: peer.iceGatheringState,
+                signalingState: peer.signalingState,
+                extra: extra,
+                userid: self.userid
+            });
+
+            if (peer && peer.iceConnectionState && peer.iceConnectionState.search(/closed|failed/gi) !== -1 && self.streams instanceof Array) {
+                self.streams.forEach(function(stream) {
+                    var streamEvent = connection.streamEvents[stream.id] || {
+                        streamid: stream.id,
+                        stream: stream,
+                        type: 'remote'
+                    };
+
+                    connection.onstreamended(streamEvent);
+                });
+            }
+        };
+
+        var sdpConstraints = {
+            OfferToReceiveAudio: !!localStreams.length,
+            OfferToReceiveVideo: !!localStreams.length
+        };
+
+        if (config.localPeerSdpConstraints) sdpConstraints = config.localPeerSdpConstraints;
+
+        defaults.sdpConstraints = setSdpConstraints(sdpConstraints);
+
+        var streamObject;
+        var dontDuplicate = {};
+
+        peer.ontrack = function(event) {
+            if (!event || event.type !== 'track') return;
+
+            event.stream = event.streams[event.streams.length - 1];
+
+            if (!event.stream.id) {
+                event.stream.id = event.track.id;
+            }
+
+            if (dontDuplicate[event.stream.id] && DetectRTC.browser.name !== 'Safari') {
+                if (event.track) {
+                    event.track.onended = function() { // event.track.onmute =
+                        peer && peer.onremovestream(event);
+                    };
+                }
+                return;
+            }
+
+            dontDuplicate[event.stream.id] = event.stream.id;
+
+            var streamsToShare = {};
+            if (config.remoteSdp && config.remoteSdp.streamsToShare) {
+                streamsToShare = config.remoteSdp.streamsToShare;
+            } else if (config.streamsToShare) {
+                streamsToShare = config.streamsToShare;
+            }
+
+            var streamToShare = streamsToShare[event.stream.id];
+            if (streamToShare) {
+                event.stream.isAudio = streamToShare.isAudio;
+                event.stream.isVideo = streamToShare.isVideo;
+                event.stream.isScreen = streamToShare.isScreen;
+            } else {
+                event.stream.isVideo = !!getTracks(event.stream, 'video').length;
+                event.stream.isAudio = !event.stream.isVideo;
+                event.stream.isScreen = false;
+            }
+
+            event.stream.streamid = event.stream.id;
+
+            allRemoteStreams[event.stream.id] = event.stream;
+            config.onRemoteStream(event.stream);
+
+            event.stream.getTracks().forEach(function(track) {
+                track.onended = function() { // track.onmute =
+                    peer && peer.onremovestream(event);
+                };
+            });
+
+            event.stream.onremovetrack = function() {
+                peer && peer.onremovestream(event);
+            };
+        };
+
+        peer.onremovestream = function(event) {
+            // this event doesn't works anymore
+            event.stream.streamid = event.stream.id;
+
+            if (allRemoteStreams[event.stream.id]) {
+                delete allRemoteStreams[event.stream.id];
+            }
+
+            config.onRemoteStreamRemoved(event.stream);
+        };
+
+        if (typeof peer.removeStream !== 'function') {
+            // removeStream backward compatibility
+            peer.removeStream = function(stream) {
+                stream.getTracks().forEach(function(track) {
+                    peer.removeTrack(track, stream);
+                });
+            };
+        }
+
+        this.addRemoteCandidate = function(remoteCandidate) {
+            peer.addIceCandidate(new RTCIceCandidate(remoteCandidate));
+        };
+
+        function oldAddRemoteSdp(remoteSdp, cb) {
+            cb = cb || function() {};
+
+            if (DetectRTC.browser.name !== 'Safari') {
+                remoteSdp.sdp = connection.processSdp(remoteSdp.sdp);
+            }
+            peer.setRemoteDescription(new RTCSessionDescription(remoteSdp), cb, function(error) {
+                if (!!connection.enableLogs) {
+                    console.error('setRemoteDescription failed', '\n', error, '\n', remoteSdp.sdp);
+                }
+
+                cb();
+            });
+        }
+
+        this.addRemoteSdp = function(remoteSdp, cb) {
+            cb = cb || function() {};
+
+            if (DetectRTC.browser.name !== 'Safari') {
+                remoteSdp.sdp = connection.processSdp(remoteSdp.sdp);
+            }
+
+            peer.setRemoteDescription(new RTCSessionDescription(remoteSdp)).then(cb, function(error) {
+                if (!!connection.enableLogs) {
+                    console.error('setRemoteDescription failed', '\n', error, '\n', remoteSdp.sdp);
+                }
+
+                cb();
+            }).catch(function(error) {
+                if (!!connection.enableLogs) {
+                    console.error('setRemoteDescription failed', '\n', error, '\n', remoteSdp.sdp);
+                }
+
+                cb();
+            });
+        };
+
+        var isOfferer = true;
+
+        if (config.remoteSdp) {
+            isOfferer = false;
+        }
+
+        this.createDataChannel = function() {
+            var channel = peer.createDataChannel('sctp', {});
+            setChannelEvents(channel);
+        };
+
+        if (connection.session.data === true && !renegotiatingPeer) {
+            if (!isOfferer) {
+                peer.ondatachannel = function(event) {
+                    var channel = event.channel;
+                    setChannelEvents(channel);
+                };
+            } else {
+                this.createDataChannel();
+            }
+        }
+
+        this.enableDisableVideoEncoding = function(enable) {
+            var rtcp;
+            peer.getSenders().forEach(function(sender) {
+                if (!rtcp && sender.track.kind === 'video') {
+                    rtcp = sender;
+                }
+            });
+
+            if (!rtcp || !rtcp.getParameters) return;
+
+            var parameters = rtcp.getParameters();
+            parameters.encodings[1] && (parameters.encodings[1].active = !!enable);
+            parameters.encodings[2] && (parameters.encodings[2].active = !!enable);
+            rtcp.setParameters(parameters);
+        };
+
+        if (config.remoteSdp) {
+            if (config.remoteSdp.remotePeerSdpConstraints) {
+                sdpConstraints = config.remoteSdp.remotePeerSdpConstraints;
+            }
+            defaults.sdpConstraints = setSdpConstraints(sdpConstraints);
+            this.addRemoteSdp(config.remoteSdp, function() {
+                createOfferOrAnswer('createAnswer');
+            });
+        }
+
+        function setChannelEvents(channel) {
+            // force ArrayBuffer in Firefox; which uses "Blob" by default.
+            channel.binaryType = 'arraybuffer';
+
+            channel.onmessage = function(event) {
+                config.onDataChannelMessage(event.data);
+            };
+
+            channel.onopen = function() {
+                config.onDataChannelOpened(channel);
+            };
+
+            channel.onerror = function(error) {
+                config.onDataChannelError(error);
+            };
+
+            channel.onclose = function(event) {
+                config.onDataChannelClosed(event);
+            };
+
+            channel.internalSend = channel.send;
+            channel.send = function(data) {
+                if (channel.readyState !== 'open') {
+                    return;
+                }
+
+                channel.internalSend(data);
+            };
+
+            peer.channel = channel;
+        }
+
+        if (connection.session.audio == 'two-way' || connection.session.video == 'two-way' || connection.session.screen == 'two-way') {
+            defaults.sdpConstraints = setSdpConstraints({
+                OfferToReceiveAudio: connection.session.audio == 'two-way' || (config.remoteSdp && config.remoteSdp.remotePeerSdpConstraints && config.remoteSdp.remotePeerSdpConstraints.OfferToReceiveAudio),
+                OfferToReceiveVideo: connection.session.video == 'two-way' || connection.session.screen == 'two-way' || (config.remoteSdp && config.remoteSdp.remotePeerSdpConstraints && config.remoteSdp.remotePeerSdpConstraints.OfferToReceiveAudio)
+            });
+        }
+
+        var streamsToShare = {};
+        peer.getLocalStreams().forEach(function(stream) {
+            streamsToShare[stream.streamid] = {
+                isAudio: !!stream.isAudio,
+                isVideo: !!stream.isVideo,
+                isScreen: !!stream.isScreen
+            };
+        });
+
+        function oldCreateOfferOrAnswer(_method) {
+            peer[_method](function(localSdp) {
+                if (DetectRTC.browser.name !== 'Safari') {
+                    localSdp.sdp = connection.processSdp(localSdp.sdp);
+                }
+                peer.setLocalDescription(localSdp, function() {
+                    if (!connection.trickleIce) return;
+
+                    config.onLocalSdp({
+                        type: localSdp.type,
+                        sdp: localSdp.sdp,
+                        remotePeerSdpConstraints: config.remotePeerSdpConstraints || false,
+                        renegotiatingPeer: !!config.renegotiatingPeer || false,
+                        connectionDescription: self.connectionDescription,
+                        dontGetRemoteStream: !!config.dontGetRemoteStream,
+                        extra: connection ? connection.extra : {},
+                        streamsToShare: streamsToShare
+                    });
+
+                    connection.onSettingLocalDescription(self);
+                }, function(error) {
+                    if (!!connection.enableLogs) {
+                        console.error('setLocalDescription-error', error);
+                    }
+                });
+            }, function(error) {
+                if (!!connection.enableLogs) {
+                    console.error('sdp-' + _method + '-error', error);
+                }
+            }, defaults.sdpConstraints);
+        }
+
+        function createOfferOrAnswer(_method) {
+            peer[_method](defaults.sdpConstraints).then(function(localSdp) {
+                if (DetectRTC.browser.name !== 'Safari') {
+                    localSdp.sdp = connection.processSdp(localSdp.sdp);
+                }
+                peer.setLocalDescription(localSdp).then(function() {
+                    if (!connection.trickleIce) return;
+
+                    config.onLocalSdp({
+                        type: localSdp.type,
+                        sdp: localSdp.sdp,
+                        remotePeerSdpConstraints: config.remotePeerSdpConstraints || false,
+                        renegotiatingPeer: !!config.renegotiatingPeer || false,
+                        connectionDescription: self.connectionDescription,
+                        dontGetRemoteStream: !!config.dontGetRemoteStream,
+                        extra: connection ? connection.extra : {},
+                        streamsToShare: streamsToShare
+                    });
+
+                    connection.onSettingLocalDescription(self);
+                }, function(error) {
+                    if (!connection.enableLogs) return;
+                    console.error('setLocalDescription error', error);
+                });
+            }, function(error) {
+                if (!!connection.enableLogs) {
+                    console.error('sdp-error', error);
+                }
+            });
+        }
+
+        if (isOfferer) {
+            createOfferOrAnswer('createOffer');
+        }
+
+        peer.nativeClose = peer.close;
+        peer.close = function() {
+            if (!peer) {
+                return;
+            }
+
+            try {
+                if (peer.nativeClose !== peer.close) {
+                    peer.nativeClose();
+                }
+            } catch (e) {}
+
+            peer = null;
+            self.peer = null;
+        };
+
+        this.peer = peer;
+    }
+
+    // CodecsHandler.js
+
+    var CodecsHandler = (function() {
+        function preferCodec(sdp, codecName) {
+            var info = splitLines(sdp);
+
+            if (!info.videoCodecNumbers) {
+                return sdp;
+            }
+
+            if (codecName === 'vp8' && info.vp8LineNumber === info.videoCodecNumbers[0]) {
+                return sdp;
+            }
+
+            if (codecName === 'vp9' && info.vp9LineNumber === info.videoCodecNumbers[0]) {
+                return sdp;
+            }
+
+            if (codecName === 'h264' && info.h264LineNumber === info.videoCodecNumbers[0]) {
+                return sdp;
+            }
+
+            sdp = preferCodecHelper(sdp, codecName, info);
+
+            return sdp;
+        }
+
+        function preferCodecHelper(sdp, codec, info, ignore) {
+            var preferCodecNumber = '';
+
+            if (codec === 'vp8') {
+                if (!info.vp8LineNumber) {
+                    return sdp;
+                }
+                preferCodecNumber = info.vp8LineNumber;
+            }
+
+            if (codec === 'vp9') {
+                if (!info.vp9LineNumber) {
+                    return sdp;
+                }
+                preferCodecNumber = info.vp9LineNumber;
+            }
+
+            if (codec === 'h264') {
+                if (!info.h264LineNumber) {
+                    return sdp;
+                }
+
+                preferCodecNumber = info.h264LineNumber;
+            }
+
+            var newLine = info.videoCodecNumbersOriginal.split('SAVPF')[0] + 'SAVPF ';
+
+            var newOrder = [preferCodecNumber];
+
+            if (ignore) {
+                newOrder = [];
+            }
+
+            info.videoCodecNumbers.forEach(function(codecNumber) {
+                if (codecNumber === preferCodecNumber) return;
+                newOrder.push(codecNumber);
+            });
+
+            newLine += newOrder.join(' ');
+
+            sdp = sdp.replace(info.videoCodecNumbersOriginal, newLine);
+            return sdp;
+        }
+
+        function splitLines(sdp) {
+            var info = {};
+            sdp.split('\n').forEach(function(line) {
+                if (line.indexOf('m=video') === 0) {
+                    info.videoCodecNumbers = [];
+                    line.split('SAVPF')[1].split(' ').forEach(function(codecNumber) {
+                        codecNumber = codecNumber.trim();
+                        if (!codecNumber || !codecNumber.length) return;
+                        info.videoCodecNumbers.push(codecNumber);
+                        info.videoCodecNumbersOriginal = line;
+                    });
+                }
+
+                if (line.indexOf('VP8/90000') !== -1 && !info.vp8LineNumber) {
+                    info.vp8LineNumber = line.replace('a=rtpmap:', '').split(' ')[0];
+                }
+
+                if (line.indexOf('VP9/90000') !== -1 && !info.vp9LineNumber) {
+                    info.vp9LineNumber = line.replace('a=rtpmap:', '').split(' ')[0];
+                }
+
+                if (line.indexOf('H264/90000') !== -1 && !info.h264LineNumber) {
+                    info.h264LineNumber = line.replace('a=rtpmap:', '').split(' ')[0];
+                }
+            });
+
+            return info;
+        }
+
+        function removeVPX(sdp) {
+            var info = splitLines(sdp);
+
+            // last parameter below means: ignore these codecs
+            sdp = preferCodecHelper(sdp, 'vp9', info, true);
+            sdp = preferCodecHelper(sdp, 'vp8', info, true);
+
+            return sdp;
+        }
+
+        function disableNACK(sdp) {
+            if (!sdp || typeof sdp !== 'string') {
+                throw 'Invalid arguments.';
+            }
+
+            sdp = sdp.replace('a=rtcp-fb:126 nack\r\n', '');
+            sdp = sdp.replace('a=rtcp-fb:126 nack pli\r\n', 'a=rtcp-fb:126 pli\r\n');
+            sdp = sdp.replace('a=rtcp-fb:97 nack\r\n', '');
+            sdp = sdp.replace('a=rtcp-fb:97 nack pli\r\n', 'a=rtcp-fb:97 pli\r\n');
+
+            return sdp;
+        }
+
+        function prioritize(codecMimeType, peer) {
+            if (!peer || !peer.getSenders || !peer.getSenders().length) {
+                return;
+            }
+
+            if (!codecMimeType || typeof codecMimeType !== 'string') {
+                throw 'Invalid arguments.';
+            }
+
+            peer.getSenders().forEach(function(sender) {
+                var params = sender.getParameters();
+                for (var i = 0; i < params.codecs.length; i++) {
+                    if (params.codecs[i].mimeType == codecMimeType) {
+                        params.codecs.unshift(params.codecs.splice(i, 1));
+                        break;
+                    }
+                }
+                sender.setParameters(params);
+            });
+        }
+
+        function removeNonG722(sdp) {
+            return sdp.replace(/m=audio ([0-9]+) RTP\/SAVPF ([0-9 ]*)/g, 'm=audio $1 RTP\/SAVPF 9');
+        }
+
+        function setBAS(sdp, bandwidth, isScreen) {
+            if (!bandwidth) {
+                return sdp;
+            }
+
+            if (typeof isFirefox !== 'undefined' && isFirefox) {
+                return sdp;
+            }
+
+            if (isScreen) {
+                if (!bandwidth.screen) {
+                    console.warn('It seems that you are not using bandwidth for screen. Screen sharing is expected to fail.');
+                } else if (bandwidth.screen < 300) {
+                    console.warn('It seems that you are using wrong bandwidth value for screen. Screen sharing is expected to fail.');
+                }
+            }
+
+            // if screen; must use at least 300kbs
+            if (bandwidth.screen && isScreen) {
+                sdp = sdp.replace(/b=AS([^\r\n]+\r\n)/g, '');
+                sdp = sdp.replace(/a=mid:video\r\n/g, 'a=mid:video\r\nb=AS:' + bandwidth.screen + '\r\n');
+            }
+
+            // remove existing bandwidth lines
+            if (bandwidth.audio || bandwidth.video) {
+                sdp = sdp.replace(/b=AS([^\r\n]+\r\n)/g, '');
+            }
+
+            if (bandwidth.audio) {
+                sdp = sdp.replace(/a=mid:audio\r\n/g, 'a=mid:audio\r\nb=AS:' + bandwidth.audio + '\r\n');
+            }
+
+            if (bandwidth.screen) {
+                sdp = sdp.replace(/a=mid:video\r\n/g, 'a=mid:video\r\nb=AS:' + bandwidth.screen + '\r\n');
+            } else if (bandwidth.video) {
+                sdp = sdp.replace(/a=mid:video\r\n/g, 'a=mid:video\r\nb=AS:' + bandwidth.video + '\r\n');
+            }
+
+            return sdp;
+        }
+
+        // Find the line in sdpLines that starts with |prefix|, and, if specified,
+        // contains |substr| (case-insensitive search).
+        function findLine(sdpLines, prefix, substr) {
+            return findLineInRange(sdpLines, 0, -1, prefix, substr);
+        }
+
+        // Find the line in sdpLines[startLine...endLine - 1] that starts with |prefix|
+        // and, if specified, contains |substr| (case-insensitive search).
+        function findLineInRange(sdpLines, startLine, endLine, prefix, substr) {
+            var realEndLine = endLine !== -1 ? endLine : sdpLines.length;
+            for (var i = startLine; i < realEndLine; ++i) {
+                if (sdpLines[i].indexOf(prefix) === 0) {
+                    if (!substr ||
+                        sdpLines[i].toLowerCase().indexOf(substr.toLowerCase()) !== -1) {
+                        return i;
+                    }
+                }
+            }
+            return null;
+        }
+
+        // Gets the codec payload type from an a=rtpmap:X line.
+        function getCodecPayloadType(sdpLine) {
+            var pattern = new RegExp('a=rtpmap:(\\d+) \\w+\\/\\d+');
+            var result = sdpLine.match(pattern);
+            return (result && result.length === 2) ? result[1] : null;
+        }
+
+        function setVideoBitrates(sdp, params) {
+            params = params || {};
+            var xgoogle_min_bitrate = params.min;
+            var xgoogle_max_bitrate = params.max;
+
+            var sdpLines = sdp.split('\r\n');
+
+            // VP8
+            var vp8Index = findLine(sdpLines, 'a=rtpmap', 'VP8/90000');
+            var vp8Payload;
+            if (vp8Index) {
+                vp8Payload = getCodecPayloadType(sdpLines[vp8Index]);
+            }
+
+            if (!vp8Payload) {
+                return sdp;
+            }
+
+            var rtxIndex = findLine(sdpLines, 'a=rtpmap', 'rtx/90000');
+            var rtxPayload;
+            if (rtxIndex) {
+                rtxPayload = getCodecPayloadType(sdpLines[rtxIndex]);
+            }
+
+            if (!rtxIndex) {
+                return sdp;
+            }
+
+            var rtxFmtpLineIndex = findLine(sdpLines, 'a=fmtp:' + rtxPayload.toString());
+            if (rtxFmtpLineIndex !== null) {
+                var appendrtxNext = '\r\n';
+                appendrtxNext += 'a=fmtp:' + vp8Payload + ' x-google-min-bitrate=' + (xgoogle_min_bitrate || '228') + '; x-google-max-bitrate=' + (xgoogle_max_bitrate || '228');
+                sdpLines[rtxFmtpLineIndex] = sdpLines[rtxFmtpLineIndex].concat(appendrtxNext);
+                sdp = sdpLines.join('\r\n');
+            }
+
+            return sdp;
+        }
+
+        function setOpusAttributes(sdp, params) {
+            params = params || {};
+
+            var sdpLines = sdp.split('\r\n');
+
+            // Opus
+            var opusIndex = findLine(sdpLines, 'a=rtpmap', 'opus/48000');
+            var opusPayload;
+            if (opusIndex) {
+                opusPayload = getCodecPayloadType(sdpLines[opusIndex]);
+            }
+
+            if (!opusPayload) {
+                return sdp;
+            }
+
+            var opusFmtpLineIndex = findLine(sdpLines, 'a=fmtp:' + opusPayload.toString());
+            if (opusFmtpLineIndex === null) {
+                return sdp;
+            }
+
+            var appendOpusNext = '';
+            appendOpusNext += '; stereo=' + (typeof params.stereo != 'undefined' ? params.stereo : '1');
+            appendOpusNext += '; sprop-stereo=' + (typeof params['sprop-stereo'] != 'undefined' ? params['sprop-stereo'] : '1');
+
+            if (typeof params.maxaveragebitrate != 'undefined') {
+                appendOpusNext += '; maxaveragebitrate=' + (params.maxaveragebitrate || 128 * 1024 * 8);
+            }
+
+            if (typeof params.maxplaybackrate != 'undefined') {
+                appendOpusNext += '; maxplaybackrate=' + (params.maxplaybackrate || 128 * 1024 * 8);
+            }
+
+            if (typeof params.cbr != 'undefined') {
+                appendOpusNext += '; cbr=' + (typeof params.cbr != 'undefined' ? params.cbr : '1');
+            }
+
+            if (typeof params.useinbandfec != 'undefined') {
+                appendOpusNext += '; useinbandfec=' + params.useinbandfec;
+            }
+
+            if (typeof params.usedtx != 'undefined') {
+                appendOpusNext += '; usedtx=' + params.usedtx;
+            }
+
+            if (typeof params.maxptime != 'undefined') {
+                appendOpusNext += '\r\na=maxptime:' + params.maxptime;
+            }
+
+            sdpLines[opusFmtpLineIndex] = sdpLines[opusFmtpLineIndex].concat(appendOpusNext);
+
+            sdp = sdpLines.join('\r\n');
+            return sdp;
+        }
+
+        // forceStereoAudio => via webrtcexample.com
+        // requires getUserMedia => echoCancellation:false
+        function forceStereoAudio(sdp) {
+            var sdpLines = sdp.split('\r\n');
+            var fmtpLineIndex = null;
+            for (var i = 0; i < sdpLines.length; i++) {
+                if (sdpLines[i].search('opus/48000') !== -1) {
+                    var opusPayload = extractSdp(sdpLines[i], /:(\d+) opus\/48000/i);
+                    break;
+                }
+            }
+            for (var i = 0; i < sdpLines.length; i++) {
+                if (sdpLines[i].search('a=fmtp') !== -1) {
+                    var payload = extractSdp(sdpLines[i], /a=fmtp:(\d+)/);
+                    if (payload === opusPayload) {
+                        fmtpLineIndex = i;
+                        break;
+                    }
+                }
+            }
+            if (fmtpLineIndex === null) return sdp;
+            sdpLines[fmtpLineIndex] = sdpLines[fmtpLineIndex].concat('; stereo=1; sprop-stereo=1');
+            sdp = sdpLines.join('\r\n');
+            return sdp;
+        }
+
+        return {
+            removeVPX: removeVPX,
+            disableNACK: disableNACK,
+            prioritize: prioritize,
+            removeNonG722: removeNonG722,
+            setApplicationSpecificBandwidth: function(sdp, bandwidth, isScreen) {
+                return setBAS(sdp, bandwidth, isScreen);
+            },
+            setVideoBitrates: function(sdp, params) {
+                return setVideoBitrates(sdp, params);
+            },
+            setOpusAttributes: function(sdp, params) {
+                return setOpusAttributes(sdp, params);
+            },
+            preferVP9: function(sdp) {
+                return preferCodec(sdp, 'vp9');
+            },
+            preferCodec: preferCodec,
+            forceStereoAudio: forceStereoAudio
+        };
+    })();
+
+    // backward compatibility
+    window.BandwidthHandler = CodecsHandler;
+
+    // OnIceCandidateHandler.js
+
+    var OnIceCandidateHandler = (function() {
+        function processCandidates(connection, icePair) {
+            var candidate = icePair.candidate;
+
+            var iceRestrictions = connection.candidates;
+            var stun = iceRestrictions.stun;
+            var turn = iceRestrictions.turn;
+
+            if (!isNull(iceRestrictions.reflexive)) {
+                stun = iceRestrictions.reflexive;
+            }
+
+            if (!isNull(iceRestrictions.relay)) {
+                turn = iceRestrictions.relay;
+            }
+
+            if (!iceRestrictions.host && !!candidate.match(/typ host/g)) {
+                return;
+            }
+
+            if (!turn && !!candidate.match(/typ relay/g)) {
+                return;
+            }
+
+            if (!stun && !!candidate.match(/typ srflx/g)) {
+                return;
+            }
+
+            var protocol = connection.iceProtocols;
+
+            if (!protocol.udp && !!candidate.match(/ udp /g)) {
+                return;
+            }
+
+            if (!protocol.tcp && !!candidate.match(/ tcp /g)) {
+                return;
+            }
+
+            if (connection.enableLogs) {
+                console.debug('Your candidate pairs:', candidate);
+            }
+
+            return {
+                candidate: candidate,
+                sdpMid: icePair.sdpMid,
+                sdpMLineIndex: icePair.sdpMLineIndex
+            };
+        }
+
+        return {
+            processCandidates: processCandidates
+        };
+    })();
+
+    // IceServersHandler.js
+
+    var IceServersHandler = (function() {
+        function getIceServers(connection) {
+            // resiprocate: 3344+4433
+            // pions: 7575
+            var iceServers = [{
+                'urls': [
+                    'stun:stun.l.google.com:19302',
+                    'stun:stun1.l.google.com:19302',
+                    'stun:stun2.l.google.com:19302',
+                    'stun:stun.l.google.com:19302?transport=udp',
+                ]
+            }];
+
+            return iceServers;
+        }
+
+        return {
+            getIceServers: getIceServers
+        };
+    })();
+
+    // getUserMediaHandler.js
+
+    function setStreamType(constraints, stream) {
+        if (constraints.mandatory && constraints.mandatory.chromeMediaSource) {
+            stream.isScreen = true;
+        } else if (constraints.mozMediaSource || constraints.mediaSource) {
+            stream.isScreen = true;
+        } else if (constraints.video) {
+            stream.isVideo = true;
+        } else if (constraints.audio) {
+            stream.isAudio = true;
+        }
+    }
+
+    // allow users to manage this object (to support re-capturing of screen/etc.)
+    window.currentUserMediaRequest = {
+        streams: [],
+        mutex: false,
+        queueRequests: [],
+        remove: function(idInstance) {
+            this.mutex = false;
+
+            var stream = this.streams[idInstance];
+            if (!stream) {
+                return;
+            }
+
+            stream = stream.stream;
+
+            var options = stream.currentUserMediaRequestOptions;
+
+            if (this.queueRequests.indexOf(options)) {
+                delete this.queueRequests[this.queueRequests.indexOf(options)];
+                this.queueRequests = removeNullEntries(this.queueRequests);
+            }
+
+            this.streams[idInstance].stream = null;
+            delete this.streams[idInstance];
+        }
+    };
+
+    function getUserMediaHandler(options) {
+        if (currentUserMediaRequest.mutex === true) {
+            currentUserMediaRequest.queueRequests.push(options);
+            return;
+        }
+        currentUserMediaRequest.mutex = true;
+
+        // easy way to match
+        var idInstance = JSON.stringify(options.localMediaConstraints);
+
+        function streaming(stream, returnBack) {
+            setStreamType(options.localMediaConstraints, stream);
+
+            var streamEndedEvent = 'ended';
+
+            if ('oninactive' in stream) {
+                streamEndedEvent = 'inactive';
+            }
+            stream.addEventListener(streamEndedEvent, function() {
+                delete currentUserMediaRequest.streams[idInstance];
+
+                currentUserMediaRequest.mutex = false;
+                if (currentUserMediaRequest.queueRequests.indexOf(options)) {
+                    delete currentUserMediaRequest.queueRequests[currentUserMediaRequest.queueRequests.indexOf(options)];
+                    currentUserMediaRequest.queueRequests = removeNullEntries(currentUserMediaRequest.queueRequests);
+                }
+            }, false);
+
+            currentUserMediaRequest.streams[idInstance] = {
+                stream: stream
+            };
+            currentUserMediaRequest.mutex = false;
+
+            if (currentUserMediaRequest.queueRequests.length) {
+                getUserMediaHandler(currentUserMediaRequest.queueRequests.shift());
+            }
+
+            // callback
+            options.onGettingLocalMedia(stream, returnBack);
+        }
+
+        if (currentUserMediaRequest.streams[idInstance]) {
+            streaming(currentUserMediaRequest.streams[idInstance].stream, true);
+        } else {
+            var isBlackBerry = !!(/BB10|BlackBerry/i.test(navigator.userAgent || ''));
+            if (isBlackBerry || typeof navigator.mediaDevices === 'undefined' || typeof navigator.mediaDevices.getUserMedia !== 'function') {
+                navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+                navigator.getUserMedia(options.localMediaConstraints, function(stream) {
+                    stream.streamid = stream.streamid || stream.id || getRandomString();
+                    stream.idInstance = idInstance;
+                    streaming(stream);
+                }, function(error) {
+                    options.onLocalMediaError(error, options.localMediaConstraints);
+                });
+                return;
+            }
+
+            if (typeof navigator.mediaDevices === 'undefined') {
+                navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+                var getUserMediaSuccess = function() {};
+                var getUserMediaFailure = function() {};
+
+                var getUserMediaStream, getUserMediaError;
+                navigator.mediaDevices = {
+                    getUserMedia: function(hints) {
+                        navigator.getUserMedia(hints, function(getUserMediaSuccess) {
+                            getUserMediaSuccess(stream);
+                            getUserMediaStream = stream;
+                        }, function(error) {
+                            getUserMediaFailure(error);
+                            getUserMediaError = error;
+                        });
+
+                        return {
+                            then: function(successCB) {
+                                if (getUserMediaStream) {
+                                    successCB(getUserMediaStream);
+                                    return;
+                                }
+
+                                getUserMediaSuccess = successCB;
+
+                                return {
+                                    then: function(failureCB) {
+                                        if (getUserMediaError) {
+                                            failureCB(getUserMediaError);
+                                            return;
+                                        }
+
+                                        getUserMediaFailure = failureCB;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+            }
+
+            if (options.localMediaConstraints.isScreen === true) {
+                if (navigator.mediaDevices.getDisplayMedia) {
+                    navigator.mediaDevices.getDisplayMedia(options.localMediaConstraints).then(function(stream) {
+                        stream.streamid = stream.streamid || stream.id || getRandomString();
+                        stream.idInstance = idInstance;
+
+                        streaming(stream);
+                    }).catch(function(error) {
+                        options.onLocalMediaError(error, options.localMediaConstraints);
+                    });
+                } else if (navigator.getDisplayMedia) {
+                    navigator.getDisplayMedia(options.localMediaConstraints).then(function(stream) {
+                        stream.streamid = stream.streamid || stream.id || getRandomString();
+                        stream.idInstance = idInstance;
+
+                        streaming(stream);
+                    }).catch(function(error) {
+                        options.onLocalMediaError(error, options.localMediaConstraints);
+                    });
+                } else {
+                    throw new Error('getDisplayMedia API is not availabe in this browser.');
+                }
+                return;
+            }
+
+            navigator.mediaDevices.getUserMedia(options.localMediaConstraints).then(function(stream) {
+                stream.streamid = stream.streamid || stream.id || getRandomString();
+                stream.idInstance = idInstance;
+
+                streaming(stream);
+            }).catch(function(error) {
+                options.onLocalMediaError(error, options.localMediaConstraints);
+            });
+        }
+    }
+
+    // StreamsHandler.js
+
+    var StreamsHandler = (function() {
+        function handleType(type) {
+            if (!type) {
+                return;
+            }
+
+            if (typeof type === 'string' || typeof type === 'undefined') {
+                return type;
+            }
+
+            if (type.audio && type.video) {
+                return null;
+            }
+
+            if (type.audio) {
+                return 'audio';
+            }
+
+            if (type.video) {
+                return 'video';
+            }
+
+            return;
+        }
+
+        function setHandlers(stream, syncAction, connection) {
+            if (!stream || !stream.addEventListener) return;
+
+            if (typeof syncAction == 'undefined' || syncAction == true) {
+                var streamEndedEvent = 'ended';
+
+                if ('oninactive' in stream) {
+                    streamEndedEvent = 'inactive';
+                }
+
+                stream.addEventListener(streamEndedEvent, function() {
+                    StreamsHandler.onSyncNeeded(this.streamid, streamEndedEvent);
+                }, false);
+            }
+
+            stream.mute = function(type, isSyncAction) {
+                type = handleType(type);
+
+                if (typeof isSyncAction !== 'undefined') {
+                    syncAction = isSyncAction;
+                }
+
+                if (typeof type == 'undefined' || type == 'audio') {
+                    getTracks(stream, 'audio').forEach(function(track) {
+                        track.enabled = false;
+                        connection.streamEvents[stream.streamid].isAudioMuted = true;
+                    });
+                }
+
+                if (typeof type == 'undefined' || type == 'video') {
+                    getTracks(stream, 'video').forEach(function(track) {
+                        track.enabled = false;
+                    });
+                }
+
+                if (typeof syncAction == 'undefined' || syncAction == true) {
+                    StreamsHandler.onSyncNeeded(stream.streamid, 'mute', type);
+                }
+
+                connection.streamEvents[stream.streamid].muteType = type || 'both';
+
+                fireEvent(stream, 'mute', type);
+            };
+
+            stream.unmute = function(type, isSyncAction) {
+                type = handleType(type);
+
+                if (typeof isSyncAction !== 'undefined') {
+                    syncAction = isSyncAction;
+                }
+
+                graduallyIncreaseVolume();
+
+                if (typeof type == 'undefined' || type == 'audio') {
+                    getTracks(stream, 'audio').forEach(function(track) {
+                        track.enabled = true;
+                        connection.streamEvents[stream.streamid].isAudioMuted = false;
+                    });
+                }
+
+                if (typeof type == 'undefined' || type == 'video') {
+                    getTracks(stream, 'video').forEach(function(track) {
+                        track.enabled = true;
+                    });
+
+                    // make sure that video unmute doesn't affects audio
+                    if (typeof type !== 'undefined' && type == 'video' && connection.streamEvents[stream.streamid].isAudioMuted) {
+                        (function looper(times) {
+                            if (!times) {
+                                times = 0;
+                            }
+
+                            times++;
+
+                            // check until five-seconds
+                            if (times < 100 && connection.streamEvents[stream.streamid].isAudioMuted) {
+                                stream.mute('audio');
+
+                                setTimeout(function() {
+                                    looper(times);
+                                }, 50);
+                            }
+                        })();
+                    }
+                }
+
+                if (typeof syncAction == 'undefined' || syncAction == true) {
+                    StreamsHandler.onSyncNeeded(stream.streamid, 'unmute', type);
+                }
+
+                connection.streamEvents[stream.streamid].unmuteType = type || 'both';
+
+                fireEvent(stream, 'unmute', type);
+            };
+
+            function graduallyIncreaseVolume() {
+                if (!connection.streamEvents[stream.streamid].mediaElement) {
+                    return;
+                }
+
+                var mediaElement = connection.streamEvents[stream.streamid].mediaElement;
+                mediaElement.volume = 0;
+                afterEach(200, 5, function() {
+                    try {
+                        mediaElement.volume += .20;
+                    } catch (e) {
+                        mediaElement.volume = 1;
+                    }
+                });
+            }
+        }
+
+        function afterEach(setTimeoutInteval, numberOfTimes, callback, startedTimes) {
+            startedTimes = (startedTimes || 0) + 1;
+            if (startedTimes >= numberOfTimes) return;
+
+            setTimeout(function() {
+                callback();
+                afterEach(setTimeoutInteval, numberOfTimes, callback, startedTimes);
+            }, setTimeoutInteval);
+        }
+
+        return {
+            setHandlers: setHandlers,
+            onSyncNeeded: function(streamid, action, type) {}
+        };
+    })();
+
+    // TextReceiver.js & TextSender.js
+
+    function TextReceiver(connection) {
+        var content = {};
+
+        function receive(data, userid, extra) {
+            // uuid is used to uniquely identify sending instance
+            var uuid = data.uuid;
+            if (!content[uuid]) {
+                content[uuid] = [];
+            }
+
+            content[uuid].push(data.message);
+
+            if (data.last) {
+                var message = content[uuid].join('');
+                if (data.isobject) {
+                    message = JSON.parse(message);
+                }
+
+                // latency detection
+                var receivingTime = new Date().getTime();
+                var latency = receivingTime - data.sendingTime;
+
+                var e = {
+                    data: message,
+                    userid: userid,
+                    extra: extra,
+                    latency: latency
+                };
+
+                if (connection.autoTranslateText) {
+                    e.original = e.data;
+                    connection.Translator.TranslateText(e.data, function(translatedText) {
+                        e.data = translatedText;
+                        connection.onmessage(e);
+                    });
+                } else {
+                    connection.onmessage(e);
+                }
+
+                delete content[uuid];
+            }
+        }
+
+        return {
+            receive: receive
+        };
+    }
+
+    // TextSender.js
+    var TextSender = {
+        send: function(config) {
+            var connection = config.connection;
+
+            var channel = config.channel,
+                remoteUserId = config.remoteUserId,
+                initialText = config.text,
+                packetSize = connection.chunkSize || 1000,
+                textToTransfer = '',
+                isobject = false;
+
+            if (!isString(initialText)) {
+                isobject = true;
+                initialText = JSON.stringify(initialText);
+            }
+
+            // uuid is used to uniquely identify sending instance
+            var uuid = getRandomString();
+            var sendingTime = new Date().getTime();
+
+            sendText(initialText);
+
+            function sendText(textMessage, text) {
+                var data = {
+                    type: 'text',
+                    uuid: uuid,
+                    sendingTime: sendingTime
+                };
+
+                if (textMessage) {
+                    text = textMessage;
+                    data.packets = parseInt(text.length / packetSize);
+                }
+
+                if (text.length > packetSize) {
+                    data.message = text.slice(0, packetSize);
+                } else {
+                    data.message = text;
+                    data.last = true;
+                    data.isobject = isobject;
+                }
+
+                channel.send(data, remoteUserId);
+
+                textToTransfer = text.slice(data.message.length);
+
+                if (textToTransfer.length) {
+                    setTimeout(function() {
+                        sendText(null, textToTransfer);
+                    }, connection.chunkInterval || 100);
+                }
+            }
+        }
+    };
+
+    // FileProgressBarHandler.js
+
+    var FileProgressBarHandler = (function() {
+        function handle(connection) {
+            var progressHelper = {};
+
+            // www.RTCMultiConnection.org/docs/onFileStart/
+            connection.onFileStart = function(file) {
+                var div = document.createElement('div');
+                div.title = file.name;
+                div.innerHTML = '<label>0%</label> <progress></progress>';
+
+                if (file.remoteUserId) {
+                    div.innerHTML += ' (Sharing with:' + file.remoteUserId + ')';
+                }
+
+                if (!connection.filesContainer) {
+                    connection.filesContainer = document.body || document.documentElement;
+                }
+
+                connection.filesContainer.insertBefore(div, connection.filesContainer.firstChild);
+
+                if (!file.remoteUserId) {
+                    progressHelper[file.uuid] = {
+                        div: div,
+                        progress: div.querySelector('progress'),
+                        label: div.querySelector('label')
+                    };
+                    progressHelper[file.uuid].progress.max = file.maxChunks;
+                    return;
+                }
+
+                if (!progressHelper[file.uuid]) {
+                    progressHelper[file.uuid] = {};
+                }
+
+                progressHelper[file.uuid][file.remoteUserId] = {
+                    div: div,
+                    progress: div.querySelector('progress'),
+                    label: div.querySelector('label')
+                };
+                progressHelper[file.uuid][file.remoteUserId].progress.max = file.maxChunks;
+            };
+
+            // www.RTCMultiConnection.org/docs/onFileProgress/
+            connection.onFileProgress = function(chunk) {
+                var helper = progressHelper[chunk.uuid];
+                if (!helper) {
+                    return;
+                }
+                if (chunk.remoteUserId) {
+                    helper = progressHelper[chunk.uuid][chunk.remoteUserId];
+                    if (!helper) {
+                        return;
+                    }
+                }
+
+                helper.progress.value = chunk.currentPosition || chunk.maxChunks || helper.progress.max;
+                updateLabel(helper.progress, helper.label);
+            };
+
+            // www.RTCMultiConnection.org/docs/onFileEnd/
+            connection.onFileEnd = function(file) {
+                var helper = progressHelper[file.uuid];
+                if (!helper) {
+                    console.error('No such progress-helper element exist.', file);
+                    return;
+                }
+
+                if (file.remoteUserId) {
+                    helper = progressHelper[file.uuid][file.remoteUserId];
+                    if (!helper) {
+                        return;
+                    }
+                }
+
+                var div = helper.div;
+                if (file.type.indexOf('image') != -1) {
+                    div.innerHTML = '<a href="' + file.url + '" download="' + file.name + '">Download <strong style="color:red;">' + file.name + '</strong> </a><br /><img src="' + file.url + '" title="' + file.name + '" style="max-width: 80%;">';
+                } else {
+                    div.innerHTML = '<a href="' + file.url + '" download="' + file.name + '">Download <strong style="color:red;">' + file.name + '</strong> </a><br /><iframe src="' + file.url + '" title="' + file.name + '" style="width: 80%;border: 0;height: inherit;margin-top:1em;"></iframe>';
+                }
+            };
+
+            function updateLabel(progress, label) {
+                if (progress.position === -1) {
+                    return;
+                }
+
+                var position = +progress.position.toFixed(2).split('.')[1] || 100;
+                label.innerHTML = position + '%';
+            }
+        }
+
+        return {
+            handle: handle
+        };
+    })();
+
+    // TranslationHandler.js
+
+    var TranslationHandler = (function() {
+        function handle(connection) {
+            connection.autoTranslateText = false;
+            connection.language = 'en';
+            connection.googKey = 'AIzaSyCgB5hmFY74WYB-EoWkhr9cAGr6TiTHrEE';
+
+            // www.RTCMultiConnection.org/docs/Translator/
+            connection.Translator = {
+                TranslateText: function(text, callback) {
+                    // if(location.protocol === 'https:') return callback(text);
+
+                    var newScript = document.createElement('script');
+                    newScript.type = 'text/javascript';
+
+                    var sourceText = encodeURIComponent(text); // escape
+
+                    var randomNumber = 'method' + connection.token();
+                    window[randomNumber] = function(response) {
+                        if (response.data && response.data.translations[0] && callback) {
+                            callback(response.data.translations[0].translatedText);
+                            return;
+                        }
+
+                        if (response.error && response.error.message === 'Daily Limit Exceeded') {
+                            console.error('Text translation failed. Error message: "Daily Limit Exceeded."');
+                            return;
+                        }
+
+                        if (response.error) {
+                            console.error(response.error.message);
+                            return;
+                        }
+
+                        console.error(response);
+                    };
+
+                    var source = 'https://www.googleapis.com/language/translate/v2?key=' + connection.googKey + '&target=' + (connection.language || 'en-US') + '&callback=window.' + randomNumber + '&q=' + sourceText;
+                    newScript.src = source;
+                    document.getElementsByTagName('head')[0].appendChild(newScript);
+                },
+                getListOfLanguages: function(callback) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == XMLHttpRequest.DONE) {
+                            var response = JSON.parse(xhr.responseText);
+
+                            if (response && response.data && response.data.languages) {
+                                callback(response.data.languages);
+                                return;
+                            }
+
+                            if (response.error && response.error.message === 'Daily Limit Exceeded') {
+                                console.error('Text translation failed. Error message: "Daily Limit Exceeded."');
+                                return;
+                            }
+
+                            if (response.error) {
+                                console.error(response.error.message);
+                                return;
+                            }
+
+                            console.error(response);
+                        }
+                    }
+                    var url = 'https://www.googleapis.com/language/translate/v2/languages?key=' + connection.googKey + '&target=en';
+                    xhr.open('GET', url, true);
+                    xhr.send(null);
+                }
+            };
+        }
+
+        return {
+            handle: handle
+        };
+    })();
+
+    // _____________________
+    // RTCMultiConnection.js
+
+    (function(connection) {
+        forceOptions = forceOptions || {
+            useDefaultDevices: true
+        };
+
+        connection.channel = connection.sessionid = (roomid || location.href.replace(/\/|:|#|\?|\$|\^|%|\.|`|~|!|\+|@|\[|\||]|\|*. /g, '').split('\n').join('').split('\r').join('')) + '';
+
+        var mPeer = new MultiPeers(connection);
+
+        var preventDuplicateOnStreamEvents = {};
+        mPeer.onGettingLocalMedia = function(stream, callback) {
+            callback = callback || function() {};
+
+            if (preventDuplicateOnStreamEvents[stream.streamid]) {
+                callback();
+                return;
+            }
+            preventDuplicateOnStreamEvents[stream.streamid] = true;
+
+            try {
+                stream.type = 'local';
+            } catch (e) {}
+
+            connection.setStreamEndHandler(stream);
+
+            getRMCMediaElement(stream, function(mediaElement) {
+                mediaElement.id = stream.streamid;
+                mediaElement.muted = true;
+                mediaElement.volume = 0;
+
+                if (connection.attachStreams.indexOf(stream) === -1) {
+                    connection.attachStreams.push(stream);
+                }
+
+                if (typeof StreamsHandler !== 'undefined') {
+                    StreamsHandler.setHandlers(stream, true, connection);
+                }
+
+                connection.streamEvents[stream.streamid] = {
+                    stream: stream,
+                    type: 'local',
+                    mediaElement: mediaElement,
+                    userid: connection.userid,
+                    extra: connection.extra,
+                    streamid: stream.streamid,
+                    isAudioMuted: true
+                };
+
+                try {
+                    setHarkEvents(connection, connection.streamEvents[stream.streamid]);
+                    setMuteHandlers(connection, connection.streamEvents[stream.streamid]);
+
+                    connection.onstream(connection.streamEvents[stream.streamid]);
+                } catch (e) {
+                    //
+                }
+
+                callback();
+            }, connection);
+        };
+
+        mPeer.onGettingRemoteMedia = function(stream, remoteUserId) {
+            try {
+                stream.type = 'remote';
+            } catch (e) {}
+
+            connection.setStreamEndHandler(stream, 'remote-stream');
+
+            getRMCMediaElement(stream, function(mediaElement) {
+                mediaElement.id = stream.streamid;
+
+                if (typeof StreamsHandler !== 'undefined') {
+                    StreamsHandler.setHandlers(stream, false, connection);
+                }
+
+                connection.streamEvents[stream.streamid] = {
+                    stream: stream,
+                    type: 'remote',
+                    userid: remoteUserId,
+                    extra: connection.peers[remoteUserId] ? connection.peers[remoteUserId].extra : {},
+                    mediaElement: mediaElement,
+                    streamid: stream.streamid
+                };
+
+                setMuteHandlers(connection, connection.streamEvents[stream.streamid]);
+
+                connection.onstream(connection.streamEvents[stream.streamid]);
+            }, connection);
+        };
+
+        mPeer.onRemovingRemoteMedia = function(stream, remoteUserId) {
+            var streamEvent = connection.streamEvents[stream.streamid];
+            if (!streamEvent) {
+                streamEvent = {
+                    stream: stream,
+                    type: 'remote',
+                    userid: remoteUserId,
+                    extra: connection.peers[remoteUserId] ? connection.peers[remoteUserId].extra : {},
+                    streamid: stream.streamid,
+                    mediaElement: connection.streamEvents[stream.streamid] ? connection.streamEvents[stream.streamid].mediaElement : null
+                };
+            }
+
+            if (connection.peersBackup[streamEvent.userid]) {
+                streamEvent.extra = connection.peersBackup[streamEvent.userid].extra;
+            }
+
+            connection.onstreamended(streamEvent);
+
+            delete connection.streamEvents[stream.streamid];
+        };
+
+        mPeer.onNegotiationNeeded = function(message, remoteUserId, callback) {
+            callback = callback || function() {};
+
+            remoteUserId = remoteUserId || message.remoteUserId;
+            message = message || '';
+
+            // usually a message looks like this
+            var messageToDeliver = {
+                remoteUserId: remoteUserId,
+                message: message,
+                sender: connection.userid
+            };
+
+            if (message.remoteUserId && message.message && message.sender) {
+                // if a code is manually passing required data
+                messageToDeliver = message;
+            }
+
+            connectSocket(function() {
+                connection.socket.emit(connection.socketMessageEvent, messageToDeliver, callback);
+            });
+        };
+
+        function onUserLeft(remoteUserId) {
+            connection.deletePeer(remoteUserId);
+        }
+
+        mPeer.onUserLeft = onUserLeft;
+        mPeer.disconnectWith = function(remoteUserId, callback) {
+            if (connection.socket) {
+                connection.socket.emit('disconnect-with', remoteUserId, callback || function() {});
+            }
+
+            connection.deletePeer(remoteUserId);
+        };
+
+        connection.socketOptions = {
+            // 'force new connection': true, // For SocketIO version < 1.0
+            // 'forceNew': true, // For SocketIO version >= 1.0
+            'transport': 'polling' // fixing transport:unknown issues
+        };
+
+        function connectSocket(connectCallback) {
+            connection.socketAutoReConnect = true;
+
+            if (connection.socket) { // todo: check here readySate/etc. to make sure socket is still opened
+                if (connectCallback) {
+                    connectCallback(connection.socket);
+                }
+                return;
+            }
+
+            if (typeof SocketConnection === 'undefined') {
+                if (typeof FirebaseConnection !== 'undefined') {
+                    window.SocketConnection = FirebaseConnection;
+                } else if (typeof PubNubConnection !== 'undefined') {
+                    window.SocketConnection = PubNubConnection;
+                } else {
+                    throw 'SocketConnection.js seems missed.';
+                }
+            }
+
+            new SocketConnection(connection, function(s) {
+                if (connectCallback) {
+                    connectCallback(connection.socket);
+                }
+            });
+        }
+
+        // 1st paramter is roomid
+        // 2rd paramter is a callback function
+        connection.openOrJoin = function(roomid, callback) {
+            callback = callback || function() {};
+
+            connection.checkPresence(roomid, function(isRoomExist, roomid) {
+                if (isRoomExist) {
+                    connection.sessionid = roomid;
+
+                    var localPeerSdpConstraints = false;
+                    var remotePeerSdpConstraints = false;
+                    var isOneWay = !!connection.session.oneway;
+                    var isDataOnly = isData(connection.session);
+
+                    remotePeerSdpConstraints = {
+                        OfferToReceiveAudio: connection.sdpConstraints.mandatory.OfferToReceiveAudio,
+                        OfferToReceiveVideo: connection.sdpConstraints.mandatory.OfferToReceiveVideo
+                    }
+
+                    localPeerSdpConstraints = {
+                        OfferToReceiveAudio: isOneWay ? !!connection.session.audio : connection.sdpConstraints.mandatory.OfferToReceiveAudio,
+                        OfferToReceiveVideo: isOneWay ? !!connection.session.video || !!connection.session.screen : connection.sdpConstraints.mandatory.OfferToReceiveVideo
+                    }
+
+                    var connectionDescription = {
+                        remoteUserId: connection.sessionid,
+                        message: {
+                            newParticipationRequest: true,
+                            isOneWay: isOneWay,
+                            isDataOnly: isDataOnly,
+                            localPeerSdpConstraints: localPeerSdpConstraints,
+                            remotePeerSdpConstraints: remotePeerSdpConstraints
+                        },
+                        sender: connection.userid
+                    };
+
+                    beforeJoin(connectionDescription.message, function() {
+                        joinRoom(connectionDescription, callback);
+                    });
+                    return;
+                }
+
+                connection.waitingForLocalMedia = true;
+                connection.isInitiator = true;
+
+                connection.sessionid = roomid || connection.sessionid;
+
+                if (isData(connection.session)) {
+                    openRoom(callback);
+                    return;
+                }
+
+                connection.captureUserMedia(function() {
+                    openRoom(callback);
+                });
+            });
+        };
+
+        // don't allow someone to join this person until he has the media
+        connection.waitingForLocalMedia = false;
+
+        connection.open = function(roomid, callback) {
+            callback = callback || function() {};
+
+            connection.waitingForLocalMedia = true;
+            connection.isInitiator = true;
+
+            connection.sessionid = roomid || connection.sessionid;
+
+            connectSocket(function() {
+                if (isData(connection.session)) {
+                    openRoom(callback);
+                    return;
+                }
+
+                connection.captureUserMedia(function() {
+                    openRoom(callback);
+                });
+            });
+        };
+
+        // this object keeps extra-data records for all connected users
+        // this object is never cleared so you can always access extra-data even if a user left
+        connection.peersBackup = {};
+
+        connection.deletePeer = function(remoteUserId) {
+            if (!remoteUserId || !connection.peers[remoteUserId]) {
+                return;
+            }
+
+            var eventObject = {
+                userid: remoteUserId,
+                extra: connection.peers[remoteUserId] ? connection.peers[remoteUserId].extra : {}
+            };
+
+            if (connection.peersBackup[eventObject.userid]) {
+                eventObject.extra = connection.peersBackup[eventObject.userid].extra;
+            }
+
+            connection.onleave(eventObject);
+
+            if (!!connection.peers[remoteUserId]) {
+                connection.peers[remoteUserId].streams.forEach(function(stream) {
+                    stream.stop();
+                });
+
+                var peer = connection.peers[remoteUserId].peer;
+                if (peer && peer.iceConnectionState !== 'closed') {
+                    try {
+                        peer.close();
+                    } catch (e) {}
+                }
+
+                if (connection.peers[remoteUserId]) {
+                    connection.peers[remoteUserId].peer = null;
+                    delete connection.peers[remoteUserId];
+                }
+            }
+        }
+
+        connection.rejoin = function(connectionDescription) {
+            if (connection.isInitiator || !connectionDescription || !Object.keys(connectionDescription).length) {
+                return;
+            }
+
+            var extra = {};
+
+            if (connection.peers[connectionDescription.remoteUserId]) {
+                extra = connection.peers[connectionDescription.remoteUserId].extra;
+                connection.deletePeer(connectionDescription.remoteUserId);
+            }
+
+            if (connectionDescription && connectionDescription.remoteUserId) {
+                connection.join(connectionDescription.remoteUserId);
+
+                connection.onReConnecting({
+                    userid: connectionDescription.remoteUserId,
+                    extra: extra
+                });
+            }
+        };
+
+        connection.join = function(remoteUserId, options) {
+            connection.sessionid = (remoteUserId ? remoteUserId.sessionid || remoteUserId.remoteUserId || remoteUserId : false) || connection.sessionid;
+            connection.sessionid += '';
+
+            var localPeerSdpConstraints = false;
+            var remotePeerSdpConstraints = false;
+            var isOneWay = false;
+            var isDataOnly = false;
+
+            if ((remoteUserId && remoteUserId.session) || !remoteUserId || typeof remoteUserId === 'string') {
+                var session = remoteUserId ? remoteUserId.session || connection.session : connection.session;
+
+                isOneWay = !!session.oneway;
+                isDataOnly = isData(session);
+
+                remotePeerSdpConstraints = {
+                    OfferToReceiveAudio: connection.sdpConstraints.mandatory.OfferToReceiveAudio,
+                    OfferToReceiveVideo: connection.sdpConstraints.mandatory.OfferToReceiveVideo
+                };
+
+                localPeerSdpConstraints = {
+                    OfferToReceiveAudio: isOneWay ? !!connection.session.audio : connection.sdpConstraints.mandatory.OfferToReceiveAudio,
+                    OfferToReceiveVideo: isOneWay ? !!connection.session.video || !!connection.session.screen : connection.sdpConstraints.mandatory.OfferToReceiveVideo
+                };
+            }
+
+            options = options || {};
+
+            var cb = function() {};
+            if (typeof options === 'function') {
+                cb = options;
+                options = {};
+            }
+
+            if (typeof options.localPeerSdpConstraints !== 'undefined') {
+                localPeerSdpConstraints = options.localPeerSdpConstraints;
+            }
+
+            if (typeof options.remotePeerSdpConstraints !== 'undefined') {
+                remotePeerSdpConstraints = options.remotePeerSdpConstraints;
+            }
+
+            if (typeof options.isOneWay !== 'undefined') {
+                isOneWay = options.isOneWay;
+            }
+
+            if (typeof options.isDataOnly !== 'undefined') {
+                isDataOnly = options.isDataOnly;
+            }
+
+            var connectionDescription = {
+                remoteUserId: connection.sessionid,
+                message: {
+                    newParticipationRequest: true,
+                    isOneWay: isOneWay,
+                    isDataOnly: isDataOnly,
+                    localPeerSdpConstraints: localPeerSdpConstraints,
+                    remotePeerSdpConstraints: remotePeerSdpConstraints
+                },
+                sender: connection.userid
+            };
+
+            beforeJoin(connectionDescription.message, function() {
+                connectSocket(function() {
+                    joinRoom(connectionDescription, cb);
+                });
+            });
+            return connectionDescription;
+        };
+
+        function joinRoom(connectionDescription, cb) {
+            connection.socket.emit('join-room', {
+                sessionid: connection.sessionid,
+                session: connection.session,
+                mediaConstraints: connection.mediaConstraints,
+                sdpConstraints: connection.sdpConstraints,
+                streams: getStreamInfoForAdmin(),
+                extra: connection.extra,
+                password: typeof connection.password !== 'undefined' && typeof connection.password !== 'object' ? connection.password : ''
+            }, function(isRoomJoined, error) {
+                if (isRoomJoined === true) {
+                    if (connection.enableLogs) {
+                        console.log('isRoomJoined: ', isRoomJoined, ' roomid: ', connection.sessionid);
+                    }
+
+                    if (!!connection.peers[connection.sessionid]) {
+                        // on socket disconnect & reconnect
+                        return;
+                    }
+
+                    mPeer.onNegotiationNeeded(connectionDescription);
+                }
+
+                if (isRoomJoined === false) {
+                    if (connection.enableLogs) {
+                        console.warn('isRoomJoined: ', error, ' roomid: ', connection.sessionid);
+                    }
+
+                    // [disabled] retry after 3 seconds
+                    false && setTimeout(function() {
+                        joinRoom(connectionDescription, cb);
+                    }, 3000);
+                }
+
+                cb(isRoomJoined, connection.sessionid, error);
+            });
+        }
+
+        connection.publicRoomIdentifier = '';
+
+        function openRoom(callback) {
+            if (connection.enableLogs) {
+                console.log('Sending open-room signal to socket.io');
+            }
+
+            connection.waitingForLocalMedia = false;
+            connection.socket.emit('open-room', {
+                sessionid: connection.sessionid,
+                session: connection.session,
+                mediaConstraints: connection.mediaConstraints,
+                sdpConstraints: connection.sdpConstraints,
+                streams: getStreamInfoForAdmin(),
+                extra: connection.extra,
+                identifier: connection.publicRoomIdentifier,
+                password: typeof connection.password !== 'undefined' && typeof connection.password !== 'object' ? connection.password : ''
+            }, function(isRoomOpened, error) {
+                if (isRoomOpened === true) {
+                    if (connection.enableLogs) {
+                        console.log('isRoomOpened: ', isRoomOpened, ' roomid: ', connection.sessionid);
+                    }
+                    callback(isRoomOpened, connection.sessionid);
+                }
+
+                if (isRoomOpened === false) {
+                    if (connection.enableLogs) {
+                        console.warn('isRoomOpened: ', error, ' roomid: ', connection.sessionid);
+                    }
+
+                    callback(isRoomOpened, connection.sessionid, error);
+                }
+            });
+        }
+
+        function getStreamInfoForAdmin() {
+            try {
+                return connection.streamEvents.selectAll('local').map(function(event) {
+                    return {
+                        streamid: event.streamid,
+                        tracks: event.stream.getTracks().length
+                    };
+                });
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function beforeJoin(userPreferences, callback) {
+            if (connection.dontCaptureUserMedia || userPreferences.isDataOnly) {
+                callback();
+                return;
+            }
+
+            var localMediaConstraints = {};
+
+            if (userPreferences.localPeerSdpConstraints.OfferToReceiveAudio) {
+                localMediaConstraints.audio = connection.mediaConstraints.audio;
+            }
+
+            if (userPreferences.localPeerSdpConstraints.OfferToReceiveVideo) {
+                localMediaConstraints.video = connection.mediaConstraints.video;
+            }
+
+            var session = userPreferences.session || connection.session;
+
+            if (session.oneway && session.audio !== 'two-way' && session.video !== 'two-way' && session.screen !== 'two-way') {
+                callback();
+                return;
+            }
+
+            if (session.oneway && session.audio && session.audio === 'two-way') {
+                session = {
+                    audio: true
+                };
+            }
+
+            if (session.audio || session.video || session.screen) {
+                if (session.screen) {
+                    if (DetectRTC.browser.name === 'Edge') {
+                        navigator.getDisplayMedia({
+                            video: true,
+                            audio: isAudioPlusTab(connection)
+                        }).then(function(screen) {
+                            screen.isScreen = true;
+                            mPeer.onGettingLocalMedia(screen);
+
+                            if ((session.audio || session.video) && !isAudioPlusTab(connection)) {
+                                connection.invokeGetUserMedia(null, callback);
+                            } else {
+                                callback(screen);
+                            }
+                        }, function(error) {
+                            console.error('Unable to capture screen on Edge. HTTPs and version 17+ is required.');
+                        });
+                    } else {
+                        connection.invokeGetUserMedia({
+                            audio: isAudioPlusTab(connection),
+                            video: true,
+                            isScreen: true
+                        }, (session.audio || session.video) && !isAudioPlusTab(connection) ? connection.invokeGetUserMedia(null, callback) : callback);
+                    }
+                } else if (session.audio || session.video) {
+                    connection.invokeGetUserMedia(null, callback, session);
+                }
+            }
+        }
+
+        connection.getUserMedia = connection.captureUserMedia = function(callback, sessionForced) {
+            callback = callback || function() {};
+            var session = sessionForced || connection.session;
+
+            if (connection.dontCaptureUserMedia || isData(session)) {
+                callback();
+                return;
+            }
+
+            if (session.audio || session.video || session.screen) {
+                if (session.screen) {
+                    if (DetectRTC.browser.name === 'Edge') {
+                        navigator.getDisplayMedia({
+                            video: true,
+                            audio: isAudioPlusTab(connection)
+                        }).then(function(screen) {
+                            screen.isScreen = true;
+                            mPeer.onGettingLocalMedia(screen);
+
+                            if ((session.audio || session.video) && !isAudioPlusTab(connection)) {
+                                var nonScreenSession = {};
+                                for (var s in session) {
+                                    if (s !== 'screen') {
+                                        nonScreenSession[s] = session[s];
+                                    }
+                                }
+                                connection.invokeGetUserMedia(sessionForced, callback, nonScreenSession);
+                                return;
+                            }
+                            callback(screen);
+                        }, function(error) {
+                            console.error('Unable to capture screen on Edge. HTTPs and version 17+ is required.');
+                        });
+                    } else {
+                        connection.invokeGetUserMedia({
+                            audio: isAudioPlusTab(connection),
+                            video: true,
+                            isScreen: true
+                        }, function(stream) {
+                            if ((session.audio || session.video) && !isAudioPlusTab(connection)) {
+                                var nonScreenSession = {};
+                                for (var s in session) {
+                                    if (s !== 'screen') {
+                                        nonScreenSession[s] = session[s];
+                                    }
+                                }
+                                connection.invokeGetUserMedia(sessionForced, callback, nonScreenSession);
+                                return;
+                            }
+                            callback(stream);
+                        });
+                    }
+                } else if (session.audio || session.video) {
+                    connection.invokeGetUserMedia(sessionForced, callback, session);
+                }
+            }
+        };
+
+        connection.onbeforeunload = function(arg1, dontCloseSocket) {
+            if (!connection.closeBeforeUnload) {
+                return;
+            }
+
+            connection.peers.getAllParticipants().forEach(function(participant) {
+                mPeer.onNegotiationNeeded({
+                    userLeft: true
+                }, participant);
+
+                if (connection.peers[participant] && connection.peers[participant].peer) {
+                    connection.peers[participant].peer.close();
+                }
+
+                delete connection.peers[participant];
+            });
+
+            if (!dontCloseSocket) {
+                connection.closeSocket();
+            }
+
+            connection.isInitiator = false;
+        };
+
+        if (!window.ignoreBeforeUnload) {
+            // user can implement its own version of window.onbeforeunload
+            connection.closeBeforeUnload = true;
+            window.addEventListener('beforeunload', connection.onbeforeunload, false);
+        } else {
+            connection.closeBeforeUnload = false;
+        }
+
+        connection.userid = getRandomString();
+        connection.changeUserId = function(newUserId, callback) {
+            callback = callback || function() {};
+            connection.userid = newUserId || getRandomString();
+            connection.socket.emit('changed-uuid', connection.userid, callback);
+        };
+
+        connection.extra = {};
+        connection.attachStreams = [];
+
+        connection.session = {
+            audio: true,
+            video: true
+        };
+
+        connection.enableFileSharing = false;
+
+        // all values in kbps
+        connection.bandwidth = {
+            screen: false,
+            audio: false,
+            video: false
+        };
+
+        connection.codecs = {
+            audio: 'opus',
+            video: 'VP9'
+        };
+
+        connection.processSdp = function(sdp) {
+            // ignore SDP modification if unified-pan is supported
+            if (isUnifiedPlanSupportedDefault()) {
+                return sdp;
+            }
+
+            if (DetectRTC.browser.name === 'Safari') {
+                return sdp;
+            }
+
+            if (connection.codecs.video.toUpperCase() === 'VP8') {
+                sdp = CodecsHandler.preferCodec(sdp, 'vp8');
+            }
+
+            if (connection.codecs.video.toUpperCase() === 'VP9') {
+                sdp = CodecsHandler.preferCodec(sdp, 'vp9');
+            }
+
+            if (connection.codecs.video.toUpperCase() === 'H264') {
+                sdp = CodecsHandler.preferCodec(sdp, 'h264');
+            }
+
+            if (connection.codecs.audio === 'G722') {
+                sdp = CodecsHandler.removeNonG722(sdp);
+            }
+
+            if (DetectRTC.browser.name === 'Firefox') {
+                return sdp;
+            }
+
+            if (connection.bandwidth.video || connection.bandwidth.screen) {
+                sdp = CodecsHandler.setApplicationSpecificBandwidth(sdp, connection.bandwidth, !!connection.session.screen);
+            }
+
+            if (connection.bandwidth.video) {
+                sdp = CodecsHandler.setVideoBitrates(sdp, {
+                    min: connection.bandwidth.video * 8 * 1024,
+                    max: connection.bandwidth.video * 8 * 1024
+                });
+            }
+
+            if (connection.bandwidth.audio) {
+                sdp = CodecsHandler.setOpusAttributes(sdp, {
+                    maxaveragebitrate: connection.bandwidth.audio * 8 * 1024,
+                    maxplaybackrate: connection.bandwidth.audio * 8 * 1024,
+                    stereo: 1,
+                    maxptime: 3
+                });
+            }
+
+            return sdp;
+        };
+
+        if (typeof CodecsHandler !== 'undefined') {
+            connection.BandwidthHandler = connection.CodecsHandler = CodecsHandler;
+        }
+
+        connection.mediaConstraints = {
+            audio: {
+                mandatory: {},
+                optional: connection.bandwidth.audio ? [{
+                    bandwidth: connection.bandwidth.audio * 8 * 1024 || 128 * 8 * 1024
+                }] : []
+            },
+            video: {
+                mandatory: {},
+                optional: connection.bandwidth.video ? [{
+                    bandwidth: connection.bandwidth.video * 8 * 1024 || 128 * 8 * 1024
+                }, {
+                    facingMode: 'user'
+                }] : [{
+                    facingMode: 'user'
+                }]
+            }
+        };
+
+        if (DetectRTC.browser.name === 'Firefox') {
+            connection.mediaConstraints = {
+                audio: true,
+                video: true
+            };
+        }
+
+        if (!forceOptions.useDefaultDevices && !DetectRTC.isMobileDevice) {
+            DetectRTC.load(function() {
+                var lastAudioDevice, lastVideoDevice;
+                // it will force RTCMultiConnection to capture last-devices
+                // i.e. if external microphone is attached to system, we should prefer it over built-in devices.
+                DetectRTC.MediaDevices.forEach(function(device) {
+                    if (device.kind === 'audioinput' && connection.mediaConstraints.audio !== false) {
+                        lastAudioDevice = device;
+                    }
+
+                    if (device.kind === 'videoinput' && connection.mediaConstraints.video !== false) {
+                        lastVideoDevice = device;
+                    }
+                });
+
+                if (lastAudioDevice) {
+                    if (DetectRTC.browser.name === 'Firefox') {
+                        if (connection.mediaConstraints.audio !== true) {
+                            connection.mediaConstraints.audio.deviceId = lastAudioDevice.id;
+                        } else {
+                            connection.mediaConstraints.audio = {
+                                deviceId: lastAudioDevice.id
+                            }
+                        }
+                        return;
+                    }
+
+                    if (connection.mediaConstraints.audio == true) {
+                        connection.mediaConstraints.audio = {
+                            mandatory: {},
+                            optional: []
+                        }
+                    }
+
+                    if (!connection.mediaConstraints.audio.optional) {
+                        connection.mediaConstraints.audio.optional = [];
+                    }
+
+                    var optional = [{
+                        sourceId: lastAudioDevice.id
+                    }];
+
+                    connection.mediaConstraints.audio.optional = optional.concat(connection.mediaConstraints.audio.optional);
+                }
+
+                if (lastVideoDevice) {
+                    if (DetectRTC.browser.name === 'Firefox') {
+                        if (connection.mediaConstraints.video !== true) {
+                            connection.mediaConstraints.video.deviceId = lastVideoDevice.id;
+                        } else {
+                            connection.mediaConstraints.video = {
+                                deviceId: lastVideoDevice.id
+                            }
+                        }
+                        return;
+                    }
+
+                    if (connection.mediaConstraints.video == true) {
+                        connection.mediaConstraints.video = {
+                            mandatory: {},
+                            optional: []
+                        }
+                    }
+
+                    if (!connection.mediaConstraints.video.optional) {
+                        connection.mediaConstraints.video.optional = [];
+                    }
+
+                    var optional = [{
+                        sourceId: lastVideoDevice.id
+                    }];
+
+                    connection.mediaConstraints.video.optional = optional.concat(connection.mediaConstraints.video.optional);
+                }
+            });
+        }
+
+        connection.sdpConstraints = {
+            mandatory: {
+                OfferToReceiveAudio: true,
+                OfferToReceiveVideo: true
+            },
+            optional: [{
+                VoiceActivityDetection: false
+            }]
+        };
+
+        connection.sdpSemantics = null; // "unified-plan" or "plan-b", ref: webrtc.org/web-apis/chrome/unified-plan/
+        connection.iceCandidatePoolSize = null; // 0
+        connection.bundlePolicy = null; // max-bundle
+        connection.rtcpMuxPolicy = null; // "require" or "negotiate"
+        connection.iceTransportPolicy = null; // "relay" or "all"
+        connection.optionalArgument = {
+            optional: [{
+                DtlsSrtpKeyAgreement: true
+            }, {
+                googImprovedWifiBwe: true
+            }, {
+                googScreencastMinBitrate: 300
+            }, {
+                googIPv6: true
+            }, {
+                googDscp: true
+            }, {
+                googCpuUnderuseThreshold: 55
+            }, {
+                googCpuOveruseThreshold: 85
+            }, {
+                googSuspendBelowMinBitrate: true
+            }, {
+                googCpuOveruseDetection: true
+            }],
+            mandatory: {}
+        };
+
+        connection.iceServers = IceServersHandler.getIceServers(connection);
+
+        connection.candidates = {
+            host: true,
+            stun: true,
+            turn: true
+        };
+
+        connection.iceProtocols = {
+            tcp: true,
+            udp: true
+        };
+
+        // EVENTs
+        connection.onopen = function(event) {
+            if (!!connection.enableLogs) {
+                console.info('Data connection has been opened between you & ', event.userid);
+            }
+        };
+
+        connection.onclose = function(event) {
+            if (!!connection.enableLogs) {
+                console.warn('Data connection has been closed between you & ', event.userid);
+            }
+        };
+
+        connection.onerror = function(error) {
+            if (!!connection.enableLogs) {
+                console.error(error.userid, 'data-error', error);
+            }
+        };
+
+        connection.onmessage = function(event) {
+            if (!!connection.enableLogs) {
+                console.debug('data-message', event.userid, event.data);
+            }
+        };
+
+        connection.send = function(data, remoteUserId) {
+            connection.peers.send(data, remoteUserId);
+        };
+
+        connection.close = connection.disconnect = connection.leave = function() {
+            connection.onbeforeunload(false, true);
+        };
+
+        connection.closeEntireSession = function(callback) {
+            callback = callback || function() {};
+            connection.socket.emit('close-entire-session', function looper() {
+                if (connection.getAllParticipants().length) {
+                    setTimeout(looper, 100);
+                    return;
+                }
+
+                connection.onEntireSessionClosed({
+                    sessionid: connection.sessionid,
+                    userid: connection.userid,
+                    extra: connection.extra
+                });
+
+                connection.changeUserId(null, function() {
+                    connection.close();
+                    callback();
+                });
+            });
+        };
+
+        connection.onEntireSessionClosed = function(event) {
+            if (!connection.enableLogs) return;
+            console.info('Entire session is closed: ', event.sessionid, event.extra);
+        };
+
+        connection.onstream = function(e) {
+            var parentNode = connection.videosContainer;
+            parentNode.insertBefore(e.mediaElement, parentNode.firstChild);
+            var played = e.mediaElement.play();
+
+            if (typeof played !== 'undefined') {
+                played.catch(function() {
+                    /*** iOS 11 doesn't allow automatic play and rejects ***/
+                }).then(function() {
+                    setTimeout(function() {
+                        e.mediaElement.play();
+                    }, 2000);
+                });
+                return;
+            }
+
+            setTimeout(function() {
+                e.mediaElement.play();
+            }, 2000);
+        };
+
+        connection.onstreamended = function(e) {
+            if (!e.mediaElement) {
+                e.mediaElement = document.getElementById(e.streamid);
+            }
+
+            if (!e.mediaElement || !e.mediaElement.parentNode) {
+                return;
+            }
+
+            e.mediaElement.parentNode.removeChild(e.mediaElement);
+        };
+
+        connection.direction = 'many-to-many';
+
+        connection.removeStream = function(streamid, remoteUserId) {
+            var stream;
+            connection.attachStreams.forEach(function(localStream) {
+                if (localStream.id === streamid) {
+                    stream = localStream;
+                }
+            });
+
+            if (!stream) {
+                console.warn('No such stream exist.', streamid);
+                return;
+            }
+
+            connection.peers.getAllParticipants().forEach(function(participant) {
+                if (remoteUserId && participant !== remoteUserId) {
+                    return;
+                }
+
+                var user = connection.peers[participant];
+                try {
+                    user.peer.removeStream(stream);
+                } catch (e) {}
+            });
+
+            connection.renegotiate();
+        };
+
+        connection.addStream = function(session, remoteUserId) {
+            if (!!session.getTracks) {
+                if (connection.attachStreams.indexOf(session) === -1) {
+                    if (!session.streamid) {
+                        session.streamid = session.id;
+                    }
+
+                    connection.attachStreams.push(session);
+                }
+                connection.renegotiate(remoteUserId);
+                return;
+            }
+
+            if (isData(session)) {
+                connection.renegotiate(remoteUserId);
+                return;
+            }
+
+            if (session.audio || session.video || session.screen) {
+                if (session.screen) {
+                    if (DetectRTC.browser.name === 'Edge') {
+                        navigator.getDisplayMedia({
+                            video: true,
+                            audio: isAudioPlusTab(connection)
+                        }).then(function(screen) {
+                            screen.isScreen = true;
+                            mPeer.onGettingLocalMedia(screen);
+
+                            if ((session.audio || session.video) && !isAudioPlusTab(connection)) {
+                                connection.invokeGetUserMedia(null, function(stream) {
+                                    gumCallback(stream);
+                                });
+                            } else {
+                                gumCallback(screen);
+                            }
+                        }, function(error) {
+                            console.error('Unable to capture screen on Edge. HTTPs and version 17+ is required.');
+                        });
+                    } else {
+                        connection.invokeGetUserMedia({
+                            audio: isAudioPlusTab(connection),
+                            video: true,
+                            isScreen: true
+                        }, function(stream) {
+                            if ((session.audio || session.video) && !isAudioPlusTab(connection)) {
+                                connection.invokeGetUserMedia(null, function(stream) {
+                                    gumCallback(stream);
+                                });
+                            } else {
+                                gumCallback(stream);
+                            }
+                        });
+                    }
+                } else if (session.audio || session.video) {
+                    connection.invokeGetUserMedia(null, gumCallback);
+                }
+            }
+
+            function gumCallback(stream) {
+                if (session.streamCallback) {
+                    session.streamCallback(stream);
+                }
+
+                connection.renegotiate(remoteUserId);
+            }
+        };
+
+        connection.invokeGetUserMedia = function(localMediaConstraints, callback, session) {
+            if (!session) {
+                session = connection.session;
+            }
+
+            if (!localMediaConstraints) {
+                localMediaConstraints = connection.mediaConstraints;
+            }
+
+            getUserMediaHandler({
+                onGettingLocalMedia: function(stream) {
+                    var videoConstraints = localMediaConstraints.video;
+                    if (videoConstraints) {
+                        if (videoConstraints.mediaSource || videoConstraints.mozMediaSource) {
+                            stream.isScreen = true;
+                        } else if (videoConstraints.mandatory && videoConstraints.mandatory.chromeMediaSource) {
+                            stream.isScreen = true;
+                        }
+                    }
+
+                    if (!stream.isScreen) {
+                        stream.isVideo = !!getTracks(stream, 'video').length;
+                        stream.isAudio = !stream.isVideo && getTracks(stream, 'audio').length;
+                    }
+
+                    mPeer.onGettingLocalMedia(stream, function() {
+                        if (typeof callback === 'function') {
+                            callback(stream);
+                        }
+                    });
+                },
+                onLocalMediaError: function(error, constraints) {
+                    mPeer.onLocalMediaError(error, constraints);
+                },
+                localMediaConstraints: localMediaConstraints || {
+                    audio: session.audio ? localMediaConstraints.audio : false,
+                    video: session.video ? localMediaConstraints.video : false
+                }
+            });
+        };
+
+        function applyConstraints(stream, mediaConstraints) {
+            if (!stream) {
+                if (!!connection.enableLogs) {
+                    console.error('No stream to applyConstraints.');
+                }
+                return;
+            }
+
+            if (mediaConstraints.audio) {
+                getTracks(stream, 'audio').forEach(function(track) {
+                    track.applyConstraints(mediaConstraints.audio);
+                });
+            }
+
+            if (mediaConstraints.video) {
+                getTracks(stream, 'video').forEach(function(track) {
+                    track.applyConstraints(mediaConstraints.video);
+                });
+            }
+        }
+
+        connection.applyConstraints = function(mediaConstraints, streamid) {
+            if (!MediaStreamTrack || !MediaStreamTrack.prototype.applyConstraints) {
+                alert('track.applyConstraints is NOT supported in your browser.');
+                return;
+            }
+
+            if (streamid) {
+                var stream;
+                if (connection.streamEvents[streamid]) {
+                    stream = connection.streamEvents[streamid].stream;
+                }
+                applyConstraints(stream, mediaConstraints);
+                return;
+            }
+
+            connection.attachStreams.forEach(function(stream) {
+                applyConstraints(stream, mediaConstraints);
+            });
+        };
+
+        function replaceTrack(track, remoteUserId, isVideoTrack) {
+            if (remoteUserId) {
+                mPeer.replaceTrack(track, remoteUserId, isVideoTrack);
+                return;
+            }
+
+            connection.peers.getAllParticipants().forEach(function(participant) {
+                mPeer.replaceTrack(track, participant, isVideoTrack);
+            });
+        }
+
+        connection.replaceTrack = function(session, remoteUserId, isVideoTrack) {
+            session = session || {};
+
+            if (!RTCPeerConnection.prototype.getSenders) {
+                connection.addStream(session);
+                return;
+            }
+
+            if (session instanceof MediaStreamTrack) {
+                replaceTrack(session, remoteUserId, isVideoTrack);
+                return;
+            }
+
+            if (session instanceof MediaStream) {
+                if (getTracks(session, 'video').length) {
+                    replaceTrack(getTracks(session, 'video')[0], remoteUserId, true);
+                }
+
+                if (getTracks(session, 'audio').length) {
+                    replaceTrack(getTracks(session, 'audio')[0], remoteUserId, false);
+                }
+                return;
+            }
+
+            if (isData(session)) {
+                throw 'connection.replaceTrack requires audio and/or video and/or screen.';
+                return;
+            }
+
+            if (session.audio || session.video || session.screen) {
+                if (session.screen) {
+                    if (DetectRTC.browser.name === 'Edge') {
+                        navigator.getDisplayMedia({
+                            video: true,
+                            audio: isAudioPlusTab(connection)
+                        }).then(function(screen) {
+                            screen.isScreen = true;
+                            mPeer.onGettingLocalMedia(screen);
+
+                            if ((session.audio || session.video) && !isAudioPlusTab(connection)) {
+                                connection.invokeGetUserMedia(null, gumCallback);
+                            } else {
+                                gumCallback(screen);
+                            }
+                        }, function(error) {
+                            console.error('Unable to capture screen on Edge. HTTPs and version 17+ is required.');
+                        });
+                    } else {
+                        connection.invokeGetUserMedia({
+                            audio: isAudioPlusTab(connection),
+                            video: true,
+                            isScreen: true
+                        }, (session.audio || session.video) && !isAudioPlusTab(connection) ? connection.invokeGetUserMedia(null, gumCallback) : gumCallback);
+                    }
+                } else if (session.audio || session.video) {
+                    connection.invokeGetUserMedia(null, gumCallback);
+                }
+            }
+
+            function gumCallback(stream) {
+                connection.replaceTrack(stream, remoteUserId, isVideoTrack || session.video || session.screen);
+            }
+        };
+
+        connection.resetTrack = function(remoteUsersIds, isVideoTrack) {
+            if (!remoteUsersIds) {
+                remoteUsersIds = connection.getAllParticipants();
+            }
+
+            if (typeof remoteUsersIds == 'string') {
+                remoteUsersIds = [remoteUsersIds];
+            }
+
+            remoteUsersIds.forEach(function(participant) {
+                var peer = connection.peers[participant].peer;
+
+                if ((typeof isVideoTrack === 'undefined' || isVideoTrack === true) && peer.lastVideoTrack) {
+                    connection.replaceTrack(peer.lastVideoTrack, participant, true);
+                }
+
+                if ((typeof isVideoTrack === 'undefined' || isVideoTrack === false) && peer.lastAudioTrack) {
+                    connection.replaceTrack(peer.lastAudioTrack, participant, false);
+                }
+            });
+        };
+
+        connection.renegotiate = function(remoteUserId) {
+            if (remoteUserId) {
+                mPeer.renegotiatePeer(remoteUserId);
+                return;
+            }
+
+            connection.peers.getAllParticipants().forEach(function(participant) {
+                mPeer.renegotiatePeer(participant);
+            });
+        };
+
+        connection.setStreamEndHandler = function(stream, isRemote) {
+            if (!stream || !stream.addEventListener) return;
+
+            isRemote = !!isRemote;
+
+            if (stream.alreadySetEndHandler) {
+                return;
+            }
+            stream.alreadySetEndHandler = true;
+
+            var streamEndedEvent = 'ended';
+
+            if ('oninactive' in stream) {
+                streamEndedEvent = 'inactive';
+            }
+
+            stream.addEventListener(streamEndedEvent, function() {
+                if (stream.idInstance) {
+                    currentUserMediaRequest.remove(stream.idInstance);
+                }
+
+                if (!isRemote) {
+                    // reset attachStreams
+                    var streams = [];
+                    connection.attachStreams.forEach(function(s) {
+                        if (s.id != stream.id) {
+                            streams.push(s);
+                        }
+                    });
+                    connection.attachStreams = streams;
+                }
+
+                // connection.renegotiate();
+
+                var streamEvent = connection.streamEvents[stream.streamid];
+                if (!streamEvent) {
+                    streamEvent = {
+                        stream: stream,
+                        streamid: stream.streamid,
+                        type: isRemote ? 'remote' : 'local',
+                        userid: connection.userid,
+                        extra: connection.extra,
+                        mediaElement: connection.streamEvents[stream.streamid] ? connection.streamEvents[stream.streamid].mediaElement : null
+                    };
+                }
+
+                if (isRemote && connection.peers[streamEvent.userid]) {
+                    // reset remote "streams"
+                    var peer = connection.peers[streamEvent.userid].peer;
+                    var streams = [];
+                    peer.getRemoteStreams().forEach(function(s) {
+                        if (s.id != stream.id) {
+                            streams.push(s);
+                        }
+                    });
+                    connection.peers[streamEvent.userid].streams = streams;
+                }
+
+                if (streamEvent.userid === connection.userid && streamEvent.type === 'remote') {
+                    return;
+                }
+
+                if (connection.peersBackup[streamEvent.userid]) {
+                    streamEvent.extra = connection.peersBackup[streamEvent.userid].extra;
+                }
+
+                connection.onstreamended(streamEvent);
+
+                delete connection.streamEvents[stream.streamid];
+            }, false);
+        };
+
+        connection.onMediaError = function(error, constraints) {
+            if (!!connection.enableLogs) {
+                console.error(error, constraints);
+            }
+        };
+
+        connection.autoCloseEntireSession = false;
+
+        connection.filesContainer = connection.videosContainer = document.body || document.documentElement;
+        connection.isInitiator = false;
+
+        connection.shareFile = mPeer.shareFile;
+        if (typeof FileProgressBarHandler !== 'undefined') {
+            FileProgressBarHandler.handle(connection);
+        }
+
+        if (typeof TranslationHandler !== 'undefined') {
+            TranslationHandler.handle(connection);
+        }
+
+        connection.token = getRandomString;
+
+        connection.onNewParticipant = function(participantId, userPreferences) {
+            connection.acceptParticipationRequest(participantId, userPreferences);
+        };
+
+        connection.acceptParticipationRequest = function(participantId, userPreferences) {
+            if (userPreferences.successCallback) {
+                userPreferences.successCallback();
+                delete userPreferences.successCallback;
+            }
+
+            mPeer.createNewPeer(participantId, userPreferences);
+        };
+
+        if (typeof StreamsHandler !== 'undefined') {
+            connection.StreamsHandler = StreamsHandler;
+        }
+
+        connection.onleave = function(userid) {};
+
+        connection.invokeSelectFileDialog = function(callback) {
+            var selector = new FileSelector();
+            selector.accept = '*.*';
+            selector.selectSingleFile(callback);
+        };
+
+        connection.onmute = function(e) {
+            if (!e || !e.mediaElement) {
+                return;
+            }
+
+            if (e.muteType === 'both' || e.muteType === 'video') {
+                e.mediaElement.src = null;
+                var paused = e.mediaElement.pause();
+                if (typeof paused !== 'undefined') {
+                    paused.then(function() {
+                        e.mediaElement.poster = e.snapshot || 'https://cdn.webrtc-experiment.com/images/muted.png';
+                    });
+                } else {
+                    e.mediaElement.poster = e.snapshot || 'https://cdn.webrtc-experiment.com/images/muted.png';
+                }
+            } else if (e.muteType === 'audio') {
+                e.mediaElement.muted = true;
+            }
+        };
+
+        connection.onunmute = function(e) {
+            if (!e || !e.mediaElement || !e.stream) {
+                return;
+            }
+
+            if (e.unmuteType === 'both' || e.unmuteType === 'video') {
+                e.mediaElement.poster = null;
+                e.mediaElement.srcObject = e.stream;
+                e.mediaElement.play();
+            } else if (e.unmuteType === 'audio') {
+                e.mediaElement.muted = false;
+            }
+        };
+
+        connection.onExtraDataUpdated = function(event) {
+            event.status = 'online';
+            connection.onUserStatusChanged(event, true);
+        };
+
+        connection.getAllParticipants = function(sender) {
+            return connection.peers.getAllParticipants(sender);
+        };
+
+        if (typeof StreamsHandler !== 'undefined') {
+            StreamsHandler.onSyncNeeded = function(streamid, action, type) {
+                connection.peers.getAllParticipants().forEach(function(participant) {
+                    mPeer.onNegotiationNeeded({
+                        streamid: streamid,
+                        action: action,
+                        streamSyncNeeded: true,
+                        type: type || 'both'
+                    }, participant);
+                });
+            };
+        }
+
+        connection.connectSocket = function(callback) {
+            connectSocket(callback);
+        };
+
+        connection.closeSocket = function() {
+            try {
+                io.sockets = {};
+            } catch (e) {};
+
+            if (!connection.socket) return;
+
+            if (typeof connection.socket.disconnect === 'function') {
+                connection.socket.disconnect();
+            }
+
+            if (typeof connection.socket.resetProps === 'function') {
+                connection.socket.resetProps();
+            }
+
+            connection.socket = null;
+        };
+
+        connection.getSocket = function(callback) {
+            if (!callback && connection.enableLogs) {
+                console.warn('getSocket.callback paramter is required.');
+            }
+
+            callback = callback || function() {};
+
+            if (!connection.socket) {
+                connectSocket(function() {
+                    callback(connection.socket);
+                });
+            } else {
+                callback(connection.socket);
+            }
+
+            return connection.socket; // callback is preferred over return-statement
+        };
+
+        connection.getRemoteStreams = mPeer.getRemoteStreams;
+
+        var skipStreams = ['selectFirst', 'selectAll', 'forEach'];
+
+        connection.streamEvents = {
+            selectFirst: function(options) {
+                return connection.streamEvents.selectAll(options)[0];
+            },
+            selectAll: function(options) {
+                if (!options) {
+                    // default will always be all streams
+                    options = {
+                        local: true,
+                        remote: true,
+                        isScreen: true,
+                        isAudio: true,
+                        isVideo: true
+                    };
+                }
+
+                if (options == 'local') {
+                    options = {
+                        local: true
+                    };
+                }
+
+                if (options == 'remote') {
+                    options = {
+                        remote: true
+                    };
+                }
+
+                if (options == 'screen') {
+                    options = {
+                        isScreen: true
+                    };
+                }
+
+                if (options == 'audio') {
+                    options = {
+                        isAudio: true
+                    };
+                }
+
+                if (options == 'video') {
+                    options = {
+                        isVideo: true
+                    };
+                }
+
+                var streams = [];
+                Object.keys(connection.streamEvents).forEach(function(key) {
+                    var event = connection.streamEvents[key];
+
+                    if (skipStreams.indexOf(key) !== -1) return;
+                    var ignore = true;
+
+                    if (options.local && event.type === 'local') {
+                        ignore = false;
+                    }
+
+                    if (options.remote && event.type === 'remote') {
+                        ignore = false;
+                    }
+
+                    if (options.isScreen && event.stream.isScreen) {
+                        ignore = false;
+                    }
+
+                    if (options.isVideo && event.stream.isVideo) {
+                        ignore = false;
+                    }
+
+                    if (options.isAudio && event.stream.isAudio) {
+                        ignore = false;
+                    }
+
+                    if (options.userid && event.userid === options.userid) {
+                        ignore = false;
+                    }
+
+                    if (ignore === false) {
+                        streams.push(event);
+                    }
+                });
+
+                return streams;
+            }
+        };
+
+        connection.socketURL = '/'; // generated via config.json
+        connection.socketMessageEvent = 'RTCMultiConnection-Message'; // generated via config.json
+        connection.socketCustomEvent = 'RTCMultiConnection-Custom-Message'; // generated via config.json
+        connection.DetectRTC = DetectRTC;
+
+        connection.setCustomSocketEvent = function(customEvent) {
+            if (customEvent) {
+                connection.socketCustomEvent = customEvent;
+            }
+
+            if (!connection.socket) {
+                return;
+            }
+
+            connection.socket.emit('set-custom-socket-event-listener', connection.socketCustomEvent);
+        };
+
+        connection.getNumberOfBroadcastViewers = function(broadcastId, callback) {
+            if (!connection.socket || !broadcastId || !callback) return;
+
+            connection.socket.emit('get-number-of-users-in-specific-broadcast', broadcastId, callback);
+        };
+
+        connection.onNumberOfBroadcastViewersUpdated = function(event) {
+            if (!connection.enableLogs || !connection.isInitiator) return;
+            console.info('Number of broadcast (', event.broadcastId, ') viewers', event.numberOfBroadcastViewers);
+        };
+
+        connection.onUserStatusChanged = function(event, dontWriteLogs) {
+            if (!!connection.enableLogs && !dontWriteLogs) {
+                console.info(event.userid, event.status);
+            }
+        };
+
+        connection.getUserMediaHandler = getUserMediaHandler;
+        connection.multiPeersHandler = mPeer;
+        connection.enableLogs = true;
+        connection.setCustomSocketHandler = function(customSocketHandler) {
+            if (typeof SocketConnection !== 'undefined') {
+                SocketConnection = customSocketHandler;
+            }
+        };
+
+        // default value should be 15k because [old]Firefox's receiving limit is 16k!
+        // however 64k works chrome-to-chrome
+        connection.chunkSize = 40 * 1000;
+
+        connection.maxParticipantsAllowed = 1000;
+
+        // eject or leave single user
+        connection.disconnectWith = mPeer.disconnectWith;
+
+        // check if room exist on server
+        // we will pass roomid to the server and wait for callback (i.e. server's response)
+        connection.checkPresence = function(roomid, callback) {
+            roomid = roomid || connection.sessionid;
+
+            if (SocketConnection.name === 'SSEConnection') {
+                SSEConnection.checkPresence(roomid, function(isRoomExist, _roomid, extra) {
+                    if (!connection.socket) {
+                        if (!isRoomExist) {
+                            connection.userid = _roomid;
+                        }
+
+                        connection.connectSocket(function() {
+                            callback(isRoomExist, _roomid, extra);
+                        });
+                        return;
+                    }
+                    callback(isRoomExist, _roomid);
+                });
+                return;
+            }
+
+            if (!connection.socket) {
+                connection.connectSocket(function() {
+                    connection.checkPresence(roomid, callback);
+                });
+                return;
+            }
+
+            connection.socket.emit('check-presence', roomid + '', function(isRoomExist, _roomid, extra) {
+                if (connection.enableLogs) {
+                    console.log('checkPresence.isRoomExist: ', isRoomExist, ' roomid: ', _roomid);
+                }
+                callback(isRoomExist, _roomid, extra);
+            });
+        };
+
+        connection.onReadyForOffer = function(remoteUserId, userPreferences) {
+            connection.multiPeersHandler.createNewPeer(remoteUserId, userPreferences);
+        };
+
+        connection.setUserPreferences = function(userPreferences) {
+            if (connection.dontAttachStream) {
+                userPreferences.dontAttachLocalStream = true;
+            }
+
+            if (connection.dontGetRemoteStream) {
+                userPreferences.dontGetRemoteStream = true;
+            }
+
+            return userPreferences;
+        };
+
+        connection.updateExtraData = function() {
+            connection.socket.emit('extra-data-updated', connection.extra);
+        };
+
+        connection.enableScalableBroadcast = false;
+        connection.maxRelayLimitPerUser = 3; // each broadcast should serve only 3 users
+
+        connection.dontCaptureUserMedia = false;
+        connection.dontAttachStream = false;
+        connection.dontGetRemoteStream = false;
+
+        connection.onReConnecting = function(event) {
+            if (connection.enableLogs) {
+                console.info('ReConnecting with', event.userid, '...');
+            }
+        };
+
+        connection.beforeAddingStream = function(stream) {
+            return stream;
+        };
+
+        connection.beforeRemovingStream = function(stream) {
+            return stream;
+        };
+
+        if (typeof isChromeExtensionAvailable !== 'undefined') {
+            connection.checkIfChromeExtensionAvailable = isChromeExtensionAvailable;
+        }
+
+        if (typeof isFirefoxExtensionAvailable !== 'undefined') {
+            connection.checkIfChromeExtensionAvailable = isFirefoxExtensionAvailable;
+        }
+
+        if (typeof getChromeExtensionStatus !== 'undefined') {
+            connection.getChromeExtensionStatus = getChromeExtensionStatus;
+        }
+
+        connection.modifyScreenConstraints = function(screen_constraints) {
+            return screen_constraints;
+        };
+
+        connection.onPeerStateChanged = function(state) {
+            if (connection.enableLogs) {
+                if (state.iceConnectionState.search(/closed|failed/gi) !== -1) {
+                    console.warn('Peer connection is closed between you & ', state.userid, state.extra, 'state:', state.iceConnectionState);
+                }
+            }
+        };
+
+        connection.isOnline = true;
+
+        listenEventHandler('online', function() {
+            connection.isOnline = true;
+        });
+
+        listenEventHandler('offline', function() {
+            connection.isOnline = false;
+        });
+
+        connection.isLowBandwidth = false;
+        if (navigator && navigator.connection && navigator.connection.type) {
+            connection.isLowBandwidth = navigator.connection.type.toString().toLowerCase().search(/wifi|cell/g) !== -1;
+            if (connection.isLowBandwidth) {
+                connection.bandwidth = {
+                    audio: false,
+                    video: false,
+                    screen: false
+                };
+
+                if (connection.mediaConstraints.audio && connection.mediaConstraints.audio.optional && connection.mediaConstraints.audio.optional.length) {
+                    var newArray = [];
+                    connection.mediaConstraints.audio.optional.forEach(function(opt) {
+                        if (typeof opt.bandwidth === 'undefined') {
+                            newArray.push(opt);
+                        }
+                    });
+                    connection.mediaConstraints.audio.optional = newArray;
+                }
+
+                if (connection.mediaConstraints.video && connection.mediaConstraints.video.optional && connection.mediaConstraints.video.optional.length) {
+                    var newArray = [];
+                    connection.mediaConstraints.video.optional.forEach(function(opt) {
+                        if (typeof opt.bandwidth === 'undefined') {
+                            newArray.push(opt);
+                        }
+                    });
+                    connection.mediaConstraints.video.optional = newArray;
+                }
+            }
+        }
+
+        connection.getExtraData = function(remoteUserId, callback) {
+            if (!remoteUserId) throw 'remoteUserId is required.';
+
+            if (typeof callback === 'function') {
+                connection.socket.emit('get-remote-user-extra-data', remoteUserId, function(extra, remoteUserId, error) {
+                    callback(extra, remoteUserId, error);
+                });
+                return;
+            }
+
+            if (!connection.peers[remoteUserId]) {
+                if (connection.peersBackup[remoteUserId]) {
+                    return connection.peersBackup[remoteUserId].extra;
+                }
+                return {};
+            }
+
+            return connection.peers[remoteUserId].extra;
+        };
+
+        if (!!forceOptions.autoOpenOrJoin) {
+            connection.openOrJoin(connection.sessionid);
+        }
+
+        connection.onUserIdAlreadyTaken = function(useridAlreadyTaken, yourNewUserId) {
+            // via #683
+            connection.close();
+            connection.closeSocket();
+
+            connection.isInitiator = false;
+            connection.userid = connection.token();
+
+            connection.join(connection.sessionid);
+
+            if (connection.enableLogs) {
+                console.warn('Userid already taken.', useridAlreadyTaken, 'Your new userid:', connection.userid);
+            }
+        };
+
+        connection.trickleIce = true;
+        connection.version = '3.6.9';
+
+        connection.onSettingLocalDescription = function(event) {
+            if (connection.enableLogs) {
+                console.info('Set local description for remote user', event.userid);
+            }
+        };
+
+        connection.resetScreen = function() {
+            sourceId = null;
+            if (DetectRTC && DetectRTC.screen) {
+                delete DetectRTC.screen.sourceId;
+            }
+
+            currentUserMediaRequest = {
+                streams: [],
+                mutex: false,
+                queueRequests: []
+            };
+        };
+
+        // if disabled, "event.mediaElement" for "onstream" will be NULL
+        connection.autoCreateMediaElement = true;
+
+        // set password
+        connection.password = null;
+
+        // set password
+        connection.setPassword = function(password, callback) {
+            callback = callback || function() {};
+            if (connection.socket) {
+                connection.socket.emit('set-password', password, callback);
+            } else {
+                connection.password = password;
+                callback(true, connection.sessionid, null);
+            }
+        };
+
+        connection.onSocketDisconnect = function(event) {
+            if (connection.enableLogs) {
+                console.warn('socket.io connection is closed');
+            }
+        };
+
+        connection.onSocketError = function(event) {
+            if (connection.enableLogs) {
+                console.warn('socket.io connection is failed');
+            }
+        };
+
+        // error messages
+        connection.errors = {
+            ROOM_NOT_AVAILABLE: 'Room not available',
+            INVALID_PASSWORD: 'Invalid password',
+            USERID_NOT_AVAILABLE: 'User ID does not exist',
+            ROOM_PERMISSION_DENIED: 'Room permission denied',
+            ROOM_FULL: 'Room full',
+            DID_NOT_JOIN_ANY_ROOM: 'Did not join any room yet',
+            INVALID_SOCKET: 'Invalid socket',
+            PUBLIC_IDENTIFIER_MISSING: 'publicRoomIdentifier is required',
+            INVALID_ADMIN_CREDENTIAL: 'Invalid username or password attempted'
+        };
+    })(this);
+
+};
+
+if (typeof module !== 'undefined' /* && !!module.exports*/ ) {
+  module.exports = exports = RTCMultiConnection3;
+}
+
+if (typeof define === 'function' && define.amd) {
+    define('RTCMultiConnection', [], function() {
+        return RTCMultiConnection3;
+    });
+}
+
+}).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"_process":35}],25:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getHTMLMediaElement = getHTMLMediaElement;
+
+// __________________
+// getHTMLMediaElement.js
+function getHTMLMediaElement(mediaElement, config) {
+  config = config || {};
+
+  if (!mediaElement.nodeName || mediaElement.nodeName.toLowerCase() != 'audio' && mediaElement.nodeName.toLowerCase() != 'video') {
+    if (!mediaElement.getVideoTracks().length) {
+      return getAudioElement(mediaElement, config);
+    }
+
+    var mediaStream = mediaElement;
+    mediaElement = document.createElement(mediaStream.getVideoTracks().length ? 'video' : 'audio');
+
+    try {
+      mediaElement.setAttributeNode(document.createAttribute('autoplay'));
+      mediaElement.setAttributeNode(document.createAttribute('playsinline'));
+    } catch (e) {
+      mediaElement.setAttribute('autoplay', true);
+      mediaElement.setAttribute('playsinline', true);
+    }
+
+    if ('srcObject' in mediaElement) {
+      mediaElement.srcObject = mediaStream;
+    } else {
+      mediaElement[!!navigator.mozGetUserMedia ? 'mozSrcObject' : 'src'] = !!navigator.mozGetUserMedia ? mediaStream : (window.URL || window.webkitURL).createObjectURL(mediaStream);
+    }
+  }
+
+  if (mediaElement.nodeName && mediaElement.nodeName.toLowerCase() == 'audio') {
+    return getAudioElement(mediaElement, config);
+  }
+
+  var buttons = config.buttons || ['mute-audio', 'mute-video', 'full-screen', 'volume-slider', 'stop'];
+
+  buttons.has = function (element) {
+    return buttons.indexOf(element) !== -1;
+  };
+
+  config.toggle = config.toggle || [];
+
+  config.toggle.has = function (element) {
+    return config.toggle.indexOf(element) !== -1;
+  };
+
+  var mediaElementContainer = document.createElement('div');
+  mediaElementContainer.classList.add('media-container'); // mediaElementContainer.setAttribute('style', 'position:absolute;left:0;top:0;width:100px;height:100px;');
+
+  var mediaControls = document.createElement('div');
+  mediaControls.className = 'media-controls';
+  mediaElementContainer.appendChild(mediaControls);
+
+  if (buttons.has('mute-audio')) {
+    var muteAudio = document.createElement('div');
+    muteAudio.className = 'control ' + (config.toggle.has('mute-audio') ? 'unmute-audio selected' : 'mute-audio');
+    mediaControls.appendChild(muteAudio);
+
+    muteAudio.onclick = function () {
+      if (muteAudio.className.indexOf('unmute-audio') != -1) {
+        muteAudio.className = muteAudio.className.replace('unmute-audio selected', 'mute-audio');
+        mediaElement.muted = false;
+        mediaElement.volume = 1;
+        if (config.onUnMuted) config.onUnMuted('audio');
+      } else {
+        muteAudio.className = muteAudio.className.replace('mute-audio', 'unmute-audio selected');
+        mediaElement.muted = true;
+        mediaElement.volume = 0;
+        if (config.onMuted) config.onMuted('audio');
+      }
+    };
+  }
+
+  if (buttons.has('mute-video')) {
+    var muteVideo = document.createElement('div');
+    muteVideo.className = 'control ' + (config.toggle.has('mute-video') ? 'unmute-video selected' : 'mute-video');
+    mediaControls.appendChild(muteVideo);
+
+    muteVideo.onclick = function () {
+      if (muteVideo.className.indexOf('unmute-video') != -1) {
+        muteVideo.className = muteVideo.className.replace('unmute-video selected', 'mute-video');
+        mediaElement.muted = false;
+        mediaElement.volume = 1;
+        mediaElement.play();
+        if (config.onUnMuted) config.onUnMuted('video');
+      } else {
+        muteVideo.className = muteVideo.className.replace('mute-video', 'unmute-video selected');
+        mediaElement.muted = true;
+        mediaElement.volume = 0;
+        mediaElement.pause();
+        if (config.onMuted) config.onMuted('video');
+      }
+    };
+  }
+
+  if (buttons.has('take-snapshot')) {
+    var takeSnapshot = document.createElement('div');
+    takeSnapshot.className = 'control take-snapshot';
+    mediaControls.appendChild(takeSnapshot);
+
+    takeSnapshot.onclick = function () {
+      if (config.onTakeSnapshot) config.onTakeSnapshot();
+    };
+  }
+
+  if (buttons.has('stop')) {
+    var stop = document.createElement('div');
+    stop.className = 'control stop';
+    mediaControls.appendChild(stop);
+
+    stop.onclick = function () {
+      mediaElementContainer.style.opacity = 0;
+      setTimeout(function () {
+        if (mediaElementContainer.parentNode) {
+          mediaElementContainer.parentNode.removeChild(mediaElementContainer);
+        }
+      }, 800);
+      if (config.onStopped) config.onStopped();
+    };
+  }
+
+  var volumeControl = document.createElement('div');
+  volumeControl.className = 'volume-control';
+
+  if (buttons.has('record-audio')) {
+    var recordAudio = document.createElement('div');
+    recordAudio.className = 'control ' + (config.toggle.has('record-audio') ? 'stop-recording-audio selected' : 'record-audio');
+    volumeControl.appendChild(recordAudio);
+
+    recordAudio.onclick = function () {
+      if (recordAudio.className.indexOf('stop-recording-audio') != -1) {
+        recordAudio.className = recordAudio.className.replace('stop-recording-audio selected', 'record-audio');
+        if (config.onRecordingStopped) config.onRecordingStopped('audio');
+      } else {
+        recordAudio.className = recordAudio.className.replace('record-audio', 'stop-recording-audio selected');
+        if (config.onRecordingStarted) config.onRecordingStarted('audio');
+      }
+    };
+  }
+
+  if (buttons.has('record-video')) {
+    var recordVideo = document.createElement('div');
+    recordVideo.className = 'control ' + (config.toggle.has('record-video') ? 'stop-recording-video selected' : 'record-video');
+    volumeControl.appendChild(recordVideo);
+
+    recordVideo.onclick = function () {
+      if (recordVideo.className.indexOf('stop-recording-video') != -1) {
+        recordVideo.className = recordVideo.className.replace('stop-recording-video selected', 'record-video');
+        if (config.onRecordingStopped) config.onRecordingStopped('video');
+      } else {
+        recordVideo.className = recordVideo.className.replace('record-video', 'stop-recording-video selected');
+        if (config.onRecordingStarted) config.onRecordingStarted('video');
+      }
+    };
+  }
+
+  if (buttons.has('volume-slider')) {
+    var volumeSlider = document.createElement('div');
+    volumeSlider.className = 'control volume-slider';
+    volumeControl.appendChild(volumeSlider);
+    var slider = document.createElement('input');
+    slider.type = 'range';
+    slider.min = 0;
+    slider.max = 100;
+    slider.value = 100;
+
+    slider.onchange = function () {
+      mediaElement.volume = '.' + slider.value.toString().substr(0, 1);
+    };
+
+    volumeSlider.appendChild(slider);
+  }
+
+  if (buttons.has('full-screen')) {
+    var zoom = document.createElement('div');
+    zoom.className = 'control ' + (config.toggle.has('zoom-in') ? 'zoom-out selected' : 'zoom-in');
+
+    if (!slider && !recordAudio && !recordVideo && zoom) {
+      mediaControls.insertBefore(zoom, mediaControls.firstChild);
+    } else volumeControl.appendChild(zoom);
+
+    zoom.onclick = function () {
+      if (zoom.className.indexOf('zoom-out') != -1) {
+        zoom.className = zoom.className.replace('zoom-out selected', 'zoom-in');
+        exitFullScreen();
+      } else {
+        zoom.className = zoom.className.replace('zoom-in', 'zoom-out selected');
+        launchFullscreen(mediaElementContainer);
+      }
+    };
+
+    function launchFullscreen(element) {
+      if (element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+      }
+    }
+
+    function exitFullScreen() {
+      if (document.fullscreen) {
+        try {
+          document.cancelFullScreen();
+        } catch (err) {}
+      }
+
+      if (document.mozFullScreen) {
+        try {
+          document.mozCancelFullScreen();
+        } catch (err) {}
+      }
+
+      if (document.webkitIsFullScreen) {
+        document.webkitCancelFullScreen();
+      }
+    }
+
+    function screenStateChange(e) {
+      if (e.srcElement != mediaElementContainer) return;
+      var isFullScreeMode = document.webkitIsFullScreen || document.mozFullScreen || document.fullscreen;
+      mediaElementContainer.style.width = (isFullScreeMode ? window.innerWidth - 20 : config.width) + 'px';
+      mediaElementContainer.style.display = isFullScreeMode ? 'block' : 'inline-block';
+
+      if (config.height) {
+        mediaBox.style.height = (isFullScreeMode ? window.innerHeight - 20 : config.height) + 'px';
+      }
+
+      if (!isFullScreeMode && config.onZoomout) config.onZoomout();
+      if (isFullScreeMode && config.onZoomin) config.onZoomin();
+
+      if (!isFullScreeMode && zoom.className.indexOf('zoom-out') != -1) {
+        zoom.className = zoom.className.replace('zoom-out selected', 'zoom-in');
+        if (config.onZoomout) config.onZoomout();
+      }
+
+      setTimeout(adjustControls, 1000);
+    }
+
+    document.addEventListener('fullscreenchange', screenStateChange, false);
+    document.addEventListener('mozfullscreenchange', screenStateChange, false);
+    document.addEventListener('webkitfullscreenchange', screenStateChange, false);
+  }
+
+  if (buttons.has('volume-slider') || buttons.has('full-screen') || buttons.has('record-audio') || buttons.has('record-video')) {
+    mediaElementContainer.appendChild(volumeControl);
+  }
+
+  var mediaBox = document.createElement('div');
+  mediaBox.className = 'media-box';
+  mediaElementContainer.appendChild(mediaBox);
+
+  if (config.title) {
+    var h2 = document.createElement('h2');
+    h2.innerHTML = config.title;
+    h2.setAttribute('style', 'position: absolute;color:white;font-size:17px;text-shadow: 1px 1px black;padding:0;margin:0;text-align: left; margin-top: 10px; margin-left: 10px; display: block; border: 0;line-height:1.5;z-index:1;');
+    mediaBox.appendChild(h2);
+  }
+
+  mediaBox.appendChild(mediaElement);
+  if (!config.width) config.width = innerWidth / 2 - 50;
+  mediaElementContainer.style.width = config.width + 'px';
+
+  if (config.height) {
+    mediaBox.style.height = config.height + 'px';
+  }
+
+  mediaBox.querySelector('video').style.maxHeight = innerHeight + 'px';
+  var times = 0;
+
+  function adjustControls() {
+    mediaControls.style.marginLeft = mediaElementContainer.clientWidth - mediaControls.clientWidth - 2 + 'px';
+
+    if (slider) {
+      slider.style.width = mediaElementContainer.clientWidth / 3 + 'px';
+      volumeControl.style.marginLeft = mediaElementContainer.clientWidth / 3 - 30 + 'px';
+      if (zoom) zoom.style['border-top-right-radius'] = '5px';
+    } else {
+      volumeControl.style.marginLeft = mediaElementContainer.clientWidth - volumeControl.clientWidth - 2 + 'px';
+    }
+
+    volumeControl.style.marginTop = mediaElementContainer.clientHeight - volumeControl.clientHeight - 2 + 'px';
+
+    if (times < 10) {
+      times++;
+      setTimeout(adjustControls, 1000);
+    } else times = 0;
+  }
+
+  if (config.showOnMouseEnter || typeof config.showOnMouseEnter === 'undefined') {
+    mediaElementContainer.onmouseenter = mediaElementContainer.onmousedown = function () {
+      adjustControls();
+      mediaControls.style.opacity = 1;
+      volumeControl.style.opacity = 1;
+    };
+
+    mediaElementContainer.onmouseleave = function () {
+      mediaControls.style.opacity = 0;
+      volumeControl.style.opacity = 0;
+    };
+  } else {
+    setTimeout(function () {
+      adjustControls();
+      setTimeout(function () {
+        mediaControls.style.opacity = 1;
+        volumeControl.style.opacity = 1;
+      }, 300);
+    }, 700);
+  }
+
+  adjustControls();
+
+  mediaElementContainer.toggle = function (clasName) {
+    if (typeof clasName != 'string') {
+      for (var i = 0; i < clasName.length; i++) {
+        mediaElementContainer.toggle(clasName[i]);
+      }
+
+      return;
+    }
+
+    if (clasName == 'mute-audio' && muteAudio) muteAudio.onclick();
+    if (clasName == 'mute-video' && muteVideo) muteVideo.onclick();
+    if (clasName == 'record-audio' && recordAudio) recordAudio.onclick();
+    if (clasName == 'record-video' && recordVideo) recordVideo.onclick();
+    if (clasName == 'stop' && stop) stop.onclick();
+    return this;
+  };
+
+  mediaElementContainer.media = mediaElement;
+  return mediaElementContainer;
+} // __________________
+// getAudioElement.js
+
+
+function getAudioElement(mediaElement, config) {
+  config = config || {};
+
+  if (!mediaElement.nodeName || mediaElement.nodeName.toLowerCase() != 'audio' && mediaElement.nodeName.toLowerCase() != 'video') {
+    var mediaStream = mediaElement;
+    mediaElement = document.createElement('audio');
+
+    try {
+      mediaElement.setAttributeNode(document.createAttribute('autoplay'));
+      mediaElement.setAttributeNode(document.createAttribute('controls'));
+    } catch (e) {
+      mediaElement.setAttribute('autoplay', true);
+      mediaElement.setAttribute('controls', true);
+    }
+
+    if ('srcObject' in mediaElement) {
+      mediaElement.mediaElement = mediaStream;
+    } else {
+      mediaElement[!!navigator.mozGetUserMedia ? 'mozSrcObject' : 'src'] = !!navigator.mozGetUserMedia ? mediaStream : (window.URL || window.webkitURL).createObjectURL(mediaStream);
+    }
+  }
+
+  config.toggle = config.toggle || [];
+
+  config.toggle.has = function (element) {
+    return config.toggle.indexOf(element) !== -1;
+  };
+
+  var mediaElementContainer = document.createElement('div');
+  mediaElementContainer.className = 'media-container';
+  var mediaControls = document.createElement('div');
+  mediaControls.className = 'media-controls';
+  mediaElementContainer.appendChild(mediaControls);
+  var muteAudio = document.createElement('div');
+  muteAudio.className = 'control ' + (config.toggle.has('mute-audio') ? 'unmute-audio selected' : 'mute-audio');
+  mediaControls.appendChild(muteAudio);
+  muteAudio.style['border-top-left-radius'] = '5px';
+
+  muteAudio.onclick = function () {
+    if (muteAudio.className.indexOf('unmute-audio') != -1) {
+      muteAudio.className = muteAudio.className.replace('unmute-audio selected', 'mute-audio');
+      mediaElement.muted = false;
+      if (config.onUnMuted) config.onUnMuted('audio');
+    } else {
+      muteAudio.className = muteAudio.className.replace('mute-audio', 'unmute-audio selected');
+      mediaElement.muted = true;
+      if (config.onMuted) config.onMuted('audio');
+    }
+  };
+
+  if (!config.buttons || config.buttons && config.buttons.indexOf('record-audio') != -1) {
+    var recordAudio = document.createElement('div');
+    recordAudio.className = 'control ' + (config.toggle.has('record-audio') ? 'stop-recording-audio selected' : 'record-audio');
+    mediaControls.appendChild(recordAudio);
+
+    recordAudio.onclick = function () {
+      if (recordAudio.className.indexOf('stop-recording-audio') != -1) {
+        recordAudio.className = recordAudio.className.replace('stop-recording-audio selected', 'record-audio');
+        if (config.onRecordingStopped) config.onRecordingStopped('audio');
+      } else {
+        recordAudio.className = recordAudio.className.replace('record-audio', 'stop-recording-audio selected');
+        if (config.onRecordingStarted) config.onRecordingStarted('audio');
+      }
+    };
+  }
+
+  var volumeSlider = document.createElement('div');
+  volumeSlider.className = 'control volume-slider';
+  volumeSlider.style.width = 'auto';
+  mediaControls.appendChild(volumeSlider);
+  var slider = document.createElement('input');
+  slider.style.marginTop = '11px';
+  slider.style.width = ' 200px';
+
+  if (config.buttons && config.buttons.indexOf('record-audio') == -1) {
+    slider.style.width = ' 241px';
+  }
+
+  slider.type = 'range';
+  slider.min = 0;
+  slider.max = 100;
+  slider.value = 100;
+
+  slider.onchange = function () {
+    mediaElement.volume = '.' + slider.value.toString().substr(0, 1);
+  };
+
+  volumeSlider.appendChild(slider);
+  var stop = document.createElement('div');
+  stop.className = 'control stop';
+  mediaControls.appendChild(stop);
+
+  stop.onclick = function () {
+    mediaElementContainer.style.opacity = 0;
+    setTimeout(function () {
+      if (mediaElementContainer.parentNode) {
+        mediaElementContainer.parentNode.removeChild(mediaElementContainer);
+      }
+    }, 800);
+    if (config.onStopped) config.onStopped();
+  };
+
+  stop.style['border-top-right-radius'] = '5px';
+  stop.style['border-bottom-right-radius'] = '5px';
+  var mediaBox = document.createElement('div');
+  mediaBox.className = 'media-box';
+  mediaElementContainer.appendChild(mediaBox);
+  var h2 = document.createElement('h2');
+  h2.innerHTML = config.title || 'Audio Element';
+  h2.setAttribute('style', 'position: absolute;color: rgb(160, 160, 160);font-size: 20px;text-shadow: 1px 1px rgb(255, 255, 255);padding:0;margin:0;');
+  mediaBox.appendChild(h2);
+  mediaBox.appendChild(mediaElement); // mediaElementContainer.style.width = '329px';
+
+  mediaBox.style.height = '90px';
+  h2.style.width = mediaElementContainer.style.width;
+  h2.style.height = '50px';
+  h2.style.overflow = 'hidden';
+  var times = 0;
+
+  function adjustControls() {
+    mediaControls.style.marginLeft = mediaElementContainer.clientWidth - mediaControls.clientWidth - 7 + 'px';
+    mediaControls.style.marginTop = mediaElementContainer.clientHeight - mediaControls.clientHeight - 6 + 'px';
+
+    if (times < 10) {
+      times++;
+      setTimeout(adjustControls, 1000);
+    } else times = 0;
+  }
+
+  if (config.showOnMouseEnter || typeof config.showOnMouseEnter === 'undefined') {
+    mediaElementContainer.onmouseenter = mediaElementContainer.onmousedown = function () {
+      adjustControls();
+      mediaControls.style.opacity = 1;
+    };
+
+    mediaElementContainer.onmouseleave = function () {
+      mediaControls.style.opacity = 0;
+    };
+  } else {
+    setTimeout(function () {
+      adjustControls();
+      setTimeout(function () {
+        mediaControls.style.opacity = 1;
+      }, 300);
+    }, 700);
+  }
+
+  adjustControls();
+
+  mediaElementContainer.toggle = function (clasName) {
+    if (typeof clasName != 'string') {
+      for (var i = 0; i < clasName.length; i++) {
+        mediaElementContainer.toggle(clasName[i]);
+      }
+
+      return;
+    }
+
+    if (clasName == 'mute-audio' && muteAudio) muteAudio.onclick();
+    if (clasName == 'record-audio' && recordAudio) recordAudio.onclick();
+    if (clasName == 'stop' && stop) stop.onclick();
+    return this;
+  };
+
+  mediaElementContainer.media = mediaElement;
+  return mediaElementContainer;
+}
+
+},{}],26:[function(require,module,exports){
+(function (Buffer){(function (){
+/*!
+ * Socket.IO v3.1.3
+ * (c) 2014-2021 Guillermo Rauch
+ * Released under the MIT License.
+ */
+!function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports.io=e():t.io=e()}(self,(function(){return function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)n.d(r,o,function(e){return t[e]}.bind(null,o));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=17)}([function(t,e,n){function r(t){if(t)return function(t){for(var e in r.prototype)t[e]=r.prototype[e];return t}(t)}t.exports=r,r.prototype.on=r.prototype.addEventListener=function(t,e){return this._callbacks=this._callbacks||{},(this._callbacks["$"+t]=this._callbacks["$"+t]||[]).push(e),this},r.prototype.once=function(t,e){function n(){this.off(t,n),e.apply(this,arguments)}return n.fn=e,this.on(t,n),this},r.prototype.off=r.prototype.removeListener=r.prototype.removeAllListeners=r.prototype.removeEventListener=function(t,e){if(this._callbacks=this._callbacks||{},0==arguments.length)return this._callbacks={},this;var n,r=this._callbacks["$"+t];if(!r)return this;if(1==arguments.length)return delete this._callbacks["$"+t],this;for(var o=0;o<r.length;o++)if((n=r[o])===e||n.fn===e){r.splice(o,1);break}return 0===r.length&&delete this._callbacks["$"+t],this},r.prototype.emit=function(t){this._callbacks=this._callbacks||{};for(var e=new Array(arguments.length-1),n=this._callbacks["$"+t],r=1;r<arguments.length;r++)e[r-1]=arguments[r];if(n){r=0;for(var o=(n=n.slice(0)).length;r<o;++r)n[r].apply(this,e)}return this},r.prototype.listeners=function(t){return this._callbacks=this._callbacks||{},this._callbacks["$"+t]||[]},r.prototype.hasListeners=function(t){return!!this.listeners(t).length}},function(t,e,n){var r=n(23),o=n(24),i=String.fromCharCode(30);t.exports={protocol:4,encodePacket:r,encodePayload:function(t,e){var n=t.length,o=new Array(n),s=0;t.forEach((function(t,c){r(t,!1,(function(t){o[c]=t,++s===n&&e(o.join(i))}))}))},decodePacket:o,decodePayload:function(t,e){for(var n=t.split(i),r=[],s=0;s<n.length;s++){var c=o(n[s],e);if(r.push(c),"error"===c.type)break}return r}}},function(t,e){t.exports="undefined"!=typeof self?self:"undefined"!=typeof window?window:Function("return this")()},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e){return(i=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function s(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=a(t);if(e){var o=a(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return c(this,n)}}function c(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function a(t){return(a=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var u=n(1),f=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&i(t,e)}(a,t);var e,n,r,c=s(a);function a(t){var e;return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,a),(e=c.call(this)).opts=t,e.query=t.query,e.readyState="",e.socket=t.socket,e}return e=a,(n=[{key:"onError",value:function(t,e){var n=new Error(t);return n.type="TransportError",n.description=e,this.emit("error",n),this}},{key:"open",value:function(){return"closed"!==this.readyState&&""!==this.readyState||(this.readyState="opening",this.doOpen()),this}},{key:"close",value:function(){return"opening"!==this.readyState&&"open"!==this.readyState||(this.doClose(),this.onClose()),this}},{key:"send",value:function(t){if("open"!==this.readyState)throw new Error("Transport not open");this.write(t)}},{key:"onOpen",value:function(){this.readyState="open",this.writable=!0,this.emit("open")}},{key:"onData",value:function(t){var e=u.decodePacket(t,this.socket.binaryType);this.onPacket(e)}},{key:"onPacket",value:function(t){this.emit("packet",t)}},{key:"onClose",value:function(){this.readyState="closed",this.emit("close")}}])&&o(e.prototype,n),r&&o(e,r),a}(n(0));t.exports=f},function(t,e){e.encode=function(t){var e="";for(var n in t)t.hasOwnProperty(n)&&(e.length&&(e+="&"),e+=encodeURIComponent(n)+"="+encodeURIComponent(t[n]));return e},e.decode=function(t){for(var e={},n=t.split("&"),r=0,o=n.length;r<o;r++){var i=n[r].split("=");e[decodeURIComponent(i[0])]=decodeURIComponent(i[1])}return e}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e,n){return(o="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=a(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(n):o.value}})(t,e,n||t)}function i(t,e){return(i=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function s(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=a(t);if(e){var o=a(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return c(this,n)}}function c(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function a(t){return(a=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}function u(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function f(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function p(t,e,n){return e&&f(t.prototype,e),n&&f(t,n),t}Object.defineProperty(e,"__esModule",{value:!0}),e.Decoder=e.Encoder=e.PacketType=e.protocol=void 0;var l,h=n(0),y=n(29),d=n(15);e.protocol=5,function(t){t[t.CONNECT=0]="CONNECT",t[t.DISCONNECT=1]="DISCONNECT",t[t.EVENT=2]="EVENT",t[t.ACK=3]="ACK",t[t.CONNECT_ERROR=4]="CONNECT_ERROR",t[t.BINARY_EVENT=5]="BINARY_EVENT",t[t.BINARY_ACK=6]="BINARY_ACK"}(l=e.PacketType||(e.PacketType={}));var v=function(){function t(){u(this,t)}return p(t,[{key:"encode",value:function(t){return t.type!==l.EVENT&&t.type!==l.ACK||!d.hasBinary(t)?[this.encodeAsString(t)]:(t.type=t.type===l.EVENT?l.BINARY_EVENT:l.BINARY_ACK,this.encodeAsBinary(t))}},{key:"encodeAsString",value:function(t){var e=""+t.type;return t.type!==l.BINARY_EVENT&&t.type!==l.BINARY_ACK||(e+=t.attachments+"-"),t.nsp&&"/"!==t.nsp&&(e+=t.nsp+","),null!=t.id&&(e+=t.id),null!=t.data&&(e+=JSON.stringify(t.data)),e}},{key:"encodeAsBinary",value:function(t){var e=y.deconstructPacket(t),n=this.encodeAsString(e.packet),r=e.buffers;return r.unshift(n),r}}]),t}();e.Encoder=v;var b=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&i(t,e)}(n,t);var e=s(n);function n(){return u(this,n),e.call(this)}return p(n,[{key:"add",value:function(t){var e;if("string"==typeof t)(e=this.decodeString(t)).type===l.BINARY_EVENT||e.type===l.BINARY_ACK?(this.reconstructor=new m(e),0===e.attachments&&o(a(n.prototype),"emit",this).call(this,"decoded",e)):o(a(n.prototype),"emit",this).call(this,"decoded",e);else{if(!d.isBinary(t)&&!t.base64)throw new Error("Unknown type: "+t);if(!this.reconstructor)throw new Error("got binary data when not reconstructing a packet");(e=this.reconstructor.takeBinaryData(t))&&(this.reconstructor=null,o(a(n.prototype),"emit",this).call(this,"decoded",e))}}},{key:"decodeString",value:function(t){var e=0,r={type:Number(t.charAt(0))};if(void 0===l[r.type])throw new Error("unknown packet type "+r.type);if(r.type===l.BINARY_EVENT||r.type===l.BINARY_ACK){for(var o=e+1;"-"!==t.charAt(++e)&&e!=t.length;);var i=t.substring(o,e);if(i!=Number(i)||"-"!==t.charAt(e))throw new Error("Illegal attachments");r.attachments=Number(i)}if("/"===t.charAt(e+1)){for(var s=e+1;++e;){if(","===t.charAt(e))break;if(e===t.length)break}r.nsp=t.substring(s,e)}else r.nsp="/";var c=t.charAt(e+1);if(""!==c&&Number(c)==c){for(var a=e+1;++e;){var u=t.charAt(e);if(null==u||Number(u)!=u){--e;break}if(e===t.length)break}r.id=Number(t.substring(a,e+1))}if(t.charAt(++e)){var f=function(t){try{return JSON.parse(t)}catch(t){return!1}}(t.substr(e));if(!n.isPayloadValid(r.type,f))throw new Error("invalid payload");r.data=f}return r}},{key:"destroy",value:function(){this.reconstructor&&this.reconstructor.finishedReconstruction()}}],[{key:"isPayloadValid",value:function(t,e){switch(t){case l.CONNECT:return"object"===r(e);case l.DISCONNECT:return void 0===e;case l.CONNECT_ERROR:return"string"==typeof e||"object"===r(e);case l.EVENT:case l.BINARY_EVENT:return Array.isArray(e)&&e.length>0;case l.ACK:case l.BINARY_ACK:return Array.isArray(e)}}}]),n}(h);e.Decoder=b;var m=function(){function t(e){u(this,t),this.packet=e,this.buffers=[],this.reconPack=e}return p(t,[{key:"takeBinaryData",value:function(t){if(this.buffers.push(t),this.buffers.length===this.reconPack.attachments){var e=y.reconstructPacket(this.reconPack,this.buffers);return this.finishedReconstruction(),e}return null}},{key:"finishedReconstruction",value:function(){this.reconPack=null,this.buffers=[]}}]),t}()},function(t,e){var n=/^(?:(?![^:@]+:[^:@\/]*@)(http|https|ws|wss):\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?((?:[a-f0-9]{0,4}:){2,7}[a-f0-9]{0,4}|[^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/,r=["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"];t.exports=function(t){var e=t,o=t.indexOf("["),i=t.indexOf("]");-1!=o&&-1!=i&&(t=t.substring(0,o)+t.substring(o,i).replace(/:/g,";")+t.substring(i,t.length));for(var s,c,a=n.exec(t||""),u={},f=14;f--;)u[r[f]]=a[f]||"";return-1!=o&&-1!=i&&(u.source=e,u.host=u.host.substring(1,u.host.length-1).replace(/;/g,":"),u.authority=u.authority.replace("[","").replace("]","").replace(/;/g,":"),u.ipv6uri=!0),u.pathNames=function(t,e){var n=e.replace(/\/{2,9}/g,"/").split("/");"/"!=e.substr(0,1)&&0!==e.length||n.splice(0,1);"/"==e.substr(e.length-1,1)&&n.splice(n.length-1,1);return n}(0,u.path),u.queryKey=(s=u.query,c={},s.replace(/(?:^|&)([^&=]*)=?([^&]*)/g,(function(t,e,n){e&&(c[e]=n)})),c),u}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e,n){return(i="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=u(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(n):o.value}})(t,e,n||t)}function s(t,e){return(s=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function c(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=u(t);if(e){var o=u(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return a(this,n)}}function a(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function u(t){return(u=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.Manager=void 0;var f=n(19),p=n(14),l=n(0),h=n(5),y=n(16),d=n(30),v=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&s(t,e)}(v,t);var e,n,a,l=c(v);function v(t,e){var n;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,v),(n=l.call(this)).nsps={},n.subs=[],t&&"object"===r(t)&&(e=t,t=void 0),(e=e||{}).path=e.path||"/socket.io",n.opts=e,n.reconnection(!1!==e.reconnection),n.reconnectionAttempts(e.reconnectionAttempts||1/0),n.reconnectionDelay(e.reconnectionDelay||1e3),n.reconnectionDelayMax(e.reconnectionDelayMax||5e3),n.randomizationFactor(e.randomizationFactor||.5),n.backoff=new d({min:n.reconnectionDelay(),max:n.reconnectionDelayMax(),jitter:n.randomizationFactor()}),n.timeout(null==e.timeout?2e4:e.timeout),n._readyState="closed",n.uri=t;var o=e.parser||h;return n.encoder=new o.Encoder,n.decoder=new o.Decoder,n._autoConnect=!1!==e.autoConnect,n._autoConnect&&n.open(),n}return e=v,(n=[{key:"reconnection",value:function(t){return arguments.length?(this._reconnection=!!t,this):this._reconnection}},{key:"reconnectionAttempts",value:function(t){return void 0===t?this._reconnectionAttempts:(this._reconnectionAttempts=t,this)}},{key:"reconnectionDelay",value:function(t){var e;return void 0===t?this._reconnectionDelay:(this._reconnectionDelay=t,null===(e=this.backoff)||void 0===e||e.setMin(t),this)}},{key:"randomizationFactor",value:function(t){var e;return void 0===t?this._randomizationFactor:(this._randomizationFactor=t,null===(e=this.backoff)||void 0===e||e.setJitter(t),this)}},{key:"reconnectionDelayMax",value:function(t){var e;return void 0===t?this._reconnectionDelayMax:(this._reconnectionDelayMax=t,null===(e=this.backoff)||void 0===e||e.setMax(t),this)}},{key:"timeout",value:function(t){return arguments.length?(this._timeout=t,this):this._timeout}},{key:"maybeReconnectOnOpen",value:function(){!this._reconnecting&&this._reconnection&&0===this.backoff.attempts&&this.reconnect()}},{key:"open",value:function(t){var e=this;if(~this._readyState.indexOf("open"))return this;this.engine=f(this.uri,this.opts);var n=this.engine,r=this;this._readyState="opening",this.skipReconnect=!1;var o=y.on(n,"open",(function(){r.onopen(),t&&t()})),s=y.on(n,"error",(function(n){r.cleanup(),r._readyState="closed",i(u(v.prototype),"emit",e).call(e,"error",n),t?t(n):r.maybeReconnectOnOpen()}));if(!1!==this._timeout){var c=this._timeout;0===c&&o();var a=setTimeout((function(){o(),n.close(),n.emit("error",new Error("timeout"))}),c);this.subs.push((function(){clearTimeout(a)}))}return this.subs.push(o),this.subs.push(s),this}},{key:"connect",value:function(t){return this.open(t)}},{key:"onopen",value:function(){this.cleanup(),this._readyState="open",i(u(v.prototype),"emit",this).call(this,"open");var t=this.engine;this.subs.push(y.on(t,"ping",this.onping.bind(this)),y.on(t,"data",this.ondata.bind(this)),y.on(t,"error",this.onerror.bind(this)),y.on(t,"close",this.onclose.bind(this)),y.on(this.decoder,"decoded",this.ondecoded.bind(this)))}},{key:"onping",value:function(){i(u(v.prototype),"emit",this).call(this,"ping")}},{key:"ondata",value:function(t){this.decoder.add(t)}},{key:"ondecoded",value:function(t){i(u(v.prototype),"emit",this).call(this,"packet",t)}},{key:"onerror",value:function(t){i(u(v.prototype),"emit",this).call(this,"error",t)}},{key:"socket",value:function(t,e){var n=this.nsps[t];return n||(n=new p.Socket(this,t,e),this.nsps[t]=n),n}},{key:"_destroy",value:function(t){for(var e=0,n=Object.keys(this.nsps);e<n.length;e++){var r=n[e];if(this.nsps[r].active)return}this._close()}},{key:"_packet",value:function(t){for(var e=this.encoder.encode(t),n=0;n<e.length;n++)this.engine.write(e[n],t.options)}},{key:"cleanup",value:function(){this.subs.forEach((function(t){return t()})),this.subs.length=0,this.decoder.destroy()}},{key:"_close",value:function(){this.skipReconnect=!0,this._reconnecting=!1,"opening"===this._readyState&&this.cleanup(),this.backoff.reset(),this._readyState="closed",this.engine&&this.engine.close()}},{key:"disconnect",value:function(){return this._close()}},{key:"onclose",value:function(t){this.cleanup(),this.backoff.reset(),this._readyState="closed",i(u(v.prototype),"emit",this).call(this,"close",t),this._reconnection&&!this.skipReconnect&&this.reconnect()}},{key:"reconnect",value:function(){var t=this;if(this._reconnecting||this.skipReconnect)return this;var e=this;if(this.backoff.attempts>=this._reconnectionAttempts)this.backoff.reset(),i(u(v.prototype),"emit",this).call(this,"reconnect_failed"),this._reconnecting=!1;else{var n=this.backoff.duration();this._reconnecting=!0;var r=setTimeout((function(){e.skipReconnect||(i(u(v.prototype),"emit",t).call(t,"reconnect_attempt",e.backoff.attempts),e.skipReconnect||e.open((function(n){n?(e._reconnecting=!1,e.reconnect(),i(u(v.prototype),"emit",t).call(t,"reconnect_error",n)):e.onreconnect()})))}),n);this.subs.push((function(){clearTimeout(r)}))}}},{key:"onreconnect",value:function(){var t=this.backoff.attempts;this._reconnecting=!1,this.backoff.reset(),i(u(v.prototype),"emit",this).call(this,"reconnect",t)}}])&&o(e.prototype,n),a&&o(e,a),v}(l);e.Manager=v},function(t,e,n){var r=n(9),o=n(22),i=n(26),s=n(27);e.polling=function(t){var e=!1,n=!1,s=!1!==t.jsonp;if("undefined"!=typeof location){var c="https:"===location.protocol,a=location.port;a||(a=c?443:80),e=t.hostname!==location.hostname||a!==t.port,n=t.secure!==c}if(t.xdomain=e,t.xscheme=n,"open"in new r(t)&&!t.forceJSONP)return new o(t);if(!s)throw new Error("JSONP disabled");return new i(t)},e.websocket=s},function(t,e,n){var r=n(21),o=n(2);t.exports=function(t){var e=t.xdomain,n=t.xscheme,i=t.enablesXDR;try{if("undefined"!=typeof XMLHttpRequest&&(!e||r))return new XMLHttpRequest}catch(t){}try{if("undefined"!=typeof XDomainRequest&&!n&&i)return new XDomainRequest}catch(t){}if(!e)try{return new(o[["Active"].concat("Object").join("X")])("Microsoft.XMLHTTP")}catch(t){}}},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function i(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function s(t,e){return(s=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function c(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=u(t);if(e){var o=u(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return a(this,n)}}function a(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function u(t){return(u=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var f=n(3),p=n(4),l=n(1),h=n(12),y=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&s(t,e)}(u,t);var e,n,r,a=c(u);function u(){return o(this,u),a.apply(this,arguments)}return e=u,(n=[{key:"doOpen",value:function(){this.poll()}},{key:"pause",value:function(t){var e=this;function n(){e.readyState="paused",t()}if(this.readyState="pausing",this.polling||!this.writable){var r=0;this.polling&&(r++,this.once("pollComplete",(function(){--r||n()}))),this.writable||(r++,this.once("drain",(function(){--r||n()})))}else n()}},{key:"poll",value:function(){this.polling=!0,this.doPoll(),this.emit("poll")}},{key:"onData",value:function(t){var e=this;l.decodePayload(t,this.socket.binaryType).forEach((function(t,n,r){if("opening"===e.readyState&&"open"===t.type&&e.onOpen(),"close"===t.type)return e.onClose(),!1;e.onPacket(t)})),"closed"!==this.readyState&&(this.polling=!1,this.emit("pollComplete"),"open"===this.readyState&&this.poll())}},{key:"doClose",value:function(){var t=this;function e(){t.write([{type:"close"}])}"open"===this.readyState?e():this.once("open",e)}},{key:"write",value:function(t){var e=this;this.writable=!1,l.encodePayload(t,(function(t){e.doWrite(t,(function(){e.writable=!0,e.emit("drain")}))}))}},{key:"uri",value:function(){var t=this.query||{},e=this.opts.secure?"https":"http",n="";return!1!==this.opts.timestampRequests&&(t[this.opts.timestampParam]=h()),this.supportsBinary||t.sid||(t.b64=1),t=p.encode(t),this.opts.port&&("https"===e&&443!==Number(this.opts.port)||"http"===e&&80!==Number(this.opts.port))&&(n=":"+this.opts.port),t.length&&(t="?"+t),e+"://"+(-1!==this.opts.hostname.indexOf(":")?"["+this.opts.hostname+"]":this.opts.hostname)+n+this.opts.path+t}},{key:"name",get:function(){return"polling"}}])&&i(e.prototype,n),r&&i(e,r),u}(f);t.exports=y},function(t,e){var n=Object.create(null);n.open="0",n.close="1",n.ping="2",n.pong="3",n.message="4",n.upgrade="5",n.noop="6";var r=Object.create(null);Object.keys(n).forEach((function(t){r[n[t]]=t}));t.exports={PACKET_TYPES:n,PACKET_TYPES_REVERSE:r,ERROR_PACKET:{type:"error",data:"parser error"}}},function(t,e,n){"use strict";var r,o="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_".split(""),i={},s=0,c=0;function a(t){var e="";do{e=o[t%64]+e,t=Math.floor(t/64)}while(t>0);return e}function u(){var t=a(+new Date);return t!==r?(s=0,r=t):t+"."+a(s++)}for(;c<64;c++)i[o[c]]=c;u.encode=a,u.decode=function(t){var e=0;for(c=0;c<t.length;c++)e=64*e+i[t.charAt(c)];return e},t.exports=u},function(t,e){t.exports.pick=function(t){for(var e=arguments.length,n=new Array(e>1?e-1:0),r=1;r<e;r++)n[r-1]=arguments[r];return n.reduce((function(e,n){return t.hasOwnProperty(n)&&(e[n]=t[n]),e}),{})}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){var n;if("undefined"==typeof Symbol||null==t[Symbol.iterator]){if(Array.isArray(t)||(n=function(t,e){if(!t)return;if("string"==typeof t)return i(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Array.from(t);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return i(t,e)}(t))||e&&t&&"number"==typeof t.length){n&&(t=n);var r=0,o=function(){};return{s:o,n:function(){return r>=t.length?{done:!0}:{done:!1,value:t[r++]}},e:function(t){throw t},f:o}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var s,c=!0,a=!1;return{s:function(){n=t[Symbol.iterator]()},n:function(){var t=n.next();return c=t.done,t},e:function(t){a=!0,s=t},f:function(){try{c||null==n.return||n.return()}finally{if(a)throw s}}}}function i(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,r=new Array(e);n<e;n++)r[n]=t[n];return r}function s(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function c(t,e,n){return(c="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=p(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(n):o.value}})(t,e,n||t)}function a(t,e){return(a=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function u(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=p(t);if(e){var o=p(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return f(this,n)}}function f(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function p(t){return(p=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.Socket=void 0;var l=n(5),h=n(0),y=n(16),d=Object.freeze({connect:1,connect_error:1,disconnect:1,disconnecting:1,newListener:1,removeListener:1}),v=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&a(t,e)}(f,t);var e,n,r,i=u(f);function f(t,e,n){var r;return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,f),(r=i.call(this)).receiveBuffer=[],r.sendBuffer=[],r.ids=0,r.acks={},r.flags={},r.io=t,r.nsp=e,r.ids=0,r.acks={},r.receiveBuffer=[],r.sendBuffer=[],r.connected=!1,r.disconnected=!0,r.flags={},n&&n.auth&&(r.auth=n.auth),r.io._autoConnect&&r.open(),r}return e=f,(n=[{key:"subEvents",value:function(){if(!this.subs){var t=this.io;this.subs=[y.on(t,"open",this.onopen.bind(this)),y.on(t,"packet",this.onpacket.bind(this)),y.on(t,"error",this.onerror.bind(this)),y.on(t,"close",this.onclose.bind(this))]}}},{key:"connect",value:function(){return this.connected||(this.subEvents(),this.io._reconnecting||this.io.open(),"open"===this.io._readyState&&this.onopen()),this}},{key:"open",value:function(){return this.connect()}},{key:"send",value:function(){for(var t=arguments.length,e=new Array(t),n=0;n<t;n++)e[n]=arguments[n];return e.unshift("message"),this.emit.apply(this,e),this}},{key:"emit",value:function(t){if(d.hasOwnProperty(t))throw new Error('"'+t+'" is a reserved event name');for(var e=arguments.length,n=new Array(e>1?e-1:0),r=1;r<e;r++)n[r-1]=arguments[r];n.unshift(t);var o={type:l.PacketType.EVENT,data:n,options:{}};o.options.compress=!1!==this.flags.compress,"function"==typeof n[n.length-1]&&(this.acks[this.ids]=n.pop(),o.id=this.ids++);var i=this.io.engine&&this.io.engine.transport&&this.io.engine.transport.writable,s=this.flags.volatile&&(!i||!this.connected);return s||(this.connected?this.packet(o):this.sendBuffer.push(o)),this.flags={},this}},{key:"packet",value:function(t){t.nsp=this.nsp,this.io._packet(t)}},{key:"onopen",value:function(){var t=this;"function"==typeof this.auth?this.auth((function(e){t.packet({type:l.PacketType.CONNECT,data:e})})):this.packet({type:l.PacketType.CONNECT,data:this.auth})}},{key:"onerror",value:function(t){this.connected||c(p(f.prototype),"emit",this).call(this,"connect_error",t)}},{key:"onclose",value:function(t){this.connected=!1,this.disconnected=!0,delete this.id,c(p(f.prototype),"emit",this).call(this,"disconnect",t)}},{key:"onpacket",value:function(t){if(t.nsp===this.nsp)switch(t.type){case l.PacketType.CONNECT:if(t.data&&t.data.sid){var e=t.data.sid;this.onconnect(e)}else c(p(f.prototype),"emit",this).call(this,"connect_error",new Error("It seems you are trying to reach a Socket.IO server in v2.x with a v3.x client, but they are not compatible (more information here: https://socket.io/docs/v3/migrating-from-2-x-to-3-0/)"));break;case l.PacketType.EVENT:case l.PacketType.BINARY_EVENT:this.onevent(t);break;case l.PacketType.ACK:case l.PacketType.BINARY_ACK:this.onack(t);break;case l.PacketType.DISCONNECT:this.ondisconnect();break;case l.PacketType.CONNECT_ERROR:var n=new Error(t.data.message);n.data=t.data.data,c(p(f.prototype),"emit",this).call(this,"connect_error",n)}}},{key:"onevent",value:function(t){var e=t.data||[];null!=t.id&&e.push(this.ack(t.id)),this.connected?this.emitEvent(e):this.receiveBuffer.push(Object.freeze(e))}},{key:"emitEvent",value:function(t){if(this._anyListeners&&this._anyListeners.length){var e,n=o(this._anyListeners.slice());try{for(n.s();!(e=n.n()).done;)e.value.apply(this,t)}catch(t){n.e(t)}finally{n.f()}}c(p(f.prototype),"emit",this).apply(this,t)}},{key:"ack",value:function(t){var e=this,n=!1;return function(){if(!n){n=!0;for(var r=arguments.length,o=new Array(r),i=0;i<r;i++)o[i]=arguments[i];e.packet({type:l.PacketType.ACK,id:t,data:o})}}}},{key:"onack",value:function(t){var e=this.acks[t.id];"function"==typeof e&&(e.apply(this,t.data),delete this.acks[t.id])}},{key:"onconnect",value:function(t){this.id=t,this.connected=!0,this.disconnected=!1,c(p(f.prototype),"emit",this).call(this,"connect"),this.emitBuffered()}},{key:"emitBuffered",value:function(){var t=this;this.receiveBuffer.forEach((function(e){return t.emitEvent(e)})),this.receiveBuffer=[],this.sendBuffer.forEach((function(e){return t.packet(e)})),this.sendBuffer=[]}},{key:"ondisconnect",value:function(){this.destroy(),this.onclose("io server disconnect")}},{key:"destroy",value:function(){this.subs&&(this.subs.forEach((function(t){return t()})),this.subs=void 0),this.io._destroy(this)}},{key:"disconnect",value:function(){return this.connected&&this.packet({type:l.PacketType.DISCONNECT}),this.destroy(),this.connected&&this.onclose("io client disconnect"),this}},{key:"close",value:function(){return this.disconnect()}},{key:"compress",value:function(t){return this.flags.compress=t,this}},{key:"onAny",value:function(t){return this._anyListeners=this._anyListeners||[],this._anyListeners.push(t),this}},{key:"prependAny",value:function(t){return this._anyListeners=this._anyListeners||[],this._anyListeners.unshift(t),this}},{key:"offAny",value:function(t){if(!this._anyListeners)return this;if(t){for(var e=this._anyListeners,n=0;n<e.length;n++)if(t===e[n])return e.splice(n,1),this}else this._anyListeners=[];return this}},{key:"listenersAny",value:function(){return this._anyListeners||[]}},{key:"active",get:function(){return!!this.subs}},{key:"volatile",get:function(){return this.flags.volatile=!0,this}}])&&s(e.prototype,n),r&&s(e,r),f}(h);e.Socket=v},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.hasBinary=e.isBinary=void 0;var o="function"==typeof ArrayBuffer,i=Object.prototype.toString,s="function"==typeof Blob||"undefined"!=typeof Blob&&"[object BlobConstructor]"===i.call(Blob),c="function"==typeof File||"undefined"!=typeof File&&"[object FileConstructor]"===i.call(File);function a(t){return o&&(t instanceof ArrayBuffer||function(t){return"function"==typeof ArrayBuffer.isView?ArrayBuffer.isView(t):t.buffer instanceof ArrayBuffer}(t))||s&&t instanceof Blob||c&&t instanceof File}e.isBinary=a,e.hasBinary=function t(e,n){if(!e||"object"!==r(e))return!1;if(Array.isArray(e)){for(var o=0,i=e.length;o<i;o++)if(t(e[o]))return!0;return!1}if(a(e))return!0;if(e.toJSON&&"function"==typeof e.toJSON&&1===arguments.length)return t(e.toJSON(),!0);for(var s in e)if(Object.prototype.hasOwnProperty.call(e,s)&&t(e[s]))return!0;return!1}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.on=void 0,e.on=function(t,e,n){return t.on(e,n),function(){t.off(e,n)}}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.Socket=e.io=e.Manager=e.protocol=void 0;var o=n(18),i=n(7),s=n(14);Object.defineProperty(e,"Socket",{enumerable:!0,get:function(){return s.Socket}}),t.exports=e=a;var c=e.managers={};function a(t,e){"object"===r(t)&&(e=t,t=void 0),e=e||{};var n,s=o.url(t,e.path),a=s.source,u=s.id,f=s.path,p=c[u]&&f in c[u].nsps;return e.forceNew||e["force new connection"]||!1===e.multiplex||p?n=new i.Manager(a,e):(c[u]||(c[u]=new i.Manager(a,e)),n=c[u]),s.query&&!e.query&&(e.query=s.queryKey),n.socket(s.path,e)}e.io=a;var u=n(5);Object.defineProperty(e,"protocol",{enumerable:!0,get:function(){return u.protocol}}),e.connect=a;var f=n(7);Object.defineProperty(e,"Manager",{enumerable:!0,get:function(){return f.Manager}})},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.url=void 0;var r=n(6);e.url=function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"",n=arguments.length>2?arguments[2]:void 0,o=t;n=n||"undefined"!=typeof location&&location,null==t&&(t=n.protocol+"//"+n.host),"string"==typeof t&&("/"===t.charAt(0)&&(t="/"===t.charAt(1)?n.protocol+t:n.host+t),/^(https?|wss?):\/\//.test(t)||(t=void 0!==n?n.protocol+"//"+t:"https://"+t),o=r(t)),o.port||(/^(http|ws)$/.test(o.protocol)?o.port="80":/^(http|ws)s$/.test(o.protocol)&&(o.port="443")),o.path=o.path||"/";var i=-1!==o.host.indexOf(":"),s=i?"["+o.host+"]":o.host;return o.id=o.protocol+"://"+s+":"+o.port+e,o.href=o.protocol+"://"+s+(n&&n.port===o.port?"":":"+o.port),o}},function(t,e,n){var r=n(20);t.exports=function(t,e){return new r(t,e)},t.exports.Socket=r,t.exports.protocol=r.protocol,t.exports.Transport=n(3),t.exports.transports=n(8),t.exports.parser=n(1)},function(t,e,n){function r(){return(r=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(t[r]=n[r])}return t}).apply(this,arguments)}function o(t){return(o="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function i(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function s(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function c(t,e){return(c=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function a(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=f(t);if(e){var o=f(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return u(this,n)}}function u(t,e){return!e||"object"!==o(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function f(t){return(f=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var p=n(8),l=n(0),h=n(1),y=n(6),d=n(4),v=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&c(t,e)}(l,t);var e,n,u,f=a(l);function l(t){var e,n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return i(this,l),e=f.call(this),t&&"object"===o(t)&&(n=t,t=null),t?(t=y(t),n.hostname=t.host,n.secure="https"===t.protocol||"wss"===t.protocol,n.port=t.port,t.query&&(n.query=t.query)):n.host&&(n.hostname=y(n.host).host),e.secure=null!=n.secure?n.secure:"undefined"!=typeof location&&"https:"===location.protocol,n.hostname&&!n.port&&(n.port=e.secure?"443":"80"),e.hostname=n.hostname||("undefined"!=typeof location?location.hostname:"localhost"),e.port=n.port||("undefined"!=typeof location&&location.port?location.port:e.secure?443:80),e.transports=n.transports||["polling","websocket"],e.readyState="",e.writeBuffer=[],e.prevBufferLen=0,e.opts=r({path:"/engine.io",agent:!1,withCredentials:!1,upgrade:!0,jsonp:!0,timestampParam:"t",rememberUpgrade:!1,rejectUnauthorized:!0,perMessageDeflate:{threshold:1024},transportOptions:{}},n),e.opts.path=e.opts.path.replace(/\/$/,"")+"/","string"==typeof e.opts.query&&(e.opts.query=d.decode(e.opts.query)),e.id=null,e.upgrades=null,e.pingInterval=null,e.pingTimeout=null,e.pingTimeoutTimer=null,"function"==typeof addEventListener&&addEventListener("beforeunload",(function(){e.transport&&(e.transport.removeAllListeners(),e.transport.close())}),!1),e.open(),e}return e=l,(n=[{key:"createTransport",value:function(t){var e=function(t){var e={};for(var n in t)t.hasOwnProperty(n)&&(e[n]=t[n]);return e}(this.opts.query);e.EIO=h.protocol,e.transport=t,this.id&&(e.sid=this.id);var n=r({},this.opts.transportOptions[t],this.opts,{query:e,socket:this,hostname:this.hostname,secure:this.secure,port:this.port});return new p[t](n)}},{key:"open",value:function(){var t;if(this.opts.rememberUpgrade&&l.priorWebsocketSuccess&&-1!==this.transports.indexOf("websocket"))t="websocket";else{if(0===this.transports.length){var e=this;return void setTimeout((function(){e.emit("error","No transports available")}),0)}t=this.transports[0]}this.readyState="opening";try{t=this.createTransport(t)}catch(t){return this.transports.shift(),void this.open()}t.open(),this.setTransport(t)}},{key:"setTransport",value:function(t){var e=this;this.transport&&this.transport.removeAllListeners(),this.transport=t,t.on("drain",(function(){e.onDrain()})).on("packet",(function(t){e.onPacket(t)})).on("error",(function(t){e.onError(t)})).on("close",(function(){e.onClose("transport close")}))}},{key:"probe",value:function(t){var e=this.createTransport(t,{probe:1}),n=!1,r=this;function o(){if(r.onlyBinaryUpgrades){var t=!this.supportsBinary&&r.transport.supportsBinary;n=n||t}n||(e.send([{type:"ping",data:"probe"}]),e.once("packet",(function(t){if(!n)if("pong"===t.type&&"probe"===t.data){if(r.upgrading=!0,r.emit("upgrading",e),!e)return;l.priorWebsocketSuccess="websocket"===e.name,r.transport.pause((function(){n||"closed"!==r.readyState&&(f(),r.setTransport(e),e.send([{type:"upgrade"}]),r.emit("upgrade",e),e=null,r.upgrading=!1,r.flush())}))}else{var o=new Error("probe error");o.transport=e.name,r.emit("upgradeError",o)}})))}function i(){n||(n=!0,f(),e.close(),e=null)}function s(t){var n=new Error("probe error: "+t);n.transport=e.name,i(),r.emit("upgradeError",n)}function c(){s("transport closed")}function a(){s("socket closed")}function u(t){e&&t.name!==e.name&&i()}function f(){e.removeListener("open",o),e.removeListener("error",s),e.removeListener("close",c),r.removeListener("close",a),r.removeListener("upgrading",u)}l.priorWebsocketSuccess=!1,e.once("open",o),e.once("error",s),e.once("close",c),this.once("close",a),this.once("upgrading",u),e.open()}},{key:"onOpen",value:function(){if(this.readyState="open",l.priorWebsocketSuccess="websocket"===this.transport.name,this.emit("open"),this.flush(),"open"===this.readyState&&this.opts.upgrade&&this.transport.pause)for(var t=0,e=this.upgrades.length;t<e;t++)this.probe(this.upgrades[t])}},{key:"onPacket",value:function(t){if("opening"===this.readyState||"open"===this.readyState||"closing"===this.readyState)switch(this.emit("packet",t),this.emit("heartbeat"),t.type){case"open":this.onHandshake(JSON.parse(t.data));break;case"ping":this.resetPingTimeout(),this.sendPacket("pong"),this.emit("pong");break;case"error":var e=new Error("server error");e.code=t.data,this.onError(e);break;case"message":this.emit("data",t.data),this.emit("message",t.data)}}},{key:"onHandshake",value:function(t){this.emit("handshake",t),this.id=t.sid,this.transport.query.sid=t.sid,this.upgrades=this.filterUpgrades(t.upgrades),this.pingInterval=t.pingInterval,this.pingTimeout=t.pingTimeout,this.onOpen(),"closed"!==this.readyState&&this.resetPingTimeout()}},{key:"resetPingTimeout",value:function(){var t=this;clearTimeout(this.pingTimeoutTimer),this.pingTimeoutTimer=setTimeout((function(){t.onClose("ping timeout")}),this.pingInterval+this.pingTimeout)}},{key:"onDrain",value:function(){this.writeBuffer.splice(0,this.prevBufferLen),this.prevBufferLen=0,0===this.writeBuffer.length?this.emit("drain"):this.flush()}},{key:"flush",value:function(){"closed"!==this.readyState&&this.transport.writable&&!this.upgrading&&this.writeBuffer.length&&(this.transport.send(this.writeBuffer),this.prevBufferLen=this.writeBuffer.length,this.emit("flush"))}},{key:"write",value:function(t,e,n){return this.sendPacket("message",t,e,n),this}},{key:"send",value:function(t,e,n){return this.sendPacket("message",t,e,n),this}},{key:"sendPacket",value:function(t,e,n,r){if("function"==typeof e&&(r=e,e=void 0),"function"==typeof n&&(r=n,n=null),"closing"!==this.readyState&&"closed"!==this.readyState){(n=n||{}).compress=!1!==n.compress;var o={type:t,data:e,options:n};this.emit("packetCreate",o),this.writeBuffer.push(o),r&&this.once("flush",r),this.flush()}}},{key:"close",value:function(){var t=this;function e(){t.onClose("forced close"),t.transport.close()}function n(){t.removeListener("upgrade",n),t.removeListener("upgradeError",n),e()}function r(){t.once("upgrade",n),t.once("upgradeError",n)}return"opening"!==this.readyState&&"open"!==this.readyState||(this.readyState="closing",this.writeBuffer.length?this.once("drain",(function(){this.upgrading?r():e()})):this.upgrading?r():e()),this}},{key:"onError",value:function(t){l.priorWebsocketSuccess=!1,this.emit("error",t),this.onClose("transport error",t)}},{key:"onClose",value:function(t,e){"opening"!==this.readyState&&"open"!==this.readyState&&"closing"!==this.readyState||(clearTimeout(this.pingIntervalTimer),clearTimeout(this.pingTimeoutTimer),this.transport.removeAllListeners("close"),this.transport.close(),this.transport.removeAllListeners(),this.readyState="closed",this.id=null,this.emit("close",t,e),this.writeBuffer=[],this.prevBufferLen=0)}},{key:"filterUpgrades",value:function(t){for(var e=[],n=0,r=t.length;n<r;n++)~this.transports.indexOf(t[n])&&e.push(t[n]);return e}}])&&s(e.prototype,n),u&&s(e,u),l}(l);v.priorWebsocketSuccess=!1,v.protocol=h.protocol,t.exports=v},function(t,e){try{t.exports="undefined"!=typeof XMLHttpRequest&&"withCredentials"in new XMLHttpRequest}catch(e){t.exports=!1}},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(){return(o=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(t[r]=n[r])}return t}).apply(this,arguments)}function i(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function s(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function c(t,e,n){return e&&s(t.prototype,e),n&&s(t,n),t}function a(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&u(t,e)}function u(t,e){return(u=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function f(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=l(t);if(e){var o=l(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return p(this,n)}}function p(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function l(t){return(l=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var h=n(9),y=n(10),d=n(0),v=n(13).pick,b=n(2);function m(){}var g=null!=new h({xdomain:!1}).responseType,k=function(t){a(n,t);var e=f(n);function n(t){var r;if(i(this,n),r=e.call(this,t),"undefined"!=typeof location){var o="https:"===location.protocol,s=location.port;s||(s=o?443:80),r.xd="undefined"!=typeof location&&t.hostname!==location.hostname||s!==t.port,r.xs=t.secure!==o}var c=t&&t.forceBase64;return r.supportsBinary=g&&!c,r}return c(n,[{key:"request",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return o(t,{xd:this.xd,xs:this.xs},this.opts),new w(this.uri(),t)}},{key:"doWrite",value:function(t,e){var n=this.request({method:"POST",data:t}),r=this;n.on("success",e),n.on("error",(function(t){r.onError("xhr post error",t)}))}},{key:"doPoll",value:function(){var t=this.request(),e=this;t.on("data",(function(t){e.onData(t)})),t.on("error",(function(t){e.onError("xhr poll error",t)})),this.pollXhr=t}}]),n}(y),w=function(t){a(n,t);var e=f(n);function n(t,r){var o;return i(this,n),(o=e.call(this)).opts=r,o.method=r.method||"GET",o.uri=t,o.async=!1!==r.async,o.data=void 0!==r.data?r.data:null,o.create(),o}return c(n,[{key:"create",value:function(){var t=v(this.opts,"agent","enablesXDR","pfx","key","passphrase","cert","ca","ciphers","rejectUnauthorized");t.xdomain=!!this.opts.xd,t.xscheme=!!this.opts.xs;var e=this.xhr=new h(t),r=this;try{e.open(this.method,this.uri,this.async);try{if(this.opts.extraHeaders)for(var o in e.setDisableHeaderCheck&&e.setDisableHeaderCheck(!0),this.opts.extraHeaders)this.opts.extraHeaders.hasOwnProperty(o)&&e.setRequestHeader(o,this.opts.extraHeaders[o])}catch(t){}if("POST"===this.method)try{e.setRequestHeader("Content-type","text/plain;charset=UTF-8")}catch(t){}try{e.setRequestHeader("Accept","*/*")}catch(t){}"withCredentials"in e&&(e.withCredentials=this.opts.withCredentials),this.opts.requestTimeout&&(e.timeout=this.opts.requestTimeout),this.hasXDR()?(e.onload=function(){r.onLoad()},e.onerror=function(){r.onError(e.responseText)}):e.onreadystatechange=function(){4===e.readyState&&(200===e.status||1223===e.status?r.onLoad():setTimeout((function(){r.onError("number"==typeof e.status?e.status:0)}),0))},e.send(this.data)}catch(t){return void setTimeout((function(){r.onError(t)}),0)}"undefined"!=typeof document&&(this.index=n.requestsCount++,n.requests[this.index]=this)}},{key:"onSuccess",value:function(){this.emit("success"),this.cleanup()}},{key:"onData",value:function(t){this.emit("data",t),this.onSuccess()}},{key:"onError",value:function(t){this.emit("error",t),this.cleanup(!0)}},{key:"cleanup",value:function(t){if(void 0!==this.xhr&&null!==this.xhr){if(this.hasXDR()?this.xhr.onload=this.xhr.onerror=m:this.xhr.onreadystatechange=m,t)try{this.xhr.abort()}catch(t){}"undefined"!=typeof document&&delete n.requests[this.index],this.xhr=null}}},{key:"onLoad",value:function(){var t=this.xhr.responseText;null!==t&&this.onData(t)}},{key:"hasXDR",value:function(){return"undefined"!=typeof XDomainRequest&&!this.xs&&this.enablesXDR}},{key:"abort",value:function(){this.cleanup()}}]),n}(d);if(w.requestsCount=0,w.requests={},"undefined"!=typeof document)if("function"==typeof attachEvent)attachEvent("onunload",_);else if("function"==typeof addEventListener){addEventListener("onpagehide"in b?"pagehide":"unload",_,!1)}function _(){for(var t in w.requests)w.requests.hasOwnProperty(t)&&w.requests[t].abort()}t.exports=k,t.exports.Request=w},function(t,e,n){var r=n(11).PACKET_TYPES,o="function"==typeof Blob||"undefined"!=typeof Blob&&"[object BlobConstructor]"===Object.prototype.toString.call(Blob),i="function"==typeof ArrayBuffer,s=function(t,e){var n=new FileReader;return n.onload=function(){var t=n.result.split(",")[1];e("b"+t)},n.readAsDataURL(t)};t.exports=function(t,e,n){var c,a=t.type,u=t.data;return o&&u instanceof Blob?e?n(u):s(u,n):i&&(u instanceof ArrayBuffer||(c=u,"function"==typeof ArrayBuffer.isView?ArrayBuffer.isView(c):c&&c.buffer instanceof ArrayBuffer))?e?n(u instanceof ArrayBuffer?u:u.buffer):s(new Blob([u]),n):n(r[a]+(u||""))}},function(t,e,n){var r,o=n(11),i=o.PACKET_TYPES_REVERSE,s=o.ERROR_PACKET;"function"==typeof ArrayBuffer&&(r=n(25));var c=function(t,e){if(r){var n=r.decode(t);return a(n,e)}return{base64:!0,data:t}},a=function(t,e){switch(e){case"blob":return t instanceof ArrayBuffer?new Blob([t]):t;case"arraybuffer":default:return t}};t.exports=function(t,e){if("string"!=typeof t)return{type:"message",data:a(t,e)};var n=t.charAt(0);return"b"===n?{type:"message",data:c(t.substring(1),e)}:i[n]?t.length>1?{type:i[n],data:t.substring(1)}:{type:i[n]}:s}},function(t,e){!function(t){"use strict";e.encode=function(e){var n,r=new Uint8Array(e),o=r.length,i="";for(n=0;n<o;n+=3)i+=t[r[n]>>2],i+=t[(3&r[n])<<4|r[n+1]>>4],i+=t[(15&r[n+1])<<2|r[n+2]>>6],i+=t[63&r[n+2]];return o%3==2?i=i.substring(0,i.length-1)+"=":o%3==1&&(i=i.substring(0,i.length-2)+"=="),i},e.decode=function(e){var n,r,o,i,s,c=.75*e.length,a=e.length,u=0;"="===e[e.length-1]&&(c--,"="===e[e.length-2]&&c--);var f=new ArrayBuffer(c),p=new Uint8Array(f);for(n=0;n<a;n+=4)r=t.indexOf(e[n]),o=t.indexOf(e[n+1]),i=t.indexOf(e[n+2]),s=t.indexOf(e[n+3]),p[u++]=r<<2|o>>4,p[u++]=(15&o)<<4|i>>2,p[u++]=(3&i)<<6|63&s;return f}}("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/")},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e,n){return(i="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=f(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(n):o.value}})(t,e,n||t)}function s(t,e){return(s=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function c(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=f(t);if(e){var o=f(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return a(this,n)}}function a(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?u(t):e}function u(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}function f(t){return(f=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var p,l=n(10),h=n(2),y=/\n/g,d=/\\n/g,v=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&s(t,e)}(l,t);var e,n,r,a=c(l);function l(t){var e;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,l),(e=a.call(this,t)).query=e.query||{},p||(p=h.___eio=h.___eio||[]),e.index=p.length;var n=u(e);return p.push((function(t){n.onData(t)})),e.query.j=e.index,e}return e=l,(n=[{key:"doClose",value:function(){this.script&&(this.script.onerror=function(){},this.script.parentNode.removeChild(this.script),this.script=null),this.form&&(this.form.parentNode.removeChild(this.form),this.form=null,this.iframe=null),i(f(l.prototype),"doClose",this).call(this)}},{key:"doPoll",value:function(){var t=this,e=document.createElement("script");this.script&&(this.script.parentNode.removeChild(this.script),this.script=null),e.async=!0,e.src=this.uri(),e.onerror=function(e){t.onError("jsonp poll error",e)};var n=document.getElementsByTagName("script")[0];n?n.parentNode.insertBefore(e,n):(document.head||document.body).appendChild(e),this.script=e,"undefined"!=typeof navigator&&/gecko/i.test(navigator.userAgent)&&setTimeout((function(){var t=document.createElement("iframe");document.body.appendChild(t),document.body.removeChild(t)}),100)}},{key:"doWrite",value:function(t,e){var n,r=this;if(!this.form){var o=document.createElement("form"),i=document.createElement("textarea"),s=this.iframeId="eio_iframe_"+this.index;o.className="socketio",o.style.position="absolute",o.style.top="-1000px",o.style.left="-1000px",o.target=s,o.method="POST",o.setAttribute("accept-charset","utf-8"),i.name="d",o.appendChild(i),document.body.appendChild(o),this.form=o,this.area=i}function c(){a(),e()}function a(){if(r.iframe)try{r.form.removeChild(r.iframe)}catch(t){r.onError("jsonp polling iframe removal error",t)}try{var t='<iframe src="javascript:0" name="'+r.iframeId+'">';n=document.createElement(t)}catch(t){(n=document.createElement("iframe")).name=r.iframeId,n.src="javascript:0"}n.id=r.iframeId,r.form.appendChild(n),r.iframe=n}this.form.action=this.uri(),a(),t=t.replace(d,"\\\n"),this.area.value=t.replace(y,"\\n");try{this.form.submit()}catch(t){}this.iframe.attachEvent?this.iframe.onreadystatechange=function(){"complete"===r.iframe.readyState&&c()}:this.iframe.onload=c}},{key:"supportsBinary",get:function(){return!1}}])&&o(e.prototype,n),r&&o(e,r),l}(l);t.exports=v},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e){return(i=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function s(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=a(t);if(e){var o=a(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return c(this,n)}}function c(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function a(t){return(a=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var u=n(3),f=n(1),p=n(4),l=n(12),h=n(13).pick,y=n(28),d=y.WebSocket,v=y.usingBrowserWebSocket,b=y.defaultBinaryType,m="undefined"!=typeof navigator&&"string"==typeof navigator.product&&"reactnative"===navigator.product.toLowerCase(),g=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&i(t,e)}(a,t);var e,n,r,c=s(a);function a(t){var e;return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,a),(e=c.call(this,t)).supportsBinary=!t.forceBase64,e}return e=a,(n=[{key:"doOpen",value:function(){if(this.check()){var t=this.uri(),e=this.opts.protocols,n=m?{}:h(this.opts,"agent","perMessageDeflate","pfx","key","passphrase","cert","ca","ciphers","rejectUnauthorized","localAddress","protocolVersion","origin","maxPayload","family","checkServerIdentity");this.opts.extraHeaders&&(n.headers=this.opts.extraHeaders);try{this.ws=v&&!m?e?new d(t,e):new d(t):new d(t,e,n)}catch(t){return this.emit("error",t)}this.ws.binaryType=this.socket.binaryType||b,this.addEventListeners()}}},{key:"addEventListeners",value:function(){var t=this;this.ws.onopen=function(){t.onOpen()},this.ws.onclose=function(){t.onClose()},this.ws.onmessage=function(e){t.onData(e.data)},this.ws.onerror=function(e){t.onError("websocket error",e)}}},{key:"write",value:function(t){var e=this;this.writable=!1;for(var n=t.length,r=0,o=n;r<o;r++)!function(t){f.encodePacket(t,e.supportsBinary,(function(r){var o={};v||(t.options&&(o.compress=t.options.compress),e.opts.perMessageDeflate&&("string"==typeof r?Buffer.byteLength(r):r.length)<e.opts.perMessageDeflate.threshold&&(o.compress=!1));try{v?e.ws.send(r):e.ws.send(r,o)}catch(t){}--n||(e.emit("flush"),setTimeout((function(){e.writable=!0,e.emit("drain")}),0))}))}(t[r])}},{key:"onClose",value:function(){u.prototype.onClose.call(this)}},{key:"doClose",value:function(){void 0!==this.ws&&(this.ws.close(),this.ws=null)}},{key:"uri",value:function(){var t=this.query||{},e=this.opts.secure?"wss":"ws",n="";return this.opts.port&&("wss"===e&&443!==Number(this.opts.port)||"ws"===e&&80!==Number(this.opts.port))&&(n=":"+this.opts.port),this.opts.timestampRequests&&(t[this.opts.timestampParam]=l()),this.supportsBinary||(t.b64=1),(t=p.encode(t)).length&&(t="?"+t),e+"://"+(-1!==this.opts.hostname.indexOf(":")?"["+this.opts.hostname+"]":this.opts.hostname)+n+this.opts.path+t}},{key:"check",value:function(){return!(!d||"__initialize"in d&&this.name===a.prototype.name)}},{key:"name",get:function(){return"websocket"}}])&&o(e.prototype,n),r&&o(e,r),a}(u);t.exports=g},function(t,e,n){var r=n(2);t.exports={WebSocket:r.WebSocket||r.MozWebSocket,usingBrowserWebSocket:!0,defaultBinaryType:"arraybuffer"}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.reconstructPacket=e.deconstructPacket=void 0;var o=n(15);e.deconstructPacket=function(t){var e=[],n=t.data,i=t;return i.data=function t(e,n){if(!e)return e;if(o.isBinary(e)){var i={_placeholder:!0,num:n.length};return n.push(e),i}if(Array.isArray(e)){for(var s=new Array(e.length),c=0;c<e.length;c++)s[c]=t(e[c],n);return s}if("object"===r(e)&&!(e instanceof Date)){var a={};for(var u in e)e.hasOwnProperty(u)&&(a[u]=t(e[u],n));return a}return e}(n,e),i.attachments=e.length,{packet:i,buffers:e}},e.reconstructPacket=function(t,e){return t.data=function t(e,n){if(!e)return e;if(e&&e._placeholder)return n[e.num];if(Array.isArray(e))for(var o=0;o<e.length;o++)e[o]=t(e[o],n);else if("object"===r(e))for(var i in e)e.hasOwnProperty(i)&&(e[i]=t(e[i],n));return e}(t.data,e),t.attachments=void 0,t}},function(t,e){function n(t){t=t||{},this.ms=t.min||100,this.max=t.max||1e4,this.factor=t.factor||2,this.jitter=t.jitter>0&&t.jitter<=1?t.jitter:0,this.attempts=0}t.exports=n,n.prototype.duration=function(){var t=this.ms*Math.pow(this.factor,this.attempts++);if(this.jitter){var e=Math.random(),n=Math.floor(e*this.jitter*t);t=0==(1&Math.floor(10*e))?t-n:t+n}return 0|Math.min(t,this.max)},n.prototype.reset=function(){this.attempts=0},n.prototype.setMin=function(t){this.ms=t},n.prototype.setMax=function(t){this.max=t},n.prototype.setJitter=function(t){this.jitter=t}}])}));
+
+}).call(this)}).call(this,require("buffer").Buffer)
+},{"buffer":30}],27:[function(require,module,exports){
 /* eslint-disable no-unused-vars */
 
 /* eslint-disable no-undef */
@@ -7873,6 +16514,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.radToDeg = radToDeg;
+exports.createAppEvent = createAppEvent;
 exports.isMobile = isMobile;
 exports.LOG = LOG;
 exports.OSCILLATOR = OSCILLATOR;
@@ -7884,7 +16526,7 @@ exports.randomIntFromTo = randomIntFromTo;
 exports._glBlend = _glBlend;
 exports._DrawElements = _DrawElements;
 exports._glTexParameteri = _glTexParameteri;
-exports.BiquadFilterType = exports.ENUMERATORS = exports.QueryString = exports.byId = exports.E = exports.scriptManager = exports.loadImage = void 0;
+exports.BiquadFilterType = exports.ENUMERATORS = exports.QueryString = exports.byId = exports.E = exports.scriptManager = exports.loadImage = exports.htmlHeader = exports.jsonHeaders = exports.HeaderTypes = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
@@ -7914,6 +16556,43 @@ function radToDeg(r) {
   var pi = Math.PI;
   return r * (180 / pi);
 }
+
+function createAppEvent(name, myDetails) {
+  return new CustomEvent(name, {
+    detail: {
+      eventName: name,
+      data: myDetails
+    },
+    bubbles: true
+  });
+}
+
+const HeaderTypes = {
+  textPlan: "text/plain",
+  html: "text/html",
+  jpeg: "image/jpeg",
+  png: "image/png",
+  mpeg: "audio/mpeg",
+  ogg: "audio/ogg",
+  audio: "audio/*",
+  mp4: "video/mp4",
+  app: "application/*",
+  appJson: "application/json",
+  appJS: "application/javascript",
+  appECMA: "application/ecmascript",
+  appOctetSteam: "application/octet-stream"
+};
+exports.HeaderTypes = HeaderTypes;
+const jsonHeaders = new Headers({
+  "Content-Type": "application/json",
+  "Accept": "application/json"
+});
+exports.jsonHeaders = jsonHeaders;
+const htmlHeader = new Headers({
+  "Content-Type": "text/html",
+  "Accept": "text/plain"
+});
+exports.htmlHeader = htmlHeader;
 
 window.DETECTBROWSER = function () {
   var HREFF,
@@ -8095,9 +16774,8 @@ var scriptManager = {
   LOAD: function addScript(src, id, type, parent) {
     var s = document.createElement('script');
 
-    s.onload = function () {
-      SCRIPT.SCRIPT_ID++;
-      console.log('Script id loaded : ' + SCRIPT.SCRIPT_ID + ' with src: ' + this.src);
+    s.onload = function () {//SCRIPT.SCRIPT_ID++;
+      //console.log('Script id loaded : ' + SCRIPT.SCRIPT_ID + ' with src: ' + this.src);
     };
 
     if (typeof type !== 'undefined') {
@@ -8574,7 +17252,7 @@ const BiquadFilterType = {
 };
 exports.BiquadFilterType = BiquadFilterType;
 
-},{"../program/manifest":25,"./events":5}],21:[function(require,module,exports){
+},{"../program/manifest":36,"./events":7}],28:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8763,7 +17441,1940 @@ if (!window.requestAnimationFrame) {
   }();
 }
 
-},{}],22:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
+'use strict'
+
+exports.byteLength = byteLength
+exports.toByteArray = toByteArray
+exports.fromByteArray = fromByteArray
+
+var lookup = []
+var revLookup = []
+var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array
+
+var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+for (var i = 0, len = code.length; i < len; ++i) {
+  lookup[i] = code[i]
+  revLookup[code.charCodeAt(i)] = i
+}
+
+// Support decoding URL-safe base64 strings, as Node.js does.
+// See: https://en.wikipedia.org/wiki/Base64#URL_applications
+revLookup['-'.charCodeAt(0)] = 62
+revLookup['_'.charCodeAt(0)] = 63
+
+function getLens (b64) {
+  var len = b64.length
+
+  if (len % 4 > 0) {
+    throw new Error('Invalid string. Length must be a multiple of 4')
+  }
+
+  // Trim off extra bytes after placeholder bytes are found
+  // See: https://github.com/beatgammit/base64-js/issues/42
+  var validLen = b64.indexOf('=')
+  if (validLen === -1) validLen = len
+
+  var placeHoldersLen = validLen === len
+    ? 0
+    : 4 - (validLen % 4)
+
+  return [validLen, placeHoldersLen]
+}
+
+// base64 is 4/3 + up to two characters of the original data
+function byteLength (b64) {
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
+}
+
+function _byteLength (b64, validLen, placeHoldersLen) {
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
+}
+
+function toByteArray (b64) {
+  var tmp
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
+
+  var arr = new Arr(_byteLength(b64, validLen, placeHoldersLen))
+
+  var curByte = 0
+
+  // if there are placeholders, only get up to the last complete 4 chars
+  var len = placeHoldersLen > 0
+    ? validLen - 4
+    : validLen
+
+  var i
+  for (i = 0; i < len; i += 4) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 18) |
+      (revLookup[b64.charCodeAt(i + 1)] << 12) |
+      (revLookup[b64.charCodeAt(i + 2)] << 6) |
+      revLookup[b64.charCodeAt(i + 3)]
+    arr[curByte++] = (tmp >> 16) & 0xFF
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  if (placeHoldersLen === 2) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 2) |
+      (revLookup[b64.charCodeAt(i + 1)] >> 4)
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  if (placeHoldersLen === 1) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 10) |
+      (revLookup[b64.charCodeAt(i + 1)] << 4) |
+      (revLookup[b64.charCodeAt(i + 2)] >> 2)
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  return arr
+}
+
+function tripletToBase64 (num) {
+  return lookup[num >> 18 & 0x3F] +
+    lookup[num >> 12 & 0x3F] +
+    lookup[num >> 6 & 0x3F] +
+    lookup[num & 0x3F]
+}
+
+function encodeChunk (uint8, start, end) {
+  var tmp
+  var output = []
+  for (var i = start; i < end; i += 3) {
+    tmp =
+      ((uint8[i] << 16) & 0xFF0000) +
+      ((uint8[i + 1] << 8) & 0xFF00) +
+      (uint8[i + 2] & 0xFF)
+    output.push(tripletToBase64(tmp))
+  }
+  return output.join('')
+}
+
+function fromByteArray (uint8) {
+  var tmp
+  var len = uint8.length
+  var extraBytes = len % 3 // if we have 1 byte left, pad 2 bytes
+  var parts = []
+  var maxChunkLength = 16383 // must be multiple of 3
+
+  // go through the array every three bytes, we'll deal with trailing stuff later
+  for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
+    parts.push(encodeChunk(uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)))
+  }
+
+  // pad the end with zeros, but make sure to not forget the extra bytes
+  if (extraBytes === 1) {
+    tmp = uint8[len - 1]
+    parts.push(
+      lookup[tmp >> 2] +
+      lookup[(tmp << 4) & 0x3F] +
+      '=='
+    )
+  } else if (extraBytes === 2) {
+    tmp = (uint8[len - 2] << 8) + uint8[len - 1]
+    parts.push(
+      lookup[tmp >> 10] +
+      lookup[(tmp >> 4) & 0x3F] +
+      lookup[(tmp << 2) & 0x3F] +
+      '='
+    )
+  }
+
+  return parts.join('')
+}
+
+},{}],30:[function(require,module,exports){
+(function (Buffer){(function (){
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+/* eslint-disable no-proto */
+
+'use strict'
+
+var base64 = require('base64-js')
+var ieee754 = require('ieee754')
+
+exports.Buffer = Buffer
+exports.SlowBuffer = SlowBuffer
+exports.INSPECT_MAX_BYTES = 50
+
+var K_MAX_LENGTH = 0x7fffffff
+exports.kMaxLength = K_MAX_LENGTH
+
+/**
+ * If `Buffer.TYPED_ARRAY_SUPPORT`:
+ *   === true    Use Uint8Array implementation (fastest)
+ *   === false   Print warning and recommend using `buffer` v4.x which has an Object
+ *               implementation (most compatible, even IE6)
+ *
+ * Browsers that support typed arrays are IE 10+, Firefox 4+, Chrome 7+, Safari 5.1+,
+ * Opera 11.6+, iOS 4.2+.
+ *
+ * We report that the browser does not support typed arrays if the are not subclassable
+ * using __proto__. Firefox 4-29 lacks support for adding new properties to `Uint8Array`
+ * (See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438). IE 10 lacks support
+ * for __proto__ and has a buggy typed array implementation.
+ */
+Buffer.TYPED_ARRAY_SUPPORT = typedArraySupport()
+
+if (!Buffer.TYPED_ARRAY_SUPPORT && typeof console !== 'undefined' &&
+    typeof console.error === 'function') {
+  console.error(
+    'This browser lacks typed array (Uint8Array) support which is required by ' +
+    '`buffer` v5.x. Use `buffer` v4.x if you require old browser support.'
+  )
+}
+
+function typedArraySupport () {
+  // Can typed array instances can be augmented?
+  try {
+    var arr = new Uint8Array(1)
+    arr.__proto__ = { __proto__: Uint8Array.prototype, foo: function () { return 42 } }
+    return arr.foo() === 42
+  } catch (e) {
+    return false
+  }
+}
+
+Object.defineProperty(Buffer.prototype, 'parent', {
+  enumerable: true,
+  get: function () {
+    if (!Buffer.isBuffer(this)) return undefined
+    return this.buffer
+  }
+})
+
+Object.defineProperty(Buffer.prototype, 'offset', {
+  enumerable: true,
+  get: function () {
+    if (!Buffer.isBuffer(this)) return undefined
+    return this.byteOffset
+  }
+})
+
+function createBuffer (length) {
+  if (length > K_MAX_LENGTH) {
+    throw new RangeError('The value "' + length + '" is invalid for option "size"')
+  }
+  // Return an augmented `Uint8Array` instance
+  var buf = new Uint8Array(length)
+  buf.__proto__ = Buffer.prototype
+  return buf
+}
+
+/**
+ * The Buffer constructor returns instances of `Uint8Array` that have their
+ * prototype changed to `Buffer.prototype`. Furthermore, `Buffer` is a subclass of
+ * `Uint8Array`, so the returned instances will have all the node `Buffer` methods
+ * and the `Uint8Array` methods. Square bracket notation works as expected -- it
+ * returns a single octet.
+ *
+ * The `Uint8Array` prototype remains unmodified.
+ */
+
+function Buffer (arg, encodingOrOffset, length) {
+  // Common case.
+  if (typeof arg === 'number') {
+    if (typeof encodingOrOffset === 'string') {
+      throw new TypeError(
+        'The "string" argument must be of type string. Received type number'
+      )
+    }
+    return allocUnsafe(arg)
+  }
+  return from(arg, encodingOrOffset, length)
+}
+
+// Fix subarray() in ES2016. See: https://github.com/feross/buffer/pull/97
+if (typeof Symbol !== 'undefined' && Symbol.species != null &&
+    Buffer[Symbol.species] === Buffer) {
+  Object.defineProperty(Buffer, Symbol.species, {
+    value: null,
+    configurable: true,
+    enumerable: false,
+    writable: false
+  })
+}
+
+Buffer.poolSize = 8192 // not used by this implementation
+
+function from (value, encodingOrOffset, length) {
+  if (typeof value === 'string') {
+    return fromString(value, encodingOrOffset)
+  }
+
+  if (ArrayBuffer.isView(value)) {
+    return fromArrayLike(value)
+  }
+
+  if (value == null) {
+    throw TypeError(
+      'The first argument must be one of type string, Buffer, ArrayBuffer, Array, ' +
+      'or Array-like Object. Received type ' + (typeof value)
+    )
+  }
+
+  if (isInstance(value, ArrayBuffer) ||
+      (value && isInstance(value.buffer, ArrayBuffer))) {
+    return fromArrayBuffer(value, encodingOrOffset, length)
+  }
+
+  if (typeof value === 'number') {
+    throw new TypeError(
+      'The "value" argument must not be of type number. Received type number'
+    )
+  }
+
+  var valueOf = value.valueOf && value.valueOf()
+  if (valueOf != null && valueOf !== value) {
+    return Buffer.from(valueOf, encodingOrOffset, length)
+  }
+
+  var b = fromObject(value)
+  if (b) return b
+
+  if (typeof Symbol !== 'undefined' && Symbol.toPrimitive != null &&
+      typeof value[Symbol.toPrimitive] === 'function') {
+    return Buffer.from(
+      value[Symbol.toPrimitive]('string'), encodingOrOffset, length
+    )
+  }
+
+  throw new TypeError(
+    'The first argument must be one of type string, Buffer, ArrayBuffer, Array, ' +
+    'or Array-like Object. Received type ' + (typeof value)
+  )
+}
+
+/**
+ * Functionally equivalent to Buffer(arg, encoding) but throws a TypeError
+ * if value is a number.
+ * Buffer.from(str[, encoding])
+ * Buffer.from(array)
+ * Buffer.from(buffer)
+ * Buffer.from(arrayBuffer[, byteOffset[, length]])
+ **/
+Buffer.from = function (value, encodingOrOffset, length) {
+  return from(value, encodingOrOffset, length)
+}
+
+// Note: Change prototype *after* Buffer.from is defined to workaround Chrome bug:
+// https://github.com/feross/buffer/pull/148
+Buffer.prototype.__proto__ = Uint8Array.prototype
+Buffer.__proto__ = Uint8Array
+
+function assertSize (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('"size" argument must be of type number')
+  } else if (size < 0) {
+    throw new RangeError('The value "' + size + '" is invalid for option "size"')
+  }
+}
+
+function alloc (size, fill, encoding) {
+  assertSize(size)
+  if (size <= 0) {
+    return createBuffer(size)
+  }
+  if (fill !== undefined) {
+    // Only pay attention to encoding if it's a string. This
+    // prevents accidentally sending in a number that would
+    // be interpretted as a start offset.
+    return typeof encoding === 'string'
+      ? createBuffer(size).fill(fill, encoding)
+      : createBuffer(size).fill(fill)
+  }
+  return createBuffer(size)
+}
+
+/**
+ * Creates a new filled Buffer instance.
+ * alloc(size[, fill[, encoding]])
+ **/
+Buffer.alloc = function (size, fill, encoding) {
+  return alloc(size, fill, encoding)
+}
+
+function allocUnsafe (size) {
+  assertSize(size)
+  return createBuffer(size < 0 ? 0 : checked(size) | 0)
+}
+
+/**
+ * Equivalent to Buffer(num), by default creates a non-zero-filled Buffer instance.
+ * */
+Buffer.allocUnsafe = function (size) {
+  return allocUnsafe(size)
+}
+/**
+ * Equivalent to SlowBuffer(num), by default creates a non-zero-filled Buffer instance.
+ */
+Buffer.allocUnsafeSlow = function (size) {
+  return allocUnsafe(size)
+}
+
+function fromString (string, encoding) {
+  if (typeof encoding !== 'string' || encoding === '') {
+    encoding = 'utf8'
+  }
+
+  if (!Buffer.isEncoding(encoding)) {
+    throw new TypeError('Unknown encoding: ' + encoding)
+  }
+
+  var length = byteLength(string, encoding) | 0
+  var buf = createBuffer(length)
+
+  var actual = buf.write(string, encoding)
+
+  if (actual !== length) {
+    // Writing a hex string, for example, that contains invalid characters will
+    // cause everything after the first invalid character to be ignored. (e.g.
+    // 'abxxcd' will be treated as 'ab')
+    buf = buf.slice(0, actual)
+  }
+
+  return buf
+}
+
+function fromArrayLike (array) {
+  var length = array.length < 0 ? 0 : checked(array.length) | 0
+  var buf = createBuffer(length)
+  for (var i = 0; i < length; i += 1) {
+    buf[i] = array[i] & 255
+  }
+  return buf
+}
+
+function fromArrayBuffer (array, byteOffset, length) {
+  if (byteOffset < 0 || array.byteLength < byteOffset) {
+    throw new RangeError('"offset" is outside of buffer bounds')
+  }
+
+  if (array.byteLength < byteOffset + (length || 0)) {
+    throw new RangeError('"length" is outside of buffer bounds')
+  }
+
+  var buf
+  if (byteOffset === undefined && length === undefined) {
+    buf = new Uint8Array(array)
+  } else if (length === undefined) {
+    buf = new Uint8Array(array, byteOffset)
+  } else {
+    buf = new Uint8Array(array, byteOffset, length)
+  }
+
+  // Return an augmented `Uint8Array` instance
+  buf.__proto__ = Buffer.prototype
+  return buf
+}
+
+function fromObject (obj) {
+  if (Buffer.isBuffer(obj)) {
+    var len = checked(obj.length) | 0
+    var buf = createBuffer(len)
+
+    if (buf.length === 0) {
+      return buf
+    }
+
+    obj.copy(buf, 0, 0, len)
+    return buf
+  }
+
+  if (obj.length !== undefined) {
+    if (typeof obj.length !== 'number' || numberIsNaN(obj.length)) {
+      return createBuffer(0)
+    }
+    return fromArrayLike(obj)
+  }
+
+  if (obj.type === 'Buffer' && Array.isArray(obj.data)) {
+    return fromArrayLike(obj.data)
+  }
+}
+
+function checked (length) {
+  // Note: cannot use `length < K_MAX_LENGTH` here because that fails when
+  // length is NaN (which is otherwise coerced to zero.)
+  if (length >= K_MAX_LENGTH) {
+    throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
+                         'size: 0x' + K_MAX_LENGTH.toString(16) + ' bytes')
+  }
+  return length | 0
+}
+
+function SlowBuffer (length) {
+  if (+length != length) { // eslint-disable-line eqeqeq
+    length = 0
+  }
+  return Buffer.alloc(+length)
+}
+
+Buffer.isBuffer = function isBuffer (b) {
+  return b != null && b._isBuffer === true &&
+    b !== Buffer.prototype // so Buffer.isBuffer(Buffer.prototype) will be false
+}
+
+Buffer.compare = function compare (a, b) {
+  if (isInstance(a, Uint8Array)) a = Buffer.from(a, a.offset, a.byteLength)
+  if (isInstance(b, Uint8Array)) b = Buffer.from(b, b.offset, b.byteLength)
+  if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
+    throw new TypeError(
+      'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array'
+    )
+  }
+
+  if (a === b) return 0
+
+  var x = a.length
+  var y = b.length
+
+  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
+    if (a[i] !== b[i]) {
+      x = a[i]
+      y = b[i]
+      break
+    }
+  }
+
+  if (x < y) return -1
+  if (y < x) return 1
+  return 0
+}
+
+Buffer.isEncoding = function isEncoding (encoding) {
+  switch (String(encoding).toLowerCase()) {
+    case 'hex':
+    case 'utf8':
+    case 'utf-8':
+    case 'ascii':
+    case 'latin1':
+    case 'binary':
+    case 'base64':
+    case 'ucs2':
+    case 'ucs-2':
+    case 'utf16le':
+    case 'utf-16le':
+      return true
+    default:
+      return false
+  }
+}
+
+Buffer.concat = function concat (list, length) {
+  if (!Array.isArray(list)) {
+    throw new TypeError('"list" argument must be an Array of Buffers')
+  }
+
+  if (list.length === 0) {
+    return Buffer.alloc(0)
+  }
+
+  var i
+  if (length === undefined) {
+    length = 0
+    for (i = 0; i < list.length; ++i) {
+      length += list[i].length
+    }
+  }
+
+  var buffer = Buffer.allocUnsafe(length)
+  var pos = 0
+  for (i = 0; i < list.length; ++i) {
+    var buf = list[i]
+    if (isInstance(buf, Uint8Array)) {
+      buf = Buffer.from(buf)
+    }
+    if (!Buffer.isBuffer(buf)) {
+      throw new TypeError('"list" argument must be an Array of Buffers')
+    }
+    buf.copy(buffer, pos)
+    pos += buf.length
+  }
+  return buffer
+}
+
+function byteLength (string, encoding) {
+  if (Buffer.isBuffer(string)) {
+    return string.length
+  }
+  if (ArrayBuffer.isView(string) || isInstance(string, ArrayBuffer)) {
+    return string.byteLength
+  }
+  if (typeof string !== 'string') {
+    throw new TypeError(
+      'The "string" argument must be one of type string, Buffer, or ArrayBuffer. ' +
+      'Received type ' + typeof string
+    )
+  }
+
+  var len = string.length
+  var mustMatch = (arguments.length > 2 && arguments[2] === true)
+  if (!mustMatch && len === 0) return 0
+
+  // Use a for loop to avoid recursion
+  var loweredCase = false
+  for (;;) {
+    switch (encoding) {
+      case 'ascii':
+      case 'latin1':
+      case 'binary':
+        return len
+      case 'utf8':
+      case 'utf-8':
+        return utf8ToBytes(string).length
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return len * 2
+      case 'hex':
+        return len >>> 1
+      case 'base64':
+        return base64ToBytes(string).length
+      default:
+        if (loweredCase) {
+          return mustMatch ? -1 : utf8ToBytes(string).length // assume utf8
+        }
+        encoding = ('' + encoding).toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+Buffer.byteLength = byteLength
+
+function slowToString (encoding, start, end) {
+  var loweredCase = false
+
+  // No need to verify that "this.length <= MAX_UINT32" since it's a read-only
+  // property of a typed array.
+
+  // This behaves neither like String nor Uint8Array in that we set start/end
+  // to their upper/lower bounds if the value passed is out of range.
+  // undefined is handled specially as per ECMA-262 6th Edition,
+  // Section 13.3.3.7 Runtime Semantics: KeyedBindingInitialization.
+  if (start === undefined || start < 0) {
+    start = 0
+  }
+  // Return early if start > this.length. Done here to prevent potential uint32
+  // coercion fail below.
+  if (start > this.length) {
+    return ''
+  }
+
+  if (end === undefined || end > this.length) {
+    end = this.length
+  }
+
+  if (end <= 0) {
+    return ''
+  }
+
+  // Force coersion to uint32. This will also coerce falsey/NaN values to 0.
+  end >>>= 0
+  start >>>= 0
+
+  if (end <= start) {
+    return ''
+  }
+
+  if (!encoding) encoding = 'utf8'
+
+  while (true) {
+    switch (encoding) {
+      case 'hex':
+        return hexSlice(this, start, end)
+
+      case 'utf8':
+      case 'utf-8':
+        return utf8Slice(this, start, end)
+
+      case 'ascii':
+        return asciiSlice(this, start, end)
+
+      case 'latin1':
+      case 'binary':
+        return latin1Slice(this, start, end)
+
+      case 'base64':
+        return base64Slice(this, start, end)
+
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return utf16leSlice(this, start, end)
+
+      default:
+        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+        encoding = (encoding + '').toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+
+// This property is used by `Buffer.isBuffer` (and the `is-buffer` npm package)
+// to detect a Buffer instance. It's not possible to use `instanceof Buffer`
+// reliably in a browserify context because there could be multiple different
+// copies of the 'buffer' package in use. This method works even for Buffer
+// instances that were created from another copy of the `buffer` package.
+// See: https://github.com/feross/buffer/issues/154
+Buffer.prototype._isBuffer = true
+
+function swap (b, n, m) {
+  var i = b[n]
+  b[n] = b[m]
+  b[m] = i
+}
+
+Buffer.prototype.swap16 = function swap16 () {
+  var len = this.length
+  if (len % 2 !== 0) {
+    throw new RangeError('Buffer size must be a multiple of 16-bits')
+  }
+  for (var i = 0; i < len; i += 2) {
+    swap(this, i, i + 1)
+  }
+  return this
+}
+
+Buffer.prototype.swap32 = function swap32 () {
+  var len = this.length
+  if (len % 4 !== 0) {
+    throw new RangeError('Buffer size must be a multiple of 32-bits')
+  }
+  for (var i = 0; i < len; i += 4) {
+    swap(this, i, i + 3)
+    swap(this, i + 1, i + 2)
+  }
+  return this
+}
+
+Buffer.prototype.swap64 = function swap64 () {
+  var len = this.length
+  if (len % 8 !== 0) {
+    throw new RangeError('Buffer size must be a multiple of 64-bits')
+  }
+  for (var i = 0; i < len; i += 8) {
+    swap(this, i, i + 7)
+    swap(this, i + 1, i + 6)
+    swap(this, i + 2, i + 5)
+    swap(this, i + 3, i + 4)
+  }
+  return this
+}
+
+Buffer.prototype.toString = function toString () {
+  var length = this.length
+  if (length === 0) return ''
+  if (arguments.length === 0) return utf8Slice(this, 0, length)
+  return slowToString.apply(this, arguments)
+}
+
+Buffer.prototype.toLocaleString = Buffer.prototype.toString
+
+Buffer.prototype.equals = function equals (b) {
+  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+  if (this === b) return true
+  return Buffer.compare(this, b) === 0
+}
+
+Buffer.prototype.inspect = function inspect () {
+  var str = ''
+  var max = exports.INSPECT_MAX_BYTES
+  str = this.toString('hex', 0, max).replace(/(.{2})/g, '$1 ').trim()
+  if (this.length > max) str += ' ... '
+  return '<Buffer ' + str + '>'
+}
+
+Buffer.prototype.compare = function compare (target, start, end, thisStart, thisEnd) {
+  if (isInstance(target, Uint8Array)) {
+    target = Buffer.from(target, target.offset, target.byteLength)
+  }
+  if (!Buffer.isBuffer(target)) {
+    throw new TypeError(
+      'The "target" argument must be one of type Buffer or Uint8Array. ' +
+      'Received type ' + (typeof target)
+    )
+  }
+
+  if (start === undefined) {
+    start = 0
+  }
+  if (end === undefined) {
+    end = target ? target.length : 0
+  }
+  if (thisStart === undefined) {
+    thisStart = 0
+  }
+  if (thisEnd === undefined) {
+    thisEnd = this.length
+  }
+
+  if (start < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
+    throw new RangeError('out of range index')
+  }
+
+  if (thisStart >= thisEnd && start >= end) {
+    return 0
+  }
+  if (thisStart >= thisEnd) {
+    return -1
+  }
+  if (start >= end) {
+    return 1
+  }
+
+  start >>>= 0
+  end >>>= 0
+  thisStart >>>= 0
+  thisEnd >>>= 0
+
+  if (this === target) return 0
+
+  var x = thisEnd - thisStart
+  var y = end - start
+  var len = Math.min(x, y)
+
+  var thisCopy = this.slice(thisStart, thisEnd)
+  var targetCopy = target.slice(start, end)
+
+  for (var i = 0; i < len; ++i) {
+    if (thisCopy[i] !== targetCopy[i]) {
+      x = thisCopy[i]
+      y = targetCopy[i]
+      break
+    }
+  }
+
+  if (x < y) return -1
+  if (y < x) return 1
+  return 0
+}
+
+// Finds either the first index of `val` in `buffer` at offset >= `byteOffset`,
+// OR the last index of `val` in `buffer` at offset <= `byteOffset`.
+//
+// Arguments:
+// - buffer - a Buffer to search
+// - val - a string, Buffer, or number
+// - byteOffset - an index into `buffer`; will be clamped to an int32
+// - encoding - an optional encoding, relevant is val is a string
+// - dir - true for indexOf, false for lastIndexOf
+function bidirectionalIndexOf (buffer, val, byteOffset, encoding, dir) {
+  // Empty buffer means no match
+  if (buffer.length === 0) return -1
+
+  // Normalize byteOffset
+  if (typeof byteOffset === 'string') {
+    encoding = byteOffset
+    byteOffset = 0
+  } else if (byteOffset > 0x7fffffff) {
+    byteOffset = 0x7fffffff
+  } else if (byteOffset < -0x80000000) {
+    byteOffset = -0x80000000
+  }
+  byteOffset = +byteOffset // Coerce to Number.
+  if (numberIsNaN(byteOffset)) {
+    // byteOffset: it it's undefined, null, NaN, "foo", etc, search whole buffer
+    byteOffset = dir ? 0 : (buffer.length - 1)
+  }
+
+  // Normalize byteOffset: negative offsets start from the end of the buffer
+  if (byteOffset < 0) byteOffset = buffer.length + byteOffset
+  if (byteOffset >= buffer.length) {
+    if (dir) return -1
+    else byteOffset = buffer.length - 1
+  } else if (byteOffset < 0) {
+    if (dir) byteOffset = 0
+    else return -1
+  }
+
+  // Normalize val
+  if (typeof val === 'string') {
+    val = Buffer.from(val, encoding)
+  }
+
+  // Finally, search either indexOf (if dir is true) or lastIndexOf
+  if (Buffer.isBuffer(val)) {
+    // Special case: looking for empty string/buffer always fails
+    if (val.length === 0) {
+      return -1
+    }
+    return arrayIndexOf(buffer, val, byteOffset, encoding, dir)
+  } else if (typeof val === 'number') {
+    val = val & 0xFF // Search for a byte value [0-255]
+    if (typeof Uint8Array.prototype.indexOf === 'function') {
+      if (dir) {
+        return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset)
+      } else {
+        return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset)
+      }
+    }
+    return arrayIndexOf(buffer, [ val ], byteOffset, encoding, dir)
+  }
+
+  throw new TypeError('val must be string, number or Buffer')
+}
+
+function arrayIndexOf (arr, val, byteOffset, encoding, dir) {
+  var indexSize = 1
+  var arrLength = arr.length
+  var valLength = val.length
+
+  if (encoding !== undefined) {
+    encoding = String(encoding).toLowerCase()
+    if (encoding === 'ucs2' || encoding === 'ucs-2' ||
+        encoding === 'utf16le' || encoding === 'utf-16le') {
+      if (arr.length < 2 || val.length < 2) {
+        return -1
+      }
+      indexSize = 2
+      arrLength /= 2
+      valLength /= 2
+      byteOffset /= 2
+    }
+  }
+
+  function read (buf, i) {
+    if (indexSize === 1) {
+      return buf[i]
+    } else {
+      return buf.readUInt16BE(i * indexSize)
+    }
+  }
+
+  var i
+  if (dir) {
+    var foundIndex = -1
+    for (i = byteOffset; i < arrLength; i++) {
+      if (read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)) {
+        if (foundIndex === -1) foundIndex = i
+        if (i - foundIndex + 1 === valLength) return foundIndex * indexSize
+      } else {
+        if (foundIndex !== -1) i -= i - foundIndex
+        foundIndex = -1
+      }
+    }
+  } else {
+    if (byteOffset + valLength > arrLength) byteOffset = arrLength - valLength
+    for (i = byteOffset; i >= 0; i--) {
+      var found = true
+      for (var j = 0; j < valLength; j++) {
+        if (read(arr, i + j) !== read(val, j)) {
+          found = false
+          break
+        }
+      }
+      if (found) return i
+    }
+  }
+
+  return -1
+}
+
+Buffer.prototype.includes = function includes (val, byteOffset, encoding) {
+  return this.indexOf(val, byteOffset, encoding) !== -1
+}
+
+Buffer.prototype.indexOf = function indexOf (val, byteOffset, encoding) {
+  return bidirectionalIndexOf(this, val, byteOffset, encoding, true)
+}
+
+Buffer.prototype.lastIndexOf = function lastIndexOf (val, byteOffset, encoding) {
+  return bidirectionalIndexOf(this, val, byteOffset, encoding, false)
+}
+
+function hexWrite (buf, string, offset, length) {
+  offset = Number(offset) || 0
+  var remaining = buf.length - offset
+  if (!length) {
+    length = remaining
+  } else {
+    length = Number(length)
+    if (length > remaining) {
+      length = remaining
+    }
+  }
+
+  var strLen = string.length
+
+  if (length > strLen / 2) {
+    length = strLen / 2
+  }
+  for (var i = 0; i < length; ++i) {
+    var parsed = parseInt(string.substr(i * 2, 2), 16)
+    if (numberIsNaN(parsed)) return i
+    buf[offset + i] = parsed
+  }
+  return i
+}
+
+function utf8Write (buf, string, offset, length) {
+  return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length)
+}
+
+function asciiWrite (buf, string, offset, length) {
+  return blitBuffer(asciiToBytes(string), buf, offset, length)
+}
+
+function latin1Write (buf, string, offset, length) {
+  return asciiWrite(buf, string, offset, length)
+}
+
+function base64Write (buf, string, offset, length) {
+  return blitBuffer(base64ToBytes(string), buf, offset, length)
+}
+
+function ucs2Write (buf, string, offset, length) {
+  return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length)
+}
+
+Buffer.prototype.write = function write (string, offset, length, encoding) {
+  // Buffer#write(string)
+  if (offset === undefined) {
+    encoding = 'utf8'
+    length = this.length
+    offset = 0
+  // Buffer#write(string, encoding)
+  } else if (length === undefined && typeof offset === 'string') {
+    encoding = offset
+    length = this.length
+    offset = 0
+  // Buffer#write(string, offset[, length][, encoding])
+  } else if (isFinite(offset)) {
+    offset = offset >>> 0
+    if (isFinite(length)) {
+      length = length >>> 0
+      if (encoding === undefined) encoding = 'utf8'
+    } else {
+      encoding = length
+      length = undefined
+    }
+  } else {
+    throw new Error(
+      'Buffer.write(string, encoding, offset[, length]) is no longer supported'
+    )
+  }
+
+  var remaining = this.length - offset
+  if (length === undefined || length > remaining) length = remaining
+
+  if ((string.length > 0 && (length < 0 || offset < 0)) || offset > this.length) {
+    throw new RangeError('Attempt to write outside buffer bounds')
+  }
+
+  if (!encoding) encoding = 'utf8'
+
+  var loweredCase = false
+  for (;;) {
+    switch (encoding) {
+      case 'hex':
+        return hexWrite(this, string, offset, length)
+
+      case 'utf8':
+      case 'utf-8':
+        return utf8Write(this, string, offset, length)
+
+      case 'ascii':
+        return asciiWrite(this, string, offset, length)
+
+      case 'latin1':
+      case 'binary':
+        return latin1Write(this, string, offset, length)
+
+      case 'base64':
+        // Warning: maxLength not taken into account in base64Write
+        return base64Write(this, string, offset, length)
+
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return ucs2Write(this, string, offset, length)
+
+      default:
+        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+        encoding = ('' + encoding).toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+
+Buffer.prototype.toJSON = function toJSON () {
+  return {
+    type: 'Buffer',
+    data: Array.prototype.slice.call(this._arr || this, 0)
+  }
+}
+
+function base64Slice (buf, start, end) {
+  if (start === 0 && end === buf.length) {
+    return base64.fromByteArray(buf)
+  } else {
+    return base64.fromByteArray(buf.slice(start, end))
+  }
+}
+
+function utf8Slice (buf, start, end) {
+  end = Math.min(buf.length, end)
+  var res = []
+
+  var i = start
+  while (i < end) {
+    var firstByte = buf[i]
+    var codePoint = null
+    var bytesPerSequence = (firstByte > 0xEF) ? 4
+      : (firstByte > 0xDF) ? 3
+        : (firstByte > 0xBF) ? 2
+          : 1
+
+    if (i + bytesPerSequence <= end) {
+      var secondByte, thirdByte, fourthByte, tempCodePoint
+
+      switch (bytesPerSequence) {
+        case 1:
+          if (firstByte < 0x80) {
+            codePoint = firstByte
+          }
+          break
+        case 2:
+          secondByte = buf[i + 1]
+          if ((secondByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0x1F) << 0x6 | (secondByte & 0x3F)
+            if (tempCodePoint > 0x7F) {
+              codePoint = tempCodePoint
+            }
+          }
+          break
+        case 3:
+          secondByte = buf[i + 1]
+          thirdByte = buf[i + 2]
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | (thirdByte & 0x3F)
+            if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
+              codePoint = tempCodePoint
+            }
+          }
+          break
+        case 4:
+          secondByte = buf[i + 1]
+          thirdByte = buf[i + 2]
+          fourthByte = buf[i + 3]
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | (fourthByte & 0x3F)
+            if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
+              codePoint = tempCodePoint
+            }
+          }
+      }
+    }
+
+    if (codePoint === null) {
+      // we did not generate a valid codePoint so insert a
+      // replacement char (U+FFFD) and advance only 1 byte
+      codePoint = 0xFFFD
+      bytesPerSequence = 1
+    } else if (codePoint > 0xFFFF) {
+      // encode to utf16 (surrogate pair dance)
+      codePoint -= 0x10000
+      res.push(codePoint >>> 10 & 0x3FF | 0xD800)
+      codePoint = 0xDC00 | codePoint & 0x3FF
+    }
+
+    res.push(codePoint)
+    i += bytesPerSequence
+  }
+
+  return decodeCodePointsArray(res)
+}
+
+// Based on http://stackoverflow.com/a/22747272/680742, the browser with
+// the lowest limit is Chrome, with 0x10000 args.
+// We go 1 magnitude less, for safety
+var MAX_ARGUMENTS_LENGTH = 0x1000
+
+function decodeCodePointsArray (codePoints) {
+  var len = codePoints.length
+  if (len <= MAX_ARGUMENTS_LENGTH) {
+    return String.fromCharCode.apply(String, codePoints) // avoid extra slice()
+  }
+
+  // Decode in chunks to avoid "call stack size exceeded".
+  var res = ''
+  var i = 0
+  while (i < len) {
+    res += String.fromCharCode.apply(
+      String,
+      codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
+    )
+  }
+  return res
+}
+
+function asciiSlice (buf, start, end) {
+  var ret = ''
+  end = Math.min(buf.length, end)
+
+  for (var i = start; i < end; ++i) {
+    ret += String.fromCharCode(buf[i] & 0x7F)
+  }
+  return ret
+}
+
+function latin1Slice (buf, start, end) {
+  var ret = ''
+  end = Math.min(buf.length, end)
+
+  for (var i = start; i < end; ++i) {
+    ret += String.fromCharCode(buf[i])
+  }
+  return ret
+}
+
+function hexSlice (buf, start, end) {
+  var len = buf.length
+
+  if (!start || start < 0) start = 0
+  if (!end || end < 0 || end > len) end = len
+
+  var out = ''
+  for (var i = start; i < end; ++i) {
+    out += toHex(buf[i])
+  }
+  return out
+}
+
+function utf16leSlice (buf, start, end) {
+  var bytes = buf.slice(start, end)
+  var res = ''
+  for (var i = 0; i < bytes.length; i += 2) {
+    res += String.fromCharCode(bytes[i] + (bytes[i + 1] * 256))
+  }
+  return res
+}
+
+Buffer.prototype.slice = function slice (start, end) {
+  var len = this.length
+  start = ~~start
+  end = end === undefined ? len : ~~end
+
+  if (start < 0) {
+    start += len
+    if (start < 0) start = 0
+  } else if (start > len) {
+    start = len
+  }
+
+  if (end < 0) {
+    end += len
+    if (end < 0) end = 0
+  } else if (end > len) {
+    end = len
+  }
+
+  if (end < start) end = start
+
+  var newBuf = this.subarray(start, end)
+  // Return an augmented `Uint8Array` instance
+  newBuf.__proto__ = Buffer.prototype
+  return newBuf
+}
+
+/*
+ * Need to make sure that buffer isn't trying to write out of bounds.
+ */
+function checkOffset (offset, ext, length) {
+  if ((offset % 1) !== 0 || offset < 0) throw new RangeError('offset is not uint')
+  if (offset + ext > length) throw new RangeError('Trying to access beyond buffer length')
+}
+
+Buffer.prototype.readUIntLE = function readUIntLE (offset, byteLength, noAssert) {
+  offset = offset >>> 0
+  byteLength = byteLength >>> 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset]
+  var mul = 1
+  var i = 0
+  while (++i < byteLength && (mul *= 0x100)) {
+    val += this[offset + i] * mul
+  }
+
+  return val
+}
+
+Buffer.prototype.readUIntBE = function readUIntBE (offset, byteLength, noAssert) {
+  offset = offset >>> 0
+  byteLength = byteLength >>> 0
+  if (!noAssert) {
+    checkOffset(offset, byteLength, this.length)
+  }
+
+  var val = this[offset + --byteLength]
+  var mul = 1
+  while (byteLength > 0 && (mul *= 0x100)) {
+    val += this[offset + --byteLength] * mul
+  }
+
+  return val
+}
+
+Buffer.prototype.readUInt8 = function readUInt8 (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 1, this.length)
+  return this[offset]
+}
+
+Buffer.prototype.readUInt16LE = function readUInt16LE (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  return this[offset] | (this[offset + 1] << 8)
+}
+
+Buffer.prototype.readUInt16BE = function readUInt16BE (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  return (this[offset] << 8) | this[offset + 1]
+}
+
+Buffer.prototype.readUInt32LE = function readUInt32LE (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return ((this[offset]) |
+      (this[offset + 1] << 8) |
+      (this[offset + 2] << 16)) +
+      (this[offset + 3] * 0x1000000)
+}
+
+Buffer.prototype.readUInt32BE = function readUInt32BE (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset] * 0x1000000) +
+    ((this[offset + 1] << 16) |
+    (this[offset + 2] << 8) |
+    this[offset + 3])
+}
+
+Buffer.prototype.readIntLE = function readIntLE (offset, byteLength, noAssert) {
+  offset = offset >>> 0
+  byteLength = byteLength >>> 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset]
+  var mul = 1
+  var i = 0
+  while (++i < byteLength && (mul *= 0x100)) {
+    val += this[offset + i] * mul
+  }
+  mul *= 0x80
+
+  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+
+  return val
+}
+
+Buffer.prototype.readIntBE = function readIntBE (offset, byteLength, noAssert) {
+  offset = offset >>> 0
+  byteLength = byteLength >>> 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var i = byteLength
+  var mul = 1
+  var val = this[offset + --i]
+  while (i > 0 && (mul *= 0x100)) {
+    val += this[offset + --i] * mul
+  }
+  mul *= 0x80
+
+  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+
+  return val
+}
+
+Buffer.prototype.readInt8 = function readInt8 (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 1, this.length)
+  if (!(this[offset] & 0x80)) return (this[offset])
+  return ((0xff - this[offset] + 1) * -1)
+}
+
+Buffer.prototype.readInt16LE = function readInt16LE (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  var val = this[offset] | (this[offset + 1] << 8)
+  return (val & 0x8000) ? val | 0xFFFF0000 : val
+}
+
+Buffer.prototype.readInt16BE = function readInt16BE (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  var val = this[offset + 1] | (this[offset] << 8)
+  return (val & 0x8000) ? val | 0xFFFF0000 : val
+}
+
+Buffer.prototype.readInt32LE = function readInt32LE (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset]) |
+    (this[offset + 1] << 8) |
+    (this[offset + 2] << 16) |
+    (this[offset + 3] << 24)
+}
+
+Buffer.prototype.readInt32BE = function readInt32BE (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset] << 24) |
+    (this[offset + 1] << 16) |
+    (this[offset + 2] << 8) |
+    (this[offset + 3])
+}
+
+Buffer.prototype.readFloatLE = function readFloatLE (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 4, this.length)
+  return ieee754.read(this, offset, true, 23, 4)
+}
+
+Buffer.prototype.readFloatBE = function readFloatBE (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 4, this.length)
+  return ieee754.read(this, offset, false, 23, 4)
+}
+
+Buffer.prototype.readDoubleLE = function readDoubleLE (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 8, this.length)
+  return ieee754.read(this, offset, true, 52, 8)
+}
+
+Buffer.prototype.readDoubleBE = function readDoubleBE (offset, noAssert) {
+  offset = offset >>> 0
+  if (!noAssert) checkOffset(offset, 8, this.length)
+  return ieee754.read(this, offset, false, 52, 8)
+}
+
+function checkInt (buf, value, offset, ext, max, min) {
+  if (!Buffer.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance')
+  if (value > max || value < min) throw new RangeError('"value" argument is out of bounds')
+  if (offset + ext > buf.length) throw new RangeError('Index out of range')
+}
+
+Buffer.prototype.writeUIntLE = function writeUIntLE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  byteLength = byteLength >>> 0
+  if (!noAssert) {
+    var maxBytes = Math.pow(2, 8 * byteLength) - 1
+    checkInt(this, value, offset, byteLength, maxBytes, 0)
+  }
+
+  var mul = 1
+  var i = 0
+  this[offset] = value & 0xFF
+  while (++i < byteLength && (mul *= 0x100)) {
+    this[offset + i] = (value / mul) & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeUIntBE = function writeUIntBE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  byteLength = byteLength >>> 0
+  if (!noAssert) {
+    var maxBytes = Math.pow(2, 8 * byteLength) - 1
+    checkInt(this, value, offset, byteLength, maxBytes, 0)
+  }
+
+  var i = byteLength - 1
+  var mul = 1
+  this[offset + i] = value & 0xFF
+  while (--i >= 0 && (mul *= 0x100)) {
+    this[offset + i] = (value / mul) & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeUInt8 = function writeUInt8 (value, offset, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0)
+  this[offset] = (value & 0xff)
+  return offset + 1
+}
+
+Buffer.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+  this[offset] = (value & 0xff)
+  this[offset + 1] = (value >>> 8)
+  return offset + 2
+}
+
+Buffer.prototype.writeUInt16BE = function writeUInt16BE (value, offset, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+  this[offset] = (value >>> 8)
+  this[offset + 1] = (value & 0xff)
+  return offset + 2
+}
+
+Buffer.prototype.writeUInt32LE = function writeUInt32LE (value, offset, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+  this[offset + 3] = (value >>> 24)
+  this[offset + 2] = (value >>> 16)
+  this[offset + 1] = (value >>> 8)
+  this[offset] = (value & 0xff)
+  return offset + 4
+}
+
+Buffer.prototype.writeUInt32BE = function writeUInt32BE (value, offset, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+  this[offset] = (value >>> 24)
+  this[offset + 1] = (value >>> 16)
+  this[offset + 2] = (value >>> 8)
+  this[offset + 3] = (value & 0xff)
+  return offset + 4
+}
+
+Buffer.prototype.writeIntLE = function writeIntLE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) {
+    var limit = Math.pow(2, (8 * byteLength) - 1)
+
+    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+  }
+
+  var i = 0
+  var mul = 1
+  var sub = 0
+  this[offset] = value & 0xFF
+  while (++i < byteLength && (mul *= 0x100)) {
+    if (value < 0 && sub === 0 && this[offset + i - 1] !== 0) {
+      sub = 1
+    }
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeIntBE = function writeIntBE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) {
+    var limit = Math.pow(2, (8 * byteLength) - 1)
+
+    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+  }
+
+  var i = byteLength - 1
+  var mul = 1
+  var sub = 0
+  this[offset + i] = value & 0xFF
+  while (--i >= 0 && (mul *= 0x100)) {
+    if (value < 0 && sub === 0 && this[offset + i + 1] !== 0) {
+      sub = 1
+    }
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeInt8 = function writeInt8 (value, offset, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80)
+  if (value < 0) value = 0xff + value + 1
+  this[offset] = (value & 0xff)
+  return offset + 1
+}
+
+Buffer.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+  this[offset] = (value & 0xff)
+  this[offset + 1] = (value >>> 8)
+  return offset + 2
+}
+
+Buffer.prototype.writeInt16BE = function writeInt16BE (value, offset, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+  this[offset] = (value >>> 8)
+  this[offset + 1] = (value & 0xff)
+  return offset + 2
+}
+
+Buffer.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+  this[offset] = (value & 0xff)
+  this[offset + 1] = (value >>> 8)
+  this[offset + 2] = (value >>> 16)
+  this[offset + 3] = (value >>> 24)
+  return offset + 4
+}
+
+Buffer.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+  if (value < 0) value = 0xffffffff + value + 1
+  this[offset] = (value >>> 24)
+  this[offset + 1] = (value >>> 16)
+  this[offset + 2] = (value >>> 8)
+  this[offset + 3] = (value & 0xff)
+  return offset + 4
+}
+
+function checkIEEE754 (buf, value, offset, ext, max, min) {
+  if (offset + ext > buf.length) throw new RangeError('Index out of range')
+  if (offset < 0) throw new RangeError('Index out of range')
+}
+
+function writeFloat (buf, value, offset, littleEndian, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) {
+    checkIEEE754(buf, value, offset, 4, 3.4028234663852886e+38, -3.4028234663852886e+38)
+  }
+  ieee754.write(buf, value, offset, littleEndian, 23, 4)
+  return offset + 4
+}
+
+Buffer.prototype.writeFloatLE = function writeFloatLE (value, offset, noAssert) {
+  return writeFloat(this, value, offset, true, noAssert)
+}
+
+Buffer.prototype.writeFloatBE = function writeFloatBE (value, offset, noAssert) {
+  return writeFloat(this, value, offset, false, noAssert)
+}
+
+function writeDouble (buf, value, offset, littleEndian, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) {
+    checkIEEE754(buf, value, offset, 8, 1.7976931348623157E+308, -1.7976931348623157E+308)
+  }
+  ieee754.write(buf, value, offset, littleEndian, 52, 8)
+  return offset + 8
+}
+
+Buffer.prototype.writeDoubleLE = function writeDoubleLE (value, offset, noAssert) {
+  return writeDouble(this, value, offset, true, noAssert)
+}
+
+Buffer.prototype.writeDoubleBE = function writeDoubleBE (value, offset, noAssert) {
+  return writeDouble(this, value, offset, false, noAssert)
+}
+
+// copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
+Buffer.prototype.copy = function copy (target, targetStart, start, end) {
+  if (!Buffer.isBuffer(target)) throw new TypeError('argument should be a Buffer')
+  if (!start) start = 0
+  if (!end && end !== 0) end = this.length
+  if (targetStart >= target.length) targetStart = target.length
+  if (!targetStart) targetStart = 0
+  if (end > 0 && end < start) end = start
+
+  // Copy 0 bytes; we're done
+  if (end === start) return 0
+  if (target.length === 0 || this.length === 0) return 0
+
+  // Fatal error conditions
+  if (targetStart < 0) {
+    throw new RangeError('targetStart out of bounds')
+  }
+  if (start < 0 || start >= this.length) throw new RangeError('Index out of range')
+  if (end < 0) throw new RangeError('sourceEnd out of bounds')
+
+  // Are we oob?
+  if (end > this.length) end = this.length
+  if (target.length - targetStart < end - start) {
+    end = target.length - targetStart + start
+  }
+
+  var len = end - start
+
+  if (this === target && typeof Uint8Array.prototype.copyWithin === 'function') {
+    // Use built-in when available, missing from IE11
+    this.copyWithin(targetStart, start, end)
+  } else if (this === target && start < targetStart && targetStart < end) {
+    // descending copy from end
+    for (var i = len - 1; i >= 0; --i) {
+      target[i + targetStart] = this[i + start]
+    }
+  } else {
+    Uint8Array.prototype.set.call(
+      target,
+      this.subarray(start, end),
+      targetStart
+    )
+  }
+
+  return len
+}
+
+// Usage:
+//    buffer.fill(number[, offset[, end]])
+//    buffer.fill(buffer[, offset[, end]])
+//    buffer.fill(string[, offset[, end]][, encoding])
+Buffer.prototype.fill = function fill (val, start, end, encoding) {
+  // Handle string cases:
+  if (typeof val === 'string') {
+    if (typeof start === 'string') {
+      encoding = start
+      start = 0
+      end = this.length
+    } else if (typeof end === 'string') {
+      encoding = end
+      end = this.length
+    }
+    if (encoding !== undefined && typeof encoding !== 'string') {
+      throw new TypeError('encoding must be a string')
+    }
+    if (typeof encoding === 'string' && !Buffer.isEncoding(encoding)) {
+      throw new TypeError('Unknown encoding: ' + encoding)
+    }
+    if (val.length === 1) {
+      var code = val.charCodeAt(0)
+      if ((encoding === 'utf8' && code < 128) ||
+          encoding === 'latin1') {
+        // Fast path: If `val` fits into a single byte, use that numeric value.
+        val = code
+      }
+    }
+  } else if (typeof val === 'number') {
+    val = val & 255
+  }
+
+  // Invalid ranges are not set to a default, so can range check early.
+  if (start < 0 || this.length < start || this.length < end) {
+    throw new RangeError('Out of range index')
+  }
+
+  if (end <= start) {
+    return this
+  }
+
+  start = start >>> 0
+  end = end === undefined ? this.length : end >>> 0
+
+  if (!val) val = 0
+
+  var i
+  if (typeof val === 'number') {
+    for (i = start; i < end; ++i) {
+      this[i] = val
+    }
+  } else {
+    var bytes = Buffer.isBuffer(val)
+      ? val
+      : Buffer.from(val, encoding)
+    var len = bytes.length
+    if (len === 0) {
+      throw new TypeError('The value "' + val +
+        '" is invalid for argument "value"')
+    }
+    for (i = 0; i < end - start; ++i) {
+      this[i + start] = bytes[i % len]
+    }
+  }
+
+  return this
+}
+
+// HELPER FUNCTIONS
+// ================
+
+var INVALID_BASE64_RE = /[^+/0-9A-Za-z-_]/g
+
+function base64clean (str) {
+  // Node takes equal signs as end of the Base64 encoding
+  str = str.split('=')[0]
+  // Node strips out invalid characters like \n and \t from the string, base64-js does not
+  str = str.trim().replace(INVALID_BASE64_RE, '')
+  // Node converts strings with length < 2 to ''
+  if (str.length < 2) return ''
+  // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
+  while (str.length % 4 !== 0) {
+    str = str + '='
+  }
+  return str
+}
+
+function toHex (n) {
+  if (n < 16) return '0' + n.toString(16)
+  return n.toString(16)
+}
+
+function utf8ToBytes (string, units) {
+  units = units || Infinity
+  var codePoint
+  var length = string.length
+  var leadSurrogate = null
+  var bytes = []
+
+  for (var i = 0; i < length; ++i) {
+    codePoint = string.charCodeAt(i)
+
+    // is surrogate component
+    if (codePoint > 0xD7FF && codePoint < 0xE000) {
+      // last char was a lead
+      if (!leadSurrogate) {
+        // no lead yet
+        if (codePoint > 0xDBFF) {
+          // unexpected trail
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          continue
+        } else if (i + 1 === length) {
+          // unpaired lead
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          continue
+        }
+
+        // valid lead
+        leadSurrogate = codePoint
+
+        continue
+      }
+
+      // 2 leads in a row
+      if (codePoint < 0xDC00) {
+        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+        leadSurrogate = codePoint
+        continue
+      }
+
+      // valid surrogate pair
+      codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000
+    } else if (leadSurrogate) {
+      // valid bmp char, but last char was a lead
+      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+    }
+
+    leadSurrogate = null
+
+    // encode utf8
+    if (codePoint < 0x80) {
+      if ((units -= 1) < 0) break
+      bytes.push(codePoint)
+    } else if (codePoint < 0x800) {
+      if ((units -= 2) < 0) break
+      bytes.push(
+        codePoint >> 0x6 | 0xC0,
+        codePoint & 0x3F | 0x80
+      )
+    } else if (codePoint < 0x10000) {
+      if ((units -= 3) < 0) break
+      bytes.push(
+        codePoint >> 0xC | 0xE0,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
+      )
+    } else if (codePoint < 0x110000) {
+      if ((units -= 4) < 0) break
+      bytes.push(
+        codePoint >> 0x12 | 0xF0,
+        codePoint >> 0xC & 0x3F | 0x80,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
+      )
+    } else {
+      throw new Error('Invalid code point')
+    }
+  }
+
+  return bytes
+}
+
+function asciiToBytes (str) {
+  var byteArray = []
+  for (var i = 0; i < str.length; ++i) {
+    // Node's code seems to be doing this and not & 0x7F..
+    byteArray.push(str.charCodeAt(i) & 0xFF)
+  }
+  return byteArray
+}
+
+function utf16leToBytes (str, units) {
+  var c, hi, lo
+  var byteArray = []
+  for (var i = 0; i < str.length; ++i) {
+    if ((units -= 2) < 0) break
+
+    c = str.charCodeAt(i)
+    hi = c >> 8
+    lo = c % 256
+    byteArray.push(lo)
+    byteArray.push(hi)
+  }
+
+  return byteArray
+}
+
+function base64ToBytes (str) {
+  return base64.toByteArray(base64clean(str))
+}
+
+function blitBuffer (src, dst, offset, length) {
+  for (var i = 0; i < length; ++i) {
+    if ((i + offset >= dst.length) || (i >= src.length)) break
+    dst[i + offset] = src[i]
+  }
+  return i
+}
+
+// ArrayBuffer or Uint8Array objects from other contexts (i.e. iframes) do not pass
+// the `instanceof` check but they should be treated as of that type.
+// See: https://github.com/feross/buffer/issues/166
+function isInstance (obj, type) {
+  return obj instanceof type ||
+    (obj != null && obj.constructor != null && obj.constructor.name != null &&
+      obj.constructor.name === type.name)
+}
+function numberIsNaN (obj) {
+  // For IE11 support
+  return obj !== obj // eslint-disable-line no-self-compare
+}
+
+}).call(this)}).call(this,require("buffer").Buffer)
+},{"base64-js":29,"buffer":30,"ieee754":34}],31:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8776,7 +19387,7 @@ var _bvhLoader = require("./module/bvh-loader");
 var _default = _bvhLoader.MEBvh;
 exports.default = _default;
 
-},{"./module/bvh-loader":23}],23:[function(require,module,exports){
+},{"./module/bvh-loader":32}],32:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9489,7 +20100,7 @@ class MEBvh {
 
 exports.MEBvh = MEBvh;
 
-},{}],24:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 (function (global){(function (){
 /*
  * Copyright (c) 2015 cannon.js Authors
@@ -23179,7 +33790,280 @@ World.prototype.clearForces = function(){
 (2)
 });
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],25:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+  var e, m
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var nBits = -7
+  var i = isLE ? (nBytes - 1) : 0
+  var d = isLE ? -1 : 1
+  var s = buffer[offset + i]
+
+  i += d
+
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  if (e === 0) {
+    e = 1 - eBias
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
+  } else {
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
+
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+  var i = isLE ? 0 : (nBytes - 1)
+  var d = isLE ? 1 : -1
+  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+
+  value = Math.abs(value)
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0
+    e = eMax
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2)
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--
+      c *= 2
+    }
+    if (e + eBias >= 1) {
+      value += rt / c
+    } else {
+      value += rt * Math.pow(2, 1 - eBias)
+    }
+    if (value * c >= 2) {
+      e++
+      c /= 2
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0
+      e = eMax
+    } else if (e + eBias >= 1) {
+      m = ((value * c) - 1) * Math.pow(2, mLen)
+      e = e + eBias
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+  buffer[offset + i - d] |= s * 128
+}
+
+},{}],35:[function(require,module,exports){
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],36:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -23198,7 +34082,7 @@ var App = {
   camera: {
     viewAngle: 45,
     nearViewpoint: 0.1,
-    farViewpoint: 1000,
+    farViewpoint: 5000,
     edgeMarginValue: 100,
     FirstPersonController: false,
     SceneController: false,
@@ -23209,6 +34093,7 @@ var App = {
     sceneControllerWASDKeysAmp: 0.1
   },
   raycast: true,
+  net: true,
   resize: {
     canvas: "full-screen",
     // Change to any to make

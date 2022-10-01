@@ -161,3 +161,13 @@ span {
   align-items: center;
   border: solid #0c2540 3px;
 }
+
+#matrix-net {
+  position: absolute;
+  display: none;
+  right: 0;
+  height: 100%;
+  width: 40vh;
+  font-family: stormfaze;
+  background-color: crimson;
+}
