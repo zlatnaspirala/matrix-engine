@@ -1,6 +1,7 @@
 
 /**
  * @description Usage of MEBvhAnimation with switch system.
+ * Adding improved deleting procedure for scene object.
  * @class MEBvhAnimation
  * @arg filePath
  * @arg options
@@ -41,7 +42,7 @@ import { bvhAnimations } from './animations-list';
         ],
         mix_operation: "multiply",
       },
-      drawTypeBone: "pyramid" // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
+      drawTypeBone: "triangle" // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
     };
     // window.bvhAnimations = bvhAnimations;
     // console.log(" @!!!!bvhAnimations[0] 2>>> ",  bvhAnimations);
