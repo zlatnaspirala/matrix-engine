@@ -97,7 +97,7 @@ var runThis = world => {
 
     matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
       id: "yBot",
-      path: "res/bvh-skeletal-base/y-bot/obj-seq/mid/y-bot-origin",
+      path: "res/bvh-skeletal-base/y-bot/obj-seq/low/y-bot-origin",
       from: 1,
       to: 28
     }), onLoadObj);
