@@ -29,7 +29,7 @@ import { bvhAnimations } from './animations-list';
       showOnLoad: false,              // [Optimal] if autoPLay is true then showOnLoad is inactive.
       type: 'ANIMATION',              // [Optimal] 'ANIMATION' | "TPOSE'
       loop: 'playInverse',            // [Optimal] true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
-      globalOffset: [0, -220, -100],    // [Optimal]
+      globalOffset: [0, -220, -220],    // [Optimal]
       skeletalBoneScale: 3,           // [Optimal]
       /*skeletalBlend: {             // [Optimal] remove arg for no blend
         paramDest: 4,
@@ -60,5 +60,7 @@ import { bvhAnimations } from './animations-list';
     e.detail.hitObject.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[2];
     e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
   });
+
+  createAnimation(1);
 
 };

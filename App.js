@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/bvh_animations';
+import {runThis} from './apps/load_obj_sequence';
 
 var world;
 var App = matrixEngine.App;

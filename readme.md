@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.8.0` beta
+### Name: `MATRIX-ENGINE` `1.8.1`
 
 #### Logo
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/res/icons/ms-icon.png" width="128" height="128" />
@@ -666,6 +666,8 @@ No Dependabot alerts opened.
   http://www.blendswap.com/users/view/AndresCuccaro
 - https://freestocktextures.com/texture/bark-wood-plant,122.html
 - https://github.com/Necolo/raycaster
+- Great https://www.mixamo.com/
+- Player character https://www.mixamo.com/#/?page=1&query=walk&type=Motion%2CMotionPack
 - BVH collections from: Special thanks to the CMU Graphics Lab Motion Capture Database which provided the data http://mocap.cs.cmu.edu/`
 - Used in examples:
   BLACK FLY by Audionautix | http://audionautix.com

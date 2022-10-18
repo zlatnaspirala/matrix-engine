@@ -11,6 +11,7 @@ exports.default = void 0;
  * ClientConfig is config file for client part of networking.
  */
 class ClientConfig {
+  // Not implemented yet
   // Free to define what ever -> injectCanvas
   recordCanvasOption = {
     injectCanvas: () => document.getElementsByTagName("canvas")[0],
@@ -1540,7 +1541,7 @@ if (_manifest.default.pwa.addToHomePage === true) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteMeshBuffers = exports.initMeshBuffers = exports.downloadMeshes = exports.constructMesh = void 0;
+exports.makeObjSeqArg = exports.deleteMeshBuffers = exports.initMeshBuffers = exports.downloadMeshes = exports.constructMesh = void 0;
 
 var _matrixWorld = require("./matrix-world");
 
@@ -1956,8 +1957,41 @@ var deleteMeshBuffers = function (gl, mesh) {
   gl.deleteBuffer(mesh.vertexBuffer);
   gl.deleteBuffer(mesh.indexBuffer);
 };
+/**
+ * @description 
+ * Construct sequence list argument for downloadMeshes.
+ * This is adaptation for blender obj animation export.
+ * For example:
+ * 
+ */
+
 
 exports.deleteMeshBuffers = deleteMeshBuffers;
+
+const makeObjSeqArg = arg => {
+  // Adaptation for blender (animation) obj exporter.
+  var local = {};
+  var zeros = '00000';
+
+  for (let j = arg.from; j <= arg.to; j++) {
+    if (j > 9 && j < 99) {
+      zeros = '0000';
+    } else if (j > 99 && j < 999) {
+      zeros = '000';
+    } // no need more then 999
+
+
+    if (j == arg.from) {
+      local[arg.id] = arg.path + '_' + zeros + j + '.obj';
+    } else {
+      local[arg.id + (j - 1)] = arg.path + '_' + zeros + j + '.obj';
+    }
+  }
+
+  return local;
+};
+
+exports.makeObjSeqArg = makeObjSeqArg;
 
 },{"./matrix-world":17}],7:[function(require,module,exports){
 "use strict";
@@ -2471,13 +2505,24 @@ class MEBvhAnimation {
     if (this.isConstructed == false) this.constructSkeletal();
 
     for (var x = 0; x < this.tPosition.length; x++) {
-      var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
-      App.scene[b].position.SetX(this.animation[0][1][x][0] + this.globalOffset[0]);
-      App.scene[b].position.SetY(this.animation[0][1][x][1] + this.globalOffset[1]);
-      App.scene[b].position.SetZ(this.animation[0][1][x][2] + this.globalOffset[2]);
-      App.scene[b].rotation.rotateX(this.animation[1][1][x][0]);
-      App.scene[b].rotation.rotateY(this.animation[1][1][x][1]);
-      App.scene[b].rotation.rotateZ(this.animation[1][1][x][2]);
+      var b = this.options.boneNameBasePrefix + this.skeletalKeys[x]; // test - import bvh from make human -> blender
+
+      if (this.animation[0][1]) {
+        App.scene[b].position.SetX(this.animation[0][1][x][0] + this.globalOffset[0]);
+        App.scene[b].position.SetY(this.animation[0][1][x][1] + this.globalOffset[1]);
+        App.scene[b].position.SetZ(this.animation[0][1][x][2] + this.globalOffset[2]);
+        App.scene[b].rotation.rotateX(this.animation[1][1][x][0]);
+        App.scene[b].rotation.rotateY(this.animation[1][1][x][1]);
+        App.scene[b].rotation.rotateZ(this.animation[1][1][x][2]);
+      } else {
+        // console.info("TESTED @@@")
+        App.scene[b].position.SetX(this.animation[0][0][x][0] + this.globalOffset[0]);
+        App.scene[b].position.SetY(this.animation[0][0][x][1] + this.globalOffset[1]);
+        App.scene[b].position.SetZ(this.animation[0][0][x][2] + this.globalOffset[2]);
+        App.scene[b].rotation.rotateX(this.animation[1][0][x][0]);
+        App.scene[b].rotation.rotateY(this.animation[1][0][x][1]);
+        App.scene[b].rotation.rotateZ(this.animation[1][0][x][2]);
+      }
     }
   }
 
@@ -2487,13 +2532,27 @@ class MEBvhAnimation {
     if (this.animationTimer == null) {
       this.animationTimer = setInterval(() => {
         for (var x = 0; x < this.tPosition.length; x++) {
-          var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
-          App.scene[b].position.SetX(this.animation[0][this.actualFrame][x][0] + this.globalOffset[0]);
-          App.scene[b].position.SetY(this.animation[0][this.actualFrame][x][1] + this.globalOffset[1]);
-          App.scene[b].position.SetZ(this.animation[0][this.actualFrame][x][2] + this.globalOffset[2]);
-          App.scene[b].rotation.rotateX(this.animation[1][1][x][0]);
-          App.scene[b].rotation.rotateY(this.animation[1][1][x][1]);
-          App.scene[b].rotation.rotateZ(this.animation[1][1][x][2]);
+          var b = this.options.boneNameBasePrefix + this.skeletalKeys[x]; // catch if not exist possible!
+
+          if (App.scene[b]) {
+            // 1.8.1
+            if (App.scene[b] && this.animation[0][this.actualFrame]) {
+              App.scene[b].position.SetX(this.animation[0][this.actualFrame][x][0] + this.globalOffset[0]);
+              App.scene[b].position.SetY(this.animation[0][this.actualFrame][x][1] + this.globalOffset[1]);
+              App.scene[b].position.SetZ(this.animation[0][this.actualFrame][x][2] + this.globalOffset[2]);
+              App.scene[b].rotation.rotateX(this.animation[1][1][x][0]);
+              App.scene[b].rotation.rotateY(this.animation[1][1][x][1]);
+              App.scene[b].rotation.rotateZ(this.animation[1][1][x][2]);
+            } else {
+              // for non t pose
+              App.scene[b].position.SetX(this.animation[0][0][x][0] + this.globalOffset[0]);
+              App.scene[b].position.SetY(this.animation[0][0][x][1] + this.globalOffset[1]);
+              App.scene[b].position.SetZ(this.animation[0][0][x][2] + this.globalOffset[2]);
+              App.scene[b].rotation.rotateX(this.animation[1][0][x][0]);
+              App.scene[b].rotation.rotateY(this.animation[1][0][x][1]);
+              App.scene[b].rotation.rotateZ(this.animation[1][0][x][2]);
+            }
+          }
         }
 
         if (this.options.loop == 'playInverse') {
@@ -7140,7 +7199,21 @@ function defineworld(canvas) {
       triangleObject.mvMatrix = mat4.create();
       triangleObject.geometry = new _matrixGeometry.TriangleVertex(triangleObject);
       triangleObject.geometry.nameUniq = nameUniq;
-      triangleObject.glBlend = new _utility._glBlend(); // Physics
+      triangleObject.glBlend = new _utility._glBlend(); // destroy self 
+
+      triangleObject.selfDestroy = after => {
+        if (after) {
+          setTimeout(() => {
+            // destroy me
+            let objForDelete = world.contentList.splice(world.contentList.indexOf(triangleObject), 1)[0];
+            _manifest.default.scene[objForDelete.name] = null;
+          }, after);
+        } else {
+          let objForDelete = world.contentList.splice(world.contentList.indexOf(triangleObject), 1)[0];
+          _manifest.default.scene[objForDelete.name] = null;
+        }
+      }; // Physics
+
 
       triangleObject.physics = {
         enabled: false
@@ -7188,7 +7261,21 @@ function defineworld(canvas) {
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
       squareObject.geometry.nameUniq = nameUniq;
-      squareObject.glBlend = new _utility._glBlend(); // Physics
+      squareObject.glBlend = new _utility._glBlend(); // destroy self 
+
+      squareObject.selfDestroy = after => {
+        if (after) {
+          setTimeout(() => {
+            // destroy me
+            let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
+            _manifest.default.scene[objForDelete.name] = null;
+          }, after);
+        } else {
+          let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
+          _manifest.default.scene[objForDelete.name] = null;
+        }
+      }; // Physics
+
 
       squareObject.physics = {
         enabled: false
@@ -7238,7 +7325,21 @@ function defineworld(canvas) {
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
       squareObject.geometry.nameUniq = nameUniq;
-      squareObject.glBlend = new _utility._glBlend(); // Physics
+      squareObject.glBlend = new _utility._glBlend(); // destroy self 
+
+      squareObject.selfDestroy = after => {
+        if (after) {
+          setTimeout(() => {
+            // destroy me
+            let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
+            _manifest.default.scene[objForDelete.name] = null;
+          }, after);
+        } else {
+          let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
+          _manifest.default.scene[objForDelete.name] = null;
+        }
+      }; // Physics
+
 
       squareObject.physics = {
         enabled: false
@@ -7346,7 +7447,21 @@ function defineworld(canvas) {
       //   cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       //   cubeObject.useDirectionLight = true;
       // };
-      // Physics
+      // destroy self 
+
+      cubeObject.selfDestroy = after => {
+        if (after) {
+          setTimeout(() => {
+            // destroy me
+            let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
+            _manifest.default.scene[objForDelete.name] = null;
+          }, after);
+        } else {
+          let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
+          _manifest.default.scene[objForDelete.name] = null;
+        }
+      }; // Physics
+
 
       cubeObject.physics = {
         enabled: false
@@ -7390,7 +7505,21 @@ function defineworld(canvas) {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
         ambientLight: new _matrixGeometry.COLOR(1, 1, 1),
         lightingDirection: new _matrixGeometry.COLOR(1, 1, 0)
+      }; // destroy self 
+
+      sphereObject.selfDestroy = after => {
+        if (after) {
+          setTimeout(() => {
+            // destroy me
+            let objForDelete = world.contentList.splice(world.contentList.indexOf(sphereObject), 1)[0];
+            _manifest.default.scene[objForDelete.name] = null;
+          }, after);
+        } else {
+          let objForDelete = world.contentList.splice(world.contentList.indexOf(sphereObject), 1)[0];
+          _manifest.default.scene[objForDelete.name] = null;
+        }
       }; // Physics
+
 
       sphereObject.physics = {
         enabled: false
@@ -7505,7 +7634,21 @@ function defineworld(canvas) {
       pyramidObject.rotation.nameUniq = nameUniq;
       pyramidObject.mvMatrix = mat4.create();
       pyramidObject.geometry = new _matrixGeometry.PiramideVertex(pyramidObject);
-      pyramidObject.geometry.nameUniq = nameUniq; // Physics
+      pyramidObject.geometry.nameUniq = nameUniq; // destroy self 
+
+      pyramidObject.selfDestroy = after => {
+        if (after) {
+          setTimeout(() => {
+            // destroy me
+            let objForDelete = world.contentList.splice(world.contentList.indexOf(pyramidObject), 1)[0];
+            _manifest.default.scene[objForDelete.name] = null;
+          }, after);
+        } else {
+          let objForDelete = world.contentList.splice(world.contentList.indexOf(pyramidObject), 1)[0];
+          _manifest.default.scene[objForDelete.name] = null;
+        }
+      }; // Physics
+
 
       pyramidObject.physics = {
         enabled: false
@@ -7564,7 +7707,21 @@ function defineworld(canvas) {
         directionLight: new _matrixGeometry.COLOR(5, 5, 5),
         ambientLight: new _matrixGeometry.COLOR(1, 1, 1),
         lightingDirection: new _matrixGeometry.COLOR(0, 1, 0)
+      }; // destroy self  MAy need more improve
+
+      objObject.selfDestroy = after => {
+        if (after) {
+          setTimeout(() => {
+            // destroy me
+            let objForDelete = world.contentList.splice(world.contentList.indexOf(objObject), 1)[0];
+            _manifest.default.scene[objForDelete.name] = null;
+          }, after);
+        } else {
+          let objForDelete = world.contentList.splice(world.contentList.indexOf(objObject), 1)[0];
+          _manifest.default.scene[objForDelete.name] = null;
+        }
       }; // Physics
+
 
       objObject.physics = {
         enabled: false
@@ -7669,7 +7826,21 @@ function defineworld(canvas) {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
         ambientLight: new _matrixGeometry.COLOR(1, 1, 1),
         lightingDirection: new _matrixGeometry.COLOR((0, _utility.radToDeg)(0.3), (0, _utility.radToDeg)(-0.3), (0, _utility.radToDeg)(-1))
+      }; // destroy self  MAy need more improve
+
+      cubeObject.selfDestroy = after => {
+        if (after) {
+          setTimeout(() => {
+            // destroy me
+            let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
+            _manifest.default.scene[objForDelete.name] = null;
+          }, after);
+        } else {
+          let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
+          _manifest.default.scene[objForDelete.name] = null;
+        }
       }; // Physics
+
 
       cubeObject.physics = {
         enabled: false
@@ -7783,7 +7954,21 @@ function defineworld(canvas) {
       customObject.size = size;
       customObject.sides = 12;
       customObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
-      customObject.rotation.nameUniq = nameUniq; //lights
+      customObject.rotation.nameUniq = nameUniq; // destroy self  MAy need more improve
+
+      customObject.selfDestroy = after => {
+        if (after) {
+          setTimeout(() => {
+            // destroy me
+            let objForDelete = world.contentList.splice(world.contentList.indexOf(customObject), 1)[0];
+            _manifest.default.scene[objForDelete.name] = null;
+          }, after);
+        } else {
+          let objForDelete = world.contentList.splice(world.contentList.indexOf(customObject), 1)[0];
+          _manifest.default.scene[objForDelete.name] = null;
+        }
+      }; //lights
+
 
       customObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
