@@ -13,11 +13,12 @@ export var runThis = world => {
   // LOAD MESH FROM OBJ FILES...
   // if you dont use obj or complex mesh you no need for this func
   function onLoadObj(meshes) {
-    App.meshes = meshes;
+    // No need from [1.8.2]
+    // App.meshes = meshes;
 
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.halfCircle);
-    for (const key in App.meshes) {
-      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes[key]);
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes.halfCircle);
+    for (const key in meshes) {
+      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
     }
 
     var textuteImageSamplers = {
@@ -30,28 +31,14 @@ export var runThis = world => {
       1,
       "halfCircle",
       textuteImageSamplers,
-      App.meshes.halfCircle
+      meshes.halfCircle
     );
     App.scene.halfCircle.position.y = -12;
     App.scene.halfCircle.position.z = -12;
     App.scene.halfCircle.rotation.rotationSpeed.y = 100;
     App.scene.halfCircle.glBlend.blendEnabled = true;
     var oscillator1 = new OSCILLATOR(-12, 8, 0.2);
-/*
-    world.Add(
-      "obj",
-      1,
-      "halfCircle2",
-      textuteImageSamplers,
-      App.meshes.halfCircle
-    );
-    App.scene.halfCircle2.position.y = 7;
-    App.scene.halfCircle2.position.z = -12;
-    App.scene.halfCircle2.rotation.rotationSpeed.y = -100;
-    App.scene.halfCircle2.glBlend.blendEnabled = true;
-    var oscillator2 = new OSCILLATOR(-12, 8, 0.2);
-    oscillator2.value_ = App.scene.halfCircle2.position.y - 1;
-*/
+
     // FEMALE
     var textuteImageSamplers2 = {
       source: ["res/images/RustPaint.jpg"],
@@ -60,6 +47,7 @@ export var runThis = world => {
 
     var animation_construct = {
       id: "female",
+      meshList: meshes,
       sumOfAniFrames: 18,
       currentAni: 0,
       speed: 3,
@@ -70,7 +58,7 @@ export var runThis = world => {
       1,
       "female",
       textuteImageSamplers2,
-      App.meshes.female,
+      meshes.female,
       animation_construct
     );
 

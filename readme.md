@@ -464,7 +464,9 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 ```js
 // Obj Loader
 function onLoadObj(meshes) {
-  App.meshes = meshes;
+
+  // No need from [1.8.2]
+  // App.meshes = meshes;
   for (const key in App.meshes) {
     matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes[key]);
   }
@@ -477,6 +479,7 @@ function onLoadObj(meshes) {
   setTimeout(function () {
     var animation_construct = {
       id: 'female',
+      meshList: meshes, // from [1.8.2]
       sumOfAniFrames: 18,
       currentAni: 0,
       speed: 3
@@ -491,30 +494,27 @@ function onLoadObj(meshes) {
   }, 100);
 }
 
+// Custom list 1, 3, 5, 9
 matrixEngine.objLoader.downloadMeshes(
   {
     female: 'res/3d-objects/female/female_000001.obj',
     female1: 'res/3d-objects/female/female_000003.obj',
     female2: 'res/3d-objects/female/female_000005.obj',
-    female3: 'res/3d-objects/female/female_000007.obj',
-    female4: 'res/3d-objects/female/female_000009.obj',
-    female5: 'res/3d-objects/female/female_000011.obj',
-    female6: 'res/3d-objects/female/female_000013.obj',
-    female7: 'res/3d-objects/female/female_000015.obj',
-    female8: 'res/3d-objects/female/female_000017.obj',
-    female9: 'res/3d-objects/female/female_000019.obj',
-    female10: 'res/3d-objects/female/female_000021.obj',
-    female11: 'res/3d-objects/female/female_000023.obj',
-    female12: 'res/3d-objects/female/female_000025.obj',
-    female13: 'res/3d-objects/female/female_000027.obj',
-    female14: 'res/3d-objects/female/female_000029.obj',
-    female15: 'res/3d-objects/female/female_000031.obj',
-    female16: 'res/3d-objects/female/female_000033.obj',
-    female17: 'res/3d-objects/female/female_000035.obj',
-    female18: 'res/3d-objects/female/female_000037.obj'
+    female3: 'res/3d-objects/female/female_000009.obj',
+    ...
   },
   onLoadObj
 );
+
+// From [1.8.2] you can use `makeObjSeqArg`
+matrixEngine.objLoader.downloadMeshes(
+  matrixEngine.objLoader.makeObjSeqArg(
+    { id: objName,
+      path: "res/bvh-skeletal-base/swat-guy/seq-walk/low/swat",
+      from : 1, to: 34 }),
+  onLoadObj
+);
+
 ```
 
 ### Blending:

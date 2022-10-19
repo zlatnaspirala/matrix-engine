@@ -1641,7 +1641,7 @@ var runThis = world => {
   // Camera
   _manifest.default.camera.SceneController = true;
 
-  const createObjSequence = () => {
+  const createObjSequence = objName => {
     function onLoadObj(meshes) {
       _manifest.default.meshes = meshes;
 
@@ -1650,28 +1650,45 @@ var runThis = world => {
       }
 
       var textuteImageSamplers2 = {
-        source: ["res/bvh-skeletal-base/test.png"],
+        source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
         mix_operation: "multiply" // ENUM : multiply , divide
 
       };
       setTimeout(function () {
         var animation_construct = {
-          id: "yBot",
-          sumOfAniFrames: 27,
+          // stay for now
+          id: objName,
+          meshList: meshes,
+          sumOfAniFrames: 33,
           currentAni: 0,
-          speed: 3
+          speed: 3,
+          // upgrade - optimal
+          animations: {
+            active: 'walk',
+            walk: {
+              from: 0,
+              to: 15,
+              speed: 3
+            },
+            walk2: {
+              from: 15,
+              to: 33,
+              speed: 3
+            }
+          }
         };
-        world.Add("obj", 1, "yBot", textuteImageSamplers2, _manifest.default.meshes.yBot, animation_construct);
-        _manifest.default.scene.yBot.position.y = -1;
-        _manifest.default.scene.yBot.position.z = -4;
+        world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animation_construct);
+        _manifest.default.scene[objName].position.y = -1;
+        _manifest.default.scene[objName].position.z = -4;
       }, 100);
     }
 
     matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
-      id: "yBot",
-      path: "res/bvh-skeletal-base/y-bot/obj-seq/mid/y-bot-origin",
+      id: objName,
+      // path: "res/bvh-skeletal-base/y-bot/obj-seq/low/y-bot-origin",
+      path: "res/bvh-skeletal-base/swat-guy/seq-walk/low/swat",
       from: 1,
-      to: 28
+      to: 34
     }), onLoadObj);
   };
 
@@ -1684,7 +1701,8 @@ var runThis = world => {
     e.detail.hitObject.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[2];
     e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
   });
-  createObjSequence();
+  createObjSequence('player');
+  createObjSequence('net_player');
 };
 
 exports.runThis = runThis;
@@ -1917,35 +1935,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /**
  * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
+ * @Description Matrix Engine Api Example for
+ * Load custom list of obj sequence.
  */
-
-/* globals world App world */
 var runThis = world => {
-  /* globals world App OBJ */
   // LOAD MESH FROM OBJ FILES...
   // if you dont use obj or complex mesh you no need for this func
   function onLoadObj(meshes) {
-    _manifest.default.meshes = meshes;
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female1);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female2);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female3);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female4);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female5);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female6);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female7);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female8);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female9);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female10);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female11);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female12);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female13);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female14);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female15);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female16);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female17);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.female18);
+    // No need from [1.8.2]
+    // App.meshes = meshes;
+    for (let key in meshes) {
+      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
+    }
+
     var textuteImageSamplers2 = {
       source: ["res/images/RustPaint.jpg"],
       mix_operation: "multiply" // ENUM : multiply , divide
@@ -1954,11 +1956,12 @@ var runThis = world => {
     setTimeout(function () {
       var animation_construct = {
         id: "female",
+        meshList: meshes,
         sumOfAniFrames: 18,
         currentAni: 0,
         speed: 3
       };
-      world.Add("obj", 1, "female", textuteImageSamplers2, _manifest.default.meshes.female, animation_construct);
+      world.Add("obj", 1, "female", textuteImageSamplers2, meshes.female, animation_construct);
       _manifest.default.scene.female.position.y = -3;
       _manifest.default.scene.female.rotation.rotationSpeed.z = 20;
       _manifest.default.scene.female.position.z = -13;
@@ -2020,39 +2023,24 @@ var runThis = world => {
   // if you dont use obj or complex mesh you no need for this func
 
   function onLoadObj(meshes) {
-    _manifest.default.meshes = meshes;
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.halfCircle);
+    // No need from [1.8.2]
+    // App.meshes = meshes;
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes.halfCircle);
 
-    for (const key in _manifest.default.meshes) {
-      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes[key]);
+    for (const key in meshes) {
+      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
     }
 
     var textuteImageSamplers = {
       source: ["res/images/semi_pack/gradiend_half3.png"],
       mix_operation: "multiply"
     };
-    world.Add("obj", 1, "halfCircle", textuteImageSamplers, _manifest.default.meshes.halfCircle);
+    world.Add("obj", 1, "halfCircle", textuteImageSamplers, meshes.halfCircle);
     _manifest.default.scene.halfCircle.position.y = -12;
     _manifest.default.scene.halfCircle.position.z = -12;
     _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = 100;
     _manifest.default.scene.halfCircle.glBlend.blendEnabled = true;
-    var oscillator1 = new OSCILLATOR(-12, 8, 0.2);
-    /*
-        world.Add(
-          "obj",
-          1,
-          "halfCircle2",
-          textuteImageSamplers,
-          App.meshes.halfCircle
-        );
-        App.scene.halfCircle2.position.y = 7;
-        App.scene.halfCircle2.position.z = -12;
-        App.scene.halfCircle2.rotation.rotationSpeed.y = -100;
-        App.scene.halfCircle2.glBlend.blendEnabled = true;
-        var oscillator2 = new OSCILLATOR(-12, 8, 0.2);
-        oscillator2.value_ = App.scene.halfCircle2.position.y - 1;
-    */
-    // FEMALE
+    var oscillator1 = new OSCILLATOR(-12, 8, 0.2); // FEMALE
 
     var textuteImageSamplers2 = {
       source: ["res/images/RustPaint.jpg"],
@@ -2060,11 +2048,12 @@ var runThis = world => {
     };
     var animation_construct = {
       id: "female",
+      meshList: meshes,
       sumOfAniFrames: 18,
       currentAni: 0,
       speed: 3
     };
-    world.Add("obj", 1, "female", textuteImageSamplers2, _manifest.default.meshes.female, animation_construct);
+    world.Add("obj", 1, "female", textuteImageSamplers2, meshes.female, animation_construct);
     _manifest.default.scene.female.glBlend.blendEnabled = true;
     _manifest.default.scene.female.position.y = -4;
     _manifest.default.scene.female.rotation.rotationSpeed.y = 150;
@@ -6137,14 +6126,27 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
   if (typeof object.mesh.vertexBuffer != 'undefined') {
     if (object.animation != null) {
+      //--------------------------------------------------
       object.animation.currentDraws++;
 
-      if (object.animation.currentDraws > object.animation.speed) {
+      if (typeof object.animation.anims === 'undefined' && object.animation.currentDraws > object.animation.speed) {
         object.animation.currentAni++;
         object.animation.currentDraws = 0;
 
         if (object.animation.currentAni > object.animation.sumOfAniFrames) {
           object.animation.currentAni = 0;
+        }
+      } // Make animation sequences -> sub animation
+
+
+      if (typeof object.animation.anims !== 'undefined') {
+        if (object.animation.currentDraws > object.animation.anims[object.animation.anims.active].speed) {
+          object.animation.currentAni++;
+          object.animation.currentDraws = 0;
+
+          if (object.animation.currentAni > object.animation.anims[object.animation.anims.active].to) {
+            object.animation.currentAni = object.animation.anims[object.animation.anims.active].from;
+          }
         }
       }
 
@@ -6153,10 +6155,11 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
         _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.mesh.vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
       } else {
-        _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, _manifest.default.meshes[object.animation.id + object.animation.currentAni].vertexBuffer);
+        _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.meshList[object.animation.id + object.animation.currentAni].vertexBuffer);
 
         _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.mesh.vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-      }
+      } //--------------------------------------------------
+
     } else {
       // now to render the mesh test
       _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.mesh.vertexBuffer);
@@ -10886,6 +10889,9 @@ function defineworld(canvas) {
       };
 
       objObject.mvMatrix = mat4.create(); // eslint-disable-next-line valid-typeof
+      // update
+
+      objObject.meshList = {};
 
       if (typeof animationConstruct_ == 'undefined' || typeof animationConstruct_ == null) {
         objObject.animation = null;
@@ -10897,7 +10903,15 @@ function defineworld(canvas) {
           speed: animationConstruct_.speed,
           currentDraws: 0
         };
-      }
+
+        if (typeof animationConstruct_.animations !== 'undefined') {
+          objObject.animation.anims = animationConstruct_.animations;
+        } // no need for single test it in future
+
+
+        objObject.meshList = animationConstruct_.meshList;
+      } // Stay like root or t pose data holder
+
 
       objObject.mesh = mesh_;
 

@@ -69,7 +69,7 @@ var runThis = world => {
   // Camera
   _manifest.default.camera.SceneController = true;
 
-  const createObjSequence = () => {
+  const createObjSequence = objName => {
     function onLoadObj(meshes) {
       _manifest.default.meshes = meshes;
 
@@ -78,28 +78,45 @@ var runThis = world => {
       }
 
       var textuteImageSamplers2 = {
-        source: ["res/bvh-skeletal-base/test.png"],
+        source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
         mix_operation: "multiply" // ENUM : multiply , divide
 
       };
       setTimeout(function () {
         var animation_construct = {
-          id: "yBot",
-          sumOfAniFrames: 27,
+          // stay for now
+          id: objName,
+          meshList: meshes,
+          sumOfAniFrames: 33,
           currentAni: 0,
-          speed: 3
+          speed: 3,
+          // upgrade - optimal
+          animations: {
+            active: 'walk',
+            walk: {
+              from: 0,
+              to: 5,
+              speed: 3
+            },
+            walk2: {
+              from: 15,
+              to: 33,
+              speed: 3
+            }
+          }
         };
-        world.Add("obj", 1, "yBot", textuteImageSamplers2, _manifest.default.meshes.yBot, animation_construct);
-        _manifest.default.scene.yBot.position.y = -1;
-        _manifest.default.scene.yBot.position.z = -4;
+        world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animation_construct);
+        _manifest.default.scene[objName].position.y = -1;
+        _manifest.default.scene[objName].position.z = -4;
       }, 100);
     }
 
     matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
-      id: "yBot",
-      path: "res/bvh-skeletal-base/y-bot/obj-seq/low/y-bot-origin",
+      id: objName,
+      // path: "res/bvh-skeletal-base/y-bot/obj-seq/low/y-bot-origin",
+      path: "res/bvh-skeletal-base/swat-guy/seq-walk/low/swat",
       from: 1,
-      to: 28
+      to: 34
     }), onLoadObj);
   };
 
@@ -112,7 +129,8 @@ var runThis = world => {
     e.detail.hitObject.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[2];
     e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
   });
-  createObjSequence();
+  createObjSequence('player'); // Fixed
+  // createObjSequence('player222');
 };
 
 exports.runThis = runThis;
@@ -3126,14 +3144,27 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
   if (typeof object.mesh.vertexBuffer != 'undefined') {
     if (object.animation != null) {
+      //--------------------------------------------------
       object.animation.currentDraws++;
 
-      if (object.animation.currentDraws > object.animation.speed) {
+      if (typeof object.animation.anims === 'undefined' && object.animation.currentDraws > object.animation.speed) {
         object.animation.currentAni++;
         object.animation.currentDraws = 0;
 
         if (object.animation.currentAni > object.animation.sumOfAniFrames) {
           object.animation.currentAni = 0;
+        }
+      } // Make animation sequences -> sub animation
+
+
+      if (typeof object.animation.anims !== 'undefined') {
+        if (object.animation.currentDraws > object.animation.anims[object.animation.anims.active].speed) {
+          object.animation.currentAni++;
+          object.animation.currentDraws = 0;
+
+          if (object.animation.currentAni > object.animation.anims[object.animation.anims.active].to) {
+            object.animation.currentAni = object.animation.anims[object.animation.anims.active].from;
+          }
         }
       }
 
@@ -3142,10 +3173,11 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
         _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.mesh.vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
       } else {
-        _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, _manifest.default.meshes[object.animation.id + object.animation.currentAni].vertexBuffer);
+        _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.meshList[object.animation.id + object.animation.currentAni].vertexBuffer);
 
         _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.mesh.vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-      }
+      } //--------------------------------------------------
+
     } else {
       // now to render the mesh test
       _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.mesh.vertexBuffer);
@@ -7875,6 +7907,9 @@ function defineworld(canvas) {
       };
 
       objObject.mvMatrix = mat4.create(); // eslint-disable-next-line valid-typeof
+      // update
+
+      objObject.meshList = {};
 
       if (typeof animationConstruct_ == 'undefined' || typeof animationConstruct_ == null) {
         objObject.animation = null;
@@ -7886,7 +7921,15 @@ function defineworld(canvas) {
           speed: animationConstruct_.speed,
           currentDraws: 0
         };
-      }
+
+        if (typeof animationConstruct_.animations !== 'undefined') {
+          objObject.animation.anims = animationConstruct_.animations;
+        } // no need for single test it in future
+
+
+        objObject.meshList = animationConstruct_.meshList;
+      } // Stay like root or t pose data holder
+
 
       objObject.mesh = mesh_;
 

@@ -1,38 +1,22 @@
 /**
  * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
+ * @Description Matrix Engine Api Example for
+ * Load custom list of obj sequence.
  */
 
-/* globals world App world */
 import App from "../program/manifest";
 
 export var runThis = world => {
-  /* globals world App OBJ */
 
   // LOAD MESH FROM OBJ FILES...
   // if you dont use obj or complex mesh you no need for this func
 
   function onLoadObj(meshes) {
-    App.meshes = meshes;
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female1);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female2);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female3);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female4);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female5);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female6);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female7);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female8);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female9);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female10);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female11);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female12);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female13);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female14);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female15);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female16);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female17);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.female18);
+    // No need from [1.8.2]
+    // App.meshes = meshes;
+    for (let key in meshes) {
+      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
+    }
 
     var textuteImageSamplers2 = {
       source: ["res/images/RustPaint.jpg"],
@@ -42,6 +26,7 @@ export var runThis = world => {
     setTimeout(function () {
       var animation_construct = {
         id: "female",
+        meshList: meshes,
         sumOfAniFrames: 18,
         currentAni: 0,
         speed: 3,
@@ -52,7 +37,7 @@ export var runThis = world => {
         1,
         "female",
         textuteImageSamplers2,
-        App.meshes.female,
+        meshes.female,
         animation_construct
       );
 

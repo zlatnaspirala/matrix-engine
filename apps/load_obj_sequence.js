@@ -14,7 +14,7 @@ export var runThis = (world) => {
   // Camera
   App.camera.SceneController = true;
 
-  const createObjSequence = () => {
+  const createObjSequence = (objName) => {
 
     function onLoadObj(meshes) {
       App.meshes = meshes;
@@ -24,32 +24,49 @@ export var runThis = (world) => {
       }
 
       var textuteImageSamplers2 = {
-        source: ["res/bvh-skeletal-base/test.png"],
+        source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
         mix_operation: "multiply", // ENUM : multiply , divide
       };
 
       setTimeout(function () {
         var animation_construct = {
-          id: "yBot",
-          sumOfAniFrames: 27,
+          // stay for now
+          id: objName,
+          meshList: meshes,
+          sumOfAniFrames: 33,
           currentAni: 0,
           speed: 3,
+          // upgrade - optimal
+          animations: {
+            active: 'walk',
+            walk : {
+              from: 0,
+              to: 5,
+              speed: 3
+            },
+            walk2: {
+              from: 15,
+              to: 33,
+              speed: 3
+            }
+          }
         };
-        world.Add("obj", 1, "yBot",
+        world.Add("obj", 1, objName,
           textuteImageSamplers2,
-          App.meshes.yBot,
+          meshes[objName],
           animation_construct
         );
-        App.scene.yBot.position.y = -1;
-        App.scene.yBot.position.z = -4;
+        App.scene[objName].position.y = -1;
+        App.scene[objName].position.z = -4;
       }, 100);
     }
 
     matrixEngine.objLoader.downloadMeshes(
       matrixEngine.objLoader.makeObjSeqArg(
-        { id: "yBot",
-          path: "res/bvh-skeletal-base/y-bot/obj-seq/low/y-bot-origin",
-          from : 1, to: 28 }),
+        { id: objName,
+          // path: "res/bvh-skeletal-base/y-bot/obj-seq/low/y-bot-origin",
+          path: "res/bvh-skeletal-base/swat-guy/seq-walk/low/swat",
+          from : 1, to: 34 }),
       onLoadObj
     );
 
@@ -67,6 +84,9 @@ export var runThis = (world) => {
     e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
   });
 
-  createObjSequence();
+  createObjSequence('player');
+
+  // Fixed
+  // createObjSequence('player222');
 
 };
