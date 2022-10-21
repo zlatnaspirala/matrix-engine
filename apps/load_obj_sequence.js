@@ -19,34 +19,37 @@ export var runThis = (world) => {
     function onLoadObj(meshes) {
       App.meshes = meshes;
 
-      for (let key in meshes) {
+      for(let key in meshes) {
         matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
       }
 
       var textuteImageSamplers2 = {
-        source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
+        source: [
+          "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png",
+          "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"
+        ],
         mix_operation: "multiply", // ENUM : multiply , divide
       };
 
-      setTimeout(function () {
+      setTimeout(function() {
         var animation_construct = {
           // stay for now
           id: objName,
           meshList: meshes,
-          sumOfAniFrames: 33,
+          sumOfAniFrames: 61,
           currentAni: 0,
           speed: 3,
           // upgrade - optimal
           animations: {
             active: 'walk',
-            walk : {
+            walk: {
               from: 0,
-              to: 5,
+              to: 35,
               speed: 3
             },
-            walk2: {
-              from: 15,
-              to: 33,
+            walkPistol: {
+              from: 36,
+              to: 60,
               speed: 3
             }
           }
@@ -58,15 +61,18 @@ export var runThis = (world) => {
         );
         App.scene[objName].position.y = -1;
         App.scene[objName].position.z = -4;
-      }, 100);
+        App.scene[objName].rotation.rotationSpeed.y = 50;
+      }, 50);
     }
 
     matrixEngine.objLoader.downloadMeshes(
       matrixEngine.objLoader.makeObjSeqArg(
-        { id: objName,
-          // path: "res/bvh-skeletal-base/y-bot/obj-seq/low/y-bot-origin",
-          path: "res/bvh-skeletal-base/swat-guy/seq-walk/low/swat",
-          from : 1, to: 34 }),
+        {
+          id: objName,
+          path: "res/bvh-skeletal-base/swat-guy/anims/swat-multi",
+          from: 1,
+          to: 61
+        }),
       onLoadObj
     );
 
@@ -74,19 +80,17 @@ export var runThis = (world) => {
 
   window.createObjSequence = createObjSequence;
 
-  canvas.addEventListener('mousedown', (ev) => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
+  // canvas.addEventListener('mousedown', (ev) => {
+  //   matrixEngine.raycaster.checkingProcedure(ev);
+  // });
 
-  addEventListener('ray.hit.event', function (e) {
-    console.info(e.detail.hitObject);
-    e.detail.hitObject.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[2];
-    e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
-  });
+  // addEventListener('ray.hit.event', function(e) {
+  //   // Still not work for obj...
+  //   console.info(e.detail.hitObject);
+  //   e.detail.hitObject.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[2];
+  //   e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
+  // });
 
   createObjSequence('player');
-
-  // Fixed
-  // createObjSequence('player222');
 
 };

@@ -1650,7 +1650,7 @@ var runThis = world => {
       }
 
       var textuteImageSamplers2 = {
-        source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
+        source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png", "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
         mix_operation: "multiply" // ENUM : multiply , divide
 
       };
@@ -1659,7 +1659,7 @@ var runThis = world => {
           // stay for now
           id: objName,
           meshList: meshes,
-          sumOfAniFrames: 33,
+          sumOfAniFrames: 61,
           currentAni: 0,
           speed: 3,
           // upgrade - optimal
@@ -1667,12 +1667,12 @@ var runThis = world => {
             active: 'walk',
             walk: {
               from: 0,
-              to: 15,
+              to: 35,
               speed: 3
             },
-            walk2: {
-              from: 15,
-              to: 33,
+            walkPistol: {
+              from: 36,
+              to: 60,
               speed: 3
             }
           }
@@ -1680,29 +1680,29 @@ var runThis = world => {
         world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animation_construct);
         _manifest.default.scene[objName].position.y = -1;
         _manifest.default.scene[objName].position.z = -4;
-      }, 100);
+        _manifest.default.scene[objName].rotation.rotationSpeed.y = 50;
+      }, 50);
     }
 
     matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
       id: objName,
-      // path: "res/bvh-skeletal-base/y-bot/obj-seq/low/y-bot-origin",
-      path: "res/bvh-skeletal-base/swat-guy/seq-walk/low/swat",
+      path: "res/bvh-skeletal-base/swat-guy/anims/swat-multi",
       from: 1,
-      to: 34
+      to: 61
     }), onLoadObj);
   };
 
-  window.createObjSequence = createObjSequence;
-  canvas.addEventListener('mousedown', ev => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
-  addEventListener('ray.hit.event', function (e) {
-    console.info(e.detail.hitObject);
-    e.detail.hitObject.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[2];
-    e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
-  });
+  window.createObjSequence = createObjSequence; // canvas.addEventListener('mousedown', (ev) => {
+  //   matrixEngine.raycaster.checkingProcedure(ev);
+  // });
+  // addEventListener('ray.hit.event', function(e) {
+  //   // Still not work for obj...
+  //   console.info(e.detail.hitObject);
+  //   e.detail.hitObject.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[2];
+  //   e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
+  // });
+
   createObjSequence('player');
-  createObjSequence('net_player');
 };
 
 exports.runThis = runThis;
@@ -2352,6 +2352,12 @@ exports.runThis = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
+var CANNON = _interopRequireWildcard(require("cannon"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -2363,7 +2369,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App world */
-// import * as CANNON from 'cannon';
 // import * as CANNON from '../node_modules/cannon';
 var runThis = world => {
   _manifest.default.camera.SceneController = true;
@@ -2422,7 +2427,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":72}],31:[function(require,module,exports){
+},{"../program/manifest":72,"cannon":69}],31:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4639,6 +4644,7 @@ if (_manifest.default.pwa.addToHomePage === true) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.play = play;
 exports.makeObjSeqArg = exports.deleteMeshBuffers = exports.initMeshBuffers = exports.downloadMeshes = exports.constructMesh = void 0;
 
 var _matrixWorld = require("./matrix-world");
@@ -5056,11 +5062,29 @@ var deleteMeshBuffers = function (gl, mesh) {
   gl.deleteBuffer(mesh.indexBuffer);
 };
 /**
- * @description 
+ * @description
  * Construct sequence list argument for downloadMeshes.
  * This is adaptation for blender obj animation export.
  * For example:
- * 
+ *    matrixEngine.objLoader.downloadMeshes(
+      matrixEngine.objLoader.makeObjSeqArg(
+        {
+          id: objName,
+          joinMultiPahts: [
+            {
+              path: "res/bvh-skeletal-base/swat-guy/seq-walk/low/swat",
+              id: objName,
+              from: 1, to: 34
+            },
+            {
+              path: "res/bvh-skeletal-base/swat-guy/seq-walk-pistol/low/swat-walk-pistol",
+              id: objName,
+              from: 35, to: 54
+            }
+          ]
+        }),
+      onLoadObj
+    );
  */
 
 
@@ -5069,27 +5093,65 @@ exports.deleteMeshBuffers = deleteMeshBuffers;
 const makeObjSeqArg = arg => {
   // Adaptation for blender (animation) obj exporter.
   var local = {};
-  var zeros = '00000';
 
-  for (let j = arg.from; j <= arg.to; j++) {
-    if (j > 9 && j < 99) {
-      zeros = '0000';
-    } else if (j > 99 && j < 999) {
-      zeros = '000';
-    } // no need more then 999
+  function localCalc(arg, noInitial = false) {
+    var zeros = '00000';
+    var l = {};
+    var helper = arg.from;
+
+    for (let j = arg.from, z = 1; j <= arg.to; j++) {
+      if (z > 9 && z < 99) {
+        zeros = '0000';
+      } else if (z > 99 && z < 999) {
+        zeros = '000';
+      } // no need more then 999
 
 
-    if (j == arg.from) {
-      local[arg.id] = arg.path + '_' + zeros + j + '.obj';
-    } else {
-      local[arg.id + (j - 1)] = arg.path + '_' + zeros + j + '.obj';
+      if (helper == arg.from && noInitial === false) {
+        l[arg.id] = arg.path + '_' + zeros + z + '.obj';
+      } else {
+        l[arg.id + (helper - 1)] = arg.path + '_' + zeros + z + '.obj';
+      }
+
+      helper++;
+      z++;
+    }
+
+    return l;
+  }
+
+  if (typeof arg.path === 'string') {
+    local = localCalc(arg);
+  } else if (typeof arg.path === 'undefined') {
+    if (typeof arg.joinMultiPahts !== 'undefined') {
+      console.log("ITS joinMultiPahts!");
+      var localFinal = {};
+      arg.joinMultiPahts.forEach((arg, index) => {
+        if (index === 0) {
+          localFinal = Object.assign(local, localCalc(arg));
+        } else {
+          localFinal = Object.assign(local, localCalc(arg, true));
+        }
+      });
+      console.log("joinMultiPahts LOCAL => ", localFinal);
+      return localFinal;
     }
   }
 
   return local;
 };
+/**
+ * @description
+ * Switching obj seq animations frames range.
+ */
+
 
 exports.makeObjSeqArg = makeObjSeqArg;
+
+function play(nameAni) {
+  this.animation.anims.active = nameAni;
+  this.animation.currentAni = this.animation.anims[this.animation.anims.active].from;
+}
 
 },{"./matrix-world":55}],45:[function(require,module,exports){
 "use strict";
@@ -6151,13 +6213,13 @@ _manifest.default.operation.draws.drawObj = function (object) {
       }
 
       if (object.animation.currentAni == 0) {
-        _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.mesh.vertexBuffer);
+        _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.meshList[object.animation.id].vertexBuffer);
 
-        _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.mesh.vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
+        _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.meshList[object.animation.id].vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
       } else {
         _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.meshList[object.animation.id + object.animation.currentAni].vertexBuffer);
 
-        _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.mesh.vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
+        _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.meshList[object.animation.id + object.animation.currentAni].vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
       } //--------------------------------------------------
 
     } else {
@@ -6315,7 +6377,9 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
   this.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
 
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 3);
+  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 3); // world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
+  // update for anim
+
 
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
 
@@ -10088,6 +10152,8 @@ var _matrixShadows = require("./matrix-shadows");
 
 var _matrixInitShaders = require("./matrix-init-shaders");
 
+var _loaderObj = require("./loader-obj");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable no-unused-vars */
@@ -10906,6 +10972,7 @@ function defineworld(canvas) {
 
         if (typeof animationConstruct_.animations !== 'undefined') {
           objObject.animation.anims = animationConstruct_.animations;
+          objObject.play = _loaderObj.play;
         } // no need for single test it in future
 
 
@@ -11178,7 +11245,7 @@ function defineworld(canvas) {
   return world;
 }
 
-},{"../program/manifest":72,"./engine":42,"./matrix-draws":47,"./matrix-geometry":48,"./matrix-init-shaders":49,"./matrix-render":50,"./matrix-shadows":52,"./matrix-tags":53,"./physics":57,"./utility":63}],56:[function(require,module,exports){
+},{"../program/manifest":72,"./engine":42,"./loader-obj":44,"./matrix-draws":47,"./matrix-geometry":48,"./matrix-init-shaders":49,"./matrix-render":50,"./matrix-shadows":52,"./matrix-tags":53,"./physics":57,"./utility":63}],56:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11672,7 +11739,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var cannon = _interopRequireWildcard(require("cannon"));
+var CANNON = _interopRequireWildcard(require("cannon"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -11680,8 +11747,8 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 // DEV
 // import * as cannon from '../node_modules/cannon/build/cannon';
-// import * as CANNON from 'cannon';
 // PRODC
+// import * as cannon from 'cannon';
 
 /**
  * @MatrixPhysics

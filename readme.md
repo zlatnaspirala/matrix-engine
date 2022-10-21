@@ -178,6 +178,7 @@ Take a look at query-build.html
 - Physics Cube with force on raycast trigger
 - Physics Sphere
 - BVH loader, animation play
+- Load obj sequences
 
 ## Features description
 

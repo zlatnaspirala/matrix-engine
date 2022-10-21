@@ -1541,6 +1541,7 @@ if (_manifest.default.pwa.addToHomePage === true) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.play = play;
 exports.makeObjSeqArg = exports.deleteMeshBuffers = exports.initMeshBuffers = exports.downloadMeshes = exports.constructMesh = void 0;
 
 var _matrixWorld = require("./matrix-world");
@@ -1958,11 +1959,29 @@ var deleteMeshBuffers = function (gl, mesh) {
   gl.deleteBuffer(mesh.indexBuffer);
 };
 /**
- * @description 
+ * @description
  * Construct sequence list argument for downloadMeshes.
  * This is adaptation for blender obj animation export.
  * For example:
- * 
+ *    matrixEngine.objLoader.downloadMeshes(
+      matrixEngine.objLoader.makeObjSeqArg(
+        {
+          id: objName,
+          joinMultiPahts: [
+            {
+              path: "res/bvh-skeletal-base/swat-guy/seq-walk/low/swat",
+              id: objName,
+              from: 1, to: 34
+            },
+            {
+              path: "res/bvh-skeletal-base/swat-guy/seq-walk-pistol/low/swat-walk-pistol",
+              id: objName,
+              from: 35, to: 54
+            }
+          ]
+        }),
+      onLoadObj
+    );
  */
 
 
@@ -1971,27 +1990,65 @@ exports.deleteMeshBuffers = deleteMeshBuffers;
 const makeObjSeqArg = arg => {
   // Adaptation for blender (animation) obj exporter.
   var local = {};
-  var zeros = '00000';
 
-  for (let j = arg.from; j <= arg.to; j++) {
-    if (j > 9 && j < 99) {
-      zeros = '0000';
-    } else if (j > 99 && j < 999) {
-      zeros = '000';
-    } // no need more then 999
+  function localCalc(arg, noInitial = false) {
+    var zeros = '00000';
+    var l = {};
+    var helper = arg.from;
+
+    for (let j = arg.from, z = 1; j <= arg.to; j++) {
+      if (z > 9 && z < 99) {
+        zeros = '0000';
+      } else if (z > 99 && z < 999) {
+        zeros = '000';
+      } // no need more then 999
 
 
-    if (j == arg.from) {
-      local[arg.id] = arg.path + '_' + zeros + j + '.obj';
-    } else {
-      local[arg.id + (j - 1)] = arg.path + '_' + zeros + j + '.obj';
+      if (helper == arg.from && noInitial === false) {
+        l[arg.id] = arg.path + '_' + zeros + z + '.obj';
+      } else {
+        l[arg.id + (helper - 1)] = arg.path + '_' + zeros + z + '.obj';
+      }
+
+      helper++;
+      z++;
+    }
+
+    return l;
+  }
+
+  if (typeof arg.path === 'string') {
+    local = localCalc(arg);
+  } else if (typeof arg.path === 'undefined') {
+    if (typeof arg.joinMultiPahts !== 'undefined') {
+      console.log("ITS joinMultiPahts!");
+      var localFinal = {};
+      arg.joinMultiPahts.forEach((arg, index) => {
+        if (index === 0) {
+          localFinal = Object.assign(local, localCalc(arg));
+        } else {
+          localFinal = Object.assign(local, localCalc(arg, true));
+        }
+      });
+      console.log("joinMultiPahts LOCAL => ", localFinal);
+      return localFinal;
     }
   }
 
   return local;
 };
+/**
+ * @description
+ * Switching obj seq animations frames range.
+ */
+
 
 exports.makeObjSeqArg = makeObjSeqArg;
+
+function play(nameAni) {
+  this.animation.anims.active = nameAni;
+  this.animation.currentAni = this.animation.anims[this.animation.anims.active].from;
+}
 
 },{"./matrix-world":17}],7:[function(require,module,exports){
 "use strict";
@@ -3028,26 +3085,40 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
   if (typeof object.mesh.vertexBuffer != 'undefined') {
     if (object.animation != null) {
+      //--------------------------------------------------
       object.animation.currentDraws++;
 
-      if (object.animation.currentDraws > object.animation.speed) {
+      if (typeof object.animation.anims === 'undefined' && object.animation.currentDraws > object.animation.speed) {
         object.animation.currentAni++;
         object.animation.currentDraws = 0;
 
         if (object.animation.currentAni > object.animation.sumOfAniFrames) {
           object.animation.currentAni = 0;
         }
+      } // Make animation sequences -> sub animation
+
+
+      if (typeof object.animation.anims !== 'undefined') {
+        if (object.animation.currentDraws > object.animation.anims[object.animation.anims.active].speed) {
+          object.animation.currentAni++;
+          object.animation.currentDraws = 0;
+
+          if (object.animation.currentAni > object.animation.anims[object.animation.anims.active].to) {
+            object.animation.currentAni = object.animation.anims[object.animation.anims.active].from;
+          }
+        }
       }
 
       if (object.animation.currentAni == 0) {
-        _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.mesh.vertexBuffer);
+        _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.meshList[object.animation.id].vertexBuffer);
 
-        _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.mesh.vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
+        _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.meshList[object.animation.id].vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
       } else {
-        _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, _manifest.default.meshes[object.animation.id + object.animation.currentAni].vertexBuffer);
+        _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.meshList[object.animation.id + object.animation.currentAni].vertexBuffer);
 
-        _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.mesh.vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-      }
+        _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.meshList[object.animation.id + object.animation.currentAni].vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
+      } //--------------------------------------------------
+
     } else {
       // now to render the mesh test
       _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.mesh.vertexBuffer);
@@ -3203,7 +3274,9 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
   this.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
 
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 3);
+  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 3); // world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
+  // update for anim
+
 
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
 
@@ -6976,6 +7049,8 @@ var _matrixShadows = require("./matrix-shadows");
 
 var _matrixInitShaders = require("./matrix-init-shaders");
 
+var _loaderObj = require("./loader-obj");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable no-unused-vars */
@@ -7777,6 +7852,9 @@ function defineworld(canvas) {
       };
 
       objObject.mvMatrix = mat4.create(); // eslint-disable-next-line valid-typeof
+      // update
+
+      objObject.meshList = {};
 
       if (typeof animationConstruct_ == 'undefined' || typeof animationConstruct_ == null) {
         objObject.animation = null;
@@ -7788,7 +7866,16 @@ function defineworld(canvas) {
           speed: animationConstruct_.speed,
           currentDraws: 0
         };
-      }
+
+        if (typeof animationConstruct_.animations !== 'undefined') {
+          objObject.animation.anims = animationConstruct_.animations;
+          objObject.play = _loaderObj.play;
+        } // no need for single test it in future
+
+
+        objObject.meshList = animationConstruct_.meshList;
+      } // Stay like root or t pose data holder
+
 
       objObject.mesh = mesh_;
 
@@ -8055,7 +8142,7 @@ function defineworld(canvas) {
   return world;
 }
 
-},{"../program/manifest":34,"./engine":4,"./matrix-draws":9,"./matrix-geometry":10,"./matrix-init-shaders":11,"./matrix-render":12,"./matrix-shadows":14,"./matrix-tags":15,"./physics":19,"./utility":25}],18:[function(require,module,exports){
+},{"../program/manifest":34,"./engine":4,"./loader-obj":6,"./matrix-draws":9,"./matrix-geometry":10,"./matrix-init-shaders":11,"./matrix-render":12,"./matrix-shadows":14,"./matrix-tags":15,"./physics":19,"./utility":25}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
