@@ -518,8 +518,6 @@ matrixEngine.objLoader.downloadMeshes(
 
 ```
 
-<img src="https://github.com/zlatnaspirala/matrix-engine/blob/develop/non-project-files/character1.png" width="328" height="328" />
-
 ### Blending:
 
 ```js
@@ -551,6 +549,8 @@ App.scene.TV.streamTextures = new ACCESS_CAMERA('webcam_beta');
 How to update character animation?
 Maximo -> download dea or fbx -> import intro blender 
 Import multi or one animation. -> blender export -> obj (animation)
+
+<img src="https://github.com/zlatnaspirala/matrix-engine/blob/develop/non-project-files/character1.png" width="328" height="328" />
 
 This is new feature from [1.8.2].
 Take a look at : load_obj_sequence.js
