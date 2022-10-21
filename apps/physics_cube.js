@@ -1,15 +1,13 @@
 /**
- *@Author Nikola Lukic zlatnaspirala
+ *@Author Nikola Lukic zlatnaspirala@
  *@Description Matrix Engine Api Example
  * WORKSHOP SCRIPT
  * Current theme : SceneController and 
  * physics (cannon.js) implementation.
  */
 
-/* globals world App world */
 import App from "../program/manifest";
-// import * as CANNON from 'cannon';
-// import * as CANNON from '../node_modules/cannon';
+import * as CANNON from 'cannon';
 
 export var runThis = (world) => {
 
