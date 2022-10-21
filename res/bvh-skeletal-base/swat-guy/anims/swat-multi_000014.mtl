@@ -1,0 +1,31 @@
+# Blender MTL File: 'swat-multiply-animations.blend'
+# Material Count: 2
+
+newmtl Ch15_body.003
+Ns 179.999996
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\swat-guy\\origin-maximo\\textures\\Ch15_1001_Normal.png
+map_Kd G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\swat-guy\\origin-maximo\\textures\\Ch15_1001_Diffuse.png
+map_Ks G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\swat-guy\\origin-maximo\\textures\\Ch15_1001_Specular.png
+map_Ns G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\swat-guy\\origin-maximo\\textures\\Ch15_1001_Glossiness.png
+
+newmtl Ch15_body1.003
+Ns 179.999996
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\swat-guy\\origin-maximo\\textures\\Ch15_1002_Normal.png
+map_Kd G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\swat-guy\\origin-maximo\\textures\\Ch15_1002_Diffuse.png
+map_Ke G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\swat-guy\\origin-maximo\\textures\\Ch15_1002_Emissive.png
+map_Ks G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\swat-guy\\origin-maximo\\textures\\Ch15_1002_Specular.png
+map_Ns G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\swat-guy\\origin-maximo\\textures\\Ch15_1002_Glossiness.png

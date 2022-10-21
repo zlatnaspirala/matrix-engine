@@ -7,13 +7,10 @@
     "lib": "lib"
   },
   "scripts": {
-
     "install.dep": "npm install -g uglify-js browserify watchify",
-
     "examples": "watchify App-Examples.js -p [esmify --noImplicitAny] -o builds/examples.me.js",
     "app": "watchify App.js -p [esmify --noImplicitAny] -o builds/app.js",
     "tex.editor": "watchify ./2DTextureEditor/actual.js -p [esmify --noImplicitAny] -o ./2DTextureEditor/builds/actual.tex.js",
-
     "build.examples": "browserify App-Examples.js -p esmify > builds/examples.me.js",
     "build.app": "browserify App.js -p esmify > builds/app.js",
     "build.tex.editor": "browserify ./2DTextureEditor/actual.js -p esmify > ./2DTextureEditor/builds/actual.tex.js",
@@ -22,12 +19,9 @@
     "build.tex3": "browserify ./2DTextureEditor/micro-drawing.js -p esmify > ./2DTextureEditor/builds/md.tex.js",
     "build.lib": "browserify entry-lib-build.js -p esmify > builds/me.lib.js",
     "build.app.ugly": "browserify App.js -p esmify | uglifyjs -cm > builds/app.ugly.js",
-
     "build.all": "npm run build.tex.editor | npm run build.examples | npm run build.app | npm run build.lib | npm run build.app.ugly",
-
     "run.tex.editor": "node ./2DTextureEditor/editor.js",
     "te": "node ./2DTextureEditor/editor.js",
-
     "test": "echo \"no build tradicional view\" && exit 1"
   },
   "dependencies": {
