@@ -544,6 +544,54 @@ App.scene.TV.streamTextures = new VIDEO_TEXTURE('Galactic Expansion Fractal Morp
 App.scene.TV.streamTextures = new ACCESS_CAMERA('webcam_beta');
 ```
 
+### Character
+
+How to update character animation?
+Maximo -> download dea or fbx -> import intro blender 
+Import multi or one animation. -> blender export -> obj (animation)
+
+This is new feature from [1.8.2].
+Take a look at : load_obj_sequence.js
+
+For now engine use objLoader to load all morphs.
+```js
+    matrixEngine.objLoader.downloadMeshes(
+      matrixEngine.objLoader.makeObjSeqArg(
+        {
+          id: objName,
+          path: "res/bvh-skeletal-base/swat-guy/anims/swat-multi",
+          from: 1,
+          to: 61
+        }),
+      onLoadObj
+    );
+```
+
+in onLoadObj : 
+```js
+  var animArg = {
+    id: objName,
+    meshList: meshes,
+    // sumOfAniFrames: 61, No need if `animations` exist!
+    currentAni: 0,
+    // speed: 3, No need if `animations` exist!
+    // upgrade - optimal
+    animations: {
+      active: 'walk',
+      walk: {
+        from: 0,
+        to: 35,
+        speed: 3
+      },
+      walkPistol: {
+        from: 36,
+        to: 60,
+        speed: 3
+      }
+    }
+  };
+```
+
 ### Texture editor (runtime):
 
  - Using Vjs3 with Editor use:

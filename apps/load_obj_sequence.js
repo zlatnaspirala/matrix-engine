@@ -32,13 +32,12 @@ export var runThis = (world) => {
       };
 
       setTimeout(function() {
-        var animation_construct = {
-          // stay for now
+        var animArg = {
           id: objName,
           meshList: meshes,
-          sumOfAniFrames: 61,
+          // sumOfAniFrames: 61, No need if `animations` exist!
           currentAni: 0,
-          speed: 3,
+          // speed: 3, No need if `animations` exist!
           // upgrade - optimal
           animations: {
             active: 'walk',
@@ -57,12 +56,12 @@ export var runThis = (world) => {
         world.Add("obj", 1, objName,
           textuteImageSamplers2,
           meshes[objName],
-          animation_construct
+          animArg
         );
         App.scene[objName].position.y = -1;
         App.scene[objName].position.z = -4;
         App.scene[objName].rotation.rotationSpeed.y = 50;
-      }, 50);
+      }, 1);
     }
 
     matrixEngine.objLoader.downloadMeshes(
