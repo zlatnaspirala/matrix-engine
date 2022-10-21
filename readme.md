@@ -518,6 +518,8 @@ matrixEngine.objLoader.downloadMeshes(
 
 ```
 
+<img src="https://github.com/zlatnaspirala/matrix-engine/blob/develop/non-project-files/character1.png" width="328" height="328" />
+
 ### Blending:
 
 ```js
