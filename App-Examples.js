@@ -37,8 +37,10 @@ import {runThis as physics_cube } from './apps/physics_cube';
 import {runThis as physics_sphere } from './apps/physics_sphere';
 import {runThis as spot_light_basic } from './apps/spot_light_basic';
 import {runThis as networking_basic } from './apps/networking_basic';
+import {runThis as load_obj_sequence } from './apps/load_obj_sequence';
 
 var Examples = {
+  load_obj_sequence: load_obj_sequence,
   networking_basic: networking_basic,
   spot_light_basic: spot_light_basic,
   physics_sphere: physics_sphere,

@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.8.0` beta
+### Name: `MATRIX-ENGINE` `1.8.1`
 
 #### Logo
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/res/icons/ms-icon.png" width="128" height="128" />
@@ -178,6 +178,7 @@ Take a look at query-build.html
 - Physics Cube with force on raycast trigger
 - Physics Sphere
 - BVH loader, animation play
+- Load obj sequences
 
 ## Features description
 
@@ -464,7 +465,9 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 ```js
 // Obj Loader
 function onLoadObj(meshes) {
-  App.meshes = meshes;
+
+  // No need from [1.8.2]
+  // App.meshes = meshes;
   for (const key in App.meshes) {
     matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes[key]);
   }
@@ -477,6 +480,7 @@ function onLoadObj(meshes) {
   setTimeout(function () {
     var animation_construct = {
       id: 'female',
+      meshList: meshes, // from [1.8.2]
       sumOfAniFrames: 18,
       currentAni: 0,
       speed: 3
@@ -491,30 +495,27 @@ function onLoadObj(meshes) {
   }, 100);
 }
 
+// Custom list 1, 3, 5, 9
 matrixEngine.objLoader.downloadMeshes(
   {
     female: 'res/3d-objects/female/female_000001.obj',
     female1: 'res/3d-objects/female/female_000003.obj',
     female2: 'res/3d-objects/female/female_000005.obj',
-    female3: 'res/3d-objects/female/female_000007.obj',
-    female4: 'res/3d-objects/female/female_000009.obj',
-    female5: 'res/3d-objects/female/female_000011.obj',
-    female6: 'res/3d-objects/female/female_000013.obj',
-    female7: 'res/3d-objects/female/female_000015.obj',
-    female8: 'res/3d-objects/female/female_000017.obj',
-    female9: 'res/3d-objects/female/female_000019.obj',
-    female10: 'res/3d-objects/female/female_000021.obj',
-    female11: 'res/3d-objects/female/female_000023.obj',
-    female12: 'res/3d-objects/female/female_000025.obj',
-    female13: 'res/3d-objects/female/female_000027.obj',
-    female14: 'res/3d-objects/female/female_000029.obj',
-    female15: 'res/3d-objects/female/female_000031.obj',
-    female16: 'res/3d-objects/female/female_000033.obj',
-    female17: 'res/3d-objects/female/female_000035.obj',
-    female18: 'res/3d-objects/female/female_000037.obj'
+    female3: 'res/3d-objects/female/female_000009.obj',
+    ...
   },
   onLoadObj
 );
+
+// From [1.8.2] you can use `makeObjSeqArg`
+matrixEngine.objLoader.downloadMeshes(
+  matrixEngine.objLoader.makeObjSeqArg(
+    { id: objName,
+      path: "res/bvh-skeletal-base/swat-guy/seq-walk/low/swat",
+      from : 1, to: 34 }),
+  onLoadObj
+);
+
 ```
 
 ### Blending:
@@ -541,6 +542,56 @@ App.scene.TV.streamTextures = new VIDEO_TEXTURE('Galactic Expansion Fractal Morp
 
 ```js
 App.scene.TV.streamTextures = new ACCESS_CAMERA('webcam_beta');
+```
+
+### Character
+
+How to update character animation?
+Maximo -> download dea or fbx -> import intro blender 
+Import multi or one animation. -> blender export -> obj (animation)
+
+<img src="https://github.com/zlatnaspirala/matrix-engine/blob/develop/non-project-files/character1.png" width="328" height="328" />
+
+This is new feature from [1.8.2].
+Take a look at : load_obj_sequence.js
+
+For now engine use objLoader to load all morphs.
+```js
+    matrixEngine.objLoader.downloadMeshes(
+      matrixEngine.objLoader.makeObjSeqArg(
+        {
+          id: objName,
+          path: "res/bvh-skeletal-base/swat-guy/anims/swat-multi",
+          from: 1,
+          to: 61
+        }),
+      onLoadObj
+    );
+```
+
+in onLoadObj : 
+```js
+  var animArg = {
+    id: objName,
+    meshList: meshes,
+    // sumOfAniFrames: 61, No need if `animations` exist!
+    currentAni: 0,
+    // speed: 3, No need if `animations` exist!
+    // upgrade - optimal
+    animations: {
+      active: 'walk',
+      walk: {
+        from: 0,
+        to: 35,
+        speed: 3
+      },
+      walkPistol: {
+        from: 36,
+        to: 60,
+        speed: 3
+      }
+    }
+  };
 ```
 
 ### Texture editor (runtime):
@@ -666,6 +717,8 @@ No Dependabot alerts opened.
   http://www.blendswap.com/users/view/AndresCuccaro
 - https://freestocktextures.com/texture/bark-wood-plant,122.html
 - https://github.com/Necolo/raycaster
+- Great https://www.mixamo.com/
+- Player character https://www.mixamo.com/#/?page=1&query=walk&type=Motion%2CMotionPack
 - BVH collections from: Special thanks to the CMU Graphics Lab Motion Capture Database which provided the data http://mocap.cs.cmu.edu/`
 - Used in examples:
   BLACK FLY by Audionautix | http://audionautix.com
