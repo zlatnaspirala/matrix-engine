@@ -1,6 +1,10 @@
 
 # CREDITS
 
+## Used Maximo characters dea/fbx download.
+
+## Blender used for importe/edit/export.
+
 ## OBJECT LOADER
 ```js
 /**
@@ -106,7 +110,7 @@ https://www.npmjs.com/package/raycaster
 but adapted special for matrix-engine.
 
 ## Bvh Loader:
-Converted from python to javascript:
+Converted from python to javascript and adapted for maximum-engine:
 Original source: https://github.com/dabeschte/npybvh
 
 ## Bvh Resources folder in resources:

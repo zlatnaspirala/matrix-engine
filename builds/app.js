@@ -33,12 +33,12 @@ window.webGLStart = () => {
 
   window.world = world;
   window.App = App;
-  window.runThis = _load_obj_sequence.runThis;
-  matrixEngine.utility.E('debugBox').style.display = 'block'; // If you need this , you can prolong loading time
+  window.runThis = _load_obj_sequence.runThis; // matrixEngine.utility.E('debugBox').style.display = 'block';
+  // If you need this , you can prolong loading time
 
   setTimeout(() => {
     (0, _load_obj_sequence.runThis)(world);
-  }, 250);
+  }, 1);
 };
 
 window.matrixEngine = matrixEngine;
@@ -83,13 +83,12 @@ var runThis = world => {
 
       };
       setTimeout(function () {
-        var animation_construct = {
-          // stay for now
+        var animArg = {
           id: objName,
           meshList: meshes,
-          sumOfAniFrames: 61,
+          // sumOfAniFrames: 61, No need if `animations` exist!
           currentAni: 0,
-          speed: 3,
+          // speed: 3, No need if `animations` exist!
           // upgrade - optimal
           animations: {
             active: 'walk',
@@ -105,11 +104,11 @@ var runThis = world => {
             }
           }
         };
-        world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animation_construct);
+        world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg);
         _manifest.default.scene[objName].position.y = -1;
         _manifest.default.scene[objName].position.z = -4;
         _manifest.default.scene[objName].rotation.rotationSpeed.y = 50;
-      }, 50);
+      }, 1);
     }
 
     matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
@@ -6352,12 +6351,14 @@ _manifest.default.operation.reDrawGlobal = function (time) {
     while (physicsLooper <= _matrixWorld.world.contentList.length - 1) {
       if (_matrixWorld.world.contentList[physicsLooper].physics.enabled) {
         var local = _matrixWorld.world.contentList[physicsLooper];
+        local.position.SetX(local.physics.currentBody.position.x);
+        local.position.SetZ(local.physics.currentBody.position.y);
+        local.position.SetY(local.physics.currentBody.position.z);
         _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
         _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-        _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-        _matrixWorld.world.contentList[physicsLooper].rotation.x = local.physics.currentBody.quaternion.toAxisAngle()[0].x;
-        _matrixWorld.world.contentList[physicsLooper].rotation.y = local.physics.currentBody.quaternion.toAxisAngle()[0].z;
-        _matrixWorld.world.contentList[physicsLooper].rotation.z = local.physics.currentBody.quaternion.toAxisAngle()[0].y;
+        _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]); // world.contentList[physicsLooper].rotation.x = (local.physics.currentBody.quaternion.toAxisAngle()[0].x)
+        // world.contentList[physicsLooper].rotation.y = (local.physics.currentBody.quaternion.toAxisAngle()[0].z)
+        // world.contentList[physicsLooper].rotation.z = (local.physics.currentBody.quaternion.toAxisAngle()[0].y)
       }
 
       physicsLooper++;
@@ -8752,16 +8753,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var cannon = _interopRequireWildcard(require("cannon"));
+var CANNON = _interopRequireWildcard(require("cannon"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-// DEV
-// import * as cannon from '../node_modules/cannon/build/cannon';
-// import * as CANNON from 'cannon';
-// PRODC
 
 /**
  * @MatrixPhysics

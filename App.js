@@ -23,9 +23,9 @@ window.webGLStart = () => {
   window.App = App;
   window.runThis = runThis;
 
-  matrixEngine.utility.E('debugBox').style.display = 'block';
+  // matrixEngine.utility.E('debugBox').style.display = 'block';
   // If you need this , you can prolong loading time
-  setTimeout(() => { runThis(world); }, 250);
+  setTimeout(() => { runThis(world); }, 1);
 };
 
 window.matrixEngine = matrixEngine;
