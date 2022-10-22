@@ -1,7 +1,7 @@
 
 # CREDITS
 
-## Used Maximo characters dea/fbx download.
+## Used https://www.mixamo.com/ characters dea/fbx download.
 
 ## Blender used for importe/edit/export.
 
