@@ -163,9 +163,9 @@ class ClientConfig {
    * recommendent to use for local propose LAN ip
    * like : 192.168.0.XXX if you wanna run ant test app with server.
    */
-  // domain = "maximumroulette.com";
 
-  domain = "localhost";
+  domain = "maximumroulette.com"; // domain = "localhost";
+
   /**
    * @description Important note for this property: if you
    * disable (false) you can't use Account system or any other
