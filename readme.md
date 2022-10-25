@@ -544,7 +544,17 @@ App.scene.TV.streamTextures = new VIDEO_TEXTURE('Galactic Expansion Fractal Morp
 App.scene.TV.streamTextures = new ACCESS_CAMERA('webcam_beta');
 ```
 
-### Character
+### MatrixBVHCharacter (MEBvhAnimation)
+
+ MatrixBVHCharacter feature use class `matrixEngine.MEBvhAnimation`.
+ Its load primitives for bvh skeletal. MatrixBVHCharacter is proccess
+ where we load pre defined skelatal obj parts(head, neck, legs...) .
+
+ Take a look example: `matrix_skeletal.js`.
+
+### Character (ObjLoader/morph targets)
+
+This good in runtime bad for loading procedure.
 
 How to update character animation?
 Maximo -> download dea or fbx -> import intro blender 

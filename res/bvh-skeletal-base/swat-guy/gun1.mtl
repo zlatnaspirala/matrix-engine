@@ -1,0 +1,15 @@
+# Blender MTL File: 'gun1.blend'
+# Material Count: 1
+
+newmtl Space_Vintovka
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\Nikola Lukic\\blenderkit_data\\models\\textures\\Space_Vintovka_Base_Color_1001.png
+map_Ns C:\\Users\\Nikola Lukic\\blenderkit_data\\models\\textures\\Space_Vintovka_Roughness_1001.png
+refl C:\\Users\\Nikola Lukic\\blenderkit_data\\models\\textures\\Space_Vintovka_Metallic_1001.png

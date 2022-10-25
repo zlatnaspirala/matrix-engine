@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/load_obj_sequence';
+import {runThis} from './apps/matrix_skeletal';
 
 var world;
 var App = matrixEngine.App;
@@ -17,14 +17,13 @@ if ('serviceWorker' in navigator) {
 window.webGLStart = () => {
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
-
   // Make it global for dev - for easy console/debugger access
-  window.world = world;
-  window.App = App;
-  window.runThis = runThis;
+  // window.world = world;
 
-  // matrixEngine.utility.E('debugBox').style.display = 'block';
-  // If you need this , you can prolong loading time
+  // Must be fixed gloabal access
+  window.App = App;
+
+  window.runThis = runThis;
   setTimeout(() => { runThis(world); }, 1);
 };
 

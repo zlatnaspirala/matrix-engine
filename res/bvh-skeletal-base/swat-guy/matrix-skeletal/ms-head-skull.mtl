@@ -1,0 +1,26 @@
+# Blender MTL File: 'matrix-skeletal.blend'
+# Material Count: 2
+
+newmtl front_skull
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\blenderkit_data\\models\\female_and_male_skulls_2179a67f-be9f-4a76-ad18-1a3929029992\\textures\\NormalMap.png
+map_Kd G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\blenderkit_data\\models\\female_and_male_skulls_2179a67f-be9f-4a76-ad18-1a3929029992\\textures\\human-skull-3d-model-female-3d-model-obj-ma-ztl.jpg
+
+newmtl side_skull
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\blenderkit_data\\models\\female_and_male_skulls_2179a67f-be9f-4a76-ad18-1a3929029992\\textures\\NormalMap.png
+map_Kd G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\blenderkit_data\\models\\female_and_male_skulls_2179a67f-be9f-4a76-ad18-1a3929029992\\textures\\human-skull-3d-model-female-3d-model-obj-ma-ztl.jpg
