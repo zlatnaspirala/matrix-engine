@@ -1,7 +1,7 @@
 # Blender MTL File: 'y-bot-origin-high.blend'
 # Material Count: 1
 
-newmtl Material.001
+newmtl Material
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -10,4 +10,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\images\\default\\default-pink-64.png
+map_Kd G:\\web_server\\xampp\\htdocs\\PRIVATE_SERVER\\webgl2-glmatrix2-engine\\webgl2-glmatrix2-engine\\res\\bvh-skeletal-base\\y-bot\\origin-mixamo-com\\tex0.png

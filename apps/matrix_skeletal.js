@@ -23,14 +23,14 @@ export var runThis = (world) => {
     type: 'ANIMATION',              // [Optimal] 'ANIMATION' | "TPOSE'
     loop: 'playInverse',            // [Optimal] true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
     globalOffset: [0, -1.5, -4],  // [Optimal]  for 1.5 diff from obj seq anim
-    skeletalBoneScale: 0.05,        // [Optimal]
+    skeletalBoneScale: 0.02,        // [Optimal]
     /*skeletalBlend: {                // [Optimal] remove arg for no blend
       paramDest: 4,
       paramSrc: 4
     },*/
     boneTex: {
       source: [
-        "res/bvh-skeletal-base/vanguard.png",
+        "res/images/default/default-matrix.png",
       ],
       mix_operation: "multiply",
     },
