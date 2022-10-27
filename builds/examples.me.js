@@ -5552,7 +5552,9 @@ class MEBvhAnimation {
     if (typeof options.globalOffset === 'undefined') options.globalOffset = [0, 0, 0];
     if (typeof options.globalRotation === 'undefined') options.globalRotation = [0, 0, 0];
     if (typeof options.myFrameRate === 'undefined') options.myFrameRate = 125;
-    if (typeof options.speed === 'undefined') options.speed = 5; // passed
+    if (typeof options.speed === 'undefined') options.speed = 5;
+    if (typeof options.matrixSkeletalObjScale === 'undefined') options.matrixSkeletalObjScale = 1;
+    if (typeof options.ifNotExistDrawType === 'undefined') options.ifNotExistDrawType = 'cube'; // passed
 
     this.options = options;
     this.world = options.world;
@@ -5676,36 +5678,38 @@ class MEBvhAnimation {
           if (detTypeOfMEObject == 'matrixSkeletal') {
             if (this.options.objList.indexOf(filename) !== -1) {
               if (typeof this.options.ignoreList !== 'undefined' && this.options.ignoreList[0] == filename) {
-                resolve();
+                resolve('ignored' + filename);
               } else {
-                // console.log(this.skeletalKeys[x], ' <<<<test skeletal >>> ', this.options);
+                console.info(this.skeletalKeys[x], ' >>> looking for obj part...');
                 matrixEngine.objLoader.downloadMeshes(curName, meshes => {
                   for (let key in meshes) {
+                    meshes[key].setScale(this.options.matrixSkeletalObjScale);
                     matrixEngine.objLoader.initMeshBuffers(this.world.GL.gl, meshes[key]);
-                    this.world.Add('obj', this.options.skeletalBoneScale, key, this.options.boneTex, meshes[key]);
-                    resolve();
+                    this.world.Add('obj', this.options.matrixSkeletalObjScale, key, this.options.boneTex, meshes[key]);
+                    resolve(key);
                   }
                 });
               }
             } else {
               // Primitives mesh
-              this.world.Add('cube', this.options.skeletalBoneScale, b, this.options.boneTex);
-              resolve();
+              this.world.Add(this.options.ifNotExistDrawType, this.options.skeletalBoneScale, b, this.options.boneTex);
+              resolve(b);
             }
           } else {
             // Primitives mesh
             this.world.Add(detTypeOfMEObject, this.options.skeletalBoneScale, b, this.options.boneTex);
-            resolve();
+            resolve(b);
           }
         } else {
           // Primitives mesh
           this.world.Add('cube', this.options.skeletalBoneScale, b);
-          resolve();
+          resolve(b);
         }
       }));
     }
 
-    Promise.all(promises).then(() => {
+    Promise.all(promises).then(what => {
+      console.info('Promise all -> ', what);
       console.info('Promise all -> ', promises);
       this.isConstructed = true;
       this.objectsReady(options);
