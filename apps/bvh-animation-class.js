@@ -40,7 +40,7 @@ export var runThis = (world) => {
   const options2 = {
     world: world,
     autoPlay: true,
-    myFrameRate: 10,
+    myFrameRate: 20,
     showOnLoad: false, // if autoPLay is true then showOnLoad is inactive.
     type: 'ANIMATION', // "TPOSE' | 'ANIMATION'
     loop: 'playInverse', // true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
@@ -48,7 +48,7 @@ export var runThis = (world) => {
     skeletalBoneScale: 6,
     boneNameBasePrefix: 'backWalk',
     skeletalBlend: { paramDest: 7, paramSrc: 6 }, // remove arg for no blend
-    speed: 15,
+    speed: 1,
     boneTex: {
       source: [
         "res/icons/512.png"

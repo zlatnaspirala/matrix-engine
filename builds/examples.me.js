@@ -932,7 +932,7 @@ var runThis = world => {
   const options2 = {
     world: world,
     autoPlay: true,
-    myFrameRate: 10,
+    myFrameRate: 20,
     showOnLoad: false,
     // if autoPLay is true then showOnLoad is inactive.
     type: 'ANIMATION',
@@ -947,6 +947,7 @@ var runThis = world => {
       paramSrc: 6
     },
     // remove arg for no blend
+    speed: 1,
     boneTex: {
       source: ["res/icons/512.png"],
       mix_operation: "multiply"
@@ -960,25 +961,22 @@ var runThis = world => {
   var funnySwitch = new matrixEngine.utility.OSCILLATOR(0, 0.1, 0.0001);
   setTimeout(() => {
     // make funny staff with matrix-engine
-    myBvhAnimation.accessBonesObject().forEach(bone => {
-      // bone is MEObject [matrix-engine game object],
+    myBvhAnimation.accessBonesObject().forEach(bone => {// bone is MEObject [matrix-engine game object],
       // instancedDraws.overrideDrawArraysInstance is part of webgl2
-      bone.instancedDraws.numberOfInstance = 2;
-
-      bone.instancedDraws.overrideDrawArraysInstance = function (object) {
-        for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
-          // object.instancedDraws.array_of_local_offset = [0, 0, 18];
-          object.instancedDraws.array_of_local_offset = [funnySwitch.UPDATE(), funnySwitch.UPDATE(), 0];
-          mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-          world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-
-          for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
-            mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-            world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-            world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
-          }
-        }
-      };
+      // bone.instancedDraws.numberOfInstance = 2;
+      // bone.instancedDraws.overrideDrawArraysInstance = function (object) {
+      //   for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
+      //     // object.instancedDraws.array_of_local_offset = [0, 0, 18];
+      //     object.instancedDraws.array_of_local_offset = [funnySwitch.UPDATE(), funnySwitch.UPDATE(), 0];
+      //     mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
+      //     world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
+      //     for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
+      //       mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
+      //       world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
+      //       world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
+      //     }
+      //   }
+      // };
     });
   }, 250);
   console.log("<myBvhAnimation> try it => ", myBvhAnimation);
@@ -5526,20 +5524,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /**
  * @description MatrixEngine BVH animation loader.
- * MEBvh comes from `npm i bvh-loader`. Package 
- * `bvh-loader` is created for MatrixEngine but 
+ * MEBvh comes from `npm i bvh-loader`. Package
+ * `bvh-loader` is created for MatrixEngine but
  * can be used for any other projects.
+ * [Internal] More info:
+ * https://docs.w3cub.com/dom/webgl2renderingcontext/drawelementsinstanced
  * @name `MEBvhAnimation`
  * @author Nikola Lukic
- * @async YES
+ * @async Yes
  */
-// https://docs.w3cub.com/dom/webgl2renderingcontext/drawelementsinstanced
-// HARDCODE DEV
-// import MEBvh from '../node_modules/bvh-loader/index';
 class MEBvhAnimation {
   constructor(path_, options) {
-    if (typeof options === "undefined" || typeof options.world === 'undefined') {
-      console.error("MEBvhAnimation class error: No second argument options || possible world is not passed.");
+    if (typeof options === 'undefined' || typeof options.world === 'undefined') {
+      console.error('MEBvhAnimation class error: No second argument options || possible world is not passed.');
       return;
     }
 
@@ -5549,16 +5546,18 @@ class MEBvhAnimation {
 
     if (typeof options.loop === 'undefined') options.loop = true;
     if (typeof options.showOnLoad === 'undefined') options.showOnLoad = true;
-    if (typeof options.type === 'undefined') options.type = "ME-SKELETAL_POINT_BASE";
+    if (typeof options.type === 'undefined') options.type = 'ME-SKELETAL_POINT_BASE';
     if (typeof options.autoPlay === 'undefined') options.autoPlay = true;
-    if (typeof options.boneNameBasePrefix === 'undefined') options.boneNameBasePrefix = "MatrixSkeletalBone";
+    if (typeof options.boneNameBasePrefix === 'undefined') options.boneNameBasePrefix = 'MS';
     if (typeof options.globalOffset === 'undefined') options.globalOffset = [0, 0, 0];
+    if (typeof options.globalRotation === 'undefined') options.globalRotation = [0, 0, 0];
     if (typeof options.myFrameRate === 'undefined') options.myFrameRate = 125;
     if (typeof options.speed === 'undefined') options.speed = 5; // passed
 
     this.options = options;
     this.world = options.world;
     this.globalOffset = options.globalOffset;
+    this.globalRotation = options.globalRotation;
     this.anim = new _bvhLoader.default();
     this.tPose = null;
     this.skeletalKeys = null;
@@ -5574,81 +5573,43 @@ class MEBvhAnimation {
       this.animation = this.anim.all_frame_poses();
       this.sumOfFrames = this.animation[0].length - 1;
       this.loopInverse = new _utility.OSCILLATOR(1, this.sumOfFrames, options.speed);
+      if (this.isConstructed == false) this.constructSkeletal(this.options);
+    }).catch(err => {
+      console.warn('Bvh-loader error: ', err);
+    });
+  }
 
-      if (options.autoPlay == true) {
+  objectsReady(options) {
+    if (options.autoPlay == true) {
+      switch (options.type) {
+        case 'TPOSE':
+          this.constructSkeletalTPose();
+          break;
+
+        case 'ANIMATION':
+          this.playAnimation();
+          break;
+
+        default:
+          this.playAnimation();
+      }
+    } else {
+      if (options.showOnLoad == true) {
         switch (options.type) {
           case 'TPOSE':
             this.constructSkeletalTPose();
             break;
 
           case 'ANIMATION':
-            this.playAnimation();
+            // console.log("No autoPlay but preview first frame of animation")
+            this.constructFirstFrame(this.options);
             break;
 
           default:
-            this.playAnimation();
-        }
-      } else {
-        if (options.showOnLoad == true) {
-          switch (options.type) {
-            case 'TPOSE':
-              this.constructSkeletalTPose();
-              break;
-
-            case 'ANIMATION':
-              // console.log("No autoPlay but preview first frame of animation")
-              this.constructFirstFrame(this.options);
-              break;
-
-            default:
-              this.constructFirstFrame(this.options);
-          }
+            this.constructFirstFrame(this.options);
         }
       }
-    }).catch(err => {
-      console.warn("Bvh loader error: ", err);
-    });
-  }
-
-  constructSkeletalTPose() {
-    if (this.isConstructed == false) this.constructSkeletal(this.options);
-
-    for (var x = 0; x < this.tPosition.length; x++) {
-      var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
-      App.scene[b].position.SetX(this.tPosition[x][0] + this.globalOffset[0]);
-      App.scene[b].position.SetY(this.tPosition[x][1] + this.globalOffset[1]);
-      App.scene[b].position.SetZ(this.tPosition[x][2] + this.globalOffset[2]);
-      App.scene[b].rotation.rotateX(this.tRotation[x][0]);
-      App.scene[b].rotation.rotateY(this.tRotation[x][1]);
-      App.scene[b].rotation.rotateZ(this.tRotation[x][2]);
     }
-  }
-
-  accessBonesObject() {
-    let onlyMine = [];
-    matrixWorld.objListToDispose[0].contentList.forEach(MEObject => {
-      if (MEObject.name.indexOf(this.options.boneNameBasePrefix) != -1) {
-        // console.log(MEObject)
-        onlyMine.push(MEObject);
-      }
-    });
-    return onlyMine;
-  }
-
-  constructSkeletal() {
-    for (var x = 0; x < this.tPosition.length; x++) {
-      var b = this.options.boneNameBasePrefix + this.skeletalKeys[x]; // boneTex
-
-      if (typeof this.options.boneTex != 'undefined') {
-        // cubeLightTex
-        const detTypeOfMEObject = typeof this.options.drawTypeBone == 'undefined' ? 'cubeLightTex' : this.options.drawTypeBone;
-        this.world.Add(detTypeOfMEObject, this.options.skeletalBoneScale, b, this.options.boneTex);
-      } else {
-        this.world.Add('cube', this.options.skeletalBoneScale, b);
-      }
-    }
-
-    this.isConstructed = true;
 
     if (typeof this.options.skeletalBlend != 'undefined') {
       for (var x = 0; x < this.tPosition.length; x++) {
@@ -5660,9 +5621,98 @@ class MEBvhAnimation {
     }
   }
 
-  constructFirstFrame() {
-    if (this.isConstructed == false) this.constructSkeletal();
+  constructSkeletalTPose() {
+    for (var x = 0; x < this.tPosition.length; x++) {
+      var b = this.options.boneNameBasePrefix + this.skeletalKeys[x]; // test check
 
+      if (App.scene[b]) {
+        App.scene[b].position.SetX(this.tPosition[x][0] + this.globalOffset[0]);
+        App.scene[b].position.SetY(this.tPosition[x][1] + this.globalOffset[1]);
+        App.scene[b].position.SetZ(this.tPosition[x][2] + this.globalOffset[2]);
+        App.scene[b].rotation.rotateX(this.tRotation[x][0] + this.globalRotation[0]);
+        App.scene[b].rotation.rotateY(this.tRotation[x][1] + this.globalRotation[1]);
+        App.scene[b].rotation.rotateZ(this.tRotation[x][2] + this.globalRotation[2]);
+      } else {
+        console.log('TEST NON EXIST  T POSE', b);
+      }
+    }
+  } // Must be improved not secure 100%.
+
+
+  accessBonesObject() {
+    let onlyMine = [];
+    matrixWorld.objListToDispose[0].contentList.forEach(MEObject => {
+      if (MEObject.name.indexOf(this.options.boneNameBasePrefix) != -1) {
+        // console.log(MEObject)
+        onlyMine.push(MEObject);
+      }
+    });
+    return onlyMine;
+  } // cleanNames = (name) => {
+  //   const arrondissements = ['mixamorig'];
+  //   return arrondissements.reduce((acc, cur) => acc.replace(cur, ''), name);
+  // };
+
+
+  async constructSkeletal(options) {
+    this.skeletalKeys = this.skeletalKeys.map(item => item.replace('mixamorig:', ''));
+    const promises = [];
+
+    for (var x = 0; x < this.tPosition.length; x++) {
+      promises.push(new Promise(resolve => {
+        // Blender adapt
+        let filename = this.skeletalKeys[x];
+        filename = filename.toLowerCase();
+        var b = this.options.boneNameBasePrefix + this.skeletalKeys[x]; // just handler
+
+        var curName = {};
+        curName[b] = this.options.matrixSkeletal + filename + '.obj';
+
+        if (typeof this.options.boneTex != 'undefined') {
+          // mixamorig:Head
+          // console.log("filename = ", filename);
+          const detTypeOfMEObject = typeof this.options.drawTypeBone == 'undefined' ? 'cubeLightTex' : this.options.drawTypeBone; // matrixSkeletal feature
+
+          if (detTypeOfMEObject == 'matrixSkeletal') {
+            if (this.options.objList.indexOf(filename) !== -1) {
+              if (typeof this.options.ignoreList !== 'undefined' && this.options.ignoreList[0] == filename) {
+                resolve();
+              } else {
+                // console.log(this.skeletalKeys[x], ' <<<<test skeletal >>> ', this.options);
+                matrixEngine.objLoader.downloadMeshes(curName, meshes => {
+                  for (let key in meshes) {
+                    matrixEngine.objLoader.initMeshBuffers(this.world.GL.gl, meshes[key]);
+                    this.world.Add('obj', this.options.skeletalBoneScale, key, this.options.boneTex, meshes[key]);
+                    resolve();
+                  }
+                });
+              }
+            } else {
+              // Primitives mesh
+              this.world.Add('cube', this.options.skeletalBoneScale, b, this.options.boneTex);
+              resolve();
+            }
+          } else {
+            // Primitives mesh
+            this.world.Add(detTypeOfMEObject, this.options.skeletalBoneScale, b, this.options.boneTex);
+            resolve();
+          }
+        } else {
+          // Primitives mesh
+          this.world.Add('cube', this.options.skeletalBoneScale, b);
+          resolve();
+        }
+      }));
+    }
+
+    Promise.all(promises).then(() => {
+      console.info('Promise all -> ', promises);
+      this.isConstructed = true;
+      this.objectsReady(options);
+    });
+  }
+
+  constructFirstFrame() {
     for (var x = 0; x < this.tPosition.length; x++) {
       var b = this.options.boneNameBasePrefix + this.skeletalKeys[x]; // test - import bvh from make human -> blender
 
@@ -5670,24 +5720,22 @@ class MEBvhAnimation {
         App.scene[b].position.SetX(this.animation[0][1][x][0] + this.globalOffset[0]);
         App.scene[b].position.SetY(this.animation[0][1][x][1] + this.globalOffset[1]);
         App.scene[b].position.SetZ(this.animation[0][1][x][2] + this.globalOffset[2]);
-        App.scene[b].rotation.rotateX(this.animation[1][1][x][0]);
-        App.scene[b].rotation.rotateY(this.animation[1][1][x][1]);
-        App.scene[b].rotation.rotateZ(this.animation[1][1][x][2]);
+        App.scene[b].rotation.rotateX(this.animation[1][1][x][0] + this.globalRotation[0]);
+        App.scene[b].rotation.rotateY(this.animation[1][1][x][1] + this.globalRotation[1]);
+        App.scene[b].rotation.rotateZ(this.animation[1][1][x][2] + this.globalRotation[2]);
       } else {
-        // console.info("TESTED @@@")
+        // console.info("TESTED no t-pose case!")
         App.scene[b].position.SetX(this.animation[0][0][x][0] + this.globalOffset[0]);
         App.scene[b].position.SetY(this.animation[0][0][x][1] + this.globalOffset[1]);
         App.scene[b].position.SetZ(this.animation[0][0][x][2] + this.globalOffset[2]);
-        App.scene[b].rotation.rotateX(this.animation[1][0][x][0]);
-        App.scene[b].rotation.rotateY(this.animation[1][0][x][1]);
-        App.scene[b].rotation.rotateZ(this.animation[1][0][x][2]);
+        App.scene[b].rotation.rotateX(this.animation[1][0][x][0] + this.globalRotation[0]);
+        App.scene[b].rotation.rotateY(this.animation[1][0][x][1] + this.globalRotation[1]);
+        App.scene[b].rotation.rotateZ(this.animation[1][0][x][2] + this.globalRotation[2]);
       }
     }
   }
 
   playAnimation() {
-    if (this.isConstructed == false) this.constructFirstFrame(this.options);
-
     if (this.animationTimer == null) {
       this.animationTimer = setInterval(() => {
         for (var x = 0; x < this.tPosition.length; x++) {
@@ -5699,17 +5747,17 @@ class MEBvhAnimation {
               App.scene[b].position.SetX(this.animation[0][this.actualFrame][x][0] + this.globalOffset[0]);
               App.scene[b].position.SetY(this.animation[0][this.actualFrame][x][1] + this.globalOffset[1]);
               App.scene[b].position.SetZ(this.animation[0][this.actualFrame][x][2] + this.globalOffset[2]);
-              App.scene[b].rotation.rotateX(this.animation[1][1][x][0]);
-              App.scene[b].rotation.rotateY(this.animation[1][1][x][1]);
-              App.scene[b].rotation.rotateZ(this.animation[1][1][x][2]);
+              App.scene[b].rotation.rotateX(this.animation[1][1][x][0] + this.globalRotation[0]);
+              App.scene[b].rotation.rotateY(this.animation[1][1][x][1] + this.globalRotation[1]);
+              App.scene[b].rotation.rotateZ(this.animation[1][1][x][2] + this.globalRotation[2]);
             } else {
               // for non t pose
               App.scene[b].position.SetX(this.animation[0][0][x][0] + this.globalOffset[0]);
               App.scene[b].position.SetY(this.animation[0][0][x][1] + this.globalOffset[1]);
               App.scene[b].position.SetZ(this.animation[0][0][x][2] + this.globalOffset[2]);
-              App.scene[b].rotation.rotateX(this.animation[1][0][x][0]);
-              App.scene[b].rotation.rotateY(this.animation[1][0][x][1]);
-              App.scene[b].rotation.rotateZ(this.animation[1][0][x][2]);
+              App.scene[b].rotation.rotateX(this.animation[1][0][x][0] + this.globalRotation[0]);
+              App.scene[b].rotation.rotateY(this.animation[1][0][x][1] + this.globalRotation[1]);
+              App.scene[b].rotation.rotateZ(this.animation[1][0][x][2] + this.globalRotation[2]);
             }
           }
         }
@@ -5733,7 +5781,7 @@ class MEBvhAnimation {
         }
       }, this.options.myFrameRate);
     } else {
-      console.warn("MEBvhAnimation: Animation already play.");
+      console.warn('MEBvhAnimation: Animation already play.');
     }
   }
 
@@ -13565,7 +13613,9 @@ var RTCMultiConnection3 = function(roomid, forceOptions) {
                 var type = message.message.type != 'both' ? message.message.type : null;
 
                 if (typeof stream.stream[action] == 'function') {
+                  try {
                     stream.stream[action](type);
+                  } catch(err) {}
                 }
                 return;
             }
