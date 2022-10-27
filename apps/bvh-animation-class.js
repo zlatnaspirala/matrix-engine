@@ -48,6 +48,7 @@ export var runThis = (world) => {
     skeletalBoneScale: 6,
     boneNameBasePrefix: 'backWalk',
     skeletalBlend: { paramDest: 7, paramSrc: 6 }, // remove arg for no blend
+    speed: 15,
     boneTex: {
       source: [
         "res/icons/512.png"
