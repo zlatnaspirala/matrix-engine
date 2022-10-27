@@ -436,12 +436,14 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 
 ### Raycast
 
-   - cube , square, triangle  [1.4.11]
+   - cube , square, triangle, obj (ObjLoader) [1.8.4]
+   From 1.8.4 raycast hit trigger works for obj's.
+
    Raycast works fine also in firstPersonCamera operation.
    Raycast work perfect after local single rotation x, y, or z.
    Combination rotx and roty works , roty and rotz only with rotx = 180 for now.
-
    Bug if walk behind object then turn arround and try raycast but no work for now.
+
    - Usage:
 ```js
   canvas.addEventListener('mousedown', (ev) => {
