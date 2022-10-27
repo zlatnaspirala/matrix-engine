@@ -921,7 +921,7 @@ var runThis = world => {
       paramSrc: 4
     },*/
     boneTex: {
-      source: ["res/images/default/default-pink.png"],
+      source: ["res/images/default/default-pink-64.png"],
       mix_operation: "multiply"
     },
     drawTypeBone: "cubeLightTex" // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
