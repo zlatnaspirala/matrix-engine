@@ -68,23 +68,26 @@ export var runThis = (world) => {
   setTimeout( () => {
   // make funny staff with matrix-engine
    myBvhAnimation.accessBonesObject().forEach(bone => {
+
      // bone is MEObject [matrix-engine game object],
      // instancedDraws.overrideDrawArraysInstance is part of webgl2
-    bone.instancedDraws.numberOfInstance = 2;
-    bone.instancedDraws.overrideDrawArraysInstance = function (object) {
-      for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
-        // object.instancedDraws.array_of_local_offset = [0, 0, 18];
-        object.instancedDraws.array_of_local_offset = [funnySwitch.UPDATE(), funnySwitch.UPDATE(), 0];
-        mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-        world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
+    // bone.instancedDraws.numberOfInstance = 2;
+    // bone.instancedDraws.overrideDrawArraysInstance = function (object) {
+    //   for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
+    //     // object.instancedDraws.array_of_local_offset = [0, 0, 18];
+    //     object.instancedDraws.array_of_local_offset = [funnySwitch.UPDATE(), funnySwitch.UPDATE(), 0];
+    //     mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
+    //     world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
         
-        for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
-          mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-          world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-          world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
-        }
-      }
-    };
+    //     for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
+    //       mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
+    //       world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
+    //       world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
+    //     }
+    //   }
+    // };
+
+
    });
   }, 250 )
 

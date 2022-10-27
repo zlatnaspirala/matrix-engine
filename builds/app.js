@@ -74,7 +74,7 @@ var runThis = world => {
     // [Optimal]
     showOnLoad: false,
     // [Optimal] if autoPLay is true then showOnLoad is inactive.
-    type: 'ANIMATION',
+    type: 'TPOSE',
     // [Optimal] 'ANIMATION' | "TPOSE'
     loop: 'playInverse',
     // [Optimal] true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
@@ -88,11 +88,12 @@ var runThis = world => {
       paramSrc: 4
     },*/
     boneTex: {
-      source: ["res/images/default/default-matrix.png"],
+      source: ["res/images/default/default-pink.png"],
       mix_operation: "multiply"
     },
     drawTypeBone: "matrixSkeletal",
     matrixSkeletal: "res/bvh-skeletal-base/y-bot/matrix-skeletal/",
+    objList: ['headtop_end_end', 'headtop_end', 'spine2', 'spine1', 'spine', 'hips', 'leftupleg', 'leftleg', 'rightleg', 'rightupleg', 'leftarm', 'leftforearm'],
     // Can be predefined `MatrixSkeletal` prepared skeletal obj parts/bones.
     // Can be primitives:
     // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
@@ -100,7 +101,9 @@ var runThis = world => {
     // Sometime we need more optimisation
     ignoreList: ['spine1']
   };
-  const filePath = "res/bvh-skeletal-base/swat-guy/bvh-export/swat.bvh";
+  const filePath = "res/bvh-skeletal-base/swat-guy/bvh-export/swat.bvh"; //
+  // const filePath = "https://raw.githubusercontent.com/zlatnaspirala/Matrix-Engine-BVH-test/main/javascript-bvh/example.bvh";
+
   var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options);
   window.myFirstBvhAnimation = myFirstBvhAnimation;
   canvas.addEventListener('mousedown', ev => {
@@ -2680,6 +2683,8 @@ class MEBvhAnimation {
         App.scene[b].rotation.rotateX(this.tRotation[x][0] + this.globalRotation[0]);
         App.scene[b].rotation.rotateY(this.tRotation[x][1] + this.globalRotation[1]);
         App.scene[b].rotation.rotateZ(this.tRotation[x][2] + this.globalRotation[2]);
+      } else {
+        console.log('TEST NON EXIST  T POSE', b);
       }
     }
   } // Must be improved not secure 100%.
@@ -2703,8 +2708,9 @@ class MEBvhAnimation {
   async constructSkeletal(options) {
     this.skeletalKeys = this.skeletalKeys.map(item => item.replace('mixamorig:', ''));
     const promises = [];
-    new Promise(() => {
-      for (var x = 0; x < this.tPosition.length; x++) {
+
+    for (var x = 0; x < this.tPosition.length; x++) {
+      promises.push(new Promise(resolve => {
         // Blender adapt
         let filename = this.skeletalKeys[x];
         filename = filename.toLowerCase();
@@ -2720,36 +2726,42 @@ class MEBvhAnimation {
 
           if (detTypeOfMEObject == 'matrixSkeletal') {
             // just check
-            if (filename == 'head' || filename == 'headtop_end_end' || filename == 'headtop_end' || filename == 'spine2' || filename == 'spine1' || filename == 'spine' || filename == 'hips') {
+            if (this.options.objList.indexOf(filename) !== -1) {
               if (typeof this.options.ignoreList !== 'undefined' && this.options.ignoreList[0] == filename) {
-                promises.push(b + 'IGNORED');
+                // promises.push(b + 'IGNORED');
+                resolve();
               } else {
                 console.log(this.skeletalKeys[x], ' <<<<test skeletal >>> ', this.options);
                 matrixEngine.objLoader.downloadMeshes(curName, meshes => {
                   for (let key in meshes) {
                     matrixEngine.objLoader.initMeshBuffers(this.world.GL.gl, meshes[key]);
-                    this.world.Add('obj', this.options.skeletalBoneScale, key, this.options.boneTex, meshes[key]);
-                    promises.push(b);
+                    this.world.Add('obj', this.options.skeletalBoneScale, key, this.options.boneTex, meshes[key]); // promises.push(b);
+
+                    resolve();
                   }
                 });
               }
             } else {
               // Primitives mesh
-              this.world.Add('cube', this.options.skeletalBoneScale, b, this.options.boneTex);
-              promises.push(b);
+              this.world.Add('cube', this.options.skeletalBoneScale, b, this.options.boneTex); // promises.push(b);
+
+              resolve();
             }
           } else {
             // Primitives mesh
-            this.world.Add(detTypeOfMEObject, this.options.skeletalBoneScale, b, this.options.boneTex);
-            promises.push(b);
+            this.world.Add(detTypeOfMEObject, this.options.skeletalBoneScale, b, this.options.boneTex); // promises.push(b);
+
+            resolve();
           }
         } else {
           // Primitives mesh
-          this.world.Add('cube', this.options.skeletalBoneScale, b);
-          promises.push(b);
+          this.world.Add('cube', this.options.skeletalBoneScale, b); // promises.push(b);
+
+          resolve();
         }
-      }
-    });
+      }));
+    }
+
     Promise.all(promises).then(() => {
       console.log('Promise all -> ', promises);
       this.isConstructed = true;

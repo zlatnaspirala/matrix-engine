@@ -550,6 +550,11 @@ App.scene.TV.streamTextures = new ACCESS_CAMERA('webcam_beta');
  Its load primitives for bvh skeletal. MatrixBVHCharacter is proccess
  where we load pre defined skelatal obj parts(head, neck, legs...) .
 
+### @Note Human character failed for noe but func works.
+Nice for primitive obj mesh bur rig must have nice description of 
+position/rotation. In maximo skeletal bones simple not fit.
+If you pripare bones you can get nice bvh obj adaptation for animations.
+
  Take a look example: `matrix_skeletal.js`.
 
 ### Character (ObjLoader/morph targets)

@@ -1,7 +1,11 @@
 
 /**
  * @description Usage of MEBvhAnimation
- * @class MEBvhAnimation
+ * @class MEBvhAnimation test MatrixBVHSkeletal pseudo bvh object follow.
+ * @Note Human character failed for noe but func works.
+ * Nice for primitive obj mesh bur rig must have nice description of 
+ * position/rotation. In maximo skeletal bones simple not fit.
+ * If you pripare bones you can get nice bvh obj adaptation for animations.
  * @arg filePath
  * @arg options
  */
@@ -20,7 +24,7 @@ export var runThis = (world) => {
     world: world,                   // [Required]
     autoPlay: true,                 // [Optimal]
     showOnLoad: false,              // [Optimal] if autoPLay is true then showOnLoad is inactive.
-    type: 'ANIMATION',              // [Optimal] 'ANIMATION' | "TPOSE'
+    type: 'TPOSE',              // [Optimal] 'ANIMATION' | "TPOSE'
     loop: 'playInverse',            // [Optimal] true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
     globalOffset: [0, -1.5, -4],  // [Optimal]  for 1.5 diff from obj seq anim
     skeletalBoneScale: 0.02,        // [Optimal]
@@ -30,12 +34,15 @@ export var runThis = (world) => {
     },*/
     boneTex: {
       source: [
-        "res/images/default/default-matrix.png",
+        "res/images/default/default-pink.png",
       ],
       mix_operation: "multiply",
     },
     drawTypeBone: "matrixSkeletal",
     matrixSkeletal: "res/bvh-skeletal-base/y-bot/matrix-skeletal/",
+    objList: ['headtop_end_end', 'headtop_end', 'spine2', 'spine1', 'spine', 'hips', 'leftupleg', 'leftleg',
+              'rightleg', 'rightupleg' ,'leftarm', 'leftforearm'] ,
+
     // Can be predefined `MatrixSkeletal` prepared skeletal obj parts/bones.
     // Can be primitives:
     // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
@@ -46,6 +53,8 @@ export var runThis = (world) => {
   };
 
   const filePath = "res/bvh-skeletal-base/swat-guy/bvh-export/swat.bvh";
+  //
+  // const filePath = "https://raw.githubusercontent.com/zlatnaspirala/Matrix-Engine-BVH-test/main/javascript-bvh/example.bvh";
   var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options);
 
   window.myFirstBvhAnimation = myFirstBvhAnimation;
