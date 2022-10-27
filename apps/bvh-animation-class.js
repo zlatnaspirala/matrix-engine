@@ -27,7 +27,7 @@ export var runThis = (world) => {
     },*/
     boneTex: {
       source: [
-        "res/images/default/default-pink.png",
+        "res/images/default/default-pink-64.png",
       ],
       mix_operation: "multiply",
     },
