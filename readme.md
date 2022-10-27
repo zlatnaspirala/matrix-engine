@@ -595,6 +595,10 @@ If you pripare bones you can get nice bvh obj adaptation for animations.
   const filePath = "res/bvh/Female1_B04_StandToWalkBack.bvh";
   var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options);
 ```
+ This is folder for obj parts (head arm legs ...)
+ Filenames are simplefield like head.obj , arm.obj without any prefix from constructor...
+ 
+ matrixSkeletal: "res/bvh-skeletal-base/y-bot/matrix-skeletal/",
 
  Take a look example: `matrix_skeletal.js`.
 
