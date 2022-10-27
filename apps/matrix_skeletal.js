@@ -24,10 +24,10 @@ export var runThis = (world) => {
     world: world,                   // [Required]
     autoPlay: true,                 // [Optimal]
     showOnLoad: false,              // [Optimal] if autoPLay is true then showOnLoad is inactive.
-    type: 'TPOSE',              // [Optimal] 'ANIMATION' | "TPOSE'
+    type: 'ANIMATION',              // [Optimal] 'ANIMATION' | "TPOSE'
     loop: 'playInverse',            // [Optimal] true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
-    globalOffset: [0, -1.5, -4],  // [Optimal]  for 1.5 diff from obj seq anim
-    skeletalBoneScale: 0.02,        // [Optimal]
+    globalOffset: [-30, -180, -155], // [Optimal]  for 1.5 diff from obj seq anim
+    skeletalBoneScale: 2,        // [Optimal]
     /*skeletalBlend: {                // [Optimal] remove arg for no blend
       paramDest: 4,
       paramSrc: 4
@@ -40,8 +40,9 @@ export var runThis = (world) => {
     },
     drawTypeBone: "matrixSkeletal",
     matrixSkeletal: "res/bvh-skeletal-base/y-bot/matrix-skeletal/",
-    objList: ['headtop_end_end', 'headtop_end', 'spine2', 'spine1', 'spine', 'hips', 'leftupleg', 'leftleg',
-              'rightleg', 'rightupleg' ,'leftarm', 'leftforearm'] ,
+    objList: ['spine', 'hips', 'head'] ,
+
+    matrixSkeletalObjScale: 80,          // [Optimal]
 
     // Can be predefined `MatrixSkeletal` prepared skeletal obj parts/bones.
     // Can be primitives:
@@ -49,10 +50,12 @@ export var runThis = (world) => {
 
     // New optimal arg
     // Sometime we need more optimisation
-    ignoreList: ['spine1']
+    ignoreList: ['spine1'],
+    ifNotExistDrawType: 'triangle'
   };
 
-  const filePath = "res/bvh-skeletal-base/swat-guy/bvh-export/swat.bvh";
+  // const filePath = "res/bvh-skeletal-base/swat-guy/bvh-export/swat.bvh";
+  const filePath = "res/bvh/Female1_B04_StandToWalkBack.bvh";
   //
   // const filePath = "https://raw.githubusercontent.com/zlatnaspirala/Matrix-Engine-BVH-test/main/javascript-bvh/example.bvh";
   var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options);

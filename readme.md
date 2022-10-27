@@ -555,6 +555,47 @@ Nice for primitive obj mesh bur rig must have nice description of
 position/rotation. In maximo skeletal bones simple not fit.
 If you pripare bones you can get nice bvh obj adaptation for animations.
 
+
+#### Example Code:
+```js
+  const options = {
+    world: world,                    // [Required]
+    autoPlay: true,                  // [Optimal]
+    showOnLoad: false,               // [Optimal] if autoPLay is true then showOnLoad is inactive.
+    type: 'ANIMATION',               // [Optimal] 'ANIMATION' | "TPOSE'
+    loop: 'playInverse',             // [Optimal] true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
+    globalOffset: [-30, -180, -155], // [Optimal]  for 1.5 diff from obj seq anim
+    skeletalBoneScale: 2,            // [Optimal]
+    /*skeletalBlend: {               // [Optimal] remove arg for no blend
+      paramDest: 4,
+      paramSrc: 4
+    },*/
+    boneTex: {
+      source: [
+        "res/images/default/default-pink.png",
+      ],
+      mix_operation: "multiply",
+    },
+    drawTypeBone: "matrixSkeletal",
+    matrixSkeletal: "res/bvh-skeletal-base/y-bot/matrix-skeletal/",
+    objList: ['spine', 'hips', 'head'] ,
+
+    matrixSkeletalObjScale: 80,       // [Optimal]
+
+    // Can be predefined `MatrixSkeletal` prepared skeletal obj parts/bones.
+    // Can be primitives:
+    // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
+
+    // New optimal arg
+    // Sometime we need more optimisation
+    ignoreList: ['spine1'],
+    ifNotExistDrawType: 'triangle'
+  };
+
+  const filePath = "res/bvh/Female1_B04_StandToWalkBack.bvh";
+  var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options);
+```
+
  Take a look example: `matrix_skeletal.js`.
 
 ### Character (ObjLoader/morph targets)
