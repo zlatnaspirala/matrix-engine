@@ -27,11 +27,11 @@ export var runThis = (world) => {
     },*/
     boneTex: {
       source: [
-        "res/images/sky/blue.jpg",
+        "res/images/default/default-pink.png",
       ],
       mix_operation: "multiply",
     },
-    drawTypeBone: "sphereLightTex" // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
+    drawTypeBone: "cubeLightTex" // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
   };
 
   const filePath = "https://raw.githubusercontent.com/zlatnaspirala/Matrix-Engine-BVH-test/main/javascript-bvh/example.bvh";
