@@ -972,6 +972,7 @@ function initShaders(gl, fragment, vertex) {
 
 
       if (null !== gl.getUniformLocation(shaderProgram, 'uSampler')) {
+        // console.log('uso u drugi')
         shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
       }
 
@@ -1002,12 +1003,7 @@ function initShaders(gl, fragment, vertex) {
       if (null !== gl.getUniformLocation(shaderProgram, 'uSampler7')) {
         shaderProgram.samplerUniform7 = gl.getUniformLocation(shaderProgram, 'uSampler7');
       } // maybe to the 16 ?
-      // 1.8.4
 
-
-      if (null !== gl.getUniformLocation(shaderProgram, 'uCubeMapSampler')) {
-        shaderProgram.uCubeMapSampler = gl.getUniformLocation(shaderProgram, 'uCubeMapSampler');
-      }
 
       if (null !== gl.getUniformLocation(shaderProgram, 'uUseLighting')) {
         shaderProgram.useLightingUniform = gl.getUniformLocation(shaderProgram, 'uUseLighting');
@@ -1044,6 +1040,14 @@ function initShaders(gl, fragment, vertex) {
 
       if (null !== gl.getUniformLocation(shaderProgram, "u_lightWorldPosition")) {
         shaderProgram.lightWorldPositionLocation = gl.getUniformLocation(shaderProgram, 'u_lightWorldPosition');
+      } // 1.8.4
+
+
+      console.log('TTTTTTT before');
+
+      if (null !== gl.getUniformLocation(shaderProgram, 'uCubeMapSampler')) {
+        console.log('TTTTTTT');
+        shaderProgram.uCubeMapSampler = gl.getUniformLocation(shaderProgram, 'uCubeMapSampler');
       }
 
       shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, 'uPMatrix');
@@ -3092,7 +3096,7 @@ _manifest.default.operation.draws.cube = function (object) {
         if (object.custom.gl_texture == null) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
 
-          if (t == 0) {
+          if (t == 1) {
             var gl = _matrixWorld.world.GL.gl;
             var tex = gl.createTexture(); // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_CUBE_MAP, object.textures[t]);
 
@@ -3169,7 +3173,7 @@ _manifest.default.operation.draws.cube = function (object) {
             gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
             gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
 
-            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, t);
+            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, 0);
           } // 
           // App.tools.cubeMapTextures(world.GL.gl);
           else {
@@ -6076,6 +6080,8 @@ function getInitFSCubeTexLight() {
 
   // The CubeMap texture.
   uniform samplerCube uCubeMapSampler;
+  // cube map
+  varying vec3 v_normal_cubemap;
 
   uniform float numberOfsamplers;
 
@@ -6114,9 +6120,9 @@ function getInitFSCubeTexLight() {
     vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
 
     // test 
-    gl_FragColor = textureCube(uCubeMapSampler, normal);
+    // gl_FragColor = textureCube(uCubeMapSampler, normal);
 
-    // gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
     // Lets multiply just the color portion (not the alpha)
     // by the light
@@ -6159,6 +6165,9 @@ function getInitVSCubeTexLight() {
 
   varying vec3 v_normal;
 
+  // cube map
+  varying vec3 v_normal_cubemap;
+
   varying vec3 v_surfaceToLight;
   varying vec3 v_surfaceToView;
 
@@ -6167,6 +6176,11 @@ function getInitVSCubeTexLight() {
     // orient the normals and pass to the fragment shader
     // v_normal = mat3(u_worldInverseTranspose) * aVertexNormal;
     v_normal = mat3(uNMatrix) * aVertexNormal;
+
+    // normalize
+    //  v_normal = normalize(a_position.xyz);
+    v_normal_cubemap = normalize(aVertexPosition.xyz);
+
     // uniform mat4 uMVMatrix;
     // uniform mat4 uPMatrix;
     // uniform mat3 uNMatrix;
@@ -6762,6 +6776,7 @@ exports.generateShaderSimpleDirection = generateShaderSimpleDirection;
 exports.generateVShaderSimpleDirectionLight = generateVShaderSimpleDirectionLight;
 exports.generateCustomShaderSrc = generateCustomShaderSrc;
 
+// Fragment shader
 function generateShaderSrc(numTextures, mixOperand, spotLight) {
   return `
     // shader for ${numTextures} textures
@@ -6774,6 +6789,9 @@ function generateShaderSrc(numTextures, mixOperand, spotLight) {
     int MixOperandString = ${mixOperand};
 
     uniform sampler2D uSampler;
+    // The CubeMap texture.
+    uniform samplerCube uCubeMapSampler;
+    
     uniform sampler2D uSampler1;
     uniform sampler2D uSampler2;
     uniform sampler2D uSampler3;
@@ -6782,14 +6800,12 @@ function generateShaderSrc(numTextures, mixOperand, spotLight) {
     uniform sampler2D uSampler6;
     uniform sampler2D uSampler7;
 
-    // The CubeMap texture.
-    uniform samplerCube uCubeMapSampler;
-    varying vec3 v_normal;
+
+    varying vec3 v_normal_cubemap;
 
     ` + (typeof spotLight !== 'undefined' ? generateSpotLightDefinitions() : ``) + `
     void main(void) {
 
-        vec3 normal = normalize(v_normal);
 
         vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
         vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
@@ -6801,16 +6817,18 @@ function generateShaderSrc(numTextures, mixOperand, spotLight) {
         vec4 textureColor7 = texture2D(uSampler7, vec2(vTextureCoord.s, vTextureCoord.t));
 
         if (${numTextures} == 1) {
-          // gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a); // ori
+          gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a); // ori
 
-          gl_FragColor = textureCube(uCubeMapSampler, normal);
+          // gl_FragColor = textureCube(uCubeMapSampler, textureColor.rgb);
 
-          //  gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b,textureColor.g ) , smoothstep(textureColor.r, textureColor.b,textureColor.g ) ,0 ,smoothstep(textureColor.r, textureColor.b,textureColor.g ) );
+          // gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b,textureColor.g ) , smoothstep(textureColor.r, textureColor.b,textureColor.g ) ,0 ,smoothstep(textureColor.r, textureColor.b,textureColor.g ) );
         } else if (${numTextures} == 2) {
           if ( ${mixOperand} == 0) {
-            gl_FragColor      = vec4( (textureColor.rgb * textureColor1.rgb) * vLightWeighting, textureColor.a);
+            gl_FragColor = textureCube(uCubeMapSampler, textureColor.rgb);
+            // gl_FragColor      = vec4( (textureColor.rgb * textureColor1.rgb) * vLightWeighting, textureColor.a);
           } else if (${mixOperand} == 1) {
-            gl_FragColor      = vec4( (textureColor.rgb / textureColor1.rgb) * vLightWeighting, textureColor.a);
+            gl_FragColor = textureCube(uCubeMapSampler, textureColor.rgb);
+            // gl_FragColor      = vec4( (textureColor.rgb / textureColor1.rgb) * vLightWeighting, textureColor.a);
           }
         } else if (${numTextures} == 3) {
           if (${mixOperand} == 0) {
