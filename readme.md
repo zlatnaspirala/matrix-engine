@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.8.1`
+### Name: `MATRIX-ENGINE` `1.8.5`
 
 #### Logo
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/res/icons/ms-icon.png" width="128" height="128" />

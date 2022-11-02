@@ -121,3 +121,78 @@ https://schteppe.github.io/cannon.js/
 
 ## Shadows vs Lights
 https://webglfundamentals.org/webgl/lessons/webgl-3d-lighting-spot.html
+
+
+Trimesh shape works fine but no support for many other types.
+
+Is it possible to use ConvexPolyhedron with obj mesh ver and vertexNormals?
+
+From Docs:
+```js
+ConvexPolyhedron ( points  faces )
+Defined in src/shapes/ConvexPolyhedron.js:8
+
+Parameters:
+points Array
+An array of Vec3's
+
+faces Array
+Array of integer arrays, describing which vertices that is included in each face.
+```
+
+
+My code:
+
+```js
+    var localPoints = [];
+    for (var j = 0; j < App.scene.armor2.mesh.vertices.length; j+=3) {
+      localPoints.push([
+        new CANNON.Vec3(
+          App.scene.armor2.mesh.vertices[j],
+          App.scene.armor2.mesh.vertices[j+1],
+          App.scene.armor2.mesh.vertices[j+2])
+      ])
+    }
+    var localFaces = [];
+    for (var j = 0; j < App.scene.armor2.mesh.vertexNormals.length; j+=3) {
+      localFaces.push([
+        new CANNON.Vec3(
+          App.scene.armor2.mesh.vertexNormals[j],
+          App.scene.armor2.mesh.vertexNormals[j+1],
+          App.scene.armor2.mesh.vertexNormals[j+2])
+      ])
+    }
+
+    console.log('FORMAT vec3 ', localPoints)
+
+    var b4 = new CANNON.Body({
+      mass: 1,
+      linearDamping: 0.01,
+      position: new CANNON.Vec3(1, -14.5, 12),
+      // shape: new CANNON.Trimesh(App.scene.armor2.mesh.vertices, App.scene.armor2.mesh.indices)
+      shape: new CANNON.ConvexPolyhedron(localPoints, localFaces)
+    });
+
+```
+
+
+Error deep intro cannojs :
+
+```js
+ConvexPolyhedron.prototype.computeNormals = function(){
+    this.faceNormals.length = this.faces.length;
+
+    // Generate normals
+    for(var i=0; i<this.faces.length; i++){
+
+        // Check so all vertices exists for this face
+        for(var j=0; j<this.faces[i].length; j++){
+            if(!this.vertices[this.faces[i][j]]){
+                throw new Error("Vertex "+this.faces[i][j]+" not found!");
+            }
+        }
+```
+
+Error logs:
+
+> Uncaught Error: Vertex -0.0731 not found!
