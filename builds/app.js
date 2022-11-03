@@ -2543,6 +2543,62 @@ _manifest.default.operation.sphere_buffer_procedure = function (object) {
   object.vertexIndexBuffer.numItems = object.geometry.indexData.length;
 };
 
+_manifest.default.operation.cubemap_buffer_procedure = function (object) {
+  /* Vertex */
+  object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
+
+  _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
+
+  _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
+
+  object.vertexPositionBuffer.itemSize = 3;
+  object.vertexPositionBuffer.numItems = 24;
+  /* Color */
+
+  if (object.color && null !== object.shaderProgram.vertexColorAttribute) {
+    object.vertexColorBuffer = _matrixWorld.world.GL.gl.createBuffer();
+
+    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
+
+    _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.color, _matrixWorld.world.GL.gl.STATIC_DRAW);
+
+    object.vertexColorBuffer.itemSize = 4;
+    object.vertexColorBuffer.numItems = 24;
+  } // /* Texture */
+  // if (object.texture) {
+  //   object.vertexTexCoordBuffer = world.GL.gl.createBuffer();
+  //   world.GL.gl.bindBuffer(world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
+  //   world.GL.gl.bufferData(world.GL.gl.ARRAY_BUFFER, object.geometry.texCoords, world.GL.gl.STATIC_DRAW);
+  //   object.vertexTexCoordBuffer.itemSize = 2;
+  //   object.vertexTexCoordBuffer.numItems = 24;
+  // }
+
+  /* Normals */
+
+
+  if (object.shaderProgram.useLightingUniform) {
+    object.vertexNormalBuffer = _matrixWorld.world.GL.gl.createBuffer();
+
+    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
+
+    _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.LightMap, _matrixWorld.world.GL.gl.STATIC_DRAW);
+
+    object.vertexNormalBuffer.itemSize = 3;
+    object.vertexNormalBuffer.numItems = 24;
+  }
+  /* Indices */
+
+
+  object.vertexIndexBuffer = _matrixWorld.world.GL.gl.createBuffer();
+
+  _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
+
+  _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(object.geometry.indices), _matrixWorld.world.GL.gl.STATIC_DRAW);
+
+  object.vertexIndexBuffer.itemSize = 1;
+  object.vertexIndexBuffer.numItems = 36;
+};
+
 var _default = _manifest.default.operation;
 exports.default = _default;
 
@@ -3000,25 +3056,102 @@ _manifest.default.operation.draws.cube = function (object) {
     } else {
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
-          _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
+          if (object.type == 'cubeMap') {
+            // CUBE MAP
+            _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE1']);
 
-          _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
+            var gl = _matrixWorld.world.GL.gl;
+            if (!object.tex) object.tex = gl.createTexture(); // var tex = gl.createTexture();
+            // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_CUBE_MAP, object.textures[t]);
 
-          _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            gl.bindTexture(gl.TEXTURE_CUBE_MAP, object.tex); // Get A 2D context
 
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+            /** @type {Canvas2DRenderingContext} */
 
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+            if (typeof window.TEST == 'undefined') {
+              window.TEST = null;
+              var T = document.createElement("canvas");
+              T.id = 'blabla';
+              document.body.append(T);
+            } else {
+              var T = document.getElementById("blabla");
+            }
 
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
+            const ctx = T.getContext("2d");
+            ctx.canvas.width = 512;
+            ctx.canvas.height = 512;
+            const faceInfos = [{
+              target: gl.TEXTURE_CUBE_MAP_POSITIVE_X,
+              faceColor: '#F00',
+              textColor: '#0FF',
+              text: '+X'
+            }, {
+              target: gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
+              faceColor: '#FF0',
+              textColor: '#00F',
+              text: '-X'
+            }, {
+              target: gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
+              faceColor: '#0F0',
+              textColor: '#F0F',
+              text: '+Y'
+            }, {
+              target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
+              faceColor: '#0FF',
+              textColor: '#F00',
+              text: '-Y'
+            }, {
+              target: gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
+              faceColor: '#00F',
+              textColor: '#FF0',
+              text: '+Z'
+            }, {
+              target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
+              faceColor: '#F0F',
+              textColor: '#0F0',
+              text: 'CUBEMAP'
+            }];
+            faceInfos.forEach(faceInfo => {
+              const {
+                target,
+                faceColor,
+                textColor,
+                text
+              } = faceInfo;
+              (0, _utility.gen2DTextFace)(ctx, faceColor, textColor, text); // Upload the canvas to the cubemap face.
 
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE); // -- Allocate storage for the texture
-          // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-          // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
-          // world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
+              const level = 0;
+              const internalFormat = gl.RGBA;
+              const format = gl.RGBA;
+              const type = gl.UNSIGNED_BYTE;
+              gl.texImage2D(target, level, internalFormat, format, type, ctx.canvas);
+              gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            });
+            gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
+            gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+
+            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, 1);
+          } else {
+            _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
+
+            _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
+
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
+
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE); // -- Allocate storage for the texture
+            // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+            // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
+            // world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
 
 
-          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 1);
+          }
         } else {
           object.custom.gl_texture(object, t);
         }
@@ -3027,7 +3160,89 @@ _manifest.default.operation.draws.cube = function (object) {
 
     localLooper = localLooper + 1;
   } else {
-    _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+    console.log("TEST object.shaderProgram.samplerUniform ");
+
+    if (object.shaderProgram.samplerUniform) {
+      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+    } else if (object.shaderProgram.uCubeMapSampler) {
+      // CUBE MAP
+      _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE1']);
+
+      var gl = _matrixWorld.world.GL.gl;
+      if (!object.tex) object.tex = gl.createTexture(); // var tex = gl.createTexture();
+      // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_CUBE_MAP, object.textures[t]);
+
+      gl.bindTexture(gl.TEXTURE_CUBE_MAP, object.tex); // Get A 2D context
+
+      /** @type {Canvas2DRenderingContext} */
+
+      if (typeof window.TEST == 'undefined') {
+        window.TEST = null;
+        var T = document.createElement("canvas");
+        T.id = 'blabla';
+        document.body.append(T);
+      } else {
+        var T = document.getElementById("blabla");
+      }
+
+      const ctx = T.getContext("2d");
+      ctx.canvas.width = 512;
+      ctx.canvas.height = 512;
+      const faceInfos = [{
+        target: gl.TEXTURE_CUBE_MAP_POSITIVE_X,
+        faceColor: '#F00',
+        textColor: '#0FF',
+        text: '+X'
+      }, {
+        target: gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
+        faceColor: '#FF0',
+        textColor: '#00F',
+        text: '-X'
+      }, {
+        target: gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
+        faceColor: '#0F0',
+        textColor: '#F0F',
+        text: '+Y'
+      }, {
+        target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
+        faceColor: '#0FF',
+        textColor: '#F00',
+        text: '-Y'
+      }, {
+        target: gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
+        faceColor: '#00F',
+        textColor: '#FF0',
+        text: '+Z'
+      }, {
+        target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
+        faceColor: '#F0F',
+        textColor: '#0F0',
+        text: 'CUBEMAP'
+      }];
+      faceInfos.forEach(faceInfo => {
+        const {
+          target,
+          faceColor,
+          textColor,
+          text
+        } = faceInfo;
+        (0, _utility.gen2DTextFace)(ctx, faceColor, textColor, text); // Upload the canvas to the cubemap face.
+
+        const level = 0;
+        const internalFormat = gl.RGBA;
+        const format = gl.RGBA;
+        const type = gl.UNSIGNED_BYTE;
+        gl.texImage2D(target, level, internalFormat, format, type, ctx.canvas);
+        gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+      });
+      gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
+      gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+
+      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, 1);
+
+      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, 1); // blabla
+
+    }
   }
 
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
@@ -6405,13 +6620,6 @@ function getInitFSCubeMap() {
   varying vec2 vTextureCoord;
   varying vec3 vLightWeighting;
 
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-  uniform sampler2D uSampler3;
-  uniform sampler2D uSampler4;
-  uniform sampler2D uSampler5;
-
   // The CubeMap texture.
   uniform samplerCube u_texture;
   // cube map
@@ -6711,9 +6919,6 @@ function generateShaderSrc(numTextures, mixOperand, spotLight) {
     int MixOperandString = ${mixOperand};
 
     uniform sampler2D uSampler;
-    // The CubeMap texture.
-    uniform samplerCube u_texture;
-
     uniform sampler2D uSampler1;
     uniform sampler2D uSampler2;
     uniform sampler2D uSampler3;
@@ -6721,10 +6926,8 @@ function generateShaderSrc(numTextures, mixOperand, spotLight) {
     uniform sampler2D uSampler5;
     uniform sampler2D uSampler6;
     uniform sampler2D uSampler7;
-
     varying vec3 v_normal;
-    varying vec3 v_normal_cubemap;
-
+    
     ` + (typeof spotLight !== 'undefined' ? generateSpotLightDefinitions() : ``) + `
     void main(void) {
 
@@ -6733,23 +6936,15 @@ function generateShaderSrc(numTextures, mixOperand, spotLight) {
         vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
         vec4 textureColor3 = texture2D(uSampler3, vec2(vTextureCoord.s, vTextureCoord.t));
         vec4 textureColor4 = texture2D(uSampler4, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor5 = texture2D(uSampler5, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor6 = texture2D(uSampler6, vec2(vTextureCoord.s, vTextureCoord.t));
-        // vec4 textureColor7 = textureCube(u_texture, vLightWeighting );
 
         if (${numTextures} == 1) {
-          // gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a); // ori
-
-          gl_FragColor = textureCube(u_texture, vLightWeighting );
-
-          // gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b,textureColor.g ) , smoothstep(textureColor.r, textureColor.b,textureColor.g ) ,0 ,smoothstep(textureColor.r, textureColor.b,textureColor.g ) );
+          gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+          // gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b,textureColor.g ) , smoothstep(textureColor.r, textureColor.b,textureColor.g ) ,0 ,smoothstep(textureColor.r, textureColor.b,textureColor.g));
         } else if (${numTextures} == 2) {
           if ( ${mixOperand} == 0) {
-            // gl_FragColor = textureColor7;
-            gl_FragColor      = vec4( (textureColor.rgb * textureColor1.rgb) * vLightWeighting, textureColor.a);
+            gl_FragColor    = vec4( (textureColor.rgb * textureColor1.rgb) * vLightWeighting, textureColor.a);
           } else if (${mixOperand} == 1) {
-            // gl_FragColor = textureColor7;
-            gl_FragColor      = vec4( (textureColor.rgb / textureColor1.rgb) * vLightWeighting, textureColor.a);
+            gl_FragColor    = vec4( (textureColor.rgb / textureColor1.rgb) * vLightWeighting, textureColor.a);
           }
         } else if (${numTextures} == 3) {
           if (${mixOperand} == 0) {
@@ -6886,17 +7081,13 @@ function generateCubeMapShaderSrc(numTextures, mixOperand, spotLight) {
 
     uniform float textureSamplerAmount[1];
     int MixOperandString = ${mixOperand};
-
     // The CubeMap texture.
     uniform samplerCube u_texture;
-
     varying vec3 v_normal;
     varying vec3 v_normal_cubemap;
 
     void main(void) {
-
-      gl_FragColor = textureCube(u_texture, v_normal_cubemap );
-
+      gl_FragColor = textureCube(u_texture, v_normal_cubemap);
     }
     `;
 } // make custom shader
@@ -7685,6 +7876,9 @@ function defineworld(canvas) {
   /* Buffer Cube                              */
 
   world.bufferCube = _manifest.default.operation.cube_buffer_procedure;
+  /* Buffer Cube                              */
+
+  world.bufferCubeMap = _manifest.default.operation.cubemap_buffer_procedure;
   /* Draw Cube                                */
 
   world.drawCube = _manifest.default.operation.draws.cube;
@@ -8642,9 +8836,9 @@ function defineworld(canvas) {
 
       if (cubeObject.shaderProgram) {
         // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
-        console.log(" PREVENT   Buffer the"); // this.bufferCube(cubeObject);
-
-        cubeObject.glDrawElements = new _utility._DrawElements(24); // cubeObject.glDrawElements = new _DrawElements(cubeObject.vertexIndexBuffer.numItems);
+        console.log(" PREVENT   Buffer the bufferCubeMapbufferCubeMap");
+        this.bufferCubeMap(cubeObject);
+        cubeObject.glDrawElements = new _utility._DrawElements(cubeObject.vertexIndexBuffer.numItems); // cubeObject.glDrawElements = new _DrawElements(cubeObject.vertexIndexBuffer.numItems);
 
         this.contentList[this.contentList.length] = cubeObject;
         _manifest.default.scene[cubeObject.name] = cubeObject;
