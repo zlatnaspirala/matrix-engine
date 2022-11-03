@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/physics_for_objs';
+import {runThis} from './apps/opengles_native_cubemap';
 
 var world;
 var App = matrixEngine.App;

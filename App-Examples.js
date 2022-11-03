@@ -1,3 +1,4 @@
+
 import * as matrixEngine from './index';
 
 import {runThis as cube_tex_arrays} from './apps/cube_tex_arrays';
@@ -38,8 +39,17 @@ import {runThis as physics_sphere } from './apps/physics_sphere';
 import {runThis as spot_light_basic } from './apps/spot_light_basic';
 import {runThis as networking_basic } from './apps/networking_basic';
 import {runThis as load_obj_sequence } from './apps/load_obj_sequence';
+import {runThis as opengles_native_cubemap } from './apps/opengles_native_cubemap';
 
+/**
+ * @description
+ * All examples instances.
+ * This shema can be used for any website.
+ * It is good for switching big independent
+ * parts of app.
+ */
 var Examples = {
+  opengles_native_cubemap: opengles_native_cubemap,
   load_obj_sequence: load_obj_sequence,
   networking_basic: networking_basic,
   spot_light_basic: spot_light_basic,
@@ -93,11 +103,8 @@ var App = matrixEngine.App;
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
     // navigator.serviceWorker.register('worker.js');
-
     setTimeout( () => { matrixEngine.Engine.initApp(webGLStart); }, 1000)
-
   });
-
 } else {
   console.warn('Matrix Engine: No support for web workers in this browser.');
 }
@@ -111,7 +118,6 @@ function webGLStart() {
         typeof Examples[QueryString.u] != 'undefined') {
       setTimeout(() => {
         try {
-          
           Examples[QueryString.u](world);
         } catch(err) {
           // Examples['adding_color_cube'](world);
@@ -127,10 +133,12 @@ function webGLStart() {
   }
 
   // Make it global for console easy access.
+  // Remove this line for final prodc.
   window.App = App;
 }
 
 // Make it global for console easy access.
+// Remove this line for final prodc.
 window.matrixEngine = matrixEngine;
 
 var App = matrixEngine.App;

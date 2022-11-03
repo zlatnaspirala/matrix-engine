@@ -8,7 +8,7 @@ exports.default = void 0;
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _physics_for_objs = require("./apps/physics_for_objs");
+var _opengles_native_cubemap = require("./apps/opengles_native_cubemap");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -34,9 +34,9 @@ window.webGLStart = () => {
   // Must be fixed gloabal access
 
   window.App = App;
-  window.runThis = _physics_for_objs.runThis;
+  window.runThis = _opengles_native_cubemap.runThis;
   setTimeout(() => {
-    (0, _physics_for_objs.runThis)(world);
+    (0, _opengles_native_cubemap.runThis)(world);
   }, 1);
 };
 
@@ -45,7 +45,7 @@ var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/physics_for_objs":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/opengles_native_cubemap":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -89,40 +89,22 @@ var runThis = world => {
       ev.detail.hitObject.physics.currentBody.force.set(-330, 0, 1000);
     }
   });
-  var tex = {
+  var groundTex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
-    // source: [],
     mix_operation: "multiply"
-  }; // Load Physics world!
+  };
+  var tex = {
+    source: [],
+    mix_operation: "multiply"
+  }; // Load Physics world !
 
   let gravityVector = [0, 0, -9.82];
   let physics = world.loadPhysics(gravityVector); // Add ground
 
   var groundMaterial = new CANNON.Material();
-  physics.addGround(_manifest.default, world, tex, groundMaterial);
-  physics.world.solver.iterations = 17; // physics.world.defaultContactMaterial.contactEquationStiffness = 1e6;
-  // physics.world.defaultContactMaterial.contactEquationRelaxation = 3;
+  physics.addGround(_manifest.default, world, groundTex, groundMaterial); // physics.world.solver.iterations = 17;
 
-  var height = 5;
-  var damping = 0.01; // world.Add("sphereLightTex", 1, "BALL", tex);
-  // var mass = 1;
-  // var sphereShape = new CANNON.Sphere(1);
-  // var mat1 = new CANNON.Material();
-  // var shapeBody1 = new CANNON.Body({
-  //     mass: mass,
-  //     material: mat1,
-  //     position: new CANNON.Vec3(3*1, -7, height)
-  // });
-  // shapeBody1.addShape(sphereShape);
-  // shapeBody1.linearDamping = damping;
-  // physics.world.addBody(shapeBody1);
-  // // Physics
-  // App.scene.BALL.physics.currentBody = shapeBody1;
-  // App.scene.BALL.physics.enabled = true;
-  // var mm = new CANNON.ContactMaterial(groundMaterial, mat1, { friction: 0.01, restitution: 0.9 });
-  // physics.world.addContactMaterial(mm);
-
-  world.Add("cubeMap", 1, "CUBE", tex);
+  world.Add("cubeMap", 1, "myCubeMapObj", tex);
   var b = new CANNON.Body({
     mass: 5,
     position: new CANNON.Vec3(0, -4, 2),
@@ -130,8 +112,8 @@ var runThis = world => {
   });
   physics.world.addBody(b); // Physics
 
-  _manifest.default.scene.CUBE.physics.currentBody = b;
-  _manifest.default.scene.CUBE.physics.enabled = true;
+  _manifest.default.scene.myCubeMapObj.physics.currentBody = b;
+  _manifest.default.scene.myCubeMapObj.physics.enabled = true;
 };
 
 exports.runThis = runThis;
@@ -481,14 +463,14 @@ let activateNet = () => {
   if (typeof _manifest.default.net !== 'undefinde' && _manifest.default.net === true) {
     var t = new _clientConfig.default();
     exports.net = net = new _net.Broadcaster(t);
-    console.log("Networking is active.", net);
+    console.info('Networking is active.', net);
   }
 };
 
 exports.activateNet = activateNet;
 
 function initApp(callback) {
-  /* Calculate Width and Height before rendering       */
+  /* Calculate Width and Height before rendering */
   resizeView();
   drawCanvas();
   window.canvas = document.getElementById('canvas');
@@ -549,14 +531,18 @@ function loadHtmlPowerAsset(href, callback) {
   xmlhttp.onload = handler;
   xmlhttp.open('GET', href, true);
   xmlhttp.send();
-} // WebGL start
-// Base environment property for totality of WEBGL
+}
+/**
+ * @description
+ * WebGL start
+ * Base environment property for totality of WEBGL 
+ */
 
 
 function defineWebGLWorld(cavnas) {
-  // console.log("      Define the WEBGL base pocket");
+  // console.log("Define the WEBGL base pocket");
   var world = new Object();
-  /* Constructor for a particular GL environment   */
+  /* Constructor for a particular GL environment */
 
   try {
     var gl = _webglUtils.WebGLUtils.setupWebGL(canvas);
@@ -566,9 +552,9 @@ function defineWebGLWorld(cavnas) {
     world.gl = gl; // console.log("      WEBGL base pocket: SUCCESS");
   } catch (e) {
     /* Exception: Could not initialise WebGL     */
-    // console.log("      Exception in WEBGL base pocket: " + e);
+    console.error("Exception in WEBGL base pocket: " + e);
   }
-  /* Destructor                                    */
+  /* Destructor */
 
 
   world.destroy = function () {
@@ -581,7 +567,7 @@ function defineWebGLWorld(cavnas) {
 
 
 function updateFPS(elements) {
-  // // console.log("    Update FPS");
+  // console.log(" Update FPS");
   var now = new Date().getTime();
   var delta = now - lastTime;
   exports.lastTime = lastTime = now;
@@ -603,7 +589,7 @@ function drawCanvas() {
   var canvas = document.createElement('canvas');
   canvas.id = 'canvas';
 
-  if (_manifest.default.resize.canvas == "full-screen") {
+  if (_manifest.default.resize.canvas == 'full-screen') {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -617,13 +603,13 @@ function drawCanvas() {
 
   document.body.append(canvas);
 }
-/* Degree to Radian converter                        */
+/* Degree to Radian converter */
 
 
 function degToRad(degrees) {
   return degrees * Math.PI / 180;
 }
-/* One time initiation of FPS to store initial time  */
+/* One time initiation of FPS to store initial time */
 
 
 function initiateFPS() {
@@ -632,24 +618,18 @@ function initiateFPS() {
 } // Help the browser Garbage collect
 
 
-window.onbeforeunload = onExit; //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-// Provides cancelRequestAnimFrame in a cross browser way.
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+window.onbeforeunload = onExit; // Provides cancelRequestAnimFrame in a cross browser way.
 
 window.cancelRequestAnimFrame = function () {
   return window.cancelAnimationFrame || window.webkitCancelRequestAnimationFrame || window.mozCancelRequestAnimationFrame || window.oCancelRequestAnimationFrame || window.msCancelRequestAnimationFrame || function (callback) {
     window.clearTimeout(callback);
   };
-}(); //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-// Dispose off the dangling objects
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+}(); // Dispose off the dangling objects
 
 
 function onExit() {
   /* RIP Mouse object                              */
-  //mouseLoc.destroy();
+  // mouseLoc.destroy();
 
   /* RIP Objects                                   */
   exports.looper = looper = 0;
@@ -660,41 +640,43 @@ function onExit() {
     exports.looper = looper = looper + 1;
   }
 
-  _matrixWorld.objListToDispose.length = 0;
+  _matrixWorld.objListToDispose = ([], function () {
+    throw new Error('"' + "objListToDispose" + '" is read-only.');
+  }()); // ? objListToDispose.length = 0;
 }
 
 _manifest.default.operation.destroyWorld = function () {
-  // console.log("    Destroy at iteration:" + reDrawID);
+  // console.log("Destroy at iteration:" + reDrawID);
 
-  /* Stop the render                               */
+  /* Stop the render */
   cancelRequestAnimFrame(_matrixRender.reDrawID);
   delete this.pMatrix;
   delete this.mvMatrixStack;
   exports.looper = looper = 0;
 
   while (looper <= this.contentList.length - 1) {
-    // console.log("    Destroying: " + this.contentList[looper].type);
+    // console.log("Destroying: " + this.contentList[looper].type);
     delete this.contentList[looper].type;
     delete this.contentList[looper].size;
     delete this.contentList[looper].sides;
-    /* Dispose the shaders                       */
+    /* Dispose the shaders */
 
     if (this.contentList[looper].shaderProgram.fragmentShader) {
-      // console.log("      Dispose Fragment Shader");
+      // console.log("Dispose Fragment Shader");
       this.GL.gl.deleteShader(this.contentList[looper].shaderProgram.fragmentShader);
       delete this.contentList[looper].shaderProgram.fragmentShader;
     }
 
     if (this.contentList[looper].shaderProgram.vertexShader) {
-      // console.log("      Dispose Vertex Shader");
+      // console.log("Dispose Vertex Shader");
       this.GL.gl.deleteShader(this.contentList[looper].shaderProgram.vertexShader);
       delete this.contentList[looper].shaderProgram.vertexShader;
     }
-    /* Dispose the texture                       */
+    /* Dispose the texture */
 
 
     if (this.contentList[looper].texture) {
-      // console.log("      Dispose Texture");
+      // console.log("Dispose Texture");
       // must be improved Nikola Lukic
       try {
         this.GL.gl.deleteTexture(this.contentList[looper].texture);
@@ -704,38 +686,38 @@ _manifest.default.operation.destroyWorld = function () {
 
       delete this.contentList[looper].texture;
     }
-    /* Dispose the program                       */
+    /* Dispose the program */
 
 
     if (this.contentList[looper].shaderProgram) {
-      // console.log("      Dispose Shader program");
+      // console.log("Dispose Shader program");
       this.GL.gl.deleteProgram(this.contentList[looper].shaderProgram);
       delete this.contentList[looper].shaderProgram;
     }
-    /* Empty the buffers                         */
-    // console.log("      Dispose buffers");
+    /* Empty the buffers */
+    // console.log(" Dispose buffers");
 
 
     if (this.contentList[looper].vertexPositionBuffer) {
-      // console.log("        Dispose Vertex Position Buffer");
+      // console.log("Dispose Vertex Position Buffer");
       this.GL.gl.deleteBuffer(this.contentList[looper].vertexPositionBuffer);
       delete this.contentList[looper].vertexPositionBuffer;
     }
 
     if (this.contentList[looper].vertexTexCoordBuffer) {
-      // console.log("        Dispose Vertex Coordinate Buffer");
+      // console.log("Dispose Vertex Coordinate Buffer");
       this.GL.gl.deleteBuffer(this.contentList[looper].vertexTexCoordBuffer);
       delete this.contentList[looper].vertexTexCoordBuffer;
     }
 
     if (this.contentList[looper].vertexColorBuffer) {
-      // console.log("        Dispose Vertex Color Buffer");
+      // console.log("Dispose Vertex Color Buffer");
       this.GL.gl.deleteBuffer(this.contentList[looper].vertexColorBuffer);
       delete this.contentList[looper].vertexColorBuffer;
     }
 
     if (this.contentList[looper].vertexIndexBuffer) {
-      // console.log("        Dispose Vertex Index Buffer");
+      // console.log("Dispose Vertex Index Buffer");
       this.GL.gl.deleteBuffer(this.contentList[looper].vertexIndexBuffer);
       delete this.contentList[looper].vertexIndexBuffer;
     }
@@ -752,9 +734,11 @@ _manifest.default.operation.destroyWorld = function () {
   _events.SYS.DEBUG.WARNING('exit');
 
   delete this;
-}; //##################################
-// LOAD SHADERS DYNAMIC
-//##################################
+};
+/**
+ * @description
+ * LOAD SHADERS DYNAMIC
+ */
 
 
 function loadShaders(gl, id) {
@@ -776,10 +760,10 @@ function loadShaders(gl, id) {
     }
 
     if (shaderScript.type == 'x-shader/x-fragment') {
-      // console.log("            Creating fragment shader");
+      // console.log("Creating fragment shader");
       shader = gl.createShader(gl.FRAGMENT_SHADER);
     } else if (shaderScript.type == 'x-shader/x-vertex') {
-      // console.log("            Creating vertex shader");
+      // console.log("Creating vertex shader");
       shader = gl.createShader(gl.VERTEX_SHADER);
     } else {
       return 0;
@@ -789,30 +773,30 @@ function loadShaders(gl, id) {
     gl.compileShader(shader);
 
     if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      // console.log("            Shader Program compile success");
+      // console.log("Shader Program compile success");
       return shader;
     } else {
-      console.log("            Shader Program compile failed:" + gl.getShaderInfoLog(shader));
+      console.warn('Shader Program compile failed:' + gl.getShaderInfoLog(shader));
       return 0;
     }
   } else {
-    console.log("            Shader Program creation failed");
+    console.warn('Shader Program creation failed');
     return 0;
   }
 }
 
 function initShaders(gl, fragment, vertex) {
-  // console.log("      Initialize Shader");
-  // console.log("        Fragment Shader:" + fragment);
-  // console.log("        Vertex Shader:" + vertex);
+  // console.log("Initialize Shader");
+  // console.log("Fragment Shader:" + fragment);
+  // console.log("Vertex Shader:" + vertex);
   var fragmentShader = this.getShader(gl, fragment);
   var vertexShader = this.getShader(gl, vertex);
 
   if (0 == fragmentShader || 0 == vertexShader) {
-    console.log("        Failed to Load shader");
+    console.warn('Failed to Load shader');
     return 0;
   } else {
-    var shaderProgram = gl.createProgram(); // console.log("        Creating Shader fragment");
+    var shaderProgram = gl.createProgram(); // console.log("Creating Shader fragment");
 
     gl.attachShader(shaderProgram, vertexShader);
     gl.attachShader(shaderProgram, fragmentShader);
@@ -842,7 +826,7 @@ function initShaders(gl, fragment, vertex) {
 
       if (null !== gl.getUniformLocation(shaderProgram, 'uNMatrix')) {
         shaderProgram.nMatrixUniform = gl.getUniformLocation(shaderProgram, 'uNMatrix');
-      } // for 2d sprite test
+      } // For 2d sprite test - not in use for now!
 
 
       if (null !== gl.getUniformLocation(shaderProgram, 'layer')) {
@@ -857,11 +841,10 @@ function initShaders(gl, fragment, vertex) {
 
       if (null !== gl.getUniformLocation(shaderProgram, 'TimeFor')) {
         shaderProgram.uniformTime = gl.getUniformLocation(shaderProgram, 'TimeFor');
-      } // multi samplers for textutes
+      } // Multi samplers for textutes
 
 
       if (null !== gl.getUniformLocation(shaderProgram, 'uSampler')) {
-        // console.log('uso u drugi')
         shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
       }
 
@@ -911,29 +894,28 @@ function initShaders(gl, fragment, vertex) {
       } // Local SpotLight
 
 
-      if (null !== gl.getUniformLocation(shaderProgram, "u_shininess")) {
+      if (null !== gl.getUniformLocation(shaderProgram, 'u_shininess')) {
         shaderProgram.shininessLocation = gl.getUniformLocation(shaderProgram, 'u_shininess');
       }
 
-      if (null !== gl.getUniformLocation(shaderProgram, "u_lightDirection")) {
+      if (null !== gl.getUniformLocation(shaderProgram, 'u_lightDirection')) {
         shaderProgram.lightDirectionLocation = gl.getUniformLocation(shaderProgram, 'u_lightDirection');
       }
 
-      if (null !== gl.getUniformLocation(shaderProgram, "u_innerLimit")) {
+      if (null !== gl.getUniformLocation(shaderProgram, 'u_innerLimit')) {
         shaderProgram.innerLimitLocation = gl.getUniformLocation(shaderProgram, 'u_innerLimit');
       }
 
-      if (null !== gl.getUniformLocation(shaderProgram, "u_outerLimit")) {
+      if (null !== gl.getUniformLocation(shaderProgram, 'u_outerLimit')) {
         shaderProgram.outerLimitLocation = gl.getUniformLocation(shaderProgram, 'u_outerLimit');
       }
 
-      if (null !== gl.getUniformLocation(shaderProgram, "u_lightWorldPosition")) {
+      if (null !== gl.getUniformLocation(shaderProgram, 'u_lightWorldPosition')) {
         shaderProgram.lightWorldPositionLocation = gl.getUniformLocation(shaderProgram, 'u_lightWorldPosition');
       } // 1.8.4
 
 
       if (null !== gl.getUniformLocation(shaderProgram, 'u_texture')) {
-        console.log('u_texture LOADED !');
         shaderProgram.uCubeMapSampler = gl.getUniformLocation(shaderProgram, 'u_texture');
       }
 
@@ -945,7 +927,7 @@ function initShaders(gl, fragment, vertex) {
       shaderProgram.vertexShader = vertexShader;
       return shaderProgram;
     } else {
-      console.warn("          Returning Shader fragment failed");
+      console.warn('Returning Shader fragment failed!');
       return 0;
     }
   }
@@ -3070,14 +3052,14 @@ _manifest.default.operation.draws.cube = function (object) {
 
             if (typeof window.TEST == 'undefined') {
               window.TEST = null;
-              var T = document.createElement("canvas");
+              var T = document.createElement('canvas');
               T.id = 'blabla';
               document.body.append(T);
             } else {
-              var T = document.getElementById("blabla");
+              var T = document.getElementById('blabla');
             }
 
-            const ctx = T.getContext("2d");
+            const ctx = T.getContext('2d');
             ctx.canvas.width = 512;
             ctx.canvas.height = 512;
             const faceInfos = [{
@@ -3160,88 +3142,35 @@ _manifest.default.operation.draws.cube = function (object) {
 
     localLooper = localLooper + 1;
   } else {
-    console.log("TEST object.shaderProgram.samplerUniform ");
-
     if (object.shaderProgram.samplerUniform) {
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else if (object.shaderProgram.uCubeMapSampler) {
       // CUBE MAP
-      _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE1']);
+      _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE0']);
 
       var gl = _matrixWorld.world.GL.gl;
-      if (!object.tex) object.tex = gl.createTexture(); // var tex = gl.createTexture();
-      // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_CUBE_MAP, object.textures[t]);
-
-      gl.bindTexture(gl.TEXTURE_CUBE_MAP, object.tex); // Get A 2D context
-
-      /** @type {Canvas2DRenderingContext} */
-
-      if (typeof window.TEST == 'undefined') {
-        window.TEST = null;
-        var T = document.createElement("canvas");
-        T.id = 'blabla';
-        document.body.append(T);
-      } else {
-        var T = document.getElementById("blabla");
-      }
-
-      const ctx = T.getContext("2d");
-      ctx.canvas.width = 512;
-      ctx.canvas.height = 512;
-      const faceInfos = [{
-        target: gl.TEXTURE_CUBE_MAP_POSITIVE_X,
-        faceColor: '#F00',
-        textColor: '#0FF',
-        text: '+X'
-      }, {
-        target: gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
-        faceColor: '#FF0',
-        textColor: '#00F',
-        text: '-X'
-      }, {
-        target: gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
-        faceColor: '#0F0',
-        textColor: '#F0F',
-        text: '+Y'
-      }, {
-        target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
-        faceColor: '#0FF',
-        textColor: '#F00',
-        text: '-Y'
-      }, {
-        target: gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
-        faceColor: '#00F',
-        textColor: '#FF0',
-        text: '+Z'
-      }, {
-        target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
-        faceColor: '#F0F',
-        textColor: '#0F0',
-        text: 'CUBEMAP'
-      }];
-      faceInfos.forEach(faceInfo => {
+      if (!object.tex) object.tex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_CUBE_MAP, object.tex);
+      object.cubeMap2dCanvasSet.forEach(faceInfo => {
         const {
           target,
           faceColor,
           textColor,
           text
         } = faceInfo;
-        (0, _utility.gen2DTextFace)(ctx, faceColor, textColor, text); // Upload the canvas to the cubemap face.
+        (0, _utility.gen2DTextFace)(object.cubeMap2dCtx, faceColor, textColor, text); // Upload the canvas to the cubemap face.
 
         const level = 0;
         const internalFormat = gl.RGBA;
         const format = gl.RGBA;
         const type = gl.UNSIGNED_BYTE;
-        gl.texImage2D(target, level, internalFormat, format, type, ctx.canvas);
+        gl.texImage2D(target, level, internalFormat, format, type, object.cubeMap2dCtx.canvas);
         gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
       });
       gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
       gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
 
-      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, 1);
-
-      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, 1); // blabla
-
+      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, 0);
     }
   }
 
@@ -3258,10 +3187,10 @@ _manifest.default.operation.draws.cube = function (object) {
     // world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, [matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos]);
 
 
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition); // set the shininess
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition); // Set the shininess
 
 
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess); // set the spotlight uniforms
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess); // Set the spotlight uniforms
 
 
     {
@@ -6906,7 +6835,10 @@ exports.generateVShaderSimpleDirectionLight = generateVShaderSimpleDirectionLigh
 exports.generateCubeMapShaderSrc = generateCubeMapShaderSrc;
 exports.generateCustomShaderSrc = generateCustomShaderSrc;
 
-// Fragment shader
+/**
+ * @description
+ * Fragment shader CUBE - general/main
+ **/
 function generateShaderSrc(numTextures, mixOperand, spotLight) {
   return `
     // shader for ${numTextures} textures
@@ -7069,13 +7001,15 @@ function generateSpotLightMain() {
   gl_FragColor.rgb += specular;
   //
   `;
-} // cubeMap
-// Fragment shader
+}
+/**
+ * @description
+ * Make cubeMap Fragment shader */
 
 
 function generateCubeMapShaderSrc(numTextures, mixOperand, spotLight) {
   return `
-    // shader for textures
+    // shader for opengles native 'uniform samplerCube' CubeMap canvas2d textures.
     precision mediump float;
     precision highp float;
 
@@ -7090,7 +7024,10 @@ function generateCubeMapShaderSrc(numTextures, mixOperand, spotLight) {
       gl_FragColor = textureCube(u_texture, v_normal_cubemap);
     }
     `;
-} // make custom shader
+}
+/**
+ * @description
+ * Make Custom shader*/
 
 
 function generateCustomShaderSrc(numTextures, mixOperand, code_) {
@@ -7623,74 +7560,9 @@ _manifest.default.tools.createPixelsTex = function (options) {
  */
 
 
-_manifest.default.tools.cubeMapTextures = function (gl) {
-  var tex = gl.createTexture();
-  gl.bindTexture(gl.TEXTURE_CUBE_MAP, tex); // gl.bindTexture(gl.TEXTURE_2D, texture);
-  // gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
-  // gl.bindTexture(gl.TEXTURE_2D, null);
-  // Get A 2D context
-
-  /** @type {Canvas2DRenderingContext} */
-
-  var T = document.createElement("canvas");
-  document.body.append(T);
-  const ctx = T.getContext("2d");
-  ctx.canvas.width = 128;
-  ctx.canvas.height = 128;
-  const faceInfos = [{
-    target: gl.TEXTURE_CUBE_MAP_POSITIVE_X,
-    faceColor: '#F00',
-    textColor: '#0FF',
-    text: '+X'
-  }, {
-    target: gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
-    faceColor: '#FF0',
-    textColor: '#00F',
-    text: '-X'
-  }, {
-    target: gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
-    faceColor: '#0F0',
-    textColor: '#F0F',
-    text: '+Y'
-  }, {
-    target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
-    faceColor: '#0FF',
-    textColor: '#F00',
-    text: '-Y'
-  }, {
-    target: gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
-    faceColor: '#00F',
-    textColor: '#FF0',
-    text: '+Z'
-  }, {
-    target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
-    faceColor: '#F0F',
-    textColor: '#0F0',
-    text: 'CUBEMAP'
-  }];
-  faceInfos.forEach(faceInfo => {
-    const {
-      target,
-      faceColor,
-      textColor,
-      text
-    } = faceInfo;
-    (0, _utility.gen2DTextFace)(ctx, faceColor, textColor, text); // Upload the canvas to the cubemap face.
-
-    const level = 0;
-    const internalFormat = gl.RGBA;
-    const format = gl.RGBA;
-    const type = gl.UNSIGNED_BYTE;
-    gl.texImage2D(target, level, internalFormat, format, type, ctx.canvas);
-  });
-  gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
-  gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-  return tex;
+_manifest.default.tools.cubeMapTextures = function (gl) {// var tex = gl.createTexture();
+  // gl.bindTexture(gl.TEXTURE_CUBE_MAP, tex);
+  // return tex;
 };
 
 var _default = _manifest.default.textools;
@@ -7809,9 +7681,9 @@ function defineworld(canvas) {
   _manifest.default.limitations.MAX_VERTEX_ATTRIBS = world.GL.gl.getParameter(world.GL.gl.MAX_VERTEX_ATTRIBS);
   _manifest.default.limitations.MAX_ELEMENTS_VERTICES = world.GL.gl.getParameter(world.GL.gl.MAX_ELEMENTS_VERTICES);
   /**
-  * World base functions                        
-  * Get the fragment or vertex shader 
-  */
+   * World base functions
+   * Get the fragment or vertex shader
+   */
 
   world.getShader = _engine.loadShaders;
   /* Initialize shader fragment                        */
@@ -7956,7 +7828,7 @@ function defineworld(canvas) {
       triangleObject.mvMatrix = mat4.create();
       triangleObject.geometry = new _matrixGeometry.TriangleVertex(triangleObject);
       triangleObject.geometry.nameUniq = nameUniq;
-      triangleObject.glBlend = new _utility._glBlend(); // destroy self 
+      triangleObject.glBlend = new _utility._glBlend(); // destroy self
 
       triangleObject.selfDestroy = after => {
         if (after) {
@@ -8018,7 +7890,7 @@ function defineworld(canvas) {
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
       squareObject.geometry.nameUniq = nameUniq;
-      squareObject.glBlend = new _utility._glBlend(); // destroy self 
+      squareObject.glBlend = new _utility._glBlend(); // destroy self
 
       squareObject.selfDestroy = after => {
         if (after) {
@@ -8082,7 +7954,7 @@ function defineworld(canvas) {
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
       squareObject.geometry.nameUniq = nameUniq;
-      squareObject.glBlend = new _utility._glBlend(); // destroy self 
+      squareObject.glBlend = new _utility._glBlend(); // destroy self
 
       squareObject.selfDestroy = after => {
         if (after) {
@@ -8204,7 +8076,7 @@ function defineworld(canvas) {
       //   cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       //   cubeObject.useDirectionLight = true;
       // };
-      // destroy self 
+      // destroy self
 
       cubeObject.selfDestroy = after => {
         if (after) {
@@ -8262,7 +8134,7 @@ function defineworld(canvas) {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
         ambientLight: new _matrixGeometry.COLOR(1, 1, 1),
         lightingDirection: new _matrixGeometry.COLOR(1, 1, 0)
-      }; // destroy self 
+      }; // destroy self
 
       sphereObject.selfDestroy = after => {
         if (after) {
@@ -8391,7 +8263,7 @@ function defineworld(canvas) {
       pyramidObject.rotation.nameUniq = nameUniq;
       pyramidObject.mvMatrix = mat4.create();
       pyramidObject.geometry = new _matrixGeometry.PiramideVertex(pyramidObject);
-      pyramidObject.geometry.nameUniq = nameUniq; // destroy self 
+      pyramidObject.geometry.nameUniq = nameUniq; // destroy self
 
       pyramidObject.selfDestroy = after => {
         if (after) {
@@ -8571,7 +8443,7 @@ function defineworld(canvas) {
         this.contentList[this.contentList.length] = objObject;
         _manifest.default.scene[objObject.name] = objObject;
       } else {
-        console.log("obj file shader failure");
+        console.log('obj file shader failure');
       }
     }
 
@@ -8706,7 +8578,7 @@ function defineworld(canvas) {
         this.contentList[this.contentList.length] = cubeObject;
         _manifest.default.scene[cubeObject.name] = cubeObject;
       } else {
-        console.log("Cube shader failure");
+        console.log('Cube shader failure');
       }
     }
 
@@ -8791,7 +8663,7 @@ function defineworld(canvas) {
           cubeObject.texture = this.initTexture(this.GL.gl, texturesPaths);
           cubeObject.textures.push(cubeObject.texture);
         } else if (typeof texturesPaths == 'object') {
-          console.log("path is object");
+          console.log('path is object');
           cubeObject.textures = [];
           cubeObject.texture = true; // cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler+"-shader-fs", filler+"-shader-vs");
 
@@ -8830,22 +8702,58 @@ function defineworld(canvas) {
         numberOfInstance: 10,
         array_of_local_offset: [12, 0, 0],
         overrideDrawArraysInstance: function (object_) {}
-      }; //draws params
-
+      };
       cubeObject.glBlend = new _utility._glBlend();
 
       if (cubeObject.shaderProgram) {
-        // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
-        console.log(" PREVENT   Buffer the bufferCubeMapbufferCubeMap");
-        this.bufferCubeMap(cubeObject);
-        cubeObject.glDrawElements = new _utility._DrawElements(cubeObject.vertexIndexBuffer.numItems); // cubeObject.glDrawElements = new _DrawElements(cubeObject.vertexIndexBuffer.numItems);
+        // Only cubeMap2dCanvasSet - Get A 2D context
 
+        /** @type {Canvas2DRenderingContext} */
+        var T = document.createElement('canvas');
+        T.id = cubeObject.name + '_cubeMap';
+        document.body.append(T);
+        cubeObject.cubeMap2dCtx = T.getContext('2d');
+        cubeObject.cubeMap2dCtx.canvas.width = 512;
+        cubeObject.cubeMap2dCtx.canvas.height = 512;
+        cubeObject.cubeMap2dCanvasSet = [{
+          target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_X,
+          faceColor: '#F00',
+          textColor: '#0FF',
+          text: 'm'
+        }, {
+          target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
+          faceColor: '#FF0',
+          textColor: '#00F',
+          text: 'a'
+        }, {
+          target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
+          faceColor: '#0F0',
+          textColor: '#F0F',
+          text: 't'
+        }, {
+          target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
+          faceColor: '#0FF',
+          textColor: '#F00',
+          text: 'r'
+        }, {
+          target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
+          faceColor: '#00F',
+          textColor: '#FF0',
+          text: 'i'
+        }, {
+          target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
+          faceColor: '#F0F',
+          textColor: '#0F0',
+          text: 'x'
+        }];
+        this.bufferCubeMap(cubeObject);
+        cubeObject.glDrawElements = new _utility._DrawElements(cubeObject.vertexIndexBuffer.numItems);
         this.contentList[this.contentList.length] = cubeObject;
         _manifest.default.scene[cubeObject.name] = cubeObject;
       } else {
-        console.log("Cube shader failure");
+        console.warn('Cube shader failure!');
       }
-    } // no physics for now - no networking for now
+    } // No physics for now - no networking for now!
 
 
     if ('generatorTex' == filler || 'generatorLightTex' == filler) {

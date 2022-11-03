@@ -187,9 +187,8 @@ In `./program/manifest.js`. Access is `App.camera`.
 Note: One of params `FirstPersonController` or `SceneController` must be `false`.
 
 - `FirstPersonController` is classic first person view with movement WASD and mouse look.
-- `SceneController` use direct input WASD. To make camera angle view change press `shift` to
-   enable camera angle. Middle mouse button will enable drag scene to left/right/top/down.
-   Mouse middle wheel change work only when `shift` is pressed.
+- `SceneController` use direct input WASD. To make camera angle view change press `shift` to enable camera angle. Middle mouse button will enable drag scene to left/right/top/down.
+  Mouse middle wheel change work only when `shift` is pressed.
 
 ```js
   camera: {
@@ -397,6 +396,28 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 
   world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
 };
+```
+
+### Opengles native `cubeMap` [1.8.5]
+
+New tag `cubeMap` takes texture.source empty array.
+
+Example:
+```js
+var tex = {
+  source: [],
+  mix_operation: "multiply",
+};
+world.Add("cubeMap", 1, "myCubeMapObj", tex);
+```
+
+For now it is predefinited inside engine.
+It is canvas2d with center-middle text position.
+Index is 0,1,2,3,4,5 for all six faces of cube geometry.
+```js
+App.scene.myCubeMapObj.cubeMap2dCanvasSet[4].text = 'MA';
+App.scene.myCubeMapObj.cubeMap2dCanvasSet[4].textColor = 'orange';
+App.scene.myCubeMapObj.cubeMap2dCanvasSet[4].faceColor = 'black';
 ```
 
 ### BVH Matrix Skeletal [1.5.0]

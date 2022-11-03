@@ -1,4 +1,17 @@
+
 ## CHANGES
+
+[1.8.5] Added new scene type of object `"cubeMap"` with Opengles native 'uniform samplerCube' sampler:
+```js
+var tex = {source: [], mix_operation: "multiply"};
+world.Add("cubeMap", 1, "myCubeMapObj", tex);
+```
+For now it is predefinited inside engine.
+It is canvas2d with center-middle text position.
+Index is 0,1,2,3,4,5 for all six faces of cube geometry.
+```js
+App.scene.myCubeMapObj.cubeMap2dCanvasSet[index] 
+```
 
 [1.8.4] From 1.8.4 raycast hit trigger works for obj's.
 
