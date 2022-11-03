@@ -163,7 +163,7 @@ My code:
       ])
     }
 
-    console.log('FORMAT vec3 ', localPoints)
+    // console.log('FORMAT vec3 ', localPoints)
 
     var b4 = new CANNON.Body({
       mass: 1,
