@@ -21,7 +21,6 @@ export var runThis = (world) => {
   function myFace(args
     /*ctx, faceColor, textColor, txtSizeCoeficient, text*/) {
     const {width, height} = this.cubeMap2dCtx.canvas;
-    console.log(args)
     this.cubeMap2dCtx.fillStyle = args[0];
     this.cubeMap2dCtx.fillRect(0, 0, width, height);
     this.cubeMap2dCtx.font = `${width * args[2]}px sans-serif`;
