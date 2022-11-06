@@ -57,8 +57,6 @@ var _manifest = _interopRequireDefault(require("../program/manifest"));
 
 var CANNON = _interopRequireWildcard(require("cannon"));
 
-var _matrixGeometry = require("../lib/matrix-geometry");
-
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -75,6 +73,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 window.CANNON = CANNON;
 
 var runThis = world => {
+  /**
+   * @description
+   * What ever you want!
+   * It is 2dCanvas context draw func.
+   */
+  function myFace(args
+  /*ctx, faceColor, textColor, txtSizeCoeficient, text*/
+  ) {
+    const {
+      width,
+      height
+    } = this.cubeMap2dCtx.canvas;
+    console.log(args);
+    this.cubeMap2dCtx.fillStyle = args[0];
+    this.cubeMap2dCtx.fillRect(0, 0, width, height);
+    this.cubeMap2dCtx.font = `${width * args[2]}px sans-serif`;
+    this.cubeMap2dCtx.textAlign = 'center';
+    this.cubeMap2dCtx.textBaseline = 'middle';
+    this.cubeMap2dCtx.fillStyle = args[1];
+    this.cubeMap2dCtx.fillText(args[3], width / 2, height / 2);
+  }
+
   _manifest.default.camera.SceneController = true;
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
@@ -95,7 +115,46 @@ var runThis = world => {
   };
   var tex = {
     source: [],
-    mix_operation: "multiply"
+    mix_operation: "multiply",
+    cubeMap: {
+      type: '2dcanvas',
+      drawFunc: myFace,
+      sides: [// This is custom access you can edit but only must have
+      // nice relation with your draw function !
+      // This is example for render 2d text in middle-center manir.
+      // Nice for 3d button object!
+      {
+        faceColor: '#F00',
+        textColor: '#28F',
+        txtSizeCoeficient: 0.8,
+        text: 'm'
+      }, {
+        faceColor: '#FF0',
+        textColor: '#82F',
+        txtSizeCoeficient: 0.5,
+        text: 'a'
+      }, {
+        faceColor: '#0F0',
+        textColor: '#82F',
+        txtSizeCoeficient: 0.5,
+        text: 't'
+      }, {
+        faceColor: '#0FF',
+        textColor: '#802',
+        txtSizeCoeficient: 0.5,
+        text: 'r'
+      }, {
+        faceColor: '#00F',
+        textColor: '#8F2',
+        txtSizeCoeficient: 0.5,
+        text: 'i'
+      }, {
+        faceColor: '#F0F',
+        textColor: '#2F8',
+        txtSizeCoeficient: 0.5,
+        text: 'x'
+      }]
+    }
   }; // Load Physics world !
 
   let gravityVector = [0, 0, -9.82];
@@ -107,7 +166,7 @@ var runThis = world => {
   world.Add("cubeMap", 1, "myCubeMapObj", tex);
   var b = new CANNON.Body({
     mass: 5,
-    position: new CANNON.Vec3(0, -4, 2),
+    position: new CANNON.Vec3(0, -14, 3),
     shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
   });
   physics.world.addBody(b); // Physics
@@ -118,7 +177,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../lib/matrix-geometry":11,"../program/manifest":35,"cannon":32}],3:[function(require,module,exports){
+},{"../program/manifest":35,"cannon":32}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -640,9 +699,7 @@ function onExit() {
     exports.looper = looper = looper + 1;
   }
 
-  _matrixWorld.objListToDispose = ([], function () {
-    throw new Error('"' + "objListToDispose" + '" is read-only.');
-  }()); // ? objListToDispose.length = 0;
+  _matrixWorld.objListToDispose.length = 0;
 }
 
 _manifest.default.operation.destroyWorld = function () {
@@ -3038,102 +3095,25 @@ _manifest.default.operation.draws.cube = function (object) {
     } else {
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
-          if (object.type == 'cubeMap') {
-            // CUBE MAP
-            _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE1']);
+          _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
 
-            var gl = _matrixWorld.world.GL.gl;
-            if (!object.tex) object.tex = gl.createTexture(); // var tex = gl.createTexture();
-            // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_CUBE_MAP, object.textures[t]);
+          _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
 
-            gl.bindTexture(gl.TEXTURE_CUBE_MAP, object.tex); // Get A 2D context
+          _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
 
-            /** @type {Canvas2DRenderingContext} */
+          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
 
-            if (typeof window.TEST == 'undefined') {
-              window.TEST = null;
-              var T = document.createElement('canvas');
-              T.id = 'blabla';
-              document.body.append(T);
-            } else {
-              var T = document.getElementById('blabla');
-            }
+          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.NEAREST);
 
-            const ctx = T.getContext('2d');
-            ctx.canvas.width = 512;
-            ctx.canvas.height = 512;
-            const faceInfos = [{
-              target: gl.TEXTURE_CUBE_MAP_POSITIVE_X,
-              faceColor: '#F00',
-              textColor: '#0FF',
-              text: '+X'
-            }, {
-              target: gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
-              faceColor: '#FF0',
-              textColor: '#00F',
-              text: '-X'
-            }, {
-              target: gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
-              faceColor: '#0F0',
-              textColor: '#F0F',
-              text: '+Y'
-            }, {
-              target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
-              faceColor: '#0FF',
-              textColor: '#F00',
-              text: '-Y'
-            }, {
-              target: gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
-              faceColor: '#00F',
-              textColor: '#FF0',
-              text: '+Z'
-            }, {
-              target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
-              faceColor: '#F0F',
-              textColor: '#0F0',
-              text: 'CUBEMAP'
-            }];
-            faceInfos.forEach(faceInfo => {
-              const {
-                target,
-                faceColor,
-                textColor,
-                text
-              } = faceInfo;
-              (0, _utility.gen2DTextFace)(ctx, faceColor, textColor, text); // Upload the canvas to the cubemap face.
+          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
 
-              const level = 0;
-              const internalFormat = gl.RGBA;
-              const format = gl.RGBA;
-              const type = gl.UNSIGNED_BYTE;
-              gl.texImage2D(target, level, internalFormat, format, type, ctx.canvas);
-              gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-            });
-            gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
-            gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-
-            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, 1);
-          } else {
-            _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
-
-            _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-
-            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
-
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.NEAREST);
-
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
-
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE); // -- Allocate storage for the texture
-            // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-            // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
-            // world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
+          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE); // -- Allocate storage for the texture
+          // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+          // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
+          // world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
 
 
-            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 1);
-          }
+          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 1);
         } else {
           object.custom.gl_texture(object, t);
         }
@@ -3151,22 +3131,49 @@ _manifest.default.operation.draws.cube = function (object) {
       var gl = _matrixWorld.world.GL.gl;
       if (!object.tex) object.tex = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_CUBE_MAP, object.tex);
-      object.cubeMap2dCanvasSet.forEach(faceInfo => {
-        const {
-          target,
-          faceColor,
-          textColor,
-          text
-        } = faceInfo;
-        (0, _utility.gen2DTextFace)(object.cubeMap2dCtx, faceColor, textColor, text); // Upload the canvas to the cubemap face.
 
-        const level = 0;
-        const internalFormat = gl.RGBA;
-        const format = gl.RGBA;
-        const type = gl.UNSIGNED_BYTE;
-        gl.texImage2D(target, level, internalFormat, format, type, object.cubeMap2dCtx.canvas);
-        gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-      });
+      if (object.cubeMap.type == 'images') {
+        object.cubeMap.cubeMap2dCanvasSet.forEach((faceInfo, index) => {
+          // Upload the canvas to the cubemap face.
+          const level = 0;
+          const internalFormat = gl.RGBA;
+          const format = gl.RGBA;
+          const type = gl.UNSIGNED_BYTE;
+          gl.texImage2D(faceInfo.target, level, internalFormat, format, type, object.cubeMap.images[index]);
+          gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+        });
+      } else {
+        object.cubeMap.cubeMap2dCanvasSet.forEach((faceInfo, index) => {
+          var args = [];
+
+          for (var key in faceInfo) {
+            if (key !== 'target') {
+              args.push(faceInfo[key]);
+            }
+          }
+
+          if (object.cubeMap.drawFunc) {
+            object.cubeMap.drawFunc(args);
+          } else {
+            const {
+              faceColor,
+              textColor,
+              text
+            } = faceInfo;
+            (0, _utility.gen2DTextFace)(object.cubeMap.cubeMap2dCtx, faceColor, textColor, text);
+          } // Upload the canvas to the cubemap face.
+
+
+          const level = 0;
+          const internalFormat = gl.RGBA;
+          const format = gl.RGBA;
+          const type = gl.UNSIGNED_BYTE; // gl.texImage2D(faceInfo.target, level, internalFormat, format, type, object.cubeMap.images[0]);
+
+          gl.texImage2D(faceInfo.target, level, internalFormat, format, type, object.cubeMap.cubeMap2dCtx.canvas);
+          gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+        });
+      }
+
       gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
       gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
 
@@ -6619,11 +6626,31 @@ function getInitVSCubeMap() {
   varying vec3 v_normal;
   varying vec3 v_normal_cubemap;
 
+  // lights
+  uniform vec3 uAmbientColor;
+  uniform vec3 uLightingDirection;
+  uniform vec3 uDirectionalColor;
+  uniform bool uUseLighting;
+  // varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+
   void main(void) {
 
     v_normal = mat3(uNMatrix) * aVertexNormal;
     v_normal_cubemap = normalize(aVertexPosition.xyz);
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+
+    // lights
+    // vTextureCoord = aTextureCoord;
+
+    if (!uUseLighting) {
+      vLightWeighting = vec3(1.0, 1.0, 1.0);
+    }
+    else {
+      vec3 transformedNormal          = uNMatrix * aVertexNormal;
+      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+    }
 
   } `;
 
@@ -7009,9 +7036,13 @@ function generateSpotLightMain() {
 
 function generateCubeMapShaderSrc(numTextures, mixOperand, spotLight) {
   return `
-    // shader for opengles native 'uniform samplerCube' CubeMap canvas2d textures.
+    // shader for opengles native 
+    // 'uniform samplerCube' CubeMap canvas2d textures.
+
     precision mediump float;
     precision highp float;
+
+    varying vec3 vLightWeighting;
 
     uniform float textureSamplerAmount[1];
     int MixOperandString = ${mixOperand};
@@ -7021,7 +7052,11 @@ function generateCubeMapShaderSrc(numTextures, mixOperand, spotLight) {
     varying vec3 v_normal_cubemap;
 
     void main(void) {
-      gl_FragColor = textureCube(u_texture, v_normal_cubemap);
+      // without light
+      // gl_FragColor = textureCube(u_texture, v_normal_cubemap);
+
+      vec4 lightMapColor = textureCube(u_texture, v_normal_cubemap);
+      gl_FragColor = vec4(lightMapColor.rgb * vLightWeighting, lightMapColor.a);
     }
     `;
 }
@@ -7405,7 +7440,7 @@ exports.MatrixButton = MatrixButton;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.cubeMapTextures = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
@@ -7560,12 +7595,27 @@ _manifest.default.tools.createPixelsTex = function (options) {
  */
 
 
-_manifest.default.tools.cubeMapTextures = function (gl) {// var tex = gl.createTexture();
-  // gl.bindTexture(gl.TEXTURE_CUBE_MAP, tex);
-  // return tex;
+const cubeMapTextures = async function (sources, callback) {
+  var cubeMapImgTex = [];
+  var promiseMe = [];
+  sources.forEach(src => {
+    promiseMe.push(new Promise(resolve => {
+      var image = new Image();
+      image.addEventListener("load", () => {
+        cubeMapImgTex.push(image);
+        resolve(image);
+      });
+      image.src = src;
+    }));
+  });
+  await Promise.all([...promiseMe]).then(values => {
+    // console.log(values + ' promise all !');
+    callback(values);
+  });
 };
 
-var _default = _manifest.default.textools;
+exports.cubeMapTextures = cubeMapTextures;
+var _default = _manifest.default.tools;
 exports.default = _default;
 
 },{"../program/manifest":35,"./matrix-world":18,"./utility":26}],18:[function(require,module,exports){
@@ -7599,6 +7649,8 @@ var _matrixShadows = require("./matrix-shadows");
 var _matrixInitShaders = require("./matrix-init-shaders");
 
 var _loaderObj = require("./loader-obj");
+
+var _matrixTextures = require("./matrix-textures");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7690,9 +7742,7 @@ function defineworld(canvas) {
 
   world.initShaders = _engine.initShaders;
   world.handleLoadedTexture = _manifest.default.tools.BasicTextures;
-  world.initTexture = _manifest.default.tools.loadTextureImage; // unuse
-
-  world.Loaded2dTextTex = _manifest.default.tools.cubeMapTextures;
+  world.initTexture = _manifest.default.tools.loadTextureImage;
 
   world.disableUnusedAttr = function (gl, vertLimit) {
     var Local_looper1 = vertLimit; // var Local_looper1 = 0;
@@ -7751,6 +7801,7 @@ function defineworld(canvas) {
   /* Buffer Cube                              */
 
   world.bufferCubeMap = _manifest.default.operation.cubemap_buffer_procedure;
+  world.cubeMapTextures = _matrixTextures.cubeMapTextures;
   /* Draw Cube                                */
 
   world.drawCube = _manifest.default.operation.draws.cube;
@@ -8663,7 +8714,6 @@ function defineworld(canvas) {
           cubeObject.texture = this.initTexture(this.GL.gl, texturesPaths);
           cubeObject.textures.push(cubeObject.texture);
         } else if (typeof texturesPaths == 'object') {
-          console.log('path is object');
           cubeObject.textures = [];
           cubeObject.texture = true; // cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler+"-shader-fs", filler+"-shader-vs");
 
@@ -8712,40 +8762,87 @@ function defineworld(canvas) {
         var T = document.createElement('canvas');
         T.id = cubeObject.name + '_cubeMap';
         document.body.append(T);
-        cubeObject.cubeMap2dCtx = T.getContext('2d');
-        cubeObject.cubeMap2dCtx.canvas.width = 512;
-        cubeObject.cubeMap2dCtx.canvas.height = 512;
-        cubeObject.cubeMap2dCanvasSet = [{
-          target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_X,
-          faceColor: '#F00',
-          textColor: '#0FF',
-          text: 'm'
-        }, {
-          target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
-          faceColor: '#FF0',
-          textColor: '#00F',
-          text: 'a'
-        }, {
-          target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
-          faceColor: '#0F0',
-          textColor: '#F0F',
-          text: 't'
-        }, {
-          target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
-          faceColor: '#0FF',
-          textColor: '#F00',
-          text: 'r'
-        }, {
-          target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
-          faceColor: '#00F',
-          textColor: '#FF0',
-          text: 'i'
-        }, {
-          target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
-          faceColor: '#F0F',
-          textColor: '#0F0',
-          text: 'x'
-        }];
+        cubeObject.cubeMap = {};
+        cubeObject.cubeMap.drawFunc = texturesPaths.cubeMap.drawFunc || null;
+        cubeObject.cubeMap.cubeMap2dCtx = T.getContext('2d');
+        cubeObject.cubeMap.cubeMap2dCtx.canvas.width = 512;
+        cubeObject.cubeMap.cubeMap2dCtx.canvas.height = 512;
+
+        if (texturesPaths.cubeMap) {
+          cubeObject.cubeMap.type = texturesPaths.cubeMap.type;
+
+          if (texturesPaths.cubeMap.type == '2dcanvas') {
+            cubeObject.cubeMap.cubeMap2dCanvasSet = [{
+              target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_X
+            }, {
+              target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_X
+            }, {
+              target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_Y
+            }, {
+              target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y
+            }, {
+              target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_Z
+            }, {
+              target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z
+            }];
+            texturesPaths.cubeMap.sides.forEach((side, index) => {
+              for (let key in side) {
+                cubeObject.cubeMap.cubeMap2dCanvasSet[index][key] = side[key];
+              }
+            }); // maybe no need ...
+
+            cubeObject.cubeMap.images = texturesPaths.source;
+          } else if (texturesPaths.cubeMap.type == 'images') {
+            cubeObject.cubeMap.cubeMap2dCanvasSet = [{
+              target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_X
+            }, {
+              target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_X
+            }, {
+              target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_Y
+            }, {
+              target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y
+            }, {
+              target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_Z
+            }, {
+              target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z
+            }];
+            cubeObject.cubeMap.images = texturesPaths.source;
+          }
+        } else {
+          // default
+          cubeObject.cubeMap.cubeMap2dCanvasSet = [{
+            target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_X,
+            faceColor: '#F00',
+            textColor: '#0FF',
+            text: 'm'
+          }, {
+            target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
+            faceColor: '#FF0',
+            textColor: '#00F',
+            text: 'a'
+          }, {
+            target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
+            faceColor: '#0F0',
+            textColor: '#F0F',
+            text: 't'
+          }, {
+            target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
+            faceColor: '#0FF',
+            textColor: '#F00',
+            text: 'r'
+          }, {
+            target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
+            faceColor: '#00F',
+            textColor: '#FF0',
+            text: 'i'
+          }, {
+            target: this.GL.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
+            faceColor: '#F0F',
+            textColor: '#0F0',
+            text: 'x'
+          }];
+        }
+
         this.bufferCubeMap(cubeObject);
         cubeObject.glDrawElements = new _utility._DrawElements(cubeObject.vertexIndexBuffer.numItems);
         this.contentList[this.contentList.length] = cubeObject;
@@ -8873,7 +8970,7 @@ function defineworld(canvas) {
   return world;
 }
 
-},{"../program/manifest":35,"./engine":5,"./loader-obj":7,"./matrix-draws":10,"./matrix-geometry":11,"./matrix-init-shaders":12,"./matrix-render":13,"./matrix-shadows":15,"./matrix-tags":16,"./physics":20,"./utility":26}],19:[function(require,module,exports){
+},{"../program/manifest":35,"./engine":5,"./loader-obj":7,"./matrix-draws":10,"./matrix-geometry":11,"./matrix-init-shaders":12,"./matrix-render":13,"./matrix-shadows":15,"./matrix-tags":16,"./matrix-textures":17,"./physics":20,"./utility":26}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9428,8 +9525,8 @@ class MatrixPhysics {
     this.world.addBody(groundBody); // matrix engine visual
 
     world.Add("squareTex", 1, "FLOOR_STATIC", tex);
-    App.scene.FLOOR_STATIC.geometry.setScaleByX(5);
-    App.scene.FLOOR_STATIC.geometry.setScaleByY(5);
+    App.scene.FLOOR_STATIC.geometry.setScaleByX(15);
+    App.scene.FLOOR_STATIC.geometry.setScaleByY(15);
     App.scene.FLOOR_STATIC.position.SetY(-2);
     App.scene.FLOOR_STATIC.position.SetZ(-15);
     App.scene.FLOOR_STATIC.rotation.rotx = 90;
@@ -18269,7 +18366,9 @@ const BiquadFilterType = {
   allpass: 'allpass'
 };
 /**
- * 
+ * @description
+ * Default cubeMap drawer
+ * 2DCanvas ctx
  */
 
 exports.BiquadFilterType = BiquadFilterType;
@@ -18281,7 +18380,7 @@ function gen2DTextFace(ctx, faceColor, textColor, text) {
   } = ctx.canvas;
   ctx.fillStyle = faceColor;
   ctx.fillRect(0, 0, width, height);
-  ctx.font = `${width * 0.7}px sans-serif`;
+  ctx.font = `${width * 0.6}px sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = textColor;

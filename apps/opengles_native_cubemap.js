@@ -8,11 +8,28 @@
 
 import App from "../program/manifest";
 import * as CANNON from 'cannon';
-import {Point} from "../lib/matrix-geometry";
 
 window.CANNON = CANNON;
 
 export var runThis = (world) => {
+
+  /**
+   * @description
+   * What ever you want!
+   * It is 2dCanvas context draw func.
+   */
+  function myFace(args
+    /*ctx, faceColor, textColor, txtSizeCoeficient, text*/) {
+    const {width, height} = this.cubeMap2dCtx.canvas;
+    console.log(args)
+    this.cubeMap2dCtx.fillStyle = args[0];
+    this.cubeMap2dCtx.fillRect(0, 0, width, height);
+    this.cubeMap2dCtx.font = `${width * args[2]}px sans-serif`;
+    this.cubeMap2dCtx.textAlign = 'center';
+    this.cubeMap2dCtx.textBaseline = 'middle';
+    this.cubeMap2dCtx.fillStyle = args[1];
+    this.cubeMap2dCtx.fillText(args[3], width / 2, height / 2);
+  }
 
   App.camera.SceneController = true;
 
@@ -26,9 +43,9 @@ export var runThis = (world) => {
     /**
      * Physics force apply
      */
-     if (ev.detail.hitObject.physics.enabled == true) {
-      ev.detail.hitObject.physics.currentBody.force.set(-330,0,1000)
-     }
+    if(ev.detail.hitObject.physics.enabled == true) {
+      ev.detail.hitObject.physics.currentBody.force.set(-330, 0, 1000)
+    }
   });
 
   var groundTex = {
@@ -39,6 +56,22 @@ export var runThis = (world) => {
   var tex = {
     source: [],
     mix_operation: "multiply",
+    cubeMap: {
+      type: '2dcanvas',
+      drawFunc: myFace,
+      sides: [
+        // This is custom access you can edit but only must have
+        // nice relation with your draw function !
+        // This is example for render 2d text in middle-center manir.
+        // Nice for 3d button object!
+        {faceColor: '#F00', textColor: '#28F', txtSizeCoeficient: 0.8, text: 'm'},
+        {faceColor: '#FF0', textColor: '#82F', txtSizeCoeficient: 0.5, text: 'a'},
+        {faceColor: '#0F0', textColor: '#82F', txtSizeCoeficient: 0.5, text: 't'},
+        {faceColor: '#0FF', textColor: '#802', txtSizeCoeficient: 0.5, text: 'r'},
+        {faceColor: '#00F', textColor: '#8F2', txtSizeCoeficient: 0.5, text: 'i'},
+        {faceColor: '#F0F', textColor: '#2F8', txtSizeCoeficient: 0.5, text: 'x'}
+      ]
+    }
   };
 
   // Load Physics world !

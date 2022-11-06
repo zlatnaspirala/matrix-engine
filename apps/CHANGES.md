@@ -1,6 +1,10 @@
 
 ## CHANGES
 
+[1.8.6] Improve of cubeMap
+
+
+
 [1.8.5] Added new scene type of object `"cubeMap"` with Opengles native 'uniform samplerCube' sampler:
 ```js
 var tex = {source: [], mix_operation: "multiply"};

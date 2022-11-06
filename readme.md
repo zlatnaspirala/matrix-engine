@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.8.5`
+### Name: `MATRIX-ENGINE` `1.8.6`
 
 #### Logo
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/res/icons/ms-icon.png" width="128" height="128" />
@@ -400,24 +400,70 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 
 ### Opengles native `cubeMap` [1.8.5]
 
-New tag `cubeMap` takes texture.source empty array.
+- If you wanna custom canvasd2d draws for aech cube side 
+  New tag `cubeMap` takes texture.source empty array.
 
-Example:
+Canvas2d Example:
 ```js
-var tex = {
-  source: [],
-  mix_operation: "multiply",
-};
-world.Add("cubeMap", 1, "myCubeMapObj", tex);
+  /**
+   * @description
+   * What ever you want!
+   * It is 2dCanvas context draw func.
+   */
+  function myFace(args) {
+    const {width, height} = this.cubeMap2dCtx.canvas;
+    this.cubeMap2dCtx.fillStyle = args[0];
+    this.cubeMap2dCtx.fillRect(0, 0, width, height);
+    this.cubeMap2dCtx.font = `${width * args[2]}px sans-serif`;
+    this.cubeMap2dCtx.textAlign = 'center';
+    this.cubeMap2dCtx.textBaseline = 'middle';
+    this.cubeMap2dCtx.fillStyle = args[1];
+    this.cubeMap2dCtx.fillText(args[3], width / 2, height / 2);
+  }
+
+  var tex = {
+    source: [],
+    mix_operation: "multiply",
+    cubeMap: {
+      type: '2dcanvas',
+      drawFunc: myFace,
+      sides: [
+        // This is custom access you can edit but only must have
+        // nice relation with your draw function !
+        // This is example for render 2d text in middle-center manir.
+        // Nice for 3d button object!
+        {faceColor: '#F00', textColor: '#28F', txtSizeCoeficient: 0.8, text: 'm'},
+        {faceColor: '#FF0', textColor: '#82F', txtSizeCoeficient: 0.5, text: 'a'},
+        {faceColor: '#0F0', textColor: '#82F', txtSizeCoeficient: 0.5, text: 't'},
+        {faceColor: '#0FF', textColor: '#802', txtSizeCoeficient: 0.5, text: 'r'},
+        {faceColor: '#00F', textColor: '#8F2', txtSizeCoeficient: 0.5, text: 'i'},
+        {faceColor: '#F0F', textColor: '#2F8', txtSizeCoeficient: 0.5, text: 'x'}
+      ]
+    }
+  };
+
 ```
 
-For now it is predefinited inside engine.
-It is canvas2d with center-middle text position.
-Index is 0,1,2,3,4,5 for all six faces of cube geometry.
+Classic images:
+- If you wanna load images, see example:
 ```js
-App.scene.myCubeMapObj.cubeMap2dCanvasSet[4].text = 'MA';
-App.scene.myCubeMapObj.cubeMap2dCanvasSet[4].textColor = 'orange';
-App.scene.myCubeMapObj.cubeMap2dCanvasSet[4].faceColor = 'black';
+world.cubeMapTextures([
+  'res/images/cube/1.png',
+  'res/images/cube/2.png',
+  'res/images/cube/3.png',
+  'res/images/cube/4.png',
+  'res/images/cube/5.png',
+  'res/images/cube/6.png',
+], (imgs) => {
+  var tex = {
+    source: [...imgs],
+    mix_operation: "multiply",
+    cubeMap: {
+      type: 'images',
+    }
+  };
+  world.Add("cubeMap", 1, "myCubeMapObj", tex);
+});
 ```
 
 ### BVH Matrix Skeletal [1.5.0]
@@ -808,4 +854,5 @@ No Dependabot alerts opened.
   Music promoted by https://www.free-stock-music.com
   Creative Commons Attribution-ShareAlike 3.0 Unported
   https://creativecommons.org/licenses/by-sa/3.0/deed.en_US
-  - Networking based on https://github.com/muaz-khan/RTCMultiConnection
+- Networking based on https://github.com/muaz-khan/RTCMultiConnection
+- https://unsplash.com/photos/8UDJ4sflous
