@@ -179,6 +179,7 @@ Take a look at query-build.html
 - Physics Sphere
 - BVH loader, animation play
 - Load obj sequences
+- FPShooter example WIP
 
 ## Features description
 
@@ -847,6 +848,7 @@ No Dependabot alerts opened.
 - https://freestocktextures.com/texture/bark-wood-plant,122.html
 - https://github.com/Necolo/raycaster
 - Great https://www.mixamo.com/
+- OBJECT LOADER http://math.hws.edu/graphicsbook/source/webgl/cube-camera.html
 - Player character https://www.mixamo.com/#/?page=1&query=walk&type=Motion%2CMotionPack
 - BVH collections from: Special thanks to the CMU Graphics Lab Motion Capture Database which provided the data http://mocap.cs.cmu.edu/`
 - Used in examples:

@@ -2,7 +2,7 @@
 
 var App = {
   name: "Matrix Engine Manifest",
-  version: "1.0.6",
+  version: "1.0.7",
   events: true,
   logs: false,
   draw_interval: 10,
@@ -17,6 +17,7 @@ var App = {
     sceneControllerDragAmp: 0.1,
     sceneControllerDragAmp: 0.1,
     speedAmp: 0.5,
+    yawRate: 1,
     sceneControllerEdgeCameraYawRate: 3,
     sceneControllerWASDKeysAmp: 0.1
   },

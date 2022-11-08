@@ -8,7 +8,7 @@ exports.default = void 0;
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _opengles_native_cubemap = require("./apps/opengles_native_cubemap");
+var _specular_light_basic = require("./apps/specular_light_basic");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -34,9 +34,9 @@ window.webGLStart = () => {
   // Must be fixed gloabal access
 
   window.App = App;
-  window.runThis = _opengles_native_cubemap.runThis;
+  window.runThis = _specular_light_basic.runThis;
   setTimeout(() => {
-    (0, _opengles_native_cubemap.runThis)(world);
+    (0, _specular_light_basic.runThis)(world);
   }, 1);
 };
 
@@ -45,7 +45,7 @@ var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/opengles_native_cubemap":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/specular_light_basic":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -55,129 +55,54 @@ exports.runThis = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
-var CANNON = _interopRequireWildcard(require("cannon"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- *@Author Nikola Lukic zlatnaspirala@
+ *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
- * WORKSHOP SCRIPT
- * Current theme : SceneController and 
- * physics (cannon.js) implementation.
+ * From version [1.7.6]
+ * Local Light/Shadows shader
+ * - Spot ligth for now works perfect for fixed camera movement.
+ * - Direction, ambient working fine also with spot light.
  */
-window.CANNON = CANNON;
 
+/* globals world App */
 var runThis = world => {
-  /**
-   * @description
-   * What ever you want!
-   * It is 2dCanvas context draw func.
-   */
-  function myFace(args
-  /*ctx, faceColor, textColor, txtSizeCoeficient, text*/
-  ) {
-    const {
-      width,
-      height
-    } = this.cubeMap2dCtx.canvas;
-    console.log(args);
-    this.cubeMap2dCtx.fillStyle = args[0];
-    this.cubeMap2dCtx.fillRect(0, 0, width, height);
-    this.cubeMap2dCtx.font = `${width * args[2]}px sans-serif`;
-    this.cubeMap2dCtx.textAlign = 'center';
-    this.cubeMap2dCtx.textBaseline = 'middle';
-    this.cubeMap2dCtx.fillStyle = args[1];
-    this.cubeMap2dCtx.fillText(args[3], width / 2, height / 2);
-  }
+  // Camera
+  _manifest.default.camera.SceneController = true; // Image texs
 
-  _manifest.default.camera.SceneController = true;
-  canvas.addEventListener('mousedown', ev => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
-  window.addEventListener('ray.hit.event', ev => {
-    console.log("You shoot the object! Nice!", ev.detail.hitObject.name);
-    /**
-     * Physics force apply
-     */
-
-    if (ev.detail.hitObject.physics.enabled == true) {
-      ev.detail.hitObject.physics.currentBody.force.set(-330, 0, 1000);
-    }
-  });
-  var groundTex = {
+  var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
-  var tex = {
-    source: [],
-    mix_operation: "multiply",
-    cubeMap: {
-      type: '2dcanvas',
-      drawFunc: myFace,
-      sides: [// This is custom access you can edit but only must have
-      // nice relation with your draw function !
-      // This is example for render 2d text in middle-center manir.
-      // Nice for 3d button object!
-      {
-        faceColor: '#F00',
-        textColor: '#28F',
-        txtSizeCoeficient: 0.8,
-        text: 'm'
-      }, {
-        faceColor: '#FF0',
-        textColor: '#82F',
-        txtSizeCoeficient: 0.5,
-        text: 'a'
-      }, {
-        faceColor: '#0F0',
-        textColor: '#82F',
-        txtSizeCoeficient: 0.5,
-        text: 't'
-      }, {
-        faceColor: '#0FF',
-        textColor: '#802',
-        txtSizeCoeficient: 0.5,
-        text: 'r'
-      }, {
-        faceColor: '#00F',
-        textColor: '#8F2',
-        txtSizeCoeficient: 0.5,
-        text: 'i'
-      }, {
-        faceColor: '#F0F',
-        textColor: '#2F8',
-        txtSizeCoeficient: 0.5,
-        text: 'x'
-      }]
-    }
-  }; // Load Physics world !
+  world.Add("cubeLightTex", 1, "myCube1", textuteImageSamplers);
 
-  let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground
+  _manifest.default.scene.myCube1.activateShadows();
 
-  var groundMaterial = new CANNON.Material();
-  physics.addGround(_manifest.default, world, groundTex, groundMaterial); // physics.world.solver.iterations = 17;
+  _manifest.default.scene.myCube1.position.setPosition(0, 0, -4); // Local Shadows cast must be activated!
 
-  world.Add("cubeMap", 1, "myCubeMapObj", tex);
-  var b = new CANNON.Body({
-    mass: 5,
-    position: new CANNON.Vec3(0, -14, 3),
-    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+
+  _manifest.default.scene.myCube1.shadows.innerLimit = 0;
+
+  _manifest.default.scene.myCube1.shadows.activeUpdate();
+
+  _manifest.default.scene.myCube1.shadows.animatePositionX(); // Click event
+
+
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
   });
-  physics.world.addBody(b); // Physics
-
-  _manifest.default.scene.myCubeMapObj.physics.currentBody = b;
-  _manifest.default.scene.myCubeMapObj.physics.enabled = true;
+  addEventListener("ray.hit.event", function (e) {
+    e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 10);
+    e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 10);
+    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 10);
+    console.info(e.detail);
+  });
 };
 
 exports.runThis = runThis;
 
-},{"../program/manifest":35,"cannon":32}],3:[function(require,module,exports){
+},{"../program/manifest":35}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1413,7 +1338,7 @@ function EVENTS(canvas) {
     }
 
     if (_manifest.default.camera.SceneController === true && keyboardPress.getKeyStatus(16) || _manifest.default.camera.FirstPersonController === true) {
-      console.log('works for both now');
+      // console.log('works for both now')
       camera.pitchRate += deltaY * 10;
       camera.yawRate += deltaX * 1;
 
@@ -1573,22 +1498,22 @@ exports.keyboardPress = keyboardPress;
 camera.setCamera = function (object) {
   /* Left Key  or A                            */
   if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
-    camera.yawRate = 20;
-    if (_manifest.default.camera.leftEdge == true) camera.yawRate = 10;
+    camera.yawRate = _manifest.default.camera.yawRate;
+    if (_manifest.default.camera.leftEdge == true) camera.yawRate = _manifest.default.camera.yawRate;
   } else if (
   /* Right Key or D                            */
   keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
-    camera.yawRate = -20;
-    if (_manifest.default.camera.rightEdge == true) camera.yawRate = -10;
+    camera.yawRate = -_manifest.default.camera.yawRate;
+    if (_manifest.default.camera.rightEdge == true) camera.yawRate = -_manifest.default.camera.yawRate;
   } else {// camera.yawRate = 0;
   }
-  /* Up Key    or W                            */
+  /* Up Key or W */
 
 
   if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
     camera.speed = _manifest.default.camera.speedAmp;
   } else if (keyboardPress.getKeyStatus(40) || keyboardPress.getKeyStatus(83)) {
-    /* Down Key  or S                            */
+    /* Down Key or S */
     camera.speed = -_manifest.default.camera.speedAmp;
   } else {
     camera.speed = 0;
@@ -1609,8 +1534,8 @@ camera.setCamera = function (object) {
 
 
   if (camera.speed != 0) {
-    camera.xPos -= Math.sin(degToRad(camera.yaw)) * camera.speed;
-    camera.yPos = 0;
+    camera.xPos -= Math.sin(degToRad(camera.yaw)) * camera.speed; // camera.yPos = 0;
+
     camera.zPos -= Math.cos(degToRad(camera.yaw)) * camera.speed;
   }
 
@@ -6064,7 +5989,8 @@ function getInitFSCubeTexLight() {
 
   // Spot
   // Passed in from the vertex shader.
-  varying vec3 v_normal;
+  // varying vec3 v_normal;
+  
   varying vec3 v_surfaceToLight;
   varying vec3 v_surfaceToView;
 
@@ -6884,8 +6810,7 @@ function generateShaderSrc(numTextures, mixOperand, spotLight) {
     uniform sampler2D uSampler4;
     uniform sampler2D uSampler5;
     uniform sampler2D uSampler6;
-    uniform sampler2D uSampler7;
-    varying vec3 v_normal;
+    // varying vec3 v_normal;
     
     ` + (typeof spotLight !== 'undefined' ? generateSpotLightDefinitions() : ``) + `
     void main(void) {
@@ -7048,7 +6973,7 @@ function generateCubeMapShaderSrc(numTextures, mixOperand, spotLight) {
     int MixOperandString = ${mixOperand};
     // The CubeMap texture.
     uniform samplerCube u_texture;
-    varying vec3 v_normal;
+    // varying vec3 v_normal;
     varying vec3 v_normal_cubemap;
 
     void main(void) {
@@ -7194,7 +7119,7 @@ function generateCustomShaderSrc(numTextures, mixOperand, code_) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MatrixShadowSpot = void 0;
+exports.MatrixShadowSpecular = exports.MatrixShadowSpot = void 0;
 
 var _utility = require("./utility");
 
@@ -7339,8 +7264,20 @@ class MatrixShadowSpot {
   }
 
 }
+/**
+ * @description
+ * Specular light
+ */
+
 
 exports.MatrixShadowSpot = MatrixShadowSpot;
+
+class MatrixShadowSpecular {
+  constructor() {}
+
+}
+
+exports.MatrixShadowSpecular = MatrixShadowSpecular;
 
 },{"../program/manifest":35,"./utility":26}],16:[function(require,module,exports){
 "use strict";
@@ -8037,9 +7974,17 @@ function defineworld(canvas) {
       };
       squareObject.useShadows = false;
 
-      squareObject.activateShadows = function () {
-        squareObject.useShadows = true;
-        squareObject.shadows = new _matrixShadows.MatrixShadowSpot();
+      squareObject.activateShadows = function (t) {
+        if (typeof t === 'undefined') {
+          squareObject.useShadows = true;
+          squareObject.shadows = new _matrixShadows.MatrixShadowSpot();
+        } else if (t == 'spot') {
+          squareObject.useShadows = true;
+          squareObject.shadows = new _matrixShadows.MatrixShadowSpot();
+        } else if ('specular') {
+          squareObject.useShadows = true;
+          squareObject.shadows = new _matrixShadows.MatrixShadowSpecular();
+        }
       };
 
       if (typeof texturesPaths !== 'undefined') {
@@ -35209,7 +35154,7 @@ exports.default = void 0;
 /* eslint-disable no-unused-vars */
 var App = {
   name: "Matrix Engine Manifest",
-  version: "1.0.6",
+  version: "1.0.7",
   events: true,
   logs: false,
   draw_interval: 10,
@@ -35224,6 +35169,7 @@ var App = {
     sceneControllerDragAmp: 0.1,
     sceneControllerDragAmp: 0.1,
     speedAmp: 0.5,
+    yawRate: 1,
     sceneControllerEdgeCameraYawRate: 3,
     sceneControllerWASDKeysAmp: 0.1
   },

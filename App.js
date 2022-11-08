@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/opengles_native_cubemap';
+import {runThis} from './apps/specular_light_basic';
 
 var world;
 var App = matrixEngine.App;
