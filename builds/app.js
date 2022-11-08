@@ -8,7 +8,7 @@ exports.default = void 0;
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _specular_light_basic = require("./apps/specular_light_basic");
+var _spot_light_basic = require("./apps/spot_light_basic");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -34,9 +34,9 @@ window.webGLStart = () => {
   // Must be fixed gloabal access
 
   window.App = App;
-  window.runThis = _specular_light_basic.runThis;
+  window.runThis = _spot_light_basic.runThis;
   setTimeout(() => {
-    (0, _specular_light_basic.runThis)(world);
+    (0, _spot_light_basic.runThis)(world);
   }, 1);
 };
 
@@ -45,7 +45,7 @@ var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/specular_light_basic":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/spot_light_basic":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -75,18 +75,194 @@ var runThis = world => {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
+  var textuteImageSamplersTest = {
+    source: ["res/images/texture_spiral1.png", "res/images/complex_texture_1/diffuse.png"],
+    mix_operation: "multiply"
+  };
+  var textuteBlanko = {
+    source: ["res/images/blankoB.png"],
+    mix_operation: "multiply"
+  };
   world.Add("cubeLightTex", 1, "myCube1", textuteImageSamplers);
 
   _manifest.default.scene.myCube1.activateShadows();
 
-  _manifest.default.scene.myCube1.position.setPosition(0, 0, -4); // Local Shadows cast must be activated!
+  _manifest.default.scene.myCube1.position.setPosition(-3, 3, -11); // Local Shadows cast must be activated!
 
-
-  _manifest.default.scene.myCube1.shadows.innerLimit = 0;
 
   _manifest.default.scene.myCube1.shadows.activeUpdate();
 
-  _manifest.default.scene.myCube1.shadows.animatePositionX(); // Click event
+  _manifest.default.scene.myCube1.shadows.animatePositionX();
+
+  world.Add("cubeLightTex", 1, "myCube2", textuteImageSamplers);
+
+  _manifest.default.scene.myCube2.activateShadows();
+
+  _manifest.default.scene.myCube2.shadows.lightPosition = [0, 0, 3];
+  _manifest.default.scene.myCube2.shadows.innerLimit = 0;
+
+  _manifest.default.scene.myCube2.position.SetX(-3);
+
+  _manifest.default.scene.myCube2.position.SetZ(-11);
+
+  _manifest.default.scene.myCube2.shadows.activeUpdate();
+
+  _manifest.default.scene.myCube2.shadows.animateRadius({
+    from: 0,
+    to: 25,
+    step: 0.5
+  });
+
+  world.Add("cubeLightTex", 1, "myCube3", textuteImageSamplers);
+
+  _manifest.default.scene.myCube3.activateShadows();
+
+  _manifest.default.scene.myCube3.shadows.innerLimit = 0;
+
+  _manifest.default.scene.myCube3.position.SetY(-3);
+
+  _manifest.default.scene.myCube3.position.SetZ(-11);
+
+  _manifest.default.scene.myCube3.position.SetX(-3);
+
+  _manifest.default.scene.myCube3.shadows.lightPosition = [0, 3, 3]; // Animate local spot
+
+  var option = {
+    from: 0.01,
+    to: 0.02,
+    step: 0.001,
+    centerX: 0,
+    centerY: 0,
+    flyArroundByIndexs: [1, 2] // Means that Y,Z coords are orbiting
+
+  };
+
+  _manifest.default.scene.myCube3.shadows.activeUpdate();
+
+  _manifest.default.scene.myCube3.shadows.flyArround(option); // Animate by Y pos
+
+
+  world.Add("cubeLightTex", 1, "myCube4", textuteImageSamplers);
+
+  _manifest.default.scene.myCube4.activateShadows();
+
+  _manifest.default.scene.myCube4.position.SetY(3);
+
+  _manifest.default.scene.myCube4.position.SetZ(-11);
+
+  _manifest.default.scene.myCube4.shadows.activeUpdate();
+
+  _manifest.default.scene.myCube4.shadows.animatePositionY();
+
+  _manifest.default.scene.myCube4.position.SetX(0); // Created with blanko texture or red, blue or green solid.
+  // then add new tex sampler created generic square 2x2 by default.
+
+
+  world.Add("cubeLightTex", 1, "myCube5", textuteBlanko);
+
+  _manifest.default.scene.myCube5.position.SetZ(-11);
+
+  _manifest.default.scene.myCube5.activateShadows();
+
+  _manifest.default.scene.myCube5.shadows.activeUpdate();
+
+  _manifest.default.scene.myCube5.shadows.animateRadius({
+    from: 15,
+    to: 45,
+    step: 0.05
+  });
+
+  _manifest.default.scene.myCube5.textures.push(_manifest.default.scene.myCube5.createPixelsTex()); // Created with blanko texture or red, blue or green solid.
+
+
+  world.Add("cubeLightTex", 1, "myCube6", textuteImageSamplersTest);
+
+  _manifest.default.scene.myCube6.position.SetZ(-11);
+
+  _manifest.default.scene.myCube6.position.SetY(-3);
+
+  _manifest.default.scene.myCube6.activateShadows(); // Animate local spot
+
+
+  var option = {
+    from: 0.01,
+    to: 0.02,
+    step: 0.001,
+    centerX: 0,
+    centerY: 0,
+    flyArroundByIndexs: [0, 2] // Means that X,Z coords are orbiting
+
+  };
+  _manifest.default.scene.myCube6.shadows.outerLimit = 2; // Local Shadows cast must be activated!
+
+  _manifest.default.scene.myCube6.shadows.activeUpdate();
+
+  _manifest.default.scene.myCube6.shadows.flyArround(option);
+
+  _manifest.default.scene.myCube6.textures.push(_manifest.default.scene.myCube6.createPixelsTex()); // Simple direction light
+
+
+  world.Add("cubeLightTex", 1, "myCube7", textuteImageSamplersTest);
+
+  _manifest.default.scene.myCube7.position.setPosition(3, 3, -11);
+
+  _manifest.default.scene.myCube7.geometry.colorData.SetGreenForAll(0.5);
+
+  _manifest.default.scene.myCube7.geometry.colorData.SetRedForAll(0.5);
+
+  _manifest.default.scene.myCube7.geometry.colorData.SetBlueForAll(0.5);
+
+  _manifest.default.scene.myCube7.deactivateTex();
+
+  world.Add("cubeLightTex", 1, "myCube8", textuteImageSamplersTest);
+
+  _manifest.default.scene.myCube8.position.setPosition(3, 0, -11); // Custom generic textures. Micro Drawing.
+  // Example for arg shema square for now only.
+
+
+  var options = {
+    squareShema: [8, 8],
+    pixels: new Uint8Array(8 * 8 * 4)
+  }; // options.pixels.fill(0);
+
+  var I = 0,
+      localCounter = 0;
+
+  for (var funny = 0; funny < 8 * 8 * 4; funny += 4) {
+    localCounter++;
+    options.pixels[funny] = I + localCounter;
+    options.pixels[funny + 1] = I + 1.5 * localCounter;
+    options.pixels[funny + 2] = I + 1.2 * localCounter;
+    options.pixels[funny + 3] = 1;
+  }
+
+  options.pixels[4 * 7] = 255;
+  options.pixels[4 * 7 + 1] = 1;
+  options.pixels[4 * 7 + 2] = 1;
+
+  _manifest.default.scene.myCube8.textures.push(_manifest.default.scene.myCube8.createPixelsTex(options)); // Custom generic textures
+
+
+  world.Add("cubeLightTex", 1, "myCube9", textuteImageSamplersTest);
+
+  _manifest.default.scene.myCube9.position.setPosition(3, -3, -11); // Custom generic textures. Micro Drawing.
+  // Example for arg shema square for now only.
+
+
+  var options = {
+    squareShema: [4, 4],
+    pixels: new Uint8Array(4 * 4 * 4),
+    style: {
+      type: 'chessboard',
+      color1: 0,
+      color2: 255
+    }
+  };
+
+  _manifest.default.scene.myCube9.textures.push(_manifest.default.scene.myCube9.createPixelsTex(options)); // App.scene.myCube9.activateShadows();
+  // App.scene.myCube9.shadows.activeUpdate();
+  // App.scene.myCube9.shadows.animateRadius({from: 15, to: 45, step: 0.05});
+  // Click event
 
 
   canvas.addEventListener('mousedown', ev => {
@@ -3038,7 +3214,7 @@ _manifest.default.operation.draws.cube = function (object) {
           // world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
 
 
-          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 1);
+          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
         }
@@ -5989,8 +6165,7 @@ function getInitFSCubeTexLight() {
 
   // Spot
   // Passed in from the vertex shader.
-  // varying vec3 v_normal;
-  
+  varying vec3 v_normal;
   varying vec3 v_surfaceToLight;
   varying vec3 v_surfaceToView;
 
@@ -6810,7 +6985,8 @@ function generateShaderSrc(numTextures, mixOperand, spotLight) {
     uniform sampler2D uSampler4;
     uniform sampler2D uSampler5;
     uniform sampler2D uSampler6;
-    // varying vec3 v_normal;
+    uniform sampler2D uSampler7;
+    varying vec3 v_normal;
     
     ` + (typeof spotLight !== 'undefined' ? generateSpotLightDefinitions() : ``) + `
     void main(void) {
@@ -6914,7 +7090,7 @@ function generateVShaderSimpleDirectionLight() {
 
 function generateSpotLightDefinitions() {
   return `// Passed in from the vertex shader.
-  varying vec3 v_normal;
+  // varying vec3 v_normal;
   varying vec3 v_surfaceToLight;
   varying vec3 v_surfaceToView;
 
@@ -6973,7 +7149,7 @@ function generateCubeMapShaderSrc(numTextures, mixOperand, spotLight) {
     int MixOperandString = ${mixOperand};
     // The CubeMap texture.
     uniform samplerCube u_texture;
-    // varying vec3 v_normal;
+    varying vec3 v_normal;
     varying vec3 v_normal_cubemap;
 
     void main(void) {
@@ -7119,7 +7295,7 @@ function generateCustomShaderSrc(numTextures, mixOperand, code_) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MatrixShadowSpecular = exports.MatrixShadowSpot = void 0;
+exports.MatrixShadowSpot = void 0;
 
 var _utility = require("./utility");
 
@@ -7264,20 +7440,8 @@ class MatrixShadowSpot {
   }
 
 }
-/**
- * @description
- * Specular light
- */
-
 
 exports.MatrixShadowSpot = MatrixShadowSpot;
-
-class MatrixShadowSpecular {
-  constructor() {}
-
-}
-
-exports.MatrixShadowSpecular = MatrixShadowSpecular;
 
 },{"../program/manifest":35,"./utility":26}],16:[function(require,module,exports){
 "use strict";

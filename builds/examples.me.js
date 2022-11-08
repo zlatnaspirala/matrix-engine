@@ -6277,7 +6277,7 @@ _manifest.default.operation.draws.cube = function (object) {
           // world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
 
 
-          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 1);
+          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
         }
@@ -9228,8 +9228,7 @@ function getInitFSCubeTexLight() {
 
   // Spot
   // Passed in from the vertex shader.
-  // varying vec3 v_normal;
-  
+  varying vec3 v_normal;
   varying vec3 v_surfaceToLight;
   varying vec3 v_surfaceToView;
 
@@ -10049,7 +10048,8 @@ function generateShaderSrc(numTextures, mixOperand, spotLight) {
     uniform sampler2D uSampler4;
     uniform sampler2D uSampler5;
     uniform sampler2D uSampler6;
-    // varying vec3 v_normal;
+    uniform sampler2D uSampler7;
+    varying vec3 v_normal;
     
     ` + (typeof spotLight !== 'undefined' ? generateSpotLightDefinitions() : ``) + `
     void main(void) {
@@ -10153,7 +10153,7 @@ function generateVShaderSimpleDirectionLight() {
 
 function generateSpotLightDefinitions() {
   return `// Passed in from the vertex shader.
-  varying vec3 v_normal;
+  // varying vec3 v_normal;
   varying vec3 v_surfaceToLight;
   varying vec3 v_surfaceToView;
 
@@ -10212,7 +10212,7 @@ function generateCubeMapShaderSrc(numTextures, mixOperand, spotLight) {
     int MixOperandString = ${mixOperand};
     // The CubeMap texture.
     uniform samplerCube u_texture;
-    // varying vec3 v_normal;
+    varying vec3 v_normal;
     varying vec3 v_normal_cubemap;
 
     void main(void) {
@@ -10358,7 +10358,7 @@ function generateCustomShaderSrc(numTextures, mixOperand, code_) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MatrixShadowSpecular = exports.MatrixShadowSpot = void 0;
+exports.MatrixShadowSpot = void 0;
 
 var _utility = require("./utility");
 
@@ -10503,20 +10503,8 @@ class MatrixShadowSpot {
   }
 
 }
-/**
- * @description
- * Specular light
- */
-
 
 exports.MatrixShadowSpot = MatrixShadowSpot;
-
-class MatrixShadowSpecular {
-  constructor() {}
-
-}
-
-exports.MatrixShadowSpecular = MatrixShadowSpecular;
 
 },{"../program/manifest":74,"./utility":65}],55:[function(require,module,exports){
 "use strict";
