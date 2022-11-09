@@ -71,3 +71,21 @@
 
   // var mm = new CANNON.ContactMaterial(groundMaterial, mat1, { friction: 0.01, restitution: 0.9 });
   // physics.world.addContactMaterial(mm);
+
+
+
+
+  ---------------------------------------------------------------
+
+    // uniform sampler2D uSampler[${numTextures}];
+    // uniform float uMixAmount[${numTextures}];
+    /*
+    void main() {
+        vec4 color = vec4(0);
+        for (int i = 0; i < ${numTextures}; ++i) {
+            vec4 texColor = texture2D(uSampler[i], vTextureCoord);
+            color = mix(color, texColor, uMixAmount[i]);
+        }
+        gl_FragColor = color;
+    }
+    */

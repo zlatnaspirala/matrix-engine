@@ -9,27 +9,46 @@
 
 /* globals world App */
 import App from "../program/manifest";
+import * as CANNON from 'cannon';
 
 export var runThis = (world) => {
 
-  // Camera
-  App.camera.SceneController = true;
-
   // Image texs
-  var textuteImageSamplers = {
+  var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply",
   };
 
-  world.Add("cubeLightTex", 1, "myCube1", textuteImageSamplers);
-  App.scene.myCube1.activateShadows();
-  App.scene.myCube1.position.setPosition(0,0,-4);
-  // Local Shadows cast must be activated!
+  // Load Physics world!
+  let gravityVector = [0, 0, -9.82];
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
+  // Create a ground
+  var groundBody = new CANNON.Body({
+    mass: 0, // mass == 0 makes the body static
+    position: new CANNON.Vec3(0, -15, -2)
+  });
+  var groundShape = new CANNON.Plane();
+  groundBody.addShape(groundShape);
+  physics.world.addBody(groundBody);
+  // matrix engine visual
+  world.Add("cubeLightTex", 1, "FLOOR_STATIC", tex);
+  App.scene.FLOOR_STATIC.geometry.setScaleByX(15);
+  App.scene.FLOOR_STATIC.geometry.setScaleByY(15);
+  App.scene.FLOOR_STATIC.geometry.setScaleByZ(0.1);
+  App.scene.FLOOR_STATIC.position.SetY(-2);
+  App.scene.FLOOR_STATIC.position.SetZ(-15);
+  App.scene.FLOOR_STATIC.rotation.rotx = 90;
+  App.scene.FLOOR_STATIC.activateShadows('specular');
 
-  App.scene.myCube1.shadows.innerLimit = 0;
+  // Camera
+  App.camera.SceneController = true;
 
+  world.Add("cubeLightTex", 1, "myCube1", tex);
+  App.scene.myCube1.activateShadows('specular');
+  App.scene.myCube1.position.setPosition(0, 0, -4);
+  App.scene.myCube1.rotation.rotationSpeed.x = 100;
   App.scene.myCube1.shadows.activeUpdate();
-  App.scene.myCube1.shadows.animatePositionX();
 
   // Click event
   canvas.addEventListener('mousedown', (ev) => {
@@ -46,4 +65,24 @@ export var runThis = (world) => {
     console.info(e.detail);
   });
 
+  const objGenerator = (n) => {
+    for(var j = 0;j < n;j++) {
+
+      setTimeout(() => {
+        world.Add("cubeLightTex", 1, "CUBE" + j, tex);
+        var b2 = new CANNON.Body({
+          mass: 1,
+          linearDamping: 0.01,
+          position: new CANNON.Vec3(1, -14.5, 15),
+          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+        });
+
+        physics.world.addBody(b2);
+        App.scene['CUBE' + j].physics.currentBody = b2;
+        App.scene['CUBE' + j].physics.enabled = true;
+        App.scene['CUBE' + j].activateShadows('specular');
+      }, 1000 * j)
+    }
+  }
+  objGenerator(100)
 };

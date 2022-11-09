@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.8.6`
+### Name: `MATRIX-ENGINE` `1.8.8`
 
 #### Logo
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/res/icons/ms-icon.png" width="128" height="128" />
@@ -179,7 +179,8 @@ Take a look at query-build.html
 - Physics Sphere
 - BVH loader, animation play
 - Load obj sequences
-- FPShooter example WIP
+- FPShooter example [WIP]
+- specular_light_basic -> global light position test [WIP]
 
 ## Features description
 

@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/spot_light_basic';
+import {runThis} from './apps/specular_light_basic';
 
 var world;
 var App = matrixEngine.App;
@@ -18,15 +18,10 @@ window.webGLStart = () => {
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
   // Make it global for dev - for easy console/debugger access
-  // window.world = world;
-
-  // Must be fixed gloabal access
   window.App = App;
-
   window.runThis = runThis;
   setTimeout(() => { runThis(world); }, 1);
 };
 
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
-export default App;
