@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/specular_light_basic';
+import {runThis} from './apps/lens_effect';
 
 var world;
 var App = matrixEngine.App;

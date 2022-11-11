@@ -41,6 +41,7 @@ import {runThis as networking_basic } from './apps/networking_basic';
 import {runThis as load_obj_sequence } from './apps/load_obj_sequence';
 import {runThis as opengles_native_cubemap } from './apps/opengles_native_cubemap';
 import {runThis as opengles_native_cubemap_images } from './apps/opengles_native_cubemap_images';
+import {runThis as lens_effect } from './apps/lens_effect';
 
 /**
  * @description
@@ -50,6 +51,7 @@ import {runThis as opengles_native_cubemap_images } from './apps/opengles_native
  * parts of app.
  */
 var Examples = {
+  lens_effect: lens_effect,
   opengles_native_cubemap_images: opengles_native_cubemap_images,
   opengles_native_cubemap: opengles_native_cubemap,
   load_obj_sequence: load_obj_sequence,

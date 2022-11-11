@@ -19,27 +19,27 @@ export var runThis = (world) => {
     mix_operation: "multiply",
   };
 
-  // Load Physics world!
-  let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector);
-  // Add ground
-  // Create a ground
-  var groundBody = new CANNON.Body({
-    mass: 0, // mass == 0 makes the body static
-    position: new CANNON.Vec3(0, -15, -2)
-  });
-  var groundShape = new CANNON.Plane();
-  groundBody.addShape(groundShape);
-  physics.world.addBody(groundBody);
-  // matrix engine visual
-  world.Add("cubeLightTex", 1, "FLOOR_STATIC", tex);
-  App.scene.FLOOR_STATIC.geometry.setScaleByX(15);
-  App.scene.FLOOR_STATIC.geometry.setScaleByY(15);
-  App.scene.FLOOR_STATIC.geometry.setScaleByZ(0.1);
-  App.scene.FLOOR_STATIC.position.SetY(-2);
-  App.scene.FLOOR_STATIC.position.SetZ(-15);
-  App.scene.FLOOR_STATIC.rotation.rotx = 90;
-  App.scene.FLOOR_STATIC.activateShadows('specular');
+  // // Load Physics world!
+  // let gravityVector = [0, 0, -9.82];
+  // let physics = world.loadPhysics(gravityVector);
+  // // Add ground
+  // // Create a ground
+  // var groundBody = new CANNON.Body({
+  //   mass: 0, // mass == 0 makes the body static
+  //   position: new CANNON.Vec3(0, -15, -2)
+  // });
+  // var groundShape = new CANNON.Plane();
+  // groundBody.addShape(groundShape);
+  // physics.world.addBody(groundBody);
+  // // matrix engine visual
+  // world.Add("cubeLightTex", 1, "FLOOR_STATIC", tex);
+  // App.scene.FLOOR_STATIC.geometry.setScaleByX(15);
+  // App.scene.FLOOR_STATIC.geometry.setScaleByY(15);
+  // App.scene.FLOOR_STATIC.geometry.setScaleByZ(0.1);
+  // App.scene.FLOOR_STATIC.position.SetY(-2);
+  // App.scene.FLOOR_STATIC.position.SetZ(-15);
+  // App.scene.FLOOR_STATIC.rotation.rotx = 90;
+  // App.scene.FLOOR_STATIC.activateShadows('specular');
 
   // Camera
   App.camera.SceneController = true;
@@ -65,24 +65,24 @@ export var runThis = (world) => {
     console.info(e.detail);
   });
 
-  const objGenerator = (n) => {
-    for(var j = 0;j < n;j++) {
+  // const objGenerator = (n) => {
+  //   for(var j = 0;j < n;j++) {
 
-      setTimeout(() => {
-        world.Add("cubeLightTex", 1, "CUBE" + j, tex);
-        var b2 = new CANNON.Body({
-          mass: 1,
-          linearDamping: 0.01,
-          position: new CANNON.Vec3(1, -14.5, 15),
-          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-        });
+  //     setTimeout(() => {
+  //       world.Add("cubeLightTex", 1, "CUBE" + j, tex);
+  //       var b2 = new CANNON.Body({
+  //         mass: 1,
+  //         linearDamping: 0.01,
+  //         position: new CANNON.Vec3(1, -14.5, 15),
+  //         shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+  //       });
 
-        physics.world.addBody(b2);
-        App.scene['CUBE' + j].physics.currentBody = b2;
-        App.scene['CUBE' + j].physics.enabled = true;
-        App.scene['CUBE' + j].activateShadows('specular');
-      }, 1000 * j)
-    }
-  }
-  objGenerator(100)
+  //       physics.world.addBody(b2);
+  //       App.scene['CUBE' + j].physics.currentBody = b2;
+  //       App.scene['CUBE' + j].physics.enabled = true;
+  //       App.scene['CUBE' + j].activateShadows('specular');
+  //     }, 1000 * j)
+  //   }
+  // }
+  // objGenerator(100)
 };

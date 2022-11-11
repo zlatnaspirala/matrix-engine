@@ -181,6 +181,7 @@ Take a look at query-build.html
 - Load obj sequences
 - FPShooter example [WIP]
 - specular_light_basic -> global light position test [WIP]
+- Lens effect shaders for cube
 
 ## Features description
 
@@ -859,3 +860,4 @@ No Dependabot alerts opened.
   https://creativecommons.org/licenses/by-sa/3.0/deed.en_US
 - Networking based on https://github.com/muaz-khan/RTCMultiConnection
 - https://unsplash.com/photos/8UDJ4sflous
+- https://webgl-shaders.com/shaders/frag-lens.glsl

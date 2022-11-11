@@ -816,7 +816,7 @@ function initShaders(gl, fragment, vertex) {
 
       if (null !== gl.getUniformLocation(shaderProgram, 'u_texture')) {
         shaderProgram.uCubeMapSampler = gl.getUniformLocation(shaderProgram, 'u_texture');
-      } // [1.8.8]
+      } // [1.8.8] global positon light test
 
 
       if (null !== gl.getUniformLocation(shaderProgram, 'specularColor')) {
@@ -825,13 +825,16 @@ function initShaders(gl, fragment, vertex) {
 
       if (null !== gl.getUniformLocation(shaderProgram, 'uLightPosition')) {
         shaderProgram.uLightPosition = gl.getUniformLocation(shaderProgram, 'uLightPosition');
-      } // if (null !== gl.getUniformLocation(shaderProgram, 'uFogColor')) {
-      //   shaderProgram.uFogColor = gl.getUniformLocation(shaderProgram, 'uFogColor');
-      // }
-      // if (null !== gl.getUniformLocation(shaderProgram, 'uFogDist')) {
-      //   shaderProgram.uFogDist = gl.getUniformLocation(shaderProgram, 'uFogDist');
-      // }
+      } // [1.8.9] Lens effect
 
+
+      if (null !== gl.getUniformLocation(shaderProgram, 'uResolution')) {
+        shaderProgram.uResolution = gl.getUniformLocation(shaderProgram, 'uResolution');
+      }
+
+      if (null !== gl.getUniformLocation(shaderProgram, 'uControl')) {
+        shaderProgram.uControl = gl.getUniformLocation(shaderProgram, 'uControl');
+      }
 
       shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, 'uPMatrix');
       shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, 'uMVMatrix');
@@ -3042,7 +3045,7 @@ _manifest.default.operation.draws.cube = function (object) {
 
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
 
-  _matrixWorld.world.setMatrixUniforms(object, this.pMatrix, object.mvMatrix); // shadows
+  _matrixWorld.world.setMatrixUniforms(object, this.pMatrix, object.mvMatrix); // Shadows
 
 
   if (object.shadows && object.shadows.type == 'spot') {
@@ -3077,13 +3080,17 @@ _manifest.default.operation.draws.cube = function (object) {
 
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
   } else if (object.shadows && object.shadows.type == 'spec') {
-    // TEST
+    // global position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
 
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition); // world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, [matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos]);
-    // world.GL.gl.uniform3fv(object.shaderProgram.uFogColor, object.shadows.uFogColor);
-    // world.GL.gl.uniform3fv(object.shaderProgram.uFogDist, object.shadows.uFogDist);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
+  } else if (object.shadows && object.shadows.type == 'lens') {
+    // Lens
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
 
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uControl, object.shadows.uControl);
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uResolution, object.shadows.uResolution);
   }
 
   if (object.vertexNormalBuffer && object.shaderProgram.nMatrixUniform) {
@@ -5964,8 +5971,6 @@ function getInitFSCubeTexLight() {
 
     vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
 
- //    gl_FragColor = textureCube(u_texture, normal);
-
     gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
     // Lets multiply just the color portion (not the alpha)
@@ -6006,14 +6011,12 @@ function getInitVSCubeTexLight() {
   varying vec3 v_surfaceToLight;
   varying vec3 v_surfaceToView;
 
-  // Specular / fog
-
+  // Specular
   varying mat4 uMVMatrixINTER;
   varying mat3 uNMatrixINTER;
   varying mat4 uPMatrixINNTER;
 
   attribute vec4 specularColor;
-
   varying vec4 vColor;
   varying vec3 vNormal;
   varying vec4 vPosition;
@@ -6731,6 +6734,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.generateShaderSrc = generateShaderSrc;
 exports.generateShaderSimpleDirection = generateShaderSimpleDirection;
 exports.generateVShaderSimpleDirectionLight = generateVShaderSimpleDirectionLight;
+exports.generateLensDefinitions = generateLensDefinitions;
+exports.generateLensMain = generateLensMain;
 exports.generateCubeMapShaderSrc = generateCubeMapShaderSrc;
 exports.generateCustomShaderSrc = generateCustomShaderSrc;
 
@@ -6762,6 +6767,8 @@ function generateShaderSrc(numTextures, mixOperand, lightType) {
     ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightDefinitions() : ``) + `
 
     ` + (typeof lightType !== 'undefined' && lightType == 'specular' ? generateSpecularLightDefinitions() : ``) + `
+
+    ` + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensDefinitions() : ``) + `
 
     void main(void) {
 
@@ -6799,6 +6806,8 @@ function generateShaderSrc(numTextures, mixOperand, lightType) {
     ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightMain() : ``) + `
 
     ` + (typeof lightType !== 'undefined' && lightType == 'specular' ? generateSpecularLightMain() : ``) + `
+
+    ` + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensMain(numTextures) : ``) + `
 
     }`;
 }
@@ -6889,12 +6898,13 @@ function generateSpotLightMain() {
 /**
  * @description
  * Specular lights.
+ * Definition scope.
+ * Global world scene position.
  */
 
 
 function generateSpecularLightDefinitions() {
   return `// Passed in from the vertex shader.
-
   uniform mat4 uMVMatrixINTER;
   uniform mat3 uNMatrixINTER;
   uniform mat4 uPMatrixINNTER;
@@ -6902,14 +6912,19 @@ function generateSpecularLightDefinitions() {
   uniform vec3 uLightPosition;
   uniform vec3 uFogColor;
   uniform vec2 uFogDist;
-    
+
   varying vec4 vColor;
   varying vec3 vNormal;
   varying vec4 vPosition;
   varying float vDist;
-
   `;
-} // VS
+}
+/**
+ * @description
+ * Specular lights.
+ * Main function.
+ * Global world scene position.
+ */
 
 
 function generateSpecularLightMain() {
@@ -6927,7 +6942,6 @@ function generateSpecularLightMain() {
   float specular = 0.0;
 
   if (nDotL > 0.0) {
-    // viewing vector
     vec3 viewVec = vec3(0,0,1);
     // reflective vector
     vec3 reflectVec = reflect(-lightDirection, normal);
@@ -6937,6 +6951,50 @@ function generateSpecularLightMain() {
     specular = pow(specularFactor, specularPower);
   }
   gl_FragColor.rgb =  textureColor.rgb * vLightWeighting * nDotL - specular;
+  gl_FragColor.a = textureColor.a;
+  `;
+}
+/**
+ * @description
+ * Lens effect.
+ * Definition scope.
+ * Global world scene position.
+ */
+
+
+function generateLensDefinitions() {
+  return `// lens effect
+  uniform vec3 uLightPosition;
+  uniform vec3 uResolution;
+  uniform vec3 uControl;
+  `;
+}
+/**
+ * @description
+ * Lens effect.
+ * Main function.
+ */
+
+
+function generateLensMain(numTextures) {
+  return `
+  vec2 rez = vec2(uResolution.x , uResolution.y );
+  vec2 uC = vec2(uControl.x, uControl.y);
+  vec3 pixel_color;
+  float lens_radius = min(0.3 * rez.x, 250.0);
+  vec2 mouse_direction = uC - gl_FragCoord.xy;
+  float mouse_distance = length(mouse_direction);
+  float exp = 1.0;
+  vec2 offset = (1.0 - pow(mouse_distance / lens_radius, exp)) * mouse_direction;
+  if (mouse_distance < lens_radius) {
+    pixel_color = texture2D(uSampler, vTextureCoord + offset / rez ).rgb;
+    pixel_color.rgb =  pixel_color.rgb * vLightWeighting;
+  } else {
+    pixel_color.rgb =  textureColor.rgb * vLightWeighting;
+  }
+  // todo
+  // if (${numTextures} == 1) { }
+  gl_FragColor = vec4(pixel_color, 1.0);
   gl_FragColor.a = textureColor.a;
   `;
 }
@@ -7105,7 +7163,7 @@ function generateCustomShaderSrc(numTextures, mixOperand, code_) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MatrixShadowSpecular = exports.MatrixShadowSpot = void 0;
+exports.MatrixEffectLens = exports.MatrixShadowSpecular = exports.MatrixShadowSpot = void 0;
 
 var _utility = require("./utility");
 
@@ -7275,6 +7333,51 @@ class MatrixShadowSpecular {
 }
 
 exports.MatrixShadowSpecular = MatrixShadowSpecular;
+
+class MatrixEffectLens {
+  constructor() {
+    this.type = 'lens';
+    this.uLightPosition = new Float32Array([0.0, 0.0, 0.0]);
+    this.uResolution = new Float32Array([window.innerWidth, window.innerHeight, 0.0]);
+    this.uControl = new Float32Array([100.05, 100.15, 100.55]);
+
+    this.UPDATE = function () {};
+
+    this.activeUpdate = () => {
+      this.idUpdater = _manifest.default.updateBeforeDraw.length;
+
+      _manifest.default.updateBeforeDraw.push(this);
+    };
+
+    this.animateCenterX = function (option) {
+      if (typeof option === 'undefined') var option = {
+        from: 0,
+        to: 1200,
+        step: 5
+      };
+      this.rx = new _utility.OSCILLATOR(option.from, option.to, option.step);
+      this.UPDATE = this.centerX;
+    };
+
+    this.animateCenterY = function (option) {
+      if (typeof option === 'undefined') var option = {
+        from: 0,
+        to: 1200,
+        step: 5
+      };
+      this.ry = new _utility.OSCILLATOR(option.from, option.to, option.step);
+      this.UPDATE = this.centerX;
+    };
+  }
+
+  centerX() {
+    if (this.rx) this.uControl[0] = this.rx.UPDATE();
+    if (this.ry) this.uControl[1] = this.ry.UPDATE();
+  }
+
+}
+
+exports.MatrixEffectLens = MatrixEffectLens;
 
 },{"../program/manifest":34,"./utility":25}],15:[function(require,module,exports){
 "use strict";
@@ -7771,8 +7874,8 @@ function defineworld(canvas) {
     return world.physics;
   };
   /**
-   * @ tEST GLOBAL LIGHT PARAMS
-   *     this.uLightPosition = new Float32Array([0.0,0.0,0.0]);
+   * @ TEST GLOBAL LIGHT PARAMS
+   * this.uLightPosition = new Float32Array([0.0,0.0,0.0]);
    */
 
 
@@ -7985,6 +8088,9 @@ function defineworld(canvas) {
         } else if (t == 'specular') {
           squareObject.useShadows = true;
           squareObject.shadows = new _matrixShadows.MatrixShadowSpecular();
+        } else if (t == 'lens') {
+          squareObject.useShadows = true;
+          squareObject.shadows = new _matrixShadows.MatrixEffectLens();
         }
 
         (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
@@ -8504,9 +8610,12 @@ function defineworld(canvas) {
           type = 'spot';
           cubeObject.useShadows = true;
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpot();
-        } else if ('specular') {
+        } else if (type == 'specular') {
           cubeObject.useShadows = true;
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpecular();
+        } else if (type == 'lens') {
+          cubeObject.useShadows = true;
+          cubeObject.shadows = new _matrixShadows.MatrixEffectLens();
         }
 
         (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, type);
@@ -8642,13 +8751,17 @@ function defineworld(canvas) {
       cubeObject.useShadows = false;
 
       cubeObject.activateShadows = type => {
+        // Update others end
         if (typeof type === 'undefined' || type == 'spot') {
           type = 'spot';
           cubeObject.useShadows = true;
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpot();
-        } else if ('specular') {
+        } else if (type == 'specular') {
           cubeObject.useShadows = true;
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpecular();
+        } else if (type == 'lens') {
+          cubeObject.useShadows = true;
+          cubeObject.shadows = new _matrixShadows.MatrixEffectLens();
         }
 
         (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, type);
@@ -8664,8 +8777,7 @@ function defineworld(canvas) {
 
       cubeObject.activateTex = () => {
         cubeObject.vertexTexCoordBuffer = cubeObject.vertexTexCoordBufferRefVar;
-      }; // Update others end
-
+      };
 
       cubeObject.textures = [];
       cubeObject.custom = new Object();
