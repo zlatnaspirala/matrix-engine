@@ -605,6 +605,17 @@ For more details dee this example script: `load_obj_file.js`
 
 ### Video texture:
 
+New way: There is not prefix for path any more. Fixed autoplay on `AFTRE FIRST CLICK`. Multi textures loading. Video texture corespond with direction & ambient light. Important 
+it is direct pass from video to webgl textures. No canvad2d context.
+NOT WORKING with shadows for now.
+```js
+  App.scene.outsideBox.streamTextures = new VT(
+    "res/video-texture/lava1.mkv"
+  );
+```
+TODO: Add arg { mixWithCanvas2d }
+
+Old way [still present]:
 ```js
 world.Add('cubeLightTex', 1, 'TV', textuteImageSamplers, App.meshes.TV);
 App.scene.TV.streamTextures = new VIDEO_TEXTURE('Galactic Expansion Fractal Morph [Official Video]');

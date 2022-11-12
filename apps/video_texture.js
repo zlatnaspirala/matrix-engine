@@ -31,6 +31,7 @@ export var runThis = world => {
   App.scene.outsideBox.rotation.rotationSpeed.z = 50;
   App.scene.outsideBox.rotValue = 90;
   App.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
+  // prefix for path is 'res/videos'
   App.scene.outsideBox.streamTextures = new VIDEO_TEXTURE(
     "electric_sheep.mp4"
   );

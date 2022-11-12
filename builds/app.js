@@ -3,7 +3,7 @@
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _lens_effect = require("./apps/lens_effect");
+var _video_texture_lava = require("./apps/video_texture_lava");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -27,16 +27,16 @@ window.webGLStart = () => {
   world.callReDraw(); // Make it global for dev - for easy console/debugger access
 
   window.App = App;
-  window.runThis = _lens_effect.runThis;
+  window.runThis = _video_texture_lava.runThis;
   setTimeout(() => {
-    (0, _lens_effect.runThis)(world);
+    (0, _video_texture_lava.runThis)(world);
   }, 1);
 };
 
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/lens_effect":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/video_texture_lava":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46,64 +46,74 @@ exports.runThis = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
+var matrixEngine = _interopRequireWildcard(require("../index.js"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/*
+  Nikola Lukic
+  webGl2GLmatrix2 api example
+*/
+
+/* globals App world VIDEO_TEXTURE ENUMERATORS */
+
 /**
- *@Author Nikola Lukic
- *@Description Matrix Engine Api Example
- * From version [1.8.9]
- * Lens effect shader
- * - Lens effect
+ * @Author Nikola Lukic
+ * @Description Matrix Engine Api Example.
  */
 
-/* globals world App */
+/* globals world App world */
+let VT = matrixEngine.Engine.VT;
+
 var runThis = world => {
-  // Image texs
+  // eslint-disable-next-line no-unused-vars
+  _manifest.default.camera.SceneController = true;
+  let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  }; // Camera
+    mix_operation: "multiply" // ENUM : multiply , divide ,
 
-  _manifest.default.camera.SceneController = true;
-  world.Add("cubeLightTex", 1, "myCube1", tex);
+  };
+  world.Add("cubeLightTex", 2, "outsideBox", tex); // App.scene.outsideBox.geometry.setScaleByY(7)
 
-  _manifest.default.scene.myCube1.activateShadows('lens');
+  _manifest.default.scene.outsideBox.position.x = -9;
+  _manifest.default.scene.outsideBox.position.z = -24; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
 
-  _manifest.default.scene.myCube1.position.setPosition(0, 0, -7);
+  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(0, 0, 0);
 
-  _manifest.default.scene.myCube1.rotation.rotationSpeed.x = 0;
+  _manifest.default.scene.outsideBox.streamTextures = new VT("res/video-texture/lava1.mkv");
+  world.Add("cubeLightTex", 2, "outsideBox", tex); // App.scene.outsideBox.geometry.setScaleByY(7)
 
-  _manifest.default.scene.myCube1.shadows.activeUpdate();
+  _manifest.default.scene.outsideBox.position.x = 9;
+  _manifest.default.scene.outsideBox.position.z = -24; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
 
-  _manifest.default.scene.myCube1.shadows.animateCenterX({
-    from: 0,
-    to: 1125,
-    step: 10
-  });
+  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 0, 0);
 
-  _manifest.default.scene.myCube1.shadows.animateCenterY({
-    from: 0,
-    to: 1125,
-    step: 10
-  });
-
-  _manifest.default.scene.myCube1.LightsData.directionLight.set(0.5, 0.5, 0.5); // Click event
-
-
-  canvas.addEventListener('mousedown', ev => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
-  addEventListener("ray.hit.event", function (e) {
-    e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 2);
-    e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 2);
-    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2);
-    console.info(e.detail);
-  });
+  _manifest.default.scene.outsideBox.streamTextures = new VT("res/video-texture/lava1.mkv");
+  world.Add("cubeLightTex", 5, "outsideBox2", tex);
+  _manifest.default.scene.outsideBox2.position.x = 0;
+  _manifest.default.scene.outsideBox2.position.z = -24;
+  _manifest.default.scene.outsideBox2.rotation.rotationSpeed.y = 10;
+  _manifest.default.scene.outsideBox2.rotation.rotx = 45;
+  _manifest.default.scene.outsideBox2.streamTextures = new VT("res/video-texture/me.mkv");
+  _manifest.default.scene.outsideBox2.glBlend.blendEnabled = true;
+  _manifest.default.scene.outsideBox2.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
+  _manifest.default.scene.outsideBox2.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
+  setInterval(function () {
+    _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.right_top.x += 0.01;
+    _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.left_bottom.x += 0.01;
+    _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.left_top.x += 0.01;
+    _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.right_bottom.x += 0.01;
+  }, 20);
 };
 
 exports.runThis = runThis;
 
-},{"../program/manifest":35}],3:[function(require,module,exports){
+},{"../index.js":4,"../program/manifest":35}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -383,6 +393,7 @@ exports.initShaders = initShaders;
 exports.SET_STREAM = SET_STREAM;
 exports.ACCESS_CAMERA = ACCESS_CAMERA;
 exports.VIDEO_TEXTURE = VIDEO_TEXTURE;
+exports.VT = VT;
 exports.Vjs3 = Vjs3;
 exports.anyCanvas = anyCanvas;
 exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateVShaderSimpleDirectionLight = exports.RegenerateShaderSimpleDirectionLight = exports.RegenerateCubeMapShader = exports.RegenerateShader = exports.activateNet = exports.net = exports.looper = exports.EVENTS_INSTANCE = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
@@ -1087,7 +1098,7 @@ function ACCESS_CAMERA(htmlElement) {
 
 }
 
-function VIDEO_TEXTURE(path_) {
+function VIDEO_TEXTURE(p) {
   var ROOT = this,
       DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
   ROOT.video = document.getElementById('webcam_beta');
@@ -1108,7 +1119,7 @@ function VIDEO_TEXTURE(path_) {
   };
 
   ROOT.video.addEventListener('loadeddata', ROOT.video.READY, false);
-  ROOT.video.src = 'res/videos/' + path_;
+  ROOT.video.src = 'res/videos/' + p;
 
   ROOT.UPDATE = function () {
     if (ROOT.video.readyState === ROOT.video.HAVE_ENOUGH_DATA) {
@@ -1117,6 +1128,86 @@ function VIDEO_TEXTURE(path_) {
       ROOT.videoImageContext.fillStyle = 'black';
       ROOT.videoImageContext.fillText(' Visual-JS game engine -webGL 2 part', 0, 85);
       ROOT.videoImageContext.fillText('Video texture example ', 20, 50);
+    }
+  };
+}
+
+function VT(p, name, options) {
+  if (typeof name === 'undefined') name = 'vtex' + (0, _utility.randomIntFromTo)(1, 999999);
+
+  if (typeof options === 'undefined') {
+    options = {
+      mixWithCanvas2d: false
+    };
+  }
+
+  function fixAutoPlay() {
+    console.log("Autoplay fixing...? ", ROOT.video);
+    window.addEventListener('click', FirstClickAutoPlay, {
+      passive: false
+    });
+  }
+
+  function FirstClickAutoPlay() {
+    var t = ROOT.video.play();
+    t.then(() => {
+      console.info("Autoplay fixed.");
+      window.removeEventListener('click', FirstClickAutoPlay);
+    }).catch(() => {
+      console.warn("Autoplay error.");
+    });
+  }
+
+  var ROOT = this,
+      DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
+  ROOT.video = document.createElement('video');
+  DIV_CONTENT_STREAMS.appendChild(ROOT.video); // ROOT.name = 'vtex-' + name;
+
+  ROOT.video.READY = function (e) {
+    ROOT.videoImage = document.createElement('canvas');
+    ROOT.videoImage.id = 'vtex-' + name;
+    ROOT.videoImage.setAttribute('width', '512px');
+    ROOT.videoImage.setAttribute('height', '512px');
+    ROOT.video.mute = true;
+    ROOT.video.autoplay = true;
+    ROOT.video.loop = true;
+    DIV_CONTENT_STREAMS.appendChild(ROOT.videoImage);
+    ROOT.options = options;
+
+    if (options.mixWithCanvas2d == true) {
+      ROOT.videoImageContext = ROOT.videoImage.getContext('2d');
+      ROOT.videoImageContext.fillStyle = '#00003F';
+      ROOT.videoImageContext.fillRect(0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
+      ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.videoImage);
+    } else {
+      ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.video);
+    }
+
+    try {
+      var testAutoplay = ROOT.video.play();
+      testAutoplay.catch(() => {
+        fixAutoPlay();
+      });
+    } catch (err) {}
+
+    _manifest.default.updateBeforeDraw.push(ROOT);
+
+    console.info("Video 2dcanvas texture created.", ROOT.video);
+  };
+
+  ROOT.video.addEventListener('loadeddata', ROOT.video.READY, false);
+  ROOT.video.src = p;
+  ROOT.video.load();
+
+  ROOT.UPDATE = function () {
+    if (ROOT.options.mixWithCanvas2d == false) return;
+
+    if (ROOT.video.readyState === ROOT.video.HAVE_ENOUGH_DATA) {
+      ROOT.videoImageContext.drawImage(ROOT.video, 0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
+      ROOT.videoImageContext.font = '30px Georgia';
+      ROOT.videoImageContext.fillStyle = 'black';
+      ROOT.videoImageContext.fillText('Matrix-Engine [1.8.10] ', 0, 85);
+      ROOT.videoImageContext.fillText('Video texture', 20, 50);
     }
   };
 }
@@ -3035,7 +3126,8 @@ _manifest.default.operation.draws.cube = function (object) {
 
     if (object.streamTextures != null) {
       // video/webcam tex
-      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
 
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else {
@@ -3528,7 +3620,8 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
       if (object.streamTextures != null) {
         // video webcam textures
-        _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+        // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+        _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
 
         _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
       } else {
@@ -3713,7 +3806,8 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
 
     if (object.streamTextures != null) {
       // video/webcam tex
-      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
 
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else {
@@ -3940,7 +4034,8 @@ _manifest.default.operation.draws.sphere = function (object) {
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
 
     if (object.streamTextures != null) {
-      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
 
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else {
