@@ -3,7 +3,7 @@
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _video_texture_lava = require("./apps/video_texture_lava");
+var _fps_player_controller = require("./apps/fps_player_controller");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -27,16 +27,16 @@ window.webGLStart = () => {
   world.callReDraw(); // Make it global for dev - for easy console/debugger access
 
   window.App = App;
-  window.runThis = _video_texture_lava.runThis;
+  window.runThis = _fps_player_controller.runThis;
   setTimeout(() => {
-    (0, _video_texture_lava.runThis)(world);
+    (0, _fps_player_controller.runThis)(world);
   }, 1);
 };
 
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/video_texture_lava":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/fps_player_controller":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46,7 +46,7 @@ exports.runThis = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
+var CANNON = _interopRequireWildcard(require("cannon"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -54,66 +54,159 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/*
-  Nikola Lukic
-  webGl2GLmatrix2 api example
-*/
-
-/* globals App world VIDEO_TEXTURE ENUMERATORS */
-
 /**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
+ * @description Usage of MEBvhAnimation with switch system.
+ * Adding improved deleting procedure for scene object.
+ * @class MEBvhAnimation
+ * @arg filePath
+ * @arg options
  */
-
-/* globals world App world */
-let VT = matrixEngine.Engine.VT;
-
 var runThis = world => {
-  // eslint-disable-next-line no-unused-vars
-  _manifest.default.camera.SceneController = true;
-  let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+  // Camera
+  // App.camera.SceneController = true;
+  _manifest.default.camera.FirstPersonController = true;
+  _manifest.default.camera.speedAmp = 0.01;
+  matrixEngine.Events.camera.yPos = 2;
+
+  const createObjSequence = objName => {
+    function onLoadObj(meshes) {
+      for (let key in meshes) {
+        matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
+      }
+
+      var textuteImageSamplers2 = {
+        source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png", "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
+        mix_operation: "multiply" // ENUM : multiply , divide
+
+      };
+      setTimeout(function () {
+        var animArg = {
+          id: objName,
+          meshList: meshes,
+          // sumOfAniFrames: 61, No need if `animations` exist!
+          currentAni: 0,
+          // speed: 3, No need if `animations` exist!
+          // upgrade - optimal
+          animations: {
+            active: 'walk',
+            walk: {
+              from: 0,
+              to: 20,
+              speed: 3
+            } // walkPistol: {
+            //   from: 36,
+            //   to: 60,
+            //   speed: 3
+            // }
+
+          }
+        };
+        world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg); // Fix object orientation - this can be fixed also in blender.
+
+        matrixEngine.Events.camera.yaw = 180;
+        var playerUpdater = {
+          UPDATE: () => {
+            _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 2, matrixEngine.Events.camera.zPos);
+
+            _manifest.default.scene[objName].rotation.rotateY(matrixEngine.Events.camera.yaw + 180);
+
+            _manifest.default.scene[objName].rotation.rotateX(matrixEngine.Events.camera.pitch);
+
+            console.log('TEST  matrixEngine.Events.camera.pitch', matrixEngine.Events.camera.pitch);
+          }
+        };
+
+        _manifest.default.updateBeforeDraw.push(playerUpdater);
+
+        for (let key in _manifest.default.scene.player.meshList) {
+          _manifest.default.scene.player.meshList[key].setScale(1.35);
+        }
+      }, 1);
+    }
+
+    matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
+      id: objName,
+      // path: "res/bvh-skeletal-base/swat-guy/anims/swat-multi",
+      path: "res/bvh-skeletal-base/swat-guy/FPShooter-hands/FPShooter-hands",
+      from: 1,
+      to: 20
+    }), onLoadObj);
+  };
+
+  window.createObjSequence = createObjSequence; // canvas.addEventListener('mousedown', (ev) => {
+  //   matrixEngine.raycaster.checkingProcedure(ev);
+  // });
+  // addEventListener('ray.hit.event', function(e) {
+  //   // Still not work for obj...
+  //   console.info(e.detail.hitObject);
+  //   e.detail.hitObject.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[2];
+  //   e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
+  // });
+
+  createObjSequence('player'); // Some scene env
+
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply" // ENUM : multiply , divide ,
+    mix_operation: "multiply"
+  }; // Load Physics world!
 
+  let gravityVector = [0, 0, -9.82];
+  let physics = world.loadPhysics(gravityVector); // Add ground
+  // physics.addGround(App, world, tex);
+
+  var groundBody = new CANNON.Body({
+    mass: 0,
+    // mass == 0 makes the body static
+    position: new CANNON.Vec3(0, -15, -2)
+  });
+  var groundShape = new CANNON.Plane();
+  groundBody.addShape(groundShape);
+  physics.world.addBody(groundBody); // matrix engine visual
+
+  world.Add("squareTex", 1, "FLOOR_STATIC", tex);
+
+  _manifest.default.scene.FLOOR_STATIC.geometry.setScaleByX(20);
+
+  _manifest.default.scene.FLOOR_STATIC.geometry.setScaleByY(20);
+
+  _manifest.default.scene.FLOOR_STATIC.position.SetY(-2);
+
+  _manifest.default.scene.FLOOR_STATIC.position.SetZ(-15);
+
+  _manifest.default.scene.FLOOR_STATIC.rotation.rotx = 90; // world.Add("cubeLightTex", 1, "CUBE", tex);
+  // var b = new CANNON.Body({
+  //   mass: 5,
+  //   position: new CANNON.Vec3(0, -15, 2),
+  //   shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+  // });
+  // physics.world.addBody(b);
+  // // Physics
+  // App.scene.CUBE.physics.currentBody = b;
+  // App.scene.CUBE.physics.enabled = true;
+
+  const objGenerator = n => {
+    for (var j = 0; j < n; j++) {
+      setTimeout(() => {
+        world.Add("cubeLightTex", 1, "CUBE" + j, tex);
+        var b2 = new CANNON.Body({
+          mass: 1,
+          linearDamping: 0.01,
+          position: new CANNON.Vec3(1, -14.5, 15),
+          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+        });
+        physics.world.addBody(b2);
+        _manifest.default.scene['CUBE' + j].physics.currentBody = b2;
+        _manifest.default.scene['CUBE' + j].physics.enabled = true;
+      }, 1000 * j);
+    }
   };
-  world.Add("cubeLightTex", 2, "outsideBox", tex); // App.scene.outsideBox.geometry.setScaleByY(7)
 
-  _manifest.default.scene.outsideBox.position.x = -9;
-  _manifest.default.scene.outsideBox.position.z = -24; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
-
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(0, 0, 0);
-
-  _manifest.default.scene.outsideBox.streamTextures = new VT("res/video-texture/lava1.mkv");
-  world.Add("cubeLightTex", 2, "outsideBox", tex); // App.scene.outsideBox.geometry.setScaleByY(7)
-
-  _manifest.default.scene.outsideBox.position.x = 9;
-  _manifest.default.scene.outsideBox.position.z = -24; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
-
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 0, 0);
-
-  _manifest.default.scene.outsideBox.streamTextures = new VT("res/video-texture/lava1.mkv");
-  world.Add("cubeLightTex", 5, "outsideBox2", tex);
-  _manifest.default.scene.outsideBox2.position.x = 0;
-  _manifest.default.scene.outsideBox2.position.z = -24;
-  _manifest.default.scene.outsideBox2.rotation.rotationSpeed.y = 10;
-  _manifest.default.scene.outsideBox2.rotation.rotx = 45;
-  _manifest.default.scene.outsideBox2.streamTextures = new VT("res/video-texture/me.mkv");
-  _manifest.default.scene.outsideBox2.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox2.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
-  _manifest.default.scene.outsideBox2.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
-  setInterval(function () {
-    _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.right_top.x += 0.01;
-    _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.left_bottom.x += 0.01;
-    _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.left_top.x += 0.01;
-    _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.right_bottom.x += 0.01;
-  }, 20);
+  objGenerator(100);
 };
 
 exports.runThis = runThis;
 
-},{"../index.js":4,"../program/manifest":35}],3:[function(require,module,exports){
+},{"../program/manifest":35,"cannon":32}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3502,7 +3595,7 @@ _manifest.default.operation.draws.drawObj = function (object) {
           object.animation.currentAni++;
           object.animation.currentDraws = 0;
 
-          if (object.animation.currentAni > object.animation.anims[object.animation.anims.active].to) {
+          if (object.animation.currentAni > object.animation.anims[object.animation.anims.active].to - 1) {
             object.animation.currentAni = object.animation.anims[object.animation.anims.active].from;
           }
         }

@@ -17,8 +17,7 @@ export var runThis = (world) => {
   App.camera.FirstPersonController = true;
   App.camera.speedAmp = 0.01
 
-  matrixEngine.Events.camera.yPos = 15;
-
+  matrixEngine.Events.camera.yPos = 2;
 
   const createObjSequence = (objName) => {
 
@@ -45,17 +44,17 @@ export var runThis = (world) => {
           // speed: 3, No need if `animations` exist!
           // upgrade - optimal
           animations: {
-            active: 'walkPistol',
+            active: 'walk',
             walk: {
               from: 0,
-              to: 35,
+              to: 20,
               speed: 3
             },
-            walkPistol: {
-              from: 36,
-              to: 60,
-              speed: 3
-            }
+            // walkPistol: {
+            //   from: 36,
+            //   to: 60,
+            //   speed: 3
+            // }
           }
         };
         world.Add("obj", 1, objName,
@@ -64,21 +63,25 @@ export var runThis = (world) => {
           animArg
         );
 
-        // App.scene[objName].position.y = -1;
-        // App.scene[objName].position.z = -4;
-
-        matrixEngine.Events.camera.yaw = 180
+        // Fix object orientation - this can be fixed also in blender.
+        matrixEngine.Events.camera.yaw = 180;
 
         var playerUpdater = {
           UPDATE: () => {
             App.scene[objName].position.setPosition(
               matrixEngine.Events.camera.xPos,
-              matrixEngine.Events.camera.yPos - 1.3,
+              matrixEngine.Events.camera.yPos - 2,
               matrixEngine.Events.camera.zPos
             )
 
             App.scene[objName].rotation.rotateY(
             matrixEngine.Events.camera.yaw + 180)
+
+            App.scene[objName].rotation.rotateX(
+              matrixEngine.Events.camera.pitch)
+
+              console.log('TEST  matrixEngine.Events.camera.pitch',
+              matrixEngine.Events.camera.pitch);
 
           }
         };
@@ -86,7 +89,7 @@ export var runThis = (world) => {
 
 
         for ( let key in App.scene.player.meshList) {
-          App.scene.player.meshList[key].setScale(0.7)
+          App.scene.player.meshList[key].setScale(1.35);
         }
 
 
@@ -97,9 +100,10 @@ export var runThis = (world) => {
       matrixEngine.objLoader.makeObjSeqArg(
         {
           id: objName,
-          path: "res/bvh-skeletal-base/swat-guy/anims/swat-multi",
+          // path: "res/bvh-skeletal-base/swat-guy/anims/swat-multi",
+          path: "res/bvh-skeletal-base/swat-guy/FPShooter-hands/FPShooter-hands",
           from: 1,
-          to: 61
+          to: 20
         }),
       onLoadObj
     );
@@ -142,8 +146,8 @@ export var runThis = (world) => {
   physics.world.addBody(groundBody);
   // matrix engine visual
   world.Add("squareTex", 1, "FLOOR_STATIC", tex);
-  App.scene.FLOOR_STATIC.geometry.setScaleByX(200);
-  App.scene.FLOOR_STATIC.geometry.setScaleByY(200);
+  App.scene.FLOOR_STATIC.geometry.setScaleByX(20);
+  App.scene.FLOOR_STATIC.geometry.setScaleByY(20);
   App.scene.FLOOR_STATIC.position.SetY(-2);
   App.scene.FLOOR_STATIC.position.SetZ(-15);
   App.scene.FLOOR_STATIC.rotation.rotx = 90;

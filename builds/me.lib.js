@@ -299,6 +299,7 @@ exports.initShaders = initShaders;
 exports.SET_STREAM = SET_STREAM;
 exports.ACCESS_CAMERA = ACCESS_CAMERA;
 exports.VIDEO_TEXTURE = VIDEO_TEXTURE;
+exports.VT = VT;
 exports.Vjs3 = Vjs3;
 exports.anyCanvas = anyCanvas;
 exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateVShaderSimpleDirectionLight = exports.RegenerateShaderSimpleDirectionLight = exports.RegenerateCubeMapShader = exports.RegenerateShader = exports.activateNet = exports.net = exports.looper = exports.EVENTS_INSTANCE = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
@@ -1003,7 +1004,7 @@ function ACCESS_CAMERA(htmlElement) {
 
 }
 
-function VIDEO_TEXTURE(path_) {
+function VIDEO_TEXTURE(p) {
   var ROOT = this,
       DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
   ROOT.video = document.getElementById('webcam_beta');
@@ -1024,7 +1025,7 @@ function VIDEO_TEXTURE(path_) {
   };
 
   ROOT.video.addEventListener('loadeddata', ROOT.video.READY, false);
-  ROOT.video.src = 'res/videos/' + path_;
+  ROOT.video.src = 'res/videos/' + p;
 
   ROOT.UPDATE = function () {
     if (ROOT.video.readyState === ROOT.video.HAVE_ENOUGH_DATA) {
@@ -1033,6 +1034,86 @@ function VIDEO_TEXTURE(path_) {
       ROOT.videoImageContext.fillStyle = 'black';
       ROOT.videoImageContext.fillText(' Visual-JS game engine -webGL 2 part', 0, 85);
       ROOT.videoImageContext.fillText('Video texture example ', 20, 50);
+    }
+  };
+}
+
+function VT(p, name, options) {
+  if (typeof name === 'undefined') name = 'vtex' + (0, _utility.randomIntFromTo)(1, 999999);
+
+  if (typeof options === 'undefined') {
+    options = {
+      mixWithCanvas2d: false
+    };
+  }
+
+  function fixAutoPlay() {
+    console.log("Autoplay fixing...? ", ROOT.video);
+    window.addEventListener('click', FirstClickAutoPlay, {
+      passive: false
+    });
+  }
+
+  function FirstClickAutoPlay() {
+    var t = ROOT.video.play();
+    t.then(() => {
+      console.info("Autoplay fixed.");
+      window.removeEventListener('click', FirstClickAutoPlay);
+    }).catch(() => {
+      console.warn("Autoplay error.");
+    });
+  }
+
+  var ROOT = this,
+      DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
+  ROOT.video = document.createElement('video');
+  DIV_CONTENT_STREAMS.appendChild(ROOT.video); // ROOT.name = 'vtex-' + name;
+
+  ROOT.video.READY = function (e) {
+    ROOT.videoImage = document.createElement('canvas');
+    ROOT.videoImage.id = 'vtex-' + name;
+    ROOT.videoImage.setAttribute('width', '512px');
+    ROOT.videoImage.setAttribute('height', '512px');
+    ROOT.video.mute = true;
+    ROOT.video.autoplay = true;
+    ROOT.video.loop = true;
+    DIV_CONTENT_STREAMS.appendChild(ROOT.videoImage);
+    ROOT.options = options;
+
+    if (options.mixWithCanvas2d == true) {
+      ROOT.videoImageContext = ROOT.videoImage.getContext('2d');
+      ROOT.videoImageContext.fillStyle = '#00003F';
+      ROOT.videoImageContext.fillRect(0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
+      ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.videoImage);
+    } else {
+      ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.video);
+    }
+
+    try {
+      var testAutoplay = ROOT.video.play();
+      testAutoplay.catch(() => {
+        fixAutoPlay();
+      });
+    } catch (err) {}
+
+    _manifest.default.updateBeforeDraw.push(ROOT);
+
+    console.info("Video 2dcanvas texture created.", ROOT.video);
+  };
+
+  ROOT.video.addEventListener('loadeddata', ROOT.video.READY, false);
+  ROOT.video.src = p;
+  ROOT.video.load();
+
+  ROOT.UPDATE = function () {
+    if (ROOT.options.mixWithCanvas2d == false) return;
+
+    if (ROOT.video.readyState === ROOT.video.HAVE_ENOUGH_DATA) {
+      ROOT.videoImageContext.drawImage(ROOT.video, 0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
+      ROOT.videoImageContext.font = '30px Georgia';
+      ROOT.videoImageContext.fillStyle = 'black';
+      ROOT.videoImageContext.fillText('Matrix-Engine [1.8.10] ', 0, 85);
+      ROOT.videoImageContext.fillText('Video texture', 20, 50);
     }
   };
 }
@@ -2951,7 +3032,8 @@ _manifest.default.operation.draws.cube = function (object) {
 
     if (object.streamTextures != null) {
       // video/webcam tex
-      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
 
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else {
@@ -3326,7 +3408,7 @@ _manifest.default.operation.draws.drawObj = function (object) {
           object.animation.currentAni++;
           object.animation.currentDraws = 0;
 
-          if (object.animation.currentAni > object.animation.anims[object.animation.anims.active].to) {
+          if (object.animation.currentAni > object.animation.anims[object.animation.anims.active].to - 1) {
             object.animation.currentAni = object.animation.anims[object.animation.anims.active].from;
           }
         }
@@ -3444,7 +3526,8 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
       if (object.streamTextures != null) {
         // video webcam textures
-        _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+        // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+        _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
 
         _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
       } else {
@@ -3629,7 +3712,8 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
 
     if (object.streamTextures != null) {
       // video/webcam tex
-      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
 
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else {
@@ -3856,7 +3940,8 @@ _manifest.default.operation.draws.sphere = function (object) {
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
 
     if (object.streamTextures != null) {
-      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
 
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else {

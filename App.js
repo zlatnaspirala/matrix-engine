@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/video_texture_lava';
+import {runThis} from './apps/fps_player_controller';
 
 var world;
 var App = matrixEngine.App;

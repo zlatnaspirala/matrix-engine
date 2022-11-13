@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.8.8`
+### Name: `MATRIX-ENGINE` `1.8.11`
 
 #### Logo
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/res/icons/ms-icon.png" width="128" height="128" />
@@ -12,7 +12,7 @@
 #### - [Integrated raycast (hit trigger detect), bvh animation]	✔	
 #### - [Basic Physics implementation based on cannon.js]	✔	
 #### - [FirstPersonController/SceneController Drag and navigation scene]	✔	
-#### - [Shadows vs lights (GLSL)]	✔	
+#### - [Basic's Shadows vs lights (GLSL)]	✔	
 
 ### Description ℹ
   This is small but inspiring project.
@@ -20,7 +20,7 @@
   easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
   (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in 
    opengles 1.1. Also can be downgraded to openGLES 1.1. webGL Lightweight library based on glmatrix engine.
-  For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js.
+  For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js. I use free software Blender 2.90.1 for 3d Object mesh works. MatrixEngine is Blender frendly orientend lib. Also mixamo.com is great service used for creating my assets.
 
 ### Limitation ⚠
  - Basic implementation for physics (Cube, Sphere)
@@ -159,7 +159,7 @@ Take a look at query-build.html
 - Adding multi (compose) textures
 - Adding square texture
 - Blending
-- Audion amnipulation
+- Audion manipulation
 - Camera texture (stream texture)
 - Cube
 - Cube Geometry
@@ -167,7 +167,7 @@ Take a look at query-build.html
 - Cube light dynamic
 - Custom texture
 - First Person controller
-- Load obj files
+- Load obj files - UV maps
 - Object animation -morh sequence
 - Object animation mesh indices calculation
 - JS1Kilo examples implementation
@@ -207,6 +207,28 @@ Note: One of params `FirstPersonController` or `SceneController` must be `false`
     sceneControllerEdgeCameraYawRate: 3,
     sceneControllerWASDKeysAmp: 0.1
   },
+```
+
+Range of `matrixEngine.Events.camera.pitch` in ForstPersonController is (-33 to 33).
+
+To get access for camera use `matrixEngine.Events.camera`.
+Typically looks:
+```js
+{
+  "roll": 0,
+  "rollRate": 0,
+  "rallAmp": 0.05,
+  "pitch": 0.24500000000000632,
+  "pitchRate": 0,
+  "yaw": -6945.400000016527,
+  "yawRate": 0,
+  "xPos": 5.1753983300242155,
+  "yPos": 2,
+  "zPos": -21.90917813969003,
+  "speed": 0,
+  "yawAmp": 0.05,
+  "pitchAmp": 0.007
+}
 ```
 
 ### Light And Shadows [1.7.6]
@@ -527,6 +549,7 @@ world.cubeMapTextures([
 
 ### First person controller:
 
+If you activate this flag you get fly/free camera controller by default.
 ```js
   // In one line activate also deactivate.
   App.camera.FirstPersonController = true;
@@ -605,7 +628,7 @@ For more details dee this example script: `load_obj_file.js`
 
 ### Video texture:
 
-New way: There is not prefix for path any more. Fixed autoplay on `AFTRE FIRST CLICK`. Multi textures loading. Video texture corespond with direction & ambient light. Important 
+New way: There is no prefix for path any more. Fixed autoplay on `AFTRE FIRST CLICK`. Multi textures loading. Video texture corespond with direction & ambient light. Important 
 it is direct pass from video to webgl textures. No canvad2d context.
 NOT WORKING with shadows for now.
 ```js
@@ -712,7 +735,7 @@ For now engine use objLoader to load all morphs.
     );
 ```
 
-in onLoadObj : 
+In `onLoadObj` callback function:
 ```js
   var animArg = {
     id: objName,
@@ -736,6 +759,14 @@ in onLoadObj :
     }
   };
 ```
+
+### FirstPersonShooter examples [WIP]
+ - Just like in eu4 shooter we dont need whole character mesh for FPSHooter view. I cut off no hands vertices in blender to make optimised flow.
+
+Take a look at the `apps\fps_player_controller.js` example.
+
+ WIP calculating for fixing FPS camera view.
+
 
 ### Texture editor (runtime):
 
