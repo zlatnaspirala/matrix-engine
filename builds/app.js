@@ -48,6 +48,8 @@ var _manifest = _interopRequireDefault(require("../program/manifest"));
 
 var CANNON = _interopRequireWildcard(require("cannon"));
 
+var _utility = require("../lib/utility");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -83,10 +85,7 @@ var runThis = world => {
         var animArg = {
           id: objName,
           meshList: meshes,
-          // sumOfAniFrames: 61, No need if `animations` exist!
           currentAni: 0,
-          // speed: 3, No need if `animations` exist!
-          // upgrade - optimal
           animations: {
             active: 'walk',
             walk: {
@@ -103,23 +102,66 @@ var runThis = world => {
         };
         world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg); // Fix object orientation - this can be fixed also in blender.
 
-        matrixEngine.Events.camera.yaw = 180;
+        matrixEngine.Events.camera.yaw = 180; // TARGET 
+
+        world.Add("cubeLightTex", 0.2, 'FPSTarget', textuteImageSamplers2);
+
+        _manifest.default.scene.FPSTarget.geometry.setScale(0.1);
+
+        var options = {
+          squareShema: [2, 2],
+          pixels: new Uint8Array(2 * 2 * 4),
+          style: {
+            type: 'chessboard',
+            color1: 0,
+            color2: 255
+          }
+        };
+
+        _manifest.default.scene.FPSTarget.textures.push(_manifest.default.scene.FPSTarget.createPixelsTex(options));
+
         var playerUpdater = {
           UPDATE: () => {
-            _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 2, matrixEngine.Events.camera.zPos);
-
             _manifest.default.scene[objName].rotation.rotateY(matrixEngine.Events.camera.yaw + 180);
 
-            _manifest.default.scene[objName].rotation.rotateX(matrixEngine.Events.camera.pitch);
+            var TEST;
+            var limit = 2;
 
-            console.log('TEST  matrixEngine.Events.camera.pitch', matrixEngine.Events.camera.pitch);
+            if (matrixEngine.Events.camera.pitch < limit && matrixEngine.Events.camera.pitch > -limit) {
+              TEST = matrixEngine.Events.camera.pitch * 2;
+            } else if (matrixEngine.Events.camera.pitch > limit) {
+              TEST = limit * 2;
+            } else if (matrixEngine.Events.camera.pitch < -(limit + 2)) {
+              TEST = -(limit + 2) * 2;
+            }
+
+            _manifest.default.scene[objName].rotation.rotateX(-TEST);
+
+            var TEST2 = matrixEngine.Events.camera.pitch;
+            if (TEST2 > 4) TEST2 = 4;
+
+            _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 0.2 + TEST2 / 50, matrixEngine.Events.camera.zPos); // App.scene.FPSTarget.position.setPosition(
+            //   matrixEngine.Events.camera.xPos,
+            //   matrixEngine.Events.camera.yPos -0.2 + TEST2 / 50,
+            //   matrixEngine.Events.camera.zPos + 2
+            // )
+            // TEST 
+
+
+            var getPos = (0, _utility.ORBIT_FROM_ARRAY)(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.zPos, matrixEngine.Events.camera.yaw + 180, [0, 1, -1], [1, 2] // Means that Y,Z coords are orbiting
+            );
+            console.log('TEST  matrixEngine.Events.camera.pitch', getPos);
+
+            _manifest.default.scene.FPSTarget.position.setPosition(getPos[0], getPos[1], getPos[2]);
+
+            _manifest.default.scene.FPSTarget.rotation.rotateY(matrixEngine.Events.camera.yaw + 180);
           }
         };
 
         _manifest.default.updateBeforeDraw.push(playerUpdater);
 
         for (let key in _manifest.default.scene.player.meshList) {
-          _manifest.default.scene.player.meshList[key].setScale(1.35);
+          _manifest.default.scene.player.meshList[key].setScale(1.85);
         }
       }, 1);
     }
@@ -206,7 +248,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../program/manifest":35,"cannon":32}],3:[function(require,module,exports){
+},{"../lib/utility":26,"../program/manifest":35,"cannon":32}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

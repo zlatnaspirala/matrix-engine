@@ -10,6 +10,8 @@
 import App from '../program/manifest';
 import * as CANNON from 'cannon';
 
+import {ORBIT_FROM_ARRAY, OSCILLATOR} from '../lib/utility';
+
 export var runThis = (world) => {
 
   // Camera
@@ -39,10 +41,7 @@ export var runThis = (world) => {
         var animArg = {
           id: objName,
           meshList: meshes,
-          // sumOfAniFrames: 61, No need if `animations` exist!
           currentAni: 0,
-          // speed: 3, No need if `animations` exist!
-          // upgrade - optimal
           animations: {
             active: 'walk',
             walk: {
@@ -66,22 +65,79 @@ export var runThis = (world) => {
         // Fix object orientation - this can be fixed also in blender.
         matrixEngine.Events.camera.yaw = 180;
 
+        // TARGET 
+        world.Add("cubeLightTex", 0.2, 'FPSTarget', textuteImageSamplers2);
+        App.scene.FPSTarget.geometry.setScale(0.1);
+        var options = {
+          squareShema: [2,2],
+          pixels: new Uint8Array(2 * 2 * 4),
+          style: {
+            type: 'chessboard',
+            color1: 0,
+            color2: 255
+          }
+        };
+      
+        App.scene.FPSTarget.textures.push(
+          App.scene.FPSTarget.createPixelsTex(options)
+        );
+
         var playerUpdater = {
           UPDATE: () => {
-            App.scene[objName].position.setPosition(
-              matrixEngine.Events.camera.xPos,
-              matrixEngine.Events.camera.yPos - 2,
-              matrixEngine.Events.camera.zPos
-            )
+          
 
             App.scene[objName].rotation.rotateY(
             matrixEngine.Events.camera.yaw + 180)
 
-            App.scene[objName].rotation.rotateX(
-              matrixEngine.Events.camera.pitch)
+            var TEST;
+            var limit = 2;
+             if (matrixEngine.Events.camera.pitch < limit &&
+                 matrixEngine.Events.camera.pitch > -limit) {
+                 TEST =  matrixEngine.Events.camera.pitch * 2;
+            } else if (matrixEngine.Events.camera.pitch > limit) {
+              TEST = limit * 2;
+            } else if (matrixEngine.Events.camera.pitch < -(limit + 2)) {
+              TEST = -(limit + 2) * 2;
+            }
+            
 
-              console.log('TEST  matrixEngine.Events.camera.pitch',
-              matrixEngine.Events.camera.pitch);
+            App.scene[objName].rotation.rotateX(-TEST);
+           
+              var TEST2 =  matrixEngine.Events.camera.pitch;
+              if (TEST2 > 4) TEST2 = 4;
+              App.scene[objName].position.setPosition(
+                matrixEngine.Events.camera.xPos,
+                matrixEngine.Events.camera.yPos -0.2 + TEST2 / 50,
+                matrixEngine.Events.camera.zPos 
+              )
+
+              // App.scene.FPSTarget.position.setPosition(
+              //   matrixEngine.Events.camera.xPos,
+              //   matrixEngine.Events.camera.yPos -0.2 + TEST2 / 50,
+              //   matrixEngine.Events.camera.zPos + 2
+              // )
+
+              // TEST 
+              var getPos = ORBIT_FROM_ARRAY(
+                matrixEngine.Events.camera.xPos,
+                matrixEngine.Events.camera.zPos,
+                matrixEngine.Events.camera.yaw + 180,
+                [0, 1, -1],
+                [1, 2] // Means that Y,Z coords are orbiting
+                );
+
+                console.log('TEST  matrixEngine.Events.camera.pitch',
+                getPos);
+
+                
+                App.scene.FPSTarget.position.setPosition(
+                  getPos[0],
+                  getPos[1],
+                  getPos[2]
+                )
+
+              App.scene.FPSTarget.rotation.rotateY(
+                matrixEngine.Events.camera.yaw + 180)
 
           }
         };
@@ -89,7 +145,7 @@ export var runThis = (world) => {
 
 
         for ( let key in App.scene.player.meshList) {
-          App.scene.player.meshList[key].setScale(1.35);
+          App.scene.player.meshList[key].setScale(1.85);
         }
 
 
