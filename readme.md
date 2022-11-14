@@ -767,6 +767,10 @@ Take a look at the `apps\fps_player_controller.js` example.
 
  WIP calculating for fixing FPS camera view.
 
+ [1.8.11] New 3dObject property `isHUD`.
+ If you setup this to the `true` value object will escape world rotation/translation.
+ Only local translation is active. This is good for HUD Menu in 3d space.
+
 
 ### Texture editor (runtime):
 

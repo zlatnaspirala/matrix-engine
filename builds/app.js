@@ -69,6 +69,19 @@ var runThis = world => {
   _manifest.default.camera.FirstPersonController = true;
   _manifest.default.camera.speedAmp = 0.01;
   matrixEngine.Events.camera.yPos = 2;
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+  window.addEventListener('ray.hit.event', ev => {
+    console.log("You shoot the object! Nice!", ev);
+    /**
+     * Physics force apply
+     */
+
+    if (ev.detail.hitObject.physics.enabled == true) {
+      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+    }
+  });
 
   const createObjSequence = objName => {
     function onLoadObj(meshes) {
@@ -104,7 +117,19 @@ var runThis = world => {
 
         matrixEngine.Events.camera.yaw = 180; // TARGET 
 
-        world.Add("cubeLightTex", 0.2, 'FPSTarget', textuteImageSamplers2);
+        var tex = {
+          source: ["res/bvh-skeletal-base/swat-guy/target.png"],
+          mix_operation: "multiply" // ENUM : multiply , divide
+
+        };
+        world.Add("cubeLightTex", 0.2, 'FPSTarget', tex);
+
+        _manifest.default.scene.FPSTarget.position.setPosition(0, 0, -5);
+
+        _manifest.default.scene.FPSTarget.glBlend.blendEnabled = true;
+        _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+        _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+        _manifest.default.scene.FPSTarget.isHUD = true;
 
         _manifest.default.scene.FPSTarget.geometry.setScale(0.1);
 
@@ -116,9 +141,9 @@ var runThis = world => {
             color1: 0,
             color2: 255
           }
-        };
-
-        _manifest.default.scene.FPSTarget.textures.push(_manifest.default.scene.FPSTarget.createPixelsTex(options));
+        }; // App.scene.FPSTarget.textures.push(
+        //   App.scene.FPSTarget.createPixelsTex(options)
+        // );
 
         var playerUpdater = {
           UPDATE: () => {
@@ -140,21 +165,7 @@ var runThis = world => {
             var TEST2 = matrixEngine.Events.camera.pitch;
             if (TEST2 > 4) TEST2 = 4;
 
-            _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 0.2 + TEST2 / 50, matrixEngine.Events.camera.zPos); // App.scene.FPSTarget.position.setPosition(
-            //   matrixEngine.Events.camera.xPos,
-            //   matrixEngine.Events.camera.yPos -0.2 + TEST2 / 50,
-            //   matrixEngine.Events.camera.zPos + 2
-            // )
-            // TEST 
-
-
-            var getPos = (0, _utility.ORBIT_FROM_ARRAY)(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.zPos, matrixEngine.Events.camera.yaw + 180, [0, 1, -1], [1, 2] // Means that Y,Z coords are orbiting
-            );
-            console.log('TEST  matrixEngine.Events.camera.pitch', getPos);
-
-            _manifest.default.scene.FPSTarget.position.setPosition(getPos[0], getPos[1], getPos[2]);
-
-            _manifest.default.scene.FPSTarget.rotation.rotateY(matrixEngine.Events.camera.yaw + 180);
+            _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 0.2 + TEST2 / 50, matrixEngine.Events.camera.zPos);
           }
         };
 
@@ -3141,17 +3152,23 @@ _manifest.default.operation.draws.cube = function (object) {
   mat4.identity(object.mvMatrix);
   this.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
 
-  if (_manifest.default.camera.FirstPersonController == true) {
-    _events.camera.setCamera(object);
-  } else if (_manifest.default.camera.SceneController == true) {
-    _events.camera.setSceneCamera(object);
-  }
+  if (object.isHUD === true) {
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
+  } else {
+    if (_manifest.default.camera.FirstPersonController == true) {
+      _events.camera.setCamera(object);
+    } else if (_manifest.default.camera.SceneController == true) {
+      _events.camera.setSceneCamera(object);
+    }
 
-  mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); // V
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  } // V
+
 
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
