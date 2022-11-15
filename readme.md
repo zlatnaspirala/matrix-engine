@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.8.11`
+### Name: `MATRIX-ENGINE` `1.8.12`
 
 #### Logo
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/res/icons/ms-icon.png" width="128" height="128" />
@@ -656,11 +656,11 @@ App.scene.TV.streamTextures = new ACCESS_CAMERA('webcam_beta');
  Its load primitives for bvh skeletal. MatrixBVHCharacter is proccess
  where we load pre defined skelatal obj parts(head, neck, legs...) .
 
-### @Note Human character failed for noe but func works.
+### @Note Human character failed for now but func works.
 Nice for primitive obj mesh bur rig must have nice description of 
 position/rotation. In maximo skeletal bones simple not fit.
 If you pripare bones you can get nice bvh obj adaptation for animations.
-
+mocap set of assets looks better for this operation.
 
 #### Example Code:
 ```js
@@ -763,8 +763,29 @@ In `onLoadObj` callback function:
 ### FirstPersonShooter examples [WIP]
  - Just like in eu4 shooter we dont need whole character mesh for FPSHooter view. I cut off no hands vertices in blender to make optimised flow.
 
+Feature [1.8.12] App.events Access.
 Take a look at the `apps\fps_player_controller.js` example.
 
+```js
+
+  App.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
+    // From [1.8.12]
+    // checkingProcedure gets secound optimal argument
+    // for custom ray origin target.
+    // mouse
+    console.log(mouse.BUTTON)
+    if(mouse.BUTTON_PRESSED == 'RIGHT') {
+      // Zoom
+    } else {
+      // This call represent `SHOOT` Action.
+      // And it is center of screen
+      matrixEngine.raycaster.checkingProcedure(ev, {
+        clientX: ev.target.width / 2,
+        clientY: ev.target.height / 2
+      });
+    }
+  };
+```
  WIP calculating for fixing FPS camera view.
 
  [1.8.11] New 3dObject property `isHUD`.
@@ -837,6 +858,9 @@ Video and webcam works at:
 https://maximumroulette.com/webgl2/examples.html
 
 ### Changes:
+
+#### From [1.8.12]
+Draw scene list swap items options must be done!
 
 #### From [1.8.0]
 Added watchify.

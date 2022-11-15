@@ -57,29 +57,65 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * @description Usage of MEBvhAnimation with switch system.
- * Adding improved deleting procedure for scene object.
- * @class MEBvhAnimation
+ * @description Usage of raycaster, ObjectLoader,
+ * FirstPersonController...
+ * @class First Person Shooter example
  * @arg filePath
  * @arg options
  */
 var runThis = world => {
   // Camera
-  // App.camera.SceneController = true;
+  canvas.style.cursor = 'none';
   _manifest.default.camera.FirstPersonController = true;
   _manifest.default.camera.speedAmp = 0.01;
   matrixEngine.Events.camera.yPos = 2;
-  canvas.addEventListener('mousedown', ev => {
-    matrixEngine.raycaster.checkingProcedure(ev);
+  window.addEventListener("contextmenu", e => {
+    e.preventDefault();
   });
+
+  _manifest.default.events.CALCULATE_TOUCH_UP_OR_MOUSE_UP = () => {
+    _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+
+    _manifest.default.scene.FPSTarget.geometry.setScale(0.1);
+  };
+
+  matrixEngine.Events.SYS.MOUSE.ON_RIGHT_BTN_PRESSED = e => {
+    _manifest.default.scene.FPSTarget.geometry.setScale(0.6);
+
+    _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+    _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+  };
+
+  _manifest.default.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
+    // From [1.8.12]
+    // checkingProcedure gets secound optimal argument
+    // for custom ray origin target.
+    // mouse
+    console.log(mouse.BUTTON);
+
+    if (mouse.BUTTON_PRESSED == 'RIGHT') {// Zoom
+    } else {
+      // This call represent `SHOOT` Action.
+      // And it is center of screen
+      matrixEngine.raycaster.checkingProcedure(ev, {
+        clientX: ev.target.width / 2,
+        clientY: ev.target.height / 2
+      });
+    }
+  }; // BAD
+  // canvas.addEventListener('mousedown', (ev) => {});
+
+
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev);
     /**
-     * Physics force apply
+     * Physics force apply also change ambienty light.
      */
 
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+      ev.detail.hitObject.LightsData.ambientLight.set((0, _utility.randomFloatFromTo)(0, 2), (0, _utility.randomFloatFromTo)(0, 2), (0, _utility.randomFloatFromTo)(0, 2));
     }
   });
 
@@ -105,46 +141,12 @@ var runThis = world => {
               from: 0,
               to: 20,
               speed: 3
-            } // walkPistol: {
-            //   from: 36,
-            //   to: 60,
-            //   speed: 3
-            // }
-
+            }
           }
         };
         world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg); // Fix object orientation - this can be fixed also in blender.
 
-        matrixEngine.Events.camera.yaw = 180; // TARGET 
-
-        var tex = {
-          source: ["res/bvh-skeletal-base/swat-guy/target.png"],
-          mix_operation: "multiply" // ENUM : multiply , divide
-
-        };
-        world.Add("cubeLightTex", 0.2, 'FPSTarget', tex);
-
-        _manifest.default.scene.FPSTarget.position.setPosition(0, 0, -5);
-
-        _manifest.default.scene.FPSTarget.glBlend.blendEnabled = true;
-        _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-        _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-        _manifest.default.scene.FPSTarget.isHUD = true;
-
-        _manifest.default.scene.FPSTarget.geometry.setScale(0.1);
-
-        var options = {
-          squareShema: [2, 2],
-          pixels: new Uint8Array(2 * 2 * 4),
-          style: {
-            type: 'chessboard',
-            color1: 0,
-            color2: 255
-          }
-        }; // App.scene.FPSTarget.textures.push(
-        //   App.scene.FPSTarget.createPixelsTex(options)
-        // );
-
+        matrixEngine.Events.camera.yaw = 180;
         var playerUpdater = {
           UPDATE: () => {
             _manifest.default.scene[objName].rotation.rotateY(matrixEngine.Events.camera.yaw + 180);
@@ -165,7 +167,7 @@ var runThis = world => {
             var TEST2 = matrixEngine.Events.camera.pitch;
             if (TEST2 > 4) TEST2 = 4;
 
-            _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 0.2 + TEST2 / 50, matrixEngine.Events.camera.zPos);
+            _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 0.3 + TEST2 / 50, matrixEngine.Events.camera.zPos);
           }
         };
 
@@ -173,7 +175,24 @@ var runThis = world => {
 
         for (let key in _manifest.default.scene.player.meshList) {
           _manifest.default.scene.player.meshList[key].setScale(1.85);
-        }
+        } // TARGET 
+
+
+        var texTarget = {
+          source: ["res/bvh-skeletal-base/swat-guy/target.png"],
+          mix_operation: "multiply"
+        };
+        world.Add("cubeLightTex", 0.25, 'FPSTarget', texTarget);
+
+        _manifest.default.scene.FPSTarget.position.setPosition(0, 0, -4);
+
+        _manifest.default.scene.FPSTarget.glBlend.blendEnabled = true;
+        _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+        _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+        _manifest.default.scene.FPSTarget.isHUD = true;
+
+        _manifest.default.scene.FPSTarget.geometry.setScale(0.1); // swap(6,22, matrixEngine.matrixWorld.world.contentList)
+
       }, 1);
     }
 
@@ -185,57 +204,6 @@ var runThis = world => {
       to: 20
     }), onLoadObj);
   };
-
-  window.createObjSequence = createObjSequence; // canvas.addEventListener('mousedown', (ev) => {
-  //   matrixEngine.raycaster.checkingProcedure(ev);
-  // });
-  // addEventListener('ray.hit.event', function(e) {
-  //   // Still not work for obj...
-  //   console.info(e.detail.hitObject);
-  //   e.detail.hitObject.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[2];
-  //   e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
-  // });
-
-  createObjSequence('player'); // Some scene env
-
-  var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
-  }; // Load Physics world!
-
-  let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground
-  // physics.addGround(App, world, tex);
-
-  var groundBody = new CANNON.Body({
-    mass: 0,
-    // mass == 0 makes the body static
-    position: new CANNON.Vec3(0, -15, -2)
-  });
-  var groundShape = new CANNON.Plane();
-  groundBody.addShape(groundShape);
-  physics.world.addBody(groundBody); // matrix engine visual
-
-  world.Add("squareTex", 1, "FLOOR_STATIC", tex);
-
-  _manifest.default.scene.FLOOR_STATIC.geometry.setScaleByX(20);
-
-  _manifest.default.scene.FLOOR_STATIC.geometry.setScaleByY(20);
-
-  _manifest.default.scene.FLOOR_STATIC.position.SetY(-2);
-
-  _manifest.default.scene.FLOOR_STATIC.position.SetZ(-15);
-
-  _manifest.default.scene.FLOOR_STATIC.rotation.rotx = 90; // world.Add("cubeLightTex", 1, "CUBE", tex);
-  // var b = new CANNON.Body({
-  //   mass: 5,
-  //   position: new CANNON.Vec3(0, -15, 2),
-  //   shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-  // });
-  // physics.world.addBody(b);
-  // // Physics
-  // App.scene.CUBE.physics.currentBody = b;
-  // App.scene.CUBE.physics.enabled = true;
 
   const objGenerator = n => {
     for (var j = 0; j < n; j++) {
@@ -252,9 +220,43 @@ var runThis = world => {
         _manifest.default.scene['CUBE' + j].physics.enabled = true;
       }, 1000 * j);
     }
+
+    setTimeout(() => {
+      swap(3, 17, matrixEngine.matrixWorld.world.contentList);
+    }, 1000 * (n + 2));
   };
 
-  objGenerator(100);
+  objGenerator(15);
+  createObjSequence('player'); // Some scene env
+
+  var tex = {
+    source: ["res/images/complex_texture_1/diffuse.png"],
+    mix_operation: "multiply"
+  }; // Load Physics world.
+
+  let gravityVector = [0, 0, -9.82];
+  let physics = world.loadPhysics(gravityVector); // Add ground
+
+  var groundBody = new CANNON.Body({
+    mass: 0,
+    // mass == 0 makes the body static
+    position: new CANNON.Vec3(0, -15, -2)
+  });
+  var groundShape = new CANNON.Plane();
+  groundBody.addShape(groundShape);
+  physics.world.addBody(groundBody); // Matrix engine visual
+
+  world.Add("squareTex", 1, "FLOOR_STATIC", tex);
+
+  _manifest.default.scene.FLOOR_STATIC.geometry.setScaleByX(20);
+
+  _manifest.default.scene.FLOOR_STATIC.geometry.setScaleByY(20);
+
+  _manifest.default.scene.FLOOR_STATIC.position.SetY(-2);
+
+  _manifest.default.scene.FLOOR_STATIC.position.SetZ(-15);
+
+  _manifest.default.scene.FLOOR_STATIC.rotation.rotx = 90;
 };
 
 exports.runThis = runThis;
@@ -542,7 +544,7 @@ exports.VIDEO_TEXTURE = VIDEO_TEXTURE;
 exports.VT = VT;
 exports.Vjs3 = Vjs3;
 exports.anyCanvas = anyCanvas;
-exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateVShaderSimpleDirectionLight = exports.RegenerateShaderSimpleDirectionLight = exports.RegenerateCubeMapShader = exports.RegenerateShader = exports.activateNet = exports.net = exports.looper = exports.EVENTS_INSTANCE = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
+exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateVShaderSimpleDirectionLight = exports.RegenerateShaderSimpleDirectionLight = exports.RegenerateCubeMapShader = exports.RegenerateShader = exports.activateNet = exports.net = exports.looper = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
 
 var _net = require("./net");
 
@@ -572,15 +574,14 @@ var wd = 0,
     lastTime = 0,
     totalTime = 0,
     updateTime = 0,
-    updateFrames = 0;
+    updateFrames = 0; // export let EVENTS_INSTANCE = null;
+
 exports.updateFrames = updateFrames;
 exports.updateTime = updateTime;
 exports.totalTime = totalTime;
 exports.lastTime = lastTime;
 exports.ht = ht;
 exports.wd = wd;
-let EVENTS_INSTANCE = null;
-exports.EVENTS_INSTANCE = EVENTS_INSTANCE;
 let looper = 0;
 exports.looper = looper;
 
@@ -617,8 +618,8 @@ function initApp(callback) {
   drawCanvas();
   window.canvas = document.getElementById('canvas');
 
-  if (_manifest.default.events == true && EVENTS_INSTANCE === null) {
-    exports.EVENTS_INSTANCE = EVENTS_INSTANCE = new _events.EVENTS((0, _utility.E)('canvas'));
+  if (_manifest.default.events == true) {
+    _manifest.default.events = new _events.EVENTS((0, _utility.E)('canvas'));
   }
 
   if (typeof callback !== 'undefined') {
@@ -1550,7 +1551,7 @@ function EVENTS(canvas) {
 
       SYS.MOUSE.x = e.layerX;
       SYS.MOUSE.y = e.layerY;
-      ROOT_EVENTS.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN();
+      ROOT_EVENTS.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN(e, SYS.MOUSE);
     }; //console.log("This is PC desktop device.");
 
   }
@@ -1651,10 +1652,11 @@ function EVENTS(canvas) {
   }; // CALCULATE_TOUCH_UP_OR_MOUSE_UP
 
 
-  this.CALCULATE_TOUCH_UP_OR_MOUSE_UP = function () {// SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH UP ');
+  this.CALCULATE_TOUCH_UP_OR_MOUSE_UP = function () {
+    SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH UP ');
   };
 
-  this.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = function () {// SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH DOWN ');
+  this.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = function (ev, m) {// SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH DOWN ');
   };
 }
 
@@ -9955,6 +9957,14 @@ exports.checkingProcedure = checkingProcedure;
 exports.checkingProcedureCalc = checkingProcedureCalc;
 exports.checkingProcedureCalcObj = checkingProcedureCalcObj;
 exports.touchCoordinate = void 0;
+
+/**
+ * @author Nikola Lukic
+ * @info maximumroulette.com
+ * @Licence GPL v3
+ * Inspired with original code from:
+ * https://github.com/Necolo/raycaster
+ */
 let rayHitEvent;
 let touchCoordinate = {
   enabled: false,
@@ -10068,13 +10078,19 @@ function rotate2dPlot(cx, cy, x, y, angle) {
   return [nx, ny];
 }
 
-function checkingProcedure(ev) {
-  const {
+function checkingProcedure(ev, customArg) {
+  let {
     clientX,
     clientY,
     screenX,
     screenY
   } = ev;
+
+  if (typeof customArg !== 'undefined') {
+    clientX = customArg.clientX;
+    clientY = customArg.clientY;
+  }
+
   touchCoordinate.x = clientX;
   touchCoordinate.y = clientY;
   touchCoordinate.w = ev.target.width;

@@ -302,7 +302,7 @@ exports.VIDEO_TEXTURE = VIDEO_TEXTURE;
 exports.VT = VT;
 exports.Vjs3 = Vjs3;
 exports.anyCanvas = anyCanvas;
-exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateVShaderSimpleDirectionLight = exports.RegenerateShaderSimpleDirectionLight = exports.RegenerateCubeMapShader = exports.RegenerateShader = exports.activateNet = exports.net = exports.looper = exports.EVENTS_INSTANCE = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
+exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateVShaderSimpleDirectionLight = exports.RegenerateShaderSimpleDirectionLight = exports.RegenerateCubeMapShader = exports.RegenerateShader = exports.activateNet = exports.net = exports.looper = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
 
 var _net = require("./net");
 
@@ -332,15 +332,14 @@ var wd = 0,
     lastTime = 0,
     totalTime = 0,
     updateTime = 0,
-    updateFrames = 0;
+    updateFrames = 0; // export let EVENTS_INSTANCE = null;
+
 exports.updateFrames = updateFrames;
 exports.updateTime = updateTime;
 exports.totalTime = totalTime;
 exports.lastTime = lastTime;
 exports.ht = ht;
 exports.wd = wd;
-let EVENTS_INSTANCE = null;
-exports.EVENTS_INSTANCE = EVENTS_INSTANCE;
 let looper = 0;
 exports.looper = looper;
 
@@ -377,8 +376,8 @@ function initApp(callback) {
   drawCanvas();
   window.canvas = document.getElementById('canvas');
 
-  if (_manifest.default.events == true && EVENTS_INSTANCE === null) {
-    exports.EVENTS_INSTANCE = EVENTS_INSTANCE = new _events.EVENTS((0, _utility.E)('canvas'));
+  if (_manifest.default.events == true) {
+    _manifest.default.events = new _events.EVENTS((0, _utility.E)('canvas'));
   }
 
   if (typeof callback !== 'undefined') {
@@ -1310,7 +1309,7 @@ function EVENTS(canvas) {
 
       SYS.MOUSE.x = e.layerX;
       SYS.MOUSE.y = e.layerY;
-      ROOT_EVENTS.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN();
+      ROOT_EVENTS.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN(e, SYS.MOUSE);
     }; //console.log("This is PC desktop device.");
 
   }
@@ -1411,10 +1410,11 @@ function EVENTS(canvas) {
   }; // CALCULATE_TOUCH_UP_OR_MOUSE_UP
 
 
-  this.CALCULATE_TOUCH_UP_OR_MOUSE_UP = function () {// SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH UP ');
+  this.CALCULATE_TOUCH_UP_OR_MOUSE_UP = function () {
+    SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH UP ');
   };
 
-  this.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = function () {// SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH DOWN ');
+  this.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = function (ev, m) {// SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH DOWN ');
   };
 }
 
@@ -2912,17 +2912,23 @@ _manifest.default.operation.draws.cube = function (object) {
   mat4.identity(object.mvMatrix);
   this.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
 
-  if (_manifest.default.camera.FirstPersonController == true) {
-    _events.camera.setCamera(object);
-  } else if (_manifest.default.camera.SceneController == true) {
-    _events.camera.setSceneCamera(object);
-  }
+  if (object.isHUD === true) {
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
+  } else {
+    if (_manifest.default.camera.FirstPersonController == true) {
+      _events.camera.setCamera(object);
+    } else if (_manifest.default.camera.SceneController == true) {
+      _events.camera.setSceneCamera(object);
+    }
 
-  mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); // V
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  } // V
+
 
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -9709,6 +9715,14 @@ exports.checkingProcedure = checkingProcedure;
 exports.checkingProcedureCalc = checkingProcedureCalc;
 exports.checkingProcedureCalcObj = checkingProcedureCalcObj;
 exports.touchCoordinate = void 0;
+
+/**
+ * @author Nikola Lukic
+ * @info maximumroulette.com
+ * @Licence GPL v3
+ * Inspired with original code from:
+ * https://github.com/Necolo/raycaster
+ */
 let rayHitEvent;
 let touchCoordinate = {
   enabled: false,
@@ -9822,13 +9836,19 @@ function rotate2dPlot(cx, cy, x, y, angle) {
   return [nx, ny];
 }
 
-function checkingProcedure(ev) {
-  const {
+function checkingProcedure(ev, customArg) {
+  let {
     clientX,
     clientY,
     screenX,
     screenY
   } = ev;
+
+  if (typeof customArg !== 'undefined') {
+    clientX = customArg.clientX;
+    clientY = customArg.clientY;
+  }
+
   touchCoordinate.x = clientX;
   touchCoordinate.y = clientY;
   touchCoordinate.w = ev.target.width;
