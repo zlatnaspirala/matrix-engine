@@ -20,6 +20,9 @@ export var runThis = (world) => {
   App.camera.speedAmp = 0.01
   matrixEngine.Events.camera.yPos = 2;
 
+  // from 1.8.13
+  App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
+
   window.addEventListener("contextmenu", (e) => {
     e.preventDefault();
   });
@@ -40,8 +43,6 @@ export var runThis = (world) => {
     // From [1.8.12]
     // checkingProcedure gets secound optimal argument
     // for custom ray origin target.
-    // mouse
-    console.log(mouse.BUTTON)
     if(mouse.BUTTON_PRESSED == 'RIGHT') {
       // Zoom
     } else {
@@ -51,6 +52,7 @@ export var runThis = (world) => {
         clientX: ev.target.width / 2,
         clientY: ev.target.height / 2
       });
+      App.sounds.play('shoot');
     }
   };
 
@@ -106,7 +108,7 @@ export var runThis = (world) => {
         );
 
         // Fix object orientation - this can be fixed also in blender.
-        matrixEngine.Events.camera.yaw = 180;
+        matrixEngine.Events.camera.yaw = 0;
 
         var playerUpdater = {
           UPDATE: () => {
@@ -218,4 +220,18 @@ export var runThis = (world) => {
   App.scene.FLOOR_STATIC.position.SetY(-2);
   App.scene.FLOOR_STATIC.position.SetZ(-15);
   App.scene.FLOOR_STATIC.rotation.rotx = 90;
+
+  // Hud Menu
+  var texTarget = {
+    source: [
+      "res/bvh-skeletal-base/swat-guy/target.png"
+    ],
+    mix_operation: "multiply",
+  };
+  world.Add("cubeLightTex", 0.25, 'playerEnergy', texTarget);
+  App.scene.playerEnergy.position.setPosition(0, -2, -4);
+  App.scene.playerEnergy.glBlend.blendEnabled = true;
+  App.scene.playerEnergy.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+  App.scene.playerEnergy.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+  App.scene.playerEnergy.isHUD = true;
 };

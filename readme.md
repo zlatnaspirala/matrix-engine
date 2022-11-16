@@ -179,9 +179,9 @@ Take a look at query-build.html
 - Physics Sphere
 - BVH loader, animation play
 - Load obj sequences
-- FPShooter example [WIP]
+- FPShooter example (+Sounds) [WIP]
 - specular_light_basic -> global light position test [WIP]
-- Lens effect shaders for cube
+- Lens effect shaders for cube [WIP]
 
 ## Features description
 
@@ -859,6 +859,18 @@ https://maximumroulette.com/webgl2/examples.html
 
 ### Changes:
 
+#### From [1.8.13] MatrixSounds
+
+Access object `App.sounds`.
+
+Usage:
+```js
+// Play source audio [single instance].
+App.sounds.createAudio('music', 'res/music/background-music.mp3');
+// Play simultanius same source audio.
+App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
+```
+
 #### From [1.8.12]
 Draw scene list swap items options must be done!
 
@@ -931,3 +943,4 @@ No Dependabot alerts opened.
 - Networking based on https://github.com/muaz-khan/RTCMultiConnection
 - https://unsplash.com/photos/8UDJ4sflous
 - https://webgl-shaders.com/shaders/frag-lens.glsl
+- https://www.fesliyanstudios.com/royalty-free-sound-effects-download/gun-shooting-300

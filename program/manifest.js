@@ -2,8 +2,9 @@
 
 var App = {
   name: "Matrix Engine Manifest",
-  version: "1.0.7",
+  version: "1.0.8",
   events: true,
+  sounds: true,
   logs: false,
   draw_interval: 10,
   antialias: false,
