@@ -1,0 +1,11 @@
+node_modules/
+res/bvh/test
+apps/funny-slot/
+res/bvh-skeletal-base/y-bot
+res/bvh-skeletal-base/swat-guy/origin-maximo
+2DTextureEditor/res
+res/bvh-skeletal-base/swat-guy/seq-walk-pistol
+res/bvh-skeletal-base/swat-guy/seq-walk
+res/bvh-skeletal-base/swat-guy/seq-walk-pistol
+res/bvh-skeletal-base/swat-guy/anims
+res/bvh-skeletal-base/swat-guy
