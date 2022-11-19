@@ -859,6 +859,11 @@ https://maximumroulette.com/webgl2/examples.html
 
 ### Changes:
 
+#### From [1.8.14] Html's Every static file / resource moved to the new folder ./public
+
+ - Improved FPShooter example , added collision box for player.
+
+
 #### From [1.8.13] MatrixSounds
 
 Access object `App.sounds`.

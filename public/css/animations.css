@@ -1,0 +1,180 @@
+/* MessageBox animation */
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes autohide {
+  0%   {background-color:rgba(255, 0, 0, 0.5); right:0px; top:0px; transform: scale(0.5, 0.5);}
+  25%  {background-color:rgba(255, 255, 0, 0.5); right:-100px; top:0px; transform: scale(1, 1);}
+  50%  {background-color:rgba(30, 30, 175, 0.5); right:0px; top:0px; transform: scale(0.5, 0.5);}
+  75%  {background-color:rgba(0, 128, 0, 0.5); right:60px; top:0px; transform: scale(0.8, 0.8);}
+  100% {background-color:rgba(255, 0, 0, 0.1); right:88px; top:0px; transform: scale(1, 1);}
+}
+
+/* Standard syntax */
+@keyframes autohide {
+  0%   {background-color:rgba(255, 0, 0, 0.164); right:0px; top:0px; transform: scale(0.5, 0.5);}
+  25%  {background-color:rgba(255, 255, 0, 0.164); right:-100px; top:0px; transform: scale(1, 1);}
+  50%  {background-color:rgba(30, 30, 175, 0.26); right:0px; top:0px; transform: scale(0.5, 0.5);}
+  75%  {background-color:rgba(0, 128, 0, 0.164); right:60px; top:0px; transform: scale(0.8, 0.8);}
+  100% {background-color:rgba(255, 0, 0, 0.15); right:88px; top:0px; transform: scale(1, 1);}
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes scaleToCenter {
+  0%   {background-color:rgba(21, 0, 0, 0.9); right:0px; top:0px; transform: scale(1, 1);}
+  100% {background-color:rgba(21, 0, 0, 0.9); right:88px; top:0px; transform: scale(0.01, 0.1);}
+}
+
+/* Standard syntax */
+@keyframes scaleToCenter {
+  0%   {background-color:rgba(21, 0, 0, 0.9); right:0px; top:0px; transform: scale(1, 1);}
+  100% {background-color:rgba(21, 0, 0, 0.9); right:88px; top:0px; transform: scale(0.01, 0.1);}
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes scaleFromCenter {
+  0%   {background-color:rgba(21, 0, 0, 0.9); right:0px; top:0px; transform: scale(0.1, 0.1);}
+  100% {background-color:rgba(21, 0, 0, 0.9); right:88px; top:0px; transform: scale(1, 1);}
+}
+
+/* Standard syntax */
+@keyframes scaleFromCenter {
+  0%   {background-color:rgba(21, 0, 0, 0.9); right:0px; top:0px; transform: scale(0.1, 0.1);}
+  100% {background-color:rgba(21, 0, 0, 0.9); right:88px; top:0px; transform: scale(1, 1);}
+}
+
+/* Network-Panel animation */
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes rightmove {
+  0%   {background-color:rgba(255, 0, 0, 0.9); right:0%; top:0px;}
+  100%  {background-color:rgba(13, 46, 65, 0.9); right:-26%; top:95%;}
+}
+
+/* Standard syntax */
+@keyframes rightmove {
+  0%   {background-color:rgba(255, 0, 0, 0.9); right:0%; top:0px;}
+  100%  {background-color:rgba(13, 46, 65, 0.9); right:-26%; top:95%;}
+}
+
+@-webkit-keyframes leftmove {
+  0%   {background-color:rgba(255, 0, 0, 0.9); right:-26%; top:95%;}
+  100%  {background-color:rgba(13, 46, 65, 0.9); right:0%; top:0px;}
+}
+
+/* Standard syntax */
+@keyframes leftmove {
+  0%   {background-color:rgba(255, 0, 0, 0.9); right:-26%; top:95%;}
+  100%  {background-color:rgba(13, 46, 65, 0.9); right:0%; top:0px;}
+}
+
+/* Vertical */
+/* Network-Panel animation */
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes goBottom {
+  0%   {background-color:rgba(155, 101, 10, 0.9); top:0px;}
+  100%  {background-color:rgba(13, 46, 65, 0.9); top:95%;}
+}
+
+/* Standard syntax */
+@keyframes goBottom {
+  0%   {background-color:rgba(255, 120, 0, 0.9); top:0px;}
+  100%  {background-color:rgba(255, 25, 112, 0.9); top:95%;}
+}
+
+@-webkit-keyframes goUp {
+  0%   {background-color:rgba(255, 0, 0, 0.9); top:95%;}
+  100%  {background-color:rgba(13, 46, 65, 0.9); top:0px;}
+}
+
+/* Standard syntax */
+@keyframes goUp {
+  0%   {background-color:rgba(255, 0, 0, 0.9); top:95%;}
+  100%  {background-color:rgba(13, 46, 65, 0.9); top:0px;}
+}
+
+/* bounceIn */
+.bounceIn {
+  border: none;
+  -webkit-animation-name: bounceIn;
+  animation-name: bounceIn;
+  -webkit-animation-duration: .75s;
+  animation-duration: .75s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  -webkit-animation-fill-mode: none;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+div.bounceIn:hover {
+  border: solid red 1px;
+}
+
+@-webkit-keyframes bounceIn {
+0%, 20%, 40%, 60%, 80%, 100% {
+  -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+0% {
+  opacity: 0;
+  -webkit-transform: scale3d(.3, .3, .3);
+  transform: scale3d(.3, .3, .3);
+}
+20% {
+  -webkit-transform: scale3d(1.1, 1.1, 1.1);
+  transform: scale3d(1.1, 1.1, 1.1);
+}
+40% {
+  -webkit-transform: scale3d(.9, .9, .9);
+  transform: scale3d(.9, .9, .9);
+}
+60% {
+  opacity: 1;
+  -webkit-transform: scale3d(1.03, 1.03, 1.03);
+  transform: scale3d(1.03, 1.03, 1.03);
+}
+80% {
+  -webkit-transform: scale3d(.97, .97, .97);
+  transform: scale3d(.97, .97, .97);
+}
+100% {
+  opacity: 1;
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+}
+}
+@keyframes bounceIn {
+0%, 20%, 40%, 60%, 80%, 100% {
+  -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+0% {
+opacity: 0;
+  -webkit-transform: scale3d(.3, .3, .3);
+  transform: scale3d(.3, .3, .3);
+}
+20% {
+  -webkit-transform: scale3d(1.1, 1.1, 1.1);
+  transform: scale3d(1.1, 1.1, 1.1);
+}
+40% {
+  -webkit-transform: scale3d(.9, .9, .9);
+  transform: scale3d(.9, .9, .9);
+}
+60% {
+  opacity: 1;
+  -webkit-transform: scale3d(1.03, 1.03, 1.03);
+  transform: scale3d(1.03, 1.03, 1.03);
+}
+80% {
+  -webkit-transform: scale3d(.97, .97, .97);
+  transform: scale3d(.97, .97, .97);
+}
+100% {
+  opacity: 1;
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+}
+}

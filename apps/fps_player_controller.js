@@ -31,12 +31,14 @@ export var runThis = (world) => {
     App.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     App.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     App.scene.FPSTarget.geometry.setScale(0.1);
+    App.scene.xrayTarget.visible = false;
   };
 
   matrixEngine.Events.SYS.MOUSE.ON_RIGHT_BTN_PRESSED = (e) => {
     App.scene.FPSTarget.geometry.setScale(0.6);
     App.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
     App.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+    App.scene.xrayTarget.visible = true;
   };
 
   App.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
@@ -67,7 +69,7 @@ export var runThis = (world) => {
      */
     if(ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
-      ev.detail.hitObject.LightsData.ambientLight.set(
+      if(ev.detail.hitObject.LightsData) ev.detail.hitObject.LightsData.ambientLight.set(
         randomFloatFromTo(0, 2), randomFloatFromTo(0, 2), randomFloatFromTo(0, 2));
     }
   });
@@ -110,6 +112,21 @@ export var runThis = (world) => {
         // Fix object orientation - this can be fixed also in blender.
         matrixEngine.Events.camera.yaw = 0;
 
+        // Add collision cube to the local player.
+        world.Add("cube", 0.2, "playerCollisonBox");
+        var collisionBox = new CANNON.Body({
+          mass: 5,
+          linearDamping: 0.01,
+          position: new CANNON.Vec3(0, 0, 0),
+          shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
+        });
+        physics.world.addBody(collisionBox);
+        App.scene.playerCollisonBox.physics.currentBody = collisionBox;
+        App.scene.playerCollisonBox.physics.enabled = true;
+        App.scene.playerCollisonBox.physics.currentBody.fixedRotation = true;
+        App.scene.playerCollisonBox.geometry.setScale(0.02);
+        //matrixEngine.Events.camera.yaw
+
         var playerUpdater = {
           UPDATE: () => {
             App.scene[objName].rotation.rotateY(
@@ -132,8 +149,21 @@ export var runThis = (world) => {
             App.scene[objName].position.setPosition(
               matrixEngine.Events.camera.xPos,
               matrixEngine.Events.camera.yPos - 0.3 + TEST2 / 50,
-              matrixEngine.Events.camera.zPos
+              matrixEngine.Events.camera.zPos,
             )
+
+            App.scene.playerCollisonBox.
+              physics.currentBody.position.set(
+                matrixEngine.Events.camera.xPos,
+                matrixEngine.Events.camera.zPos, // Switched  Z - Y
+                matrixEngine.Events.camera.yPos  // + TEST2 / 50
+              )
+            App.scene.playerCollisonBox.
+              physics.currentBody.velocity.set(0, 0, 0);
+            App.scene.playerCollisonBox.
+              physics.currentBody.angularVelocity.set(0, 0, 0);
+
+
           }
         };
         App.updateBeforeDraw.push(playerUpdater);
@@ -142,14 +172,14 @@ export var runThis = (world) => {
           App.scene.player.meshList[key].setScale(1.85);
         }
 
-        // TARGET 
+        // Target scene object
         var texTarget = {
           source: [
             "res/bvh-skeletal-base/swat-guy/target.png"
           ],
           mix_operation: "multiply",
         };
-        world.Add("cubeLightTex", 0.25, 'FPSTarget', texTarget);
+        world.Add("squareTex", 0.25, 'FPSTarget', texTarget);
         App.scene.FPSTarget.position.setPosition(0, 0, -4);
         App.scene.FPSTarget.glBlend.blendEnabled = true;
         App.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
@@ -174,30 +204,39 @@ export var runThis = (world) => {
 
   };
 
+  let promiseAllGenerated = [];
+
   const objGenerator = (n) => {
     for(var j = 0;j < n;j++) {
-      setTimeout(() => {
-        world.Add("cubeLightTex", 1, "CUBE" + j, tex);
-        var b2 = new CANNON.Body({
-          mass: 1,
-          linearDamping: 0.01,
-          position: new CANNON.Vec3(1, -14.5, 15),
-          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-        });
-        physics.world.addBody(b2);
-        App.scene['CUBE' + j].physics.currentBody = b2;
-        App.scene['CUBE' + j].physics.enabled = true;
-      }, 1000 * j)
+      promiseAllGenerated.push(new Promise((resolve) => {
+        setTimeout(() => {
+          world.Add("cubeLightTex", 1, "CUBE" + j, tex);
+          var b2 = new CANNON.Body({
+            mass: 1,
+            linearDamping: 0.01,
+            position: new CANNON.Vec3(1, -14.5, 15),
+            shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+          });
+          physics.world.addBody(b2);
+          App.scene['CUBE' + j].physics.currentBody = b2;
+          App.scene['CUBE' + j].physics.enabled = true;
+          resolve();
+        }, 1000 * j);
+      }));
     }
-    setTimeout(() => {
-      swap(3, 17, matrixEngine.matrixWorld.world.contentList);
-    }, 1000 * (n + 2))
   }
 
   objGenerator(15);
   createObjSequence('player');
 
-  // Some scene env
+  Promise.all(promiseAllGenerated).then((what) => {
+    console.info(`Runtime wait for some generetion of scene objects,
+                  then swap scene array index for target -> 
+                  must be manual setup for now!`, what);
+    swap(5, 19, matrixEngine.matrixWorld.world.contentList);
+  });
+
+  // Add ground for physics bodies.
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply",
@@ -221,17 +260,20 @@ export var runThis = (world) => {
   App.scene.FLOOR_STATIC.position.SetZ(-15);
   App.scene.FLOOR_STATIC.rotation.rotx = 90;
 
-  // Hud Menu
+  // Target x-ray
+  // See through the objects
   var texTarget = {
     source: [
-      "res/bvh-skeletal-base/swat-guy/target.png"
+      "res/bvh-skeletal-base/swat-guy/target-night.png"
     ],
     mix_operation: "multiply",
   };
-  world.Add("cubeLightTex", 0.25, 'playerEnergy', texTarget);
-  App.scene.playerEnergy.position.setPosition(0, -2, -4);
-  App.scene.playerEnergy.glBlend.blendEnabled = true;
-  App.scene.playerEnergy.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-  App.scene.playerEnergy.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-  App.scene.playerEnergy.isHUD = true;
+  world.Add("squareTex", 0.18, 'xrayTarget', texTarget);
+  App.scene.xrayTarget.glBlend.blendEnabled = true;
+  App.scene.xrayTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+  App.scene.xrayTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+  App.scene.xrayTarget.isHUD = true;
+  App.scene.xrayTarget.visible = false;
+  App.scene.xrayTarget.position.setPosition(-0.3, 0.27, -4);
+
 };

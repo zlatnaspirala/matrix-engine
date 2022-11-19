@@ -1617,6 +1617,8 @@ var runThis = world => {
     _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
 
     _manifest.default.scene.FPSTarget.geometry.setScale(0.1);
+
+    _manifest.default.scene.xrayTarget.visible = false;
   };
 
   matrixEngine.Events.SYS.MOUSE.ON_RIGHT_BTN_PRESSED = e => {
@@ -1624,6 +1626,7 @@ var runThis = world => {
 
     _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
     _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+    _manifest.default.scene.xrayTarget.visible = true;
   };
 
   _manifest.default.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
@@ -1653,7 +1656,7 @@ var runThis = world => {
 
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
-      ev.detail.hitObject.LightsData.ambientLight.set((0, _utility.randomFloatFromTo)(0, 2), (0, _utility.randomFloatFromTo)(0, 2), (0, _utility.randomFloatFromTo)(0, 2));
+      if (ev.detail.hitObject.LightsData) ev.detail.hitObject.LightsData.ambientLight.set((0, _utility.randomFloatFromTo)(0, 2), (0, _utility.randomFloatFromTo)(0, 2), (0, _utility.randomFloatFromTo)(0, 2));
     }
   });
 
@@ -1684,7 +1687,23 @@ var runThis = world => {
         };
         world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg); // Fix object orientation - this can be fixed also in blender.
 
-        matrixEngine.Events.camera.yaw = 0;
+        matrixEngine.Events.camera.yaw = 0; // Add collision cube to the local player.
+
+        world.Add("cube", 0.2, "playerCollisonBox");
+        var collisionBox = new CANNON.Body({
+          mass: 5,
+          linearDamping: 0.01,
+          position: new CANNON.Vec3(0, 0, 0),
+          shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
+        });
+        physics.world.addBody(collisionBox);
+        _manifest.default.scene.playerCollisonBox.physics.currentBody = collisionBox;
+        _manifest.default.scene.playerCollisonBox.physics.enabled = true;
+        _manifest.default.scene.playerCollisonBox.physics.currentBody.fixedRotation = true;
+
+        _manifest.default.scene.playerCollisonBox.geometry.setScale(0.02); //matrixEngine.Events.camera.yaw
+
+
         var playerUpdater = {
           UPDATE: () => {
             _manifest.default.scene[objName].rotation.rotateY(matrixEngine.Events.camera.yaw + 180);
@@ -1706,6 +1725,14 @@ var runThis = world => {
             if (TEST2 > 4) TEST2 = 4;
 
             _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 0.3 + TEST2 / 50, matrixEngine.Events.camera.zPos);
+
+            _manifest.default.scene.playerCollisonBox.physics.currentBody.position.set(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.zPos, // Switched  Z - Y
+            matrixEngine.Events.camera.yPos // + TEST2 / 50
+            );
+
+            _manifest.default.scene.playerCollisonBox.physics.currentBody.velocity.set(0, 0, 0);
+
+            _manifest.default.scene.playerCollisonBox.physics.currentBody.angularVelocity.set(0, 0, 0);
           }
         };
 
@@ -1713,14 +1740,14 @@ var runThis = world => {
 
         for (let key in _manifest.default.scene.player.meshList) {
           _manifest.default.scene.player.meshList[key].setScale(1.85);
-        } // TARGET 
+        } // Target scene object
 
 
         var texTarget = {
           source: ["res/bvh-skeletal-base/swat-guy/target.png"],
           mix_operation: "multiply"
         };
-        world.Add("cubeLightTex", 0.25, 'FPSTarget', texTarget);
+        world.Add("squareTex", 0.25, 'FPSTarget', texTarget);
 
         _manifest.default.scene.FPSTarget.position.setPosition(0, 0, -4);
 
@@ -1743,29 +1770,36 @@ var runThis = world => {
     }), onLoadObj);
   };
 
+  let promiseAllGenerated = [];
+
   const objGenerator = n => {
     for (var j = 0; j < n; j++) {
-      setTimeout(() => {
-        world.Add("cubeLightTex", 1, "CUBE" + j, tex);
-        var b2 = new CANNON.Body({
-          mass: 1,
-          linearDamping: 0.01,
-          position: new CANNON.Vec3(1, -14.5, 15),
-          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-        });
-        physics.world.addBody(b2);
-        _manifest.default.scene['CUBE' + j].physics.currentBody = b2;
-        _manifest.default.scene['CUBE' + j].physics.enabled = true;
-      }, 1000 * j);
+      promiseAllGenerated.push(new Promise(resolve => {
+        setTimeout(() => {
+          world.Add("cubeLightTex", 1, "CUBE" + j, tex);
+          var b2 = new CANNON.Body({
+            mass: 1,
+            linearDamping: 0.01,
+            position: new CANNON.Vec3(1, -14.5, 15),
+            shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+          });
+          physics.world.addBody(b2);
+          _manifest.default.scene['CUBE' + j].physics.currentBody = b2;
+          _manifest.default.scene['CUBE' + j].physics.enabled = true;
+          resolve();
+        }, 1000 * j);
+      }));
     }
-
-    setTimeout(() => {
-      swap(3, 17, matrixEngine.matrixWorld.world.contentList);
-    }, 1000 * (n + 2));
   };
 
   objGenerator(15);
-  createObjSequence('player'); // Some scene env
+  createObjSequence('player');
+  Promise.all(promiseAllGenerated).then(what => {
+    console.info(`Runtime wait for some generetion of scene objects,
+                  then swap scene array index for target -> 
+                  must be manual setup for now!`, what);
+    swap(5, 19, matrixEngine.matrixWorld.world.contentList);
+  }); // Add ground for physics bodies.
 
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
@@ -1794,20 +1828,21 @@ var runThis = world => {
 
   _manifest.default.scene.FLOOR_STATIC.position.SetZ(-15);
 
-  _manifest.default.scene.FLOOR_STATIC.rotation.rotx = 90; // Hud Menu
+  _manifest.default.scene.FLOOR_STATIC.rotation.rotx = 90; // Target x-ray
+  // See through the objects
 
   var texTarget = {
-    source: ["res/bvh-skeletal-base/swat-guy/target.png"],
+    source: ["res/bvh-skeletal-base/swat-guy/target-night.png"],
     mix_operation: "multiply"
   };
-  world.Add("cubeLightTex", 0.25, 'playerEnergy', texTarget);
+  world.Add("squareTex", 0.18, 'xrayTarget', texTarget);
+  _manifest.default.scene.xrayTarget.glBlend.blendEnabled = true;
+  _manifest.default.scene.xrayTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+  _manifest.default.scene.xrayTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+  _manifest.default.scene.xrayTarget.isHUD = true;
+  _manifest.default.scene.xrayTarget.visible = false;
 
-  _manifest.default.scene.playerEnergy.position.setPosition(0, -2, -4);
-
-  _manifest.default.scene.playerEnergy.glBlend.blendEnabled = true;
-  _manifest.default.scene.playerEnergy.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-  _manifest.default.scene.playerEnergy.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-  _manifest.default.scene.playerEnergy.isHUD = true;
+  _manifest.default.scene.xrayTarget.position.setPosition(-0.3, 0.27, -4);
 };
 
 exports.runThis = runThis;
@@ -7244,17 +7279,23 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
   mat4.identity(object.mvMatrix);
   this.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
 
-  if (_manifest.default.camera.FirstPersonController == true) {
-    _events.camera.setCamera(object);
-  } else if (_manifest.default.camera.SceneController == true) {
-    _events.camera.setSceneCamera(object);
-  }
+  if (object.isHUD === true) {
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
+  } else {
+    if (_manifest.default.camera.FirstPersonController == true) {
+      _events.camera.setCamera(object);
+    } else if (_manifest.default.camera.SceneController == true) {
+      _events.camera.setSceneCamera(object);
+    }
 
-  mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY()); // V
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
+  } // V
+
 
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -10385,48 +10426,50 @@ _manifest.default.operation.reDrawGlobal = function (time) {
   physicsLooper = 0;
 
   while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
-    if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
-      _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+    if (_matrixWorld.world.contentList[_engine.looper].visible === true) {
+      if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
-      _matrixWorld.world.drawTriangle(_matrixWorld.world.contentList[_engine.looper]);
+        _matrixWorld.world.drawTriangle(_matrixWorld.world.contentList[_engine.looper]);
 
-      _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
-    } else if ('square' == _matrixWorld.world.contentList[_engine.looper].type) {
-      _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if ('square' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
-      _matrixWorld.world.drawSquare(_matrixWorld.world.contentList[_engine.looper]);
+        _matrixWorld.world.drawSquare(_matrixWorld.world.contentList[_engine.looper]);
 
-      _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
-    } else if ('cube' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeMap' == _matrixWorld.world.contentList[_engine.looper].type) {
-      _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if ('cube' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeMap' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
-      _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper]);
+        _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper]);
 
-      _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
-    } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
-      _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
-      _matrixWorld.world.drawPyramid(_matrixWorld.world.contentList[_engine.looper]);
+        _matrixWorld.world.drawPyramid(_matrixWorld.world.contentList[_engine.looper]);
 
-      _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
-    } else if ('obj' == _matrixWorld.world.contentList[_engine.looper].type) {
-      _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if ('obj' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
-      _matrixWorld.world.drawObj(_matrixWorld.world.contentList[_engine.looper]);
+        _matrixWorld.world.drawObj(_matrixWorld.world.contentList[_engine.looper]);
 
-      _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
-    } else if ('squareTex' == _matrixWorld.world.contentList[_engine.looper].type) {
-      _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if ('squareTex' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
-      _matrixWorld.world.drawSquareTex(_matrixWorld.world.contentList[_engine.looper]);
+        _matrixWorld.world.drawSquareTex(_matrixWorld.world.contentList[_engine.looper]);
 
-      _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
-    } else if ('sphereLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'sphere' == _matrixWorld.world.contentList[_engine.looper].type || 'generatorLightTex' == _matrixWorld.world.contentList[_engine.looper].type) {
-      _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if ('sphereLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'sphere' == _matrixWorld.world.contentList[_engine.looper].type || 'generatorLightTex' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
-      _matrixWorld.world.drawSphere(_matrixWorld.world.contentList[_engine.looper]);
+        _matrixWorld.world.drawSphere(_matrixWorld.world.contentList[_engine.looper]);
 
-      _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      }
     }
 
     (0, _engine.modifyLooper)(_engine.looper + 1);
@@ -11619,6 +11662,7 @@ function defineworld(canvas) {
     /*
       Common conventions to be followed across
       Contents can contain any type of objects. Each object can be a triangle, cube etc.
+      object.visible        =  Avoid draw procedure
       object.type           =  Contains the type of object namely triangle, cube
       object.size           =  Contains the size of the object. 1 unit will be the same as how WEBGL assumes 1 as in an array
       object.sides          =  Contains the number of sides. This needs to be first declared.  (To be built and used)
@@ -11634,6 +11678,7 @@ function defineworld(canvas) {
     // console.info("Fill world with:" + filler + " of size:" + size);
     if ('triangle' == filler) {
       var triangleObject = new Object();
+      triangleObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         triangleObject.name = nameUniq;
@@ -11697,6 +11742,7 @@ function defineworld(canvas) {
 
     if ('square' == filler) {
       var squareObject = new Object();
+      squareObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         squareObject.name = nameUniq;
@@ -11763,6 +11809,7 @@ function defineworld(canvas) {
     if ('squareTex' == filler) {
       // eslint-disable-next-line no-redeclare
       var squareObject = new Object();
+      squareObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         squareObject.name = nameUniq;
@@ -11879,6 +11926,7 @@ function defineworld(canvas) {
 
     if ('cube' == filler) {
       var cubeObject = new Object();
+      cubeObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         cubeObject.name = nameUniq;
@@ -11953,6 +12001,7 @@ function defineworld(canvas) {
 
     if ('sphereTex' == filler || 'sphereLightTex' == filler) {
       var sphereObject = new Object();
+      sphereObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         sphereObject.name = nameUniq;
@@ -12084,6 +12133,7 @@ function defineworld(canvas) {
 
     if ('pyramid' == filler) {
       var pyramidObject = new Object();
+      pyramidObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         pyramidObject.name = nameUniq;
@@ -12148,6 +12198,7 @@ function defineworld(canvas) {
 
     if ('obj' == filler) {
       var objObject = new Object();
+      objObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         objObject.name = nameUniq;
@@ -12289,6 +12340,7 @@ function defineworld(canvas) {
     if ('cubeTex' == filler || 'cubeLightTex' == filler) {
       // eslint-disable-next-line no-redeclare
       var cubeObject = new Object();
+      cubeObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         cubeObject.name = nameUniq;
@@ -12434,6 +12486,7 @@ function defineworld(canvas) {
     if ('cubeMap' == filler || 'cubeMapTex' == filler) {
       // eslint-disable-next-line no-redeclare
       var cubeObject = new Object();
+      cubeObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         cubeObject.name = nameUniq;
@@ -12663,6 +12716,7 @@ function defineworld(canvas) {
 
     if ('generatorTex' == filler || 'generatorLightTex' == filler) {
       var customObject = new Object();
+      customObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         customObject.name = nameUniq;
