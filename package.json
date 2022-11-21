@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "install.dep": "npm install -g uglify-js browserify watchify",
+    "install.dep": "npm i | npm install -g uglify-js browserify watchify",
     "examples": "watchify App-Examples.js -p [esmify --noImplicitAny] -o public/examples.me.js",
     "app": "watchify App.js -p [esmify --noImplicitAny] -o public/app.js",
     "tex.editor": "watchify ./2DTextureEditor/actual.js -p [esmify --noImplicitAny] -o ./2DTextureEditor/builds/actual.tex.js",
