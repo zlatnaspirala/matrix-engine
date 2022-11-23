@@ -1,17 +1,16 @@
 ![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/webgl2glmatrix2.jpg)
 
 ## About Matrix Engine project
-
-### Name: `MATRIX-ENGINE` `1.8.12`
+### Name: `MATRIX-ENGINE` `1.8.15`
 
 #### Logo
-<img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/res/icons/ms-icon.png" width="128" height="128" />
+<img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/public/res/icons/ms-icon.png" width="128" height="128" />
 
 ### STATUS
-#### - [Integrated PWA addToHomePage/cache/] 	✔	
+#### - [Integrated PWA addToHomePage/cache/]	✔	
 #### - [Integrated raycast (hit trigger detect), bvh animation]	✔	
 #### - [Basic Physics implementation based on cannon.js]	✔	
-#### - [FirstPersonController/SceneController Drag and navigation scene]	✔	
+#### - [FirstPersonController fly or classic fp / SceneController Drag and navigation scene]	✔	
 #### - [Basic's Shadows vs lights (GLSL)]	✔	
 
 ### Description ℹ
@@ -23,8 +22,8 @@
   For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js. I use free software Blender 2.90.1 for 3d Object mesh works. MatrixEngine is Blender frendly orientend lib. Also mixamo.com is great service used for creating my assets.
 
 ### Limitation ⚠
- - Basic implementation for physics (Cube, Sphere)
- - Raycast not work after walk behind the object in first person mode
+ - Basic implementation for physics (Cube, Sphere).
+ - Raycast not work after walk behind the object in first person mode.
  - Only static object cast spot light in right way for now.
  - Need general more improvement on GLSL part.
 
@@ -57,9 +56,9 @@
 - https://fps-matrix-engine.vercel.app
 
 
-  #### How to use it from npm services [codepen examples]
+#### How to use it from npm services [codepen examples]
 
-  [1.7.9] Lights - Who to use matrix-engine on codepen:
+[1.7.9] Lights - Who to use matrix-engine on codepen:
 - https://codepen.io/zlatnaspirala/full/OJZXMWR
 
   BHV Pseudo Skeletal animation:
@@ -351,24 +350,46 @@ Example with physics and raycast hit detect:
 
 Networking based on webRTC. If you wanna use `multiplayer mode` you need to run intro
 folder `networking/` next commands:
+
 ```js
  npm i
  node matrix-server.js
 ```
 
 #### Networking Support Methods list: ✅😇
+
+Networking is deeply integrated no need for extra interventions.
+Except activation.
+```js
+  App.scene.MyColoredSquare1.net.enable = true;
+  App.scene.MyColoredSquare1.net.activate();
+
+  // Now MyColoredSquare1 is net replicated on others clients.
+  App.scene.MyColoredSquare1.position.SetZ(-8);
+```
+
  - Any scene object:
+
   ➡ position SetX() SetY() SetZ()
+
   ➡ rotation.rotateX() rotateY() rotateZ()
 
  - Cube, Sphere, Square
+
   ➡ geometry.setScale()
+
   ➡ geometry.setScaleByY()
+
   ➡ geometry.setScaleByZ()
+
   ➡ geometry.setScaleByZ()
+
   ➡ geometry.setTexCoordScaleFactor()
+
  - Pyramid
+
   ➡ geometry.setScale()
+
   ➡ geometry.setSpitz()
 
 #### Networking minimal example
@@ -859,50 +880,21 @@ Old Live demo:
 Video and webcam works at:
 https://maximumroulette.com/webgl2/examples.html
 
-### Changes:
 
-#### From [1.8.14] Html's Every static file / resource moved to the new folder ./public
+### Sounds
 
- - Improved FPShooter example , added collision box for player.
+From 1.8.13 you can add audios:
 
-
-#### From [1.8.13] MatrixSounds
-
-Access object `App.sounds`.
-
-Usage:
+Create single audio object:
 ```js
-// Play source audio [single instance].
-App.sounds.createAudio('music', 'res/music/background-music.mp3');
-// Play simultanius same source audio.
+App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3');
+```
+
+Create multi clone audio objects:
+```js
 App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
 ```
-
-#### From [1.8.12]
-Draw scene list swap items options must be done!
-
-#### From [1.8.0]
-Added watchify.
-We have support for real time connections based on webRTC.
-You must work on https protocol even in localhost.
-Change in program/manifest `net = false` if you dont wanna use networking.
-
-Node.js Multiplayer Server based on webRTC. Take a look at the folder `./netwotking`.
-
-Run it:
-```js
-cd networking
-node matrix.server.js
-```
-
-If you wanna in terminal popup then run (bash/work on win also if you have bash) `dedicated.sh./`
-or `dedicated.bat`.
-
-
-#### From [1.7.11]
- No need for:
- `// matrixEngine.Engine.load_shaders('shaders/shaders.html');`
- Initial Shaders now loads from code (inside engine). No need any action.
+This is in case that you need to play same audio many times [simultaneously].
 
 
 ## PWA Fully runned

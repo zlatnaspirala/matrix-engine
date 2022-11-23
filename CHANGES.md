@@ -1,9 +1,48 @@
 
 ## CHANGES
 
+#### From [1.8.15] Improved camera
+
+
+#### From [1.8.14] Html's Every static file / resource moved to the new folder ./public
+
+Improved FPShooter example , added collision box for player.
+
+
+#### From [1.8.13] MatrixSounds
+
+Access object `App.sounds`.
+
+Usage:
+```js
+// Play source audio [single instance].
+App.sounds.createAudio('music', 'res/music/background-music.mp3');
+// Play simultanius same source audio.
+App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
+```
+
+#### From [1.8.12]
+Draw scene list swap items options must be done!
+
+#### From [1.8.0]
+Added watchify.
+We have support for real time connections based on webRTC.
+You must work on https protocol even in localhost.
+Change in program/manifest `net = false` if you dont wanna use networking.
+
+Node.js Multiplayer Server based on webRTC. Take a look at the folder `./netwotking`.
+
+Run it:
+```js
+cd networking
+node matrix.server.js
+```
+
+If you wanna in terminal popup then run (bash/work on win also if you have bash) `dedicated.sh./`
+or `dedicated.bat`.
+
+
 [1.8.6] Improve of cubeMap
-
-
 
 [1.8.5] Added new scene type of object `"cubeMap"` with Opengles native 'uniform samplerCube' sampler:
 ```js

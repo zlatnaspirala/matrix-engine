@@ -1,10 +1,16 @@
 
 /**
  * @description Usage of raycaster, ObjectLoader,
- * FirstPersonController...
+ * FirstPersonController.
+ * This will be part of new lib file `lib/controllers/fps.js`
+ * 
+ * Axample API calls Usage:
+ * 
+ * - Deeply integrated to the top level scene object with name `player`.
+ *   App.scene.player.updateEnergy(4);
+ * Predefined from 0 to the 8 energy value.
+ * 
  * @class First Person Shooter example
- * @arg filePath
- * @arg options
  */
 
 import App from '../program/manifest';
@@ -17,10 +23,10 @@ export var runThis = (world) => {
   // Camera
   canvas.style.cursor = 'none'
   App.camera.FirstPersonController = true;
+  matrixEngine.Events.camera.fly = false;
   App.camera.speedAmp = 0.01
   matrixEngine.Events.camera.yPos = 2;
 
-  // from 1.8.13
   App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
 
   window.addEventListener("contextmenu", (e) => {
@@ -83,8 +89,8 @@ export var runThis = (world) => {
       }
       var textuteImageSamplers2 = {
         source: [
-          "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png",
-          "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"
+          "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png" // ,
+          // "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"
         ],
         mix_operation: "multiply", // ENUM : multiply , divide
       };
@@ -125,45 +131,47 @@ export var runThis = (world) => {
         App.scene.playerCollisonBox.physics.enabled = true;
         App.scene.playerCollisonBox.physics.currentBody.fixedRotation = true;
         App.scene.playerCollisonBox.geometry.setScale(0.02);
-        //matrixEngine.Events.camera.yaw
+
+        // Player Energy status
+        App.scene.player.energy = {
+          status: 100
+        };
 
         var playerUpdater = {
           UPDATE: () => {
             App.scene[objName].rotation.rotateY(
               matrixEngine.Events.camera.yaw + 180)
 
-            var TEST;
+            var detPitch;
             var limit = 2;
             if(matrixEngine.Events.camera.pitch < limit &&
               matrixEngine.Events.camera.pitch > -limit) {
-              TEST = matrixEngine.Events.camera.pitch * 2;
+              detPitch = matrixEngine.Events.camera.pitch * 2;
             } else if(matrixEngine.Events.camera.pitch > limit) {
-              TEST = limit * 2;
+              detPitch = limit * 2;
             } else if(matrixEngine.Events.camera.pitch < -(limit + 2)) {
-              TEST = -(limit + 2) * 2;
+              detPitch = -(limit + 2) * 2;
             }
 
-            App.scene[objName].rotation.rotateX(-TEST);
-            var TEST2 = matrixEngine.Events.camera.pitch;
-            if(TEST2 > 4) TEST2 = 4;
+            App.scene[objName].rotation.rotateX(-detPitch);
+            var detPitchPos = matrixEngine.Events.camera.pitch;
+            if(detPitchPos > 4) detPitchPos = 4;
             App.scene[objName].position.setPosition(
               matrixEngine.Events.camera.xPos,
-              matrixEngine.Events.camera.yPos - 0.3 + TEST2 / 50,
+              matrixEngine.Events.camera.yPos - 0.3 + detPitchPos / 50,
               matrixEngine.Events.camera.zPos,
             )
 
+            // Switched  Z - Y
             App.scene.playerCollisonBox.
               physics.currentBody.position.set(
                 matrixEngine.Events.camera.xPos,
-                matrixEngine.Events.camera.zPos, // Switched  Z - Y
-                matrixEngine.Events.camera.yPos  // + TEST2 / 50
-              )
+                matrixEngine.Events.camera.zPos,
+                matrixEngine.Events.camera.yPos);
             App.scene.playerCollisonBox.
               physics.currentBody.velocity.set(0, 0, 0);
             App.scene.playerCollisonBox.
               physics.currentBody.angularVelocity.set(0, 0, 0);
-
-
           }
         };
         App.updateBeforeDraw.push(playerUpdater);
@@ -186,7 +194,88 @@ export var runThis = (world) => {
         App.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
         App.scene.FPSTarget.isHUD = true;
         App.scene.FPSTarget.geometry.setScale(0.1);
-        // swap(6,22, matrixEngine.matrixWorld.world.contentList)
+
+        // Energy active bar
+        // Custom generic textures. Micro Drawing.
+        // Example for arg shema square for now only.
+        var options = {
+          squareShema: [8, 8],
+          pixels: new Uint8Array(8 * 8 * 4)
+        };
+        // options.pixels.fill(0);
+        App.scene.player.energy.value = 8;
+        App.scene.player.updateEnergy = function(v) {
+          this.energy.value = v;
+          var t = App.scene.energyBar.preparePixelsTex(App.scene.energyBar.specialValue);
+          App.scene.energyBar.textures.pop()
+          App.scene.energyBar.textures.push(App.scene.energyBar.createPixelsTex(t));
+        };
+
+        function preparePixelsTex(options) {
+          var I = 0, R = 0, G = 0, B = 0, localCounter = 0;
+          for(var funny = 0;funny < 8 * 8 * 4;funny += 4) {
+            if(localCounter > 7) {
+              localCounter = 0;
+            }
+            if(localCounter < App.scene.player.energy.value) {
+              I = 128;
+              if(App.scene.player.energy.value < 3) {
+                R = 255;
+                G = 0;
+                B = 0;
+                I = 0;
+              } else if(App.scene.player.energy.value > 2 && App.scene.player.energy.value < 5) {
+                R = 255;
+                G = 255;
+                B = 0;
+              } else {
+                R = 0;
+                G = 255;
+                B = 0;
+              }
+            } else {
+              I = 0;
+              R = 0;
+              G = 0;
+              B = 0;
+            }
+            options.pixels[funny] = R;
+            options.pixels[funny + 1] = G;
+            options.pixels[funny + 2] = B;
+            options.pixels[funny + 3] = 0;
+            localCounter++;
+          }
+          return options;
+        }
+
+        var tex2 = {
+          source: [
+            "res/images/hud/energy-bar.png",
+            "res/images/hud/energy-bar.png"
+          ],
+          mix_operation: "multiply",
+        };
+
+        world.Add("squareTex", 1, 'energyBar', tex2);
+        App.scene.energyBar.glBlend.blendEnabled = true;
+        App.scene.energyBar.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+        App.scene.energyBar.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+        App.scene.energyBar.isHUD = true;
+        // App.scene.energy.visible = false;
+        App.scene.energyBar.position.setPosition(0, 1.1, -3);
+        App.scene.energyBar.geometry.setScaleByX(1)
+        App.scene.energyBar.geometry.setScaleByY(0.05)
+
+        App.scene.energyBar.preparePixelsTex = preparePixelsTex;
+
+        options = preparePixelsTex(options);
+
+        //
+        // App.scene.energyBar.textures[0] = App.scene.energyBar.createPixelsTex(options);
+        App.scene.energyBar.textures.push(App.scene.energyBar.createPixelsTex(options));
+
+        App.scene.energyBar.specialValue = options;
+
       }, 1);
     }
 
@@ -260,8 +349,9 @@ export var runThis = (world) => {
   App.scene.FLOOR_STATIC.position.SetZ(-15);
   App.scene.FLOOR_STATIC.rotation.rotx = 90;
 
-  // Target x-ray
-  // See through the objects
+  // Target x-ray 
+  // See through the objects.
+  // In webGL context it is object how was drawn before others.
   var texTarget = {
     source: [
       "res/bvh-skeletal-base/swat-guy/target-night.png"
@@ -275,5 +365,23 @@ export var runThis = (world) => {
   App.scene.xrayTarget.isHUD = true;
   App.scene.xrayTarget.visible = false;
   App.scene.xrayTarget.position.setPosition(-0.3, 0.27, -4);
+
+  // Energy
+  var tex1 = {
+    source: [
+      "res/images/hud/energy.png"
+    ],
+    mix_operation: "multiply",
+  };
+  world.Add("squareTex", 0.5, 'energy', tex1);
+  App.scene.energy.glBlend.blendEnabled = true;
+  App.scene.energy.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+  App.scene.energy.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+  App.scene.energy.isHUD = true;
+  // App.scene.energy.visible = false;
+  App.scene.energy.position.setPosition(-1, 1.15, -3);
+  App.scene.energy.geometry.setScaleByX(0.35)
+  App.scene.energy.geometry.setScaleByY(0.1)
+
 
 };

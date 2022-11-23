@@ -34,6 +34,13 @@ iframe {
   border: none;
 }
 
+#matrix-editor {
+  position: absolute;
+  left: 0;
+  top:0;
+  width: 400px;
+}
+
 .btnShadow {
   -webkit-box-shadow: inset 0px 1px 0px 0px rgb(52, 253, 189);
   -moz-box-shadow: inset 0px 1px 0px 0px rgb(52, 253, 189);
