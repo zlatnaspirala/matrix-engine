@@ -177,9 +177,20 @@ var runThis = world => {
         _manifest.default.scene.playerCollisonBox.geometry.setScale(0.02); // Player Energy status
 
 
-        _manifest.default.scene.player.energy = {
-          status: 100
-        };
+        _manifest.default.scene.player.energy = {}; // test 
+
+        addEventListener('hit.keyDown', e => {
+          console.log('Bring to the top level', e.detail.keyCode); // dont mess in events 
+          // better in high level to be respoved
+
+          if (e.detail.keyCode == 32) {
+            setTimeout(() => {
+              _manifest.default.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 111);
+            }, 250);
+          } else if (e.detail.keyCode == 87) {
+            _manifest.default.scene.playerCollisonBox.physics.currentBody.force.set(0, 10, 0);
+          }
+        });
         var playerUpdater = {
           UPDATE: () => {
             _manifest.default.scene[objName].rotation.rotateY(matrixEngine.Events.camera.yaw + 180);
@@ -195,19 +206,53 @@ var runThis = world => {
               detPitch = -(limit + 2) * 2;
             }
 
-            _manifest.default.scene[objName].rotation.rotateX(-detPitch);
+            if (matrixEngine.Events.camera.virtualJumpActive == true) {
+              console.log('?????'); // invert logic
+              // Scene object set
 
-            var detPitchPos = matrixEngine.Events.camera.pitch;
-            if (detPitchPos > 4) detPitchPos = 4;
+              _manifest.default.scene[objName].rotation.rotateX(-detPitch);
 
-            _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 0.3 + detPitchPos / 50, matrixEngine.Events.camera.zPos); // Switched  Z - Y
+              var detPitchPos = matrixEngine.Events.camera.pitch;
+              if (detPitchPos > 4) detPitchPos = 4; // App.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 1);
+
+              _manifest.default.scene[objName].position.setPosition(_manifest.default.scene.playerCollisonBox.physics.currentBody.position.x, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y); // Cannonjs object set
+              // Switched  Z - Y
 
 
-            _manifest.default.scene.playerCollisonBox.physics.currentBody.position.set(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.zPos, matrixEngine.Events.camera.yPos);
+              matrixEngine.Events.camera.xPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.x;
+              matrixEngine.Events.camera.zPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y;
+              matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z; // App.scene.playerCollisonBox.
+              //   physics.currentBody.velocity.set(0, 0, 0);
 
-            _manifest.default.scene.playerCollisonBox.physics.currentBody.velocity.set(0, 0, 0);
+              _manifest.default.scene.playerCollisonBox.physics.currentBody.angularVelocity.set(0, 0, 0);
 
-            _manifest.default.scene.playerCollisonBox.physics.currentBody.angularVelocity.set(0, 0, 0);
+              setTimeout(() => {
+                matrixEngine.Events.camera.virtualJumpY = 2;
+                matrixEngine.Events.camera.virtualJumpActive = false;
+              }, 1350);
+            } else {
+              // Tamo tu iznad duge nebo zri...
+              // Cannonjs object set
+              // Switched  Z - Y
+              //matrixEngine.Events.camera.xPos = App.scene.playerCollisonBox.physics.currentBody.position.x;
+              // matrixEngine.Events.camera.zPos = App.scene.playerCollisonBox.physics.currentBody.position.y;
+              matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z; // Scene object set
+
+              _manifest.default.scene[objName].rotation.rotateX(-detPitch);
+
+              var detPitchPos = matrixEngine.Events.camera.pitch;
+              if (detPitchPos > 4) detPitchPos = 4;
+
+              _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 0.3 + detPitchPos / 50, // App.scene.playerCollisonBox.physics.currentBody.position.y,
+              matrixEngine.Events.camera.zPos); // Cannonjs object set
+              // Switched  Z - Y
+
+
+              _manifest.default.scene.playerCollisonBox.physics.currentBody.position.set(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.zPos, matrixEngine.Events.camera.yPos); //                 App.scene.playerCollisonBox.physics.currentBody.position.y);
+              // App.scene.playerCollisonBox.physics.currentBody.velocity.set(0, 0, 0);
+              // App.scene.playerCollisonBox.physics.currentBody.angularVelocity.set(0, 0, 0);
+
+            }
           }
         };
 
@@ -219,7 +264,7 @@ var runThis = world => {
 
 
         var texTarget = {
-          source: ["res/bvh-skeletal-base/swat-guy/target.png"],
+          source: ["res/bvh-skeletal-base/swat-guy/target.png", "res/bvh-skeletal-base/swat-guy/target.png"],
           mix_operation: "multiply"
         };
         world.Add("squareTex", 0.25, 'FPSTarget', texTarget);
@@ -1614,8 +1659,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable no-unused-vars */
 
 /* globals LOG App NOMOBILE keyboardPress printLog degToRad mat4 */
-var SYS = {}; // export var keyboardPress = {};
-
+var SYS = {};
 exports.SYS = SYS;
 SYS.MOUSE = {
   x: 0,
@@ -1863,25 +1907,39 @@ function defineKeyBoardObject() {
 
 
   globKeyPressObj.setKeyStatus = function (keyCode, status) {
+    // console.log("keycode", keyCode)
     this.keyArr[keyCode] = status;
   };
   /**
    * @description
    * Key Down and Up handlers.
+   * Optimal dispatch event: 'hit.KeyDown'
    **/
 
 
   globKeyPressObj.handleKeyDown = function (evt) {
     evt = evt ? evt : window.event ? window.event : ''; // console.log("'LOG KEY CODE ", evt.keyCode);
 
+    let emitKeyDown = new CustomEvent('hit.keyDown', {
+      detail: {
+        keyCode: evt.keyCode
+      }
+    });
+    dispatchEvent(emitKeyDown);
     this.setKeyStatus(evt.keyCode, true);
   };
 
   globKeyPressObj.handleKeyUp = function (evt) {
     evt = evt ? evt : window.event ? window.event : '';
+    let emitKeyUp = new CustomEvent('hit.keyUp', {
+      detail: {
+        keyCode: evt.keyCode
+      }
+    });
+    dispatchEvent(emitKeyUp);
     this.setKeyStatus(evt.keyCode, false);
   };
-  /* Destructor                                    */
+  /* Destructor */
 
 
   globKeyPressObj.destroy = function () {
@@ -1916,7 +1974,7 @@ window.onwheel = evt => {
 };
 
 var camera = {};
-/* Set defaults                                  */
+/* Set defaults       */
 
 exports.camera = camera;
 camera.roll = 0;
@@ -1931,25 +1989,30 @@ camera.xPos = 0;
 camera.yPos = 0;
 camera.zPos = 0;
 camera.speed = 0;
-camera.yawAmp = 0.05;
-camera.pitchAmp = 0.007;
-camera.virtualJumpY = 0; // eslint-disable-next-line no-global-assign
+camera.yawAmp = 0.065;
+camera.pitchAmp = 0.014;
+camera.virtualJumpY = 2;
+camera.virtualJumpActive = false; // eslint-disable-next-line no-global-assign
 
 var keyboardPress = defineKeyBoardObject(); // For FirstPersonController
 
 exports.keyboardPress = keyboardPress;
 
 camera.setCamera = function (object) {
-  /* Left Key  or A                            */
+  /* Left Key  or A */
   if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
     camera.yawRate = _manifest.default.camera.yawRate;
     if (_manifest.default.camera.leftEdge == true) camera.yawRate = _manifest.default.camera.yawRate;
   } else if (
-  /* Right Key or D                            */
+  /* Right Key or D */
   keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
     camera.yawRate = -_manifest.default.camera.yawRate;
     if (_manifest.default.camera.rightEdge == true) camera.yawRate = -_manifest.default.camera.yawRate;
-  } else {// camera.yawRate = 0;
+  } else if (keyboardPress.getKeyStatus(32)) {
+    /* Right Key or SPACE */
+    if (this.virtualJumpActive != true) {
+      this.virtualJumpActive = true;
+    }
   }
   /* Up Key or W */
 
@@ -1962,18 +2025,6 @@ camera.setCamera = function (object) {
   } else {
     camera.speed = 0;
   }
-  /*
-  // PAGE UP
-  if (keyboardPress.getKeyStatus(33)) {
-    camera.pitchRate = 100;
-  }
-  // Page Down
-  else if (keyboardPress.getKeyStatus(34)) {
-    camera.pitchRate = -100;
-  } else {
-    camera.pitchRate = 0;
-  } */
-
   /* Calculate yaw, pitch and roll(x,y,z) */
 
 
@@ -1994,8 +2045,7 @@ camera.setCamera = function (object) {
   camera.yaw += camera.yawRate * camera.yawAmp;
   camera.pitch += camera.pitchRate * camera.pitchAmp;
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.pitch), [1, 0, 0]);
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.yaw), [0, 1, 0]); // mat4.translate(object.mvMatrix, object.mvMatrix, [camera.yaw, -camera.pitch, 0]);
-
+  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.yaw), [0, 1, 0]);
   mat4.translate(object.mvMatrix, object.mvMatrix, [-camera.xPos, -camera.yPos, -camera.zPos]);
   camera.yawRate = 0;
   camera.pitchRate = 0;
@@ -2003,24 +2053,24 @@ camera.setCamera = function (object) {
 
 
 camera.setSceneCamera = function (object) {
-  /* Left Key  or A                            */
+  /* Left Key  or A */
   if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
     camera.yawRate = _manifest.default.camera.sceneControllerWASDKeysAmp;
     if (_manifest.default.camera.leftEdge == true) camera.yawRate = _manifest.default.camera.sceneControllerEdgeCameraYawRate;
   } else if (
-  /* Right Key or D                            */
+  /* Right Key or D */
   keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
     camera.yawRate = -_manifest.default.camera.sceneControllerWASDKeysAmp;
     if (_manifest.default.camera.rightEdge == true) camera.yawRate = -_manifest.default.camera.sceneControllerEdgeCameraYawRate;
   } else {// camera.yawRate = 0;
   }
-  /* Up Key    or W                            */
+  /* Up Key or W */
 
 
   if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
     camera.speed = _manifest.default.camera.speedAmp;
   } else if (keyboardPress.getKeyStatus(40) || keyboardPress.getKeyStatus(83)) {
-    /* Down Key  or S                            */
+    /* Down Key or S */
     camera.speed = -_manifest.default.camera.speedAmp;
   } else {
     // diff

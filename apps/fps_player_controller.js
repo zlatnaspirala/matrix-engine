@@ -133,9 +133,24 @@ export var runThis = (world) => {
         App.scene.playerCollisonBox.geometry.setScale(0.02);
 
         // Player Energy status
-        App.scene.player.energy = {
-          status: 100
-        };
+        App.scene.player.energy = {};
+
+        // test 
+        addEventListener('hit.keyDown', (e) => {
+          console.log('Bring to the top level', e.detail.keyCode)
+
+          // dont mess in events 
+          // better in high level to be respoved
+          if (e.detail.keyCode == 32) {
+            setTimeout(()=> {
+              App.scene.playerCollisonBox.physics.currentBody.force.set(0,0,111)
+            }, 250)
+          } else if (e.detail.keyCode == 87) {
+
+            App.scene.playerCollisonBox.physics.currentBody.force.set(0,10,0)
+
+          }
+        });
 
         var playerUpdater = {
           UPDATE: () => {
@@ -153,25 +168,74 @@ export var runThis = (world) => {
               detPitch = -(limit + 2) * 2;
             }
 
-            App.scene[objName].rotation.rotateX(-detPitch);
-            var detPitchPos = matrixEngine.Events.camera.pitch;
-            if(detPitchPos > 4) detPitchPos = 4;
-            App.scene[objName].position.setPosition(
-              matrixEngine.Events.camera.xPos,
-              matrixEngine.Events.camera.yPos - 0.3 + detPitchPos / 50,
-              matrixEngine.Events.camera.zPos,
-            )
+            if(matrixEngine.Events.camera.virtualJumpActive == true) {
 
-            // Switched  Z - Y
-            App.scene.playerCollisonBox.
-              physics.currentBody.position.set(
+              console.log('?????')
+              // invert logic
+              // Scene object set
+              App.scene[objName].rotation.rotateX(-detPitch);
+              var detPitchPos = matrixEngine.Events.camera.pitch;
+              if(detPitchPos > 4) detPitchPos = 4;
+
+              // App.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 1);
+
+              App.scene[objName].position.setPosition(
+                App.scene.playerCollisonBox.physics.currentBody.position.x,
+                App.scene.playerCollisonBox.physics.currentBody.position.z,
+                App.scene.playerCollisonBox.physics.currentBody.position.y
+              )
+
+              // Cannonjs object set
+              // Switched  Z - Y
+              matrixEngine.Events.camera.xPos = App.scene.playerCollisonBox.physics.currentBody.position.x;
+              matrixEngine.Events.camera.zPos = App.scene.playerCollisonBox.physics.currentBody.position.y;
+              matrixEngine.Events.camera.yPos = App.scene.playerCollisonBox.physics.currentBody.position.z;
+
+              // App.scene.playerCollisonBox.
+              //   physics.currentBody.velocity.set(0, 0, 0);
+
+              App.scene.playerCollisonBox.
+                physics.currentBody.angularVelocity.set(0, 0, 0);
+
+              setTimeout(() => {
+                matrixEngine.Events.camera.virtualJumpY = 2;
+                matrixEngine.Events.camera.virtualJumpActive = false;
+              }, 1350);
+
+            } else {
+
+              // Tamo tu iznad duge nebo zri...
+              // Cannonjs object set
+              // Switched  Z - Y
+              //matrixEngine.Events.camera.xPos = App.scene.playerCollisonBox.physics.currentBody.position.x;
+              // matrixEngine.Events.camera.zPos = App.scene.playerCollisonBox.physics.currentBody.position.y;
+              matrixEngine.Events.camera.yPos = App.scene.playerCollisonBox.physics.currentBody.position.z;
+
+              // Scene object set
+              App.scene[objName].rotation.rotateX(-detPitch);
+              var detPitchPos = matrixEngine.Events.camera.pitch;
+              if(detPitchPos > 4) detPitchPos = 4;
+              
+              App.scene[objName].position.setPosition(
                 matrixEngine.Events.camera.xPos,
+                matrixEngine.Events.camera.yPos - 0.3 + detPitchPos / 50,
+                // App.scene.playerCollisonBox.physics.currentBody.position.y,
                 matrixEngine.Events.camera.zPos,
-                matrixEngine.Events.camera.yPos);
-            App.scene.playerCollisonBox.
-              physics.currentBody.velocity.set(0, 0, 0);
-            App.scene.playerCollisonBox.
-              physics.currentBody.angularVelocity.set(0, 0, 0);
+              )
+
+              // Cannonjs object set
+              // Switched  Z - Y
+              App.scene.playerCollisonBox.
+                physics.currentBody.position.set(
+                  matrixEngine.Events.camera.xPos,
+                  matrixEngine.Events.camera.zPos,
+                 matrixEngine.Events.camera.yPos)
+//                 App.scene.playerCollisonBox.physics.currentBody.position.y);
+
+              // App.scene.playerCollisonBox.physics.currentBody.velocity.set(0, 0, 0);
+              // App.scene.playerCollisonBox.physics.currentBody.angularVelocity.set(0, 0, 0);
+            }
+
           }
         };
         App.updateBeforeDraw.push(playerUpdater);
@@ -183,6 +247,7 @@ export var runThis = (world) => {
         // Target scene object
         var texTarget = {
           source: [
+            "res/bvh-skeletal-base/swat-guy/target.png",
             "res/bvh-skeletal-base/swat-guy/target.png"
           ],
           mix_operation: "multiply",
@@ -333,6 +398,7 @@ export var runThis = (world) => {
   // Load Physics world.
   let gravityVector = [0, 0, -9.82];
   let physics = world.loadPhysics(gravityVector);
+  
   // Add ground
   var groundBody = new CANNON.Body({
     mass: 0, // mass == 0 makes the body static
