@@ -785,6 +785,17 @@ In `onLoadObj` callback function:
 
 ### FirstPersonShooter examples [WIP]
  - Just like in eu4 shooter we dont need whole character mesh for FPSHooter view. I cut off no hands vertices in blender to make optimised flow.
+ - Added basic Jumping with physics
+
+From [1.8.15]
+ - 'hit.keyDown' && 'hit.keyUp' dispatch events added. See FPS Example.
+ - Added basic JUMP with physics / not calibrated.
+
+```js
+  addEventListener('hit.keyDown', (e) => {
+    // console.log('Bring to the top level', e.detail.keyCode);
+  })
+```
 
 Feature [1.8.12] App.events Access.
 Take a look at the `apps\fps_player_controller.js` example.

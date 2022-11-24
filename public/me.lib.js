@@ -485,7 +485,7 @@ function updateFPS(elements) {
   exports.updateFrames = updateFrames = updateFrames + 1;
 
   if (1000 < updateTime) {
-    document.getElementById('fps').innerHTML = 'FPS AVG:' + Math.floor(1000 * _matrixWorld.frames / totalTime / elements) + ' CUR:' + Math.floor(1000 * updateFrames / updateTime / elements + ' matrixEngine');
+    document.getElementById('fps').innerHTML = `FPS AVG:` + Math.floor(1000 * _matrixWorld.frames / totalTime / elements) + ` CUR:` + Math.floor(1000 * updateFrames / updateTime / elements);
     exports.updateTime = updateTime = 0;
     exports.updateFrames = updateFrames = 0;
   }
@@ -535,10 +535,10 @@ window.cancelRequestAnimFrame = function () {
 
 
 function onExit() {
-  /* RIP Mouse object                              */
+  /* RIP Mouse object */
   // mouseLoc.destroy();
 
-  /* RIP Objects                                   */
+  /* RIP Objects */
   exports.looper = looper = 0;
 
   while (looper <= _matrixWorld.objListToDispose.length - 1) {
@@ -875,7 +875,7 @@ _manifest.default.operation.POP_MATRIX = function (mvMatrix, mvMatrixStack) {
 _manifest.default.operation.SET_MATRIX_UNIFORMS = function (object, pMatrix) {
   this.GL.gl.uniformMatrix4fv(object.shaderProgram.pMatrixUniform, false, pMatrix);
   this.GL.gl.uniformMatrix4fv(object.shaderProgram.mvMatrixUniform, false, object.mvMatrix);
-}; // REGENERATORs SHADER
+}; // Modify shaders in runtime.
 
 
 var RegenerateShader = function (id_elem, numOfSamplerInUse, mixOperand, lightType) {
@@ -892,7 +892,7 @@ var RegenerateShader = function (id_elem, numOfSamplerInUse, mixOperand, lightTy
   } else {
     e.innerHTML = (0, _matrixShaders.generateShaderSrc)(numOfSamplerInUse, mixOperand);
   }
-}; // REGENERATORs SHADER
+}; // Modify shaders in runtime.
 
 
 exports.RegenerateShader = RegenerateShader;
@@ -1204,8 +1204,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable no-unused-vars */
 
 /* globals LOG App NOMOBILE keyboardPress printLog degToRad mat4 */
-var SYS = {}; // export var keyboardPress = {};
-
+var SYS = {};
 exports.SYS = SYS;
 SYS.MOUSE = {
   x: 0,
@@ -1337,10 +1336,10 @@ function EVENTS(canvas) {
     }
   }, {
     passive: true
-  }); //Calculate touch or click event
+  }); // Calculate touch or click event
 
   this.CALCULATE_TOUCH_OR_CLICK = function () {
-    SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH CLICK ');
+    SYS.DEBUG.LOG('EVENT: MOUSE/TOUCH CLICK');
   };
 
   this.virtualUpDownScene = 0;
@@ -1364,7 +1363,7 @@ function EVENTS(canvas) {
       camera.yawRate += deltaX * 1;
 
       if (SYS.MOUSE.x < _manifest.default.camera.edgeMarginValue - center_x) {
-        _manifest.default.camera.leftEdge = true; //SYS.DEBUG.LOG(" mouse on edge ! ");
+        _manifest.default.camera.leftEdge = true; // SYS.DEBUG.LOG(" mouse on edge ! ");
       } else {
         _manifest.default.camera.leftEdge = false;
       }
@@ -1437,32 +1436,55 @@ function defineKeyBoardObject() {
   document.onkeyup = function (e) {
     globKeyPressObj.handleKeyUp(e);
   };
-  /* Getter for a key status                       */
+  /**
+   * @description
+   * Getter for a key status.
+   **/
 
 
   globKeyPressObj.getKeyStatus = function (keyCode) {
     return this.keyArr[keyCode];
   };
-  /* Setter for a key status                       */
+  /**
+   * @description 
+   * Setter for a key status.
+   **/
 
 
   globKeyPressObj.setKeyStatus = function (keyCode, status) {
+    // console.log("keycode", keyCode)
     this.keyArr[keyCode] = status;
   };
-  /* Key Down and Up handlers                      */
+  /**
+   * @description
+   * Key Down and Up handlers.
+   * Optimal dispatch event: 'hit.KeyDown'
+   **/
 
 
   globKeyPressObj.handleKeyDown = function (evt) {
-    evt = evt ? evt : window.event ? window.event : '';
-    console.log("'LOG KEY CODE ", evt.keyCode);
+    evt = evt ? evt : window.event ? window.event : ''; // console.log("'LOG KEY CODE ", evt.keyCode);
+
+    let emitKeyDown = new CustomEvent('hit.keyDown', {
+      detail: {
+        keyCode: evt.keyCode
+      }
+    });
+    dispatchEvent(emitKeyDown);
     this.setKeyStatus(evt.keyCode, true);
   };
 
   globKeyPressObj.handleKeyUp = function (evt) {
     evt = evt ? evt : window.event ? window.event : '';
+    let emitKeyUp = new CustomEvent('hit.keyUp', {
+      detail: {
+        keyCode: evt.keyCode
+      }
+    });
+    dispatchEvent(emitKeyUp);
     this.setKeyStatus(evt.keyCode, false);
   };
-  /* Destructor                                    */
+  /* Destructor */
 
 
   globKeyPressObj.destroy = function () {
@@ -1497,12 +1519,13 @@ window.onwheel = evt => {
 };
 
 var camera = {};
-/* Set defaults                                  */
+/* Set defaults       */
 
 exports.camera = camera;
 camera.roll = 0;
 camera.rollRate = 0;
 camera.rallAmp = 0.05;
+camera.fly = true;
 camera.pitch = 0;
 camera.pitchRate = 0;
 camera.yaw = 0;
@@ -1511,23 +1534,30 @@ camera.xPos = 0;
 camera.yPos = 0;
 camera.zPos = 0;
 camera.speed = 0;
-camera.yawAmp = 0.05;
-camera.pitchAmp = 0.007; // eslint-disable-next-line no-global-assign
+camera.yawAmp = 0.065;
+camera.pitchAmp = 0.014;
+camera.virtualJumpY = 2;
+camera.virtualJumpActive = false; // eslint-disable-next-line no-global-assign
 
-var keyboardPress = defineKeyBoardObject();
+var keyboardPress = defineKeyBoardObject(); // For FirstPersonController
+
 exports.keyboardPress = keyboardPress;
 
 camera.setCamera = function (object) {
-  /* Left Key  or A                            */
+  /* Left Key  or A */
   if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
     camera.yawRate = _manifest.default.camera.yawRate;
     if (_manifest.default.camera.leftEdge == true) camera.yawRate = _manifest.default.camera.yawRate;
   } else if (
-  /* Right Key or D                            */
+  /* Right Key or D */
   keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
     camera.yawRate = -_manifest.default.camera.yawRate;
     if (_manifest.default.camera.rightEdge == true) camera.yawRate = -_manifest.default.camera.yawRate;
-  } else {// camera.yawRate = 0;
+  } else if (keyboardPress.getKeyStatus(32)) {
+    /* Right Key or SPACE */
+    if (this.virtualJumpActive != true) {
+      this.virtualJumpActive = true;
+    }
   }
   /* Up Key or W */
 
@@ -1540,23 +1570,20 @@ camera.setCamera = function (object) {
   } else {
     camera.speed = 0;
   }
-  /*
-  // PAGE UP
-  if (keyboardPress.getKeyStatus(33)) {
-    camera.pitchRate = 100;
-  }
-  // Page Down
-  else if (keyboardPress.getKeyStatus(34)) {
-    camera.pitchRate = -100;
-  } else {
-    camera.pitchRate = 0;
-  } */
-
   /* Calculate yaw, pitch and roll(x,y,z) */
 
 
   if (camera.speed != 0) {
-    camera.xPos -= Math.sin(degToRad(camera.yaw)) * camera.speed; // camera.yPos = 0;
+    camera.xPos -= Math.sin(degToRad(camera.yaw)) * camera.speed;
+
+    if (camera.fly == true) {
+      // Fly regime
+      camera.yPos += Math.sin(degToRad(camera.pitch)) * camera.speed;
+    } else {// usually for fpshooter regime
+      // camera.yPos = this.virtualJumpY;
+      // camera.yPos = 0;
+      // leave it zero by default lets dirigent from top
+    }
 
     camera.zPos -= Math.cos(degToRad(camera.yaw)) * camera.speed;
   }
@@ -1564,32 +1591,32 @@ camera.setCamera = function (object) {
   camera.yaw += camera.yawRate * camera.yawAmp;
   camera.pitch += camera.pitchRate * camera.pitchAmp;
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.pitch), [1, 0, 0]);
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.yaw), [0, 1, 0]); // mat4.translate(object.mvMatrix, object.mvMatrix, [camera.yaw, -camera.pitch, 0]);
-
+  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.yaw), [0, 1, 0]);
   mat4.translate(object.mvMatrix, object.mvMatrix, [-camera.xPos, -camera.yPos, -camera.zPos]);
   camera.yawRate = 0;
   camera.pitchRate = 0;
-};
+}; // For sceneController
+
 
 camera.setSceneCamera = function (object) {
-  /* Left Key  or A                            */
+  /* Left Key  or A */
   if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
     camera.yawRate = _manifest.default.camera.sceneControllerWASDKeysAmp;
     if (_manifest.default.camera.leftEdge == true) camera.yawRate = _manifest.default.camera.sceneControllerEdgeCameraYawRate;
   } else if (
-  /* Right Key or D                            */
+  /* Right Key or D */
   keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
     camera.yawRate = -_manifest.default.camera.sceneControllerWASDKeysAmp;
     if (_manifest.default.camera.rightEdge == true) camera.yawRate = -_manifest.default.camera.sceneControllerEdgeCameraYawRate;
   } else {// camera.yawRate = 0;
   }
-  /* Up Key    or W                            */
+  /* Up Key or W */
 
 
   if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
     camera.speed = _manifest.default.camera.speedAmp;
   } else if (keyboardPress.getKeyStatus(40) || keyboardPress.getKeyStatus(83)) {
-    /* Down Key  or S                            */
+    /* Down Key or S */
     camera.speed = -_manifest.default.camera.speedAmp;
   } else {
     // diff
@@ -3754,9 +3781,11 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
           //world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
           //world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
           // ori world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+          // var nothing = 
+          // world.GL.gl.uniform1i(object.shaderProgram['samplerUniform' + t], t);
 
 
-          var nothing = _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram['samplerUniform' + t], t);
+          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
         }
@@ -8204,7 +8233,10 @@ function defineworld(canvas) {
 
         (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
         squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-      };
+      }; // gen tex
+
+
+      squareObject.createPixelsTex = _manifest.default.tools.createPixelsTex;
 
       if (typeof texturesPaths !== 'undefined') {
         if (typeof texturesPaths == 'string') {

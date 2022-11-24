@@ -43,7 +43,7 @@ import {runThis as opengles_native_cubemap } from './apps/opengles_native_cubema
 import {runThis as opengles_native_cubemap_images } from './apps/opengles_native_cubemap_images';
 import {runThis as lens_effect } from './apps/lens_effect';
 import {runThis as fps_player_controller } from './apps/fps_player_controller';
-import {runThis as city } from './apps/city';
+// import {runThis as city } from './apps/city';
 
 /**
  * @description
@@ -53,7 +53,7 @@ import {runThis as city } from './apps/city';
  * parts of app.
  */
 var Examples = {
-  city: city,
+  // city: city,
   fps_player_controller:fps_player_controller,
   lens_effect: lens_effect,
   opengles_native_cubemap_images: opengles_native_cubemap_images,

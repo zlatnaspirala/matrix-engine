@@ -3,6 +3,14 @@
 
 #### From [1.8.15] Improved camera
 
+ - 'hit.keyDown' && 'hit.keyUp' dispatch events added. See FPS Example.
+ - Added basic JUMP with physics / not calibrated.
+
+```js
+  addEventListener('hit.keyDown', (e) => {
+    // console.log('Bring to the top level', e.detail.keyCode);
+  })
+```
 
 #### From [1.8.14] Html's Every static file / resource moved to the new folder ./public
 
