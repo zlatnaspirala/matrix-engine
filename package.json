@@ -24,6 +24,9 @@
     "te": "node ./2DTextureEditor/editor.js",
     "test": "echo \"no build tradicional view\" && exit 1"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "dependencies": {
     "browser-resolve": "^2.0.0",
     "bvh-loader": "0.0.9",
@@ -40,9 +43,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zlatnaspirala/webgl2-glmatrix2-engine.git"
+    "url": "git+https://github.com/zlatnaspirala/matrix-engine.git"
   },
   "keywords": [
+    "webrtc",
+    "networking",
     "physics",
     "cannon.js",
     "bvh-glmatrx",
