@@ -1,0 +1,724 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{829B67B9-3DAA-3AF7-8755-AA03E29FA264}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>ceftests</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef-win\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ceftests.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ceftests</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef-win\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ceftests.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ceftests</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4100;4127;4244;4324;4481;4512;4701;4702;4996</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;_WIN32;UNICODE;_UNICODE;WINVER=0x0601;_WIN32_WINNT=0x601;NOMINMAX;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;PSAPI_VERSION=1;CEF_USE_SANDBOX;CEF_USE_ATL;_HAS_ITERATOR_DEBUGGING=0;UNIT_TEST;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;_WIN32;UNICODE;_UNICODE;WINVER=0x0601;_WIN32_WINNT=0x601;NOMINMAX;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;PSAPI_VERSION=1;CEF_USE_SANDBOX;CEF_USE_ATL;_HAS_ITERATOR_DEBUGGING=0;UNIT_TEST;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>Adding manifest...																			</Message>
+      <Command>setlocal
+mt.exe -nologo -manifest "G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/resources/win/ceftests.exe.manifest" "G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/resources/win/compatibility.manifest" -outputresource:"G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/ceftests.exe";#1
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Debug/chrome_elf.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/chrome_elf.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Debug/libcef.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/libcef.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Debug/libEGL.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/libEGL.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Debug/libGLESv2.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/libGLESv2.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Debug/snapshot_blob.bin G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/snapshot_blob.bin
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Debug/v8_context_snapshot.bin G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/v8_context_snapshot.bin
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Debug/vk_swiftshader.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/vk_swiftshader.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Debug/vk_swiftshader_icd.json G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/vk_swiftshader_icd.json
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Debug/vulkan-1.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/vulkan-1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Debug/d3dcompiler_47.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/d3dcompiler_47.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Resources/chrome_100_percent.pak G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/chrome_100_percent.pak
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Resources/chrome_200_percent.pak G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/chrome_200_percent.pak
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Resources/resources.pak G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/resources.pak
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Resources/icudtl.dat G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/icudtl.dat
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Resources/locales G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/locales
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/resources/net/data/ssl/certificates/expired_cert.pem G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/ceftests_files/net/data/ssl/certificates/expired_cert.pem
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/resources/net/data/ssl/certificates/localhost_cert.pem G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/ceftests_files/net/data/ssl/certificates/localhost_cert.pem
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/resources/net/data/ssl/certificates/ok_cert.pem G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/ceftests_files/net/data/ssl/certificates/ok_cert.pem
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/resources/net/data/ssl/certificates/root_ca_cert.pem G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/ceftests_files/net/data/ssl/certificates/root_ca_cert.pem
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\Debug\libcef.lib;..\..\..\..\..\libcef_dll_wrapper\Debug\libcef_dll_wrapper.lib;..\gtest\Debug\cef_gtest.lib;comctl32.lib;gdi32.lib;rpcrt4.lib;shlwapi.lib;ws2_32.lib;G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\Debug\cef_sandbox.lib;Advapi32.lib;dbghelp.lib;Delayimp.lib;OleAut32.lib;PowrProf.lib;Propsys.lib;psapi.lib;SetupAPI.lib;Shell32.lib;version.lib;wbemuuid.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/ceftests.lib</ImportLibrary>
+      <LargeAddressAware>true</LargeAddressAware>
+      <ProgramDataBaseFile>G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Debug/ceftests.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4100;4127;4244;4324;4481;4512;4701;4702;4996</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;_WIN32;UNICODE;_UNICODE;WINVER=0x0601;_WIN32_WINNT=0x601;NOMINMAX;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;PSAPI_VERSION=1;CEF_USE_SANDBOX;CEF_USE_ATL;_NDEBUG;UNIT_TEST;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;_WIN32;UNICODE;_UNICODE;WINVER=0x0601;_WIN32_WINNT=0x601;NOMINMAX;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;PSAPI_VERSION=1;CEF_USE_SANDBOX;CEF_USE_ATL;_NDEBUG;UNIT_TEST;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>Adding manifest...																			</Message>
+      <Command>setlocal
+mt.exe -nologo -manifest "G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/resources/win/ceftests.exe.manifest" "G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/resources/win/compatibility.manifest" -outputresource:"G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/ceftests.exe";#1
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Release/chrome_elf.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/chrome_elf.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Release/libcef.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/libcef.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Release/libEGL.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/libEGL.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Release/libGLESv2.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/libGLESv2.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Release/snapshot_blob.bin G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/snapshot_blob.bin
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Release/v8_context_snapshot.bin G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/v8_context_snapshot.bin
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Release/vk_swiftshader.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/vk_swiftshader.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Release/vk_swiftshader_icd.json G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/vk_swiftshader_icd.json
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Release/vulkan-1.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/vulkan-1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Release/d3dcompiler_47.dll G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/d3dcompiler_47.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Resources/chrome_100_percent.pak G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/chrome_100_percent.pak
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Resources/chrome_200_percent.pak G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/chrome_200_percent.pak
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Resources/resources.pak G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/resources.pak
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Resources/icudtl.dat G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/icudtl.dat
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/Resources/locales G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/locales
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/resources/net/data/ssl/certificates/expired_cert.pem G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/ceftests_files/net/data/ssl/certificates/expired_cert.pem
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/resources/net/data/ssl/certificates/localhost_cert.pem G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/ceftests_files/net/data/ssl/certificates/localhost_cert.pem
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/resources/net/data/ssl/certificates/ok_cert.pem G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/ceftests_files/net/data/ssl/certificates/ok_cert.pem
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/resources/net/data/ssl/certificates/root_ca_cert.pem G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/ceftests_files/net/data/ssl/certificates/root_ca_cert.pem
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\Release\libcef.lib;..\..\..\..\..\libcef_dll_wrapper\Release\libcef_dll_wrapper.lib;..\gtest\Release\cef_gtest.lib;comctl32.lib;gdi32.lib;rpcrt4.lib;shlwapi.lib;ws2_32.lib;G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\Release\cef_sandbox.lib;Advapi32.lib;dbghelp.lib;Delayimp.lib;OleAut32.lib;PowrProf.lib;Propsys.lib;psapi.lib;SetupAPI.lib;Shell32.lib;version.lib;wbemuuid.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/ceftests.lib</ImportLibrary>
+      <LargeAddressAware>true</LargeAddressAware>
+      <ProgramDataBaseFile>G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/Release/ceftests.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\CMakeLists.txt">
+      <StdOutEncoding>UTF-8</StdOutEncoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SG:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef -BG:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win --check-stamp-file G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef-win\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SG:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef -BG:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win --check-stamp-file G:/web_server/xampp/htdocs/PRIVATE_SERVER/cpp-wrap/test-make-for-cpp/desktop/cef-win/third_party/cef/cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64/tests/ceftests/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef-win\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\audio_output_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\browser_info_map_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\certificate_error_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\client_app_delegates.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\command_line_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\cookie_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\cors_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\devtools_message_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\dialog_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\display_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\dom_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\download_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\draggable_regions_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\file_util_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\frame_handler_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\frame_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\hsts_redirect_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\image_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\image_util.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\image_util.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\jsdialog_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\life_span_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\media_access_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\message_router_harness_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\message_router_multi_query_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\message_router_single_query_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\message_router_threshold_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\message_router_unittest_utils.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\message_router_unittest_utils.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\navigation_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\os_rendering_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\osr_accessibility_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\osr_display_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\parser_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\pdf_viewer_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\permission_prompt_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\preference_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\print_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\process_message_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\request_context_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\request_handler_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\request_unittest.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\resource.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\resource_manager_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\resource_request_handler_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\response_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\routing_test_handler.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\routing_test_handler.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\run_all_unittests.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\scheme_handler_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\scoped_temp_dir_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\send_shared_process_message_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\server_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\shared_process_message_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\stream_resource_handler_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\stream_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\string_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\task_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_handler.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_handler.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_request.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_request.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_server.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_server.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_server_manager.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_server_manager.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_server_observer.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_server_observer.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_server_observer_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_server_runner.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_server_runner.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_server_runner_normal.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_server_runner_test.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_server_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_suite.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_suite.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_util.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\test_util.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\thread_helper.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\thread_helper.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\thread_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\time_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\tracing_unittest.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\track_callback.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\translator_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\urlrequest_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\v8_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\values_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\version_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\waitable_event_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\webui_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\xml_reader_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\zip_reader_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\resource_util_win_dir.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\resource_util_win_idmap.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\extensions\background_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\extensions\chrome_alarms_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\extensions\chrome_storage_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\extensions\chrome_tabs_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\extensions\extension_test_handler.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\extensions\extension_test_handler.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\extensions\view_unittest.cc" />
+    <ResourceCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\resources\win\ceftests.rc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\client_app_browser.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\client_app_browser.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\extension_util.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\extension_util.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\file_util.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\file_util.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\geometry_util.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\geometry_util.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\main_message_loop.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\main_message_loop.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\main_message_loop_external_pump.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\main_message_loop_external_pump.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\main_message_loop_std.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\main_message_loop_std.h" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\resource_util.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\main_message_loop_external_pump_win.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\resource_util_win.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\util_win.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\browser\util_win.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\common\binary_value_utils.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\common\binary_value_utils.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\common\client_app.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\common\client_app.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\common\client_app_other.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\common\client_app_other.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\common\client_switches.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\common\client_switches.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\common\string_util.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\common\string_util.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\renderer\client_app_renderer.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\renderer\client_app_renderer.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\views\button_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\views\panel_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\views\scroll_view_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\views\test_window_delegate.cc" />
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\views\test_window_delegate.h" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\views\textfield_unittest.cc" />
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\ceftests\views\window_unittest.cc" />
+    <None Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\resources\osr_test.html">
+    </None>
+    <None Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\resources\pdf.html">
+    </None>
+    <None Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\resources\pdf.pdf">
+    </None>
+    <Image Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\resources\window_icon.1x.png">
+    </Image>
+    <Image Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\shared\resources\window_icon.2x.png">
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef-win\ZERO_CHECK.vcxproj">
+      <Project>{62A11B20-6434-3273-833E-6157632E4F30}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef-win\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\gtest\cef_gtest.vcxproj">
+      <Project>{284F4367-7B5E-32F3-95B1-5A2906242596}</Project>
+      <Name>cef_gtest</Name>
+    </ProjectReference>
+    <ProjectReference Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef-win\libcef_dll_wrapper\libcef_dll_wrapper.vcxproj">
+      <Project>{F85847AD-FEB8-3344-B94A-3876998590F0}</Project>
+      <Name>libcef_dll_wrapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

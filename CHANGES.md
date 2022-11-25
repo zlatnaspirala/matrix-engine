@@ -1,6 +1,17 @@
 
 ## CHANGES
 
+
+#### [1.9.0 BETA]
+
+Add cef and cefSharp Visual Studio projects for building executive native apps.
+
+Support:
+ - Windows
+
+GUI Texture editor based on Visualjs3 in background.
+
+
 #### From [1.8.15] Improved camera
 
  - 'hit.keyDown' && 'hit.keyUp' dispatch events added. See FPS Example.

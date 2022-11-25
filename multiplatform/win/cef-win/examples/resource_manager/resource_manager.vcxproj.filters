@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\minimal\main_minimal.cc">
+      <Filter>minimal</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\resource_manager\app_browser_impl.cc">
+      <Filter>resource_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\resource_manager\client_impl.cc">
+      <Filter>resource_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\resource_manager\resource_util_win_impl.cc">
+      <Filter>resource_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\minimal\app_other_minimal.cc">
+      <Filter>minimal</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\minimal\app_renderer_minimal.cc">
+      <Filter>minimal</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\resource_manager\client_impl.h">
+      <Filter>resource_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\resource_manager\resources\win\resource.h">
+      <Filter>resource_manager\resources\win</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\resources\win\resource.h">
+      <Filter>shared\resources\win</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\resource_manager\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\resource_manager\resources\logo.png">
+      <Filter>resource_manager\resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\resource_manager\resources\resource_manager.html">
+      <Filter>resource_manager\resources</Filter>
+    </None>
+    <None Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\resources\win\big.ico">
+      <Filter>shared\resources\win</Filter>
+    </None>
+    <None Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\resources\win\small.ico">
+      <Filter>shared\resources\win</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\resource_manager\resources\win\resource.rc">
+      <Filter>resource_manager\resources\win</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\resources\win\shared.rc">
+      <Filter>shared\resources\win</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="minimal">
+      <UniqueIdentifier>{1A1B0C81-F788-3E41-AFB9-AC610061EBE7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource_manager">
+      <UniqueIdentifier>{C92FD46E-FA91-376B-A966-C487155A0566}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource_manager\resources">
+      <UniqueIdentifier>{DE0775D5-CE97-399F-8E0F-0AE61DD140E2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource_manager\resources\win">
+      <UniqueIdentifier>{E10A1513-0974-3531-8661-09D0F1E9154B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shared">
+      <UniqueIdentifier>{1CB0B4E6-30D8-39CA-AE05-6F74A4F99603}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shared\resources">
+      <UniqueIdentifier>{6A872502-A7A1-3D26-BAE9-0D8796F76AE4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shared\resources\win">
+      <UniqueIdentifier>{B2730625-41CD-38F6-8F1C-586D6DB64E46}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

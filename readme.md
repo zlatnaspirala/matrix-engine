@@ -19,7 +19,8 @@
   easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
   (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in 
    opengles 1.1. Also can be downgraded to openGLES 1.1. webGL Lightweight library based on glmatrix engine.
-  For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js. I use free software Blender 2.90.1 for 3d Object mesh works. MatrixEngine is Blender frendly orientend lib. Also mixamo.com is great service used for creating my assets.
+  For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js. I use free software Blender 2.90.1 for 3d Object mesh works. MatrixEngine is Blender frendly orientend lib. Another frendly tools comes from mixamo.com. Mixamo is great service used for creating my 3d assets. GIMP and MsPaint
+  also used for editing images.
 
 ### Limitation ⚠
  - Basic implementation for physics (Cube, Sphere).
@@ -906,6 +907,21 @@ Create multi clone audio objects:
 App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
 ```
 This is in case that you need to play same audio many times [simultaneously].
+
+
+### Events
+
+How to detect colliding between two objects:
+```
+physicsObject.addEventListener("collide",function(e) {
+    var relativeVelocity = e.contact.getImpactVelocityAlongNormal();
+    if(Math.abs(relativeVelocity) > 10){
+        // More energy
+    } else {
+        // Less energy
+    }
+});
+```
 
 
 ## PWA Fully runned

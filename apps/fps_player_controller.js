@@ -21,18 +21,21 @@ import {ORBIT_FROM_ARRAY, OSCILLATOR, randomFloatFromTo} from '../lib/utility';
 export var runThis = (world) => {
 
   // Camera
-  canvas.style.cursor = 'none'
+  canvas.style.cursor = 'none';
   App.camera.FirstPersonController = true;
   matrixEngine.Events.camera.fly = false;
-  App.camera.speedAmp = 0.01
+  App.camera.speedAmp = 0.01;
   matrixEngine.Events.camera.yPos = 2;
 
+  // Audio effects
   App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
 
+  // Prevent right click context menu
   window.addEventListener("contextmenu", (e) => {
     e.preventDefault();
   });
 
+  // Override mouse up
   App.events.CALCULATE_TOUCH_UP_OR_MOUSE_UP = () => {
     App.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     App.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
@@ -40,6 +43,7 @@ export var runThis = (world) => {
     App.scene.xrayTarget.visible = false;
   };
 
+  // Override right mouse down
   matrixEngine.Events.SYS.MOUSE.ON_RIGHT_BTN_PRESSED = (e) => {
     App.scene.FPSTarget.geometry.setScale(0.6);
     App.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
@@ -47,9 +51,9 @@ export var runThis = (world) => {
     App.scene.xrayTarget.visible = true;
   };
 
+  // Override mouse down
   App.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
-    // From [1.8.12]
-    // checkingProcedure gets secound optimal argument
+    // `checkingProcedure` gets secound optimal argument
     // for custom ray origin target.
     if(mouse.BUTTON_PRESSED == 'RIGHT') {
       // Zoom
@@ -64,22 +68,23 @@ export var runThis = (world) => {
     }
   };
 
-  // BAD
+  // Bad usage
   // canvas.addEventListener('mousedown', (ev) => {});
 
   window.addEventListener('ray.hit.event', (ev) => {
-    console.log("You shoot the object! Nice!", ev)
+    console.log("You shoot the object! Nice!", ev);
 
-    /**
-     * Physics force apply also change ambienty light.
-     */
+    // Physics force apply also change ambienty light.
     if(ev.detail.hitObject.physics.enabled == true) {
+      // Shoot the object - apply force
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+      // Apply random diff color
       if(ev.detail.hitObject.LightsData) ev.detail.hitObject.LightsData.ambientLight.set(
         randomFloatFromTo(0, 2), randomFloatFromTo(0, 2), randomFloatFromTo(0, 2));
     }
   });
 
+  // Load obj seq animation
   const createObjSequence = (objName) => {
 
     function onLoadObj(meshes) {
@@ -87,6 +92,7 @@ export var runThis = (world) => {
       for(let key in meshes) {
         matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
       }
+
       var textuteImageSamplers2 = {
         source: [
           "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png" // ,
@@ -109,11 +115,8 @@ export var runThis = (world) => {
             }
           }
         };
-        world.Add("obj", 1, objName,
-          textuteImageSamplers2,
-          meshes[objName],
-          animArg
-        );
+
+        world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg);
 
         // Fix object orientation - this can be fixed also in blender.
         matrixEngine.Events.camera.yaw = 0;
@@ -437,18 +440,37 @@ export var runThis = (world) => {
   App.scene.energy.geometry.setScaleByX(0.35)
   App.scene.energy.geometry.setScaleByY(0.1)
 
-          world.Add("cubeLightTex", 1, "FLOOR2", tex);
-          var b2 = new CANNON.Body({
-            mass: 0,
-            linearDamping: 0.01,
-            position: new CANNON.Vec3(1, -14.5, -1),
-            shape: new CANNON.Box(new CANNON.Vec3(3, 1, 1))
-          });
-          physics.world.addBody(b2);
-          App.scene['FLOOR2'].position.setPosition(1, -1, -14.5)
-          App.scene['FLOOR2'].geometry.setScaleByX(3);
+  // good for fix rotation in future
+  world.Add("cubeLightTex", 1, "FLOOR2", tex);
+  var b2 = new CANNON.Body({
+    mass: 0,
+    linearDamping: 0.01,
+    position: new CANNON.Vec3(1, -14.5, -1),
+    shape: new CANNON.Box(new CANNON.Vec3(3, 1, 1))
+  });
+  physics.world.addBody(b2);
+  App.scene['FLOOR2'].position.setPosition(1, -1, -14.5)
+  App.scene['FLOOR2'].geometry.setScaleByX(3);
 
-          App.scene['FLOOR2'].physics.currentBody = b2;
-          App.scene['FLOOR2'].physics.enabled = true;
+  App.scene['FLOOR2'].physics.currentBody = b2;
+  App.scene['FLOOR2'].physics.enabled = true;
 
+  // Damage object test
+  world.Add("cubeLightTex", 1, "LAVA", tex);
+  var b2 = new CANNON.Body({
+    mass: 0,
+    linearDamping: 0.01,
+    position: new CANNON.Vec3(1, -16.5, -1),
+    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+  });
+  physics.world.addBody(b2);
+  App.scene.LAVA.position.setPosition(1, -1, -16.5)
+  // App.scene.LAVA.geometry.setScaleByX(1);
+  App.scene.LAVA.physics.currentBody = b2;
+  App.scene.LAVA.physics.enabled = true;
+  App.scene.LAVA.LightsData.ambientLight.set(0, 0, 0);
+  App.scene.LAVA.streamTextures = new matrixEngine.Engine.VT(
+    "res/video-texture/lava1.mkv"
+  );
+ 
 };

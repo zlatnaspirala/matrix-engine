@@ -75,13 +75,14 @@ var runThis = world => {
   _manifest.default.camera.FirstPersonController = true;
   matrixEngine.Events.camera.fly = false;
   _manifest.default.camera.speedAmp = 0.01;
-  matrixEngine.Events.camera.yPos = 2;
+  matrixEngine.Events.camera.yPos = 2; // Audio effects
 
-  _manifest.default.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
+  _manifest.default.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5); // Prevent right click context menu
+
 
   window.addEventListener("contextmenu", e => {
     e.preventDefault();
-  });
+  }); // Override mouse up
 
   _manifest.default.events.CALCULATE_TOUCH_UP_OR_MOUSE_UP = () => {
     _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
@@ -90,7 +91,8 @@ var runThis = world => {
     _manifest.default.scene.FPSTarget.geometry.setScale(0.1);
 
     _manifest.default.scene.xrayTarget.visible = false;
-  };
+  }; // Override right mouse down
+
 
   matrixEngine.Events.SYS.MOUSE.ON_RIGHT_BTN_PRESSED = e => {
     _manifest.default.scene.FPSTarget.geometry.setScale(0.6);
@@ -98,11 +100,11 @@ var runThis = world => {
     _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
     _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
     _manifest.default.scene.xrayTarget.visible = true;
-  };
+  }; // Override mouse down
+
 
   _manifest.default.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
-    // From [1.8.12]
-    // checkingProcedure gets secound optimal argument
+    // `checkingProcedure` gets secound optimal argument
     // for custom ray origin target.
     if (mouse.BUTTON_PRESSED == 'RIGHT') {// Zoom
     } else {
@@ -115,21 +117,20 @@ var runThis = world => {
 
       _manifest.default.sounds.play('shoot');
     }
-  }; // BAD
+  }; // Bad usage
   // canvas.addEventListener('mousedown', (ev) => {});
 
 
   window.addEventListener('ray.hit.event', ev => {
-    console.log("You shoot the object! Nice!", ev);
-    /**
-     * Physics force apply also change ambienty light.
-     */
+    console.log("You shoot the object! Nice!", ev); // Physics force apply also change ambienty light.
 
     if (ev.detail.hitObject.physics.enabled == true) {
-      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+      // Shoot the object - apply force
+      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000); // Apply random diff color
+
       if (ev.detail.hitObject.LightsData) ev.detail.hitObject.LightsData.ambientLight.set((0, _utility.randomFloatFromTo)(0, 2), (0, _utility.randomFloatFromTo)(0, 2), (0, _utility.randomFloatFromTo)(0, 2));
     }
-  });
+  }); // Load obj seq animation
 
   const createObjSequence = objName => {
     function onLoadObj(meshes) {
@@ -465,7 +466,8 @@ var runThis = world => {
 
   _manifest.default.scene.energy.geometry.setScaleByX(0.35);
 
-  _manifest.default.scene.energy.geometry.setScaleByY(0.1);
+  _manifest.default.scene.energy.geometry.setScaleByY(0.1); // good for fix rotation in future
+
 
   world.Add("cubeLightTex", 1, "FLOOR2", tex);
   var b2 = new CANNON.Body({
@@ -481,7 +483,26 @@ var runThis = world => {
   _manifest.default.scene['FLOOR2'].geometry.setScaleByX(3);
 
   _manifest.default.scene['FLOOR2'].physics.currentBody = b2;
-  _manifest.default.scene['FLOOR2'].physics.enabled = true;
+  _manifest.default.scene['FLOOR2'].physics.enabled = true; // Damage object test
+
+  world.Add("cubeLightTex", 1, "LAVA", tex);
+  var b2 = new CANNON.Body({
+    mass: 0,
+    linearDamping: 0.01,
+    position: new CANNON.Vec3(1, -16.5, -1),
+    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+  });
+  physics.world.addBody(b2);
+
+  _manifest.default.scene.LAVA.position.setPosition(1, -1, -16.5); // App.scene.LAVA.geometry.setScaleByX(1);
+
+
+  _manifest.default.scene.LAVA.physics.currentBody = b2;
+  _manifest.default.scene.LAVA.physics.enabled = true;
+
+  _manifest.default.scene.LAVA.LightsData.ambientLight.set(0, 0, 0);
+
+  _manifest.default.scene.LAVA.streamTextures = new matrixEngine.Engine.VT("res/video-texture/lava1.mkv");
 };
 
 exports.runThis = runThis;
