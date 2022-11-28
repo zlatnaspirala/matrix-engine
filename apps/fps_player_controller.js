@@ -460,11 +460,11 @@ export var runThis = (world) => {
   var b2 = new CANNON.Body({
     mass: 0,
     linearDamping: 0.01,
-    position: new CANNON.Vec3(1, -16.5, -1),
+    position: new CANNON.Vec3(1, -10.5, -1),
     shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
   });
   physics.world.addBody(b2);
-  App.scene.LAVA.position.setPosition(1, -1, -16.5)
+  App.scene.LAVA.position.setPosition(1, -1, -10.5)
   // App.scene.LAVA.geometry.setScaleByX(1);
   App.scene.LAVA.physics.currentBody = b2;
   App.scene.LAVA.physics.enabled = true;

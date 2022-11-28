@@ -11,6 +11,10 @@ Support:
 
 GUI Texture editor based on Visualjs3 in background.
 
+GLSL : 
+
+Note: This extension is only available to WebGL1 contexts. In WebGL2, the functionality of this extension is available on the WebGL2 context by default. The constant in WebGL2 is gl.UNSIGNED_INT_24_8.
+
 
 #### From [1.8.15] Improved camera
 
