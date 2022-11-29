@@ -83,15 +83,11 @@ var runThis = world => {
     }
   });
 
-<<<<<<< Updated upstream:builds/app.js
   const createObjSequence = objName => {
     function onLoadObj(meshes) {
       for (let key in meshes) {
         matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
       }
-=======
-  world.Add("squareTex", 4, "myCube5", tex);
->>>>>>> Stashed changes:public/app.js
 
       var textuteImageSamplers2 = {
         source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png", "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
@@ -121,18 +117,13 @@ var runThis = world => {
 
         matrixEngine.Events.camera.yaw = 180; // TARGET 
 
-<<<<<<< Updated upstream:builds/app.js
         var tex = {
           source: ["res/bvh-skeletal-base/swat-guy/target.png"],
           mix_operation: "multiply" // ENUM : multiply , divide
-=======
-  _manifest.default.scene.myCube5.activateShadows('spot-shadow');
->>>>>>> Stashed changes:public/app.js
 
         };
         world.Add("cubeLightTex", 0.2, 'FPSTarget', tex);
 
-<<<<<<< Updated upstream:builds/app.js
         _manifest.default.scene.FPSTarget.position.setPosition(0, 0, -5);
 
         _manifest.default.scene.FPSTarget.glBlend.blendEnabled = true;
@@ -141,14 +132,6 @@ var runThis = world => {
         _manifest.default.scene.FPSTarget.isHUD = true;
 
         _manifest.default.scene.FPSTarget.geometry.setScale(0.1);
-=======
-  _manifest.default.scene.myCube5.shadows.activeUpdate(); // App.scene.myCube5.shadows.animatePositionX();
-
-
-  _manifest.default.scene.myCube5.rotation.rotx = -80;
-  _manifest.default.scene.myCube5.shadows.lightPosition = [0, -1, 0]; // App.scene.myCube5.shadows.animateRadius({from: 15, to: 45, step: 0.05});
-  // Click event
->>>>>>> Stashed changes:public/app.js
 
         var options = {
           squareShema: [2, 2],
@@ -930,7 +913,7 @@ function loadShaders(gl, id) {
     gl.compileShader(shader);
 
     if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      console.log("Shader Program compile success");
+      // console.log("Shader Program compile success");
       return shader;
     } else {
       console.warn('Shader Program compile failed:' + gl.getShaderInfoLog(shader));
@@ -944,6 +927,8 @@ function loadShaders(gl, id) {
 
 function initShaders(gl, fragment, vertex) {
   // console.log("Initialize Shader");
+  // console.log("Fragment Shader:" + fragment);
+  // console.log("Vertex Shader:" + vertex);
   var fragmentShader = this.getShader(gl, fragment);
   var vertexShader = this.getShader(gl, vertex);
 
@@ -958,7 +943,7 @@ function initShaders(gl, fragment, vertex) {
     gl.linkProgram(shaderProgram);
 
     if (gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-      console.log("          Returning Shader fragment successfully");
+      // console.log("          Returning Shader fragment successfully");
       gl.useProgram(shaderProgram);
       shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
       gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
@@ -1067,14 +1052,7 @@ function initShaders(gl, fragment, vertex) {
 
       if (null !== gl.getUniformLocation(shaderProgram, 'u_lightWorldPosition')) {
         shaderProgram.lightWorldPositionLocation = gl.getUniformLocation(shaderProgram, 'u_lightWorldPosition');
-      } // test
-
-
-      if (null !== gl.getUniformLocation(shaderProgram, 'u_textureMatrix')) {
-        shaderProgram.u_textureMatrix = gl.getUniformLocation(shaderProgram, 'u_textureMatrix');
-      } // 
-      //
-      // 1.8.4 cubeMap
+      } // 1.8.4 cubeMap
 
 
       if (null !== gl.getUniformLocation(shaderProgram, 'u_texture')) {
@@ -1144,15 +1122,8 @@ var RegenerateShader = function (id_elem, numOfSamplerInUse, mixOperand, lightTy
     mixOperand = 1;
   }
 
-  console.log('lightType is', lightType);
-
   if (typeof lightType !== 'undefined') {
-    if (lightType == 'spot-shadow') {
-      console.log('opengles 30 ....', lightType);
-      e.innerHTML = (0, _matrixShaders.generateShaderSrc3)(numOfSamplerInUse, mixOperand, lightType);
-    } else {
-      e.innerHTML = (0, _matrixShaders.generateShaderSrc)(numOfSamplerInUse, mixOperand, lightType);
-    }
+    e.innerHTML = (0, _matrixShaders.generateShaderSrc)(numOfSamplerInUse, mixOperand, lightType);
   } else {
     e.innerHTML = (0, _matrixShaders.generateShaderSrc)(numOfSamplerInUse, mixOperand);
   }
@@ -3167,8 +3138,6 @@ var raycaster = _interopRequireWildcard(require("./raycast"));
 
 var _matrixShadows = require("./matrix-shadows");
 
-var _matrixTextures = require("./matrix-textures");
-
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -3407,7 +3376,7 @@ _manifest.default.operation.draws.cube = function (object) {
   _matrixWorld.world.setMatrixUniforms(object, this.pMatrix, object.mvMatrix); // Shadows
 
 
-  if (object.shadows && object.shadows.type == 'spot') {
+  if (object.shadows && object.shadows.type == 'spot' || object.shadows.type == 'spot-shadow') {
     // set the light position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition); // set the camera/view position
     // gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, camera);
@@ -3873,17 +3842,23 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
   mat4.identity(object.mvMatrix);
   this.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
 
-  if (_manifest.default.camera.FirstPersonController == true) {
-    _events.camera.setCamera(object);
-  } else if (_manifest.default.camera.SceneController == true) {
-    _events.camera.setSceneCamera(object);
-  }
+  if (object.isHUD === true) {
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
+  } else {
+    if (_manifest.default.camera.FirstPersonController == true) {
+      _events.camera.setCamera(object);
+    } else if (_manifest.default.camera.SceneController == true) {
+      _events.camera.setSceneCamera(object);
+    }
 
-  mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY()); // V
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
+  } // V
+
 
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -4013,9 +3988,11 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
           //world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
           //world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
           // ori world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+          // var nothing = 
+          // world.GL.gl.uniform1i(object.shaderProgram['samplerUniform' + t], t);
 
 
-          var nothing = _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram['samplerUniform' + t], t);
+          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
         }
@@ -4058,127 +4035,38 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
   } // shadows
 
 
-<<<<<<< Updated upstream:builds/app.js
   if (object.shadows) {
     // console.log(" SHADOWS -> " , object.shadows)
-    // Set the color to use
-    // world.GL.gl.uniform4fv(object.shaderProgram.colorLocation, [0.2, 1, 0.2, 1]); // green
-=======
-  if (object.shadows && object.shadows.type == 'spot' || object.shadows.type == 'spot-shadow') {
-    const settings = {
-      cameraX: 6,
-      cameraY: 5,
-      posX: 2.5,
-      posY: 4.8,
-      posZ: 4.3,
-      targetX: 2.5,
-      targetY: 0,
-      targetZ: 3.5,
-      projWidth: 1,
-      projHeight: 1,
-      perspective: true,
-      fieldOfView: 120,
-      bias: -0.006
-    };
-
-    if (!object.shadows.depthFramebuffer) {
-      console.log('ONLY ONCE !!!');
-      var depthFramebuffer = (0, _matrixTextures.depthTextures)(_matrixWorld.world.GL.gl);
-      object.shadows.depthFramebuffer = depthFramebuffer[0];
-      object.shadows.TEST = depthFramebuffer[1];
-    } // console.log(" SHADOWS -> " , object.shadows)
->>>>>>> Stashed changes:public/app.js
     // set the light position
-
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition); // set the camera/view position
-    //gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, camera);
-    // set the shininess
+    // gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, camera);
+    // world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, [matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos]);
 
 
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition); // Set the shininess
 
-    var target = [0, 35, 0]; //object.position.worldLocation
 
-    var up = [0, 1, 0]; // set the spotlight uniforms
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess); // Set the spotlight uniforms
+
 
     {
-      var lmat = [0, 0, -1];
-      lmat = mat4.lookAt(lmat, target, up, [0, 0, -1]);
-      lmat = mat4.multiply(mat4.fromXRotation(object.shadows.lightRotationX), lmat);
-      lmat = mat4.multiply(mat4.fromXRotation(object.shadows.lightRotationY), lmat); // get the zAxis from the matrix
+      var target = [0, 0, 0]; // object.position.worldLocation;
+
+      var up = [0, 1, 0];
+      var lmat = m4.lookAt(object.shadows.lightPosition, target, up); // var lmat = m4.lookAt(object.position.worldLocation, target, up);
+
+      lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
+      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat); // get the zAxis from the matrix
       // negate it because lookAt looks down the -Z axis
 
       object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]]; // object.shadows.lightDirection = [-0, -0, -1];
-    } // test
-
-    const viewMatrix = m4.inverse(lmat); // first draw from the POV of the light
-
-    const lightWorldMatrix = m4.lookAt([settings.posX, settings.posY, settings.posZ], // position
-    [settings.targetX, settings.targetY, settings.targetZ], // target
-    [0, 1, 0] // up
-    );
-    const lightProjectionMatrix = settings.perspective ? m4.perspective(degToRad(settings.fieldOfView), settings.projWidth / settings.projHeight, 0.5, // near
-    10) // far
-    : m4.orthographic(-settings.projWidth / 2, // left
-    settings.projWidth / 2, // right
-    -settings.projHeight / 2, // bottom
-    settings.projHeight / 2, // top
-    0.5, // near
-    10); // far
-    // draw to the depth texture
-
-    _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, object.shadows.depthFramebuffer);
-
-    _matrixWorld.world.GL.gl.viewport(0, 0, 512, 512);
-
-    _matrixWorld.world.GL.gl.clear(_matrixWorld.world.GL.gl.COLOR_BUFFER_BIT | _matrixWorld.world.GL.gl.DEPTH_BUFFER_BIT); // draw 
-
-
-    let textureMatrix = m4.identity();
-    textureMatrix = m4.translate(textureMatrix, 1, 1, 0.5);
-    textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
-    textureMatrix = m4.multiply(textureMatrix, lightProjectionMatrix); // use the inverse of this world matrix to make
-    // a matrix that will transform other positions
-    // to be relative this world space.
-
-    textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
-
-    _matrixWorld.world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
+    }
 
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
 
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
 
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit)); // TEST 
-
-
-    _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
-
-    _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, null);
-
-    _matrixWorld.world.GL.gl.viewport(0, 0, _matrixWorld.world.GL.gl.canvas.width, _matrixWorld.world.GL.gl.canvas.height);
-
-    _matrixWorld.world.GL.gl.clearColor(1, 1, 1, 1);
-
-    _matrixWorld.world.GL.gl.clear(_matrixWorld.world.GL.gl.COLOR_BUFFER_BIT | _matrixWorld.world.GL.gl.DEPTH_BUFFER_BIT); // REPEAT NORMAL TEX
-
-
-    _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + 0]);
-
-    _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[0]);
-
-    _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-
-    _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
-
-    _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.NEAREST);
-
-    _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
-
-    _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
-
-    _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
   }
 
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
@@ -4378,11 +4266,7 @@ var drawsOperation = _manifest.default.operation.draws;
 var _default = drawsOperation;
 exports.default = _default;
 
-<<<<<<< Updated upstream:builds/app.js
 },{"../program/manifest":35,"./events":6,"./matrix-shadows":15,"./matrix-world":18,"./raycast":21,"./utility":26}],11:[function(require,module,exports){
-=======
-},{"../program/manifest":36,"./events":6,"./matrix-shadows":15,"./matrix-textures":17,"./matrix-world":18,"./raycast":21,"./utility":27}],11:[function(require,module,exports){
->>>>>>> Stashed changes:public/app.js
 /* eslint-disable no-redeclare */
 
 /* eslint-disable no-unused-vars */
@@ -6712,11 +6596,11 @@ function getInitVSPyramid() {
 }
 
 function getInitFSSquareTex() {
-  const f = `#version 300 es
+  const f = `
   precision mediump float;
 
-  in vec2 vTextureCoord;
-  in vec3 vLightWeighting;
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
 
   uniform sampler2D uSampler;
   uniform sampler2D uSampler1;
@@ -6728,17 +6612,15 @@ function getInitFSSquareTex() {
 
   // Spot
   // Passed in from the vertex shader.
-  in vec3 v_normal;
-  in vec3 v_surfaceToLight;
-  in vec3 v_surfaceToView;
+  varying vec3 v_normal;
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
 
   uniform vec4 u_color;
   uniform float u_shininess;
   uniform vec3 u_lightDirection;
   uniform float u_innerLimit;          // in dot space
   uniform float u_outerLimit;          // in dot space
-
-  out vec4 outColor;
 
   void main(void) {
     vec3 normal = normalize(v_normal);
@@ -6754,9 +6636,9 @@ function getInitFSSquareTex() {
     vec4 textureColor  = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
     vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
     vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-    outColor       = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+    gl_FragColor       = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
-    outColor.rgb *= light;
+    // gl_FragColor.rgb *= light;
     // gl_FragColor.rgb += specular;
   }
   `;
@@ -6765,71 +6647,55 @@ function getInitFSSquareTex() {
 }
 
 function getInitVSSquareTex() {
-  const f = `#version 300 es
-
-  in vec3 aVertexPosition;
-  in vec3 aVertexNormal;
-  in vec2 aTextureCoord;
+  const f = `
+  attribute vec3 aVertexPosition;
+  attribute vec3 aVertexNormal;
+  attribute vec2 aTextureCoord;
 
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
   uniform mat3 uNMatrix;
+
   uniform vec3 uAmbientColor;
+
   uniform vec3 uLightingDirection;
   uniform vec3 uDirectionalColor;
+
   uniform bool uUseLighting;
 
-  out vec2 vTextureCoord;
-  out vec3 vLightWeighting;
-
-  varying vec3 v_normal;
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
 
   // Spot
   uniform vec3 u_lightWorldPosition;
-<<<<<<< Updated upstream:builds/app.js
-  uniform vec3 u_viewWorldPosition;
+  varying vec3 v_normal;
+  // varying vec3 v_normal_cubemap;
   varying vec3 v_surfaceToLight;
   varying vec3 v_surfaceToView;
 
-  void main(void) {
-    // Spot
-    v_normal = mat3(uPMatrix) * aVertexNormal;
-=======
-  out vec3 v_normal;
-
-  out vec3 v_surfaceToLight;
-  out vec3 v_surfaceToView;
-
-  // spot-Shadow
-  uniform mat4 u_textureMatrix;
-  out vec2 v_texcoord;
-  out vec4 v_projectedTexcoord;
-
   // Specular
-  // out mat4 uMVMatrixINTER;
-  // out mat3 uNMatrixINTER;
-  // out mat4 uPMatrixINNTER;
+  varying mat4 uMVMatrixINTER;
+  varying mat3 uNMatrixINTER;
+  varying mat4 uPMatrixINNTER;
 
-  // out vec4 specularColor;
-  // out vec4 vColor;
-  // out vec3 vNormal;
-  // out vec4 vPosition;
-  // out float vDist;
+  attribute vec4 specularColor;
+  varying vec4 vColor;
+  varying vec3 vNormal;
+  varying vec4 vPosition;
+  varying float vDist;
 
   void main(void) {
-    // uMVMatrixINTER = uMVMatrix;
-    // uNMatrixINTER = uNMatrix;
-    // uPMatrixINNTER = uPMatrix;
+    uMVMatrixINTER = uMVMatrix;
+    uNMatrixINTER = uNMatrix;
+    uPMatrixINNTER = uPMatrix;
 
     // GLOBAL POS SPECULAR
-    // vColor = specularColor;
-
-    // vNormal = normalize(uNMatrix * vec3(aVertexNormal));
-
+    vColor = specularColor;
+    vNormal = normalize(uNMatrix * vec3(aVertexNormal));
     // Calculate the modelView of the model, and set the vPosition
     // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
-    // vPosition = uMVMatrix * vec4(1,1,1,1);
-    // vDist = gl_Position.w;
+    vPosition = uMVMatrix * vec4(1,1,1,1);
+    vDist = gl_Position.w;
 
     // SPOT
     // orient the normals and pass to the fragment shader
@@ -6839,21 +6705,15 @@ function getInitVSSquareTex() {
     // v_normal_cubemap = normalize(aVertexPosition.xyz);
 
     // compute the world position of the surfoace
->>>>>>> Stashed changes:public/app.js
     vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+
+    // compute the vector of the surface to the light
+    // and pass it to the fragment shader
     v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
-    v_surfaceToView = -surfaceWorldPosition;
 
-    // spot shadow
-    // Pass the texture coord to the fragment shader. maybe duplicated
-
-    // Multiply the position by the matrix.
-    // vec4 worldPosition = u_world * a_position;
-    vec4 worldPosition = vec4(0,0,0,0) * vec4( aVertexPosition, 1.0);
-
-    v_texcoord = aTextureCoord;
-    v_projectedTexcoord = u_textureMatrix * worldPosition;
-
+    // compute the vector of the surface to the view/camera
+    // and pass it to the fragment shader
+    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
 
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vTextureCoord = aTextureCoord;
@@ -6866,14 +6726,14 @@ function getInitVSSquareTex() {
       float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
       vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
     }
-  }
+  } 
 `;
 
   _utility.scriptManager.LOAD(f, "squareTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
 
 function getInitFSSphereLightTex() {
-  const f = `// #version 300 es
+  const f = `
   precision mediump float;
 
   varying vec2 vTextureCoord;
@@ -7240,556 +7100,6 @@ var callReDraw_ = function () {
 exports.callReDraw_ = callReDraw_;
 
 },{"../program/manifest":35,"./engine":5,"./matrix-world":18,"./raycast":21,"./utility":26}],14:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.generateShaderSrc3 = generateShaderSrc3;
-exports.generateShaderSrc = generateShaderSrc;
-exports.generateShaderSimpleDirection = generateShaderSimpleDirection;
-exports.generateVShaderSimpleDirectionLight = generateVShaderSimpleDirectionLight;
-exports.generateLensDefinitions = generateLensDefinitions;
-exports.generateLensMain = generateLensMain;
-exports.generateCubeMapShaderSrc = generateCubeMapShaderSrc;
-exports.generateCustomShaderSrc = generateCustomShaderSrc;
-
-/**
- * @description
- * Fragment shader CUBE SQUARETex - general/main
- * OPENGLES30  SQUARE !!!
- **/
-function generateShaderSrc3(numTextures, mixOperand, lightType) {
-  return `#version 300 es
-    // Matrix-engine 1.8.16 shader for ${numTextures} textures samples.
-    precision highp float;
-    in vec2 vTextureCoord;
-    in vec3 vLightWeighting;
-
-    uniform float textureSamplerAmount[${numTextures}];
-    int MixOperandString = ${mixOperand};
-
-    uniform sampler2D uSampler;
-    uniform sampler2D uSampler1;
-    uniform sampler2D uSampler2;
-    uniform sampler2D uSampler3;
-    in vec3 v_normal;
-    ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightDefinitions() : ``) + (typeof lightType !== 'undefined' && lightType == 'specular' ? generateSpecularLightDefinitions() : ``) + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensDefinitions() : ``) + (typeof lightType !== 'undefined' && lightType == 'spot-shadow' ? generateSpotLightShadowDefinitions() : ``) + `
-
-    void main(void) {
-
-        vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
-        vec4 textureColor1 = texture(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor2 = texture(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor3 = texture(uSampler3, vec2(vTextureCoord.s, vTextureCoord.t));
-
-        if (${numTextures} == 1) {
-          outColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-        } else if (${numTextures} == 2) {
-          if ( ${mixOperand} == 0) {
-            outColor    = vec4( (textureColor.rgb * textureColor1.rgb) * vLightWeighting, textureColor.a);
-          } else if (${mixOperand} == 1) {
-            outColor    = vec4( (textureColor.rgb / textureColor1.rgb) * vLightWeighting, textureColor.a);
-          }
-        } else if (${numTextures} == 3) {
-          if (${mixOperand} == 0) {
-            outColor =vec4( (textureColor.rgb * textureColor1.rgb * textureColor2.rgb ) * vLightWeighting, textureColor.a);
-          }
-          else if (${mixOperand} == 1) {
-            outColor = vec4( (textureColor.rgb * textureColor1.rgb / textureColor2.rgb ) * vLightWeighting, textureColor.a);
-          }
-        } else if (${numTextures} == 4) {
-            if (${mixOperand} == 0) {
-              outColor = textureColor * textureColor1 * textureColor2 * textureColor3;
-            }
-            else if (${mixOperand} == 1) {
-              outColor = textureColor / textureColor1 / textureColor2 /  textureColor3;
-            }
-        }
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightMain() : ``) + `
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'specular' ? generateSpecularLightMain() : ``) + `
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensMain(numTextures) : ``) + `
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'spot-shadow' ? generateSpotLightShadowMain() : ``) + `
-
-    }`;
-}
-/**
- * @description
- * Fragment shader CUBE SQUARETex - general/main
- **/
-
-
-function generateShaderSrc(numTextures, mixOperand, lightType) {
-  return `
-    // Matrix-engine shader for ${numTextures} textures samples.
-    precision mediump float;
-    precision highp float;
-    varying vec2 vTextureCoord;
-    varying vec3 vLightWeighting;
-
-    uniform float textureSamplerAmount[${numTextures}];
-    int MixOperandString = ${mixOperand};
-
-    uniform sampler2D uSampler;
-    uniform sampler2D uSampler1;
-    uniform sampler2D uSampler2;
-    uniform sampler2D uSampler3;
-    uniform sampler2D uSampler4;
-    uniform sampler2D uSampler5;
-    uniform sampler2D uSampler6;
-    uniform sampler2D uSampler7;
-    varying vec3 v_normal;
-    
-    ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightDefinitions() : ``) + `
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'specular' ? generateSpecularLightDefinitions() : ``) + `
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensDefinitions() : ``) + `
-
-    void main(void) {
-
-        vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor3 = texture2D(uSampler3, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor4 = texture2D(uSampler4, vec2(vTextureCoord.s, vTextureCoord.t));
-
-        if (${numTextures} == 1) {
-          gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-          // gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b,textureColor.g ) , smoothstep(textureColor.r, textureColor.b,textureColor.g ) ,0 ,smoothstep(textureColor.r, textureColor.b,textureColor.g));
-        } else if (${numTextures} == 2) {
-          if ( ${mixOperand} == 0) {
-            gl_FragColor    = vec4( (textureColor.rgb * textureColor1.rgb) * vLightWeighting, textureColor.a);
-          } else if (${mixOperand} == 1) {
-            gl_FragColor    = vec4( (textureColor.rgb / textureColor1.rgb) * vLightWeighting, textureColor.a);
-          }
-        } else if (${numTextures} == 3) {
-          if (${mixOperand} == 0) {
-            gl_FragColor =vec4( (textureColor.rgb * textureColor1.rgb * textureColor2.rgb ) * vLightWeighting, textureColor.a);
-          }
-          else if (${mixOperand} == 1) {
-            gl_FragColor = vec4( (textureColor.rgb * textureColor1.rgb / textureColor2.rgb ) * vLightWeighting, textureColor.a);
-          }
-        } else if (${numTextures} == 4) {
-            if (${mixOperand} == 0) {
-              gl_FragColor = textureColor * textureColor1 * textureColor2 * textureColor3;
-            }
-            else if (${mixOperand} == 1) {
-              gl_FragColor = textureColor / textureColor1 / textureColor2 /  textureColor3;
-            }
-        }
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightMain() : ``) + `
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'specular' ? generateSpecularLightMain() : ``) + `
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensMain(numTextures) : ``) + `
-
-    }`;
-}
-
-function generateShaderSimpleDirection() {
-  return `
-  precision mediump float;
-  precision highp float;
-
-  varying vec4 vColor;
-  varying vec3 vLightWeighting;
-
-  void main(void) {
-    gl_FragColor      = vec4(vColor.rgb * vLightWeighting, vColor.a);
-  }
-  `;
-}
-
-function generateVShaderSimpleDirectionLight() {
-  return `
-  attribute vec3 aVertexPosition;
-  attribute vec4 aVertexColor;
-  attribute vec3 aVertexNormal;
-  
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
-  varying vec3 vLightWeighting;
-  varying vec4 vColor;
-
-  void main(void) {
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-
-    vec3 transformedNormal          = uNMatrix * aVertexNormal;
-    float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-    vLightWeighting                 = uDirectionalColor * directionalLightWeighting;
-    vColor      = aVertexColor;
-  }
-  `;
-}
-
-function generateSpotLightDefinitions() {
-  return `// Passed in from the vertex shader.
-  // varying vec3 v_normal;
-  varying vec3 v_surfaceToLight;
-  varying vec3 v_surfaceToView;
-
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;          // in dot space
-  uniform float u_outerLimit;          // in dot space
-  //
-  `;
-}
-
-function generateSpotLightMain() {
-  return `
-  //
-  // because v_normal is a varying it's interpolated
-  // so it will not be a unit vector. Normalizing it
-  // will make it a unit vector again
-  vec3 normal = normalize(v_normal);
-
-  vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-  vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-  vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-
-  float dotFromDirection = dot(surfaceToLightDirection,
-                               -u_lightDirection);
-  float limitRange = u_innerLimit - u_outerLimit;
-  float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-  float light = inLight * dot(normal, surfaceToLightDirection);
-  float specular = inLight * pow(dot(normal, halfVector), u_shininess);
-
-  // Lets multiply just the color portion (not the alpha)
-  // by the light
-  gl_FragColor.rgb *= light;
-  // Just add in the specular
-  gl_FragColor.rgb += specular;
-  //
-  `;
-}
-/**
- * @description
- * Specular lights.
- * Definition scope.
- * Global world scene position.
- */
-
-
-function generateSpecularLightDefinitions() {
-  return `// Passed in from the vertex shader.
-  uniform mat4 uMVMatrixINTER;
-  uniform mat3 uNMatrixINTER;
-  uniform mat4 uPMatrixINNTER;
-
-  uniform vec3 uLightPosition;
-  uniform vec3 uFogColor;
-  uniform vec2 uFogDist;
-
-  varying vec4 vColor;
-  varying vec3 vNormal;
-  varying vec4 vPosition;
-  varying float vDist;
-  `;
-}
-/**
- * @description
- * Specular lights.
- * Main function.
- * Global world scene position.
- */
-
-
-function generateSpecularLightMain() {
-  return `
-  vec3 normal = normalize(v_normal);
-  vec3 lightPosition = vec3(uMVMatrixINTER * vec4(uLightPosition, 1) - vPosition);
-  vec3 lightDirection = normalize(lightPosition);
-
-  // The dot product of the light direction and the orientation of a surface (the normal)
-  // This will be the "diffuse factor"
-  float nDotL = max(dot(lightDirection, normal), 0.1);
-
-  // Specular vars to canculate
-  float specularPower = 0.1;
-  float specular = 0.0;
-
-  if (nDotL > 0.0) {
-    vec3 viewVec = vec3(0,0,1);
-    // reflective vector
-    vec3 reflectVec = reflect(-lightDirection, normal);
-    // determine the specularFactor based on the dot product of viewing and reflective,
-    // taking at least a minimum of 0.0
-    float specularFactor = max(dot(reflectVec, viewVec), 0.0);
-    specular = pow(specularFactor, specularPower);
-  }
-  gl_FragColor.rgb =  textureColor.rgb * vLightWeighting * nDotL - specular;
-  gl_FragColor.a = textureColor.a;
-  `;
-}
-/**
- * @description
- * Lens effect.
- * Definition scope.
- * Global world scene position.
- */
-
-
-function generateLensDefinitions() {
-  return `// lens effect
-  uniform vec3 uLightPosition;
-  uniform vec3 uResolution;
-  uniform vec3 uControl;
-  `;
-}
-/**
- * @description
- * Lens effect.
- * Main function.
- */
-
-
-function generateLensMain(numTextures) {
-  return `
-  vec2 rez = vec2(uResolution.x , uResolution.y );
-  vec2 uC = vec2(uControl.x, uControl.y);
-  vec3 pixel_color;
-  float lens_radius = min(0.3 * rez.x, 250.0);
-  vec2 mouse_direction = uC - gl_FragCoord.xy;
-  float mouse_distance = length(mouse_direction);
-  float exp = 1.0;
-  vec2 offset = (1.0 - pow(mouse_distance / lens_radius, exp)) * mouse_direction;
-  if (mouse_distance < lens_radius) {
-    pixel_color = texture2D(uSampler, vTextureCoord + offset / rez ).rgb;
-    pixel_color.rgb =  pixel_color.rgb * vLightWeighting;
-  } else {
-    pixel_color.rgb =  textureColor.rgb * vLightWeighting;
-  }
-  // todo
-  // if (${numTextures} == 1) { }
-  gl_FragColor = vec4(pixel_color, 1.0);
-  gl_FragColor.a = textureColor.a;
-  `;
-}
-/**
- * @description
- * Make cubeMap Fragment shader.
- */
-
-
-function generateCubeMapShaderSrc(numTextures, mixOperand, lightType) {
-  return `
-    // shader for opengles native 
-    // 'uniform samplerCube' CubeMap canvas2d textures.
-
-    precision mediump float;
-    precision highp float;
-
-    varying vec3 vLightWeighting;
-
-    uniform float textureSamplerAmount[1];
-    int MixOperandString = ${mixOperand};
-    // The CubeMap texture.
-    uniform samplerCube u_texture;
-    varying vec3 v_normal;
-    varying vec3 v_normal_cubemap;
-
-    void main(void) {
-      // without light
-      // gl_FragColor = textureCube(u_texture, v_normal_cubemap);
-      vec4 lightMapColor = textureCube(u_texture, v_normal_cubemap);
-      gl_FragColor = vec4(lightMapColor.rgb * vLightWeighting, lightMapColor.a);
-    }
-    `;
-<<<<<<< Updated upstream:builds/app.js
-=======
-} // OPENGLE30 !!!
-
-
-function generateSpotLightShadowDefinitions() {
-  return `// Passed in from the vertex shader.
-  // varying vec3 v_normal;
-  in vec3 v_surfaceToLight;
-  in vec3 v_surfaceToView;
-
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;          // in dot space
-  uniform float u_outerLimit;          // in dot space
-
-  uniform mat4 u_projection;
-  uniform mat4 u_view;
-  uniform mat4 u_world;
-  uniform mat4 u_textureMatrix;
-
-  out vec4 outColor;
-  //
-  `;
-}
-
-function generateSpotLightShadowMain() {
-  return `
-  //
-  // because v_normal is a varying it's interpolated
-  // so it will not be a unit vector. Normalizing it
-  // will make it a unit vector again
-  vec3 normal = normalize(v_normal);
-
-  vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-  vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-  vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-
-  float dotFromDirection = dot(surfaceToLightDirection,
-                               -u_lightDirection);
-  float limitRange = u_innerLimit - u_outerLimit;
-  float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-  float light = inLight * dot(normal, surfaceToLightDirection);
-  float specular = inLight * pow(dot(normal, halfVector), u_shininess);
-
-  // Lets multiply just the color portion (not the alpha)
-  // by the light
-  outColor.rgb *= light;
-  // Just add in the specular
-  outColor.rgb += specular;
-  //
-  `;
->>>>>>> Stashed changes:public/app.js
-}
-/**
- * @description
- * Make Custom shader*/
-
-
-function generateCustomShaderSrc(numTextures, mixOperand, code_) {
-  return `
-
-    // shader for ${numTextures} textures
-    precision mediump float;
-    precision highp float;
-
-    varying vec2 vTextureCoord;
-    varying vec3 vLightWeighting;
-
-    uniform float textureSamplerAmount[${numTextures}];
-    float TimeFor;
-
-    int MixOperandString = ${mixOperand};
-    int CODE = ${code_};
-
-    uniform sampler2D uSampler;
-    uniform sampler2D uSampler1;
-    uniform sampler2D uSampler2;
-    uniform sampler2D uSampler3;
-    uniform sampler2D uSampler4;
-    uniform sampler2D uSampler5;
-    uniform sampler2D uSampler6;
-    uniform sampler2D uSampler7;
-
-    void main(void) {
-
-        vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor3 = texture2D(uSampler3, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor4 = texture2D(uSampler4, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor5 = texture2D(uSampler5, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor6 = texture2D(uSampler6, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor7 = texture2D(uSampler7, vec2(vTextureCoord.s, vTextureCoord.t));
-
-        // MixOperandString  make it with eval todo task
-
-        if (  ${numTextures} == 1)
-        {
-
-            if  ( CODE == 0 ) {
-
-                gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-
-            }
-            else if (CODE == 1){
-
-                gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b,textureColor.g ) , smoothstep(textureColor.r, textureColor.b,textureColor.g ) , 0 , 1 );
-
-            }
-            else if (CODE == 2){
-
-                gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b , textureColor.g ) , 1 , 0 , 1 );
-
-            }
-            else if (CODE == 3){
-
-                gl_FragColor = vec4( smoothstep( textureColor.g , textureColor.b , 0.5 ) , 1 , 0 , 1 );
-
-            }
-            else if (CODE == 4){
-
-                // textureColor
-                vec2 position =  vTextureCoord;
-                float color = 0.3;
-                gl_FragColor = vec4( vec3( color , color * 0.5, sin( color + TimeFor / 3.0 ) * 0.75 ), 1.0 );
-
-            }
-
-        }
-        else if (${numTextures} == 2)
-        {
-            if ( ${mixOperand} == 0){
-                gl_FragColor      = vec4( (textureColor.rgb * textureColor1.rgb) * vLightWeighting, textureColor.a);
-            }
-            else if (${mixOperand} == 1){
-                gl_FragColor      = vec4( (textureColor.rgb / textureColor1.rgb) * vLightWeighting, textureColor.a);
-            }
-
-        }
-        else if (${numTextures} == 3)
-        {
-            if (MixOperandString == 0){
-                gl_FragColor =vec4( (textureColor.rgb * textureColor1.rgb * textureColor2.rgb ) * vLightWeighting, textureColor.a);
-            }
-            else if (MixOperandString == 1){
-                gl_FragColor = vec4( (textureColor.rgb * textureColor1.rgb / textureColor2.rgb ) * vLightWeighting, textureColor.a);
-            }
-
-        }
-        else if (${numTextures} == 4)
-        {
-            if (MixOperandString == 0){
-                gl_FragColor = textureColor * textureColor1 * textureColor2 * textureColor3;
-            }
-            else if (MixOperandString == 1){
-                gl_FragColor = textureColor / textureColor1 / textureColor2 /  textureColor3;
-            }
-
-        }
-
-    }
-
-    // uniform sampler2D uSampler[${numTextures}];
-    // uniform float uMixAmount[${numTextures}];
-
-    /*
-     void main() {
-     vec4 color = vec4(0);
-
-     for (int i = 0; i < ${numTextures}; ++i) {
-     vec4 texColor = texture2D(uSampler[i], vTextureCoord);
-     color = mix(color, texColor, uMixAmount[i]);
-     }
-
-     gl_FragColor = color;
-     }
-     */
-
-    `;
-}
 
 },{}],15:[function(require,module,exports){
 "use strict";
@@ -8111,7 +7421,7 @@ exports.MatrixButton = MatrixButton;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.depthTextures = exports.cubeMapTextures = void 0;
+exports.default = exports.cubeMapTextures = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
@@ -8286,79 +7596,6 @@ const cubeMapTextures = async function (sources, callback) {
 };
 
 exports.cubeMapTextures = cubeMapTextures;
-
-const depthTextures = gl => {
-  // test
-  const checkerboardTexture = gl.createTexture();
-  gl.bindTexture(gl.TEXTURE_2D, checkerboardTexture);
-  gl.texImage2D(gl.TEXTURE_2D, 0, // mip level
-  gl.LUMINANCE, // internal format
-  8, // width
-  8, // height
-  0, // border
-  gl.LUMINANCE, // format
-  gl.UNSIGNED_BYTE, // type
-  new Uint8Array([// data
-  0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF]));
-  gl.generateMipmap(gl.TEXTURE_2D);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); // test depth
-
-  const depthTexture = gl.createTexture();
-  const depthTextureSize = 512;
-  gl.bindTexture(gl.TEXTURE_2D, depthTexture);
-  gl.texImage2D(gl.TEXTURE_2D, // target
-  0, // mip level
-  gl.DEPTH_COMPONENT32F, // internal format
-  depthTextureSize, // width
-  depthTextureSize, // height
-  0, // border
-  gl.DEPTH_COMPONENT, // format
-  gl.FLOAT, // type
-  null); // data
-
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  const depthFramebuffer = gl.createFramebuffer();
-  gl.bindFramebuffer(gl.FRAMEBUFFER, depthFramebuffer);
-  gl.framebufferTexture2D(gl.FRAMEBUFFER, // target
-  gl.DEPTH_ATTACHMENT, // attachment point
-  gl.TEXTURE_2D, // texture target
-  depthTexture, // texture
-  0); // mip level
-  // only for webgl1
-  // create a color texture of the same size as the depth texture
-  // see article why this is needed_
-  // const unusedTexture = gl.createTexture();
-  // gl.bindTexture(gl.TEXTURE_2D, unusedTexture);
-  // gl.texImage2D(
-  //   gl.TEXTURE_2D,
-  //   0,
-  //   gl.RGBA,
-  //   depthTextureSize,
-  //   depthTextureSize,
-  //   0,
-  //   gl.RGBA,
-  //   gl.UNSIGNED_BYTE,
-  //   null,
-  // );
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  // // attach it to the framebuffer
-  // gl.framebufferTexture2D(
-  //   gl.FRAMEBUFFER,        // target
-  //   gl.COLOR_ATTACHMENT0,  // attachment point
-  //   gl.TEXTURE_2D,         // texture target
-  //   unusedTexture,         // texture
-  //   0);                    // mip level
-
-  return [depthFramebuffer, checkerboardTexture];
-};
-
-exports.depthTextures = depthTextures;
 var _default = _manifest.default.tools;
 exports.default = _default;
 
@@ -8593,6 +7830,7 @@ function defineworld(canvas) {
     /*
       Common conventions to be followed across
       Contents can contain any type of objects. Each object can be a triangle, cube etc.
+      object.visible        =  Avoid draw procedure
       object.type           =  Contains the type of object namely triangle, cube
       object.size           =  Contains the size of the object. 1 unit will be the same as how WEBGL assumes 1 as in an array
       object.sides          =  Contains the number of sides. This needs to be first declared.  (To be built and used)
@@ -8608,6 +7846,7 @@ function defineworld(canvas) {
     // console.info("Fill world with:" + filler + " of size:" + size);
     if ('triangle' == filler) {
       var triangleObject = new Object();
+      triangleObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         triangleObject.name = nameUniq;
@@ -8671,6 +7910,7 @@ function defineworld(canvas) {
 
     if ('square' == filler) {
       var squareObject = new Object();
+      squareObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         squareObject.name = nameUniq;
@@ -8737,6 +7977,7 @@ function defineworld(canvas) {
     if ('squareTex' == filler) {
       // eslint-disable-next-line no-redeclare
       var squareObject = new Object();
+      squareObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         squareObject.name = nameUniq;
@@ -8798,11 +8039,17 @@ function defineworld(canvas) {
         } else if (t == 'lens') {
           squareObject.useShadows = true;
           squareObject.shadows = new _matrixShadows.MatrixEffectLens();
+        } else if (t == 'spot-shadow') {
+          squareObject.useShadows = true;
+          squareObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
         }
 
         (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
         squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-      };
+      }; // gen tex
+
+
+      squareObject.createPixelsTex = _manifest.default.tools.createPixelsTex;
 
       if (typeof texturesPaths !== 'undefined') {
         if (typeof texturesPaths == 'string') {
@@ -8814,7 +8061,7 @@ function defineworld(canvas) {
           // console.info("texturesPaths is object...");
           squareObject.textures = [];
           squareObject.texture = true;
-          (0, _engine.RegenerateShader)('' + filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'spot-shadow');
+          (0, _engine.RegenerateShader)('' + filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             squareObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
@@ -8853,6 +8100,7 @@ function defineworld(canvas) {
 
     if ('cube' == filler) {
       var cubeObject = new Object();
+      cubeObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         cubeObject.name = nameUniq;
@@ -8927,6 +8175,7 @@ function defineworld(canvas) {
 
     if ('sphereTex' == filler || 'sphereLightTex' == filler) {
       var sphereObject = new Object();
+      sphereObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         sphereObject.name = nameUniq;
@@ -9058,6 +8307,7 @@ function defineworld(canvas) {
 
     if ('pyramid' == filler) {
       var pyramidObject = new Object();
+      pyramidObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         pyramidObject.name = nameUniq;
@@ -9122,6 +8372,7 @@ function defineworld(canvas) {
 
     if ('obj' == filler) {
       var objObject = new Object();
+      objObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         objObject.name = nameUniq;
@@ -9263,6 +8514,7 @@ function defineworld(canvas) {
     if ('cubeTex' == filler || 'cubeLightTex' == filler) {
       // eslint-disable-next-line no-redeclare
       var cubeObject = new Object();
+      cubeObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         cubeObject.name = nameUniq;
@@ -9312,20 +8564,23 @@ function defineworld(canvas) {
 
       cubeObject.useShadows = false;
 
-      cubeObject.activateShadows = type => {
-        if (typeof type === 'undefined' || type == 'spot') {
-          type = 'spot';
+      cubeObject.activateShadows = t => {
+        if (typeof t === 'undefined' || t == 'spot') {
+          t = 'spot';
           cubeObject.useShadows = true;
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpot();
-        } else if (type == 'specular') {
+        } else if (t == 'specular') {
           cubeObject.useShadows = true;
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpecular();
-        } else if (type == 'lens') {
+        } else if (t == 'lens') {
           cubeObject.useShadows = true;
           cubeObject.shadows = new _matrixShadows.MatrixEffectLens();
+        } else if (t == 'spot-shadow') {
+          cubeObject.useShadows = true;
+          cubeObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
         }
 
-        (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, type);
+        (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
         cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       };
 
@@ -9408,6 +8663,7 @@ function defineworld(canvas) {
     if ('cubeMap' == filler || 'cubeMapTex' == filler) {
       // eslint-disable-next-line no-redeclare
       var cubeObject = new Object();
+      cubeObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         cubeObject.name = nameUniq;
@@ -9457,18 +8713,21 @@ function defineworld(canvas) {
 
       cubeObject.useShadows = false;
 
-      cubeObject.activateShadows = type => {
+      cubeObject.activateShadows = t => {
         // Update others end
-        if (typeof type === 'undefined' || type == 'spot') {
-          type = 'spot';
+        if (typeof t === 'undefined' || t == 'spot') {
+          t = 'spot';
           cubeObject.useShadows = true;
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpot();
-        } else if (type == 'specular') {
+        } else if (t == 'specular') {
           cubeObject.useShadows = true;
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpecular();
-        } else if (type == 'lens') {
+        } else if (t == 'lens') {
           cubeObject.useShadows = true;
           cubeObject.shadows = new _matrixShadows.MatrixEffectLens();
+        } else if (t == 'spot-shadow') {
+          cubeObject.useShadows = true;
+          cubeObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
         }
 
         (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, type);
@@ -9637,6 +8896,7 @@ function defineworld(canvas) {
 
     if ('generatorTex' == filler || 'generatorLightTex' == filler) {
       var customObject = new Object();
+      customObject.visible = true;
 
       if (typeof nameUniq != 'undefined') {
         customObject.name = nameUniq;
