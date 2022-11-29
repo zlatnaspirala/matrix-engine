@@ -20,31 +20,29 @@ export var runThis = (world) => {
     mix_operation: "multiply",
   };
 
-  // world.Add("cubeLightTex", 1, "myCube1", tex);
-  // App.scene.myCube1.activateShadows();
-  // App.scene.myCube1.position.setPosition(-3,3,-11);
-  // // Local Shadows cast must be activated!
-  // // cubeLightTex squareTex
-  // App.scene.myCube1.shadows.activeUpdate();
-  // App.scene.myCube1.shadows.animatePositionX();
+  // world.Add("squareTex", 2, "myCube", tex);
+  // App.scene.myCube.position.SetZ(-11);
+  // App.scene.myCube.position.SetX(0);
+  // App.scene.myCube.position.SetY(2);
+  // // App.scene.myCube5.rotation.rotateX(90)
+  // App.scene.myCube.activateShadows('spot-shadow');
+  // App.scene.myCube.shadows.innerLimit = 0
+  // App.scene.myCube.shadows.activeUpdate();
+  // App.scene.myCube.rotation.rotx = -80;
+  // App.scene.myCube.shadows.lightPosition = [0,-1,0]
  
   // Created with blanko texture or red, blue or green solid.
   // then add new tex sampler created generic square 2x2 by default.
   world.Add("squareTex", 4, "myCube5", tex);
   App.scene.myCube5.position.SetZ(-11);
   App.scene.myCube5.position.SetX(0);
-  App.scene.myCube5.position.SetY(0);
-  // App.scene.myCube5.rotation.rotateX(90)
+  App.scene.myCube5.position.SetY(1);
   App.scene.myCube5.activateShadows('spot-shadow');
   App.scene.myCube5.shadows.innerLimit = 0
   App.scene.myCube5.shadows.activeUpdate();
-  // App.scene.myCube5.shadows.animatePositionX();
-
   App.scene.myCube5.rotation.rotx = -80;
   App.scene.myCube5.shadows.lightPosition = [0,-1,0]
-
-  // App.scene.myCube5.shadows.animateRadius({from: 15, to: 45, step: 0.05});
-
+ 
   // Click event
   canvas.addEventListener('mousedown', (ev) => {
     matrixEngine.raycaster.checkingProcedure(ev);
