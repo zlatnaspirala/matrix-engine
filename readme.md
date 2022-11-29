@@ -1,17 +1,16 @@
 ![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/webgl2glmatrix2.jpg)
 
 ## About Matrix Engine project
-
-### Name: `MATRIX-ENGINE` `1.8.11`
+### Name: `MATRIX-ENGINE` `1.8.15`
 
 #### Logo
-<img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/res/icons/ms-icon.png" width="128" height="128" />
+<img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/public/res/icons/ms-icon.png" width="128" height="128" />
 
 ### STATUS
-#### - [Integrated PWA addToHomePage/cache/] 	✔	
+#### - [Integrated PWA addToHomePage/cache/]	✔	
 #### - [Integrated raycast (hit trigger detect), bvh animation]	✔	
 #### - [Basic Physics implementation based on cannon.js]	✔	
-#### - [FirstPersonController/SceneController Drag and navigation scene]	✔	
+#### - [FirstPersonController fly or classic fp / SceneController Drag and navigation scene]	✔	
 #### - [Basic's Shadows vs lights (GLSL)]	✔	
 
 ### Description ℹ
@@ -20,11 +19,12 @@
   easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
   (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in 
    opengles 1.1. Also can be downgraded to openGLES 1.1. webGL Lightweight library based on glmatrix engine.
-  For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js. I use free software Blender 2.90.1 for 3d Object mesh works. MatrixEngine is Blender frendly orientend lib. Also mixamo.com is great service used for creating my assets.
+  For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js. I use free software Blender 2.90.1 for 3d Object mesh works. MatrixEngine is Blender frendly orientend lib. Another frendly tools comes from mixamo.com. Mixamo is great service used for creating my 3d assets. GIMP and MsPaint
+  also used for editing images.
 
 ### Limitation ⚠
- - Basic implementation for physics (Cube, Sphere)
- - Raycast not work after walk behind the object in first person mode
+ - Basic implementation for physics (Cube, Sphere).
+ - Raycast not work after walk behind the object in first person mode.
  - Only static object cast spot light in right way for now.
  - Need general more improvement on GLSL part.
 
@@ -54,10 +54,12 @@
 
 - https://maximumroulette.com/apps/matrix-engine/examples-build.html
 - https://maximumroulette.com/apps/matrix-engine/app-build.html
+- https://fps-matrix-engine.vercel.app
 
-  #### How to use it from npm services [codepen examples]
 
-  [1.7.9] Lights - Who to use matrix-engine on codepen:
+#### How to use it from npm services [codepen examples]
+
+[1.7.9] Lights - Who to use matrix-engine on codepen:
 - https://codepen.io/zlatnaspirala/full/OJZXMWR
 
   BHV Pseudo Skeletal animation:
@@ -179,9 +181,9 @@ Take a look at query-build.html
 - Physics Sphere
 - BVH loader, animation play
 - Load obj sequences
-- FPShooter example [WIP]
+- FPShooter example (+Sounds) [WIP]
 - specular_light_basic -> global light position test [WIP]
-- Lens effect shaders for cube
+- Lens effect shaders for cube [WIP]
 
 ## Features description
 
@@ -349,24 +351,46 @@ Example with physics and raycast hit detect:
 
 Networking based on webRTC. If you wanna use `multiplayer mode` you need to run intro
 folder `networking/` next commands:
+
 ```js
  npm i
  node matrix-server.js
 ```
 
 #### Networking Support Methods list: ✅😇
+
+Networking is deeply integrated no need for extra interventions.
+Except activation.
+```js
+  App.scene.MyColoredSquare1.net.enable = true;
+  App.scene.MyColoredSquare1.net.activate();
+
+  // Now MyColoredSquare1 is net replicated on others clients.
+  App.scene.MyColoredSquare1.position.SetZ(-8);
+```
+
  - Any scene object:
+
   ➡ position SetX() SetY() SetZ()
+
   ➡ rotation.rotateX() rotateY() rotateZ()
 
  - Cube, Sphere, Square
+
   ➡ geometry.setScale()
+
   ➡ geometry.setScaleByY()
+
   ➡ geometry.setScaleByZ()
+
   ➡ geometry.setScaleByZ()
+
   ➡ geometry.setTexCoordScaleFactor()
+
  - Pyramid
+
   ➡ geometry.setScale()
+
   ➡ geometry.setSpitz()
 
 #### Networking minimal example
@@ -656,11 +680,11 @@ App.scene.TV.streamTextures = new ACCESS_CAMERA('webcam_beta');
  Its load primitives for bvh skeletal. MatrixBVHCharacter is proccess
  where we load pre defined skelatal obj parts(head, neck, legs...) .
 
-### @Note Human character failed for noe but func works.
+### @Note Human character failed for now but func works.
 Nice for primitive obj mesh bur rig must have nice description of 
 position/rotation. In maximo skeletal bones simple not fit.
 If you pripare bones you can get nice bvh obj adaptation for animations.
-
+mocap set of assets looks better for this operation.
 
 #### Example Code:
 ```js
@@ -762,9 +786,41 @@ In `onLoadObj` callback function:
 
 ### FirstPersonShooter examples [WIP]
  - Just like in eu4 shooter we dont need whole character mesh for FPSHooter view. I cut off no hands vertices in blender to make optimised flow.
+ - Added basic Jumping with physics
 
+From [1.8.15]
+ - 'hit.keyDown' && 'hit.keyUp' dispatch events added. See FPS Example.
+ - Added basic JUMP with physics / not calibrated.
+
+```js
+  addEventListener('hit.keyDown', (e) => {
+    // console.log('Bring to the top level', e.detail.keyCode);
+  })
+```
+
+Feature [1.8.12] App.events Access.
 Take a look at the `apps\fps_player_controller.js` example.
 
+```js
+
+  App.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
+    // From [1.8.12]
+    // checkingProcedure gets secound optimal argument
+    // for custom ray origin target.
+    // mouse
+    console.log(mouse.BUTTON)
+    if(mouse.BUTTON_PRESSED == 'RIGHT') {
+      // Zoom
+    } else {
+      // This call represent `SHOOT` Action.
+      // And it is center of screen
+      matrixEngine.raycaster.checkingProcedure(ev, {
+        clientX: ev.target.width / 2,
+        clientY: ev.target.height / 2
+      });
+    }
+  };
+```
  WIP calculating for fixing FPS camera view.
 
  [1.8.11] New 3dObject property `isHUD`.
@@ -836,30 +892,36 @@ Old Live demo:
 Video and webcam works at:
 https://maximumroulette.com/webgl2/examples.html
 
-### Changes:
 
-#### From [1.8.0]
-Added watchify.
-We have support for real time connections based on webRTC.
-You must work on https protocol even in localhost.
-Change in program/manifest `net = false` if you dont wanna use networking.
+### Sounds
 
-Node.js Multiplayer Server based on webRTC. Take a look at the folder `./netwotking`.
+From 1.8.13 you can add audios:
 
-Run it:
+Create single audio object:
 ```js
-cd networking
-node matrix.server.js
+App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3');
 ```
 
-If you wanna in terminal popup then run (bash/work on win also if you have bash) `dedicated.sh./`
-or `dedicated.bat`.
+Create multi clone audio objects:
+```js
+App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
+```
+This is in case that you need to play same audio many times [simultaneously].
 
 
-#### From [1.7.11]
- No need for:
- `// matrixEngine.Engine.load_shaders('shaders/shaders.html');`
- Initial Shaders now loads from code (inside engine). No need any action.
+### Events
+
+How to detect colliding between two objects:
+```
+physicsObject.addEventListener("collide",function(e) {
+    var relativeVelocity = e.contact.getImpactVelocityAlongNormal();
+    if(Math.abs(relativeVelocity) > 10){
+        // More energy
+    } else {
+        // Less energy
+    }
+});
+```
 
 
 ## PWA Fully runned
@@ -907,3 +969,4 @@ No Dependabot alerts opened.
 - Networking based on https://github.com/muaz-khan/RTCMultiConnection
 - https://unsplash.com/photos/8UDJ4sflous
 - https://webgl-shaders.com/shaders/frag-lens.glsl
+- https://www.fesliyanstudios.com/royalty-free-sound-effects-download/gun-shooting-300

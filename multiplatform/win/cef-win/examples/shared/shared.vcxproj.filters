@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\main_util.cc">
+      <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\client_manager.cc">
+      <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\client_util.cc">
+      <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\browser_util.cc">
+      <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\resource_util.cc">
+      <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\client_util_win.cc">
+      <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\main_win.cc">
+      <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\resource_util_win.cc">
+      <Filter>shared</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\app_factory.h">
+      <Filter>shared</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\main_util.h">
+      <Filter>shared</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\client_manager.h">
+      <Filter>shared</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\client_util.h">
+      <Filter>shared</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\browser_util.h">
+      <Filter>shared</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\main.h">
+      <Filter>shared</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\resource_util.h">
+      <Filter>shared</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="shared">
+      <UniqueIdentifier>{1CB0B4E6-30D8-39CA-AE05-6F74A4F99603}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

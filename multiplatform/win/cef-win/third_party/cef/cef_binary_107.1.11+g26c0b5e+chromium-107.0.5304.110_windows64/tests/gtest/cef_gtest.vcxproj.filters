@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\gtest\src\gtest-all.cc">
+      <Filter>cef_gtest</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\gtest\teamcity\src\teamcity_gtest.cpp">
+      <Filter>cef_gtest</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\gtest\teamcity\src\teamcity_messages.cpp">
+      <Filter>cef_gtest</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\gtest\teamcity\include\teamcity_gtest.h">
+      <Filter>cef_gtest</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\gtest\teamcity\src\teamcity_messages.h">
+      <Filter>cef_gtest</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\third_party\cef\cef_binary_107.1.11+g26c0b5e+chromium-107.0.5304.110_windows64\tests\gtest\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="cef_gtest">
+      <UniqueIdentifier>{BB002D48-CD5C-3DFC-9FD6-E140A956210F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

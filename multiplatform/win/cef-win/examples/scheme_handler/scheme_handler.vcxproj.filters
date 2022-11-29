@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\scheme_handler\scheme_strings.cc">
+      <Filter>scheme_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\minimal\client_minimal.cc">
+      <Filter>minimal</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\minimal\main_minimal.cc">
+      <Filter>minimal</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\scheme_handler\app_browser_impl.cc">
+      <Filter>scheme_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\scheme_handler\scheme_handler_impl.cc">
+      <Filter>scheme_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\scheme_handler\resource_util_win_impl.cc">
+      <Filter>scheme_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\scheme_handler\app_subprocess_impl.cc">
+      <Filter>scheme_handler</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\scheme_handler\scheme_strings.h">
+      <Filter>scheme_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\minimal\client_minimal.h">
+      <Filter>minimal</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\scheme_handler\scheme_handler_impl.h">
+      <Filter>scheme_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\scheme_handler\resources\win\resource.h">
+      <Filter>scheme_handler\resources\win</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\resources\win\resource.h">
+      <Filter>shared\resources\win</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\scheme_handler\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\scheme_handler\resources\logo.png">
+      <Filter>scheme_handler\resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\scheme_handler\resources\scheme_handler.html">
+      <Filter>scheme_handler\resources</Filter>
+    </None>
+    <None Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\resources\win\big.ico">
+      <Filter>shared\resources\win</Filter>
+    </None>
+    <None Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\resources\win\small.ico">
+      <Filter>shared\resources\win</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\scheme_handler\resources\win\resource.rc">
+      <Filter>scheme_handler\resources\win</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="G:\web_server\xampp\htdocs\PRIVATE_SERVER\cpp-wrap\test-make-for-cpp\desktop\cef\examples\shared\resources\win\shared.rc">
+      <Filter>shared\resources\win</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="minimal">
+      <UniqueIdentifier>{1A1B0C81-F788-3E41-AFB9-AC610061EBE7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scheme_handler">
+      <UniqueIdentifier>{416B6C94-F148-33F9-85A2-24E36ED0AFDC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scheme_handler\resources">
+      <UniqueIdentifier>{12875782-AECB-3A7C-AA62-AF8184A228F4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scheme_handler\resources\win">
+      <UniqueIdentifier>{C707010C-F63B-3719-A5C6-974E9BB94A54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shared">
+      <UniqueIdentifier>{1CB0B4E6-30D8-39CA-AE05-6F74A4F99603}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shared\resources">
+      <UniqueIdentifier>{6A872502-A7A1-3D26-BAE9-0D8796F76AE4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shared\resources\win">
+      <UniqueIdentifier>{B2730625-41CD-38F6-8F1C-586D6DB64E46}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

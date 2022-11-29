@@ -9,19 +9,19 @@
 import App from '../program/manifest';
 
 export var runThis = (world) => {
-  // ACTIVATE FPController
+
   App.camera.FirstPersonController = true;
 
   // FLOOR
   var textuteImageSamplers = {
     source: ['./res/images/beli_andjeo.jpg'],
-    mix_operation: 'multiply' // ENUM: multiply, divide,
+    mix_operation: 'multiply'
   };
 
-  world.Add('squareTex', 12, 'floor', textuteImageSamplers);
-  App.scene.floor.position.z = 0;
+  world.Add('squareTex', 4, 'floor', textuteImageSamplers);
+  App.scene.floor.position.z = -10;
 
-  // only for texture
+  // Only for texture
   var coeficientSizeOfTex = 1.9;
   App.scene.floor.geometry.texCoordsPoints.right_top.y = 1 + coeficientSizeOfTex;
   App.scene.floor.geometry.texCoordsPoints.right_top.x = 1 + coeficientSizeOfTex;
@@ -31,7 +31,7 @@ export var runThis = (world) => {
   App.scene.floor.geometry.texCoordsPoints.left_top.y = 1 + coeficientSizeOfTex;
   App.scene.floor.geometry.texCoordsPoints.right_bottom.x = 1 + coeficientSizeOfTex;
   App.scene.floor.geometry.texCoordsPoints.right_bottom.y = 0 - coeficientSizeOfTex;
-
+  App.scene.floor.rotation.rotx = 180;
   App.scene.floor.custom.gl_texture = function (object, t) {
     world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
     world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.LINEAR);
@@ -43,8 +43,8 @@ export var runThis = (world) => {
     world.GL.gl.texImage2D(
       world.GL.gl.TEXTURE_2D,
       0, // Level of details
-      world.GL.gl.RGB5_A1, // Format
-      world.GL.gl.RGB5_A1,
+      world.GL.gl.RGBA,
+      world.GL.gl.RGBA,
       world.GL.gl.UNSIGNED_BYTE, // Size of each channel
       object.textures[t].image
     );
@@ -52,15 +52,12 @@ export var runThis = (world) => {
     // world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
   };
 
-  App.scene.floor.position.y = -2;
-  App.scene.floor.rotValue = 90;
+  // App.scene.floor.position.y = -2;
 
   world.Add('cubeLightTex', 1, 'BeliAndjeo', textuteImageSamplers);
-
   App.scene.BeliAndjeo.rotation.roty = -90;
-
   App.scene.BeliAndjeo.position.y = 1;
-  App.scene.BeliAndjeo.position.x = 0;
+  App.scene.BeliAndjeo.position.z = -10;
 
   world.Add('pyramid', 1, 'MyPyramid1');
   world.Add('pyramid', 1, 'MyPyramid2');
