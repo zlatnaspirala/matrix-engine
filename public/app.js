@@ -64,35 +64,39 @@ var runThis = world => {
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
-  }; // world.Add("squareTex", 2, "myCube", tex);
-  // App.scene.myCube.position.SetZ(-11);
-  // App.scene.myCube.position.SetX(0);
-  // App.scene.myCube.position.SetY(2);
-  // // App.scene.myCube5.rotation.rotateX(90)
-  // App.scene.myCube.activateShadows('spot-shadow');
-  // App.scene.myCube.shadows.innerLimit = 0
-  // App.scene.myCube.shadows.activeUpdate();
-  // App.scene.myCube.rotation.rotx = -80;
-  // App.scene.myCube.shadows.lightPosition = [0,-1,0]
-  // Created with blanko texture or red, blue or green solid.
-  // then add new tex sampler created generic square 2x2 by default.
+  };
+  world.Add("squareTex", 0.2, "myCube", tex);
 
-  world.Add("squareTex", 4, "myCube5", tex);
+  _manifest.default.scene.myCube.position.SetZ(-11);
 
-  _manifest.default.scene.myCube5.position.SetZ(-11);
+  _manifest.default.scene.myCube.position.SetX(1);
+
+  _manifest.default.scene.myCube.position.SetY(0.6); // App.scene.myCube.activateShadows('spot');
+
+
+  world.Add("squareTex", 5, "myCube5", tex);
+
+  _manifest.default.scene.myCube5.position.SetZ(-12);
 
   _manifest.default.scene.myCube5.position.SetX(0);
 
-  _manifest.default.scene.myCube5.position.SetY(1);
+  _manifest.default.scene.myCube5.position.SetY(0);
 
-  _manifest.default.scene.myCube5.activateShadows('spot-shadow');
+  _manifest.default.scene.myCube5.activateShadows('spot');
 
-  _manifest.default.scene.myCube5.shadows.innerLimit = 0;
+  world.Add("squareTex", 3, "MyColoredCube1", tex);
 
-  _manifest.default.scene.myCube5.shadows.activeUpdate();
+  _manifest.default.scene.MyColoredCube1.position.SetZ(-11);
 
-  _manifest.default.scene.myCube5.rotation.rotx = -80;
-  _manifest.default.scene.myCube5.shadows.lightPosition = [0, -1, 0]; // Click event
+  _manifest.default.scene.MyColoredCube1.position.SetX(0);
+
+  _manifest.default.scene.MyColoredCube1.position.SetY(-2); //App.scene.MyColoredCube1.activateShadows('spot');
+  // App.scene.MyColoredCube1.shadows.innerLimit = 0
+  // App.scene.MyColoredCube1.shadows.activeUpdate();
+  // App.scene.MyColoredCube1.rotation.rotx = -80;
+  // App.scene.MyColoredCube1.shadows.lightPosition = [0, -5 ,0]
+  // Click event
+
 
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
@@ -996,16 +1000,11 @@ var RegenerateShader = function (id_elem, numOfSamplerInUse, mixOperand, lightTy
     mixOperand = 1;
   }
 
-  console.log('lightType is', lightType);
-
   if (typeof lightType !== 'undefined') {
-    if (lightType == 'spot-shadow') {
-      console.log('opengles 30 ....', lightType);
-      e.innerHTML = (0, _matrixShaders.generateShaderSrc3)(numOfSamplerInUse, mixOperand, lightType);
-    } else {
-      e.innerHTML = (0, _matrixShaders.generateShaderSrc)(numOfSamplerInUse, mixOperand, lightType);
-    }
+    console.log('shader version: 300 ', lightType);
+    e.innerHTML = (0, _matrixShaders.generateShaderSrc3)(numOfSamplerInUse, mixOperand, lightType);
   } else {
+    console.log('shader version: 2 ', lightType);
     e.innerHTML = (0, _matrixShaders.generateShaderSrc)(numOfSamplerInUse, mixOperand);
   }
 }; // Modify shaders in runtime.
@@ -3875,6 +3874,77 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
       _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
 
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+    } else if (object.FBO) {
+      // test FBO
+      // spot light test light
+      const settings = {
+        cameraX: 6,
+        cameraY: 5,
+        posX: 2.5,
+        posY: 4.8,
+        posZ: 4.3,
+        targetX: 2.5,
+        targetY: 0,
+        targetZ: 3.5,
+        projWidth: 1,
+        projHeight: 1,
+        perspective: true,
+        fieldOfView: 120,
+        bias: -0.006
+      }; // Fbo staff
+
+      if (!object.FBO.FB) {
+        console.log('ONLY ONCE !!!');
+        object.FBO = {};
+        object.FBO.FB = (0, _matrixTextures.makeFBO)(_matrixWorld.world.GL.gl, object); // for now 
+
+        _matrixWorld.world.FBOS.push(object.FBO.FB); // object.shadows.depthFramebuffer = depthFramebuffer[0];
+        // object.shadows.checkerboardTexture = depthFramebuffer[1];
+        // object.shadows.depthTexture = depthFramebuffer[2];
+
+      }
+
+      _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
+
+      _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.FB.texture);
+
+      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0); // shadow staff
+
+
+      var target = [0, 0, 0];
+      var up = [0, 1, 0]; // var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
+
+      var lmat = m4.lookAt([0, 2, 0], target, up);
+      const viewMatrix = m4.inverse(lmat); // first draw from the POV of the light
+
+      const lightWorldMatrix = m4.lookAt([settings.posX, settings.posY, settings.posZ], // position
+      [settings.targetX, settings.targetY, settings.targetZ], // target
+      [0, 1, 0] // up
+      );
+      const lightProjectionMatrix = settings.perspective ? m4.perspective(degToRad(settings.fieldOfView), settings.projWidth / settings.projHeight, 0.5, // near
+      10) // far
+      : m4.orthographic(-settings.projWidth / 2, // left
+      settings.projWidth / 2, // right
+      -settings.projHeight / 2, // bottom
+      settings.projHeight / 2, // top
+      0.5, // near
+      10); // far
+      // // draw to the depth texture
+      // world.GL.gl.bindFramebuffer(world.GL.gl.FRAMEBUFFER, object.shadows.depthFramebuffer);
+      // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.shadows.checkerboardTexture);
+      // world.GL.gl.viewport(0, 0, 512, 512);
+      // world.GL.gl.clear(world.GL.gl.COLOR_BUFFER_BIT | world.GL.gl.DEPTH_BUFFER_BIT);
+      // draw 
+
+      let textureMatrix = m4.identity();
+      textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
+      textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
+      textureMatrix = m4.multiply(textureMatrix, lightProjectionMatrix);
+      textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
+
+      _matrixWorld.world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
+
+      _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, -0.006);
     } else {
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
@@ -3894,9 +3964,6 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
           //world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
           //world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
           //world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-          // ori world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
-          // var nothing = 
-          // world.GL.gl.uniform1i(object.shaderProgram['samplerUniform' + t], t);
 
 
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
@@ -3927,52 +3994,23 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
 
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
-      // world.GL.gl.disable(world.GL.gl.DEPTH_TEST);
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
     }
 
-    try {
-      _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
-    } catch (e) {
-      console.log(e);
-    }
+    _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
 
-    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
+    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST); // for non blend
 
-    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.CULL_FACE);
+
+    _matrixWorld.world.GL.gl.depthMask(true); // world.GL.gl.enable(world.GL.gl.CULL_FACE);
+
   } // shadows
 
 
-  if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
-    const settings = {
-      cameraX: 6,
-      cameraY: 5,
-      posX: 2.5,
-      posY: 4.8,
-      posZ: 4.3,
-      targetX: 2.5,
-      targetY: 0,
-      targetZ: 3.5,
-      projWidth: 1,
-      projHeight: 1,
-      perspective: true,
-      fieldOfView: 120,
-      bias: -0.006
-    };
-
-    if (!object.shadows.depthFramebuffer) {
-      console.log('ONLY ONCE !!!'); // world.GL.gl.activeTexture(world.GL.gl['TEXTURE' + 0]);
-
-      var depthFramebuffer = (0, _matrixTextures.depthTextures)(_matrixWorld.world.GL.gl);
-      object.shadows.depthFramebuffer = depthFramebuffer[0];
-      object.shadows.TEST = depthFramebuffer[1];
-      object.shadows.depthTexture = depthFramebuffer[2]; // world.GL.gl.uniform(object.shaderProgram.u_projectedTexture, object.shadows.depthTexture );
-      // world.GL.gl.uniform1i(object.shaderProgram.u_projectedTexture, 1);
-    } // console.log(" SHADOWS -> " , object.shadows)
-
-
+  if (object.shadows && object.shadows.type == 'spot') {
+    // console.log(" SHADOWS -> " , object.shadows)
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
 
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
@@ -3987,71 +4025,13 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
       lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
       lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
       object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]]; // object.shadows.lightDirection = [-0, -0, -1];
-    } // test
-
-    const viewMatrix = m4.inverse(lmat); // first draw from the POV of the light
-
-    const lightWorldMatrix = m4.lookAt([settings.posX, settings.posY, settings.posZ], // position
-    [settings.targetX, settings.targetY, settings.targetZ], // target
-    [0, 1, 0] // up
-    );
-    const lightProjectionMatrix = settings.perspective ? m4.perspective(degToRad(settings.fieldOfView), settings.projWidth / settings.projHeight, 0.5, // near
-    10) // far
-    : m4.orthographic(-settings.projWidth / 2, // left
-    settings.projWidth / 2, // right
-    -settings.projHeight / 2, // bottom
-    settings.projHeight / 2, // top
-    0.5, // near
-    10); // far
-    // draw to the depth texture
-
-    _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, object.shadows.depthFramebuffer);
-
-    _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.shadows.TEST);
-
-    _matrixWorld.world.GL.gl.viewport(0, 0, 512, 512);
-
-    _matrixWorld.world.GL.gl.clear(_matrixWorld.world.GL.gl.COLOR_BUFFER_BIT | _matrixWorld.world.GL.gl.DEPTH_BUFFER_BIT); // draw 
-
-
-    let textureMatrix = m4.identity();
-    textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
-    textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
-    textureMatrix = m4.multiply(textureMatrix, lightProjectionMatrix); // use the inverse of this world matrix to make
-    // a matrix that will transform other positions
-    // to be relative this world space.
-
-    textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
-
-    _matrixWorld.world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
-
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, -0.006);
+    }
 
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
 
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
 
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit)); // TEST 
-
-
-    _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
-
-    _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, null);
-
-    _matrixWorld.world.GL.gl.viewport(0, 0, _matrixWorld.world.GL.gl.canvas.width, _matrixWorld.world.GL.gl.canvas.height);
-
-    _matrixWorld.world.GL.gl.clearColor(1, 1, 1, 1);
-
-    _matrixWorld.world.GL.gl.clear(_matrixWorld.world.GL.gl.COLOR_BUFFER_BIT | _matrixWorld.world.GL.gl.DEPTH_BUFFER_BIT); // world.GL.gl.activeTexture(world.GL.gl['TEXTURE0' + 1]);
-
-
-    _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.shadows.depthTexture); // world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-    // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.NEAREST);
-    // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.NEAREST);
-    // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.CLAMP_TO_EDGE);
-    // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.CLAMP_TO_EDGE);
-    // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
-    // world.GL.gl.uniform1i(object.shaderProgram.u_projectedTexture, 0);
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit)); // world.GL.gl.uniform1f(object.shaderProgram.u_projectedTexture, 1);
 
   }
 
@@ -6710,7 +6690,7 @@ function getInitVSSquareTex() {
 
     // Multiply the position by the matrix.
     // vec4 worldPosition = u_world * a_position;
-    vec4 worldPosition = vec4(0,0,0,0) * vec4( aVertexPosition, 1.0);
+    vec4 worldPosition = vec4(1,1,1,1) * vec4( aVertexPosition, 1.0);
 
     v_texcoord = aTextureCoord;
     v_projectedTexcoord = u_textureMatrix * worldPosition;
@@ -7023,13 +7003,144 @@ _manifest.default.operation.reDrawGlobal = function (time) {
 
       physicsLooper++;
     }
-  } // same
+  } // reset to zero
 
 
-  physicsLooper = 0;
+  physicsLooper = 0; // Must be override for performance 
+  // - non FBO and FBO option draw coroutine
+  // hc 512
+
+  _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, _matrixWorld.world.FBOS[0]);
+
+  _matrixWorld.world.GL.gl.viewport(0, 0, 512, 512);
+
+  _matrixWorld.world.GL.gl.clearColor(0.2, 0.2, 0.4, 1.0);
+
+  _matrixWorld.world.GL.gl.clear(_matrixWorld.world.GL.gl.COLOR_BUFFER_BIT | _matrixWorld.world.GL.gl.DEPTH_BUFFER_BIT);
+
+  _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
+
+  _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
+
+  _matrixWorld.world.GL.gl.depthMask(true); // - draw all `non fbo` and `no blend`
+
 
   while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
-    if (_matrixWorld.world.contentList[_engine.looper].visible === true) {
+    if (_matrixWorld.world.contentList[_engine.looper].visible === true && !_matrixWorld.world.contentList[_engine.looper].FBO && _matrixWorld.world.contentList[_engine.looper].glBlend.blendEnabled == false) {
+      if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawTriangle(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      } else if ('square' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawSquare(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      } else if ('cube' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeMap' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawPyramid(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      } else if ('obj' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawObj(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      } else if ('squareTex' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawSquareTex(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      } else if ('sphereLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'sphere' == _matrixWorld.world.contentList[_engine.looper].type || 'generatorLightTex' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawSphere(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      }
+    }
+
+    (0, _engine.modifyLooper)(_engine.looper + 1);
+  }
+
+  (0, _engine.modifyLooper)(0); // maybe no need here
+
+  _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
+
+  _matrixWorld.world.GL.gl.depthMask(false); // all non FBO but blended
+
+
+  while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
+    if (_matrixWorld.world.contentList[_engine.looper].visible === true && !_matrixWorld.world.contentList[_engine.looper].FBO && _matrixWorld.world.contentList[_engine.looper].glBlend.blendEnabled == true) {
+      if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawTriangle(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      } else if ('square' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawSquare(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      } else if ('cube' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeMap' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawPyramid(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      } else if ('obj' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawObj(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      } else if ('squareTex' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawSquareTex(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      } else if ('sphereLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'sphere' == _matrixWorld.world.contentList[_engine.looper].type || 'generatorLightTex' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawSphere(_matrixWorld.world.contentList[_engine.looper]); // world.animate(world.contentList[looper]);
+
+      }
+    }
+
+    (0, _engine.modifyLooper)(_engine.looper + 1);
+  }
+
+  (0, _engine.modifyLooper)(0);
+
+  _matrixWorld.world.GL.gl.depthMask(true); // Back to drawing on the main color buffer!
+
+
+  _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, null);
+
+  _matrixWorld.world.GL.gl.viewport(0, 0, _matrixWorld.world.GL.gl.canvas.width, _matrixWorld.world.GL.gl.canvas.height);
+
+  _matrixWorld.world.GL.gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+  _matrixWorld.world.GL.gl.clear(_matrixWorld.world.GL.gl.COLOR_BUFFER_BIT | _matrixWorld.world.GL.gl.DEPTH_BUFFER_BIT); // Draw again all
+
+
+  _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
+
+  _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
+
+  _matrixWorld.world.GL.gl.depthMask(true); // all but no blend
+
+
+  while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
+    if (_matrixWorld.world.contentList[_engine.looper].visible === true && _matrixWorld.world.contentList[_engine.looper].glBlend.blendEnabled == false) {
       if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
@@ -7077,6 +7188,64 @@ _manifest.default.operation.reDrawGlobal = function (time) {
 
     (0, _engine.modifyLooper)(_engine.looper + 1);
   }
+
+  _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
+
+  _matrixWorld.world.GL.gl.depthMask(false);
+
+  (0, _engine.modifyLooper)(0); // all but no blend
+
+  while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
+    if (_matrixWorld.world.contentList[_engine.looper].visible === true && _matrixWorld.world.contentList[_engine.looper].glBlend.blendEnabled == true) {
+      if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawTriangle(_matrixWorld.world.contentList[_engine.looper]);
+
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if ('square' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawSquare(_matrixWorld.world.contentList[_engine.looper]);
+
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if ('cube' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeMap' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper]);
+
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawPyramid(_matrixWorld.world.contentList[_engine.looper]);
+
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if ('obj' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawObj(_matrixWorld.world.contentList[_engine.looper]);
+
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if ('squareTex' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawSquareTex(_matrixWorld.world.contentList[_engine.looper]);
+
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if ('sphereLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'sphere' == _matrixWorld.world.contentList[_engine.looper].type || 'generatorLightTex' == _matrixWorld.world.contentList[_engine.looper].type) {
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.drawSphere(_matrixWorld.world.contentList[_engine.looper]);
+
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      }
+    }
+
+    (0, _engine.modifyLooper)(_engine.looper + 1);
+  }
+
+  _matrixWorld.world.GL.gl.depthMask(true);
 
   if (_manifest.default.raycast) {
     if (secondPass <= 2) {
@@ -7128,7 +7297,7 @@ exports.generateSpotLightShadowMain = generateSpotLightShadowMain;
  **/
 function generateShaderSrc3(numTextures, mixOperand, lightType) {
   return `#version 300 es
-    // Matrix-engine 1.8.16 shader for ${numTextures} textures samples.
+    // Matrix-engine 1.9.0 shader[300es] for ${numTextures} textures samples.
     precision highp float;
     in vec2 vTextureCoord;
     in vec3 vLightWeighting;
@@ -7141,6 +7310,9 @@ function generateShaderSrc3(numTextures, mixOperand, lightType) {
     uniform sampler2D uSampler2;
     uniform sampler2D uSampler3;
     in vec3 v_normal;
+
+    out vec4 outColor;
+
     ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightDefinitions() : ``) + (typeof lightType !== 'undefined' && lightType == 'specular' ? generateSpecularLightDefinitions() : ``) + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensDefinitions() : ``) + (typeof lightType !== 'undefined' && lightType == 'spot-shadow' ? generateSpotLightShadowDefinitions() : ``) + `
 
     void main(void) {
@@ -7206,9 +7378,6 @@ function generateShaderSrc(numTextures, mixOperand, lightType) {
     uniform sampler2D uSampler2;
     uniform sampler2D uSampler3;
     uniform sampler2D uSampler4;
-    uniform sampler2D uSampler5;
-    uniform sampler2D uSampler6;
-    uniform sampler2D uSampler7;
     varying vec3 v_normal;
     
     ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightDefinitions() : ``) + `
@@ -7301,17 +7470,16 @@ function generateVShaderSimpleDirectionLight() {
 }
 
 function generateSpotLightDefinitions() {
-  return `// Passed in from the vertex shader.
-  // varying vec3 v_normal;
-  varying vec3 v_surfaceToLight;
-  varying vec3 v_surfaceToView;
+  return `// inject generateSpotLightDefinitions
+  in vec3 v_surfaceToLight;
+  in vec3 v_surfaceToView;
 
   uniform vec4 u_color;
   uniform float u_shininess;
   uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;          // in dot space
-  uniform float u_outerLimit;          // in dot space
-  //
+  uniform float u_innerLimit;
+  uniform float u_outerLimit;
+  // inject generateSpotLightDefinitions end
   `;
 }
 
@@ -7336,9 +7504,14 @@ function generateSpotLightMain() {
 
   // Lets multiply just the color portion (not the alpha)
   // by the light
-  gl_FragColor.rgb *= light;
+  outColor.rgb *= light;
   // Just add in the specular
-  gl_FragColor.rgb += specular;
+  outColor.rgb += specular;
+
+  // outColor = vec4(
+  //   texColor.rgb * light * shadowLight +
+  //   specular * shadowLight,
+  //   texColor.a);
   //
   `;
 }
@@ -7606,14 +7779,10 @@ function generateCustomShaderSrc(numTextures, mixOperand, code_) {
 
 
 function generateSpotLightShadowDefinitions() {
-  return `// Passed in from the vertex shader.
-  // varying vec3 v_normal;
-
+  return `// inject generateSpotLightShadowDefinitions
   uniform sampler2D u_projectedTexture;
   uniform sampler2D u_texture;
-
   in vec2 v_texcoord;
-
   uniform float u_bias;
   in vec4 v_projectedTexcoord;
   in vec3 v_surfaceToLight;
@@ -7621,14 +7790,13 @@ function generateSpotLightShadowDefinitions() {
   uniform vec4 u_color;
   uniform float u_shininess;
   uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;    
-  uniform float u_outerLimit;         
+  uniform float u_innerLimit;
+  uniform float u_outerLimit;
   uniform mat4 u_projection;
   uniform mat4 u_view;
   uniform mat4 u_world;
   uniform mat4 u_textureMatrix;
-  out vec4 outColor;
-  //
+  // inject generateSpotLightShadowDefinitions end
   `;
 }
 
@@ -7638,8 +7806,6 @@ function generateSpotLightShadowMain() {
   // because v_normal is a varying it's interpolated
   // so it will not be a unit vector. Normalizing it
   // will make it a unit vector again
-
-
   vec3 normal = normalize(v_normal);
   vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
   vec3 surfaceToViewDirection = normalize(v_surfaceToView);
@@ -8134,7 +8300,7 @@ exports.MatrixButton = MatrixButton;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.depthTextures = exports.cubeMapTextures = void 0;
+exports.default = exports.makeFBO = exports.cubeMapTextures = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
@@ -8310,79 +8476,123 @@ const cubeMapTextures = async function (sources, callback) {
 
 exports.cubeMapTextures = cubeMapTextures;
 
-const depthTextures = gl => {
+const makeFBO = (gl, object) => {
   // test
-  gl.activeTexture(gl.TEXTURE0 + 0);
-  const checkerboardTexture = gl.createTexture();
-  gl.bindTexture(gl.TEXTURE_2D, checkerboardTexture);
-  gl.texImage2D(gl.TEXTURE_2D, 0, // mip level
-  gl.LUMINANCE, // internal format
-  8, // width
-  8, // height
-  0, // border
-  gl.LUMINANCE, // format
-  gl.UNSIGNED_BYTE, // type
-  new Uint8Array([// data
-  0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF]));
-  gl.generateMipmap(gl.TEXTURE_2D);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); // test depth
-
-  const depthTexture = gl.createTexture();
-  const depthTextureSize = 512;
-  gl.bindTexture(gl.TEXTURE_2D, depthTexture);
-  gl.texImage2D(gl.TEXTURE_2D, // target
-  0, // mip level
-  gl.DEPTH_COMPONENT32F, // internal format
-  depthTextureSize, // width
-  depthTextureSize, // height
-  0, // border
-  gl.DEPTH_COMPONENT, // format
-  gl.FLOAT, // type
-  null); // data
-
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  const depthFramebuffer = gl.createFramebuffer();
-  gl.bindFramebuffer(gl.FRAMEBUFFER, depthFramebuffer);
-  gl.framebufferTexture2D(gl.FRAMEBUFFER, // target
-  gl.DEPTH_ATTACHMENT, // attachment point
-  gl.TEXTURE_2D, // texture target
-  depthTexture, // texture
-  0); // mip level
-  // only for webgl1
-  // create a color texture of the same size as the depth texture
-  // see article why this is needed_
-  // const unusedTexture = gl.createTexture();
-  // gl.bindTexture(gl.TEXTURE_2D, unusedTexture);
+  // gl.activeTexture(gl.TEXTURE0);
+  // const checkerboardTexture = gl.createTexture();
+  // gl.bindTexture(gl.TEXTURE_2D, checkerboardTexture);
   // gl.texImage2D(
   //   gl.TEXTURE_2D,
-  //   0,
-  //   gl.RGBA,
-  //   depthTextureSize,
-  //   depthTextureSize,
-  //   0,
-  //   gl.RGBA,
-  //   gl.UNSIGNED_BYTE,
-  //   null,
-  // );
+  //   0,                // mip level
+  //   gl.LUMINANCE,     // internal format
+  //   8,                // width
+  //   8,                // height
+  //   0,                // border
+  //   gl.LUMINANCE,     // format
+  //   gl.UNSIGNED_BYTE, // type
+  //   new Uint8Array([  // data
+  //     0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC,
+  //     0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF,
+  //     0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC,
+  //     0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF,
+  //     0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC,
+  //     0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF,
+  //     0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC,
+  //     0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF,
+  //   ]));
+  // gl.generateMipmap(gl.TEXTURE_2D);
   // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  // // attach it to the framebuffer
+  // // test depth
+  // const depthTexture = gl.createTexture();
+  // const depthTextureSize = 512;
+  // gl.bindTexture(gl.TEXTURE_2D, depthTexture);
+  // {
+  //   // define size and format of level 0
+  //   const level = 0;
+  //   const internalFormat = gl.RGBA;
+  //   const border = 0;
+  //   const format = gl.RGBA;
+  //   const type = gl.UNSIGNED_BYTE;
+  //   const data = null;
+  //   gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
+  //                 512, 512, border,
+  //                 format, type, data);
+  //   // set the filtering so we don't need mips
+  //   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  //   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  //   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  // }
+  // const depthFramebuffer = gl.createFramebuffer();
+  // gl.bindFramebuffer(gl.FRAMEBUFFER, depthFramebuffer);
   // gl.framebufferTexture2D(
-  //   gl.FRAMEBUFFER,        // target
-  //   gl.COLOR_ATTACHMENT0,  // attachment point
-  //   gl.TEXTURE_2D,         // texture target
-  //   unusedTexture,         // texture
-  //   0);                    // mip level
+  //     gl.FRAMEBUFFER,       // target
+  //     gl.COLOR_ATTACHMENT0, //  gl.DEPTH_ATTACHMENT,  // attachment point
+  //     gl.TEXTURE_2D,        // texture target
+  //     depthTexture,         // texture
+  //     0);                   // mip level
+  //////////////////////////////////////////////////////
+  // TEST 2
+  //////////////////////////////////////////////////////
+  var framebuffer, texture, depthBuffer;
 
-  return [depthFramebuffer, checkerboardTexture, depthTexture];
+  var error = function () {
+    console.log('Error in creating FBO!');
+    return null;
+  };
+
+  framebuffer = gl.createFramebuffer();
+
+  if (!framebuffer) {
+    console.log('Failed to create frame buffer object');
+    return error();
+  }
+
+  texture = gl.createTexture();
+
+  if (!texture) {
+    console.log('Failed to create texture object');
+    return error();
+  } // local
+
+
+  var OFFSCREEN_WIDTH = 512;
+  var OFFSCREEN_HEIGHT = 512;
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, OFFSCREEN_WIDTH, OFFSCREEN_HEIGHT, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  framebuffer.texture = texture;
+  depthBuffer = gl.createRenderbuffer();
+
+  if (!depthBuffer) {
+    console.log('Failed to create renderbuffer object');
+    return error();
+  }
+
+  gl.bindRenderbuffer(gl.RENDERBUFFER, depthBuffer);
+  gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, OFFSCREEN_WIDTH, OFFSCREEN_HEIGHT); // Attach the texture and the renderbuffer object to the FBO
+
+  gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
+  gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+  gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, depthBuffer); // Check if FBO is configured correctly
+
+  var e = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
+
+  if (gl.FRAMEBUFFER_COMPLETE !== e) {
+    console.log('Frame buffer object is incomplete: ' + e.toString());
+    return error();
+  } // Unbind the buffer object
+
+
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  gl.bindTexture(gl.TEXTURE_2D, null);
+  gl.bindRenderbuffer(gl.RENDERBUFFER, null); // object.FBO.FB = framebuffer;
+  // object.FBO.OFFSCREEN_WIDTH = 512;
+  // object.FBO.OFFSCREEN_HEIGHT = 512;
+
+  return framebuffer; //////////////////////////////////////////////////////
 };
 
-exports.depthTextures = depthTextures;
+exports.makeFBO = makeFBO;
 var _default = _manifest.default.tools;
 exports.default = _default;
 
@@ -8588,6 +8798,7 @@ function defineworld(canvas) {
   world.bufferSprite2d = _manifest.default.operation.sprite2d_buffer_procedure;
   world.drawSphere = _manifest.default.operation.draws.sphere;
   world.bufferSphere = _manifest.default.operation.sphere_buffer_procedure;
+  world.FBOS = [];
   /* Repeated draw functionality            */
   // eslint-disable-next-line no-global-assign
 
@@ -8783,7 +8994,12 @@ function defineworld(canvas) {
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
       squareObject.geometry.nameUniq = nameUniq;
-      squareObject.glBlend = new _utility._glBlend(); // destroy self
+      squareObject.glBlend = new _utility._glBlend();
+
+      squareObject.setFOB = function () {
+        squareObject.FBO = {};
+      }; // destroy self
+
 
       squareObject.selfDestroy = after => {
         if (after) {
@@ -8829,9 +9045,10 @@ function defineworld(canvas) {
         } else if (t == 'spot-shadow') {
           squareObject.useShadows = true;
           squareObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
-        } // RegenerateShader(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
-        // squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
+        }
 
+        (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
+        squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       }; // gen tex
 
 
@@ -8847,7 +9064,7 @@ function defineworld(canvas) {
           // console.info("texturesPaths is object...");
           squareObject.textures = [];
           squareObject.texture = true;
-          (0, _engine.RegenerateShader)('' + filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'spot-shadow');
+          (0, _engine.RegenerateShader)('' + filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30');
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             squareObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));

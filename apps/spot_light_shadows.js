@@ -20,29 +20,28 @@ export var runThis = (world) => {
     mix_operation: "multiply",
   };
 
-  // world.Add("squareTex", 2, "myCube", tex);
-  // App.scene.myCube.position.SetZ(-11);
-  // App.scene.myCube.position.SetX(0);
-  // App.scene.myCube.position.SetY(2);
-  // // App.scene.myCube5.rotation.rotateX(90)
-  // App.scene.myCube.activateShadows('spot-shadow');
-  // App.scene.myCube.shadows.innerLimit = 0
-  // App.scene.myCube.shadows.activeUpdate();
-  // App.scene.myCube.rotation.rotx = -80;
-  // App.scene.myCube.shadows.lightPosition = [0,-1,0]
- 
-  // Created with blanko texture or red, blue or green solid.
-  // then add new tex sampler created generic square 2x2 by default.
-  world.Add("squareTex", 4, "myCube5", tex);
-  App.scene.myCube5.position.SetZ(-11);
+  world.Add("squareTex", 0.2, "myCube", tex);
+  App.scene.myCube.position.SetZ(-11);
+  App.scene.myCube.position.SetX(1);
+  App.scene.myCube.position.SetY(0.6);
+  // App.scene.myCube.activateShadows('spot');
+
+  world.Add("squareTex", 5, "myCube5", tex);
+  App.scene.myCube5.position.SetZ(-12);
   App.scene.myCube5.position.SetX(0);
-  App.scene.myCube5.position.SetY(1);
-  App.scene.myCube5.activateShadows('spot-shadow');
-  App.scene.myCube5.shadows.innerLimit = 0
-  App.scene.myCube5.shadows.activeUpdate();
-  App.scene.myCube5.rotation.rotx = -80;
-  App.scene.myCube5.shadows.lightPosition = [0,-1,0]
+  App.scene.myCube5.position.SetY(0);
+  App.scene.myCube5.activateShadows('spot');
  
+  world.Add("squareTex", 3, "MyColoredCube1", tex);
+  App.scene.MyColoredCube1.position.SetZ(-11);
+  App.scene.MyColoredCube1.position.SetX(0);
+  App.scene.MyColoredCube1.position.SetY(-2);
+  //App.scene.MyColoredCube1.activateShadows('spot');
+  // App.scene.MyColoredCube1.shadows.innerLimit = 0
+  // App.scene.MyColoredCube1.shadows.activeUpdate();
+  // App.scene.MyColoredCube1.rotation.rotx = -80;
+  // App.scene.MyColoredCube1.shadows.lightPosition = [0, -5 ,0]
+
   // Click event
   canvas.addEventListener('mousedown', (ev) => {
     matrixEngine.raycaster.checkingProcedure(ev);
