@@ -12,6 +12,10 @@
 #### - [Basic Physics implementation based on cannon.js]	✔	
 #### - [FirstPersonController fly or classic fp / SceneController Drag and navigation scene]	✔	
 #### - [Basic's Shadows vs lights (GLSL)]	✔	
+#### - [Migrated to the opengles300]
+#### - [FBO implemented]
+#### - [Add cef and cefSharp Visual Studio projects for building executive native apps. 
+####     Support: Windows, MAC, Linux ]
 
 ### Description ℹ
   This is small but inspiring project.

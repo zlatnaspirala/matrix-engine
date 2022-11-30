@@ -4,20 +4,18 @@
 
 #### [1.9.0 BETA]
 
-Add cef and cefSharp Visual Studio projects for building executive native apps.
+ - FBO implemented BASIC
+ - Migrated to the opengles300
+ - Add cef and cefSharp Visual Studio projects for building executive native apps.
+   Support:
+    - Windows
+    - MAC
+    - Linux
+  - GUI Texture editor based on Visualjs3 in background. 
+    make gui fast run - wip
 
-##### Migrated to the opengles300
-
-
-Support:
- - Windows
-
-GUI Texture editor based on Visualjs3 in background.
-
-GLSL : 
-
+GLSL Note:
 Note: This extension is only available to WebGL1 contexts. In WebGL2, the functionality of this extension is available on the WebGL2 context by default. The constant in WebGL2 is gl.UNSIGNED_INT_24_8.
-
 
 
 
