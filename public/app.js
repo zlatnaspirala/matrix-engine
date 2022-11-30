@@ -65,7 +65,7 @@ var runThis = world => {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
-  world.Add("squareTex", 0.2, "myCube", tex);
+  world.Add("cubeLightTex", 0.2, "myCube", tex);
 
   _manifest.default.scene.myCube.position.SetZ(-11);
 
@@ -394,7 +394,7 @@ exports.VIDEO_TEXTURE = VIDEO_TEXTURE;
 exports.VT = VT;
 exports.Vjs3 = Vjs3;
 exports.anyCanvas = anyCanvas;
-exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateVShaderSimpleDirectionLight = exports.RegenerateShaderSimpleDirectionLight = exports.RegenerateCubeMapShader = exports.RegenerateShader = exports.activateNet = exports.net = exports.looper = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
+exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateCubeMapShader = exports.RegenerateShader = exports.activateNet = exports.net = exports.looper = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
 
 var _net = require("./net");
 
@@ -1027,24 +1027,18 @@ var RegenerateCubeMapShader = function (id_elem, numOfSamplerInUse, mixOperand, 
     e.innerHTML = (0, _matrixShaders.generateCubeMapShaderSrc)(numOfSamplerInUse, mixOperand);
   }
 }; // Not active
+// export var RegenerateShaderSimpleDirectionLight = function (id_elem) {
+//   var e = document.getElementById(id_elem);
+//   e.innerHTML = generateShaderSimpleDirection();
+// };
+// // Not active
+// export var RegenerateVShaderSimpleDirectionLight = function (id_elem) {
+//   var e = document.getElementById(id_elem);
+//   e.innerHTML = generateVShaderSimpleDirectionLight();
+// };
 
 
 exports.RegenerateCubeMapShader = RegenerateCubeMapShader;
-
-var RegenerateShaderSimpleDirectionLight = function (id_elem) {
-  var e = document.getElementById(id_elem);
-  e.innerHTML = (0, _matrixShaders.generateShaderSimpleDirection)();
-}; // Not active
-
-
-exports.RegenerateShaderSimpleDirectionLight = RegenerateShaderSimpleDirectionLight;
-
-var RegenerateVShaderSimpleDirectionLight = function (id_elem) {
-  var e = document.getElementById(id_elem);
-  e.innerHTML = (0, _matrixShaders.generateVShaderSimpleDirectionLight)();
-};
-
-exports.RegenerateVShaderSimpleDirectionLight = RegenerateVShaderSimpleDirectionLight;
 
 var RegenerateCustomShader = function (id_elem, numOfSamplerInUse, mixOperand, code_) {
   var e = document.getElementById(id_elem);
@@ -6201,13 +6195,12 @@ function loadShaders2() {
 }
 
 function genInitFSTriangle() {
-  const f = `
+  const f = `#version 300 es
   precision mediump float;
-
-  varying vec4 vColor;
-
+  in vec4 vColor;
+  out vec4 outColor;
   void main(void) {
-    gl_FragColor = vColor;
+    outColor = vColor;
   }
   `;
 
@@ -6215,15 +6208,12 @@ function genInitFSTriangle() {
 }
 
 function getInitVSTriangle() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec4 aVertexColor;
-
+  const f = `#version 300 es
+  in vec3 aVertexPosition;
+  in vec4 aVertexColor;
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
-
-  varying vec4 vColor;
-
+  out vec4 vColor;
   void main(void) {
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vColor      = aVertexColor;
@@ -6234,37 +6224,34 @@ function getInitVSTriangle() {
 }
 
 function getInitFSCubeTexLight() {
-  const f = `
+  const f = `#version 300 es
   precision mediump float;
-
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
-
+  in vec2 vTextureCoord;
+  in vec3 vLightWeighting;
   uniform sampler2D uSampler;
   uniform sampler2D uSampler1;
   uniform sampler2D uSampler2;
   uniform sampler2D uSampler3;
   uniform sampler2D uSampler4;
   uniform sampler2D uSampler5;
-
   // The CubeMap texture.
   uniform samplerCube u_texture;
   // cube map
-  varying vec3 v_normal_cubemap;
-
+  in vec3 v_normal_cubemap;
   uniform float numberOfsamplers;
 
   // Spot
   // Passed in from the vertex shader.
-  varying vec3 v_normal;
-  varying vec3 v_surfaceToLight;
-  varying vec3 v_surfaceToView;
-
+  in vec3 v_normal;
+  in vec3 v_surfaceToLight;
+  in vec3 v_surfaceToView;
   uniform vec4 u_color;
   uniform float u_shininess;
   uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;          // in dot space
-  uniform float u_outerLimit;          // in dot space
+  uniform float u_innerLimit;
+  uniform float u_outerLimit;
+
+  out vec4 outColor;
 
   void main(void) {
     // because v_normal is a varying it's interpolated
@@ -6290,13 +6277,13 @@ function getInitFSCubeTexLight() {
 
     vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
 
-    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+    outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
     // Lets multiply just the color portion (not the alpha)
     // by the light
-    gl_FragColor.rgb *= light;
+    outColor.rgb *= light;
     // Just add in the specular
-    gl_FragColor.rgb += specular;
+    outColor.rgb += specular;
   }
   `;
 
@@ -6304,42 +6291,38 @@ function getInitFSCubeTexLight() {
 }
 
 function getInitVSCubeTexLight() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec3 aVertexNormal;
-  attribute vec2 aTextureCoord;
+  const f = `#version 300 es
+  in vec3 aVertexPosition;
+  in vec3 aVertexNormal;
+  in vec2 aTextureCoord;
 
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
   uniform mat3 uNMatrix;
-
   uniform vec3 uAmbientColor;
-
   uniform vec3 uLightingDirection;
   uniform vec3 uDirectionalColor;
-
   uniform bool uUseLighting;
-
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
+  out vec2 vTextureCoord;
+  out vec3 vLightWeighting;
 
   // Spot
   uniform vec3 u_lightWorldPosition;
-  varying vec3 v_normal;
-  varying vec3 v_normal_cubemap;
-  varying vec3 v_surfaceToLight;
-  varying vec3 v_surfaceToView;
+  out vec3 v_normal;
+  out vec3 v_normal_cubemap;
+  out vec3 v_surfaceToLight;
+  out vec3 v_surfaceToView;
 
   // Specular
-  varying mat4 uMVMatrixINTER;
-  varying mat3 uNMatrixINTER;
-  varying mat4 uPMatrixINNTER;
+  out mat4 uMVMatrixINTER;
+  out mat3 uNMatrixINTER;
+  out mat4 uPMatrixINNTER;
 
-  attribute vec4 specularColor;
-  varying vec4 vColor;
-  varying vec3 vNormal;
-  varying vec4 vPosition;
-  varying float vDist;
+  in vec4 specularColor;
+  out vec4 vColor;
+  out vec3 vNormal;
+  out vec4 vPosition;
+  out float vDist;
 
   void main(void) {
     uMVMatrixINTER = uMVMatrix;
@@ -6389,13 +6372,12 @@ function getInitVSCubeTexLight() {
 }
 
 function getInitFSSquare() {
-  const f = `
+  const f = `#version 300 es
   precision mediump float;
-
-  varying vec4 vColor;
-
+  in vec4 vColor;
+  out vec4 outColor;
   void main(void) {
-    gl_FragColor = vColor;
+    outColor = vColor;
   }
   `;
 
@@ -6403,14 +6385,12 @@ function getInitFSSquare() {
 }
 
 function getInitVSSquare() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec4 aVertexColor;
-
+  const f = `#version 300 es
+  in vec3 aVertexPosition;
+  in vec4 aVertexColor;
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
-
-  varying vec4 vColor;
+  out vec4 vColor;
 
   void main(void) {
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
@@ -6421,28 +6401,24 @@ function getInitVSSquare() {
 }
 
 function getInitFSCube() {
-  const f = `
+  const f = `#version 300 es
   precision mediump float;
-
-  varying vec4 vColor;
-
+  in vec4 vColor;
+  out vec4 outColor;
   void main(void) {
-    gl_FragColor = vColor;
+    outColor = vColor;
   }`;
 
   _utility.scriptManager.LOAD(f, "cube-shader-fs", "x-shader/x-fragment", "shaders");
 }
 
 function getInitVSCube() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec4 aVertexColor;
-
+  const f = `#version 300 es
+  in vec3 aVertexPosition;
+  in vec4 aVertexColor;
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
-
-  varying vec4 vColor;
-
+  out vec4 vColor;
   void main(void) {
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vColor      = aVertexColor;
@@ -6452,32 +6428,26 @@ function getInitVSCube() {
 }
 
 function getInitFSCubeTex() {
-  const f = `
+  const f = `#version 300 es
   precision mediump float;
-
-  varying vec2 vTextureCoord;
+  in vec2 vTextureCoord;
   uniform sampler2D uSampler;
-
+  out vec4 outColor;
   void main(void) {
-    gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    outColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
   }`;
 
   _utility.scriptManager.LOAD(f, "cubeTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
 
 function getInitVSCubeTex() {
-  const f = `
-  #version 300 es
+  const f = `#version 300 es
   #define POSITION_LOCATION 0
-
-  attribute vec3 aVertexPosition;
-  attribute vec2 aTextureCoord;
-
+  in vec3 aVertexPosition;
+  in vec2 aTextureCoord;
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
-
-  varying vec2 vTextureCoord;
-
+  out vec2 vTextureCoord;
   void main(void) {
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vTextureCoord = aTextureCoord;
@@ -6487,41 +6457,36 @@ function getInitVSCubeTex() {
 }
 
 function getInitFSObj() {
-  const f = `
+  const f = `#version 300 es
   precision mediump float;
-
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
-
+  in vec2 vTextureCoord;
+  in vec3 vLightWeighting;
   uniform sampler2D uSampler;
   uniform sampler2D uSampler1;
   uniform sampler2D uSampler2;
 
+  out vec4 outColor;
   void main(void) {
     vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+    outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
   }`;
 
   _utility.scriptManager.LOAD(f, "obj-shader-fs", "x-shader/x-fragment", "shaders");
 }
 
 function getInitVSObj() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec3 aVertexNormal;
-  attribute vec2 aTextureCoord;
+  const f = `#version 300 es
+  in vec3 aVertexPosition;
+  in vec3 aVertexNormal;
+  in vec2 aTextureCoord;
 
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
   uniform mat3 uNMatrix;
-
   uniform vec3 uAmbientColor;
-
   uniform vec3 uLightingDirection;
   uniform vec3 uDirectionalColor;
-
   uniform bool uUseLighting;
-
   varying vec2 vTextureCoord;
   varying vec3 vLightWeighting;
 
@@ -6544,28 +6509,26 @@ function getInitVSObj() {
 }
 
 function getInitFSPyramid() {
-  const f = `
+  const f = `#version 300 es
   precision mediump float;
-  varying vec4 vColor;
+  in vec4 vColor;
 
+  out vec4 outColor;
   void main(void) {
-    gl_FragColor = vColor;
+    outColor = vColor;
   }`;
 
   _utility.scriptManager.LOAD(f, "pyramid-shader-fs", "x-shader/x-fragment", "shaders");
 }
 
 function getInitVSPyramid() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec4 aVertexColor;
+  const f = `#version 300 es
+  in vec3 aVertexPosition;
+  in vec4 aVertexColor;
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
-  varying vec4 vColor;
-
+  out vec4 vColor;
   void main(void) {
-    // instance = gl_InstanceID;
-    // gl_Position = vec4(aVertexPosition + vec2(float(gl_InstanceID) - 0.5, 0.0), 0.0, 1.0);
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vColor      = aVertexColor;
   }
@@ -6577,10 +6540,8 @@ function getInitVSPyramid() {
 function getInitFSSquareTex() {
   const f = `#version 300 es
   precision mediump float;
-
   in vec2 vTextureCoord;
   in vec3 vLightWeighting;
-
   uniform sampler2D uSampler;
   uniform sampler2D uSampler1;
   uniform sampler2D uSampler2;
@@ -6594,12 +6555,11 @@ function getInitFSSquareTex() {
   in vec3 v_normal;
   in vec3 v_surfaceToLight;
   in vec3 v_surfaceToView;
-
   uniform vec4 u_color;
   uniform float u_shininess;
   uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;          // in dot space
-  uniform float u_outerLimit;          // in dot space
+  uniform float u_innerLimit;
+  uniform float u_outerLimit;
 
   out vec4 outColor;
 
@@ -6629,11 +6589,9 @@ function getInitFSSquareTex() {
 
 function getInitVSSquareTex() {
   const f = `#version 300 es
-
   in vec3 aVertexPosition;
   in vec3 aVertexNormal;
   in vec2 aTextureCoord;
-
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
   uniform mat3 uNMatrix;
@@ -6641,14 +6599,12 @@ function getInitVSSquareTex() {
   uniform vec3 uLightingDirection;
   uniform vec3 uDirectionalColor;
   uniform bool uUseLighting;
-
   out vec2 vTextureCoord;
   out vec3 vLightWeighting;
 
   // Spot
   uniform vec3 u_lightWorldPosition;
   out vec3 v_normal;
-
   out vec3 v_surfaceToLight;
   out vec3 v_surfaceToView;
 
@@ -6658,10 +6614,6 @@ function getInitVSSquareTex() {
   out vec4 v_projectedTexcoord;
 
   // Specular
-  // out mat4 uMVMatrixINTER;
-  // out mat3 uNMatrixINTER;
-  // out mat4 uPMatrixINNTER;
-
   // out vec4 specularColor;
   // out vec4 vColor;
   // out vec3 vNormal;
@@ -6669,42 +6621,25 @@ function getInitVSSquareTex() {
   // out float vDist;
 
   void main(void) {
-    // uMVMatrixINTER = uMVMatrix;
-    // uNMatrixINTER = uNMatrix;
-    // uPMatrixINNTER = uPMatrix;
-
     // GLOBAL POS SPECULAR
     // vColor = specularColor;
-
     // vNormal = normalize(uNMatrix * vec3(aVertexNormal));
-
     // Calculate the modelView of the model, and set the vPosition
     // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
     // vPosition = uMVMatrix * vec4(1,1,1,1);
     // vDist = gl_Position.w;
 
     // SPOT
-    // orient the normals and pass to the fragment shader
     v_normal = mat3(uNMatrix) * aVertexNormal;
-
-    // normalize
-    // v_normal_cubemap = normalize(aVertexPosition.xyz);
-
-    // compute the world position of the surfoace
     vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
     v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
     v_surfaceToView = -surfaceWorldPosition;
 
     // spot shadow
-    // Pass the texture coord to the fragment shader. maybe duplicated
-
-    // Multiply the position by the matrix.
     // vec4 worldPosition = u_world * a_position;
     vec4 worldPosition = vec4(1,1,1,1) * vec4( aVertexPosition, 1.0);
-
     v_texcoord = aTextureCoord;
     v_projectedTexcoord = u_textureMatrix * worldPosition;
-
 
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vTextureCoord = aTextureCoord;
@@ -6726,27 +6661,21 @@ function getInitVSSquareTex() {
 }
 
 function getInitFSSphereLightTex() {
-  const f = `// #version 300 es
+  const f = `#version 300 es
   precision mediump float;
-
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
-
+  in vec2 vTextureCoord;
+  in vec3 vLightWeighting;
   uniform sampler2D uSampler;
   uniform sampler2D uSampler1;
   uniform sampler2D uSampler2;
   uniform sampler2D uSampler3;
-  uniform sampler2D uSampler4;
-  uniform sampler2D uSampler5;
   uniform float numberOfsamplers;
-
+  out vec4 outColor;
   void main(void) {
-
-    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-
+    vec4 textureColor = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor1 = texture(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor2 = texture(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+    outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
   }
   `;
 
@@ -6754,24 +6683,21 @@ function getInitFSSphereLightTex() {
 }
 
 function getInitVSSphereLightTex() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec3 aVertexNormal;
-  attribute vec2 aTextureCoord;
+  const f = `#version 300 es
+  in vec3 aVertexPosition;
+  in vec3 aVertexNormal;
+  in vec2 aTextureCoord;
 
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
   uniform mat3 uNMatrix;
-
   uniform vec3 uAmbientColor;
-
   uniform vec3 uLightingDirection;
   uniform vec3 uDirectionalColor;
-
   uniform bool uUseLighting;
 
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
+  out vec2 vTextureCoord;
+  out vec3 vLightWeighting;
 
   void main(void) {
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
@@ -6792,30 +6718,32 @@ function getInitVSSphereLightTex() {
 }
 
 function getInitFSCubeMap() {
-  const f = `
+  const f = `#version 300 es
   precision mediump float;
 
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
+  in vec2 vTextureCoord;
+  in vec3 vLightWeighting;
 
   // The CubeMap texture.
   uniform samplerCube u_texture;
   // cube map
-  varying vec3 v_normal_cubemap;
+  in vec3 v_normal_cubemap;
 
   uniform float numberOfsamplers;
 
   // Spot
   // Passed in from the vertex shader.
-  varying vec3 v_normal;
-  varying vec3 v_surfaceToLight;
-  varying vec3 v_surfaceToView;
+  in vec3 v_normal;
+  in vec3 v_surfaceToLight;
+  in vec3 v_surfaceToView;
 
   uniform vec4 u_color;
   uniform float u_shininess;
   uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;          // in dot space
-  uniform float u_outerLimit;          // in dot space
+  uniform float u_innerLimit;
+  uniform float u_outerLimit;
+
+  out vec4 outColor;
 
   void main(void) {
     // because v_normal is a varying it's interpolated
@@ -6838,18 +6766,14 @@ function getInitFSCubeMap() {
     vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
     vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
     vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-
     vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
 
-     gl_FragColor = textureCube(u_texture, normal);
-
-    // gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-
+    outColor = textureCube(u_texture, normal);
     // Lets multiply just the color portion (not the alpha)
     // by the light
-    gl_FragColor.rgb *= light;
+    outColor.rgb *= light;
     // Just add in the specular
-    gl_FragColor.rgb += specular;
+    outColor.rgb += specular;
   }
   `;
 
@@ -6857,16 +6781,16 @@ function getInitFSCubeMap() {
 }
 
 function getInitVSCubeMap() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec3 aVertexNormal;
+  const f = `#version 300 es
+  in vec3 aVertexPosition;
+  in vec3 aVertexNormal;
 
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
   uniform mat3 uNMatrix;
 
-  varying vec3 v_normal;
-  varying vec3 v_normal_cubemap;
+  out vec3 v_normal;
+  out vec3 v_normal_cubemap;
 
   // lights
   uniform vec3 uAmbientColor;
@@ -6874,7 +6798,7 @@ function getInitVSCubeMap() {
   uniform vec3 uDirectionalColor;
   uniform bool uUseLighting;
   // varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
+  out vec3 vLightWeighting;
 
   void main(void) {
 
@@ -7291,8 +7215,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.generateShaderSrc3 = generateShaderSrc3;
 exports.generateShaderSrc = generateShaderSrc;
-exports.generateShaderSimpleDirection = generateShaderSimpleDirection;
-exports.generateVShaderSimpleDirectionLight = generateVShaderSimpleDirectionLight;
 exports.generateLensDefinitions = generateLensDefinitions;
 exports.generateLensMain = generateLensMain;
 exports.generateCubeMapShaderSrc = generateCubeMapShaderSrc;
@@ -7436,48 +7358,40 @@ function generateShaderSrc(numTextures, mixOperand, lightType) {
     ` + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensMain(numTextures) : ``) + `
 
     }`;
-}
+} // export function generateShaderSimpleDirection() {
+//   return `
+//   precision mediump float;
+//   precision highp float;
+//   varying vec4 vColor;
+//   varying vec3 vLightWeighting;
+//   void main(void) {
+//     gl_FragColor      = vec4(vColor.rgb * vLightWeighting, vColor.a);
+//   }
+//   `;
+// }
+// export function generateVShaderSimpleDirectionLight() {
+//   return `
+//   attribute vec3 aVertexPosition;
+//   attribute vec4 aVertexColor;
+//   attribute vec3 aVertexNormal;
+//   uniform mat4 uMVMatrix;
+//   uniform mat4 uPMatrix;
+//   uniform mat3 uNMatrix;
+//   uniform vec3 uLightingDirection;
+//   uniform vec3 uDirectionalColor;
+//   uniform bool uUseLighting;
+//   varying vec3 vLightWeighting;
+//   varying vec4 vColor;
+//   void main(void) {
+//     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+//     vec3 transformedNormal          = uNMatrix * aVertexNormal;
+//     float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+//     vLightWeighting                 = uDirectionalColor * directionalLightWeighting;
+//     vColor      = aVertexColor;
+//   }
+//   `;
+// }
 
-function generateShaderSimpleDirection() {
-  return `
-  precision mediump float;
-  precision highp float;
-
-  varying vec4 vColor;
-  varying vec3 vLightWeighting;
-
-  void main(void) {
-    gl_FragColor      = vec4(vColor.rgb * vLightWeighting, vColor.a);
-  }
-  `;
-}
-
-function generateVShaderSimpleDirectionLight() {
-  return `
-  attribute vec3 aVertexPosition;
-  attribute vec4 aVertexColor;
-  attribute vec3 aVertexNormal;
-  
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
-  varying vec3 vLightWeighting;
-  varying vec4 vColor;
-
-  void main(void) {
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-
-    vec3 transformedNormal          = uNMatrix * aVertexNormal;
-    float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-    vLightWeighting                 = uDirectionalColor * directionalLightWeighting;
-    vColor      = aVertexColor;
-  }
-  `;
-}
 
 function generateSpotLightDefinitions() {
   return `// inject generateSpotLightDefinitions
@@ -9623,7 +9537,7 @@ function defineworld(canvas) {
           cubeObject.textures = [];
           cubeObject.texture = true; // cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler+"-shader-fs", filler+"-shader-vs");
 
-          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30'); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             cubeObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));

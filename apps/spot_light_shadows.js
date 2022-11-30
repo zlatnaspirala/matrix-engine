@@ -20,7 +20,7 @@ export var runThis = (world) => {
     mix_operation: "multiply",
   };
 
-  world.Add("squareTex", 0.2, "myCube", tex);
+  world.Add("cubeLightTex", 0.2, "myCube", tex);
   App.scene.myCube.position.SetZ(-11);
   App.scene.myCube.position.SetX(1);
   App.scene.myCube.position.SetY(0.6);

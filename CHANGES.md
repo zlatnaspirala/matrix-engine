@@ -7,7 +7,7 @@
 Add cef and cefSharp Visual Studio projects for building executive native apps.
 
 ##### Migrated to the opengles300
-Object tag: `squareTex`
+
 
 Support:
  - Windows
