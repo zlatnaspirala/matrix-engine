@@ -30,7 +30,7 @@ export var runThis = (world) => {
   App.scene.myCube5.position.SetZ(-12);
   App.scene.myCube5.position.SetX(0);
   App.scene.myCube5.position.SetY(0);
-  App.scene.myCube5.activateShadows('spot');
+  App.scene.myCube5.activateShadows('lens');
  
   world.Add("squareTex", 3, "MyColoredCube1", tex);
   App.scene.MyColoredCube1.position.SetZ(-11);

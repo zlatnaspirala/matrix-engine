@@ -82,7 +82,7 @@ var runThis = world => {
 
   _manifest.default.scene.myCube5.position.SetY(0);
 
-  _manifest.default.scene.myCube5.activateShadows('spot');
+  _manifest.default.scene.myCube5.activateShadows('lens');
 
   world.Add("squareTex", 3, "MyColoredCube1", tex);
 
@@ -3339,7 +3339,6 @@ _manifest.default.operation.draws.cube = function (object) {
 
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
-      // world.GL.gl.disable(world.GL.gl.DEPTH_TEST);
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
     }
 
@@ -3347,8 +3346,7 @@ _manifest.default.operation.draws.cube = function (object) {
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
 
-    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST); // TEST
-    // world.GL.gl.enable(world.GL.gl.CULL_FACE);
+    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST); // TEST world.GL.gl.enable(world.GL.gl.CULL_FACE);
 
   }
 
@@ -4033,6 +4031,18 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
 
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit)); // world.GL.gl.uniform1f(object.shaderProgram.u_projectedTexture, 1);
 
+  } else if (object.shadows && object.shadows.type == 'spec') {
+    // global position
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
+  } else if (object.shadows && object.shadows.type == 'lens') {
+    // Lens
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uControl, object.shadows.uControl);
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uResolution, object.shadows.uResolution);
   }
 
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
@@ -7607,15 +7617,15 @@ function generateLensMain(numTextures) {
   float exp = 1.0;
   vec2 offset = (1.0 - pow(mouse_distance / lens_radius, exp)) * mouse_direction;
   if (mouse_distance < lens_radius) {
-    pixel_color = texture2D(uSampler, vTextureCoord + offset / rez ).rgb;
+    pixel_color = texture(uSampler, vTextureCoord + offset / rez ).rgb;
     pixel_color.rgb =  pixel_color.rgb * vLightWeighting;
   } else {
     pixel_color.rgb =  textureColor.rgb * vLightWeighting;
   }
   // todo
   // if (${numTextures} == 1) { }
-  gl_FragColor = vec4(pixel_color, 1.0);
-  gl_FragColor.a = textureColor.a;
+  outColor = vec4(pixel_color, 1.0);
+  outColor.a = textureColor.a;
   `;
 }
 /**
