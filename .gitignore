@@ -3,3 +3,5 @@ node_modules/**/*
 builds
 package-lock.json
 networking/node_modules/**/*
+GPUCache/**/*
+DawnCache/**/*

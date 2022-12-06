@@ -40,7 +40,7 @@ class ClientConfig {
 
   /**
    * masterServerKey is channel access id used to connect
-   * multimedia server channel.Both multiRTC2/3
+   * multimedia server channel/multiRTC3
    */
   masterServerKey = "maximumroulette.matrix-engine";
 

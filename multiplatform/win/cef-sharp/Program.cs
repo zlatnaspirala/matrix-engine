@@ -10,13 +10,31 @@ namespace matrix_engine
     {
         /// <summary>
         /// The main entry point for the application.
+        /// Author Nikola Lukic zlatnaspirala@gmail.com
+        /// Matrix-Engine 1.9.0 GUI for windows OS
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            if (args[0].Contains("url"))
+            {
+                /* Run windows native app */
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MatrixEngineGUI(args[0]));
+            } 
+            else if (args[0].Contains("texture.editor")) {
+                /* Run windows native Matrix Engine Texture Editor Application */
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MatrixEngine_TextureEditor(args[0]));
+            }
+            else {
+                /* Run windows native app with default url */
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MatrixEngineGUI(""));
+            }   
         }
     }
 }

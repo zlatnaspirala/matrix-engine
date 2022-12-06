@@ -1,7 +1,7 @@
 ﻿
 namespace matrix_engine
 {
-    partial class Form1
+    partial class MatrixEngineGUI
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace matrix_engine
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MatrixEngineGUI));
             this.chromiumWebBrowser1 = new CefSharp.WinForms.ChromiumWebBrowser();
             this.SuspendLayout();
             // 
@@ -55,7 +55,7 @@ namespace matrix_engine
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.Name = "Form1";
-            this.Text = "Matrix-Engine 1.9.0 win";
+            this.Text = "Matrix-Engine";
             this.ResumeLayout(false);
 
         }

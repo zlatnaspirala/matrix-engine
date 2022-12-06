@@ -1,21 +1,22 @@
 ![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/webgl2glmatrix2.jpg)
 
 ## About Matrix Engine project
-### Name: `MATRIX-ENGINE` `1.8.15`
+### Name: `MATRIX-ENGINE` `1.9.0 Beta`
 
 #### Logo
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/public/res/icons/ms-icon.png" width="128" height="128" />
 
 ### STATUS
-#### - [Integrated PWA addToHomePage/cache/]	✔	
-#### - [Integrated raycast (hit trigger detect), bvh animation]	✔	
-#### - [Basic Physics implementation based on cannon.js]	✔	
-#### - [FirstPersonController fly or classic fp / SceneController Drag and navigation scene]	✔	
-#### - [Basic's Shadows vs lights (GLSL)]	✔	
+#### - [Integrated PWA addToHomePage/cache/] ✔
+#### - [Integrated raycast (hit trigger detect), bvh animation] ✔
+#### - [Basic Physics implementation based on cannon.js] ✔
+#### - [FirstPersonController fly or classic fp / SceneController Drag and navigation scene] ✔
+#### - [Basic's Shadows vs lights (GLSL)] ✔
 #### - [Migrated to the opengles300]
 #### - [FBO implemented]
 #### - [Add cef and cefSharp Visual Studio projects for building executive native apps. 
 ####     Support: Windows, MAC, Linux ]
+#### - Texture Editor [tutorial example]
 
 ### Description ℹ
   This is small but inspiring project.
@@ -24,7 +25,7 @@
   (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in 
    opengles 1.1. Also can be downgraded to openGLES 1.1. webGL Lightweight library based on glmatrix engine.
   For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js. I use free software Blender 2.90.1 for 3d Object mesh works. MatrixEngine is Blender frendly orientend lib. Another frendly tools comes from mixamo.com. Mixamo is great service used for creating my 3d assets. GIMP and MsPaint
-  also used for editing images.
+  also used for editing images. Networking is part of matrix engine, deeply integrated. Used webRTC reala time protocol. Powered by webGL vs webRTC!
 
 ### Limitation ⚠
  - Basic implementation for physics (Cube, Sphere).

@@ -1,8 +1,7 @@
 
 ## CHANGES
 
-
-#### [1.9.0 BETA]
+#### [1.9.0 Thunder BETA 2023]
 
  - FBO implemented BASIC
  - Migrated to the opengles300
@@ -11,8 +10,8 @@
     - Windows
     - MAC
     - Linux
-  - GUI Texture editor based on Visualjs3 in background. 
-    make gui fast run - wip
+  - GUI Texture editor based on Visualjs3 in background.
+    Make gui fast tex editor running - wip
 
 GLSL Note:
 Note: This extension is only available to WebGL1 contexts. In WebGL2, the functionality of this extension is available on the WebGL2 context by default. The constant in WebGL2 is gl.UNSIGNED_INT_24_8.
