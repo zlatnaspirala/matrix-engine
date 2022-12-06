@@ -1,15 +1,10 @@
-/*
-  Nikola Lukic
-  webGl2GLmatrix2 api example
-*/
-/* globals App world VIDEO_TEXTURE ENUMERATORS */
 
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
+ * @deplaced matrixEngine.Engine.VIDEO_TEXTURE @in matrixEngine.Engine.VT
  */
 
-/* globals world App world */
 import App from "../program/manifest";
 import * as matrixEngine from "../index.js";
 let VIDEO_TEXTURE = matrixEngine.Engine.VIDEO_TEXTURE;

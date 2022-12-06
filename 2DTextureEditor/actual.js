@@ -3,6 +3,8 @@ import { sys, ActivateModifiers, loadEditor, runEditor, loadEditorObjects } from
 
 var runTextureEditor = (curTexId) => {
 
+  if (typeof window.RESOURCE !== 'undefined') return;
+
   ActivateModifiers();
   // Run editor
   runEditor();

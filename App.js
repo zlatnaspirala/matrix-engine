@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/spot_light_shadows';
+import {runThis} from './apps/texture-editor';
 
 var world;
 var App = matrixEngine.App;

@@ -3,7 +3,7 @@
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _spot_light_shadows = require("./apps/spot_light_shadows");
+var _textureEditor = require("./apps/texture-editor");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -27,16 +27,16 @@ window.webGLStart = () => {
   world.callReDraw(); // Make it global for dev - for easy console/debugger access
 
   window.App = App;
-  window.runThis = _spot_light_shadows.runThis;
+  window.runThis = _textureEditor.runThis;
   setTimeout(() => {
-    (0, _spot_light_shadows.runThis)(world);
+    (0, _textureEditor.runThis)(world);
   }, 1);
 };
 
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/spot_light_shadows":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/texture-editor":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46,72 +46,57 @@ exports.runThis = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
+var matrixEngine = _interopRequireWildcard(require("../index.js"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- *@Author Nikola Lukic
- *@Description Matrix Engine Api Example
- * From version [1.8.15]
- * Spot Light/Shadows shader
+ * @Author Nikola Lukic
+ * @Description Matrix Engine Api Example.
  */
 
-/* globals world App */
-var runThis = world => {
-  // Camera
-  // App.camera.FirstPersonController = true;
-  _manifest.default.camera.SceneController = true; // Image texs
+/* globals world App world */
+let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+let Vjs3 = matrixEngine.Engine.Vjs3;
+let E = matrixEngine.utility.E;
 
+var runThis = world => {
+  /* globals world App ENUMERATORS E Vjs3 */
+  // eslint-disable-next-line no-unused-vars
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
-  world.Add("cubeLightTex", 0.2, "myCube", tex);
+  world.Add("cubeLightTex", 12, "outsideBox", tex);
+  _manifest.default.scene.outsideBox.rotation.rotz = -90;
+  _manifest.default.scene.outsideBox.position.y = 0;
+  _manifest.default.scene.outsideBox.position.z = -55; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
+  // App.scene.outsideBox.rotValue = 90;
 
-  _manifest.default.scene.myCube.position.SetZ(-11);
+  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
 
-  _manifest.default.scene.myCube.position.SetX(1);
+  _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
+  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
+  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
 
-  _manifest.default.scene.myCube.position.SetY(0.6); // App.scene.myCube.activateShadows('spot');
-
-
-  world.Add("squareTex", 5, "myCube5", tex);
-
-  _manifest.default.scene.myCube5.position.SetZ(-12);
-
-  _manifest.default.scene.myCube5.position.SetX(0);
-
-  _manifest.default.scene.myCube5.position.SetY(0);
-
-  _manifest.default.scene.myCube5.activateShadows('lens');
-
-  world.Add("squareTex", 3, "MyColoredCube1", tex);
-
-  _manifest.default.scene.MyColoredCube1.position.SetZ(-11);
-
-  _manifest.default.scene.MyColoredCube1.position.SetX(0);
-
-  _manifest.default.scene.MyColoredCube1.position.SetY(-2); //App.scene.MyColoredCube1.activateShadows('spot');
-  // App.scene.MyColoredCube1.shadows.innerLimit = 0
-  // App.scene.MyColoredCube1.shadows.activeUpdate();
-  // App.scene.MyColoredCube1.rotation.rotx = -80;
-  // App.scene.MyColoredCube1.shadows.lightPosition = [0, -5 ,0]
-  // Click event
+  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
 
 
-  canvas.addEventListener('mousedown', ev => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
-  addEventListener("ray.hit.event", function (e) {
-    e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 10);
-    e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 10);
-    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 10);
-    console.info(e.detail);
-  });
+  E("HOLDER_STREAMS").style.display = "block";
+  E("webcam_beta").style.display = "none";
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture");
+  setTimeout(function () {
+    _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
+  }, 100);
 };
 
 exports.runThis = runThis;
 
-},{"../program/manifest":36}],3:[function(require,module,exports){
+},{"../index.js":4,"../program/manifest":36}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -158,7 +143,7 @@ class ClientConfig {
   networkDeepLogs = false;
   /**
    * masterServerKey is channel access id used to connect
-   * multimedia server channel.Both multiRTC2/3
+   * multimedia server channel/multiRTC3
    */
 
   masterServerKey = "maximumroulette.matrix-engine";
@@ -1234,13 +1219,14 @@ function VT(p, name, options) {
 
 function Vjs3(path_, nameOfCanvas) {
   var ROOT = this;
-  ROOT.iframe = document.createElement('object');
-  ROOT.iframe.id = nameOfCanvas;
-  ROOT.iframe.setAttribute('style', 'width:512px;height:512px'); // ROOT.iframe.setAttribute('width', '512');
-  // ROOT.iframe.setAttribute('height', '512');
+  ROOT.iframe = document.createElement('iframe');
+  ROOT.iframe.id = nameOfCanvas; // ROOT.iframe.setAttribute('style', 'width:512px;height:512px');
 
+  ROOT.iframe.setAttribute('width', '512');
+  ROOT.iframe.setAttribute('height', '512');
   var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
   ROOT.iframe.data = path_;
+  ROOT.iframe.src = path_;
   DIV_CONTENT_STREAMS.appendChild(ROOT.iframe);
 
   document.getElementById(ROOT.iframe.id).onload = function (event) {
@@ -8628,6 +8614,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* eslint-disable no-unused-vars */
 // define shaders from code
+if (_manifest.default.openglesShaderVersion == '3') {}
+
 (0, _matrixInitShaders.loadShaders2)();
 /* Width and Height variables of the browser screen  */
 
@@ -36322,12 +36310,13 @@ exports.default = void 0;
 /* eslint-disable no-unused-vars */
 var App = {
   name: "Matrix Engine Manifest",
-  version: "1.0.8",
+  version: "1.0.9",
   events: true,
   sounds: true,
   logs: false,
   draw_interval: 10,
   antialias: false,
+  openglesShaderVersion: '3',
   camera: {
     viewAngle: 45,
     nearViewpoint: 0.1,
