@@ -836,12 +836,18 @@ Take a look at the `apps\fps_player_controller.js` example.
 ### Texture editor (runtime):
 
  - Using Vjs3 with Editor use:
-
 ```js
   App.scene.outsideBox.streamTextures = new Vjs3(
   "./2DTextureEditor/actual.html",
   "actualTexture"
 );
+```
+
+ - Build meta images resource with:
+```js
+npm run res.tex.editor
+or
+node ./2DTextureEditor/res.js
 ```
 
  - Running Editor Tool

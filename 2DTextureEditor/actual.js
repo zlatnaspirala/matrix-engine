@@ -2,31 +2,33 @@
 import { sys, ActivateModifiers, loadEditor, runEditor, loadEditorObjects } from 'visual-js';
 
 var runTextureEditor = (curTexId) => {
-  ActivateModifiers();
 
+  ActivateModifiers();
   // Run editor
   runEditor();
-  loadEditor();
+  // loadEditor();
+
+  sys.SCRIPT.LOAD("res/animations/resource.js").then(()=> {
+    console.log("window.RESOURCE2 ", window.RESOURCE)
+  });
 
   sys.DOM.CREATE_SURFACE("SURF", curTexId, 100, 99.4, "DIAMETRIC");
   actualTexture.ENGINE.CREATE_MODUL("STARTER");
 
-  // /**
-  //  * @description
-  //  * Create non-editor game objects here (from code)
-  //  */
+  /**
+   * @description
+   * Create non-editor game objects here (from code)
+   */
   let smodul = actualTexture.ENGINE.MODULES.ACCESS_MODULE("STARTER");
   // smodul.NEW_OBJECT("IamNewObject", 25, 50, 12, 25, 10);
 
   // Run editor ASYNC!
   loadEditorObjects();
 
-
   // test
   setTimeout(() => {
-    smodul.GAME_OBJECTS[1].ANIMATION.initial_speed = 22;
+    console.log("Test => ", smodul.GAME_OBJECTS);
   }, 2000);
-
 
 }
 
