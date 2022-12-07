@@ -1,4 +1,4 @@
-                                     /** ojsa */
+                                      /** ojsa */
 
                     window.RESOURCE = {}; 
 
@@ -49,6 +49,8 @@
  ] }; 
   RESOURCE.pil_black={"source":['pil_black/pil-black.png' , 
  ] }; 
+  RESOURCE.pil_green={"source":['pil_green/pil-black.png' , 
+ ] }; 
   RESOURCE.stone={"source":['stone/n-stone.png' , 
- ] }; window.RESOURCE = RESOURCE;  /**SYS.DEBUG.LOG('Resources loaded. ' + 9);*/ 
-  RESOURCE.SUM = 9; 
+ ] }; window.RESOURCE = RESOURCE;  /**SYS.DEBUG.LOG('Resources loaded. ' + 10);*/ 
+  RESOURCE.SUM = 10; 

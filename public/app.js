@@ -48,6 +48,8 @@ var _manifest = _interopRequireDefault(require("../program/manifest"));
 
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
 
+var CANNON = _interopRequireWildcard(require("cannon"));
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -75,8 +77,15 @@ var runThis = world => {
   });
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev);
+    /**
+    * Physics force apply
+    */
+
+    if (ev.detail.hitObject.physics.enabled == true) {
+      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+    }
   });
-  world.Add("cubeLightTex", 12, "outsideBox", tex);
+  world.Add("cubeLightTex", 1, "outsideBox", tex);
   _manifest.default.scene.outsideBox.rotation.rotz = -90;
   _manifest.default.scene.outsideBox.position.y = 0;
   _manifest.default.scene.outsideBox.position.z = -55; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
@@ -93,7 +102,32 @@ var runThis = world => {
 
   E("HOLDER_STREAMS").style.display = "block";
   E("webcam_beta").style.display = "none";
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture"); // setTimeout(function () {
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture");
+  world.Add("squareTex", 1, "FLOOR_STATIC2", tex);
+
+  _manifest.default.scene.FLOOR_STATIC2.geometry.setScaleByX(15);
+
+  _manifest.default.scene.FLOOR_STATIC2.geometry.setScaleByY(15);
+
+  _manifest.default.scene.FLOOR_STATIC2.position.SetY(2);
+
+  _manifest.default.scene.FLOOR_STATIC2.position.SetZ(-15);
+
+  _manifest.default.scene.FLOOR_STATIC2.rotation.rotx = 90; // Load Physics world!
+
+  let gravityVector = [0, 0, -9.82];
+  let physics = world.loadPhysics(gravityVector); // Add ground
+
+  physics.addGround(_manifest.default, world, tex);
+  var b = new CANNON.Body({
+    mass: 5,
+    position: new CANNON.Vec3(0, -5, 1),
+    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+  });
+  physics.world.addBody(b); // Physics
+
+  _manifest.default.scene.outsideBox.physics.currentBody = b;
+  _manifest.default.scene.outsideBox.physics.enabled = true; // setTimeout(function () {
 
   _manifest.default.scene.outsideBox.streamTextures.showTextureEditor(); // }, 100);
 
@@ -101,7 +135,7 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":4,"../program/manifest":36}],3:[function(require,module,exports){
+},{"../index.js":4,"../program/manifest":36,"cannon":33}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4791,14 +4825,14 @@ class SquareVertex {
     this.pointB = new Point(0, 0, 0);
     this.pointC = new Point(0, 0, 0);
     this.pointD = new Point(0, 0, 0);
-    this.basePoint = -1.0 * this.size;
+    this.basePoint = 1.0 * this.size;
     this.basePointNeg = 1.0 * this.size;
     this.dynamicBuffer = true;
     this.texCoordsPoints = {
-      right_top: new Point(0.0, 0.0, 0),
+      right_top: new Point(1.0, 1.0, 0),
       left_top: new Point(0.0, 1.0, 0),
-      right_bottom: new Point(1.0, 1.0, 0),
-      left_bottom: new Point(1.0, 0.0, 0)
+      right_bottom: new Point(1.0, 0.0, 0),
+      left_bottom: new Point(0.0, 0.0, 0)
     };
     this.colorData = {};
     this.colorData.parent = this.root; // default
@@ -4807,14 +4841,14 @@ class SquareVertex {
   }
 
   get vertices() {
-    return new Float32Array([this.basePoint + this.pointC.X, this.basePoint + this.pointC.Y, this.basePoint + this.pointC.Z, this.basePointNeg + this.pointD.X, this.basePoint + this.pointD.Y, this.basePoint + this.pointD.Z, this.basePointNeg + this.pointA.X, this.basePointNeg + this.pointA.Y, this.basePoint + this.pointA.Z, this.basePoint + this.pointB.X, this.basePointNeg + this.pointB.Y, this.basePoint + this.pointB.Z]);
+    return new Float32Array([this.basePointNeg + this.pointA.X, this.basePointNeg + this.pointA.Y, this.basePoint + this.pointA.Z, this.basePoint + this.pointB.X, this.basePointNeg + this.pointB.Y, this.basePoint + this.pointB.Z, this.basePoint + this.pointC.X, this.basePoint + this.pointC.Y, this.basePoint + this.pointC.Z, this.basePointNeg + this.pointD.X, this.basePoint + this.pointD.Y, this.basePoint + this.pointD.Z]);
   }
 
   get texCoords() {
     return new Float32Array([this.texCoordsPoints.right_top.X, this.texCoordsPoints.right_top.Y, this.texCoordsPoints.left_top.X, this.texCoordsPoints.left_top.Y, this.texCoordsPoints.right_bottom.X, this.texCoordsPoints.right_bottom.Y, this.texCoordsPoints.left_bottom.X, this.texCoordsPoints.left_bottom.Y]);
   }
 
-  rawIndices = [0, 1, 2, 0, 2, 3];
+  rawIndices = [0, 1, 2, 3, 2, 1];
 
   get indices() {
     return this.rawIndices;

@@ -14,6 +14,8 @@ After this command you will see access `RESOURCE.folderName`.
 Write you code intro: `actual.js`
 You can make multi instance like tex1.html/tex1.js , tex2.html/tex2.js etc...
 
+`F4` for editor mode.
+
 
 THIS IS GIST FOR EDITOR REGIME:
 ```js

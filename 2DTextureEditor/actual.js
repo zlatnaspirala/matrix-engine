@@ -33,16 +33,19 @@ var runTextureEditor = (curTexId) => {
       console.log("window.parent.matrixEngine.App.scene.outsideBox.streamTextures ",
        window.parent.matrixEngine.App.scene.outsideBox.streamTextures)
 
-      var ROT_DELTA = new sys.MATH.OSCILLATOR(0, 360, 5);
-      var POS_DELTA = new sys.MATH.OSCILLATOR(10, 80, 1);
+      var posGreen = new sys.MATH.OSCILLATOR(10, 80, 1);
+      var POS_DELTA = new sys.MATH.OSCILLATOR(10, 80, 2);
       pilLeft.ANIMATION.ROTATE.ANGLE = 90;
       pilRight.ANIMATION.ROTATE.ANGLE = 90;
       pilLeft.POSITION.SET_POSITION(-185, 230);
       text1.TEXTBOX.font = '33px verdana';
 
+      pilGreen.TESTposGreen = posGreen;
+
       // VJS3 Staff
       pilLeft.ON_UPDATE = function() {
         // NEPTUN.ROTATE.ROTATE_ARROUNT_CENTER()
+        pilGreen.POSITION.TRANSLATE(8, posGreen.UPDATE());
         blend1.POSITION.TRANSLATE(8, POS_DELTA.UPDATE());
       };
 
