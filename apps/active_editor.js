@@ -44,7 +44,7 @@ export var runThis = world => {
   // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
   // App.scene.outsideBox.rotValue = 90;
   App.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
-  App.scene.outsideBox.glBlend.blendEnabled = false;
+  App.scene.outsideBox.glBlend.blendEnabled = true;
   App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[6];
   App.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7];
   App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
@@ -58,12 +58,12 @@ export var runThis = world => {
   );
 
  
-  world.Add("squareTex", 1, "FLOOR_STATIC2", tex);
-  App.scene.FLOOR_STATIC2.geometry.setScaleByX(15);
-  App.scene.FLOOR_STATIC2.geometry.setScaleByY(15);
-  App.scene.FLOOR_STATIC2.position.SetY(2);
-  App.scene.FLOOR_STATIC2.position.SetZ(-15);
-  App.scene.FLOOR_STATIC2.rotation.rotx = 90;
+  // world.Add("squareTex", 1, "FLOOR_STATIC2", tex);
+  // App.scene.FLOOR_STATIC2.geometry.setScaleByX(15);
+  // App.scene.FLOOR_STATIC2.geometry.setScaleByY(15);
+  // App.scene.FLOOR_STATIC2.position.SetY(2);
+  // App.scene.FLOOR_STATIC2.position.SetZ(-15);
+  // App.scene.FLOOR_STATIC2.rotation.rotx = 90;
 
   // Load Physics world!
   let gravityVector = [0, 0, -9.82];

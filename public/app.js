@@ -93,7 +93,7 @@ var runThis = world => {
 
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
 
-  _manifest.default.scene.outsideBox.glBlend.blendEnabled = false;
+  _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
   _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[6];
   _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7];
 
@@ -102,18 +102,13 @@ var runThis = world => {
 
   E("HOLDER_STREAMS").style.display = "block";
   E("webcam_beta").style.display = "none";
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture");
-  world.Add("squareTex", 1, "FLOOR_STATIC2", tex);
-
-  _manifest.default.scene.FLOOR_STATIC2.geometry.setScaleByX(15);
-
-  _manifest.default.scene.FLOOR_STATIC2.geometry.setScaleByY(15);
-
-  _manifest.default.scene.FLOOR_STATIC2.position.SetY(2);
-
-  _manifest.default.scene.FLOOR_STATIC2.position.SetZ(-15);
-
-  _manifest.default.scene.FLOOR_STATIC2.rotation.rotx = 90; // Load Physics world!
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture"); // world.Add("squareTex", 1, "FLOOR_STATIC2", tex);
+  // App.scene.FLOOR_STATIC2.geometry.setScaleByX(15);
+  // App.scene.FLOOR_STATIC2.geometry.setScaleByY(15);
+  // App.scene.FLOOR_STATIC2.position.SetY(2);
+  // App.scene.FLOOR_STATIC2.position.SetZ(-15);
+  // App.scene.FLOOR_STATIC2.rotation.rotx = 90;
+  // Load Physics world!
 
   let gravityVector = [0, 0, -9.82];
   let physics = world.loadPhysics(gravityVector); // Add ground
@@ -10596,7 +10591,7 @@ class MatrixPhysics {
     world.Add("squareTex", 1, "FLOOR_STATIC", tex);
     App.scene.FLOOR_STATIC.geometry.setScaleByX(15);
     App.scene.FLOOR_STATIC.geometry.setScaleByY(15);
-    App.scene.FLOOR_STATIC.position.SetY(-2);
+    App.scene.FLOOR_STATIC.position.SetY(-1);
     App.scene.FLOOR_STATIC.position.SetZ(-15);
     App.scene.FLOOR_STATIC.rotation.rotx = 90;
   }
