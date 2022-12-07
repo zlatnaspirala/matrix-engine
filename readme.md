@@ -875,6 +875,11 @@ In examples:
 Research Vjs3 source examples at:
 https://github.com/zlatnaspirala/visualjs
 
+Simple Planetarium:
+ - https://jsfiddle.net/zlatnaspirala/y16s2krh/46/
+ - 
+
+
 On NPM Service `npm i visual-js` , matrix engine already have
 `visual-js` , `visual-js-server` editor backend part.
 

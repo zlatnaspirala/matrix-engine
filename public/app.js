@@ -3,7 +3,7 @@
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _textureEditor = require("./apps/texture-editor");
+var _active_editor = require("./apps/active_editor");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -27,16 +27,16 @@ window.webGLStart = () => {
   world.callReDraw(); // Make it global for dev - for easy console/debugger access
 
   window.App = App;
-  window.runThis = _textureEditor.runThis;
+  window.runThis = _active_editor.runThis;
   setTimeout(() => {
-    (0, _textureEditor.runThis)(world);
+    (0, _active_editor.runThis)(world);
   }, 1);
 };
 
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/texture-editor":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/active_editor":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -58,19 +58,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
-
-/* globals world App world */
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 let Vjs3 = matrixEngine.Engine.Vjs3;
 let E = matrixEngine.utility.E;
 
 var runThis = world => {
-  /* globals world App ENUMERATORS E Vjs3 */
-  // eslint-disable-next-line no-unused-vars
+  // Matrix Engine
+  _manifest.default.camera.SceneController = true; // eslint-disable-next-line no-unused-vars
+
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+  window.addEventListener('ray.hit.event', ev => {
+    console.log("You shoot the object! Nice!", ev);
+  });
   world.Add("cubeLightTex", 12, "outsideBox", tex);
   _manifest.default.scene.outsideBox.rotation.rotz = -90;
   _manifest.default.scene.outsideBox.position.y = 0;
@@ -79,19 +84,19 @@ var runThis = world => {
 
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
 
-  _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
+  _manifest.default.scene.outsideBox.glBlend.blendEnabled = false;
+  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[6];
+  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7];
 
   _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
 
 
   E("HOLDER_STREAMS").style.display = "block";
   E("webcam_beta").style.display = "none";
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture");
-  setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 100);
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture"); // setTimeout(function () {
+
+  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor(); // }, 100);
+
 };
 
 exports.runThis = runThis;
@@ -537,11 +542,9 @@ function defineWebGLWorld(cavnas) {
     const available_extensions = gl.getSupportedExtensions();
     const ext = gl.getExtension('WEBGL_depth_texture');
 
-    if (!ext) {
-      console.warn('No support for WEBGL_depth_texture!', ext);
-    }
+    if (!ext) {// console.warn('No support for WEBGL_depth_texture [opengles1.1] !', ext);
+    } // console.info("WEBGL base pocket: SUCCESS", available_extensions);
 
-    console.info("WEBGL base pocket: SUCCESS", available_extensions);
   } catch (e) {
     /* Exception: Could not initialise WebGL     */
     console.error("Exception in WEBGL base pocket: " + e);
@@ -3169,7 +3172,11 @@ _manifest.default.operation.draws.cube = function (object) {
     if (object.streamTextures != null) {
       // video/webcam tex
       // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
-      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
+      if (object.streamTextures.video) {
+        _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
+      } else {
+        _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      }
 
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else if (object.FBO) {

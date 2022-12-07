@@ -1,18 +1,17 @@
 
-import { sys, ActivateModifiers, loadEditor, runEditor, loadEditorObjects } from 'visual-js';
+import {sys, ActivateModifiers, loadEditor, runEditor, loadEditorObjects} from 'visual-js';
 
 var runTextureEditor = (curTexId) => {
 
-  if (typeof window.RESOURCE !== 'undefined') return;
+  // Visual-JS 3
+
+  // must be fixed - double call
+  if(typeof window.RESOURCE !== 'undefined') return;
 
   ActivateModifiers();
   // Run editor
   runEditor();
   // loadEditor();
-
-  sys.SCRIPT.LOAD("res/animations/resource.js").then(()=> {
-    console.log("window.RESOURCE2 ", window.RESOURCE)
-  });
 
   sys.DOM.CREATE_SURFACE("SURF", curTexId, 100, 99.4, "DIAMETRIC");
   actualTexture.ENGINE.CREATE_MODUL("STARTER");
@@ -27,11 +26,28 @@ var runTextureEditor = (curTexId) => {
   // Run editor ASYNC!
   loadEditorObjects();
 
-  // test
-  setTimeout(() => {
-    console.log("Test => ", smodul.GAME_OBJECTS);
-  }, 2000);
+  sys.SCRIPT.LOAD("res/animations/resource.js").then(() => {
+    addEventListener('postScriptReady', () => {
 
+      // Access
+      console.log("window.parent.matrixEngine.App.scene.outsideBox.streamTextures ",
+       window.parent.matrixEngine.App.scene.outsideBox.streamTextures)
+
+      var ROT_DELTA = new sys.MATH.OSCILLATOR(0, 360, 5);
+      var POS_DELTA = new sys.MATH.OSCILLATOR(10, 80, 1);
+      pilLeft.ANIMATION.ROTATE.ANGLE = 90;
+      pilRight.ANIMATION.ROTATE.ANGLE = 90;
+      pilLeft.POSITION.SET_POSITION(-185, 230);
+      text1.TEXTBOX.font = '33px verdana';
+
+      // VJS3 Staff
+      pilLeft.ON_UPDATE = function() {
+        // NEPTUN.ROTATE.ROTATE_ARROUNT_CENTER()
+        blend1.POSITION.TRANSLATE(8, POS_DELTA.UPDATE());
+      };
+
+    });
+  });
 }
 
 // Automatic run

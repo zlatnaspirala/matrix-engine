@@ -1,4 +1,4 @@
-                                   /** ojsa */
+                                     /** ojsa */
 
                     window.RESOURCE = {}; 
 
@@ -15,6 +15,8 @@
 'keys/hudKey_yellow_empty.png' , 
  ] }; 
   RESOURCE.loadingBlock={"source":['loadingBlock/alu.jpg' , 
+ ] }; 
+  RESOURCE.matrix1={"source":['matrix1/matrix.png' , 
  ] }; 
   RESOURCE.money_penny={"source":['money_penny/gold_1.png' , 
 'money_penny/gold_2.png' , 
@@ -45,6 +47,8 @@
  ] }; 
   RESOURCE.pil1={"source":['pil1/pil1.png' , 
  ] }; 
+  RESOURCE.pil_black={"source":['pil_black/pil-black.png' , 
+ ] }; 
   RESOURCE.stone={"source":['stone/n-stone.png' , 
- ] }; window.RESOURCE = RESOURCE;  /**SYS.DEBUG.LOG('Resources loaded. ' + 7);*/ 
-  RESOURCE.SUM = 7; 
+ ] }; window.RESOURCE = RESOURCE;  /**SYS.DEBUG.LOG('Resources loaded. ' + 9);*/ 
+  RESOURCE.SUM = 9; 

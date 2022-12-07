@@ -60,14 +60,11 @@ div.btnShadow:hover {
 
 .debugBox {
   position:absolute;
-  left:0;
-  top:0;
+  left:5px;
+  bottom:0;
   font-size: 12px;
   width:200px;
   height: 15px;
-  -webkit-box-shadow: inset 0px 0px 22px 2px rgba(0,255,30,1);
-  -moz-box-shadow: inset 0px 0px 22px 2px rgba(0,255,30,1);
-  box-shadow: inset 0px 0px 22px 1px rgba(0,255,30,1);
   background-color: black;
   color: lime;
 }

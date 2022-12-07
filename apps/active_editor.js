@@ -3,40 +3,56 @@
  * @Description Matrix Engine Api Example.
  */
 
-/* globals world App world */
-import App from "../program/manifest";
-import * as matrixEngine from "../index.js";
-let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-let Vjs3 = matrixEngine.Engine.Vjs3;
-let E = matrixEngine.utility.E;
+ import App from "../program/manifest";
+ import * as matrixEngine from "../index.js";
+ let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+ let Vjs3 = matrixEngine.Engine.Vjs3;
+ let E = matrixEngine.utility.E;
+ 
+ export var runThis = world => {
 
-export var runThis = world => {
-  console.log("active editor")
-  /* globals world App ENUMERATORS E Vjs3 */
-  // eslint-disable-next-line no-unused-vars
-  var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply",
-  };
+  // Matrix Engine
 
-  world.Add("cubeLightTex", 12, "outsideBox", textuteImageSamplers);
-  App.scene.outsideBox.position.y = 0;
-  App.scene.outsideBox.position.z = -55;
-  // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
-  // App.scene.outsideBox.rotValue = 90;
-  App.scene.outsideBox.LightsData.ambientLight.set(0, 0, 0);
-  // App.scene.outsideBox.glBlend.blendEnabled = true;
-  // App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  // App.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
-  App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
+  App.camera.SceneController = true;
+  
+   // eslint-disable-next-line no-unused-vars
+   var tex = {
+     source: ["res/images/complex_texture_1/diffuse.png"],
+     mix_operation: "multiply",
+   };
 
-  // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-  E("HOLDER_STREAMS").style.display = "block";
+   canvas.addEventListener('mousedown', (ev) => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
 
-  App.scene.outsideBox.rotation.rotz = -90
-  App.scene.outsideBox.streamTextures = new Vjs3(
-    "./2DTextureEditor/actual.html",
-    "actualTexture"
-  );
-  App.scene.outsideBox.streamTextures.showTextureEditor();
-};
+  window.addEventListener('ray.hit.event', (ev) => {
+    console.log("You shoot the object! Nice!", ev)
+  });
+
+   world.Add("cubeLightTex", 12, "outsideBox", tex);
+ 
+   App.scene.outsideBox.rotation.rotz = -90
+   App.scene.outsideBox.position.y = 0;
+   App.scene.outsideBox.position.z = -55;
+   // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
+   // App.scene.outsideBox.rotValue = 90;
+   App.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
+   App.scene.outsideBox.glBlend.blendEnabled = false;
+   App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[6];
+   App.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7];
+   App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
+ 
+   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
+   E("HOLDER_STREAMS").style.display = "block";
+   E("webcam_beta").style.display = "none";
+   App.scene.outsideBox.streamTextures = new Vjs3(
+     "http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html",
+     "actualTexture"
+   );
+ 
+ 
+   // setTimeout(function () {
+     App.scene.outsideBox.streamTextures.showTextureEditor();
+   // }, 100);
+ };
+ 

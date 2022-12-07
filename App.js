@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/texture-editor';
+import {runThis} from './apps/active_editor';
 
 var world;
 var App = matrixEngine.App;
