@@ -106,18 +106,51 @@ var runThis = world => {
 
   E("HOLDER_STREAMS").style.display = "block";
   E("webcam_beta").style.display = "none";
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture");
-  world.Add("cubeLightTex", 1, "WALLRIGHT", texStone); // App.scene.WALLRIGHT.geometry.setScaleByX(1);
-  // App.scene.WALLRIGHT.geometry.setScaleByY(15);
-  // App.scene.WALLRIGHT.geometry.setScaleByZ(3);
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture"); // Walls
 
-  _manifest.default.scene.WALLRIGHT.position.SetX(-7);
+  world.Add("cubeLightTex", 1, "WALLRIGHT", texStone);
 
-  _manifest.default.scene.WALLRIGHT.position.SetY(2);
+  _manifest.default.scene.WALLRIGHT.geometry.setScaleByX(0.5);
+
+  _manifest.default.scene.WALLRIGHT.geometry.setScaleByY(4);
+
+  _manifest.default.scene.WALLRIGHT.geometry.setScaleByZ(14);
+
+  _manifest.default.scene.WALLRIGHT.position.SetX(14);
+
+  _manifest.default.scene.WALLRIGHT.position.SetY(3);
 
   _manifest.default.scene.WALLRIGHT.position.SetZ(-15);
 
-  _manifest.default.scene.WALLRIGHT.rotation.rotx = 90; // Load Physics world!
+  world.Add("cubeLightTex", 1, "WALLLEFT", texStone);
+
+  _manifest.default.scene.WALLLEFT.geometry.setScaleByX(0.5);
+
+  _manifest.default.scene.WALLLEFT.geometry.setScaleByY(4);
+
+  _manifest.default.scene.WALLLEFT.geometry.setScaleByZ(14);
+
+  _manifest.default.scene.WALLLEFT.position.SetX(-14);
+
+  _manifest.default.scene.WALLLEFT.position.SetY(3);
+
+  _manifest.default.scene.WALLLEFT.position.SetZ(-15);
+
+  world.Add("cubeLightTex", 1, "WALLFRONT", texStone);
+
+  _manifest.default.scene.WALLFRONT.geometry.setScaleByX(14);
+
+  _manifest.default.scene.WALLFRONT.geometry.setScaleByY(4);
+
+  _manifest.default.scene.WALLFRONT.geometry.setScaleByZ(0.5);
+
+  _manifest.default.scene.WALLFRONT.position.SetX(0);
+
+  _manifest.default.scene.WALLFRONT.position.SetY(3);
+
+  _manifest.default.scene.WALLFRONT.position.SetZ(-27); // App.scene.WALLFRONT.rotation.rotx = 90;
+  // Load Physics world!
+
 
   let gravityVector = [0, 0, -9.82];
   let physics = world.loadPhysics(gravityVector); // Add ground
@@ -3298,9 +3331,10 @@ _manifest.default.operation.draws.cube = function (object) {
 
           _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.NEAREST);
 
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
+          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S);
 
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE); // -- Allocate storage for the texture
+          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T); //console.log('TEST' , object.texParams)
+          // -- Allocate storage for the texture
           // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
           // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
           // world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
@@ -5438,14 +5472,14 @@ class CubeVertex {
     this.Right.pointB.z = -scale;
     this.Right.pointC.z = scale;
     this.Right.pointD.z = scale;
-    this.Top.pointA.z = scale;
+    this.Top.pointA.z = -scale;
     this.Top.pointB.z = scale;
     this.Top.pointC.z = scale;
-    this.Top.pointD.z = scale;
+    this.Top.pointD.z = -scale;
     this.Bottom.pointA.z = -scale;
     this.Bottom.pointB.z = -scale;
-    this.Bottom.pointC.z = -scale;
-    this.Bottom.pointD.z = -scale;
+    this.Bottom.pointC.z = scale;
+    this.Bottom.pointD.z = scale;
     this.Front.pointA.z = scale;
     this.Front.pointB.z = scale;
     this.Front.pointC.z = scale;
@@ -5517,7 +5551,7 @@ class CubeVertex {
     return new Float32Array([// Front face
     this.basePointNeg + this.Front.pointA.X, this.basePointNeg + this.Front.pointA.Y, this.basePoint + this.Front.pointA.Z, this.basePoint + this.Front.pointB.X, this.basePointNeg + this.Front.pointB.Y, this.basePoint + this.Front.pointB.Z, this.basePoint + this.Front.pointC.X, this.basePoint + this.Front.pointC.Y, this.basePoint + this.Front.pointC.Z, this.basePointNeg + this.Front.pointD.X, this.basePoint + this.Front.pointD.Y, this.basePoint + this.Front.pointD.Z, // Back face
     this.basePointNeg + this.Back.pointA.X, this.basePointNeg + this.Back.pointA.Y, this.basePointNeg + this.Back.pointA.Z, this.basePointNeg + this.Back.pointB.X, this.basePoint + this.Back.pointB.Y, this.basePointNeg + this.Back.pointB.Z, this.basePoint + this.Back.pointC.X, this.basePoint + this.Back.pointC.Y, this.basePointNeg + this.Back.pointC.Z, this.basePoint + this.Back.pointD.X, this.basePointNeg + this.Back.pointD.Y, this.basePointNeg + this.Back.pointD.Z, // Top face
-    this.basePointNeg + this.Top.pointA.X, this.basePoint + this.Top.pointA.Y, this.basePointNeg + this.Top.pointA.Z, this.basePointNeg + this.Top.pointB.X, this.basePoint + this.Top.pointB.Y, this.basePoint + this.Top.pointA.Z, this.basePoint + this.Top.pointC.X, this.basePoint + this.Top.pointC.Y, this.basePoint + this.Top.pointA.Z, this.basePoint + this.Top.pointD.X, this.basePoint + this.Top.pointD.Y, this.basePointNeg + this.Top.pointA.Z, // Bottom face
+    this.basePointNeg + this.Top.pointA.X, this.basePoint + this.Top.pointA.Y, this.basePointNeg + this.Top.pointA.Z, this.basePointNeg + this.Top.pointB.X, this.basePoint + this.Top.pointB.Y, this.basePoint + this.Top.pointB.Z, this.basePoint + this.Top.pointC.X, this.basePoint + this.Top.pointC.Y, this.basePoint + this.Top.pointC.Z, this.basePoint + this.Top.pointD.X, this.basePoint + this.Top.pointD.Y, this.basePointNeg + this.Top.pointD.Z, // Bottom face
     this.basePointNeg + this.Bottom.pointA.X, this.basePointNeg + this.Bottom.pointA.Y, this.basePointNeg + this.Bottom.pointA.Z, this.basePoint + this.Bottom.pointB.X, this.basePointNeg + this.Bottom.pointB.Y, this.basePointNeg + this.Bottom.pointB.Z, this.basePoint + this.Bottom.pointC.X, this.basePointNeg + this.Bottom.pointC.Y, this.basePoint + this.Bottom.pointC.Z, this.basePointNeg + this.Bottom.pointD.X, this.basePointNeg + this.Bottom.pointD.Y, this.basePoint + this.Bottom.pointD.Z, // Right face
     this.basePoint + this.Right.pointA.X, this.basePointNeg + this.Right.pointA.Y, this.basePointNeg + this.Right.pointA.Z, this.basePoint + this.Right.pointB.X, this.basePoint + this.Right.pointB.Y, this.basePointNeg + this.Right.pointB.Z, this.basePoint + this.Right.pointC.X, this.basePoint + this.Right.pointC.Y, this.basePoint + this.Right.pointC.Z, this.basePoint + this.Right.pointD.X, this.basePointNeg + this.Right.pointD.Y, this.basePoint + this.Right.pointD.Z, // Left face
     this.basePointNeg + this.Left.pointA.X, this.basePointNeg + this.Left.pointA.Y, this.basePointNeg + this.Left.pointA.Z, this.basePointNeg + this.Left.pointB.X, this.basePointNeg + this.Left.pointB.Y, this.basePoint + this.Left.pointB.Z, this.basePointNeg + this.Left.pointC.X, this.basePoint + this.Left.pointC.Y, this.basePoint + this.Left.pointC.Z, this.basePointNeg + this.Left.pointD.X, this.basePoint + this.Left.pointD.Y, this.basePointNeg + this.Left.pointD.Z]);
@@ -8337,13 +8371,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @description
  * initTextures Load image file procedure.
  */
-_manifest.default.tools.loadTextureImage = function (gl, src) {
+_manifest.default.tools.loadTextureImage = function (gl, src, params) {
   var texture = gl.createTexture();
   texture.image = new Image();
   texture.image.crossOrigin = 'anonymous';
 
-  texture.image.onload = function () {
-    _matrixWorld.world.handleLoadedTexture(texture, gl);
+  texture.image.onload = () => {
+    console.log("params??? ", params);
+
+    _matrixWorld.world.handleLoadedTexture(texture, gl, params);
   };
 
   texture.image.src = src;
@@ -8355,14 +8391,17 @@ _manifest.default.tools.loadTextureImage = function (gl, src) {
  */
 
 
-_manifest.default.tools.BasicTextures = function (texture, gl) {
+_manifest.default.tools.BasicTextures = function (texture, gl, params) {
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); // gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
   gl.bindTexture(gl.TEXTURE_2D, null);
 };
 /**
@@ -8843,7 +8882,8 @@ function defineworld(canvas) {
     return world.physics;
   };
   /**
-   * @ TEST GLOBAL LIGHT PARAMS
+   * @description
+   *  TEST GLOBAL LIGHT PARAMS
    * this.uLightPosition = new Float32Array([0.0,0.0,0.0]);
    */
 
@@ -9091,6 +9131,17 @@ function defineworld(canvas) {
           // console.info("texturesPaths is object...");
           squareObject.textures = [];
           squareObject.texture = true;
+
+          if (typeof params === 'undefined') {
+            console.log("test bascio tex what is params UNDEFINED");
+            squareObject.texParams = {
+              TEXTURE_WRAP_S: this.GL.gl.REPEAT,
+              TEXTURE_WRAP_T: this.GL.gl.REPEAT
+            };
+          } else {
+            squareObject.texParams = texturesPaths.params;
+          }
+
           (0, _engine.RegenerateShader)('' + filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30');
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
@@ -9261,7 +9312,17 @@ function defineworld(canvas) {
         } else if (typeof texturesPaths == 'object') {
           // console.log("path is object");
           sphereObject.textures = [];
-          sphereObject.texture = true; // cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler+"-shader-fs", filler+"-shader-vs");
+          sphereObject.texture = true;
+
+          if (typeof params === 'undefined') {
+            console.log("test bascio tex what is params UNDEFINED");
+            squareObject.texParams = {
+              TEXTURE_WRAP_S: this.GL.gl.REPEAT,
+              TEXTURE_WRAP_T: this.GL.gl.REPEAT
+            };
+          } else {
+            squareObject.texParams = texturesPaths.params;
+          }
 
           (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
 
@@ -9285,7 +9346,7 @@ function defineworld(canvas) {
         (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
 
         for (var t = 0; t < texturesPaths.source.length; ++t) {
-          this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
+          this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t], texturesPaths.params));
         }
 
         this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
@@ -9295,7 +9356,7 @@ function defineworld(canvas) {
         RegenerateCustomShader(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, custom_code);
 
         for (var t = 0; t < texturesPaths.source.length; ++t) {
-          this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
+          this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t], texturesPaths.params));
         }
 
         this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
@@ -9476,7 +9537,7 @@ function defineworld(canvas) {
           (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
-            objObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
+            objObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t], texturesPaths.params));
             objObject.textures_texParameteri.push(new _utility._glTexParameteri('TEXTURE_2D', 'TEXTURE_MAG_FILTER', 'LINEAR'));
           }
 
@@ -9641,6 +9702,17 @@ function defineworld(canvas) {
         } else if (typeof texturesPaths == 'object') {
           cubeObject.textures = [];
           cubeObject.texture = true;
+
+          if (typeof params === 'undefined') {
+            console.log("test bascio tex what is params UNDEFINED");
+            cubeObject.texParams = {
+              TEXTURE_WRAP_S: this.GL.gl.REPEAT,
+              TEXTURE_WRAP_T: this.GL.gl.REPEAT
+            };
+          } else {
+            cubeObject.texParams = texturesPaths.params;
+          }
+
           (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30'); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
@@ -9648,7 +9720,8 @@ function defineworld(canvas) {
           }
 
           cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-        } else {// console.warn("Exec add obj : texturePaths : path is unknow typeof");
+        } else {
+          console.warn("Exec add obj : cubeObject texturePaths : path is unknow !");
         }
       } else {
         // no textures , use default single textures
@@ -9791,7 +9864,7 @@ function defineworld(canvas) {
 
           (0, _engine.RegenerateCubeMapShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
 
-          for (var t = 0; t < texturesPaths.source.length; ++t) {// cubeObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
+          for (var t = 0; t < texturesPaths.source.length; ++t) {// cubeObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t], texturesPaths.params));
           }
 
           cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');

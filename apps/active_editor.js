@@ -24,7 +24,7 @@ export var runThis = world => {
 
   var texStone = {
     source: ["res/images/n-stone.png"],
-    mix_operation: "multiply",
+    mix_operation: "multiply"
   };
 
   canvas.addEventListener('mousedown', (ev) => {
@@ -62,16 +62,33 @@ export var runThis = world => {
     "actualTexture"
   );
 
- 
-  world.Add("cubeLightTex", 1, "WALLRIGHT", texStone);
-  // App.scene.WALLRIGHT.geometry.setScaleByX(1);
-  // App.scene.WALLRIGHT.geometry.setScaleByY(15);
-  // App.scene.WALLRIGHT.geometry.setScaleByZ(3);
 
-  App.scene.WALLRIGHT.position.SetX(-7);
-  App.scene.WALLRIGHT.position.SetY(2);
+  // Walls
+  world.Add("cubeLightTex", 1, "WALLRIGHT", texStone);
+  App.scene.WALLRIGHT.geometry.setScaleByX(0.5);
+  App.scene.WALLRIGHT.geometry.setScaleByY(4);
+  App.scene.WALLRIGHT.geometry.setScaleByZ(14);
+  App.scene.WALLRIGHT.position.SetX(14);
+  App.scene.WALLRIGHT.position.SetY(3);
   App.scene.WALLRIGHT.position.SetZ(-15);
-  App.scene.WALLRIGHT.rotation.rotx = 90;
+
+
+  world.Add("cubeLightTex", 1, "WALLLEFT", texStone);
+  App.scene.WALLLEFT.geometry.setScaleByX(0.5);
+  App.scene.WALLLEFT.geometry.setScaleByY(4);
+  App.scene.WALLLEFT.geometry.setScaleByZ(14);
+  App.scene.WALLLEFT.position.SetX(-14);
+  App.scene.WALLLEFT.position.SetY(3);
+  App.scene.WALLLEFT.position.SetZ(-15);
+
+  world.Add("cubeLightTex", 1, "WALLFRONT", texStone);
+  App.scene.WALLFRONT.geometry.setScaleByX(14);
+  App.scene.WALLFRONT.geometry.setScaleByY(4);
+  App.scene.WALLFRONT.geometry.setScaleByZ(0.5);
+  App.scene.WALLFRONT.position.SetX(0);
+  App.scene.WALLFRONT.position.SetY(3);
+  App.scene.WALLFRONT.position.SetZ(-27);
+  // App.scene.WALLFRONT.rotation.rotx = 90;
 
   // Load Physics world!
   let gravityVector = [0, 0, -9.82];
