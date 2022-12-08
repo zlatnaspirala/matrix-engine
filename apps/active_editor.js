@@ -22,6 +22,11 @@ export var runThis = world => {
     mix_operation: "multiply",
   };
 
+  var texStone = {
+    source: ["res/images/n-stone.png"],
+    mix_operation: "multiply",
+  };
+
   canvas.addEventListener('mousedown', (ev) => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
@@ -58,12 +63,15 @@ export var runThis = world => {
   );
 
  
-  // world.Add("squareTex", 1, "FLOOR_STATIC2", tex);
-  // App.scene.FLOOR_STATIC2.geometry.setScaleByX(15);
-  // App.scene.FLOOR_STATIC2.geometry.setScaleByY(15);
-  // App.scene.FLOOR_STATIC2.position.SetY(2);
-  // App.scene.FLOOR_STATIC2.position.SetZ(-15);
-  // App.scene.FLOOR_STATIC2.rotation.rotx = 90;
+  world.Add("cubeLightTex", 1, "WALLRIGHT", texStone);
+  // App.scene.WALLRIGHT.geometry.setScaleByX(1);
+  // App.scene.WALLRIGHT.geometry.setScaleByY(15);
+  // App.scene.WALLRIGHT.geometry.setScaleByZ(3);
+
+  App.scene.WALLRIGHT.position.SetX(-7);
+  App.scene.WALLRIGHT.position.SetY(2);
+  App.scene.WALLRIGHT.position.SetZ(-15);
+  App.scene.WALLRIGHT.rotation.rotx = 90;
 
   // Load Physics world!
   let gravityVector = [0, 0, -9.82];

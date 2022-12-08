@@ -34,11 +34,11 @@ var runTextureEditor = (curTexId) => {
        window.parent.matrixEngine.App.scene.outsideBox.streamTextures)
 
       var posGreen = new sys.MATH.OSCILLATOR(10, 80, 1);
-      var POS_DELTA = new sys.MATH.OSCILLATOR(10, 80, 2);
+      var posBlend1 = new sys.MATH.OSCILLATOR(-30, 120, 2);
       pilLeft.ANIMATION.ROTATE.ANGLE = 90;
       pilRight.ANIMATION.ROTATE.ANGLE = 90;
       pilLeft.POSITION.SET_POSITION(-185, 230);
-      text1.TEXTBOX.font = '33px verdana';
+      text1.TEXTBOX.font = '33px stormfaze';
 
       pilGreen.TESTposGreen = posGreen;
 
@@ -46,7 +46,7 @@ var runTextureEditor = (curTexId) => {
       pilLeft.ON_UPDATE = function() {
         // NEPTUN.ROTATE.ROTATE_ARROUNT_CENTER()
         pilGreen.POSITION.TRANSLATE(8, posGreen.UPDATE());
-        blend1.POSITION.TRANSLATE(8, POS_DELTA.UPDATE());
+        blend1.POSITION.TRANSLATE(8, posBlend1.UPDATE());
       };
 
     });

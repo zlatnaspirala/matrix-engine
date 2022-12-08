@@ -72,6 +72,10 @@ var runThis = world => {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
+  var texStone = {
+    source: ["res/images/n-stone.png"],
+    mix_operation: "multiply"
+  };
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
@@ -102,13 +106,18 @@ var runThis = world => {
 
   E("HOLDER_STREAMS").style.display = "block";
   E("webcam_beta").style.display = "none";
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture"); // world.Add("squareTex", 1, "FLOOR_STATIC2", tex);
-  // App.scene.FLOOR_STATIC2.geometry.setScaleByX(15);
-  // App.scene.FLOOR_STATIC2.geometry.setScaleByY(15);
-  // App.scene.FLOOR_STATIC2.position.SetY(2);
-  // App.scene.FLOOR_STATIC2.position.SetZ(-15);
-  // App.scene.FLOOR_STATIC2.rotation.rotx = 90;
-  // Load Physics world!
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture");
+  world.Add("cubeLightTex", 1, "WALLRIGHT", texStone); // App.scene.WALLRIGHT.geometry.setScaleByX(1);
+  // App.scene.WALLRIGHT.geometry.setScaleByY(15);
+  // App.scene.WALLRIGHT.geometry.setScaleByZ(3);
+
+  _manifest.default.scene.WALLRIGHT.position.SetX(-7);
+
+  _manifest.default.scene.WALLRIGHT.position.SetY(2);
+
+  _manifest.default.scene.WALLRIGHT.position.SetZ(-15);
+
+  _manifest.default.scene.WALLRIGHT.rotation.rotx = 90; // Load Physics world!
 
   let gravityVector = [0, 0, -9.82];
   let physics = world.loadPhysics(gravityVector); // Add ground
@@ -4816,12 +4825,12 @@ class SquareVertex {
   constructor(root) {
     this.root = root;
     this.size = root.size;
-    this.pointA = new Point(0, 0, 0);
-    this.pointB = new Point(0, 0, 0);
-    this.pointC = new Point(0, 0, 0);
-    this.pointD = new Point(0, 0, 0);
+    this.pointA = new Point(1, 1, 0);
+    this.pointB = new Point(-1, 1, 0);
+    this.pointC = new Point(1, -1, 0);
+    this.pointD = new Point(-1, -1, 0);
     this.basePoint = 1.0 * this.size;
-    this.basePointNeg = 1.0 * this.size;
+    this.basePointNeg = -1.0 * this.size;
     this.dynamicBuffer = true;
     this.texCoordsPoints = {
       right_top: new Point(1.0, 1.0, 0),
@@ -4836,7 +4845,7 @@ class SquareVertex {
   }
 
   get vertices() {
-    return new Float32Array([this.basePointNeg + this.pointA.X, this.basePointNeg + this.pointA.Y, this.basePoint + this.pointA.Z, this.basePoint + this.pointB.X, this.basePointNeg + this.pointB.Y, this.basePoint + this.pointB.Z, this.basePoint + this.pointC.X, this.basePoint + this.pointC.Y, this.basePoint + this.pointC.Z, this.basePointNeg + this.pointD.X, this.basePoint + this.pointD.Y, this.basePoint + this.pointD.Z]);
+    return new Float32Array([this.pointA.X * this.size, this.pointA.Y * this.size, this.pointA.Z, this.pointB.X * this.size, this.pointB.Y * this.size, this.pointB.Z, this.pointC.X * this.size, this.pointC.Y * this.size, this.pointC.Z, this.pointD.X * this.size, this.pointD.Y * this.size, this.pointD.Z]);
   }
 
   get texCoords() {
@@ -10591,7 +10600,7 @@ class MatrixPhysics {
     world.Add("squareTex", 1, "FLOOR_STATIC", tex);
     App.scene.FLOOR_STATIC.geometry.setScaleByX(15);
     App.scene.FLOOR_STATIC.geometry.setScaleByY(15);
-    App.scene.FLOOR_STATIC.position.SetY(-1);
+    App.scene.FLOOR_STATIC.position.SetY(-2);
     App.scene.FLOOR_STATIC.position.SetZ(-15);
     App.scene.FLOOR_STATIC.rotation.rotx = 90;
   }
