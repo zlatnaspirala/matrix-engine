@@ -3,7 +3,7 @@ import {sys, ActivateModifiers, loadEditor, runEditor, loadEditorObjects} from '
 
 var runTextureEditor = (curTexId) => {
 
-  // Visual-JS 3
+  // Visual-JS 3 part
 
   // must be fixed - double call
   if(typeof window.RESOURCE !== 'undefined') return;
@@ -11,7 +11,7 @@ var runTextureEditor = (curTexId) => {
   ActivateModifiers();
   // Run editor
   runEditor();
-  // loadEditor();
+  // loadEditor(); - this load keyboard and other gui staff no need now.
 
   sys.DOM.CREATE_SURFACE("SURF", curTexId, 100, 99.4, "DIAMETRIC");
   actualTexture.ENGINE.CREATE_MODUL("STARTER");
@@ -39,8 +39,6 @@ var runTextureEditor = (curTexId) => {
       pilRight.ANIMATION.ROTATE.ANGLE = 90;
       pilLeft.POSITION.SET_POSITION(-185, 230);
       text1.TEXTBOX.font = '33px stormfaze';
-
-      pilGreen.TESTposGreen = posGreen;
 
       // VJS3 Staff
       pilLeft.ON_UPDATE = function() {

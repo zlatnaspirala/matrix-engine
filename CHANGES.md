@@ -4,7 +4,7 @@
 #### [1.9.0 Thunder BETA 2023]
 
  - FBO implemented BASIC
- - Migrated to the opengles300
+ - Migrated to the opengles300 GLSL version
  - Add cef and cefSharp Visual Studio projects for building executive native apps.
    Support:
     - Windows
@@ -12,6 +12,10 @@
     - Linux
   - GUI Texture editor based on Visualjs3 in background.
     Make gui fast tex editor running - wip
+
+  New scene object functions (Cube and square):
+    - setTexCoordScaleXFactor
+    - setTexCoordScaleYFactor
 
 GLSL Note:
 Note: This extension is only available to WebGL1 contexts. In WebGL2, the functionality of this extension is available on the WebGL2 context by default. The constant in WebGL2 is gl.UNSIGNED_INT_24_8.

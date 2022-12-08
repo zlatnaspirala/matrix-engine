@@ -59,6 +59,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
+ * How to use texture editor
  */
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 let Vjs3 = matrixEngine.Engine.Vjs3;
@@ -69,7 +70,7 @@ var runThis = world => {
   _manifest.default.camera.SceneController = true; // eslint-disable-next-line no-unused-vars
 
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.png", "res/images/semi_pack/gradiend_half2.png"],
     mix_operation: "multiply"
   };
   var texStone = {
@@ -88,21 +89,19 @@ var runThis = world => {
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
     }
-  });
+  }); // Matrix Engine use visual-js game engine
+
   world.Add("cubeLightTex", 1, "outsideBox", tex);
   _manifest.default.scene.outsideBox.rotation.rotz = -90;
   _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
-  // App.scene.outsideBox.rotValue = 90;
+  _manifest.default.scene.outsideBox.position.z = -55;
 
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
 
   _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
   _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[6];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7];
-
-  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-
+  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7]; // App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
+  // CANVAS2D_SURFACE - IS TEXTURE EDITOR
 
   E("HOLDER_STREAMS").style.display = "block";
   E("webcam_beta").style.display = "none";
@@ -122,6 +121,8 @@ var runThis = world => {
 
   _manifest.default.scene.WALLRIGHT.position.SetZ(-15);
 
+  _manifest.default.scene.WALLRIGHT.geometry.setTexCoordScaleXFactor(1);
+
   world.Add("cubeLightTex", 1, "WALLLEFT", texStone);
 
   _manifest.default.scene.WALLLEFT.geometry.setScaleByX(0.5);
@@ -136,6 +137,8 @@ var runThis = world => {
 
   _manifest.default.scene.WALLLEFT.position.SetZ(-15);
 
+  _manifest.default.scene.WALLLEFT.geometry.setTexCoordScaleYFactor(1);
+
   world.Add("cubeLightTex", 1, "WALLFRONT", texStone);
 
   _manifest.default.scene.WALLFRONT.geometry.setScaleByX(14);
@@ -148,12 +151,13 @@ var runThis = world => {
 
   _manifest.default.scene.WALLFRONT.position.SetY(3);
 
-  _manifest.default.scene.WALLFRONT.position.SetZ(-27); // App.scene.WALLFRONT.rotation.rotx = 90;
-  // Load Physics world!
+  _manifest.default.scene.WALLFRONT.position.SetZ(-27);
+
+  _manifest.default.scene.WALLFRONT.geometry.setTexCoordScaleXFactor(1); // Load Physics world
 
 
   let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground
+  let physics = world.loadPhysics(gravityVector); // Add ground (this func create scene object FLOOR_STATIC)
 
   physics.addGround(_manifest.default, world, tex);
   var b = new CANNON.Body({
@@ -164,10 +168,11 @@ var runThis = world => {
   physics.world.addBody(b); // Physics
 
   _manifest.default.scene.outsideBox.physics.currentBody = b;
-  _manifest.default.scene.outsideBox.physics.enabled = true; // setTimeout(function () {
+  _manifest.default.scene.outsideBox.physics.enabled = true;
 
-  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor(); // }, 100);
+  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
 
+  _manifest.default.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(1);
 };
 
 exports.runThis = runThis;
@@ -4083,9 +4088,9 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
 
           _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.NEAREST);
 
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
+          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S);
 
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE); // -- Allocate storage for the texture
+          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T); // -- Allocate storage for the texture
           //world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
           //world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
           //world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
@@ -4910,6 +4915,26 @@ class SquareVertex {
     });
   }
 
+  setTexCoordScaleXFactor(newScaleFactror, em) {
+    this.texCoordsPoints.right_top.y = 1 + newScaleFactror;
+    this.texCoordsPoints.left_bottom.y = 0 - newScaleFactror;
+    this.texCoordsPoints.left_top.y = 1 + newScaleFactror;
+    this.texCoordsPoints.right_bottom.y = 0 - newScaleFactror; // if(net && net.connection && typeof em === 'undefined') net.connection.send({
+    //   texScaleFactor: {newScaleFactror: newScaleFactror},
+    //   netObjId: this.nameUniq,
+    // });
+  }
+
+  setTexCoordScaleYFactor(newScaleFactror, em) {
+    this.texCoordsPoints.right_top.x = 1 + newScaleFactror;
+    this.texCoordsPoints.left_bottom.x = 0 - newScaleFactror;
+    this.texCoordsPoints.left_top.x = 0 - newScaleFactror;
+    this.texCoordsPoints.right_bottom.x = 1 + newScaleFactror; // if(net && net.connection && typeof em === 'undefined') net.connection.send({
+    //   texScaleFactor: {newScaleFactror: newScaleFactror},
+    //   netObjId: this.nameUniq,
+    // });
+  }
+
   setScaleByX(scale, em) {
     this.pointA.x = scale;
     this.pointB.x = -scale;
@@ -5516,8 +5541,7 @@ class CubeVertex {
     _manifest.default.operation.cube_buffer_procedure(this.root);
 
     return "dynamicBuffer is false but i will update vertex array prototypical.";
-  } // Setters
-
+  }
 
   setTexCoordScaleFactor(newScaleFactror, em) {
     function calculate(checkValue) {
@@ -5545,6 +5569,59 @@ class CubeVertex {
       },
       netObjId: this.nameUniq
     });
+  }
+
+  setTexCoordScaleYFactor(newScaleFactror, em) {
+    function calculate(checkValue) {
+      if (checkValue <= 0) {
+        return -1;
+      } else {
+        return 1;
+      }
+    }
+
+    for (var key in this.texCoordsPoints) {
+      // this.texCoordsPoints[key].right_top.y =
+      //   this.texCoordsPoints[key].right_top.y +
+      //   newScaleFactror * calculate(this.texCoordsPoints[key].right_top.y);
+      this.texCoordsPoints[key].right_top.x = this.texCoordsPoints[key].right_top.x + newScaleFactror * calculate(this.texCoordsPoints[key].right_top.x);
+      this.texCoordsPoints[key].left_bottom.x = this.texCoordsPoints[key].left_bottom.x + newScaleFactror * calculate(this.texCoordsPoints[key].left_bottom.x); // this.texCoordsPoints[key].left_bottom.y =
+      //   this.texCoordsPoints[key].left_bottom.y +
+      //   newScaleFactror * calculate(this.texCoordsPoints[key].left_bottom.y);
+
+      this.texCoordsPoints[key].left_top.x = this.texCoordsPoints[key].left_top.x + newScaleFactror * calculate(this.texCoordsPoints[key].left_top.x); // this.texCoordsPoints[key].left_top.y =
+      //   this.texCoordsPoints[key].left_top.y +
+      //   newScaleFactror * calculate(this.texCoordsPoints[key].left_top.y);
+
+      this.texCoordsPoints[key].right_bottom.x = this.texCoordsPoints[key].right_bottom.x + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.x); // this.texCoordsPoints[key].right_bottom.y =
+      //   this.texCoordsPoints[key].right_bottom.y +
+      //   newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.y);
+    } // if(net && net.connection && typeof em === 'undefined') net.connection.send({
+    //   texScaleFactor: {newScaleFactror: newScaleFactror},
+    //   netObjId: this.nameUniq,
+    // });
+
+  }
+
+  setTexCoordScaleXFactor(newScaleFactror, em) {
+    function calculate(checkValue) {
+      if (checkValue <= 0) {
+        return -1;
+      } else {
+        return 1;
+      }
+    }
+
+    for (var key in this.texCoordsPoints) {
+      this.texCoordsPoints[key].right_top.y = this.texCoordsPoints[key].right_top.y + newScaleFactror * calculate(this.texCoordsPoints[key].right_top.y);
+      this.texCoordsPoints[key].left_bottom.y = this.texCoordsPoints[key].left_bottom.y + newScaleFactror * calculate(this.texCoordsPoints[key].left_bottom.y);
+      this.texCoordsPoints[key].left_top.y = this.texCoordsPoints[key].left_top.y + newScaleFactror * calculate(this.texCoordsPoints[key].left_top.y);
+      this.texCoordsPoints[key].right_bottom.y = this.texCoordsPoints[key].right_bottom.y + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.y);
+    } // if(net && net.connection && typeof em === 'undefined') net.connection.send({
+    //   texScaleFactor: {newScaleFactror: newScaleFactror},
+    //   netObjId: this.nameUniq,
+    // });
+
   }
 
   get vertices() {
@@ -8396,10 +8473,7 @@ _manifest.default.tools.BasicTextures = function (texture, gl, params) {
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); // gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
   gl.bindTexture(gl.TEXTURE_2D, null);
@@ -8424,9 +8498,7 @@ _manifest.default.tools.loadVideoTexture = function (name, image) {
   gl.bindTexture(gl.TEXTURE_2D, _manifest.default.textures[name_]);
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-  //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  // world.GL.gl.texParameteri(eval("world.GL.gl." + object.glBlend.blendParamSrc ), eval("world.GL.gl." + object.glBlend.blendParamDest ) );
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   // gl.texParameteri( gl.TEXTURE_2D , gl.TEXTURE_WRAP_T  , gl.CLAMP_TO_EDGE);
   // -- Allocate storage for the texture
   // gl.texStorage2D(gl.TEXTURE_2D, 1, gl.RGB8, 512, 512);
@@ -9170,12 +9242,12 @@ function defineworld(canvas) {
 
       if (squareObject.shaderProgram) {
         // // console.info("   Buffer the " + filler + ":Store at:" + this.contentList.length);
-        this.bufferSquareTex(squareObject); // using cubeTexLight
-
+        this.bufferSquareTex(squareObject);
         squareObject.glDrawElements = new _utility._DrawElements(squareObject.vertexIndexBuffer.numItems);
         this.contentList[this.contentList.length] = squareObject;
         _manifest.default.scene[squareObject.name] = squareObject;
-      } else {// console.warn("   Square shader failure");
+      } else {
+        console.warn("Square shader failure");
       }
     }
 
@@ -19565,7 +19637,7 @@ let ENUMERATORS = {
     }
   },
   getTexParameter: function () {
-    _events.SYS.DEBUG.LOG(' TEXTURE_IMMUTABLE_FORMAT VALUE : ' + world.GL.gl.getTexParameter(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_IMMUTABLE_FORMAT));
+    _events.SYS.DEBUG.LOG('TEXTURE_IMMUTABLE_FORMAT VALUE : ' + world.GL.gl.getTexParameter(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_IMMUTABLE_FORMAT));
   }
 };
 /**
