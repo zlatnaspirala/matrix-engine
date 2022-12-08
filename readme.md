@@ -1,7 +1,7 @@
 ![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/webgl2glmatrix2.jpg)
 
 ## About Matrix Engine project
-### Name: `MATRIX-ENGINE` `1.9.0 Beta`
+### Name: `MATRIX-ENGINE` `1.9.0 Beta` THUNDER
 
 #### Logo
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/public/res/icons/ms-icon.png" width="128" height="128" />
@@ -14,7 +14,7 @@
 #### - [Basic's Shadows vs lights (GLSL)] ✔
 #### - [Migrated to the opengles300]
 #### - [FBO implemented]
-#### - [Add cef and cefSharp Visual Studio projects for building executive native apps. 
+#### - [Add cef and cefSharp Visual Studio projects for building executive desktop native apps.
 ####     Support: Windows, MAC, Linux ]
 #### - Texture Editor [tutorial example]
 

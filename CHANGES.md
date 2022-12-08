@@ -17,6 +17,8 @@
     - setTexCoordScaleXFactor
     - setTexCoordScaleYFactor
 
+  Improvements for visual-js game engine
+
 GLSL Note:
 Note: This extension is only available to WebGL1 contexts. In WebGL2, the functionality of this extension is available on the WebGL2 context by default. The constant in WebGL2 is gl.UNSIGNED_INT_24_8.
 
