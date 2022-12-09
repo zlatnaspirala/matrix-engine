@@ -50,7 +50,7 @@ export var runThis = world => {
     }
   });
 
-  // Matrix Engine use visual-js game engine
+  // Matrix Engine use visual-js game engine like texture editor.
   world.Add("cubeLightTex", 1, "outsideBox", tex);
   App.scene.outsideBox.playerHits = 0;
   App.scene.outsideBox.rotation.rotz = -90
@@ -58,16 +58,20 @@ export var runThis = world => {
   App.scene.outsideBox.position.z = -55;
   App.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
   App.scene.outsideBox.glBlend.blendEnabled = true;
-  App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
-  App.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
+  App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
+  App.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7];
   // App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-  E("HOLDER_STREAMS").style.display = "block";
   E("webcam_beta").style.display = "none";
+
+
   App.scene.outsideBox.streamTextures = new Vjs3(
     "http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html",
     "actualTexture"
   );
+
+  App.scene.outsideBox.streamTextures.showTextureEditor();
+  setTimeout( () => { E("HOLDER_STREAMS").style.display = 'none'; }, 250 )
 
   // Walls
   world.Add("cubeLightTex", 1, "WALLRIGHT", texStone);
@@ -112,9 +116,10 @@ export var runThis = world => {
   App.scene.outsideBox.physics.currentBody = b;
   App.scene.outsideBox.physics.enabled = true;
 
-  App.scene.outsideBox.streamTextures.showTextureEditor();
-  //
-  // setTimeout(() => {document.getElementById('HOLDER_STREAMS').style.display = 'none';}, 1500)
-
   App.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(1);
+
+
+
+ 
+
 };

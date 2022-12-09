@@ -1,9 +1,9 @@
 
 // Final build
-// import {sys, ActivateModifiers, application} from 'visual-js';
+import {sys, ActivateModifiers, application} from 'visual-js';
 
 // For dev stage
-import {sys, ActivateModifiers,  loadEditor, runEditor, loadEditorObjects} from 'visual-js';
+// import {sys, ActivateModifiers,  loadEditor, runEditor, loadEditorObjects} from 'visual-js';
 
 // npm run build.tex.editor
 // BUILD FROM EDITOR TO REAL JS FILE
@@ -17,12 +17,12 @@ var runTextureEditor = (curTexId) => {
   if(typeof window.RESOURCE !== 'undefined') return;
 
   // Final build
-  // application.EDITOR = false;
+  application.EDITOR = false;
 
   ActivateModifiers();
 
   // Run editor
-  runEditor();
+  // runEditor();
   // loadEditor(); - this load keyboard and other gui staff no need now.
 
   sys.DOM.CREATE_SURFACE("SURF", curTexId, 100, 99.4, "DIAMETRIC");
@@ -35,12 +35,12 @@ var runTextureEditor = (curTexId) => {
   let smodul = actualTexture.ENGINE.MODULES.ACCESS_MODULE("STARTER");
   // smodul.NEW_OBJECT("IamNewObject", 25, 50, 12, 25, 10);
 
-  // Run editor ASYNC!
-  loadEditorObjects();
+  // Run editor only !
+  // loadEditorObjects();
 
   sys.SCRIPT.LOAD("res/animations/resource.js").then(() => {
-    addEventListener('postScriptReady', () => {
-    // sys.SCRIPT.LOAD("starter/visual.js").then(() => {
+    // addEventListener('postScriptReady', () => {
+    sys.SCRIPT.LOAD("starter/visual.js").then(() => {
       // Access
       console.log("window.parent.matrixEngine.App.scene.outsideBox.streamTextures ",
         window.parent.matrixEngine.App.scene.outsideBox.streamTextures)
