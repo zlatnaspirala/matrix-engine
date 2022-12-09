@@ -24,9 +24,7 @@
     "te": "node ./2DTextureEditor/editor.js",
     "res.tex.editor": "node ./2DTextureEditor/res.js",
     "build.tex.editor": "node ./2DTextureEditor/build.js",
-
     "windows": "cd multiplatform/win/cef-sharp/bin/Debug/; | matrix-engine.exe",
-    
     "test": "echo \"matrix engine\" && exit 1"
   },
   "publishConfig": {
@@ -39,7 +37,7 @@
     "cannon-es": "^0.20.0",
     "socket.io-client": "^4.5.1",
     "visual-js": "^3.0.26",
-    "visual-js-server": "3.0.12"
+    "visual-js-server": "3.0.13"
   },
   "devDependencies": {
     "browserify": "^17.0.0",
