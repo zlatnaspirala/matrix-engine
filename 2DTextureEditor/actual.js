@@ -1,6 +1,12 @@
 
-import {sys, ActivateModifiers, loadEditor, runEditor, loadEditorObjects} from 'visual-js';
+import {sys, ActivateModifiers} from 'visual-js';
+// loadEditor, runEditor, loadEditorObjects
 
+//
+// npm run build.tex.editor
+// BUILD FROM EDITOR TO REAL JS FILE
+// DISBALE NOW EDITOR
+//
 var runTextureEditor = (curTexId) => {
 
   // Visual-JS 3 part
@@ -10,7 +16,7 @@ var runTextureEditor = (curTexId) => {
 
   ActivateModifiers();
   // Run editor
-  runEditor();
+  // runEditor();
   // loadEditor(); - this load keyboard and other gui staff no need now.
 
   sys.DOM.CREATE_SURFACE("SURF", curTexId, 100, 99.4, "DIAMETRIC");
@@ -24,14 +30,21 @@ var runTextureEditor = (curTexId) => {
   // smodul.NEW_OBJECT("IamNewObject", 25, 50, 12, 25, 10);
 
   // Run editor ASYNC!
-  loadEditorObjects();
+  // loadEditorObjects();
+
+  addEventListener('postScriptReady', () => {
+  alert()
+  });
 
   sys.SCRIPT.LOAD("res/animations/resource.js").then(() => {
-    addEventListener('postScriptReady', () => {
+    // addEventListener('postScriptReady', () => {
+
+    sys.SCRIPT.LOAD("starter/visual.js").then(() => {
+      alert(title)
 
       // Access
       console.log("window.parent.matrixEngine.App.scene.outsideBox.streamTextures ",
-       window.parent.matrixEngine.App.scene.outsideBox.streamTextures)
+        window.parent.matrixEngine.App.scene.outsideBox.streamTextures)
 
       var posGreen = new sys.MATH.OSCILLATOR(10, 80, 1);
       var posBlend1 = new sys.MATH.OSCILLATOR(-30, 120, 2);
@@ -39,16 +52,23 @@ var runTextureEditor = (curTexId) => {
       pilRight.ANIMATION.ROTATE.ANGLE = 90;
       pilLeft.POSITION.SET_POSITION(-185, 230);
       text1.TEXTBOX.font = '33px stormfaze';
+      title.TEXTBOX.font = '43px stormfaze';
 
       // VJS3 Staff
       pilLeft.ON_UPDATE = function() {
-        // NEPTUN.ROTATE.ROTATE_ARROUNT_CENTER()
+
+        // test no way
+        test.ANIMATION.ROTATE.ANGLE++;
+
         pilGreen.POSITION.TRANSLATE(8, posGreen.UPDATE());
         blend1.POSITION.TRANSLATE(8, posBlend1.UPDATE());
       };
-
     });
+
+
+
   });
+
 }
 
 // Automatic run

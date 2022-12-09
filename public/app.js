@@ -88,10 +88,14 @@ var runThis = world => {
 
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+      _manifest.default.scene.outsideBox.playerHits++;
+      var actualTexFrame = document.getElementById('actualTexture');
+      actualTexFrame.contentWindow.title.TEXTBOX.TEXT = 'HITS:' + _manifest.default.scene.outsideBox.playerHits;
     }
   }); // Matrix Engine use visual-js game engine
 
   world.Add("cubeLightTex", 1, "outsideBox", tex);
+  _manifest.default.scene.outsideBox.playerHits = 0;
   _manifest.default.scene.outsideBox.rotation.rotz = -90;
   _manifest.default.scene.outsideBox.position.y = 0;
   _manifest.default.scene.outsideBox.position.z = -55;
@@ -99,8 +103,8 @@ var runThis = world => {
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
 
   _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[6];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7]; // App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
+  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
+  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4]; // App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
 
   E("HOLDER_STREAMS").style.display = "block";
@@ -168,9 +172,12 @@ var runThis = world => {
   physics.world.addBody(b); // Physics
 
   _manifest.default.scene.outsideBox.physics.currentBody = b;
-  _manifest.default.scene.outsideBox.physics.enabled = true;
+  _manifest.default.scene.outsideBox.physics.enabled = true; // App.scene.outsideBox.streamTextures.showTextureEditor();
+  //
 
-  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
+  setTimeout(() => {
+    document.getElementById('HOLDER_STREAMS').style.display = 'none';
+  }, 1500);
 
   _manifest.default.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(1);
 };

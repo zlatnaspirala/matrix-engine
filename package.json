@@ -24,7 +24,10 @@
     "te": "node ./2DTextureEditor/editor.js",
     "res.tex.editor": "node ./2DTextureEditor/res.js",
     "build.tex.editor": "node ./2DTextureEditor/build.js",
-    "test": "echo \"no build tradicional view\" && exit 1"
+
+    "windows": "cd multiplatform/win/cef-sharp/bin/Debug/; | matrix-engine.exe",
+    
+    "test": "echo \"matrix engine\" && exit 1"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
