@@ -1,12 +1,14 @@
 
-import {sys, ActivateModifiers} from 'visual-js';
-// loadEditor, runEditor, loadEditorObjects
+// Final build
+// import {sys, ActivateModifiers, application} from 'visual-js';
 
-//
+// For dev stage
+import {sys, ActivateModifiers,  loadEditor, runEditor, loadEditorObjects} from 'visual-js';
+
 // npm run build.tex.editor
 // BUILD FROM EDITOR TO REAL JS FILE
 // DISBALE NOW EDITOR
-//
+
 var runTextureEditor = (curTexId) => {
 
   // Visual-JS 3 part
@@ -14,9 +16,13 @@ var runTextureEditor = (curTexId) => {
   // must be fixed - double call
   if(typeof window.RESOURCE !== 'undefined') return;
 
+  // Final build
+  // application.EDITOR = false;
+
   ActivateModifiers();
+
   // Run editor
-  // runEditor();
+  runEditor();
   // loadEditor(); - this load keyboard and other gui staff no need now.
 
   sys.DOM.CREATE_SURFACE("SURF", curTexId, 100, 99.4, "DIAMETRIC");
@@ -30,18 +36,11 @@ var runTextureEditor = (curTexId) => {
   // smodul.NEW_OBJECT("IamNewObject", 25, 50, 12, 25, 10);
 
   // Run editor ASYNC!
-  // loadEditorObjects();
-
-  addEventListener('postScriptReady', () => {
-  alert()
-  });
+  loadEditorObjects();
 
   sys.SCRIPT.LOAD("res/animations/resource.js").then(() => {
-    // addEventListener('postScriptReady', () => {
-
-    sys.SCRIPT.LOAD("starter/visual.js").then(() => {
-      alert(title)
-
+    addEventListener('postScriptReady', () => {
+    // sys.SCRIPT.LOAD("starter/visual.js").then(() => {
       // Access
       console.log("window.parent.matrixEngine.App.scene.outsideBox.streamTextures ",
         window.parent.matrixEngine.App.scene.outsideBox.streamTextures)
@@ -56,22 +55,16 @@ var runTextureEditor = (curTexId) => {
 
       // VJS3 Staff
       pilLeft.ON_UPDATE = function() {
-
-        // test no way
         test.ANIMATION.ROTATE.ANGLE++;
-
         pilGreen.POSITION.TRANSLATE(8, posGreen.UPDATE());
         blend1.POSITION.TRANSLATE(8, posBlend1.UPDATE());
       };
     });
-
-
-
   });
-
 }
 
 // Automatic run
 runTextureEditor('actualTexture');
 
+// Easy console access
 window.runTextureEditor = runTextureEditor;

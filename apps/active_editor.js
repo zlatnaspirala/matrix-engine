@@ -22,7 +22,7 @@ export var runThis = world => {
     source: [
       "res/images/complex_texture_1/diffuse.png",
       "res/images/semi_pack/gradiend_half2.png"
-      ],
+    ],
     mix_operation: "multiply",
   };
 
@@ -38,14 +38,14 @@ export var runThis = world => {
   window.addEventListener('ray.hit.event', (ev) => {
     console.log("You shoot the object! Nice!", ev)
     /**
- * Physics force apply
- */
+     * Physics force apply
+     */
     if(ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
 
-       App.scene.outsideBox.playerHits++;
+      App.scene.outsideBox.playerHits++;
       var actualTexFrame = document.getElementById('actualTexture')
-      actualTexFrame.contentWindow.title.TEXTBOX.TEXT = 'HITS:' +  App.scene.outsideBox.playerHits;
+      actualTexFrame.contentWindow.title.TEXTBOX.TEXT = 'HITS:' + App.scene.outsideBox.playerHits;
 
     }
   });
@@ -111,10 +111,10 @@ export var runThis = world => {
   // Physics
   App.scene.outsideBox.physics.currentBody = b;
   App.scene.outsideBox.physics.enabled = true;
-  // App.scene.outsideBox.streamTextures.showTextureEditor();
 
+  App.scene.outsideBox.streamTextures.showTextureEditor();
   //
-  setTimeout ( () => { document.getElementById('HOLDER_STREAMS').style.display = 'none'; }, 1500)
+  // setTimeout(() => {document.getElementById('HOLDER_STREAMS').style.display = 'none';}, 1500)
 
   App.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(1);
 };

@@ -83,8 +83,8 @@ var runThis = world => {
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev);
     /**
-    * Physics force apply
-    */
+     * Physics force apply
+     */
 
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
@@ -172,12 +172,11 @@ var runThis = world => {
   physics.world.addBody(b); // Physics
 
   _manifest.default.scene.outsideBox.physics.currentBody = b;
-  _manifest.default.scene.outsideBox.physics.enabled = true; // App.scene.outsideBox.streamTextures.showTextureEditor();
-  //
+  _manifest.default.scene.outsideBox.physics.enabled = true;
 
-  setTimeout(() => {
-    document.getElementById('HOLDER_STREAMS').style.display = 'none';
-  }, 1500);
+  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor(); //
+  // setTimeout(() => {document.getElementById('HOLDER_STREAMS').style.display = 'none';}, 1500)
+
 
   _manifest.default.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(1);
 };
