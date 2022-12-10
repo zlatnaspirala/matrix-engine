@@ -9,6 +9,13 @@ res/bvh-skeletal-base/swat-guy/seq-walk
 res/bvh-skeletal-base/swat-guy/seq-walk-pistol
 res/bvh-skeletal-base/swat-guy/anims
 res/bvh-skeletal-base/swat-guy
+DawnCache
+GPUCache
+multiplatform/win/cef-sharp/bin/Debug/DawnCache
+multiplatform/win/cef-sharp/bin/Debug/GPUCache
+multiplatform/win/cef-sharp/bin/Release/DawnCache
+multiplatform/win/cef-sharp/bin/Release/GPUCache
+multiplatform/win/cef-sharp
 **/wiki
 .github
 https://github.com/zlatnaspirala/matrix-engine/wiki/
