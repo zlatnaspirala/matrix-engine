@@ -33,12 +33,13 @@ export var runThis = world => {
   App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
 
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
+  E("webcam_beta").style.display = "none";
   E("HOLDER_STREAMS").style.display = "block";
 
   App.scene.outsideBox.rotation.rotz = -90
   App.scene.outsideBox.streamTextures = new Vjs3(
-    "./2DTextureEditor/tex2.html",
-    "actualTexture"
+    "../2DTextureEditor/particle.html",
+    "particle"
   );
   App.scene.outsideBox.streamTextures.showTextureEditor();
 };

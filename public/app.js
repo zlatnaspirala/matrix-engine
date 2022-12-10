@@ -3,7 +3,7 @@
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _active_editor = require("./apps/active_editor");
+var _fps_player_controller = require("./apps/fps_player_controller");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -27,16 +27,16 @@ window.webGLStart = () => {
   world.callReDraw(); // Make it global for dev - for easy console/debugger access
 
   window.App = App;
-  window.runThis = _active_editor.runThis;
+  window.runThis = _fps_player_controller.runThis;
   setTimeout(() => {
-    (0, _active_editor.runThis)(world);
+    (0, _fps_player_controller.runThis)(world);
   }, 1);
 };
 
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/active_editor":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/fps_player_controller":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46,9 +46,9 @@ exports.runThis = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
 var CANNON = _interopRequireWildcard(require("cannon"));
+
+var _utility = require("../lib/utility");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -57,159 +57,457 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- * How to use texture editor
+ * @description Usage of raycaster, ObjectLoader,
+ * FirstPersonController.
+ * This will be part of new lib file `lib/controllers/fps.js`
+ * 
+ * Axample API calls Usage:
+ * 
+ * - Deeply integrated to the top level scene object with name `player`.
+ *   App.scene.player.updateEnergy(4);
+ * Predefined from 0 to the 8 energy value.
+ * 
+ * @class First Person Shooter example
  */
-let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-let Vjs3 = matrixEngine.Engine.Vjs3;
-let E = matrixEngine.utility.E;
-
 var runThis = world => {
-  // Matrix Engine
-  _manifest.default.camera.SceneController = true; // eslint-disable-next-line no-unused-vars
+  // Camera
+  canvas.style.cursor = 'none';
+  _manifest.default.camera.FirstPersonController = true;
+  matrixEngine.Events.camera.fly = false;
+  _manifest.default.camera.speedAmp = 0.01;
+  matrixEngine.Events.camera.yPos = 2; // Audio effects
 
-  var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png", "res/images/semi_pack/gradiend_half2.png"],
-    mix_operation: "multiply"
-  };
-  var texStone = {
-    source: ["res/images/n-stone.png"],
-    mix_operation: "multiply"
-  };
-  canvas.addEventListener('mousedown', ev => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
+  _manifest.default.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5); // Prevent right click context menu
+
+
+  window.addEventListener("contextmenu", e => {
+    e.preventDefault();
+  }); // Override mouse up
+
+  _manifest.default.events.CALCULATE_TOUCH_UP_OR_MOUSE_UP = () => {
+    _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+
+    _manifest.default.scene.FPSTarget.geometry.setScale(0.1);
+
+    _manifest.default.scene.xrayTarget.visible = false;
+  }; // Override right mouse down
+
+
+  matrixEngine.Events.SYS.MOUSE.ON_RIGHT_BTN_PRESSED = e => {
+    _manifest.default.scene.FPSTarget.geometry.setScale(0.6);
+
+    _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+    _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+    _manifest.default.scene.xrayTarget.visible = true;
+  }; // Override mouse down
+
+
+  _manifest.default.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
+    // `checkingProcedure` gets secound optimal argument
+    // for custom ray origin target.
+    if (mouse.BUTTON_PRESSED == 'RIGHT') {// Zoom
+    } else {
+      // This call represent `SHOOT` Action.
+      // And it is center of screen
+      matrixEngine.raycaster.checkingProcedure(ev, {
+        clientX: ev.target.width / 2,
+        clientY: ev.target.height / 2
+      });
+
+      _manifest.default.sounds.play('shoot');
+    }
+  }; // Bad usage
+  // canvas.addEventListener('mousedown', (ev) => {});
+
+
   window.addEventListener('ray.hit.event', ev => {
-    console.log("You shoot the object! Nice!", ev);
-    /**
-     * Physics force apply
-     */
+    console.log("You shoot the object! Nice!", ev); // Physics force apply also change ambienty light.
 
     if (ev.detail.hitObject.physics.enabled == true) {
-      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
-      _manifest.default.scene.outsideBox.playerHits++;
-      var actualTexFrame = document.getElementById('actualTexture');
-      actualTexFrame.contentWindow.title.TEXTBOX.TEXT = 'HITS:' + _manifest.default.scene.outsideBox.playerHits; // double - this is deep from raycaster
+      // Shoot the object - apply force
+      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000); // Apply random diff color
 
-      _manifest.default.scene.outsideBox2.playerHits++;
-      var tex1 = document.getElementById('tex1');
-      tex1.contentWindow.hits.TEXTBOX.TEXT = 'HITS:' + _manifest.default.scene.outsideBox2.playerHits;
+      if (ev.detail.hitObject.LightsData) ev.detail.hitObject.LightsData.ambientLight.set((0, _utility.randomFloatFromTo)(0, 2), (0, _utility.randomFloatFromTo)(0, 2), (0, _utility.randomFloatFromTo)(0, 2));
     }
-  }); // Matrix Engine use visual-js game engine like texture editor.
+  }); // Load obj seq animation
 
-  world.Add("cubeLightTex", 1, "outsideBox", tex);
-  _manifest.default.scene.outsideBox.playerHits = 0;
-  _manifest.default.scene.outsideBox.rotation.rotz = -90;
-  _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55;
+  const createObjSequence = objName => {
+    function onLoadObj(meshes) {
+      for (let key in meshes) {
+        matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
+      }
 
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
+      var textuteImageSamplers2 = {
+        source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png" // ,
+        // "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"
+        ],
+        mix_operation: "multiply" // ENUM : multiply , divide
 
-  _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[5];
-  E("webcam_beta").style.display = "none";
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture");
+      };
+      setTimeout(function () {
+        var animArg = {
+          id: objName,
+          meshList: meshes,
+          currentAni: 0,
+          animations: {
+            active: 'walk',
+            walk: {
+              from: 0,
+              to: 20,
+              speed: 3
+            }
+          }
+        };
+        world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg); // Fix object orientation - this can be fixed also in blender.
 
-  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
+        matrixEngine.Events.camera.yaw = 0; // Add collision cube to the local player.
 
-  setTimeout(() => {
-    E("HOLDER_STREAMS").style.display = 'none';
-  }, 450); // Matrix Engine use visual-js game engine like texture editor in multiply times.
+        world.Add("cube", 0.2, "playerCollisonBox");
+        var collisionBox = new CANNON.Body({
+          mass: 5,
+          linearDamping: 0.01,
+          position: new CANNON.Vec3(0, 0, 0),
+          shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
+        });
+        physics.world.addBody(collisionBox);
+        _manifest.default.scene.playerCollisonBox.physics.currentBody = collisionBox;
+        _manifest.default.scene.playerCollisonBox.physics.enabled = true;
+        _manifest.default.scene.playerCollisonBox.physics.currentBody.fixedRotation = true;
 
-  world.Add("cubeLightTex", 1, "outsideBox2", tex);
-  _manifest.default.scene.outsideBox2.playerHits = 0;
-  _manifest.default.scene.outsideBox2.rotation.rotz = -90;
-  _manifest.default.scene.outsideBox2.position.y = 0;
-  _manifest.default.scene.outsideBox2.position.z = -55;
+        _manifest.default.scene.playerCollisonBox.geometry.setScale(0.02); // Player Energy status
 
-  _manifest.default.scene.outsideBox2.LightsData.ambientLight.set(1, 1, 1);
 
-  _manifest.default.scene.outsideBox2.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
-  _manifest.default.scene.outsideBox2.glBlend.blendParamDest = ENUMERATORS.glBlend.param[6];
-  _manifest.default.scene.outsideBox2.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/tex1.html", "tex1"); // App.scene.outsideBox2.streamTextures.showTextureEditor();
-  // Walls
+        _manifest.default.scene.player.energy = {}; // test 
 
-  world.Add("cubeLightTex", 1, "WALLRIGHT", texStone);
+        addEventListener('hit.keyDown', e => {
+          // console.log('Bring to the top level', e.detail.keyCode);
+          // dont mess in events 
+          // better in high level to be respoved
+          if (e.detail.keyCode == 32) {
+            setTimeout(() => {
+              _manifest.default.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 111);
+            }, 250);
+          } else if (e.detail.keyCode == 87) {
+            // Good place for blocking volume
+            // App.scene.playerCollisonBox.physics.currentBody.force.set(0,10,0)
+            setTimeout(() => {// App.scene.playerCollisonBox.physics.currentBody.force.set(0,100,0)
+            }, 100);
+          }
+        });
+        var playerUpdater = {
+          UPDATE: () => {
+            _manifest.default.scene[objName].rotation.rotateY(matrixEngine.Events.camera.yaw + 180);
 
-  _manifest.default.scene.WALLRIGHT.geometry.setScaleByX(0.5);
+            var detPitch;
+            var limit = 2;
 
-  _manifest.default.scene.WALLRIGHT.geometry.setScaleByY(4);
+            if (matrixEngine.Events.camera.pitch < limit && matrixEngine.Events.camera.pitch > -limit) {
+              detPitch = matrixEngine.Events.camera.pitch * 2;
+            } else if (matrixEngine.Events.camera.pitch > limit) {
+              detPitch = limit * 2;
+            } else if (matrixEngine.Events.camera.pitch < -(limit + 2)) {
+              detPitch = -(limit + 2) * 2;
+            }
 
-  _manifest.default.scene.WALLRIGHT.geometry.setScaleByZ(14);
+            if (matrixEngine.Events.camera.virtualJumpActive == true) {
+              // invert logic
+              // Scene object set
+              _manifest.default.scene[objName].rotation.rotateX(-detPitch);
 
-  _manifest.default.scene.WALLRIGHT.position.SetX(14);
+              var detPitchPos = matrixEngine.Events.camera.pitch;
+              if (detPitchPos > 4) detPitchPos = 4;
 
-  _manifest.default.scene.WALLRIGHT.position.SetY(3);
+              _manifest.default.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 70);
 
-  _manifest.default.scene.WALLRIGHT.position.SetZ(-15);
+              _manifest.default.scene[objName].position.setPosition(_manifest.default.scene.playerCollisonBox.physics.currentBody.position.x, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y); // Cannonjs object set / Switched  Z - Y
 
-  _manifest.default.scene.WALLRIGHT.geometry.setTexCoordScaleXFactor(1);
 
-  world.Add("cubeLightTex", 1, "WALLLEFT", texStone);
+              matrixEngine.Events.camera.xPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.x;
+              matrixEngine.Events.camera.zPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y;
+              matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z;
 
-  _manifest.default.scene.WALLLEFT.geometry.setScaleByX(0.5);
+              _manifest.default.scene.playerCollisonBox.physics.currentBody.angularVelocity.set(0, 0, 0);
 
-  _manifest.default.scene.WALLLEFT.geometry.setScaleByY(4);
+              setTimeout(() => {
+                matrixEngine.Events.camera.virtualJumpActive = false;
+              }, 1350);
+            } else {
+              // Tamo tu iznad duge nebo zri...
+              // Cannonjs object set
+              // Switched  Z - Y
+              matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z; // Scene object set
 
-  _manifest.default.scene.WALLLEFT.geometry.setScaleByZ(14);
+              _manifest.default.scene[objName].rotation.rotateX(-detPitch);
 
-  _manifest.default.scene.WALLLEFT.position.SetX(-14);
+              var detPitchPos = matrixEngine.Events.camera.pitch;
+              if (detPitchPos > 4) detPitchPos = 4;
 
-  _manifest.default.scene.WALLLEFT.position.SetY(3);
+              _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 0.3 + detPitchPos / 50, // App.scene.playerCollisonBox.physics.currentBody.position.y,
+              matrixEngine.Events.camera.zPos); // Cannonjs object set
+              // Switched  Z - Y
 
-  _manifest.default.scene.WALLLEFT.position.SetZ(-15);
 
-  _manifest.default.scene.WALLLEFT.geometry.setTexCoordScaleYFactor(1);
+              _manifest.default.scene.playerCollisonBox.physics.currentBody.position.set(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.zPos, matrixEngine.Events.camera.yPos); // App.scene.playerCollisonBox.physics.currentBody.position.y)
 
-  world.Add("cubeLightTex", 1, "WALLFRONT", texStone);
+            }
+          }
+        };
 
-  _manifest.default.scene.WALLFRONT.geometry.setScaleByX(14);
+        _manifest.default.updateBeforeDraw.push(playerUpdater);
 
-  _manifest.default.scene.WALLFRONT.geometry.setScaleByY(4);
+        for (let key in _manifest.default.scene.player.meshList) {
+          _manifest.default.scene.player.meshList[key].setScale(1.85);
+        } // Target scene object
 
-  _manifest.default.scene.WALLFRONT.geometry.setScaleByZ(0.5);
 
-  _manifest.default.scene.WALLFRONT.position.SetX(0);
+        var texTarget = {
+          source: ["res/bvh-skeletal-base/swat-guy/target.png", "res/bvh-skeletal-base/swat-guy/target.png"],
+          mix_operation: "multiply"
+        };
+        world.Add("squareTex", 0.25, 'FPSTarget', texTarget);
 
-  _manifest.default.scene.WALLFRONT.position.SetY(3);
+        _manifest.default.scene.FPSTarget.position.setPosition(0, 0, -4);
 
-  _manifest.default.scene.WALLFRONT.position.SetZ(-27);
+        _manifest.default.scene.FPSTarget.glBlend.blendEnabled = true;
+        _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+        _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+        _manifest.default.scene.FPSTarget.isHUD = true;
 
-  _manifest.default.scene.WALLFRONT.geometry.setTexCoordScaleXFactor(1); // Load Physics world
+        _manifest.default.scene.FPSTarget.geometry.setScale(0.1); // Energy active bar
+        // Custom generic textures. Micro Drawing.
+        // Example for arg shema square for now only.
 
+
+        var options = {
+          squareShema: [8, 8],
+          pixels: new Uint8Array(8 * 8 * 4)
+        }; // options.pixels.fill(0);
+
+        _manifest.default.scene.player.energy.value = 8;
+
+        _manifest.default.scene.player.updateEnergy = function (v) {
+          this.energy.value = v;
+
+          var t = _manifest.default.scene.energyBar.preparePixelsTex(_manifest.default.scene.energyBar.specialValue);
+
+          _manifest.default.scene.energyBar.textures.pop();
+
+          _manifest.default.scene.energyBar.textures.push(_manifest.default.scene.energyBar.createPixelsTex(t));
+        };
+
+        function preparePixelsTex(options) {
+          var I = 0,
+              R = 0,
+              G = 0,
+              B = 0,
+              localCounter = 0;
+
+          for (var funny = 0; funny < 8 * 8 * 4; funny += 4) {
+            if (localCounter > 7) {
+              localCounter = 0;
+            }
+
+            if (localCounter < _manifest.default.scene.player.energy.value) {
+              I = 128;
+
+              if (_manifest.default.scene.player.energy.value < 3) {
+                R = 255;
+                G = 0;
+                B = 0;
+                I = 0;
+              } else if (_manifest.default.scene.player.energy.value > 2 && _manifest.default.scene.player.energy.value < 5) {
+                R = 255;
+                G = 255;
+                B = 0;
+              } else {
+                R = 0;
+                G = 255;
+                B = 0;
+              }
+            } else {
+              I = 0;
+              R = 0;
+              G = 0;
+              B = 0;
+            }
+
+            options.pixels[funny] = R;
+            options.pixels[funny + 1] = G;
+            options.pixels[funny + 2] = B;
+            options.pixels[funny + 3] = 0;
+            localCounter++;
+          }
+
+          return options;
+        }
+
+        var tex2 = {
+          source: ["res/images/hud/energy-bar.png", "res/images/hud/energy-bar.png"],
+          mix_operation: "multiply"
+        };
+        world.Add("squareTex", 1, 'energyBar', tex2);
+        _manifest.default.scene.energyBar.glBlend.blendEnabled = true;
+        _manifest.default.scene.energyBar.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+        _manifest.default.scene.energyBar.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+        _manifest.default.scene.energyBar.isHUD = true; // App.scene.energy.visible = false;
+
+        _manifest.default.scene.energyBar.position.setPosition(0, 1.1, -3);
+
+        _manifest.default.scene.energyBar.geometry.setScaleByX(1);
+
+        _manifest.default.scene.energyBar.geometry.setScaleByY(0.05);
+
+        _manifest.default.scene.energyBar.preparePixelsTex = preparePixelsTex;
+        options = preparePixelsTex(options); //
+        // App.scene.energyBar.textures[0] = App.scene.energyBar.createPixelsTex(options);
+
+        _manifest.default.scene.energyBar.textures.push(_manifest.default.scene.energyBar.createPixelsTex(options));
+
+        _manifest.default.scene.energyBar.specialValue = options;
+      }, 1);
+    }
+
+    matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
+      id: objName,
+      // path: "res/bvh-skeletal-base/swat-guy/anims/swat-multi",
+      path: "res/bvh-skeletal-base/swat-guy/FPShooter-hands/FPShooter-hands",
+      from: 1,
+      to: 20
+    }), onLoadObj);
+  };
+
+  let promiseAllGenerated = [];
+
+  const objGenerator = n => {
+    for (var j = 0; j < n; j++) {
+      promiseAllGenerated.push(new Promise(resolve => {
+        setTimeout(() => {
+          world.Add("cubeLightTex", 1, "CUBE" + j, tex);
+          var b2 = new CANNON.Body({
+            mass: 1,
+            linearDamping: 0.01,
+            position: new CANNON.Vec3(1, -14.5, 15),
+            shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+          });
+          physics.world.addBody(b2);
+          _manifest.default.scene['CUBE' + j].physics.currentBody = b2;
+          _manifest.default.scene['CUBE' + j].physics.enabled = true;
+          resolve();
+        }, 1000 * j);
+      }));
+    }
+  }; // objGenerator(15);
+
+
+  createObjSequence('player');
+  Promise.all(promiseAllGenerated).then(what => {
+    console.info(`Runtime wait for some generetion of scene objects,
+                  then swap scene array index for target -> 
+                  must be manual setup for now!`, what); // swap(5, 19, matrixEngine.matrixWorld.world.contentList);
+  }); // Add ground for physics bodies.
+
+  var tex = {
+    source: ["res/images/complex_texture_1/diffuse.png"],
+    mix_operation: "multiply"
+  }; // Load Physics world.
 
   let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground (this func create scene object FLOOR_STATIC)
+  let physics = world.loadPhysics(gravityVector); // Add ground
 
-  physics.addGround(_manifest.default, world, tex);
-  var b = new CANNON.Body({
-    mass: 5,
-    position: new CANNON.Vec3(0, -5, 1),
-    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+  var groundBody = new CANNON.Body({
+    mass: 0,
+    // mass == 0 makes the body static
+    position: new CANNON.Vec3(0, -15, -2)
   });
-  physics.world.addBody(b); // Physics
+  var groundShape = new CANNON.Plane();
+  groundBody.addShape(groundShape);
+  physics.world.addBody(groundBody); // Matrix engine visual
 
-  _manifest.default.scene.outsideBox.physics.currentBody = b;
-  _manifest.default.scene.outsideBox.physics.enabled = true;
+  world.Add("squareTex", 1, "FLOOR_STATIC", tex);
+
+  _manifest.default.scene.FLOOR_STATIC.geometry.setScaleByX(20);
+
+  _manifest.default.scene.FLOOR_STATIC.geometry.setScaleByY(20);
+
+  _manifest.default.scene.FLOOR_STATIC.position.SetY(-2);
+
+  _manifest.default.scene.FLOOR_STATIC.position.SetZ(-15);
+
+  _manifest.default.scene.FLOOR_STATIC.rotation.rotx = 90; // Target x-ray 
+  // See through the objects.
+  // In webGL context it is object how was drawn before others.
+
+  var texTarget = {
+    source: ["res/bvh-skeletal-base/swat-guy/target-night.png"],
+    mix_operation: "multiply"
+  };
+  world.Add("squareTex", 0.18, 'xrayTarget', texTarget);
+  _manifest.default.scene.xrayTarget.glBlend.blendEnabled = true;
+  _manifest.default.scene.xrayTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+  _manifest.default.scene.xrayTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+  _manifest.default.scene.xrayTarget.isHUD = true;
+  _manifest.default.scene.xrayTarget.visible = false;
+
+  _manifest.default.scene.xrayTarget.position.setPosition(-0.3, 0.27, -4); // Energy
+
+
+  var tex1 = {
+    source: ["res/images/hud/energy.png"],
+    mix_operation: "multiply"
+  };
+  world.Add("squareTex", 0.5, 'energy', tex1);
+  _manifest.default.scene.energy.glBlend.blendEnabled = true;
+  _manifest.default.scene.energy.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+  _manifest.default.scene.energy.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+  _manifest.default.scene.energy.isHUD = true; // App.scene.energy.visible = false;
+
+  _manifest.default.scene.energy.position.setPosition(-1, 1.15, -3);
+
+  _manifest.default.scene.energy.geometry.setScaleByX(0.35);
+
+  _manifest.default.scene.energy.geometry.setScaleByY(0.1); // good for fix rotation in future
+
+
+  world.Add("cubeLightTex", 1, "FLOOR2", tex);
   var b2 = new CANNON.Body({
-    mass: 5,
-    position: new CANNON.Vec3(0, -5, 1),
+    mass: 0,
+    linearDamping: 0.01,
+    position: new CANNON.Vec3(1, -14.5, -1),
+    shape: new CANNON.Box(new CANNON.Vec3(3, 1, 1))
+  });
+  physics.world.addBody(b2);
+
+  _manifest.default.scene['FLOOR2'].position.setPosition(1, -1, -14.5);
+
+  _manifest.default.scene['FLOOR2'].geometry.setScaleByX(3);
+
+  _manifest.default.scene['FLOOR2'].physics.currentBody = b2;
+  _manifest.default.scene['FLOOR2'].physics.enabled = true; // Damage object test
+
+  world.Add("cubeLightTex", 1, "LAVA", tex);
+  var b2 = new CANNON.Body({
+    mass: 0,
+    linearDamping: 0.01,
+    position: new CANNON.Vec3(1, -10.5, -1),
     shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
   });
-  physics.world.addBody(b2); // Physics
+  physics.world.addBody(b2);
 
-  _manifest.default.scene.outsideBox2.physics.currentBody = b2;
-  _manifest.default.scene.outsideBox2.physics.enabled = true;
+  _manifest.default.scene.LAVA.position.setPosition(1, -1, -10.5); // App.scene.LAVA.geometry.setScaleByX(1);
 
-  _manifest.default.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(1);
+
+  _manifest.default.scene.LAVA.physics.currentBody = b2;
+  _manifest.default.scene.LAVA.physics.enabled = true;
+
+  _manifest.default.scene.LAVA.LightsData.ambientLight.set(0, 0, 0);
+
+  _manifest.default.scene.LAVA.streamTextures = new matrixEngine.Engine.VT("res/video-texture/lava1.mkv");
 };
 
 exports.runThis = runThis;
 
-},{"../index.js":4,"../program/manifest":36,"cannon":33}],3:[function(require,module,exports){
+},{"../lib/utility":27,"../program/manifest":36,"cannon":33}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -874,7 +1172,7 @@ function loadShaders(gl, id) {
     gl.compileShader(shader);
 
     if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      console.log("Shader Program compile success");
+      // console.log("Shader Program compile success");
       return shader;
     } else {
       console.warn('Shader Program compile failed:' + gl.getShaderInfoLog(shader));

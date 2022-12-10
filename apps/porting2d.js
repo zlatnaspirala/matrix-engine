@@ -16,12 +16,12 @@ export var runThis = world => {
   let E = matrixEngine.utility.E;
 
   // eslint-disable-next-line no-unused-vars
-  var textuteImageSamplers = {
+  var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply", // ENUM : multiply , divide ,
   };
 
-  world.Add("cubeLightTex", 12, "outsideBox");
+  world.Add("cubeLightTex", 12, "outsideBox", tex);
 
   App.scene.outsideBox.position.y = 0;
   App.scene.outsideBox.position.z = -55;
@@ -42,7 +42,7 @@ export var runThis = world => {
   E("HOLDER_STREAMS").style.display = "block";
   setTimeout(function () {
     App.scene.outsideBox.streamTextures = new anyCanvas(
-      "./apps/funny-slot/",
+      "../apps/funny-slot/",
       "HELLO_WORLD")
     App.scene.outsideBox.streamTextures.showTextureEditor();
   }, 500);

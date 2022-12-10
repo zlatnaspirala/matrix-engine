@@ -14,12 +14,12 @@ export var runThis = world => {
   /* globals world App ENUMERATORS E Vjs3 */
 
   // eslint-disable-next-line no-unused-vars
-  var textuteImageSamplers = {
+  var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply",
   };
 
-  world.Add("cubeLightTex", 12, "outsideBox");
+  world.Add("cubeLightTex", 12, "outsideBox", tex);
 
   App.scene.outsideBox.rotation.rotz = -90
   App.scene.outsideBox.position.y = 0;
@@ -35,11 +35,10 @@ export var runThis = world => {
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   E("HOLDER_STREAMS").style.display = "block";
   App.scene.outsideBox.streamTextures = new Vjs3(
-    "./2DTextureEditor/tex1.html",
-    "actualTexture"
+    "../2DTextureEditor/tex1.html",
+    "tex1"
   );
 
-  setTimeout(function () {
-    App.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 100);
+  App.scene.outsideBox.streamTextures.showTextureEditor();
+
 };

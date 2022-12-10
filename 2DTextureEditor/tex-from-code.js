@@ -2,7 +2,7 @@
 
 import {sys, ActivateModifiers, loadEditor, runEditor, loadEditorObjects} from 'visual-js';
 
-var runTextureEditor = (curTexId) => {
+export var runTextureEditor = (curTexId) => {
   ActivateModifiers();
 
   sys.DOM.CREATE_SURFACE("SURF", curTexId, 100, 99.4, "DIAMETRIC");
@@ -41,4 +41,4 @@ var runTextureEditor = (curTexId) => {
 
 }
 
-window.runTextureEditor = runTextureEditor;
+runTextureEditor('texFromCode');

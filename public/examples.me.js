@@ -3395,12 +3395,12 @@ var runThis = world => {
   let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
   let E = matrixEngine.utility.E; // eslint-disable-next-line no-unused-vars
 
-  var textuteImageSamplers = {
+  var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
 
   };
-  world.Add("cubeLightTex", 12, "outsideBox");
+  world.Add("cubeLightTex", 12, "outsideBox", tex);
   _manifest.default.scene.outsideBox.position.y = 0;
   _manifest.default.scene.outsideBox.position.z = -55;
   _manifest.default.scene.outsideBox.rotation.rotationSpeed.x = 20;
@@ -3420,7 +3420,7 @@ var runThis = world => {
 
   E("HOLDER_STREAMS").style.display = "block";
   setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas("./apps/funny-slot/", "HELLO_WORLD");
+    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas("../apps/funny-slot/", "HELLO_WORLD");
 
     _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
   }, 500);
@@ -3537,9 +3537,10 @@ var runThis = world => {
   _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
 
 
+  E("webcam_beta").style.display = "none";
   E("HOLDER_STREAMS").style.display = "block";
   _manifest.default.scene.outsideBox.rotation.rotz = -90;
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("./2DTextureEditor/tex2.html", "actualTexture");
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("../2DTextureEditor/particle.html", "particle");
 
   _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
 };
@@ -3577,11 +3578,11 @@ let E = matrixEngine.utility.E;
 var runThis = world => {
   /* globals world App ENUMERATORS E Vjs3 */
   // eslint-disable-next-line no-unused-vars
-  var textuteImageSamplers = {
+  var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
-  world.Add("cubeLightTex", 12, "outsideBox");
+  world.Add("cubeLightTex", 12, "outsideBox", tex);
   _manifest.default.scene.outsideBox.rotation.rotz = -90;
   _manifest.default.scene.outsideBox.position.y = 0;
   _manifest.default.scene.outsideBox.position.z = -55; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
@@ -3597,10 +3598,9 @@ var runThis = world => {
 
 
   E("HOLDER_STREAMS").style.display = "block";
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("./2DTextureEditor/tex1.html", "actualTexture");
-  setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 100);
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("../2DTextureEditor/tex1.html", "tex1");
+
+  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
 };
 
 exports.runThis = runThis;
@@ -4657,7 +4657,7 @@ function loadShaders(gl, id) {
     gl.compileShader(shader);
 
     if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      console.log("Shader Program compile success");
+      // console.log("Shader Program compile success");
       return shader;
     } else {
       console.warn('Shader Program compile failed:' + gl.getShaderInfoLog(shader));

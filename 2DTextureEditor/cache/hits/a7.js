@@ -1,1 +1,0 @@
-  tex1.ENGINE.MODULES.ACCESS_MODULE( 'STARTER').GAME_OBJECTS.ACCESS('hits').CREATE_TEXTBOX('HITS:' , '15' , 'black' , 'orange'); 
