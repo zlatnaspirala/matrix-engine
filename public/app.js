@@ -108,9 +108,7 @@ var runThis = world => {
 
   _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
   _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[5]; // App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
-  // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-
+  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[5];
   E("webcam_beta").style.display = "none";
   _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture");
 

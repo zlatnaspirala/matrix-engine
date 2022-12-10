@@ -1154,9 +1154,9 @@ function Vjs3(path_, nameOfCanvas) {
     ROOT.videoImage = ROOT.iframe.contentDocument.getElementById(nameOfCanvas);
     ROOT.canvasTexture = ROOT.videoImage.getContext('2d');
 
-    _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
+    _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas); // E('HOLDER_STREAMS').style.display = 'block';
 
-    (0, _utility.E)('HOLDER_STREAMS').style.display = 'block';
+
     ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage);
   };
 

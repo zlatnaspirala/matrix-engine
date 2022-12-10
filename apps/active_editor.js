@@ -65,36 +65,32 @@ export var runThis = world => {
   App.scene.outsideBox.glBlend.blendEnabled = true;
   App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
   App.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[5];
-  // App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
-  // CANVAS2D_SURFACE - IS TEXTURE EDITOR
+
   E("webcam_beta").style.display = "none";
-
-
   App.scene.outsideBox.streamTextures = new Vjs3(
     "http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html",
     "actualTexture"
   );
 
   App.scene.outsideBox.streamTextures.showTextureEditor();
-  setTimeout( () => { E("HOLDER_STREAMS").style.display = 'none'; }, 450 )
+  setTimeout(() => {E("HOLDER_STREAMS").style.display = 'none';}, 450)
 
+  // Matrix Engine use visual-js game engine like texture editor in multiply times.
+  world.Add("cubeLightTex", 1, "outsideBox2", tex);
+  App.scene.outsideBox2.playerHits = 0;
+  App.scene.outsideBox2.rotation.rotz = -90
+  App.scene.outsideBox2.position.y = 0;
+  App.scene.outsideBox2.position.z = -55;
+  App.scene.outsideBox2.LightsData.ambientLight.set(1, 1, 1);
+  App.scene.outsideBox2.glBlend.blendEnabled = true;
+  App.scene.outsideBox2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
+  App.scene.outsideBox2.glBlend.blendParamDest = ENUMERATORS.glBlend.param[6];
+  App.scene.outsideBox2.streamTextures = new Vjs3(
+    "http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/tex1.html",
+    "tex1"
+  );
 
-    // Matrix Engine use visual-js game engine like texture editor in multiply times.
-    world.Add("cubeLightTex", 1, "outsideBox2", tex);
-    App.scene.outsideBox2.playerHits = 0;
-    App.scene.outsideBox2.rotation.rotz = -90
-    App.scene.outsideBox2.position.y = 0;
-    App.scene.outsideBox2.position.z = -55;
-    App.scene.outsideBox2.LightsData.ambientLight.set(1, 1, 1);
-    App.scene.outsideBox2.glBlend.blendEnabled = true;
-    App.scene.outsideBox2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
-    App.scene.outsideBox2.glBlend.blendParamDest = ENUMERATORS.glBlend.param[6];
-    App.scene.outsideBox2.streamTextures = new Vjs3(
-      "http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/tex1.html",
-      "tex1"
-    );
-  
-    // App.scene.outsideBox2.streamTextures.showTextureEditor();
+  // App.scene.outsideBox2.streamTextures.showTextureEditor();
 
   // Walls
   world.Add("cubeLightTex", 1, "WALLRIGHT", texStone);
@@ -153,6 +149,6 @@ export var runThis = world => {
 
 
 
- 
+
 
 };

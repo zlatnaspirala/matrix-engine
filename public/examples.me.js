@@ -252,15 +252,23 @@ var runThis = world => {
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev);
     /**
-    * Physics force apply
-    */
+     * Physics force apply
+     */
 
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+      _manifest.default.scene.outsideBox.playerHits++;
+      var actualTexFrame = document.getElementById('actualTexture');
+      actualTexFrame.contentWindow.title.TEXTBOX.TEXT = 'HITS:' + _manifest.default.scene.outsideBox.playerHits; // double - this is deep from raycaster
+
+      _manifest.default.scene.outsideBox2.playerHits++;
+      var tex1 = document.getElementById('tex1');
+      tex1.contentWindow.hits.TEXTBOX.TEXT = 'HITS:' + _manifest.default.scene.outsideBox2.playerHits;
     }
-  }); // Matrix Engine use visual-js game engine
+  }); // Matrix Engine use visual-js game engine like texture editor.
 
   world.Add("cubeLightTex", 1, "outsideBox", tex);
+  _manifest.default.scene.outsideBox.playerHits = 0;
   _manifest.default.scene.outsideBox.rotation.rotz = -90;
   _manifest.default.scene.outsideBox.position.y = 0;
   _manifest.default.scene.outsideBox.position.z = -55;
@@ -268,13 +276,30 @@ var runThis = world => {
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
 
   _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[6];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7]; // App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
-  // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-
-  E("HOLDER_STREAMS").style.display = "block";
+  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
+  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[5];
   E("webcam_beta").style.display = "none";
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture"); // Walls
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture");
+
+  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
+
+  setTimeout(() => {
+    E("HOLDER_STREAMS").style.display = 'none';
+  }, 450); // Matrix Engine use visual-js game engine like texture editor in multiply times.
+
+  world.Add("cubeLightTex", 1, "outsideBox2", tex);
+  _manifest.default.scene.outsideBox2.playerHits = 0;
+  _manifest.default.scene.outsideBox2.rotation.rotz = -90;
+  _manifest.default.scene.outsideBox2.position.y = 0;
+  _manifest.default.scene.outsideBox2.position.z = -55;
+
+  _manifest.default.scene.outsideBox2.LightsData.ambientLight.set(1, 1, 1);
+
+  _manifest.default.scene.outsideBox2.glBlend.blendEnabled = true;
+  _manifest.default.scene.outsideBox2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
+  _manifest.default.scene.outsideBox2.glBlend.blendParamDest = ENUMERATORS.glBlend.param[6];
+  _manifest.default.scene.outsideBox2.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/tex1.html", "tex1"); // App.scene.outsideBox2.streamTextures.showTextureEditor();
+  // Walls
 
   world.Add("cubeLightTex", 1, "WALLRIGHT", texStone);
 
@@ -338,8 +363,15 @@ var runThis = world => {
 
   _manifest.default.scene.outsideBox.physics.currentBody = b;
   _manifest.default.scene.outsideBox.physics.enabled = true;
+  var b2 = new CANNON.Body({
+    mass: 5,
+    position: new CANNON.Vec3(0, -5, 1),
+    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+  });
+  physics.world.addBody(b2); // Physics
 
-  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
+  _manifest.default.scene.outsideBox2.physics.currentBody = b2;
+  _manifest.default.scene.outsideBox2.physics.enabled = true;
 
   _manifest.default.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(1);
 };
@@ -5095,9 +5127,9 @@ function Vjs3(path_, nameOfCanvas) {
     ROOT.videoImage = ROOT.iframe.contentDocument.getElementById(nameOfCanvas);
     ROOT.canvasTexture = ROOT.videoImage.getContext('2d');
 
-    _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
+    _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas); // E('HOLDER_STREAMS').style.display = 'block';
 
-    (0, _utility.E)('HOLDER_STREAMS').style.display = 'block';
+
     ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage);
   };
 
