@@ -1,8 +1,10 @@
 
 ## Texture editor
 
-Note:
+Texture Editor can be runned only for one instance in time.
+Here is procedure to create from editor second texture...
 
+Note:
 2DTextureEditor\actual.js is in the `Final build` regime.
 2DTextureEditor\tex1.js is in the `EDITOR active` regime.
 
@@ -51,3 +53,6 @@ https://github.com/zlatnaspirala/matrix-engine/wiki/How-to-define-%60Texture-edi
 FINAL BUILD REGIME:
 https://github.com/zlatnaspirala/matrix-engine/wiki/How-to-define-%60Texture-editor%60-%5Bvisual-js-game-engine%5D-in-matrix-engine-for-PRODC-MODE
 
+
+How to use Matrix Engine Texture Editor Video tutorial:
+https://www.youtube.com/watch?v=hSCXn-C1XxA&ab_channel=javascriptfanatic

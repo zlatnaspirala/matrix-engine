@@ -47,6 +47,11 @@ export var runThis = world => {
       var actualTexFrame = document.getElementById('actualTexture')
       actualTexFrame.contentWindow.title.TEXTBOX.TEXT = 'HITS:' + App.scene.outsideBox.playerHits;
 
+      // double - this is deep from raycaster
+      App.scene.outsideBox2.playerHits++;
+      var tex1 = document.getElementById('tex1')
+      tex1.contentWindow.hits.TEXTBOX.TEXT = 'HITS:' + App.scene.outsideBox2.playerHits;
+
     }
   });
 
@@ -58,8 +63,8 @@ export var runThis = world => {
   App.scene.outsideBox.position.z = -55;
   App.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
   App.scene.outsideBox.glBlend.blendEnabled = true;
-  App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  App.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7];
+  App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
+  App.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[5];
   // App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   E("webcam_beta").style.display = "none";
@@ -71,7 +76,7 @@ export var runThis = world => {
   );
 
   App.scene.outsideBox.streamTextures.showTextureEditor();
-  // setTimeout( () => { E("HOLDER_STREAMS").style.display = 'none'; }, 250 )
+  setTimeout( () => { E("HOLDER_STREAMS").style.display = 'none'; }, 450 )
 
 
     // Matrix Engine use visual-js game engine like texture editor in multiply times.
@@ -82,14 +87,14 @@ export var runThis = world => {
     App.scene.outsideBox2.position.z = -55;
     App.scene.outsideBox2.LightsData.ambientLight.set(1, 1, 1);
     App.scene.outsideBox2.glBlend.blendEnabled = true;
-    App.scene.outsideBox2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-    App.scene.outsideBox2.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7];
+    App.scene.outsideBox2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
+    App.scene.outsideBox2.glBlend.blendParamDest = ENUMERATORS.glBlend.param[6];
     App.scene.outsideBox2.streamTextures = new Vjs3(
       "http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/tex1.html",
       "tex1"
     );
   
-    App.scene.outsideBox2.streamTextures.showTextureEditor();
+    // App.scene.outsideBox2.streamTextures.showTextureEditor();
 
   // Walls
   world.Add("cubeLightTex", 1, "WALLRIGHT", texStone);

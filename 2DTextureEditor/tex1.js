@@ -1,9 +1,9 @@
 
 // Final build
-// import {sys, ActivateModifiers, application} from 'visual-js';
+import {sys, ActivateModifiers, application} from 'visual-js';
 
 // For dev stage
-import {sys, ActivateModifiers,  loadEditor, runEditor, loadEditorObjects} from 'visual-js';
+// import {sys, ActivateModifiers,  loadEditor, runEditor, loadEditorObjects} from 'visual-js';
 
 var runTextureEditor = (curTexId) => {
   // Visual-JS 3 part
@@ -12,12 +12,12 @@ var runTextureEditor = (curTexId) => {
   if(typeof window.RESOURCE !== 'undefined') return;
 
   // Final build
-  // application.EDITOR = false;
+  application.EDITOR = false;
 
   ActivateModifiers();
 
   // Run editor
-  runEditor();
+  // runEditor();
   // loadEditor(); - this load keyboard and other gui staff no need now.
 
   sys.DOM.CREATE_SURFACE("SURF", curTexId, 100, 99.4, "DIAMETRIC");
@@ -30,15 +30,24 @@ var runTextureEditor = (curTexId) => {
   let smodul = window[curTexId].ENGINE.MODULES.ACCESS_MODULE("STARTER");
 
   sys.SCRIPT.LOAD("res/animations/resource.js").then(() => {
-    addEventListener('postScriptReady', () => {
-    // sys.SCRIPT.LOAD("starter/visual.js").then(() => {
+    // addEventListener('postScriptReady', () => {
+    sys.SCRIPT.LOAD("starter/tex.final.js").then(() => {
       // WRITE YOUR VisualJS Code
+
+      // in postScriptReady callback
+      hits.TEXTBOX.font = '12px stormfaze';
+      TIME.TEXTBOX.font = '12px stormfaze';
+
+      TIME.ON_UPDATE = function() {
+        this.TEXTBOX.TEXT = Date();
+      };
+      console.log(TIME)
 
     });
   });
 
   // Run editor only !
-  loadEditorObjects();
+  // loadEditorObjects();
 
   // // value 1 is speed !!
   // smodul.NEW_OBJECT("IamNewObject", 12, 25, 35, 15, 1);

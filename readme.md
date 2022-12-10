@@ -835,6 +835,9 @@ Take a look at the `apps\fps_player_controller.js` example.
 
 ### Texture editor (runtime):
 
+ - How to use Matrix Engine Texture Editor Video tutorial:
+https://www.youtube.com/watch?v=hSCXn-C1XxA&ab_channel=javascriptfanatic
+
  - Using Vjs3 with Editor use:
 ```js
   App.scene.outsideBox.streamTextures = new Vjs3(
@@ -878,7 +881,6 @@ https://github.com/zlatnaspirala/visualjs
 Simple Planetarium:
  - https://jsfiddle.net/zlatnaspirala/y16s2krh/46/
  - 
-
 
 On NPM Service `npm i visual-js` , matrix engine already have
 `visual-js` , `visual-js-server` editor backend part.

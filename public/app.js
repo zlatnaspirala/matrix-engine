@@ -90,7 +90,11 @@ var runThis = world => {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
       _manifest.default.scene.outsideBox.playerHits++;
       var actualTexFrame = document.getElementById('actualTexture');
-      actualTexFrame.contentWindow.title.TEXTBOX.TEXT = 'HITS:' + _manifest.default.scene.outsideBox.playerHits;
+      actualTexFrame.contentWindow.title.TEXTBOX.TEXT = 'HITS:' + _manifest.default.scene.outsideBox.playerHits; // double - this is deep from raycaster
+
+      _manifest.default.scene.outsideBox2.playerHits++;
+      var tex1 = document.getElementById('tex1');
+      tex1.contentWindow.hits.TEXTBOX.TEXT = 'HITS:' + _manifest.default.scene.outsideBox2.playerHits;
     }
   }); // Matrix Engine use visual-js game engine like texture editor.
 
@@ -103,16 +107,18 @@ var runThis = world => {
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
 
   _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7]; // App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
+  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
+  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[5]; // App.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
 
   E("webcam_beta").style.display = "none";
   _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture");
 
-  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor(); // setTimeout( () => { E("HOLDER_STREAMS").style.display = 'none'; }, 250 )
-  // Matrix Engine use visual-js game engine like texture editor in multiply times.
+  _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
 
+  setTimeout(() => {
+    E("HOLDER_STREAMS").style.display = 'none';
+  }, 450); // Matrix Engine use visual-js game engine like texture editor in multiply times.
 
   world.Add("cubeLightTex", 1, "outsideBox2", tex);
   _manifest.default.scene.outsideBox2.playerHits = 0;
@@ -123,12 +129,10 @@ var runThis = world => {
   _manifest.default.scene.outsideBox2.LightsData.ambientLight.set(1, 1, 1);
 
   _manifest.default.scene.outsideBox2.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  _manifest.default.scene.outsideBox2.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7];
-  _manifest.default.scene.outsideBox2.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/tex1.html", "tex1");
-
-  _manifest.default.scene.outsideBox2.streamTextures.showTextureEditor(); // Walls
-
+  _manifest.default.scene.outsideBox2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
+  _manifest.default.scene.outsideBox2.glBlend.blendParamDest = ENUMERATORS.glBlend.param[6];
+  _manifest.default.scene.outsideBox2.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/tex1.html", "tex1"); // App.scene.outsideBox2.streamTextures.showTextureEditor();
+  // Walls
 
   world.Add("cubeLightTex", 1, "WALLRIGHT", texStone);
 
