@@ -684,7 +684,7 @@ function loadShaders(gl, id) {
     gl.compileShader(shader);
 
     if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      console.log("Shader Program compile success");
+      // console.log("Shader Program compile success");
       return shader;
     } else {
       console.warn('Shader Program compile failed:' + gl.getShaderInfoLog(shader));
@@ -6519,7 +6519,7 @@ function getInitFSObj() {
 
   out vec4 outColor;
   void main(void) {
-    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
     outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
   }`;
 
@@ -6539,8 +6539,8 @@ function getInitVSObj() {
   uniform vec3 uLightingDirection;
   uniform vec3 uDirectionalColor;
   uniform bool uUseLighting;
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
+  out vec2 vTextureCoord;
+  out vec3 vLightWeighting;
 
   void main(void) {
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
@@ -9448,7 +9448,7 @@ function defineworld(canvas) {
           objObject.textures_texParameteri = []; //new
 
           objObject.texture = true;
-          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30'); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             objObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t], texturesPaths.params));
