@@ -145,227 +145,226 @@ var runThis = world => {
         mix_operation: "multiply" // ENUM : multiply , divide
 
       };
-      setTimeout(function () {
-        var animArg = {
-          id: objName,
-          meshList: meshes,
-          currentAni: 0,
-          animations: {
-            active: 'walk',
-            walk: {
-              from: 0,
-              to: 20,
-              speed: 3
-            }
+      var animArg = {
+        id: objName,
+        meshList: meshes,
+        currentAni: 0,
+        animations: {
+          active: 'walk',
+          walk: {
+            from: 0,
+            to: 20,
+            speed: 3
           }
-        };
-        world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg); // Fix object orientation - this can be fixed also in blender.
+        }
+      };
+      world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg); // Fix object orientation - this can be fixed also in blender.
 
-        matrixEngine.Events.camera.yaw = 0; // Add collision cube to the local player.
+      matrixEngine.Events.camera.yaw = 0; // Add collision cube to the local player.
 
-        world.Add("cube", 0.2, "playerCollisonBox");
-        var collisionBox = new CANNON.Body({
-          mass: 5,
-          linearDamping: 0.01,
-          position: new CANNON.Vec3(0, 0, 0),
-          shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
-        });
-        physics.world.addBody(collisionBox);
-        _manifest.default.scene.playerCollisonBox.physics.currentBody = collisionBox;
-        _manifest.default.scene.playerCollisonBox.physics.enabled = true;
-        _manifest.default.scene.playerCollisonBox.physics.currentBody.fixedRotation = true;
+      world.Add("cube", 0.2, "playerCollisonBox");
+      var collisionBox = new CANNON.Body({
+        mass: 5,
+        linearDamping: 0.01,
+        position: new CANNON.Vec3(0, 0, 0),
+        shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
+      });
+      physics.world.addBody(collisionBox);
+      _manifest.default.scene.playerCollisonBox.physics.currentBody = collisionBox;
+      _manifest.default.scene.playerCollisonBox.physics.enabled = true;
+      _manifest.default.scene.playerCollisonBox.physics.currentBody.fixedRotation = true;
 
-        _manifest.default.scene.playerCollisonBox.geometry.setScale(0.02); // Player Energy status
+      _manifest.default.scene.playerCollisonBox.geometry.setScale(0.02); // test 
 
 
-        _manifest.default.scene.player.energy = {}; // test 
+      addEventListener('hit.keyDown', e => {
+        // console.log('Bring to the top level', e.detail.keyCode);
+        // dont mess in events 
+        // better in high level to be respoved
+        if (e.detail.keyCode == 32) {
+          setTimeout(() => {
+            _manifest.default.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 111);
+          }, 250);
+        } else if (e.detail.keyCode == 87) {
+          // Good place for blocking volume
+          // App.scene.playerCollisonBox.physics.currentBody.force.set(0,10,0)
+          setTimeout(() => {// App.scene.playerCollisonBox.physics.currentBody.force.set(0,100,0)
+          }, 100);
+        }
+      });
+      var playerUpdater = {
+        UPDATE: () => {
+          _manifest.default.scene[objName].rotation.rotateY(matrixEngine.Events.camera.yaw + 180);
 
-        addEventListener('hit.keyDown', e => {
-          // console.log('Bring to the top level', e.detail.keyCode);
-          // dont mess in events 
-          // better in high level to be respoved
-          if (e.detail.keyCode == 32) {
+          var detPitch;
+          var limit = 2;
+
+          if (matrixEngine.Events.camera.pitch < limit && matrixEngine.Events.camera.pitch > -limit) {
+            detPitch = matrixEngine.Events.camera.pitch * 2;
+          } else if (matrixEngine.Events.camera.pitch > limit) {
+            detPitch = limit * 2;
+          } else if (matrixEngine.Events.camera.pitch < -(limit + 2)) {
+            detPitch = -(limit + 2) * 2;
+          }
+
+          if (matrixEngine.Events.camera.virtualJumpActive == true) {
+            // invert logic
+            // Scene object set
+            _manifest.default.scene[objName].rotation.rotateX(-detPitch);
+
+            var detPitchPos = matrixEngine.Events.camera.pitch;
+            if (detPitchPos > 4) detPitchPos = 4;
+
+            _manifest.default.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 70);
+
+            _manifest.default.scene[objName].position.setPosition(_manifest.default.scene.playerCollisonBox.physics.currentBody.position.x, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y); // Cannonjs object set / Switched  Z - Y
+
+
+            matrixEngine.Events.camera.xPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.x;
+            matrixEngine.Events.camera.zPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y;
+            matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z;
+
+            _manifest.default.scene.playerCollisonBox.physics.currentBody.angularVelocity.set(0, 0, 0);
+
             setTimeout(() => {
-              _manifest.default.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 111);
-            }, 250);
-          } else if (e.detail.keyCode == 87) {
-            // Good place for blocking volume
-            // App.scene.playerCollisonBox.physics.currentBody.force.set(0,10,0)
-            setTimeout(() => {// App.scene.playerCollisonBox.physics.currentBody.force.set(0,100,0)
-            }, 100);
+              matrixEngine.Events.camera.virtualJumpActive = false;
+            }, 1350);
+          } else {
+            // Tamo tu iznad duge nebo zri...
+            // Cannonjs object set
+            // Switched  Z - Y
+            matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z; // Scene object set
+
+            _manifest.default.scene[objName].rotation.rotateX(-detPitch);
+
+            var detPitchPos = matrixEngine.Events.camera.pitch;
+            if (detPitchPos > 4) detPitchPos = 4;
+
+            _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 0.3 + detPitchPos / 50, // App.scene.playerCollisonBox.physics.currentBody.position.y,
+            matrixEngine.Events.camera.zPos); // Cannonjs object set
+            // Switched  Z - Y
+
+
+            _manifest.default.scene.playerCollisonBox.physics.currentBody.position.set(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.zPos, matrixEngine.Events.camera.yPos); // App.scene.playerCollisonBox.physics.currentBody.position.y)
+
           }
-        });
-        var playerUpdater = {
-          UPDATE: () => {
-            _manifest.default.scene[objName].rotation.rotateY(matrixEngine.Events.camera.yaw + 180);
+        }
+      };
 
-            var detPitch;
-            var limit = 2;
-
-            if (matrixEngine.Events.camera.pitch < limit && matrixEngine.Events.camera.pitch > -limit) {
-              detPitch = matrixEngine.Events.camera.pitch * 2;
-            } else if (matrixEngine.Events.camera.pitch > limit) {
-              detPitch = limit * 2;
-            } else if (matrixEngine.Events.camera.pitch < -(limit + 2)) {
-              detPitch = -(limit + 2) * 2;
-            }
-
-            if (matrixEngine.Events.camera.virtualJumpActive == true) {
-              // invert logic
-              // Scene object set
-              _manifest.default.scene[objName].rotation.rotateX(-detPitch);
-
-              var detPitchPos = matrixEngine.Events.camera.pitch;
-              if (detPitchPos > 4) detPitchPos = 4;
-
-              _manifest.default.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 70);
-
-              _manifest.default.scene[objName].position.setPosition(_manifest.default.scene.playerCollisonBox.physics.currentBody.position.x, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y); // Cannonjs object set / Switched  Z - Y
+      _manifest.default.updateBeforeDraw.push(playerUpdater); // Player Energy status
 
 
-              matrixEngine.Events.camera.xPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.x;
-              matrixEngine.Events.camera.zPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y;
-              matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z;
+      _manifest.default.scene.player.energy = {};
 
-              _manifest.default.scene.playerCollisonBox.physics.currentBody.angularVelocity.set(0, 0, 0);
-
-              setTimeout(() => {
-                matrixEngine.Events.camera.virtualJumpActive = false;
-              }, 1350);
-            } else {
-              // Tamo tu iznad duge nebo zri...
-              // Cannonjs object set
-              // Switched  Z - Y
-              matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z; // Scene object set
-
-              _manifest.default.scene[objName].rotation.rotateX(-detPitch);
-
-              var detPitchPos = matrixEngine.Events.camera.pitch;
-              if (detPitchPos > 4) detPitchPos = 4;
-
-              _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos - 0.3 + detPitchPos / 50, // App.scene.playerCollisonBox.physics.currentBody.position.y,
-              matrixEngine.Events.camera.zPos); // Cannonjs object set
-              // Switched  Z - Y
+      for (let key in _manifest.default.scene.player.meshList) {
+        _manifest.default.scene.player.meshList[key].setScale(1.85);
+      } // Target scene object
 
 
-              _manifest.default.scene.playerCollisonBox.physics.currentBody.position.set(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.zPos, matrixEngine.Events.camera.yPos); // App.scene.playerCollisonBox.physics.currentBody.position.y)
+      var texTarget = {
+        source: ["res/bvh-skeletal-base/swat-guy/target.png", "res/bvh-skeletal-base/swat-guy/target.png"],
+        mix_operation: "multiply"
+      };
+      world.Add("squareTex", 0.25, 'FPSTarget', texTarget);
 
-            }
+      _manifest.default.scene.FPSTarget.position.setPosition(0, 0, -4);
+
+      _manifest.default.scene.FPSTarget.glBlend.blendEnabled = true;
+      _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+      _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+      _manifest.default.scene.FPSTarget.isHUD = true;
+
+      _manifest.default.scene.FPSTarget.geometry.setScale(0.1); // Energy active bar
+      // Custom generic textures. Micro Drawing.
+      // Example for arg shema square for now only.
+
+
+      var options = {
+        squareShema: [8, 8],
+        pixels: new Uint8Array(8 * 8 * 4)
+      }; // options.pixels.fill(0);
+
+      _manifest.default.scene.player.energy.value = 8;
+
+      _manifest.default.scene.player.updateEnergy = function (v) {
+        this.energy.value = v;
+
+        var t = _manifest.default.scene.energyBar.preparePixelsTex(_manifest.default.scene.energyBar.specialValue);
+
+        _manifest.default.scene.energyBar.textures.pop();
+
+        _manifest.default.scene.energyBar.textures.push(_manifest.default.scene.energyBar.createPixelsTex(t));
+      };
+
+      function preparePixelsTex(options) {
+        var I = 0,
+            R = 0,
+            G = 0,
+            B = 0,
+            localCounter = 0;
+
+        for (var funny = 0; funny < 8 * 8 * 4; funny += 4) {
+          if (localCounter > 7) {
+            localCounter = 0;
           }
-        };
 
-        _manifest.default.updateBeforeDraw.push(playerUpdater);
+          if (localCounter < _manifest.default.scene.player.energy.value) {
+            I = 128;
 
-        for (let key in _manifest.default.scene.player.meshList) {
-          _manifest.default.scene.player.meshList[key].setScale(1.85);
-        } // Target scene object
-
-
-        var texTarget = {
-          source: ["res/bvh-skeletal-base/swat-guy/target.png", "res/bvh-skeletal-base/swat-guy/target.png"],
-          mix_operation: "multiply"
-        };
-        world.Add("squareTex", 0.25, 'FPSTarget', texTarget);
-
-        _manifest.default.scene.FPSTarget.position.setPosition(0, 0, -4);
-
-        _manifest.default.scene.FPSTarget.glBlend.blendEnabled = true;
-        _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-        _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-        _manifest.default.scene.FPSTarget.isHUD = true;
-
-        _manifest.default.scene.FPSTarget.geometry.setScale(0.1); // Energy active bar
-        // Custom generic textures. Micro Drawing.
-        // Example for arg shema square for now only.
-
-
-        var options = {
-          squareShema: [8, 8],
-          pixels: new Uint8Array(8 * 8 * 4)
-        }; // options.pixels.fill(0);
-
-        _manifest.default.scene.player.energy.value = 8;
-
-        _manifest.default.scene.player.updateEnergy = function (v) {
-          this.energy.value = v;
-
-          var t = _manifest.default.scene.energyBar.preparePixelsTex(_manifest.default.scene.energyBar.specialValue);
-
-          _manifest.default.scene.energyBar.textures.pop();
-
-          _manifest.default.scene.energyBar.textures.push(_manifest.default.scene.energyBar.createPixelsTex(t));
-        };
-
-        function preparePixelsTex(options) {
-          var I = 0,
-              R = 0,
-              G = 0,
-              B = 0,
-              localCounter = 0;
-
-          for (var funny = 0; funny < 8 * 8 * 4; funny += 4) {
-            if (localCounter > 7) {
-              localCounter = 0;
-            }
-
-            if (localCounter < _manifest.default.scene.player.energy.value) {
-              I = 128;
-
-              if (_manifest.default.scene.player.energy.value < 3) {
-                R = 255;
-                G = 0;
-                B = 0;
-                I = 0;
-              } else if (_manifest.default.scene.player.energy.value > 2 && _manifest.default.scene.player.energy.value < 5) {
-                R = 255;
-                G = 255;
-                B = 0;
-              } else {
-                R = 0;
-                G = 255;
-                B = 0;
-              }
-            } else {
-              I = 0;
-              R = 0;
+            if (_manifest.default.scene.player.energy.value < 3) {
+              R = 255;
               G = 0;
               B = 0;
+              I = 0;
+            } else if (_manifest.default.scene.player.energy.value > 2 && _manifest.default.scene.player.energy.value < 5) {
+              R = 255;
+              G = 255;
+              B = 0;
+            } else {
+              R = 0;
+              G = 255;
+              B = 0;
             }
-
-            options.pixels[funny] = R;
-            options.pixels[funny + 1] = G;
-            options.pixels[funny + 2] = B;
-            options.pixels[funny + 3] = 0;
-            localCounter++;
+          } else {
+            I = 0;
+            R = 0;
+            G = 0;
+            B = 0;
           }
 
-          return options;
+          options.pixels[funny] = R;
+          options.pixels[funny + 1] = G;
+          options.pixels[funny + 2] = B;
+          options.pixels[funny + 3] = 0;
+          localCounter++;
         }
 
-        var tex2 = {
-          source: ["res/images/hud/energy-bar.png", "res/images/hud/energy-bar.png"],
-          mix_operation: "multiply"
-        };
-        world.Add("squareTex", 1, 'energyBar', tex2);
-        _manifest.default.scene.energyBar.glBlend.blendEnabled = true;
-        _manifest.default.scene.energyBar.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
-        _manifest.default.scene.energyBar.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
-        _manifest.default.scene.energyBar.isHUD = true; // App.scene.energy.visible = false;
+        return options;
+      }
 
-        _manifest.default.scene.energyBar.position.setPosition(0, 1.1, -3);
+      var tex2 = {
+        source: ["res/images/hud/energy-bar.png", "res/images/hud/energy-bar.png"],
+        mix_operation: "multiply"
+      };
+      world.Add("squareTex", 1, 'energyBar', tex2);
+      _manifest.default.scene.energyBar.glBlend.blendEnabled = true;
+      _manifest.default.scene.energyBar.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+      _manifest.default.scene.energyBar.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+      _manifest.default.scene.energyBar.isHUD = true; // App.scene.energy.visible = false;
 
-        _manifest.default.scene.energyBar.geometry.setScaleByX(1);
+      _manifest.default.scene.energyBar.position.setPosition(0, 1.1, -3);
 
-        _manifest.default.scene.energyBar.geometry.setScaleByY(0.05);
+      _manifest.default.scene.energyBar.geometry.setScaleByX(1);
 
-        _manifest.default.scene.energyBar.preparePixelsTex = preparePixelsTex;
-        options = preparePixelsTex(options); //
-        // App.scene.energyBar.textures[0] = App.scene.energyBar.createPixelsTex(options);
+      _manifest.default.scene.energyBar.geometry.setScaleByY(0.05);
 
-        _manifest.default.scene.energyBar.textures.push(_manifest.default.scene.energyBar.createPixelsTex(options));
+      _manifest.default.scene.energyBar.preparePixelsTex = preparePixelsTex;
+      options = preparePixelsTex(options); //
+      // App.scene.energyBar.textures[0] = App.scene.energyBar.createPixelsTex(options);
 
-        _manifest.default.scene.energyBar.specialValue = options;
-      }, 1);
+      _manifest.default.scene.energyBar.textures.push(_manifest.default.scene.energyBar.createPixelsTex(options));
+
+      _manifest.default.scene.energyBar.specialValue = options;
     }
 
     matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
@@ -7007,7 +7006,7 @@ function getInitFSObj() {
 
   out vec4 outColor;
   void main(void) {
-    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
     outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
   }`;
 
@@ -7027,8 +7026,8 @@ function getInitVSObj() {
   uniform vec3 uLightingDirection;
   uniform vec3 uDirectionalColor;
   uniform bool uUseLighting;
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
+  out vec2 vTextureCoord;
+  out vec3 vLightWeighting;
 
   void main(void) {
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
@@ -9936,7 +9935,7 @@ function defineworld(canvas) {
           objObject.textures_texParameteri = []; //new
 
           objObject.texture = true;
-          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30'); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             objObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t], texturesPaths.params));

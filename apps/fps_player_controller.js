@@ -101,237 +101,238 @@ export var runThis = (world) => {
         mix_operation: "multiply", // ENUM : multiply , divide
       };
 
-      setTimeout(function() {
-        var animArg = {
-          id: objName,
-          meshList: meshes,
-          currentAni: 0,
-          animations: {
-            active: 'walk',
-            walk: {
-              from: 0,
-              to: 20,
-              speed: 3
-            }
+      var animArg = {
+        id: objName,
+        meshList: meshes,
+        currentAni: 0,
+        animations: {
+          active: 'walk',
+          walk: {
+            from: 0,
+            to: 20,
+            speed: 3
           }
-        };
-
-        world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg);
-
-        // Fix object orientation - this can be fixed also in blender.
-        matrixEngine.Events.camera.yaw = 0;
-
-        // Add collision cube to the local player.
-        world.Add("cube", 0.2, "playerCollisonBox");
-        var collisionBox = new CANNON.Body({
-          mass: 5,
-          linearDamping: 0.01,
-          position: new CANNON.Vec3(0, 0, 0),
-          shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
-        });
-        physics.world.addBody(collisionBox);
-        App.scene.playerCollisonBox.physics.currentBody = collisionBox;
-        App.scene.playerCollisonBox.physics.enabled = true;
-        App.scene.playerCollisonBox.physics.currentBody.fixedRotation = true;
-        App.scene.playerCollisonBox.geometry.setScale(0.02);
-
-        // Player Energy status
-        App.scene.player.energy = {};
-
-        // test 
-        addEventListener('hit.keyDown', (e) => {
-          // console.log('Bring to the top level', e.detail.keyCode);
-
-          // dont mess in events 
-          // better in high level to be respoved
-          if (e.detail.keyCode == 32) {
-            setTimeout(()=> {
-              App.scene.playerCollisonBox.physics.currentBody.force.set(0,0,111)
-            }, 250)
-          } else if (e.detail.keyCode == 87) {
-            // Good place for blocking volume
-            // App.scene.playerCollisonBox.physics.currentBody.force.set(0,10,0)
-            setTimeout(()=>{
-              // App.scene.playerCollisonBox.physics.currentBody.force.set(0,100,0)
-            }, 100);
-          }
-        });
-
-        var playerUpdater = {
-          UPDATE: () => {
-            App.scene[objName].rotation.rotateY(
-              matrixEngine.Events.camera.yaw + 180)
-
-            var detPitch;
-            var limit = 2;
-            if(matrixEngine.Events.camera.pitch < limit &&
-              matrixEngine.Events.camera.pitch > -limit) {
-              detPitch = matrixEngine.Events.camera.pitch * 2;
-            } else if(matrixEngine.Events.camera.pitch > limit) {
-              detPitch = limit * 2;
-            } else if(matrixEngine.Events.camera.pitch < -(limit + 2)) {
-              detPitch = -(limit + 2) * 2;
-            }
-
-            if(matrixEngine.Events.camera.virtualJumpActive == true) {
-              // invert logic
-              // Scene object set
-              App.scene[objName].rotation.rotateX(-detPitch);
-              var detPitchPos = matrixEngine.Events.camera.pitch;
-              if(detPitchPos > 4) detPitchPos = 4;
-
-              App.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 70);
-
-              App.scene[objName].position.setPosition(
-                App.scene.playerCollisonBox.physics.currentBody.position.x,
-                App.scene.playerCollisonBox.physics.currentBody.position.z,
-                App.scene.playerCollisonBox.physics.currentBody.position.y
-              )
-              // Cannonjs object set / Switched  Z - Y
-              matrixEngine.Events.camera.xPos = App.scene.playerCollisonBox.physics.currentBody.position.x;
-              matrixEngine.Events.camera.zPos = App.scene.playerCollisonBox.physics.currentBody.position.y;
-              matrixEngine.Events.camera.yPos = App.scene.playerCollisonBox.physics.currentBody.position.z;
-
-              App.scene.playerCollisonBox.
-                physics.currentBody.angularVelocity.set(0, 0, 0);
-
-              setTimeout(() => {
-                matrixEngine.Events.camera.virtualJumpActive = false;
-              }, 1350);
-
-            } else {
-              // Tamo tu iznad duge nebo zri...
-              // Cannonjs object set
-              // Switched  Z - Y
-              matrixEngine.Events.camera.yPos = App.scene.playerCollisonBox.physics.currentBody.position.z;
-
-              // Scene object set
-              App.scene[objName].rotation.rotateX(-detPitch);
-              var detPitchPos = matrixEngine.Events.camera.pitch;
-              if(detPitchPos > 4) detPitchPos = 4;
-              
-              App.scene[objName].position.setPosition(
-                matrixEngine.Events.camera.xPos,
-                matrixEngine.Events.camera.yPos - 0.3 + detPitchPos / 50,
-                // App.scene.playerCollisonBox.physics.currentBody.position.y,
-                matrixEngine.Events.camera.zPos,
-              )
-
-              // Cannonjs object set
-              // Switched  Z - Y
-              App.scene.playerCollisonBox.
-                physics.currentBody.position.set(
-                  matrixEngine.Events.camera.xPos,
-                  matrixEngine.Events.camera.zPos,
-                  matrixEngine.Events.camera.yPos)
-                 // App.scene.playerCollisonBox.physics.currentBody.position.y)
-            }
-          }
-        };
-        App.updateBeforeDraw.push(playerUpdater);
-
-        for(let key in App.scene.player.meshList) {
-          App.scene.player.meshList[key].setScale(1.85);
         }
+      };
 
-        // Target scene object
-        var texTarget = {
-          source: [
-            "res/bvh-skeletal-base/swat-guy/target.png",
-            "res/bvh-skeletal-base/swat-guy/target.png"
-          ],
-          mix_operation: "multiply",
-        };
-        world.Add("squareTex", 0.25, 'FPSTarget', texTarget);
-        App.scene.FPSTarget.position.setPosition(0, 0, -4);
-        App.scene.FPSTarget.glBlend.blendEnabled = true;
-        App.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-        App.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-        App.scene.FPSTarget.isHUD = true;
-        App.scene.FPSTarget.geometry.setScale(0.1);
+      world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg);
 
-        // Energy active bar
-        // Custom generic textures. Micro Drawing.
-        // Example for arg shema square for now only.
-        var options = {
-          squareShema: [8, 8],
-          pixels: new Uint8Array(8 * 8 * 4)
-        };
-        // options.pixels.fill(0);
-        App.scene.player.energy.value = 8;
-        App.scene.player.updateEnergy = function(v) {
-          this.energy.value = v;
-          var t = App.scene.energyBar.preparePixelsTex(App.scene.energyBar.specialValue);
-          App.scene.energyBar.textures.pop()
-          App.scene.energyBar.textures.push(App.scene.energyBar.createPixelsTex(t));
-        };
+      // Fix object orientation - this can be fixed also in blender.
+      matrixEngine.Events.camera.yaw = 0;
 
-        function preparePixelsTex(options) {
-          var I = 0, R = 0, G = 0, B = 0, localCounter = 0;
-          for(var funny = 0;funny < 8 * 8 * 4;funny += 4) {
-            if(localCounter > 7) {
-              localCounter = 0;
-            }
-            if(localCounter < App.scene.player.energy.value) {
-              I = 128;
-              if(App.scene.player.energy.value < 3) {
-                R = 255;
-                G = 0;
-                B = 0;
-                I = 0;
-              } else if(App.scene.player.energy.value > 2 && App.scene.player.energy.value < 5) {
-                R = 255;
-                G = 255;
-                B = 0;
-              } else {
-                R = 0;
-                G = 255;
-                B = 0;
-              }
-            } else {
-              I = 0;
-              R = 0;
+      // Add collision cube to the local player.
+      world.Add("cube", 0.2, "playerCollisonBox");
+      var collisionBox = new CANNON.Body({
+        mass: 5,
+        linearDamping: 0.01,
+        position: new CANNON.Vec3(0, 0, 0),
+        shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
+      });
+      physics.world.addBody(collisionBox);
+      App.scene.playerCollisonBox.physics.currentBody = collisionBox;
+      App.scene.playerCollisonBox.physics.enabled = true;
+      App.scene.playerCollisonBox.physics.currentBody.fixedRotation = true;
+      App.scene.playerCollisonBox.geometry.setScale(0.02);
+
+
+
+      // test 
+      addEventListener('hit.keyDown', (e) => {
+        // console.log('Bring to the top level', e.detail.keyCode);
+
+        // dont mess in events 
+        // better in high level to be respoved
+        if(e.detail.keyCode == 32) {
+          setTimeout(() => {
+            App.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 111)
+          }, 250)
+        } else if(e.detail.keyCode == 87) {
+          // Good place for blocking volume
+          // App.scene.playerCollisonBox.physics.currentBody.force.set(0,10,0)
+          setTimeout(() => {
+            // App.scene.playerCollisonBox.physics.currentBody.force.set(0,100,0)
+          }, 100);
+        }
+      });
+
+      var playerUpdater = {
+        UPDATE: () => {
+          App.scene[objName].rotation.rotateY(
+            matrixEngine.Events.camera.yaw + 180)
+
+          var detPitch;
+          var limit = 2;
+          if(matrixEngine.Events.camera.pitch < limit &&
+            matrixEngine.Events.camera.pitch > -limit) {
+            detPitch = matrixEngine.Events.camera.pitch * 2;
+          } else if(matrixEngine.Events.camera.pitch > limit) {
+            detPitch = limit * 2;
+          } else if(matrixEngine.Events.camera.pitch < -(limit + 2)) {
+            detPitch = -(limit + 2) * 2;
+          }
+
+          if(matrixEngine.Events.camera.virtualJumpActive == true) {
+            // invert logic
+            // Scene object set
+            App.scene[objName].rotation.rotateX(-detPitch);
+            var detPitchPos = matrixEngine.Events.camera.pitch;
+            if(detPitchPos > 4) detPitchPos = 4;
+
+            App.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 70);
+
+            App.scene[objName].position.setPosition(
+              App.scene.playerCollisonBox.physics.currentBody.position.x,
+              App.scene.playerCollisonBox.physics.currentBody.position.z,
+              App.scene.playerCollisonBox.physics.currentBody.position.y
+            )
+            // Cannonjs object set / Switched  Z - Y
+            matrixEngine.Events.camera.xPos = App.scene.playerCollisonBox.physics.currentBody.position.x;
+            matrixEngine.Events.camera.zPos = App.scene.playerCollisonBox.physics.currentBody.position.y;
+            matrixEngine.Events.camera.yPos = App.scene.playerCollisonBox.physics.currentBody.position.z;
+
+            App.scene.playerCollisonBox.
+              physics.currentBody.angularVelocity.set(0, 0, 0);
+
+            setTimeout(() => {
+              matrixEngine.Events.camera.virtualJumpActive = false;
+            }, 1350);
+
+          } else {
+            // Tamo tu iznad duge nebo zri...
+            // Cannonjs object set
+            // Switched  Z - Y
+            matrixEngine.Events.camera.yPos = App.scene.playerCollisonBox.physics.currentBody.position.z;
+
+            // Scene object set
+            App.scene[objName].rotation.rotateX(-detPitch);
+            var detPitchPos = matrixEngine.Events.camera.pitch;
+            if(detPitchPos > 4) detPitchPos = 4;
+
+            App.scene[objName].position.setPosition(
+              matrixEngine.Events.camera.xPos,
+              matrixEngine.Events.camera.yPos - 0.3 + detPitchPos / 50,
+              // App.scene.playerCollisonBox.physics.currentBody.position.y,
+              matrixEngine.Events.camera.zPos,
+            )
+
+            // Cannonjs object set
+            // Switched  Z - Y
+            App.scene.playerCollisonBox.
+              physics.currentBody.position.set(
+                matrixEngine.Events.camera.xPos,
+                matrixEngine.Events.camera.zPos,
+                matrixEngine.Events.camera.yPos)
+            // App.scene.playerCollisonBox.physics.currentBody.position.y)
+          }
+        }
+      };
+      App.updateBeforeDraw.push(playerUpdater);
+
+      // Player Energy status
+      App.scene.player.energy = {};
+
+      for(let key in App.scene.player.meshList) {
+        App.scene.player.meshList[key].setScale(1.85);
+      }
+
+      // Target scene object
+      var texTarget = {
+        source: [
+          "res/bvh-skeletal-base/swat-guy/target.png",
+          "res/bvh-skeletal-base/swat-guy/target.png"
+        ],
+        mix_operation: "multiply",
+      };
+      world.Add("squareTex", 0.25, 'FPSTarget', texTarget);
+      App.scene.FPSTarget.position.setPosition(0, 0, -4);
+      App.scene.FPSTarget.glBlend.blendEnabled = true;
+      App.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+      App.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+      App.scene.FPSTarget.isHUD = true;
+      App.scene.FPSTarget.geometry.setScale(0.1);
+
+      // Energy active bar
+      // Custom generic textures. Micro Drawing.
+      // Example for arg shema square for now only.
+      var options = {
+        squareShema: [8, 8],
+        pixels: new Uint8Array(8 * 8 * 4)
+      };
+      // options.pixels.fill(0);
+      App.scene.player.energy.value = 8;
+      App.scene.player.updateEnergy = function(v) {
+        this.energy.value = v;
+        var t = App.scene.energyBar.preparePixelsTex(App.scene.energyBar.specialValue);
+        App.scene.energyBar.textures.pop()
+        App.scene.energyBar.textures.push(App.scene.energyBar.createPixelsTex(t));
+      };
+
+      function preparePixelsTex(options) {
+        var I = 0, R = 0, G = 0, B = 0, localCounter = 0;
+        for(var funny = 0;funny < 8 * 8 * 4;funny += 4) {
+          if(localCounter > 7) {
+            localCounter = 0;
+          }
+          if(localCounter < App.scene.player.energy.value) {
+            I = 128;
+            if(App.scene.player.energy.value < 3) {
+              R = 255;
               G = 0;
               B = 0;
+              I = 0;
+            } else if(App.scene.player.energy.value > 2 && App.scene.player.energy.value < 5) {
+              R = 255;
+              G = 255;
+              B = 0;
+            } else {
+              R = 0;
+              G = 255;
+              B = 0;
             }
-            options.pixels[funny] = R;
-            options.pixels[funny + 1] = G;
-            options.pixels[funny + 2] = B;
-            options.pixels[funny + 3] = 0;
-            localCounter++;
+          } else {
+            I = 0;
+            R = 0;
+            G = 0;
+            B = 0;
           }
-          return options;
+          options.pixels[funny] = R;
+          options.pixels[funny + 1] = G;
+          options.pixels[funny + 2] = B;
+          options.pixels[funny + 3] = 0;
+          localCounter++;
         }
+        return options;
+      }
 
-        var tex2 = {
-          source: [
-            "res/images/hud/energy-bar.png",
-            "res/images/hud/energy-bar.png"
-          ],
-          mix_operation: "multiply",
-        };
+      var tex2 = {
+        source: [
+          "res/images/hud/energy-bar.png",
+          "res/images/hud/energy-bar.png"
+        ],
+        mix_operation: "multiply",
+      };
 
-        world.Add("squareTex", 1, 'energyBar', tex2);
-        App.scene.energyBar.glBlend.blendEnabled = true;
-        App.scene.energyBar.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
-        App.scene.energyBar.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
-        App.scene.energyBar.isHUD = true;
-        // App.scene.energy.visible = false;
-        App.scene.energyBar.position.setPosition(0, 1.1, -3);
-        App.scene.energyBar.geometry.setScaleByX(1)
-        App.scene.energyBar.geometry.setScaleByY(0.05)
+      world.Add("squareTex", 1, 'energyBar', tex2);
+      App.scene.energyBar.glBlend.blendEnabled = true;
+      App.scene.energyBar.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+      App.scene.energyBar.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
+      App.scene.energyBar.isHUD = true;
+      // App.scene.energy.visible = false;
+      App.scene.energyBar.position.setPosition(0, 1.1, -3);
+      App.scene.energyBar.geometry.setScaleByX(1)
+      App.scene.energyBar.geometry.setScaleByY(0.05)
 
-        App.scene.energyBar.preparePixelsTex = preparePixelsTex;
+      App.scene.energyBar.preparePixelsTex = preparePixelsTex;
 
-        options = preparePixelsTex(options);
+      options = preparePixelsTex(options);
 
-        //
-        // App.scene.energyBar.textures[0] = App.scene.energyBar.createPixelsTex(options);
-        App.scene.energyBar.textures.push(App.scene.energyBar.createPixelsTex(options));
+      //
+      // App.scene.energyBar.textures[0] = App.scene.energyBar.createPixelsTex(options);
+      App.scene.energyBar.textures.push(App.scene.energyBar.createPixelsTex(options));
 
-        App.scene.energyBar.specialValue = options;
+      App.scene.energyBar.specialValue = options;
 
-      }, 1);
+
     }
 
     matrixEngine.objLoader.downloadMeshes(
@@ -389,7 +390,7 @@ export var runThis = (world) => {
   // Load Physics world.
   let gravityVector = [0, 0, -9.82];
   let physics = world.loadPhysics(gravityVector);
-  
+
   // Add ground
   var groundBody = new CANNON.Body({
     mass: 0, // mass == 0 makes the body static
@@ -472,5 +473,5 @@ export var runThis = (world) => {
   App.scene.LAVA.streamTextures = new matrixEngine.Engine.VT(
     "res/video-texture/lava1.mkv"
   );
- 
+
 };
