@@ -22,6 +22,6 @@ https://github.com/zlatnaspirala/matrix-engine/wiki/How-to-define-%60Texture-edi
 
 
 THIS IS CODE BEFORE BUILD REGIME:
-```js
+https://github.com/zlatnaspirala/matrix-engine/wiki/How-to-define-%60Texture-editor%60-%5Bvisual-js-game-engine%5D-in-matrix-engine-for-PRODC-MODE
 
-```
+
