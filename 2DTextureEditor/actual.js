@@ -7,7 +7,12 @@ import {sys, ActivateModifiers, application} from 'visual-js';
 
 // npm run build.tex.editor
 // BUILD FROM EDITOR TO REAL JS FILE
-// DISBALE NOW EDITOR
+// It is auto-generated file ./starter/visual.js [from cache/ folder]
+// If you wanna multiply use of texture editor
+// just rename ./starter/actual.final.js
+// and then use `sys.SCRIPT.LOAD("starter/actual.final.js").then(() => {`
+// Lets make another texture editor file...
+// DISABLE NOW EDITOR
 
 var runTextureEditor = (curTexId) => {
 
@@ -40,7 +45,7 @@ var runTextureEditor = (curTexId) => {
 
   sys.SCRIPT.LOAD("res/animations/resource.js").then(() => {
     // addEventListener('postScriptReady', () => {
-    sys.SCRIPT.LOAD("starter/visual.js").then(() => {
+    sys.SCRIPT.LOAD("starter/actual.final.js").then(() => {
       // Access
       console.log("window.parent.matrixEngine.App.scene.outsideBox.streamTextures ",
         window.parent.matrixEngine.App.scene.outsideBox.streamTextures)

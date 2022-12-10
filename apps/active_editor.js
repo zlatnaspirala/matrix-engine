@@ -71,7 +71,25 @@ export var runThis = world => {
   );
 
   App.scene.outsideBox.streamTextures.showTextureEditor();
-  setTimeout( () => { E("HOLDER_STREAMS").style.display = 'none'; }, 250 )
+  // setTimeout( () => { E("HOLDER_STREAMS").style.display = 'none'; }, 250 )
+
+
+    // Matrix Engine use visual-js game engine like texture editor in multiply times.
+    world.Add("cubeLightTex", 1, "outsideBox2", tex);
+    App.scene.outsideBox2.playerHits = 0;
+    App.scene.outsideBox2.rotation.rotz = -90
+    App.scene.outsideBox2.position.y = 0;
+    App.scene.outsideBox2.position.z = -55;
+    App.scene.outsideBox2.LightsData.ambientLight.set(1, 1, 1);
+    App.scene.outsideBox2.glBlend.blendEnabled = true;
+    App.scene.outsideBox2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
+    App.scene.outsideBox2.glBlend.blendParamDest = ENUMERATORS.glBlend.param[7];
+    App.scene.outsideBox2.streamTextures = new Vjs3(
+      "http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/tex1.html",
+      "tex1"
+    );
+  
+    App.scene.outsideBox2.streamTextures.showTextureEditor();
 
   // Walls
   world.Add("cubeLightTex", 1, "WALLRIGHT", texStone);
@@ -115,6 +133,16 @@ export var runThis = world => {
   // Physics
   App.scene.outsideBox.physics.currentBody = b;
   App.scene.outsideBox.physics.enabled = true;
+
+  var b2 = new CANNON.Body({
+    mass: 5,
+    position: new CANNON.Vec3(0, -5, 1),
+    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+  });
+  physics.world.addBody(b2);
+  // Physics
+  App.scene.outsideBox2.physics.currentBody = b2;
+  App.scene.outsideBox2.physics.enabled = true;
 
   App.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(1);
 

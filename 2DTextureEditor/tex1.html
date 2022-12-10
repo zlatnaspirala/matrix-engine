@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>visual-js from npm - Examples</title>
+  <title>Texture Editor [tex1]</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <style>
+    body {
+      overflow: hidden;
+    }
+    @font-face {
+      font-family: stormfaze;
+      src: url(../public/res/fonts/stormfaze.ttf);
+    }
+  </style>
 </head>
 <body style="margin:0;padding:0;border:none;background-color:black;">
   <div id="RTC_HELP" style="display:none;height: 400px;overflow: auto;overflow-x: hidden;padding-left: 50px;"></div>
@@ -13,7 +22,7 @@
     <canvas id="canvas-blended" width="640" height="480" style="position:absolute;left:0;top:0;display:none;"></canvas>
     <canvas id="canvas-render" width="640" height="480" style="position:absolute;left:0;top:0;display:none;"></canvas>
   </div>
-  <canvas tabindex='1' width="1" height="1" id="actualTexture"></canvas>
+  <canvas tabindex='1' width="1" height="1" id="tex1"></canvas>
   <script type="text/javascript" src="./builds/tex1.tex.js"></script>
 </body>
 </html>

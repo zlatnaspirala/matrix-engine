@@ -8,22 +8,26 @@
   },
   "scripts": {
     "install.dep": "npm i | npm install -g uglify-js browserify watchify",
+
     "examples": "watchify App-Examples.js -p [esmify --noImplicitAny] -o public/examples.me.js",
     "app": "watchify App.js -p [esmify --noImplicitAny] -o public/app.js",
     "tex.actual": "watchify ./2DTextureEditor/actual.js -p [esmify --noImplicitAny] -o ./2DTextureEditor/builds/actual.tex.js",
+    "tex.texFromCode": "watchify ./2DTextureEditor/tex-from-code.js -p esmify -o ./2DTextureEditor/builds/tex-from-code.tex.js",
+    "tex.tex1": "watchify ./2DTextureEditor/tex1.js -p esmify -o ./2DTextureEditor/builds/tex1.tex.js",
+
     "build.examples": "browserify App-Examples.js -p esmify > public/examples.me.js",
     "build.app": "browserify App.js -p esmify > public/app.js",
     "build.tex.actual": "browserify ./2DTextureEditor/actual.js -p esmify > ./2DTextureEditor/builds/actual.tex.js",
-    "build.tex1": "browserify ./2DTextureEditor/tex1.js -p esmify > ./2DTextureEditor/public/tex1.tex.js",
-    "build.tex2": "browserify ./2DTextureEditor/tex2.js -p esmify > ./2DTextureEditor/public/tex2.tex.js",
-    "build.tex3": "browserify ./2DTextureEditor/micro-drawing.js -p esmify > ./2DTextureEditor/public/md.tex.js",
+    "build.tex1": "browserify ./2DTextureEditor/tex1.js -p esmify > ./2DTextureEditor/builds/tex1.tex.js",
+    "build.texFromCode": "browserify ./2DTextureEditor/tex-from-code.js -p esmify > ./2DTextureEditor/builds/tex-from-code.tex.js",
     "build.lib": "browserify entry-lib-build.js -p esmify > public/me.lib.js",
     "build.app.ugly": "browserify App.js -p esmify | uglifyjs -cm > public/app.ugly.js",
     "build.all": "npm run build.tex.editor | npm run build.examples | npm run build.app | npm run build.lib | npm run build.app.ugly",
-    "run.tex.editor": "node ./2DTextureEditor/editor.js",
+
     "te": "node ./2DTextureEditor/editor.js",
     "res.tex.editor": "node ./2DTextureEditor/res.js",
     "build.tex.editor": "node ./2DTextureEditor/build.js",
+
     "windows": "matrix-engine-desktop.bat",
     "test": "echo \"matrix engine\" && exit 1"
   },
