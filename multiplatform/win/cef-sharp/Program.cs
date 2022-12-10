@@ -16,19 +16,13 @@ namespace matrix_engine
         [STAThread]
         static void Main(string[] args)
         {
-            if (args[0].Contains("url"))
+            if (args.Length > 0 && args[0].Contains("url"))
             {
                 /* Run windows native app */
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MatrixEngineGUI(args[0]));
             } 
-            else if (args[0].Contains("texture.editor")) {
-                /* Run windows native Matrix Engine Texture Editor Application */
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new MatrixEngine_TextureEditor(args[0]));
-            }
             else {
                 /* Run windows native app with default url */
                 Application.EnableVisualStyles();

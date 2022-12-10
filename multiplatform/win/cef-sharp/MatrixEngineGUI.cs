@@ -33,5 +33,10 @@ namespace matrix_engine
         {
 
         }
+
+        private void MatrixEngineGUI_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

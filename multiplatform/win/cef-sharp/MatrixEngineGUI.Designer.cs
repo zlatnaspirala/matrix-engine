@@ -44,7 +44,7 @@ namespace matrix_engine
             this.chromiumWebBrowser1.TabIndex = 0;
             this.chromiumWebBrowser1.LoadingStateChanged += new System.EventHandler<CefSharp.LoadingStateChangedEventArgs>(this.chromiumWebBrowser1_LoadingStateChanged);
             // 
-            // Form1
+            // MatrixEngineGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -54,8 +54,9 @@ namespace matrix_engine
             this.Font = new System.Drawing.Font("Orbitron", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
-            this.Name = "Form1";
+            this.Name = "MatrixEngineGUI";
             this.Text = "Matrix-Engine";
+            this.Load += new System.EventHandler(this.MatrixEngineGUI_Load);
             this.ResumeLayout(false);
 
         }
