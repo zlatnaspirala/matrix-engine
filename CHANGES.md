@@ -1,8 +1,10 @@
 
+
 ## CHANGES
 
-#### [1.9.0 Thunder BETA 2023]
+#### [1.9.x Thunder BETA 2023]
 
+ - Improved FPShooter controller
  - FBO implemented BASIC
  - Migrated to the opengles300 GLSL version
  - Add cef and cefSharp Visual Studio projects for building executive native apps.
@@ -17,7 +19,7 @@
     - setTexCoordScaleXFactor
     - setTexCoordScaleYFactor
 
-  Improvements for visual-js game engine
+  - Improvements for visual-js game engine 
 
 GLSL Note:
 Note: This extension is only available to WebGL1 contexts. In WebGL2, the functionality of this extension is available on the WebGL2 context by default. The constant in WebGL2 is gl.UNSIGNED_INT_24_8.
