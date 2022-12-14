@@ -152,8 +152,13 @@ var runThis = world => {
           }
         }
       }; // Hands - in future will be weapon
+      // world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg);
 
-      world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg); // Fix object orientation - this can be fixed also in blender.
+      world.Add("obj", 1, objName, textuteImageSamplers2, meshes['player']);
+
+      _manifest.default.scene.player.position.setPosition(0.5, -0.7, -3);
+
+      _manifest.default.scene.player.isHUD = true; // Fix object orientation - this can be fixed also in blender.
 
       matrixEngine.Events.camera.yaw = 0; // Not in use but can be used
 
@@ -235,8 +240,8 @@ var runThis = world => {
           handlerTimeout2 = null;
       var playerUpdater = {
         UPDATE: () => {
-          _manifest.default.scene[objName].rotation.rotateY(matrixEngine.Events.camera.yaw + 180);
-
+          // App.scene[objName].rotation.rotateY(
+          //   matrixEngine.Events.camera.yaw + 180)
           var detPitch;
           var limit = 2;
 
@@ -251,8 +256,7 @@ var runThis = world => {
           if (matrixEngine.Events.camera.virtualJumpActive == "DEPLACED_MAYBE") {
             // invert logic
             // Scene object set
-            _manifest.default.scene[objName].rotation.rotateX(-detPitch);
-
+            // App.scene[objName].rotation.rotateX(-detPitch);
             var detPitchPos = matrixEngine.Events.camera.pitch;
             if (detPitchPos > 4) detPitchPos = 4;
             _manifest.default.scene.playerCollisonBox.physics.currentBody.mass = 0.1; // App.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 100);
@@ -283,9 +287,12 @@ var runThis = world => {
             matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z; // if(App.scene.playerCollisonBox.iamInCollideRegime === true) {
 
             if (_manifest.default.scene.playerCollisonBox.pingpong == true) {
-              _manifest.default.scene[objName].position.setPosition(_manifest.default.scene.playerCollisonBox.physics.currentBody.position.x, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y); // // Cannonjs object set / Switched  Z - Y
-
-
+              // App.scene[objName].position.setPosition(
+              //   App.scene.playerCollisonBox.physics.currentBody.position.x,
+              //   App.scene.playerCollisonBox.physics.currentBody.position.z,
+              //   App.scene.playerCollisonBox.physics.currentBody.position.y
+              // );
+              // // Cannonjs object set / Switched  Z - Y
               matrixEngine.Events.camera.xPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.x;
               matrixEngine.Events.camera.zPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y;
               matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z;
@@ -295,9 +302,12 @@ var runThis = world => {
               // App.scene[objName].rotation.rotateX(-detPitch);
               // var detPitchPos = matrixEngine.Events.camera.pitch;
               // if(detPitchPos > 4) detPitchPos = 4;
-
-              _manifest.default.scene[objName].position.setPosition(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos); // Cannonjs object set - Switched  Z - Y
-
+              // App.scene[objName].position.setPosition(
+              //   matrixEngine.Events.camera.xPos,
+              //   matrixEngine.Events.camera.yPos,
+              //   matrixEngine.Events.camera.zPos,
+              // )
+              // Cannonjs object set - Switched  Z - Y
 
               _manifest.default.scene.playerCollisonBox.physics.currentBody.position.set(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.zPos, matrixEngine.Events.camera.yPos);
 
@@ -422,12 +432,18 @@ var runThis = world => {
       _manifest.default.scene.energyBar.specialValue = options;
     }
 
-    matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
-      id: objName,
-      path: "res/bvh-skeletal-base/swat-guy/FPShooter-hands/FPShooter-hands",
-      from: 1,
-      to: 20
-    }), onLoadObj);
+    matrixEngine.objLoader.downloadMeshes({
+      player: "res/bvh-skeletal-base/swat-guy/gun2.obj"
+    }, onLoadObj); // matrixEngine.objLoader.downloadMeshes(
+    //   matrixEngine.objLoader.makeObjSeqArg(
+    //     {
+    //       id: objName,
+    //       path: "res/bvh-skeletal-base/swat-guy/FPShooter-hands/FPShooter-hands",
+    //       from: 1,
+    //       to: 20
+    //     }),
+    //   onLoadObj
+    // );
   };
 
   let promiseAllGenerated = [];
@@ -4069,17 +4085,22 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
   _matrixWorld.world.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
 
-  if (_manifest.default.camera.FirstPersonController == true) {
-    _events.camera.setCamera(object);
-  } else if (_manifest.default.camera.SceneController == true) {
-    _events.camera.setSceneCamera(object);
-  }
+  if (object.isHUD === true) {
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalcObj(object);
+  } else {
+    if (_manifest.default.camera.FirstPersonController == true) {
+      _events.camera.setCamera(object);
+    } else if (_manifest.default.camera.SceneController == true) {
+      _events.camera.setSceneCamera(object);
+    }
 
-  mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-  if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalcObj(object);
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalcObj(object);
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  }
 
   if (typeof object.mesh.vertexBuffer != 'undefined') {
     if (object.animation != null) {

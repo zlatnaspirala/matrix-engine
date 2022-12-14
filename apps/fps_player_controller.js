@@ -107,7 +107,10 @@ export var runThis = (world) => {
       };
 
       // Hands - in future will be weapon
-      world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg);
+      // world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg);
+      world.Add("obj", 1, objName , textuteImageSamplers2, meshes['player']);
+      App.scene.player.position.setPosition(0.5,-0.7,-3);
+      App.scene.player.isHUD = true;
 
       // Fix object orientation - this can be fixed also in blender.
       matrixEngine.Events.camera.yaw = 0;
@@ -178,7 +181,6 @@ export var runThis = (world) => {
         // Jump
         if(e.detail.keyCode == 32) {
           if (preventDoubleJump == null) {
-          
             preventDoubleJump = setTimeout(() => {
               console.log('JUMP >>>>>>>> ', e.detail.keyCode);
               App.scene.playerCollisonBox.physics.currentBody.mass = 1;
@@ -194,8 +196,8 @@ export var runThis = (world) => {
 
       var playerUpdater = {
         UPDATE: () => {
-          App.scene[objName].rotation.rotateY(
-            matrixEngine.Events.camera.yaw + 180)
+          // App.scene[objName].rotation.rotateY(
+          //   matrixEngine.Events.camera.yaw + 180)
 
           var detPitch;
           var limit = 2;
@@ -211,7 +213,8 @@ export var runThis = (world) => {
           if(matrixEngine.Events.camera.virtualJumpActive == "DEPLACED_MAYBE") {
             // invert logic
             // Scene object set
-            App.scene[objName].rotation.rotateX(-detPitch);
+            // App.scene[objName].rotation.rotateX(-detPitch);
+
             var detPitchPos = matrixEngine.Events.camera.pitch;
             if(detPitchPos > 4) detPitchPos = 4;
 
@@ -250,11 +253,11 @@ export var runThis = (world) => {
 
             // if(App.scene.playerCollisonBox.iamInCollideRegime === true) {
             if(App.scene.playerCollisonBox.pingpong == true) {
-              App.scene[objName].position.setPosition(
-                App.scene.playerCollisonBox.physics.currentBody.position.x,
-                App.scene.playerCollisonBox.physics.currentBody.position.z,
-                App.scene.playerCollisonBox.physics.currentBody.position.y
-              );
+              // App.scene[objName].position.setPosition(
+              //   App.scene.playerCollisonBox.physics.currentBody.position.x,
+              //   App.scene.playerCollisonBox.physics.currentBody.position.z,
+              //   App.scene.playerCollisonBox.physics.currentBody.position.y
+              // );
               // // Cannonjs object set / Switched  Z - Y
               matrixEngine.Events.camera.xPos = App.scene.playerCollisonBox.physics.currentBody.position.x;
               matrixEngine.Events.camera.zPos = App.scene.playerCollisonBox.physics.currentBody.position.y;
@@ -266,11 +269,11 @@ export var runThis = (world) => {
               // App.scene[objName].rotation.rotateX(-detPitch);
               // var detPitchPos = matrixEngine.Events.camera.pitch;
               // if(detPitchPos > 4) detPitchPos = 4;
-              App.scene[objName].position.setPosition(
-                matrixEngine.Events.camera.xPos,
-                matrixEngine.Events.camera.yPos,
-                matrixEngine.Events.camera.zPos,
-              )
+              // App.scene[objName].position.setPosition(
+              //   matrixEngine.Events.camera.xPos,
+              //   matrixEngine.Events.camera.yPos,
+              //   matrixEngine.Events.camera.zPos,
+              // )
               // Cannonjs object set - Switched  Z - Y
               App.scene.playerCollisonBox.
                 physics.currentBody.position.set(
@@ -384,16 +387,20 @@ export var runThis = (world) => {
       App.scene.energyBar.specialValue = options;
     }
 
-    matrixEngine.objLoader.downloadMeshes(
-      matrixEngine.objLoader.makeObjSeqArg(
-        {
-          id: objName,
-          path: "res/bvh-skeletal-base/swat-guy/FPShooter-hands/FPShooter-hands",
-          from: 1,
-          to: 20
-        }),
+    matrixEngine.objLoader.downloadMeshes({ player: "res/bvh-skeletal-base/swat-guy/gun2.obj" },
       onLoadObj
     );
+
+    // matrixEngine.objLoader.downloadMeshes(
+    //   matrixEngine.objLoader.makeObjSeqArg(
+    //     {
+    //       id: objName,
+    //       path: "res/bvh-skeletal-base/swat-guy/FPShooter-hands/FPShooter-hands",
+    //       from: 1,
+    //       to: 20
+    //     }),
+    //   onLoadObj
+    // );
 
   };
 
