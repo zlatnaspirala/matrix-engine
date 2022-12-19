@@ -16,7 +16,7 @@ export var runThis = world => {
     matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.mac);
 
     var textuteImageSamplers2 = {
-      source: ["res/images/armor.png"],
+      source: ["res/images/armor.png", "res/images/armor.png"],
       mix_operation: "multiply",
     };
 
@@ -29,6 +29,21 @@ export var runThis = world => {
     App.scene.armor.position.y = 1;
     App.scene.armor.rotation.rotationSpeed.y = 20;
     App.scene.armor.LightsData.ambientLight.set(1, 1, 1);
+    App.scene.armor.position.z = -6;
+    // App.scene.armor.mesh.setScale(3)
+    
+    setTimeout( () => { 
+      App.scene.armor.activateShadows('spot')
+      App.scene.mac.activateShadows('spot')
+      // App.scene.armor.shadows.activeUpdate();
+      // App.scene.armor.shadows.animatePositionY();
+    }, 2000)
+    
+
+    // world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers2);
+    // App.scene.MyCubeTex.activateShadows()
+    // App.scene.MyCubeTex.position.y = -1;
+    // App.scene.MyCubeTex.position.z = -16;
 
     world.Add("obj", 1, "mac", textuteImageSamplers, App.meshes.mac);
     App.scene.mac.position.y = 1;

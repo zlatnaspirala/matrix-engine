@@ -2,7 +2,10 @@
 
 ## CHANGES
 
-#### [1.9.x Thunder BETA 2023]
+
+#### [1.9.5] Added local shadows for obj mesh.
+
+#### [1.9.1 Thunder BETA 2023]
 
  - Improved FPShooter controller
  - FBO implemented BASIC

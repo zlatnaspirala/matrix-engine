@@ -2345,7 +2345,7 @@ var runThis = world => {
     matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.armor);
     matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.mac);
     var textuteImageSamplers2 = {
-      source: ["res/images/armor.png"],
+      source: ["res/images/armor.png", "res/images/armor.png"],
       mix_operation: "multiply"
     };
     var textuteImageSamplers = {
@@ -2357,6 +2357,19 @@ var runThis = world => {
     _manifest.default.scene.armor.rotation.rotationSpeed.y = 20;
 
     _manifest.default.scene.armor.LightsData.ambientLight.set(1, 1, 1);
+
+    _manifest.default.scene.armor.position.z = -6; // App.scene.armor.mesh.setScale(3)
+
+    setTimeout(() => {
+      _manifest.default.scene.armor.activateShadows('spot');
+
+      _manifest.default.scene.mac.activateShadows('spot'); // App.scene.armor.shadows.activeUpdate();
+      // App.scene.armor.shadows.animatePositionY();
+
+    }, 2000); // world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers2);
+    // App.scene.MyCubeTex.activateShadows()
+    // App.scene.MyCubeTex.position.y = -1;
+    // App.scene.MyCubeTex.position.z = -16;
 
     world.Add("obj", 1, "mac", textuteImageSamplers, _manifest.default.meshes.mac);
     _manifest.default.scene.mac.position.y = 1;
@@ -4985,10 +4998,10 @@ var RegenerateShader = function (id_elem, numOfSamplerInUse, mixOperand, lightTy
   }
 
   if (typeof lightType !== 'undefined') {
-    // console.log('shader version: 300 ', lightType)
+    console.log('shader version: 300 ', lightType);
     e.innerHTML = (0, _matrixShaders.generateShaderSrc3)(numOfSamplerInUse, mixOperand, lightType);
   } else {
-    // console.log('shader version: 2 ', lightType)
+    console.warn('shader version: 2 ', lightType);
     e.innerHTML = (0, _matrixShaders.generateShaderSrc)(numOfSamplerInUse, mixOperand);
   }
 }; // Modify shaders in runtime.
@@ -7252,22 +7265,22 @@ _manifest.default.operation.draws.cube = function (object) {
 
           _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
 
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-
-          if (!object.texParams.TEXTURE_MIN_FILTER) {
+          if (object.texParams.MIPMAP == false) {
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
 
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
-          } else {
-            // -- Allocate storage for the texture
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT); // -- Allocate storage for the texture
             // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-            // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
+            // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+
+          } else {
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+
             _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
           }
 
-          if (_matrixWorld.world.GL.extTFAnisotropic) {
+          if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
             _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
           } //console.log('TEST' , object.texParams)
 
@@ -7647,14 +7660,12 @@ _manifest.default.operation.draws.drawObj = function (object) {
       _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.mesh.vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
     }
   } // COLOR BUFFER
-
-  /* if (object.vertexColorBuffer) {
-      world.GL.gl.bindBuffer( world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-      world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexColorAttribute, object.vertexColorBuffer.itemSize,  world.GL.gl.FLOAT, false, 0, 0);
-      world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexColorAttribute);
-      localLooper = localLooper + 1;
-    }
-  */
+  // if (object.vertexColorBuffer) {
+  //     world.GL.gl.bindBuffer( world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
+  //     world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexColorAttribute, object.vertexColorBuffer.itemSize,  world.GL.gl.FLOAT, false, 0, 0);
+  //     world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexColorAttribute);
+  //     localLooper = localLooper + 1;
+  //   }
   //LIGHT STAFF
 
 
@@ -7739,9 +7750,13 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
 
       if (object.streamTextures != null) {
-        // video webcam textures
+        // video/webcam tex
         // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
-        _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
+        if (object.streamTextures.video) {
+          _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
+        } else {
+          _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+        }
 
         _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
       } else {
@@ -7772,12 +7787,63 @@ _manifest.default.operation.draws.drawObj = function (object) {
       localLooper = localLooper + 1;
     } else {// world.GL.gl.disableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
     }
-  } // Normals
+  } // Normals normalBuffer
   //  world.GL.gl.bindBuffer(world.GL.gl.ARRAY_BUFFER, object.mesh.normalBuffer);
   //  world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexNormalAttribute, object.mesh.normalBuffer.itemSize, world.GL.gl.FLOAT, false, 0, 0);
 
 
+  if (object.mesh.normalBuffer && object.shaderProgram.nMatrixUniform) {
+    var normalMatrix = mat3.create();
+    mat3.normalFromMat4(normalMatrix, object.mvMatrix);
+    mat3.transpose(normalMatrix, normalMatrix);
+
+    _matrixWorld.world.GL.gl.uniformMatrix3fv(object.shaderProgram.nMatrixUniform, false, normalMatrix);
+  }
+
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.mesh.indexBuffer);
+
+  this.setMatrixUniforms(object, this.pMatrix, object.mvMatrix); // Shadows
+
+  if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
+    // set the light position
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
+
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess); // Set the spotlight uniforms
+
+
+    {
+      var target = [0, 0, 0]; // object.position.worldLocation;
+
+      var up = [0, 1, 0];
+      var lmat = m4.lookAt(object.shadows.lightPosition, target, up); // var lmat = m4.lookAt(object.position.worldLocation, target, up);
+
+      lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
+      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat); // get the zAxis from the matrix
+      // negate it because lookAt looks down the -Z axis
+
+      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]]; // object.shadows.lightDirection = [-0, -0, -1];
+    }
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
+
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
+
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
+  } else if (object.shadows && object.shadows.type == 'spec') {
+    // global position
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
+  } else if (object.shadows && object.shadows.type == 'lens') {
+    // Lens
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uControl, object.shadows.uControl);
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uResolution, object.shadows.uResolution);
+  }
 
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
@@ -7790,11 +7856,10 @@ _manifest.default.operation.draws.drawObj = function (object) {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
 
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
-  }
+  } // ori this.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
 
-  this.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
 
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 3); // world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
+  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper + 1); // world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
   // update for anim
 
 
@@ -10620,11 +10685,54 @@ function getInitFSObj() {
   uniform sampler2D uSampler;
   uniform sampler2D uSampler1;
   uniform sampler2D uSampler2;
+  uniform sampler2D uSampler3;
+  uniform sampler2D uSampler4;
+  uniform sampler2D uSampler5;
+  uniform samplerCube u_texture;
+  uniform float numberOfsamplers;
+
+  // Spot
+  // Passed in from the vertex shader.
+  in vec3 v_normal;
+  in vec3 v_surfaceToLight;
+  in vec3 v_surfaceToView;
+  uniform vec4 u_color;
+  uniform float u_shininess;
+  uniform vec3 u_lightDirection;
+  uniform float u_innerLimit;
+  uniform float u_outerLimit;
 
   out vec4 outColor;
+
   void main(void) {
-    vec4 textureColor = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+    // because v_normal is a varying it's interpolated
+    // so it will not be a unit vector. Normalizing it
+    // will make it a unit vector again
+    vec3 normal = normalize(v_normal);
+
+    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+
+    float dotFromDirection = dot(surfaceToLightDirection,
+                                 -u_lightDirection);
+    float limitRange = u_innerLimit - u_outerLimit;
+    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+    float light = inLight * dot(normal, surfaceToLightDirection);
+    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+
+    // Directioin vs uAmbientColor
+    vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
+    vec4 textureColor1 = texture(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor2 = texture(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+    // vec4 testUnused = texture(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
+
+    outColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+
+    // Lets multiply just the color portion (not the alpha)
+    outColor.rgb *= light;
+    // Just add in the specular
+    outColor.rgb += specular;
   }`;
 
   _utility.scriptManager.LOAD(f, "obj-shader-fs", "x-shader/x-fragment", "shaders");
@@ -10646,19 +10754,67 @@ function getInitVSObj() {
   out vec2 vTextureCoord;
   out vec3 vLightWeighting;
 
+  // Spot
+  uniform vec3 u_lightWorldPosition;
+  out vec3 v_normal;
+  out vec3 v_normal_cubemap;
+  out vec3 v_surfaceToLight;
+  out vec3 v_surfaceToView;
+
+  // Specular
+  out mat4 uMVMatrixINTER;
+  out mat3 uNMatrixINTER;
+  out mat4 uPMatrixINNTER;
+
+  in vec4 specularColor;
+  out vec4 vColor;
+  out vec3 vNormal;
+  out vec4 vPosition;
+  out float vDist;
+
   void main(void) {
+    uMVMatrixINTER = uMVMatrix;
+    uNMatrixINTER = uNMatrix;
+    uPMatrixINNTER = uPMatrix;
+
+    // GLOBAL POS SPECULAR
+    vColor = specularColor;
+    vNormal = normalize(uNMatrix * vec3(aVertexNormal));
+    // Calculate the modelView of the model, and set the vPosition
+    // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
+    vPosition = uMVMatrix * vec4(1,1,1,1);
+    vDist = gl_Position.w;
+
+    // SPOT
+    // orient the normals and pass to the fragment shader
+    v_normal = mat3(uNMatrix) * aVertexNormal;
+
+    // normalize
+    v_normal_cubemap = normalize(aVertexPosition.xyz);
+
+    // compute the world position of the surfoace
+    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+
+    // compute the vector of the surface to the light
+    // and pass it to the fragment shader
+    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+
+    // compute the vector of the surface to the view/camera
+    // and pass it to the fragment shader
+    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
+
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vTextureCoord = aTextureCoord;
 
     if (!uUseLighting) {
-      vLightWeighting = vec3( 1.0, 1.0, 1.0);
+      vLightWeighting = vec3(1.0, 1.0, 1.0);
     }
     else {
       vec3 transformedNormal          = uNMatrix * aVertexNormal;
       float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
       vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
     }
-  }
+  } 
 `;
 
   _utility.scriptManager.LOAD(f, "obj-shader-vs", "x-shader/x-vertex", "shaders");
@@ -11061,34 +11217,10 @@ _manifest.default.operation.reDrawGlobal = function (time) {
         var local = _matrixWorld.world.contentList[physicsLooper];
         local.position.SetX(local.physics.currentBody.position.x);
         local.position.SetZ(local.physics.currentBody.position.y);
-        local.position.SetY(local.physics.currentBody.position.z); // var TTT = 0
-        // if (TTT + radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]) > 180 ) {
-        //   // TTT = -180;
-        // }
-        // if (window.PLEASE == 'CE') {
-        //   // console.log( "...." ,local.physics.currentBody.quaternion)
-        //   local.testX = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-        //   local.testY = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-        //   local.testZ = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-        // }
-        // world.contentList[physicsLooper].rotation.rotx = local.testX
-        // world.contentList[physicsLooper].rotation.roty = local.testY;
-        // world.contentList[physicsLooper].rotation.rotz = local.testZ;
-        // world.contentList[physicsLooper].rotation.SetDirection(
-        //   // local.physics.currentBody.quaternion.toAxisAngle()[0].x,
-        //   // local.physics.currentBody.quaternion.toAxisAngle()[0].y,
-        //   // local.physics.currentBody.quaternion.toAxisAngle()[0].z
-        //   local.physics.currentBody.quaternion.x,
-        //   local.physics.currentBody.quaternion.y,
-        //   local.physics.currentBody.quaternion.z
-        // );
-
+        local.position.SetY(local.physics.currentBody.position.z);
         _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
         _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
         _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]); // matrixEngine.matrixWorld.world.physics.toDeg
-        // world.contentList[physicsLooper].rotation.rotx = (matrixEngine.matrixWorld.world.physics.testToAxis(local.physics.currentBody.quaternion).angle);
-        // world.contentList[physicsLooper].rotation.roty = (matrixEngine.matrixWorld.world.physics.testToAxis(local.physics.currentBody.quaternion).angle);
-        // world.contentList[physicsLooper].rotation.rotz = (matrixEngine.matrixWorld.world.physics.testToAxis(local.physics.currentBody.quaternion).angle);
       }
 
       physicsLooper++;
@@ -11386,6 +11518,7 @@ exports.generateSpotLightShadowMain = generateSpotLightShadowMain;
 function generateShaderSrc3(numTextures, mixOperand, lightType) {
   return `#version 300 es
     // Matrix-engine 1.9.0 shader[300es] for ${numTextures} textures samples.
+    // With lightType: ${lightType}
     precision highp float;
     in vec2 vTextureCoord;
     in vec3 vLightWeighting;
@@ -11613,10 +11746,10 @@ function generateSpecularLightDefinitions() {
   uniform vec3 uFogColor;
   uniform vec2 uFogDist;
 
-  varying vec4 vColor;
-  varying vec3 vNormal;
-  varying vec4 vPosition;
-  varying float vDist;
+  in vec4 vColor;
+  in vec3 vNormal;
+  in vec4 vPosition;
+  in float vDist;
   `;
 }
 /**
@@ -11650,8 +11783,8 @@ function generateSpecularLightMain() {
     float specularFactor = max(dot(reflectVec, viewVec), 0.0);
     specular = pow(specularFactor, specularPower);
   }
-  gl_FragColor.rgb =  textureColor.rgb * vLightWeighting * nDotL - specular;
-  gl_FragColor.a = textureColor.a;
+  outColor.rgb =  textureColor.rgb * vLightWeighting * nDotL - specular;
+  outColor.a = textureColor.a;
   `;
 }
 /**
@@ -11712,20 +11845,20 @@ function generateCubeMapShaderSrc(numTextures, mixOperand, lightType) {
     precision mediump float;
     precision highp float;
 
-    varying vec3 vLightWeighting;
+    in vec3 vLightWeighting;
 
     uniform float textureSamplerAmount[1];
     int MixOperandString = ${mixOperand};
     // The CubeMap texture.
     uniform samplerCube u_texture;
-    varying vec3 v_normal;
-    varying vec3 v_normal_cubemap;
+    in vec3 v_normal;
+    in vec3 v_normal_cubemap;
 
     void main(void) {
       // without light
       // gl_FragColor = textureCube(u_texture, v_normal_cubemap);
       vec4 lightMapColor = textureCube(u_texture, v_normal_cubemap);
-      gl_FragColor = vec4(lightMapColor.rgb * vLightWeighting, lightMapColor.a);
+      outColor = vec4(lightMapColor.rgb * vLightWeighting, lightMapColor.a);
     }
     `;
 }
@@ -13499,10 +13632,6 @@ function defineworld(canvas) {
         directionLight: new _matrixGeometry.COLOR(5, 5, 5),
         ambientLight: new _matrixGeometry.COLOR(1, 1, 1),
         lightingDirection: new _matrixGeometry.COLOR(0, 1, 0)
-      }; // Physics
-
-      objObject.physics = {
-        enabled: false
       }; // destroy self  MAy need more improve
 
       objObject.selfDestroy = after => {
@@ -13527,6 +13656,28 @@ function defineworld(canvas) {
         activate: () => {
           _engine.net.activateDataStream();
         }
+      }; // Update others start
+
+      objObject.useShadows = false;
+
+      objObject.activateShadows = t => {
+        if (typeof t === 'undefined' || t == 'spot') {
+          t = 'spot';
+          objObject.useShadows = true;
+          objObject.shadows = new _matrixShadows.MatrixShadowSpot();
+        } else if (t == 'specular') {
+          objObject.useShadows = true;
+          objObject.shadows = new _matrixShadows.MatrixShadowSpecular();
+        } else if (t == 'lens') {
+          objObject.useShadows = true;
+          objObject.shadows = new _matrixShadows.MatrixEffectLens();
+        } else if (t == 'spot-shadow') {
+          objObject.useShadows = true;
+          objObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
+        }
+
+        (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
+        objObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       };
 
       if (typeof texturesPaths !== 'undefined') {
@@ -13537,11 +13688,28 @@ function defineworld(canvas) {
 
           objObject.textures[0] = objObject.texture;
         } else if (typeof texturesPaths == 'object') {
-          // console.info("path is object");
+          console.info("path is object FO R OBJ");
           objObject.textures = [];
           objObject.textures_texParameteri = []; //new
 
           objObject.texture = true;
+
+          if (typeof texturesPaths.params === 'undefined') {
+            objObject.texParams = {
+              MIPMAP: false,
+              // custom
+              ANISOTROPY: false,
+              // custom
+              TEXTURE_WRAP_S: this.GL.gl.REPEAT,
+              TEXTURE_WRAP_T: this.GL.gl.REPEAT,
+              TEXTURE_MAG_FILTER: this.GL.gl.LINEAR,
+              // NEAREST
+              TEXTURE_MIN_FILTER: this.GL.gl.LINEAR
+            };
+          } else {
+            objObject.texParams = texturesPaths.params;
+          }
+
           (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30'); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
@@ -13713,12 +13881,15 @@ function defineworld(canvas) {
 
           if (typeof texturesPaths.params === 'undefined') {
             cubeObject.texParams = {
+              MIPMAP: false,
+              // custom
+              ANISOTROPY: false,
+              // custom
               TEXTURE_WRAP_S: this.GL.gl.REPEAT,
               TEXTURE_WRAP_T: this.GL.gl.REPEAT,
               TEXTURE_MAG_FILTER: this.GL.gl.LINEAR,
               // NEAREST
-              TEXTURE_MIN_FILTER: this.GL.gl.LINEAR // 
-
+              TEXTURE_MIN_FILTER: this.GL.gl.LINEAR
             };
           } else {
             cubeObject.texParams = texturesPaths.params;
@@ -13743,7 +13914,7 @@ function defineworld(canvas) {
       }
 
       cubeObject.changeMaterial = function (texturesPaths) {
-        (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
+        (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30');
 
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));

@@ -17,7 +17,7 @@ export var runThis = (world) => {
   // Image texs
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply",
+    mix_operation: "multiply"
   };
 
   world.Add("cubeLightTex", 0.2, "myCube", tex);
@@ -30,7 +30,7 @@ export var runThis = (world) => {
   App.scene.myCube5.position.SetZ(-12);
   App.scene.myCube5.position.SetX(0);
   App.scene.myCube5.position.SetY(0);
-  App.scene.myCube5.activateShadows('lens');
+  App.scene.myCube5.activateShadows('spot');
  
   world.Add("squareTex", 3, "MyColoredCube1", tex);
   App.scene.MyColoredCube1.position.SetZ(-11);
