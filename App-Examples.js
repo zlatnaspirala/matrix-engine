@@ -43,17 +43,18 @@ import {runThis as opengles_native_cubemap } from './apps/opengles_native_cubema
 import {runThis as opengles_native_cubemap_images } from './apps/opengles_native_cubemap_images';
 import {runThis as lens_effect } from './apps/lens_effect';
 import {runThis as fps_player_controller } from './apps/fps_player_controller';
-// import {runThis as city } from './apps/city';
+import {runThis as basic_fbo } from './apps/basic_fbo';
 
 /**
  * @description
  * All examples instances.
- * This shema can be used for any website.
- * It is good for switching big independent
- * parts of app.
+ * This schema can be used for any website.
+ * It is good for switching big independent parts of app.
+ * @example for query-build.html?u=NAME_OF_EXAMPLE
+ * public/query-build.html?u=spot_light_shadows
  */
 var Examples = {
-  // city: city,
+  basic_fbo: basic_fbo,
   fps_player_controller:fps_player_controller,
   lens_effect: lens_effect,
   opengles_native_cubemap_images: opengles_native_cubemap_images,

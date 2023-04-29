@@ -9704,7 +9704,7 @@ function defineworld(canvas) {
       squareObject.geometry.nameUniq = nameUniq;
       squareObject.glBlend = new _utility._glBlend();
 
-      squareObject.setFOB = function () {
+      squareObject.setFBO = function () {
         squareObject.FBO = {};
       }; // destroy self
 
@@ -10307,7 +10307,7 @@ function defineworld(canvas) {
         lightingDirection: new _matrixGeometry.COLOR((0, _utility.radToDeg)(0.3), (0, _utility.radToDeg)(-0.3), (0, _utility.radToDeg)(-1))
       };
 
-      cubeObject.setFOB = function () {
+      cubeObject.setFBO = function () {
         cubeObject.FBO = {};
       }; // destroy self  MAy need more improve
 

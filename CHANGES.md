@@ -1,7 +1,7 @@
 
-
 ## CHANGES
 
+#### [1.9.6] FBO example
 
 #### [1.9.5] Added local shadows for obj mesh.
 

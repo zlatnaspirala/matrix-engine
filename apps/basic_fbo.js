@@ -1,17 +1,14 @@
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
- * From version [1.8.15]
- * Spot Light/Shadows shader
+  @name basic_FBO
  */
 
-/* globals world App */
 import App from "../program/manifest";
 
 export var runThis = (world) => {
 
   // Camera
-  // App.camera.FirstPersonController = true;
   App.camera.SceneController = true;
 
   // Image texs
@@ -26,22 +23,41 @@ export var runThis = (world) => {
   App.scene.myCube.position.SetY(0.6);
   // App.scene.myCube.activateShadows('spot');
 
+  // Load obj seq animation
+  const createObjSequence = (objName) => {
+
+    function onLoadObj(meshes) {
+      for(let key in meshes) {
+        matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
+      }
+      var textuteImageSamplers2 = {
+        source: ["res/bvh-skeletal-base/swat-guy/gun2.png"],
+        mix_operation: "multiply"
+      };
+      // Hands - in future will be weapon
+      // world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg);
+      world.Add("obj", 1, objName, textuteImageSamplers2, meshes['player']);
+      App.scene.player.position.setPosition(0.5, -0.7, -3);
+      App.scene.player.isHUD = true;
+      // Fix object orientation - this can be fixed also in blender.
+      matrixEngine.Events.camera.yaw = 0;
+      for(let key in App.scene.player.meshList) {
+        App.scene.player.meshList[key].setScale(1.85);
+      }
+    }
+    matrixEngine.objLoader.downloadMeshes({player: "res/bvh-skeletal-base/swat-guy/gun2.obj"}, onLoadObj);
+  };
+
+  createObjSequence('player');
+
+  // FBO BASIC
   world.Add("squareTex", 5, "myCube5", tex);
   App.scene.myCube5.position.SetZ(-12);
   App.scene.myCube5.position.SetX(0);
   App.scene.myCube5.position.SetY(0);
-  App.scene.myCube5.activateShadows('spot');
- 
-  world.Add("squareTex", 3, "MyColoredCube1", tex);
-  App.scene.MyColoredCube1.position.SetZ(-11);
-  App.scene.MyColoredCube1.position.SetX(0);
-  App.scene.MyColoredCube1.position.SetY(-2);
-  //App.scene.MyColoredCube1.activateShadows('spot');
-  // App.scene.MyColoredCube1.shadows.innerLimit = 0
-  // App.scene.MyColoredCube1.shadows.activeUpdate();
-  // App.scene.MyColoredCube1.rotation.rotx = -80;
-  // App.scene.MyColoredCube1.shadows.lightPosition = [0, -5 ,0]
-
+  App.scene.myCube5.setFBO()
+  // App.scene.myCube5.activateShadows('spot');
+  
   // Click event
   canvas.addEventListener('mousedown', (ev) => {
     matrixEngine.raycaster.checkingProcedure(ev);

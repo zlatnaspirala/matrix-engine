@@ -28,8 +28,7 @@ self.addEventListener('install', function (event) {
     caches.open(cacheName).then(function (cache) {
       return cache.addAll([
         offlineUrl,
-        'builds/app.js',
-        // "res/videos/Epiclogue.mp3"
+        'builds/app.js'
       ]);
     })
   );
