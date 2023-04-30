@@ -4,18 +4,18 @@
     <meta charset="UTF-8" />
     <title>Matrix-Engine-Workplace</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="The benefits of this project is offering an overview of the entire application logic, easy native implementations (hybrid app), object structural. " />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="apple-touch-icon" href="res/icons/512.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="theme-color" content="#000000" />
-    <script defer src="./lib/gl-matrix-min.js"></script>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimal-ui" />
     <link rel="icon" type="image/png" sizes="96x96" href="res/icons/favicon-96x96.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="res/icons/android-icon.png" />
     <link rel="icon" href="res/icons/favicon.ico" type="image/x-icon" />
     <meta name="msapplication-TileImage" content="res/icons/ms-icon.png" />
-    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js" integrity="sha512-avLcnGxl5mqAX/wIKERdb1gFNkOLHh2W5JNCfJm5OugpEPBz7LNXJJ3BDjjwO00AxEY1MqdNjtEmiYhKC0ld7g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script-->
+    <script defer src="./lib/gl-matrix-min.js"></script>
     <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
   </head>
   <body>
@@ -36,11 +36,7 @@
       <video id="webcam_beta" autoplay width="512" height="512" style="display: none; position: absolute; left: -200px; top: -110px"></video>
       <audio id="audio_beta" src="#"></audio>
     </div>
-
     <div id="matrix-net"></div>
-
-    <script defer src="examples.me.js"></script>
-
     <div style="display:none;position: absolute;left:55%;top:45%">
       <h2> Lights options </h2>
       <matrix-light type="number" id="dirLightR" value="1"></matrix-light>
@@ -53,6 +49,16 @@
       <matrix-light type="number" id="dirY" value="1"></matrix-light>
       <matrix-light type="number" id="dirZ" value="1"></matrix-light> -->
     </div>
-
+    <div id="matrixTimeLine" class="timeLine" style="display:none;">
+      <div class="timeLineSlider">
+        <p>Matrix Engine Scene Timeline - Size of sequence: <span id="globalAnimSize"></span> </p>
+        <p>Frame id: <span id="globalAnimCounter"></span></p>
+        <p>Sequence: <span id="globalAnimCurSequence"></span></p>
+      </div>
+      <div> 
+        <input type="range" min="1" max="5000" value="0" class="slider" id="timeline">
+      </div>
+    </div>
+    <script defer src="examples.me.js"></script>
   </body>
 </html>

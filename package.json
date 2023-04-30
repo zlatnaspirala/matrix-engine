@@ -88,7 +88,11 @@
     "browserify",
     "matrix-engine",
     "alternative",
-    "porting"
+    "porting",
+    "windows-desktop",
+    "linux",
+    "macos",
+    "timeline"
   ],
   "author": "Nikola Lukic <zlatnaspirala@gmail.com> (https://maximumroulette.com)",
   "license": "MIT",

@@ -14,8 +14,8 @@
 #### - [Basic's Shadows vs lights (GLSL)] ✔
 #### - [Migrated to the opengles300]
 #### - [FBO implemented]
-#### - [Add cef and cefSharp Visual Studio projects for building executive desktop native apps.
-####     Support: Windows, MAC, Linux ]
+#### - [Add cef (linux, macos) and cefSharp Visual Studio projects for building executive desktop native apps.
+####     Support: Windows, MAC, Linux ]✔
 #### - Texture Editor [tutorial example]
 
 ### Description ℹ
@@ -189,6 +189,7 @@ Take a look at query-build.html
 - FPShooter example (+Sounds) [WIP]
 - specular_light_basic -> global light position test [WIP]
 - Lens effect shaders for cube [WIP]
+- Basic FBO + timeline test [WIP]
 
 ## Features description
 
@@ -940,6 +941,9 @@ physicsObject.addEventListener("collide",function(e) {
     }
 });
 ```
+
+### Scene Timeline
+
 
 
 ## PWA Fully runned

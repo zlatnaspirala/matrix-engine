@@ -1,7 +1,20 @@
 
-## CHANGES
+## Matrix Engine [CHANGES]
 
-#### [1.9.6] FBO example
+
+#### [1.9.6] FBO example + Scene global Timeline function with visual dom preview.
+
+```js
+matrixEngine.matrixWorld.world.useAnimationLine({ sequenceSize: 500 });
+```
+Idea about timeline is to simple count redraws. Nothig other comes from timeline.
+In app level you need to write logic to use 
+`matrixEngine.matrixWorld.world.globalAnimCounter` and
+`matrixEngine.matrixWorld.world.globalAnimCurSequence`
+
+globalAnimCurSequence exist only to reduce number of redraws. 
+You can setup sequenceSize.
+
 
 #### [1.9.5] Added local shadows for obj mesh.
 

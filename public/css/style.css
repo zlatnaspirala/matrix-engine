@@ -45,7 +45,7 @@ iframe {
   -webkit-box-shadow: inset 0px 1px 0px 0px rgb(52, 253, 189);
   -moz-box-shadow: inset 0px 1px 0px 0px rgb(52, 253, 189);
   box-shadow: inset 0px 1px 0px 0px rgb(52, 253, 189);
-  cursor: pointer; cursor: hand;
+  cursor: pointer;
   color: rgb(0, 255, 10);
   text-shadow: 0px 0px 7px #80ffe0;
   font-family: stormfaze;
@@ -174,4 +174,55 @@ span {
   width: 40vh;
   font-family: stormfaze;
   background-color: crimson;
+}
+
+.timeLine {
+  display: flex;
+  position: absolute;
+  left: 5%;
+  top:85%;
+  width:90%;
+  flex-direction: column;
+}
+
+
+.timeLineSlider {
+  display:flex;
+  flex-direction: row;
+}
+.timeLineSlider, p {
+  background: rgba(12, 122, 22, 0.5);
+  width:100%;
+  margin: 5px 5px 5px 5px;
+}
+
+/* For animation Line */
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;  
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
 }

@@ -3130,7 +3130,7 @@ _manifest.default.operation.draws.cube = function (object) {
         object.FBO = {};
         object.FBO.FB = (0, _matrixTextures.makeFBO)(_matrixWorld.world.GL.gl, object); // for now 
 
-        _matrixWorld.world.FBOS.push(object.FBO.FB);
+        _matrixWorld.world.FBOS.push(object.FBO);
       }
 
       _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
@@ -3943,7 +3943,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
         object.FBO = {};
         object.FBO.FB = (0, _matrixTextures.makeFBO)(_matrixWorld.world.GL.gl, object); // for now 
 
-        _matrixWorld.world.FBOS.push(object.FBO.FB); // object.shadows.depthFramebuffer = depthFramebuffer[0];
+        _matrixWorld.world.FBOS.push(object.FBO); // object.shadows.depthFramebuffer = depthFramebuffer[0];
         // object.shadows.checkerboardTexture = depthFramebuffer[1];
         // object.shadows.depthTexture = depthFramebuffer[2];
 

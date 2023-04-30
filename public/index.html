@@ -1,10 +1,8 @@
-<!--https://github.com/zlatnaspirala/webgl2-glmatrix2-engine-->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <link rel="manifest" href="manifest.web" />
-    <title>Matrix Engine is WebGL App/Game engine based on glmatrix lib. Created by Nikola Lukic</title>
+    <title>Matrix Engine is WebGL App/Game engine based on glmatrix lib. Created by Nikola Lukic zlatnaspirala@gmail.com</title>
     <meta name="description" content="The benefits of this project is offering an overview of the entire application logic, easy native implementations (hybrid app), object structural. " />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link defer rel="stylesheet" href="css/style.css" />
@@ -27,24 +25,29 @@
       <button id="stopRender" type="button">stopRender</button>
       <div color="white"><b id="fps"></b></div>
     </div>
-
     <button class="add-button button1" style="display: none">
       <h1>Add to home screen</h1>
       <h2>Run like PWA Application for better performance</h2>
     </button>
-
     <button class="add-button button2" style="display: none">
       <h2>I don't wanna full PWA just play it in regular HTML5 page.</h2>
     </button>
-
     <div id="matrix-net"></div>
-    
     <div id="HOLDER_STREAMS" class="debugBox" style="display: none; position: absolute; left: 0px; top: 0px; width: 512px; height: 512px">
       <video id="webcam_beta" mute autoplay loop width="512" height="512" style="position: absolute; left: 0px; top: 0px"></video>
       <audio id="audio_beta" src="#"></audio>
       <div id="media-holder"></div>
     </div>
-
+    <div id="matrixTimeLine" class="timeLine" style="display:none;">
+      <div class="timeLineSlider">
+        <p>Matrix Engine Scene Timeline - Size of sequence: <span id="globalAnimSize"></span> </p>
+        <p>Frame id: <span id="globalAnimCounter"></span></p>
+        <p>Sequence: <span id="globalAnimCurSequence"></span></p>
+      </div>
+      <div> 
+        <input type="range" min="1" max="5000" value="0" class="slider" id="timeline">
+      </div>
+    </div>
     <script src="app.js"></script>
   </body>
 </html>

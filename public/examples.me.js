@@ -1042,7 +1042,11 @@ var runThis = world => {
 
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply"
+    mix_operation: "multiply",
+    params: {
+      TEXTURE_MAG_FILTER: world.GL.gl.NEAREST,
+      TEXTURE_MIN_FILTER: world.GL.gl.NEAREST
+    }
   };
   world.Add("cubeLightTex", 0.2, "myCube", tex);
 
@@ -1051,61 +1055,104 @@ var runThis = world => {
   _manifest.default.scene.myCube.position.SetX(1);
 
   _manifest.default.scene.myCube.position.SetY(0.6); // App.scene.myCube.activateShadows('spot');
-  // Load obj seq animation
 
+
+  var textuteImageSamplers2 = {
+    source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png", "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
+    mix_operation: "multiply"
+  }; // Load obj seq animation
 
   const createObjSequence = objName => {
     function onLoadObj(meshes) {
+      _manifest.default.meshes = meshes;
+
       for (let key in meshes) {
         matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
       }
 
       var textuteImageSamplers2 = {
-        source: ["res/bvh-skeletal-base/swat-guy/gun2.png"],
-        mix_operation: "multiply"
-      }; // Hands - in future will be weapon
-      // world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg);
-
-      world.Add("obj", 1, objName, textuteImageSamplers2, meshes['player']);
-
-      _manifest.default.scene.player.position.setPosition(0.5, -0.7, -3);
-
-      _manifest.default.scene.player.isHUD = true; // Fix object orientation - this can be fixed also in blender.
-
-      matrixEngine.Events.camera.yaw = 0;
-
-      for (let key in _manifest.default.scene.player.meshList) {
-        _manifest.default.scene.player.meshList[key].setScale(1.85);
-      }
+        source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
+        mix_operation: "multiply",
+        // ENUM : multiply , divide
+        params: {
+          TEXTURE_MAG_FILTER: world.GL.gl.NEAREST,
+          TEXTURE_MIN_FILTER: world.GL.gl.NEAREST
+        }
+      };
+      setTimeout(function () {
+        var animArg = {
+          id: objName,
+          meshList: meshes,
+          // sumOfAniFrames: 61, No need if `animations` exist!
+          currentAni: 0,
+          // speed: 3, No need if `animations` exist!
+          // upgrade - optimal
+          animations: {
+            active: 'walk',
+            walk: {
+              from: 0,
+              to: 35,
+              speed: 3
+            },
+            walkPistol: {
+              from: 36,
+              to: 60,
+              speed: 3
+            }
+          }
+        };
+        world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg);
+        _manifest.default.scene[objName].position.y = -1;
+        _manifest.default.scene[objName].position.z = -2;
+        _manifest.default.scene[objName].rotation.rotationSpeed.y = 50;
+      }, 1);
     }
 
-    matrixEngine.objLoader.downloadMeshes({
-      player: "res/bvh-skeletal-base/swat-guy/gun2.obj"
-    }, onLoadObj);
+    matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
+      id: objName,
+      path: "res/bvh-skeletal-base/swat-guy/anims/swat-multi",
+      from: 1,
+      to: 61
+    }), onLoadObj);
   };
 
   createObjSequence('player'); // FBO BASIC
 
-  world.Add("squareTex", 5, "myCube5", tex);
+  world.Add("squareTex", 3, "myMirror", tex);
 
-  _manifest.default.scene.myCube5.position.SetZ(-12);
+  _manifest.default.scene.myMirror.position.SetZ(-12);
 
-  _manifest.default.scene.myCube5.position.SetX(0);
+  _manifest.default.scene.myMirror.position.SetX(0);
 
-  _manifest.default.scene.myCube5.position.SetY(0);
+  _manifest.default.scene.myMirror.position.SetY(0);
 
-  _manifest.default.scene.myCube5.setFBO(); // App.scene.myCube5.activateShadows('spot');
-  // Click event
+  _manifest.default.scene.myMirror.setFBO();
 
+  world.Add("cubeLightTex", 0.5, "myMirrorBottom", tex);
+
+  _manifest.default.scene.myMirrorBottom.position.SetZ(-5);
+
+  _manifest.default.scene.myMirrorBottom.position.SetX(2);
+
+  _manifest.default.scene.myMirrorBottom.position.SetY(2);
+
+  _manifest.default.scene.myMirrorBottom.rotation.rotx = 20; // App.scene.myMirrorBottom.setFBO();
+  // App.scene.myMirror.rotation.rotationSpeed.z = 10;
+
+  _manifest.default.scene.myMirrorBottom.activateShadows(); // TEST ALSO ANIMATIONLINE
+
+
+  matrixEngine.matrixWorld.world.useAnimationLine({
+    sequenceSize: 500
+  }); // Click event
 
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
   addEventListener("ray.hit.event", function (e) {
-    e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 10);
-    e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 10);
-    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 10);
-    console.info(e.detail);
+    e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 2);
+    e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 2);
+    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2); // console.info(e.detail);
   });
 };
 
@@ -5922,7 +5969,12 @@ class constructMesh {
 
     this.setScale = s => {
       this.inputArg.scale = s;
-      initMeshBuffers(_matrixWorld.world.GL.gl, this.create(this.objectData, inputArg));
+      initMeshBuffers(_matrixWorld.world.GL.gl, this.create(this.objectData, this.inputArg));
+    };
+
+    this.updateBuffers = () => {
+      this.inputArg.scale = 1;
+      initMeshBuffers(_matrixWorld.world.GL.gl, this.create(this.objectData, this.inputArg));
     };
   }
 
@@ -7284,28 +7336,30 @@ _manifest.default.operation.draws.cube = function (object) {
     } else if (object.FBO) {
       // test FBO
       // spot light test light
-      const settings = {
-        cameraX: 6,
-        cameraY: 5,
-        posX: 2.5,
-        posY: 4.8,
-        posZ: 4.3,
-        targetX: 2.5,
-        targetY: 0,
-        targetZ: 3.5,
-        projWidth: 1,
-        projHeight: 1,
-        perspective: true,
-        fieldOfView: 120,
-        bias: -0.006
-      }; // Fbo staff
-
+      // Fbo staff
       if (!object.FBO.FB) {
-        console.log('ONLY ONCE !!!');
-        object.FBO = {};
-        object.FBO.FB = (0, _matrixTextures.makeFBO)(_matrixWorld.world.GL.gl, object); // for now 
+        // console.log('ONLY ONCE ')
+        object.FBO = {
+          name: object.name
+        };
+        object.FBO.FB = (0, _matrixTextures.makeFBO)(_matrixWorld.world.GL.gl, object);
+        object.FBO.settings = {
+          cameraX: 6,
+          cameraY: 5,
+          posX: 2.5,
+          posY: 4.8,
+          posZ: 4.3,
+          targetX: 2.5,
+          targetY: 0,
+          targetZ: 3.5,
+          projWidth: 1,
+          projHeight: 1,
+          perspective: true,
+          fieldOfView: 120,
+          bias: -0.006
+        }; // for now
 
-        _matrixWorld.world.FBOS.push(object.FBO.FB);
+        _matrixWorld.world.FBOS.push(object.FBO);
       }
 
       _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
@@ -7321,16 +7375,16 @@ _manifest.default.operation.draws.cube = function (object) {
       var lmat = m4.lookAt([0, 2, 0], target, up);
       const viewMatrix = m4.inverse(lmat); // first draw from the POV of the light
 
-      const lightWorldMatrix = m4.lookAt([settings.posX, settings.posY, settings.posZ], // position
-      [settings.targetX, settings.targetY, settings.targetZ], // target
+      const lightWorldMatrix = m4.lookAt([object.FBO.settings.posX, object.FBO.settings.posY, object.FBO.settings.posZ], // position
+      [object.FBO.settings.targetX, object.FBO.settings.targetY, object.FBO.settings.targetZ], // target
       [0, 1, 0] // up
       );
-      const lightProjectionMatrix = settings.perspective ? m4.perspective(degToRad(settings.fieldOfView), settings.projWidth / settings.projHeight, 0.5, // near
+      const lightProjectionMatrix = object.FBO.settings.perspective ? m4.perspective(degToRad(object.FBO.settings.fieldOfView), object.FBO.settings.projWidth / object.FBO.settings.projHeight, 0.5, // near
       10) // far
-      : m4.orthographic(-settings.projWidth / 2, // left
-      settings.projWidth / 2, // right
-      -settings.projHeight / 2, // bottom
-      settings.projHeight / 2, // top
+      : m4.orthographic(-object.FBO.settings.projWidth / 2, // left
+      object.FBO.settings.projWidth / 2, // right
+      -object.FBO.settings.projHeight / 2, // bottom
+      object.FBO.settings.projHeight / 2, // top
       0.5, // near
       10); // far
       // // draw to the depth texture
@@ -7348,7 +7402,7 @@ _manifest.default.operation.draws.cube = function (object) {
 
       _matrixWorld.world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
 
-      _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, -0.006);
+      _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.FBO.settings.bias);
     } else {
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
@@ -7850,33 +7904,29 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
         _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
       } else if (object.FBO) {
-        // test FBO
-        // spot light test light
-        const settings = {
-          cameraX: 6,
-          cameraY: 5,
-          posX: 2.5,
-          posY: 4.8,
-          posZ: 4.3,
-          targetX: 2.5,
-          targetY: 0,
-          targetZ: 3.5,
-          projWidth: 1,
-          projHeight: 1,
-          perspective: true,
-          fieldOfView: 120,
-          bias: -0.006
-        }; // Fbo staff
-
+        // Fbo staff
         if (!object.FBO.FB) {
-          console.log('ONLY ONCE !!!');
-          object.FBO = {};
-          object.FBO.FB = (0, _matrixTextures.makeFBO)(_matrixWorld.world.GL.gl, object); // for now
+          object.FBO = {
+            name: object.name
+          };
+          object.FBO.FB = (0, _matrixTextures.makeFBO)(_matrixWorld.world.GL.gl, object);
+          object.FBO.settings = {
+            cameraX: 6,
+            cameraY: 5,
+            posX: 2.5,
+            posY: 4.8,
+            posZ: 4.3,
+            targetX: 2.5,
+            targetY: 0,
+            targetZ: 3.5,
+            projWidth: 1,
+            projHeight: 1,
+            perspective: true,
+            fieldOfView: 120,
+            bias: -0.006
+          };
 
-          _matrixWorld.world.FBOS.push(object.FBO.FB); // object.shadows.depthFramebuffer = depthFramebuffer[0];
-          // object.shadows.checkerboardTexture = depthFramebuffer[1];
-          // object.shadows.depthTexture = depthFramebuffer[2];
-
+          _matrixWorld.world.FBOS.push(object.FBO);
         }
 
         _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
@@ -7887,21 +7937,20 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
 
         var target = [0, 0, 0];
-        var up = [0, 1, 0]; // var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
-
-        var lmat = m4.lookAt([0, 2, 0], target, up);
+        var up = [0, 1, 0];
+        var lmat = m4.lookAt([0, 1, 0], target, up);
         const viewMatrix = m4.inverse(lmat); // first draw from the POV of the light
 
-        const lightWorldMatrix = m4.lookAt([settings.posX, settings.posY, settings.posZ], // position
-        [settings.targetX, settings.targetY, settings.targetZ], // target
+        const lightWorldMatrix = m4.lookAt([object.FBO.settings.posX, object.FBO.settings.posY, object.FBO.settings.posZ], // position
+        [object.FBO.settings.targetX, object.FBO.settings.targetY, object.FBO.settings.targetZ], // target
         [0, 1, 0] // up
         );
-        const lightProjectionMatrix = settings.perspective ? m4.perspective(degToRad(settings.fieldOfView), settings.projWidth / settings.projHeight, 0.5, // near
+        const lightProjectionMatrix = object.FBO.settings.perspective ? m4.perspective(degToRad(object.FBO.settings.fieldOfView), object.FBO.settings.projWidth / object.FBO.settings.projHeight, 0.5, // near
         10) // far
-        : m4.orthographic(-settings.projWidth / 2, // left
-        settings.projWidth / 2, // right
-        -settings.projHeight / 2, // bottom
-        settings.projHeight / 2, // top
+        : m4.orthographic(-object.FBO.settings.projWidth / 2, // left
+        object.FBO.settings.projWidth / 2, // right
+        -object.FBO.settings.projHeight / 2, // bottom
+        object.FBO.settings.projHeight / 2, // top
         0.5, // near
         10); // far
         // // draw to the depth texture
@@ -7919,7 +7968,7 @@ _manifest.default.operation.draws.drawObj = function (object) {
 
         _matrixWorld.world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
 
-        _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, -0.006);
+        _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.FBO.settings.bias);
       } else {
         for (var t = 0; t < object.textures.length; t++) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
@@ -8164,32 +8213,30 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else if (object.FBO) {
       // test FBO
-      // spot light test light
-      const settings = {
-        cameraX: 6,
-        cameraY: 5,
-        posX: 2.5,
-        posY: 4.8,
-        posZ: 4.3,
-        targetX: 2.5,
-        targetY: 0,
-        targetZ: 3.5,
-        projWidth: 1,
-        projHeight: 1,
-        perspective: true,
-        fieldOfView: 120,
-        bias: -0.006
-      }; // Fbo staff
-
+      // Fbo staff
       if (!object.FBO.FB) {
-        console.log('ONLY ONCE !!!');
-        object.FBO = {};
-        object.FBO.FB = (0, _matrixTextures.makeFBO)(_matrixWorld.world.GL.gl, object); // for now 
+        object.FBO = {
+          name: object.name
+        };
+        object.FBO.FB = (0, _matrixTextures.makeFBO)(_matrixWorld.world.GL.gl, object);
 
-        _matrixWorld.world.FBOS.push(object.FBO.FB); // object.shadows.depthFramebuffer = depthFramebuffer[0];
-        // object.shadows.checkerboardTexture = depthFramebuffer[1];
-        // object.shadows.depthTexture = depthFramebuffer[2];
+        _matrixWorld.world.FBOS.push(object.FBO);
 
+        object.FBO.settings = {
+          cameraX: 6,
+          cameraY: 5,
+          posX: 2.5,
+          posY: 4.8,
+          posZ: 4.3,
+          targetX: 2.5,
+          targetY: 0,
+          targetZ: 3.5,
+          projWidth: 1,
+          projHeight: 1,
+          perspective: true,
+          fieldOfView: 120,
+          bias: -0.006
+        };
       }
 
       _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
@@ -8202,19 +8249,19 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
       var target = [0, 0, 0];
       var up = [0, 1, 0]; // var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
 
-      var lmat = m4.lookAt([0, 2, 0], target, up);
+      var lmat = m4.lookAt([0, 1, 0], target, up);
       const viewMatrix = m4.inverse(lmat); // first draw from the POV of the light
 
-      const lightWorldMatrix = m4.lookAt([settings.posX, settings.posY, settings.posZ], // position
-      [settings.targetX, settings.targetY, settings.targetZ], // target
+      const lightWorldMatrix = m4.lookAt([object.FBO.settings.posX, object.FBO.settings.posY, object.FBO.settings.posZ], // position
+      [object.FBO.settings.targetX, object.FBO.settings.targetY, object.FBO.settings.targetZ], // target
       [0, 1, 0] // up
       );
-      const lightProjectionMatrix = settings.perspective ? m4.perspective(degToRad(settings.fieldOfView), settings.projWidth / settings.projHeight, 0.5, // near
+      const lightProjectionMatrix = object.FBO.settings.perspective ? m4.perspective(degToRad(object.FBO.settings.fieldOfView), object.FBO.settings.projWidth / object.FBO.settings.projHeight, 0.5, // near
       10) // far
-      : m4.orthographic(-settings.projWidth / 2, // left
-      settings.projWidth / 2, // right
-      -settings.projHeight / 2, // bottom
-      settings.projHeight / 2, // top
+      : m4.orthographic(-object.FBO.settings.projWidth / 2, // left
+      object.FBO.settings.projWidth / 2, // right
+      -object.FBO.settings.projHeight / 2, // bottom
+      object.FBO.settings.projHeight / 2, // top
       0.5, // near
       10); // far
       // // draw to the depth texture
@@ -8232,7 +8279,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object) {
 
       _matrixWorld.world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
 
-      _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, -0.006);
+      _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.FBO.settings.bias);
     } else {
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
@@ -11393,7 +11440,9 @@ _manifest.default.operation.reDrawGlobal = function (time) {
   // - non FBO and FBO option draw coroutine
   // hc 512
 
-  _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, _matrixWorld.world.FBOS[0]);
+  if (_matrixWorld.world.FBOS.length > 0) _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, _matrixWorld.world.FBOS[0].FB); // world.FBOS.forEach((fbo) => {
+  // 
+  // world.GL.gl.bindFramebuffer(world.GL.gl.FRAMEBUFFER, fbo.fb);
 
   _matrixWorld.world.GL.gl.viewport(0, 0, 512, 512);
 
@@ -11628,7 +11677,53 @@ _manifest.default.operation.reDrawGlobal = function (time) {
     (0, _engine.modifyLooper)(_engine.looper + 1);
   }
 
-  _matrixWorld.world.GL.gl.depthMask(true);
+  (0, _engine.modifyLooper)(0);
+
+  _matrixWorld.world.GL.gl.depthMask(true); ////////////////
+  // })
+  // if (world.FBOS.length==0) {
+  //     // all but no blend
+  //     while(looper <= world.contentList.length - 1) {
+  //       if(world.contentList[looper].visible === true) {
+  //         if('triangle' == world.contentList[looper].type) {
+  //           world.GL.gl.useProgram(world.contentList[looper].shaderProgram);
+  //           world.drawTriangle(world.contentList[looper]);
+  //           world.animate(world.contentList[looper]);
+  //         } else if('square' == world.contentList[looper].type) {
+  //           world.GL.gl.useProgram(world.contentList[looper].shaderProgram);
+  //           world.drawSquare(world.contentList[looper]);
+  //           world.animate(world.contentList[looper]);
+  //         } else if('cube' == world.contentList[looper].type ||
+  //           'cubeTex' == world.contentList[looper].type ||
+  //           'cubeLightTex' == world.contentList[looper].type ||
+  //           'cubeMap' == world.contentList[looper].type) {
+  //           world.GL.gl.useProgram(world.contentList[looper].shaderProgram);
+  //           world.drawCube(world.contentList[looper]);
+  //           world.animate(world.contentList[looper]);
+  //         } else if('pyramid' == world.contentList[looper].type) {
+  //           world.GL.gl.useProgram(world.contentList[looper].shaderProgram);
+  //           world.drawPyramid(world.contentList[looper]);
+  //           world.animate(world.contentList[looper]);
+  //         } else if('obj' == world.contentList[looper].type) {
+  //           world.GL.gl.useProgram(world.contentList[looper].shaderProgram);
+  //           world.drawObj(world.contentList[looper]);
+  //           world.animate(world.contentList[looper]);
+  //         } else if('squareTex' == world.contentList[looper].type) {
+  //           world.GL.gl.useProgram(world.contentList[looper].shaderProgram);
+  //           world.drawSquareTex(world.contentList[looper]);
+  //           world.animate(world.contentList[looper]);
+  //         } else if('sphereLightTex' == world.contentList[looper].type || 'sphere' == world.contentList[looper].type || 'generatorLightTex' == world.contentList[looper].type) {
+  //           world.GL.gl.useProgram(world.contentList[looper].shaderProgram);
+  //           world.drawSphere(world.contentList[looper]);
+  //           world.animate(world.contentList[looper]);
+  //         }
+  //       }
+  //       modifyLooper(looper + 1);
+  //     }
+  //     modifyLooper(0);
+  // }
+  ///////////////////////
+
 
   if (_manifest.default.raycast) {
     if (secondPass <= 2) {
@@ -11640,6 +11735,20 @@ _manifest.default.operation.reDrawGlobal = function (time) {
   secondPass++;
   physicsLooper = 0;
   (0, _engine.updateFPS)(1);
+
+  if (_matrixWorld.world.animLine) {
+    // animatinLine
+    _matrixWorld.world.globalAnimCounter++;
+
+    if (_matrixWorld.world.globalAnimCounter >= _matrixWorld.world.globalAnimSequenceSize) {
+      _matrixWorld.world.globalAnimCounter = 0;
+      _matrixWorld.world.globalAnimCurSequence++;
+      document.getElementById('globalAnimCurSequence').innerText = _matrixWorld.world.globalAnimCurSequence;
+    }
+
+    document.getElementById('globalAnimCounter').innerText = _matrixWorld.world.globalAnimCounter;
+    document.getElementById('timeline').value = _matrixWorld.world.globalAnimCounter;
+  }
 };
 /* Field of view, Width height ratio, min distance of viewpoint, max distance of viewpoint, */
 
@@ -13170,10 +13279,30 @@ function defineworld(canvas) {
 
   exports.reDraw = reDraw = _manifest.default.operation.reDrawGlobal;
   /**
+   * @MatrixAnimationLine
+   * @globalAnimCounter Counter  READONLY
+   * @globalAnimSequenceSize = 5000
+   * After globalAnimCounter reach globalAnimSequenceSize value will reset to the zero.
+   */
+
+  world.useAnimationLine = function (args) {
+    world.animLine = true;
+    world.globalAnimCounter = 0;
+    world.globalAnimSequenceSize = args.sequenceSize;
+    world.globalAnimCurSequence = 1;
+    document.getElementById('globalAnimCurSequence').innerText = world.globalAnimCurSequence;
+    document.getElementById('globalAnimCounter').innerText = world.globalAnimCounter;
+    document.getElementById('timeline').value = world.globalAnimCounter;
+    document.getElementById('timeline').setAttribute('max', world.globalAnimSequenceSize);
+    document.getElementById('globalAnimSize').innerText = world.globalAnimSequenceSize;
+    document.getElementById('matrixTimeLine').style.display = 'flex';
+  };
+  /**
    * @MatrixPhysics
    * Must be disabled on default run.
    * Return cannon world.
    */
+
 
   world.physics = null;
 
@@ -13817,7 +13946,12 @@ function defineworld(canvas) {
         activate: () => {
           _engine.net.activateDataStream();
         }
+      };
+
+      objObject.setFBO = function () {
+        objObject.FBO = {};
       }; // Update others start
+
 
       objObject.useShadows = false;
 
