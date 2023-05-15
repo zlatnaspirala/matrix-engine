@@ -2,6 +2,8 @@
 ## Matrix Engine [CHANGES]
 
 
+#### [1.9.7] Small hotfix for stremasTextures for squareTex obj in draw func.
+
 #### [1.9.6] FBO example + Scene global Timeline function with visual dom preview.
 
 ```js
