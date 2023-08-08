@@ -1,6 +1,18 @@
 
 ## Matrix Engine [CHANGES]
 
+#### [1.9.14] New optimal arg2 for defineWorld (arg1, arg2)
+Related wwith FBO render func, 
+Can be undefined in that place  engine use full FBO render,
+With arg2 = 'simply' tooks simplyRender func.
+
+```js
+  if (typeof renderType === 'undefined') {
+    exports.reDraw = reDraw = _manifest.default.operation.reDrawGlobal;
+  } else if (renderType == 'simply') {
+    exports.reDraw = reDraw = _manifest.default.operation.simplyRender;
+  }
+```
 
 #### [1.9.7] Small hotfix for stremasTextures for squareTex obj in draw func.
 

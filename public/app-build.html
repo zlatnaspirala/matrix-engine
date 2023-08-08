@@ -1,6 +1,3 @@
-<!--Matrix-Engine 1.8.15-->
-<!--UI helper test-->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -46,7 +43,16 @@
       <audio id="audio_beta" src="#"></audio>
       <div id="media-holder"></div>
     </div>
-
+    <div id="matrixTimeLine" class="timeLine" style="display:none;">
+      <div class="timeLineSlider">
+        <p>Matrix Engine Scene Timeline - Size of sequence: <span id="globalAnimSize"></span> </p>
+        <p>Frame id: <span id="globalAnimCounter"></span></p>
+        <p>Sequence: <span id="globalAnimCurSequence"></span></p>
+      </div>
+      <div> 
+        <input type="range" min="1" max="5000" value="0" class="slider" id="timeline">
+      </div>
+    </div>
     <script src="./app.js"></script>
   </body>
 </html>
