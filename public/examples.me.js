@@ -2672,7 +2672,9 @@ var runThis = world => {
   world.Add("cubeLightTex", 3, "outsideBox", tex); // App.scene.outsideBox.geometry.setScaleByY(7)
 
   _manifest.default.scene.outsideBox.position.x = 0;
-  _manifest.default.scene.outsideBox.position.z = -17; // App.scene.outsideBox.rotation.rotationSpeed.z = 30;
+  _manifest.default.scene.outsideBox.position.z = -20;
+  _manifest.default.scene.outsideBox.rotation.rotx = 45;
+  _manifest.default.scene.outsideBox.rotation.rotz = -90; // App.scene.outsideBox.rotation.rotationSpeed.z = 30;
 
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
 
@@ -2681,14 +2683,13 @@ var runThis = world => {
   _manifest.default.scene.outsideBox.net.activate();
 
   addEventListener('stream-loaded', e => {
-    console.log('TEST CASE !!!!!!!!!!!!!!!');
-
     var _ = document.querySelectorAll('.media-box');
 
     _.forEach(i => {
-      // if(e.detail.data.userId == i.children[0].innerHTML) {
-      if (e.detail.data.userId == i.children[0].innerHTML) {// This is video element!
-        // App.scene.outsideBox.streamTextures = matrixEngine.Engine.DOM_VT(i.children[1])
+      // App.network.connection.userid  REPRESENT LOCAL STREAM 
+      if (e.detail.data.userId != _manifest.default.network.connection.userid) {
+        // This is video element!
+        _manifest.default.scene.outsideBox.streamTextures = matrixEngine.Engine.DOM_VT(i.children[1]);
       }
     });
   });

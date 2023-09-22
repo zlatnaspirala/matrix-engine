@@ -10,7 +10,7 @@ class ServerConfig {
      * no database server part - it will be used rocketcraftingserver platform.
      */
     this.version = "1.0";
-    this.serverMode = "dev";
+    this.serverMode = "prod";
     this.networkDeepLogs = false;
     this.rtc3ServerPort = 999;
 
