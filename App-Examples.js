@@ -44,6 +44,8 @@ import {runThis as opengles_native_cubemap_images } from './apps/opengles_native
 import {runThis as lens_effect } from './apps/lens_effect';
 import {runThis as fps_player_controller } from './apps/fps_player_controller';
 import {runThis as basic_fbo } from './apps/basic_fbo';
+import {runThis as video_texture_lava} from './apps/video_texture_lava';
+import {runThis as matrix_chat_room} from './apps/matrix_chat_room';
 
 /**
  * @description
@@ -54,6 +56,8 @@ import {runThis as basic_fbo } from './apps/basic_fbo';
  * public/query-build.html?u=spot_light_shadows
  */
 var Examples = {
+  matrix_chat_room: matrix_chat_room,
+  video_texture_lava: video_texture_lava,
   basic_fbo: basic_fbo,
   fps_player_controller:fps_player_controller,
   lens_effect: lens_effect,

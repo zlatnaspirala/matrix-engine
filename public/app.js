@@ -665,10 +665,10 @@ class ClientConfig {
    * @description
    * broadcasterPort Port used to connect multimedia server MultiRTC3.
    * I will use it for explicit video chat multiplatform support.
-   * Default value is 9001
+   * Default value is 999
    */
 
-  broadcasterPort = 9001;
+  broadcasterPort = 999;
   /**
    * @description
    * broadcaster socket.io address.
@@ -725,10 +725,6 @@ class ClientConfig {
     return this.getProtocolFromAddressBar() + this.getDomain() + ":" + this.broadcasterPort + "/";
   }
 
-  getCoordinatorSockRoute() {
-    return this.getProtocolFromAddressBar() + this.getDomain() + ":" + this.rtcServerPort + "/";
-  }
-
   getDomain() {
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
       return window.location.hostname;
@@ -755,14 +751,6 @@ class ClientConfig {
 
   getProtocolFromAddressBar() {
     return location.protocol === "https:" ? "https://" : "http://";
-  }
-
-  getRemoteServerAddress() {
-    return (location.protocol === "https:" ? "wss" : "ws") + "://" + document.domain + ":" + this.rtcServerPort + "/";
-  }
-
-  getRemoteServerAddressControlller() {
-    return (location.protocol === "https:" ? "wss" : "ws") + "://" + document.domain + ":" + this.getConnectorPort() + "/";
   }
 
   setNetworkDeepLog(newState) {
@@ -11102,6 +11090,7 @@ class Broadcaster {
 
       init(rtcEvent) {
         console.log("rtcEvent add new net object -> ", rtcEvent.userid);
+        dispatchEvent(new CustomEvent('net.new-user', {detail: {data: rtcEvent}}))
       },
 
       update(e) {
@@ -13450,13 +13439,13 @@ var RTCMultiConnection3 = function(roomid, forceOptions) {
         }
 
         if (connection.socketURL.substr(connection.socketURL.length - 1, 1) != '/') {
-            // connection.socketURL = 'https://domain.com:9001/';
+            // connection.socketURL = 'https://domain.com:999/';
             throw '"socketURL" MUST end with a slash.';
         }
 
         if (connection.enableLogs) {
             if (connection.socketURL == '/') {
-                connection.socketURL = "http://localhost:9001/";
+                connection.socketURL = "http://localhost:999/";
             }
         }
 

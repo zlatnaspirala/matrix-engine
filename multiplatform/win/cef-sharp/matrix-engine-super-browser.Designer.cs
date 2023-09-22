@@ -35,7 +35,7 @@ namespace matrix_engine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(931, 491);
+            this.ClientSize = new System.Drawing.Size(433, 491);
             this.Name = "matrix_engine_super_browser";
             this.Text = "matrix_engine_super_browser";
             this.ResumeLayout(false);

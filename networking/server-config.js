@@ -2,37 +2,17 @@
 class ServerConfig {
 
   constructor() {
-
     /**
      * Define backend staff
      * 
-     * @version 0.2.0 WIP
-     * Implementing multiRTC3 for data streaming operation
+     * @version 1.0
+     * Implementing signaling multiRTC3 for data streaming operation
+     * no database server part - it will be used rocketcraftingserver platform.
      */
-    this.version = "0.2.0";
-
-     // enum : 'dev', 'prod', `mongodb.net` or `mongodb.net-dev`
-    // this.serverMode = "mongodb.net";
-    this.serverMode = "mongodb.net-dev";
-
-    this.ownHosting = false;
-    this.ownHttpHostPort = 443;
-    this.ownHostingVirtualHostsEnabled = false;
-    this.ownHostingVirtualHosts = [
-      {
-        dir: "/var/www/html/apps/ultimate-roulette/",
-        name: "roulette.maximumroulette.com"
-      },
-      {
-        dir: "/var/www/html/apps/barbarian-road-mashines/beta/",
-        name: "rocketcraft.maximumroulette.com"
-      }
-    ];
-
+    this.version = "1.0";
+    this.serverMode = "dev";
     this.networkDeepLogs = false;
-    this.rtcServerPort = 12034;
-    this.rtc3ServerPort = 9001;
-    this.connectorPort = 9010;
+    this.rtc3ServerPort = 999;
 
     /**
      * @description
@@ -67,9 +47,9 @@ class ServerConfig {
      * No pem currently used at the moment.
      */
     this.certPathSelfOrigin = {
-      pKeyPath:  "./apache-local-cert/server.key",
+      pKeyPath: "./apache-local-cert/server.key",
       pCertPath: "./apache-local-cert/server.crt",
-      pCBPath:   "./apache-local-cert/server.csr",
+      pCBPath: "./apache-local-cert/server.csr",
     };
 
     /**
@@ -89,27 +69,12 @@ class ServerConfig {
       pCBPath: "/etc/letsencrypt/live/maximumroulette.com/fullchain.pem"
     };
 
-    this.appUseAccountsSystem = true;
     this.appUseBroadcaster = true;
-    this.databaseName = "masterdatabase";
-
-    this.databaseRoot = {
-      dev: "mongodb://localhost:27017" ,
-      prod: "mongodb://userAdmin:*************@localhost:27017/admin",
-      freeService: "mongodb+srv://userAdmin:**********@cluster0.piqav.mongodb.net/masterdatabase?retryWrites=true&w=majority"
-    };
-
-    this.specialRoute = {
-      "default": "/var/www/html/applications/visual-typescript-game-engine/last-build/multiplayer"
-    };
-
-    // this.dataServeRoutes = ["../data-serve/platformer/class/activeplayers"];
-
     console.log("Server running under configuration => ", this.serverMode);
 
-    if (this.serverMode == "dev") {
+    if(this.serverMode == "dev") {
       console.log("-rtc domain dev", this.domain.dev);
-    } else if (this.serverMode == "prod") {
+    } else if(this.serverMode == "prod") {
       console.log("-rtc domain prod", this.domain.prod);
     }
 
@@ -131,18 +96,8 @@ class ServerConfig {
   };
 
   get getProtocol() {
-    if (this.isSecure) {
-      this.protocol = "https";
-    } else if (this.serverMode === "mongodb.net" || this.serverMode === "mongodb.net-dev") {
-      this.protocol = "https";
-    } else {
-      this.protocol = "http";
-    }
+    this.protocol = "https";
     return this.protocol;
-  }
-
-  get getRtcServerPort() {
-    return this.rtcServerPort;
   }
 
   get getRtc3ServerPort() {
@@ -151,34 +106,12 @@ class ServerConfig {
 
   get getDatabaseRoot() {
 
-    if (this.serverMode == "dev") {
+    if(this.serverMode == "dev") {
       return this.databaseRoot.dev;
-    } else if (this.serverMode == "prod") {
+    } else if(this.serverMode == "prod") {
       return this.databaseRoot.prod;
-    } else if (this.serverMode == "mongodb.net" || this.serverMode === "mongodb.net-dev") {
+    } else if(this.serverMode == "mongodb.net" || this.serverMode === "mongodb.net-dev") {
       return this.databaseRoot.freeService;
-    }
-
-  }
-
-  get IsDatabaseActive() {
-    return this.appUseAccountsSystem;
-  }
-
-  get getConnectorPort() {
-    return this.connectorPort;
-  }
-
-  get getRemoteServerAddress() {
-
-    if (this.serverMode == "dev") {
-      return (this.isSecure ? "wss" : "ws") + "://" + this.domain.dev + ":" + this.rtcServerPort + "/";
-    } else if (this.serverMode == "prod") {
-    return (this.isSecure ? "wss" : "ws") + "://" + this.domain.prod + ":" + this.rtcServerPort + "/";
-    } else if (this.serverMode == "mongodb.net") {
-      return (this.isSecure ? "wss" : "ws") + "://" + this.domain.prod + ":" + this.rtcServerPort + "/";
-    } else if (this.serverMode == "mongodb.net-dev") {
-      return (this.isSecure ? "wss" : "ws") + "://" + this.domain.dev + ":" + this.rtcServerPort + "/";
     }
 
   }

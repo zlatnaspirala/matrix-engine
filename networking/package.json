@@ -4,6 +4,7 @@
   "description": "Networking server part for matrix-engine 1.8.0",
   "main": "index.js",
   "scripts": {
+    "server": "node matrix.server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

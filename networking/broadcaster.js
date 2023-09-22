@@ -10,10 +10,19 @@ class Broadcaster {
     // Direct input flags
     var PORT = serverConfig.getRtc3ServerPort;
 
-    const jsonPath = {
-      config: "./broadcaster-config.json",
-      logs: "logs.json",
-    };
+    let jsonPath;
+
+    if (serverConfig.serverMode == "dev") {
+      jsonPath = {
+        config: "./broadcaster-config.dev.json",
+        logs: "logs.json",
+      };
+    } else {
+      jsonPath = {
+        config: "./broadcaster-config.json",
+        logs: "logs.json",
+      };
+    }
 
     const BASH_COLORS_HELPER = RTCMultiConnectionServer.BASH_COLORS_HELPER;
     const getValuesFromConfigJson =
@@ -35,7 +44,7 @@ class Broadcaster {
       headers["Access-Control-Max-Age"] = "86400";
       response.writeHead(200, headers);
 
-      if (request.method === "OPTIONS") {
+      if(request.method === "OPTIONS") {
         console.log("OPTIONS SUCCESS");
         response.end();
       } else {
@@ -46,10 +55,10 @@ class Broadcaster {
           "Access-Control-Allow-Headers": "*",
         });
         let msgForHttpCheck = '**********************************************************' + ' \n' +
-                              '* MatrixNet         version: ' + serverConfig.version + '* \n' + 
-                              '* Type of network - BROADCASTER                          *' + ' \n' +
-                              '* Source: https://github.com/zlatnaspirala/matrix-engine *' + ' \n' +
-                              '**********************************************************';
+          '* MatrixNet         version: ' + serverConfig.version + '* \n' +
+          '* Type of network - BROADCASTER                          *' + ' \n' +
+          '* Source: https://github.com/zlatnaspirala/matrix-engine *' + ' \n' +
+          '**********************************************************';
         response.write(msgForHttpCheck);
         response.end();
       }
@@ -68,13 +77,13 @@ class Broadcaster {
      * @description This block can be optimisex
      * SSL on/off
      */
-    if (serverConfig.serverMode === "dev" || serverConfig.serverMode === "mongodb.net-dev") {
+    if(serverConfig.serverMode === "dev") {
       options = {
         key: fs.readFileSync(serverConfig.certPathSelf.pKeyPath),
         cert: fs.readFileSync(serverConfig.certPathSelf.pCertPath),
         ca: fs.readFileSync(serverConfig.certPathSelf.pCBPath),
       };
-    } else if (serverConfig.serverMode === "prod" || serverConfig.serverMode === "mongodb.net") {
+    } else if(serverConfig.serverMode === "prod") {
       options = {
         key: fs.readFileSync(serverConfig.certPathProd.pKeyPath),
         cert: fs.readFileSync(serverConfig.certPathProd.pCertPath),
@@ -95,7 +104,7 @@ class Broadcaster {
     httpApp = httpApp.listen(
       process.env.PORT || PORT,
       process.env.IP || "0.0.0.0",
-      function () {
+      function() {
         RTCMultiConnectionServer.afterHttpListen(httpApp, config);
       }
     );
@@ -104,9 +113,9 @@ class Broadcaster {
     var collectCorsDomain = config.homePage;
     console.log("-rtc cors collectCorsDomain : ", collectCorsDomain);
 
-    if (serverConfig.serverMode == "dev" || this.serverMode == "mongodb.net-dev") {
+    if(serverConfig.serverMode == "dev") {
       console.log("-rtc cors dev: ", serverConfig.domain.dev);
-    } else if (serverConfig.serverMode == "prod" || serverConfig.serverMode == "mongodb.net") {
+    } else if(serverConfig.serverMode == "prod") {
       console.log("-rtc cors prod: ", serverConfig.domain.prod);
       collectCorsDomain = serverConfig.protocol + "://" + serverConfig.domain.prod;
     }
@@ -119,17 +128,17 @@ class Broadcaster {
         allowedHeaders: ["*"],
         credentials: true,
       },
-    }).on("connection", function (socket) {
+    }).on("connection", function(socket) {
       console.log("MultiRTC3: new client.");
       RTCMultiConnectionServer.addSocket(socket, config);
 
       const params = socket.handshake.query;
 
-      if (!params.socketCustomEvent) {
+      if(!params.socketCustomEvent) {
         params.socketCustomEvent = "custom-message";
       }
 
-      socket.on(params.socketCustomEvent, function (message) {
+      socket.on(params.socketCustomEvent, function(message) {
         socket.broadcast.emit(params.socketCustomEvent, message);
       });
     });

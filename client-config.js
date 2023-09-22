@@ -55,9 +55,9 @@ class ClientConfig {
    * @description
    * broadcasterPort Port used to connect multimedia server MultiRTC3.
    * I will use it for explicit video chat multiplatform support.
-   * Default value is 9001
+   * Default value is 999
    */
-  broadcasterPort = 9001;
+  broadcasterPort = 999;
   /**
    * @description
    * broadcaster socket.io address.
@@ -118,11 +118,8 @@ class ClientConfig {
     return this.getProtocolFromAddressBar() + this.getDomain() + ":" + this.broadcasterPort + "/";
   }
 
-  getCoordinatorSockRoute() {
-    return this.getProtocolFromAddressBar() + this.getDomain() + ":" + this.rtcServerPort + "/";
-  }
-
   getDomain() {
+    // localhost vs prodc domain not works CORS not equal!
     if(window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
       return window.location.hostname;
     }
@@ -147,14 +144,6 @@ class ClientConfig {
 
   getProtocolFromAddressBar() {
     return (location.protocol === "https:" ? "https://" : "http://");
-  }
-
-  getRemoteServerAddress() {
-    return (location.protocol === "https:" ? "wss" : "ws") + "://" + document.domain + ":" + this.rtcServerPort + "/";
-  }
-
-  getRemoteServerAddressControlller() {
-    return ((location.protocol === "https:") ? "wss" : "ws") + "://" + document.domain + ":" + this.getConnectorPort() + "/";
   }
 
   setNetworkDeepLog(newState) {

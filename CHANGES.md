@@ -1,5 +1,11 @@
+## ---------------------------------
+# Matrix Engine [CHANGES]
+## ---------------------------------
 
-## Matrix Engine [CHANGES]
+[1.9.15]
+ - New custom event `net.new-user` to make easy detect on top level
+   used direct for new example video chat matrix.
+
 
 #### [1.9.14] New optimal arg2 for defineWorld (arg1, arg2)
 Related wwith FBO render func, 
