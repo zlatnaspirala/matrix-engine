@@ -2691,50 +2691,52 @@ var runThis = world => {
   _manifest.default.scene.CUBE.physics.currentBody = b;
   _manifest.default.scene.CUBE.physics.enabled = true;
 
-  const objGenerator = n => {
-    for (var j = 0; j < n; j++) {
-      setTimeout(() => {
-        world.Add("cubeLightTex", 1, "CUBE" + j, tex);
-        var b2 = new CANNON.Body({
-          mass: 1,
-          linearDamping: 0.01,
-          position: new CANNON.Vec3(1, -14.5, 15),
-          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-        });
-        physics.world.addBody(b2);
-        _manifest.default.scene['CUBE' + j].physics.currentBody = b2;
-        _manifest.default.scene['CUBE' + j].physics.enabled = true;
-      }, 1000 * j);
-    }
-  };
+  const objGenerator = meObj => {
+    var b2 = new CANNON.Body({
+      mass: 1,
+      linearDamping: 0.01,
+      position: new CANNON.Vec3(1, -14.5, 15),
+      shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+    });
+    physics.world.addBody(b2);
+    meObj.physics.currentBody = b2;
+    meObj.physics.enabled = true;
+  }; // objGenerator(1)
+  // Must be activate
 
-  objGenerator(11); // Must be activate
 
   matrixEngine.Engine.activateNet(); // Must be activate for scene objects also.
   // This is only to force avoid unnecessary networking emit!
   // let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 
-  world.Add("cubeLightTex", 3, "outsideBox", tex); // App.scene.outsideBox.geometry.setScaleByY(7)
-
-  _manifest.default.scene.outsideBox.position.x = 0;
-  _manifest.default.scene.outsideBox.position.z = -20;
-  _manifest.default.scene.outsideBox.rotation.rotx = 45;
-  _manifest.default.scene.outsideBox.rotation.rotz = -90; // App.scene.outsideBox.rotation.rotationSpeed.z = 30;
-
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
-
-  _manifest.default.scene.outsideBox.net.enable = true;
-
-  _manifest.default.scene.outsideBox.net.activate();
-
   addEventListener('stream-loaded', e => {
     var _ = document.querySelectorAll('.media-box');
+
+    var name = "videochat-" + e.detail.data.userId;
+    world.Add("cubeLightTex", 3, name, tex);
+    _manifest.default.scene[name].position.x = 0;
+    _manifest.default.scene[name].position.z = -20;
+    _manifest.default.scene[name].rotx = 45;
+    _manifest.default.scene[name].rotation.rotz = -90;
+
+    _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
+
+    _manifest.default.scene[name].net.enable = true;
+
+    _manifest.default.scene[name].net.activate();
 
     _.forEach(i => {
       // App.network.connection.userid  REPRESENT LOCAL STREAM 
       if (e.detail.data.userId != _manifest.default.network.connection.userid) {
         // This is video element!
-        _manifest.default.scene.outsideBox.streamTextures = matrixEngine.Engine.DOM_VT(i.children[1]);
+        _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT(i.children[1]);
+        objGenerator(_manifest.default.scene[name]);
+        setInterval(function () {
+          _manifest.default.scene[name].geometry.texCoordsPoints.front.right_top.x += 0.01;
+          _manifest.default.scene[name].geometry.texCoordsPoints.front.left_bottom.x += 0.01;
+          _manifest.default.scene[name].geometry.texCoordsPoints.front.left_top.x += 0.01;
+          _manifest.default.scene[name].geometry.texCoordsPoints.front.right_bottom.x += 0.01;
+        }, 20);
       }
     });
   });
@@ -2748,12 +2750,6 @@ var runThis = world => {
   _manifest.default.scene.outsideBox2.glBlend.blendEnabled = true;
   _manifest.default.scene.outsideBox2.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
   _manifest.default.scene.outsideBox2.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
-  setInterval(function () {
-    _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.right_top.x += 0.01;
-    _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.left_bottom.x += 0.01;
-    _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.left_top.x += 0.01;
-    _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.right_bottom.x += 0.01;
-  }, 20);
 };
 
 exports.runThis = runThis;

@@ -58,12 +58,6 @@ class ClientConfig {
    * Default value is 999
    */
   broadcasterPort = 999;
-  /**
-   * @description
-   * broadcaster socket.io address.
-   * Change it for production regime
-   */
-  broadcastAutoConnect = false;
 
   /**
    * @description
