@@ -34,23 +34,23 @@ export var runThis = world => {
   let physics = world.loadPhysics(gravityVector);
   // Add ground
   physics.addGround(App, world, tex);
-  world.Add("cubeLightTex", 1, "CUBE", tex);
-  var b = new CANNON.Body({
-    mass: 5,
-    position: new CANNON.Vec3(0, -15, 2),
-    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-  });
-  physics.world.addBody(b);
-  // Physics
-  App.scene.CUBE.physics.currentBody = b;
-  App.scene.CUBE.physics.enabled = true;
+  // world.Add("cubeLightTex", 1, "CUBE", tex);
+  // var b = new CANNON.Body({
+  //   mass: 5,
+  //   position: new CANNON.Vec3(0, -15, 2),
+  //   shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
+  // });
+  // physics.world.addBody(b);
+  // // Physics
+  // App.scene.CUBE.physics.currentBody = b;
+  // App.scene.CUBE.physics.enabled = true;
 
   const objGenerator = (meObj) => {
     var b2 = new CANNON.Body({
       mass: 1,
       linearDamping: 0.01,
-      position: new CANNON.Vec3(1, -14.5, 15),
-      shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+      position: new CANNON.Vec3(0, -14.5, 15),
+      shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
     });
     physics.world.addBody(b2);
     meObj.physics.currentBody = b2;
@@ -71,23 +71,24 @@ export var runThis = world => {
     var _ = document.querySelectorAll('.media-box')
 
     var name= "videochat-" + e.detail.data.userId;
-    world.Add("cubeLightTex", 3, name , tex);
-    App.scene[name].position.x = 0;
-    App.scene[name].position.z = -20;
-    App.scene[name].rotx = 45
-    App.scene[name].rotation.rotz = -90
-    App.scene[name].LightsData.ambientLight.set(1, 1, 1);
-    App.scene[name].net.enable = true;
-    App.scene[name].net.activate();
+
 
     _.forEach((i) => {
       // App.network.connection.userid  REPRESENT LOCAL STREAM 
       if(e.detail.data.userId != App.network.connection.userid) {
         // This is video element!
+        world.Add("cubeLightTex", 3, name , tex);
+        App.scene[name].position.x = 0;
+        App.scene[name].position.z = -20;
+        App.scene[name].rotx = 45
+        App.scene[name].rotation.rotz = -90
+        App.scene[name].LightsData.ambientLight.set(1, 1, 1);
+        App.scene[name].net.enable = true;
+        App.scene[name].net.activate();
         App.scene[name].streamTextures = matrixEngine.Engine.DOM_VT(i.children[1])
         objGenerator( App.scene[name])
 
-        setInterval(function() {
+        setInterval(() => {
           App.scene[name].geometry.texCoordsPoints.front.right_top.x += 0.01;
           App.scene[name].geometry.texCoordsPoints.front.left_bottom.x += 0.01;
           App.scene[name].geometry.texCoordsPoints.front.left_top.x += 0.01;

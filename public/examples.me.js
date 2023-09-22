@@ -2679,24 +2679,23 @@ var runThis = world => {
   let gravityVector = [0, 0, -9.82];
   let physics = world.loadPhysics(gravityVector); // Add ground
 
-  physics.addGround(_manifest.default, world, tex);
-  world.Add("cubeLightTex", 1, "CUBE", tex);
-  var b = new CANNON.Body({
-    mass: 5,
-    position: new CANNON.Vec3(0, -15, 2),
-    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-  });
-  physics.world.addBody(b); // Physics
-
-  _manifest.default.scene.CUBE.physics.currentBody = b;
-  _manifest.default.scene.CUBE.physics.enabled = true;
+  physics.addGround(_manifest.default, world, tex); // world.Add("cubeLightTex", 1, "CUBE", tex);
+  // var b = new CANNON.Body({
+  //   mass: 5,
+  //   position: new CANNON.Vec3(0, -15, 2),
+  //   shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
+  // });
+  // physics.world.addBody(b);
+  // // Physics
+  // App.scene.CUBE.physics.currentBody = b;
+  // App.scene.CUBE.physics.enabled = true;
 
   const objGenerator = meObj => {
     var b2 = new CANNON.Body({
       mass: 1,
       linearDamping: 0.01,
-      position: new CANNON.Vec3(1, -14.5, 15),
-      shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+      position: new CANNON.Vec3(0, -14.5, 15),
+      shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
     });
     physics.world.addBody(b2);
     meObj.physics.currentBody = b2;
@@ -2713,22 +2712,23 @@ var runThis = world => {
     var _ = document.querySelectorAll('.media-box');
 
     var name = "videochat-" + e.detail.data.userId;
-    world.Add("cubeLightTex", 3, name, tex);
-    _manifest.default.scene[name].position.x = 0;
-    _manifest.default.scene[name].position.z = -20;
-    _manifest.default.scene[name].rotx = 45;
-    _manifest.default.scene[name].rotation.rotz = -90;
-
-    _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
-
-    _manifest.default.scene[name].net.enable = true;
-
-    _manifest.default.scene[name].net.activate();
 
     _.forEach(i => {
       // App.network.connection.userid  REPRESENT LOCAL STREAM 
       if (e.detail.data.userId != _manifest.default.network.connection.userid) {
         // This is video element!
+        world.Add("cubeLightTex", 3, name, tex);
+        _manifest.default.scene[name].position.x = 0;
+        _manifest.default.scene[name].position.z = -20;
+        _manifest.default.scene[name].rotx = 45;
+        _manifest.default.scene[name].rotation.rotz = -90;
+
+        _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
+
+        _manifest.default.scene[name].net.enable = true;
+
+        _manifest.default.scene[name].net.activate();
+
         _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT(i.children[1]);
         objGenerator(_manifest.default.scene[name]);
         setInterval(function () {
@@ -4491,13 +4491,6 @@ class ClientConfig {
    */
 
   broadcasterPort = 999;
-  /**
-   * @description
-   * broadcaster socket.io address.
-   * Change it for production regime
-   */
-
-  broadcastAutoConnect = false;
   /**
    * @description
    * broadcaster rtc session init values.
