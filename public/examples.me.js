@@ -2681,12 +2681,14 @@ var runThis = world => {
   _manifest.default.scene.outsideBox.net.activate();
 
   addEventListener('stream-loaded', e => {
+    console.log('TEST CASE !!!!!!!!!!!!!!!');
+
     var _ = document.querySelectorAll('.media-box');
 
     _.forEach(i => {
-      if (e.detail.data.userId == i.children[0].innerHTML) {
-        // This is video element!
-        _manifest.default.scene.outsideBox.streamTextures = matrixEngine.Engine.DOM_VT(i.children[1]);
+      // if(e.detail.data.userId == i.children[0].innerHTML) {
+      if (e.detail.data.userId == i.children[0].innerHTML) {// This is video element!
+        // App.scene.outsideBox.streamTextures = matrixEngine.Engine.DOM_VT(i.children[1])
       }
     });
   });
@@ -4718,6 +4720,7 @@ let activateNet = () => {
   if (typeof _manifest.default.net !== 'undefinde' && _manifest.default.net === true) {
     var t = new _clientConfig.default();
     exports.net = net = new _net.Broadcaster(t);
+    _manifest.default.network = net;
     console.info('Networking is active.', net);
   }
 };
@@ -17317,7 +17320,7 @@ var RTCMultiConnection3 = function(roomid, forceOptions) {
 
         if (connection.enableLogs) {
             if (connection.socketURL == '/') {
-                connection.socketURL = "http://localhost:999/";
+                connection.socketURL = "https://localhost:999/";
             }
         }
 

@@ -30,11 +30,14 @@ export var runThis = world => {
   App.scene.outsideBox.net.activate();
 
   addEventListener('stream-loaded', (e) => {
+
+    console.log('TEST CASE !!!!!!!!!!!!!!!')
     var _ = document.querySelectorAll('.media-box')
     _.forEach((i) => {
-      if(e.detail.data.userId == i.children[0].innerHTML) {
+      // if(e.detail.data.userId == i.children[0].innerHTML) {
+        if(e.detail.data.userId == i.children[0].innerHTML) {
         // This is video element!
-        App.scene.outsideBox.streamTextures = matrixEngine.Engine.DOM_VT(i.children[1])
+        // App.scene.outsideBox.streamTextures = matrixEngine.Engine.DOM_VT(i.children[1])
       }
     })
   })
