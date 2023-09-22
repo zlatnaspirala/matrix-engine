@@ -25,6 +25,11 @@ export var runThis = world => {
      }
   });
 
+  var tex = {
+    source: ["res/images/complex_texture_1/diffuse.png"],
+    mix_operation: "multiply", // ENUM : multiply , divide ,
+  };
+  
   let gravityVector = [0, 0, -9.82];
   let physics = world.loadPhysics(gravityVector);
   // Add ground
@@ -65,10 +70,7 @@ export var runThis = world => {
   // Must be activate for scene objects also.
   // This is only to force avoid unnecessary networking emit!
   // let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-  var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply", // ENUM : multiply , divide ,
-  };
+
 
   world.Add("cubeLightTex", 3, "outsideBox", tex);
   // App.scene.outsideBox.geometry.setScaleByY(7)
