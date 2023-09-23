@@ -89,15 +89,22 @@ export var runThis = world => {
         objGenerator(App.scene[name])
 
         App.CUSTOM_TIMER = setInterval(() => {
-          if(typeof App.scene[name] !== 'undefined' && typeof App.scene[name].geometry !== 'undefined') {
-            App.scene[name].geometry.texCoordsPoints.front.right_top.x += 0.001;
-            App.scene[name].geometry.texCoordsPoints.front.left_bottom.x += 0.001;
-            App.scene[name].geometry.texCoordsPoints.front.left_top.x += 0.001;
-            App.scene[name].geometry.texCoordsPoints.front.right_bottom.x += 0.001;
-          } else {
+
+          try {
+            if(typeof App.scene[name] !== 'undefined' && typeof App.scene[name].geometry !== 'undefined') {
+              App.scene[name].geometry.texCoordsPoints.front.right_top.x += 0.001;
+              App.scene[name].geometry.texCoordsPoints.front.left_bottom.x += 0.001;
+              App.scene[name].geometry.texCoordsPoints.front.left_top.x += 0.001;
+              App.scene[name].geometry.texCoordsPoints.front.right_bottom.x += 0.001;
+            } else {
+              clearInterval(App.CUSTOM_TIMER)
+              App.CUSTOM_TIMER = null;
+            }
+          } catch(err) {
             clearInterval(App.CUSTOM_TIMER)
             App.CUSTOM_TIMER = null;
           }
+
         }, 1);
 
         addEventListener('net.remove-user', (event) => {

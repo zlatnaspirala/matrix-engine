@@ -2731,12 +2731,17 @@ var runThis = world => {
         _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT(i.children[1]);
         objGenerator(_manifest.default.scene[name]);
         _manifest.default.CUSTOM_TIMER = setInterval(() => {
-          if (typeof _manifest.default.scene[name] !== 'undefined' && typeof _manifest.default.scene[name].geometry !== 'undefined') {
-            _manifest.default.scene[name].geometry.texCoordsPoints.front.right_top.x += 0.001;
-            _manifest.default.scene[name].geometry.texCoordsPoints.front.left_bottom.x += 0.001;
-            _manifest.default.scene[name].geometry.texCoordsPoints.front.left_top.x += 0.001;
-            _manifest.default.scene[name].geometry.texCoordsPoints.front.right_bottom.x += 0.001;
-          } else {
+          try {
+            if (typeof _manifest.default.scene[name] !== 'undefined' && typeof _manifest.default.scene[name].geometry !== 'undefined') {
+              _manifest.default.scene[name].geometry.texCoordsPoints.front.right_top.x += 0.001;
+              _manifest.default.scene[name].geometry.texCoordsPoints.front.left_bottom.x += 0.001;
+              _manifest.default.scene[name].geometry.texCoordsPoints.front.left_top.x += 0.001;
+              _manifest.default.scene[name].geometry.texCoordsPoints.front.right_bottom.x += 0.001;
+            } else {
+              clearInterval(_manifest.default.CUSTOM_TIMER);
+              _manifest.default.CUSTOM_TIMER = null;
+            }
+          } catch (err) {
             clearInterval(_manifest.default.CUSTOM_TIMER);
             _manifest.default.CUSTOM_TIMER = null;
           }
