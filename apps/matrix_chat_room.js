@@ -16,10 +16,6 @@ export var runThis = world => {
 
   window.addEventListener('ray.hit.event', (ev) => {
     console.log("You shoot the object! Nice!", ev)
-
-    /**
-     * Physics force apply
-     */
     if(ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000)
     }
@@ -34,17 +30,6 @@ export var runThis = world => {
   let physics = world.loadPhysics(gravityVector);
   // Add ground
   physics.addGround(App, world, tex);
-  // world.Add("cubeLightTex", 1, "CUBE", tex);
-  // var b = new CANNON.Body({
-  //   mass: 5,
-  //   position: new CANNON.Vec3(0, -15, 2),
-  //   shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
-  // });
-  // physics.world.addBody(b);
-  // // Physics
-  // App.scene.CUBE.physics.currentBody = b;
-  // App.scene.CUBE.physics.enabled = true;
-
   const objGenerator = (meObj) => {
     var b2 = new CANNON.Body({
       mass: 1,
@@ -64,15 +49,9 @@ export var runThis = world => {
   // This is only to force avoid unnecessary networking emit!
   // let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 
-
-
-
   addEventListener('stream-loaded', (e) => {
     var _ = document.querySelectorAll('.media-box')
-
     var name = "videochat-" + e.detail.data.userId;
-
-
     _.forEach((i) => {
       // App.network.connection.userid  REPRESENT LOCAL STREAM 
       if(e.detail.data.userId != App.network.connection.userid) {
@@ -104,12 +83,10 @@ export var runThis = world => {
             clearInterval(App.CUSTOM_TIMER)
             App.CUSTOM_TIMER = null;
           }
-
         }, 1);
 
         addEventListener('net.remove-user', (event) => {
           var n = "videochat-" + event.detail.data.userid;
-          // console.log('DESTROY OBJECT!', n)
           if(typeof App.scene[n] !== 'undefinde' &&
             typeof App.scene[n].CUSTOM_FLAG_PREVENT_DBCALL === 'undefined') {
             App.scene[n].CUSTOM_FLAG_PREVENT_DBCALL = true;

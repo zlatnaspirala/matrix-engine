@@ -2663,9 +2663,6 @@ var runThis = world => {
   });
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev);
-    /**
-     * Physics force apply
-     */
 
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
@@ -2679,16 +2676,7 @@ var runThis = world => {
   let gravityVector = [0, 0, -9.82];
   let physics = world.loadPhysics(gravityVector); // Add ground
 
-  physics.addGround(_manifest.default, world, tex); // world.Add("cubeLightTex", 1, "CUBE", tex);
-  // var b = new CANNON.Body({
-  //   mass: 5,
-  //   position: new CANNON.Vec3(0, -15, 2),
-  //   shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
-  // });
-  // physics.world.addBody(b);
-  // // Physics
-  // App.scene.CUBE.physics.currentBody = b;
-  // App.scene.CUBE.physics.enabled = true;
+  physics.addGround(_manifest.default, world, tex);
 
   const objGenerator = meObj => {
     var b2 = new CANNON.Body({
@@ -2747,7 +2735,7 @@ var runThis = world => {
           }
         }, 1);
         addEventListener('net.remove-user', event => {
-          var n = "videochat-" + event.detail.data.userid; // console.log('DESTROY OBJECT!', n)
+          var n = "videochat-" + event.detail.data.userid;
 
           if (typeof _manifest.default.scene[n] !== 'undefinde' && typeof _manifest.default.scene[n].CUSTOM_FLAG_PREVENT_DBCALL === 'undefined') {
             _manifest.default.scene[n].CUSTOM_FLAG_PREVENT_DBCALL = true;
