@@ -5,10 +5,16 @@
 [1.9.16]
  - New custom event `net.new-user` to make easy detect on top level
    used direct for new example video chat matrix.
+   
   - New access point for broadcaster/networking
   ```js
   net = new Broadcaster(t);
   App.network = net;
+  ```
+
+  - added new branch [asyn nature od stream video dom element ready...]
+  ```js
+   if(App.scene[e.data.netObjId]) 
   ```
 
 #### [1.9.14] New optimal arg2 for defineWorld (arg1, arg2)

@@ -2719,9 +2719,8 @@ var runThis = world => {
         // This is video element!
         world.Add("cubeLightTex", 3, name, tex);
         _manifest.default.scene[name].position.x = 0;
-        _manifest.default.scene[name].position.z = -20;
-        _manifest.default.scene[name].rotx = 45;
-        _manifest.default.scene[name].rotation.rotz = -90;
+        _manifest.default.scene[name].position.z = -20; // App.scene[name].rotx = 45
+        // App.scene[name].rotation.rotz = -90
 
         _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
 
@@ -2731,20 +2730,56 @@ var runThis = world => {
 
         _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT(i.children[1]);
         objGenerator(_manifest.default.scene[name]);
-        setInterval(function () {
-          _manifest.default.scene[name].geometry.texCoordsPoints.front.right_top.x += 0.01;
-          _manifest.default.scene[name].geometry.texCoordsPoints.front.left_bottom.x += 0.01;
-          _manifest.default.scene[name].geometry.texCoordsPoints.front.left_top.x += 0.01;
-          _manifest.default.scene[name].geometry.texCoordsPoints.front.right_bottom.x += 0.01;
-        }, 20);
+        _manifest.default.CUSTOM_TIMER = setInterval(() => {
+          if (typeof _manifest.default.scene[name] !== 'undefined' && typeof _manifest.default.scene[name].geometry !== 'undefined') {
+            _manifest.default.scene[name].geometry.texCoordsPoints.front.right_top.x += 0.001;
+            _manifest.default.scene[name].geometry.texCoordsPoints.front.left_bottom.x += 0.001;
+            _manifest.default.scene[name].geometry.texCoordsPoints.front.left_top.x += 0.001;
+            _manifest.default.scene[name].geometry.texCoordsPoints.front.right_bottom.x += 0.001;
+          } else {
+            clearInterval(_manifest.default.CUSTOM_TIMER);
+            _manifest.default.CUSTOM_TIMER = null;
+          }
+        }, 1);
+        addEventListener('net.remove-user', event => {
+          var n = "videochat-" + event.detail.data.userid; // console.log('DESTROY OBJECT!', n)
+
+          if (typeof _manifest.default.scene[n] !== 'undefinde' && typeof _manifest.default.scene[n].CUSTOM_FLAG_PREVENT_DBCALL === 'undefined') {
+            _manifest.default.scene[n].CUSTOM_FLAG_PREVENT_DBCALL = true;
+
+            _manifest.default.scene[n].selfDestroy(1);
+          }
+        });
+      } else {
+        // console.log('OWN STREAM !!!!!!!!!!!!!!')
+        // own stream 
+        function onLoadObj(meshes) {
+          _manifest.default.meshes = meshes;
+          matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.TV);
+          setTimeout(function () {
+            world.Add("obj", 1, "TV", tex, _manifest.default.meshes.TV);
+
+            _manifest.default.scene.TV.position.setPosition(-9, 4, -15);
+
+            _manifest.default.scene.TV.rotation.rotateY(90);
+
+            _manifest.default.scene.TV.LightsData.ambientLight.set(1, 1, 1);
+
+            _manifest.default.scene.TV.streamTextures = new matrixEngine.Engine.DOM_VT(i.children[1]);
+          }, 1000);
+        }
+
+        matrixEngine.objLoader.downloadMeshes({
+          TV: "res/3d-objects/balltest2.obj"
+        }, onLoadObj);
       }
     });
   });
-  addEventListener('net-new-user', e => {});
-  world.Add("cubeLightTex", 5, "outsideBox2", tex);
+  world.Add("cubeLightTex", 3, "outsideBox2", tex);
   _manifest.default.scene.outsideBox2.position.x = 0;
+  _manifest.default.scene.outsideBox2.position.y = 2;
   _manifest.default.scene.outsideBox2.position.z = -24;
-  _manifest.default.scene.outsideBox2.rotation.rotationSpeed.y = 10;
+  _manifest.default.scene.outsideBox2.rotation.rotationSpeed.y = 20;
   _manifest.default.scene.outsideBox2.rotation.rotx = 45;
   _manifest.default.scene.outsideBox2.streamTextures = new VT("res/video-texture/me.mkv");
   _manifest.default.scene.outsideBox2.glBlend.blendEnabled = true;
@@ -15001,9 +15036,11 @@ class Broadcaster {
       update(e) {
         if (e.data.netPos) {
           // console.log('INFO ZA UPDATE', e);
-          if (e.data.netPos.x) _manifest.default.scene[e.data.netObjId].position.SetX(e.data.netPos.x, 'noemit');
-          if (e.data.netPos.y) _manifest.default.scene[e.data.netObjId].position.SetY(e.data.netPos.y, 'noemit');
-          if (e.data.netPos.z) _manifest.default.scene[e.data.netObjId].position.SetZ(e.data.netPos.z, 'noemit');
+          if (_manifest.default.scene[e.data.netObjId]) {
+            if (e.data.netPos.x) _manifest.default.scene[e.data.netObjId].position.SetX(e.data.netPos.x, 'noemit');
+            if (e.data.netPos.y) _manifest.default.scene[e.data.netObjId].position.SetY(e.data.netPos.y, 'noemit');
+            if (e.data.netPos.z) _manifest.default.scene[e.data.netObjId].position.SetZ(e.data.netPos.z, 'noemit');
+          }
         } else if (e.data.netRot) {
           // console.log('ROT INFO ZA UPDATE', e);
           if (e.data.netRot.x) _manifest.default.scene[e.data.netObjId].rotation.rotx = e.data.netRot.x; // , 'noemit');
