@@ -2,6 +2,19 @@
 # Matrix Engine [CHANGES]
 ## ---------------------------------
 
+[1.9.18] 
+- Implemented torus geometry with 'generatorLightTex' flag type.
+  support for stream textures but not physics and net for `generatorLightTex`
+```js
+  world.Add("generatorLightTex", 1, "outsideBox2", tex, {
+      custom_type: 'torus',
+      slices: 8,
+      loops: 20,
+      inner_rad: 1.5,
+      outerRad: 2
+  });
+```
+
 [1.9.17]
  Added new net example script - video chat.
   - added new branch [asyn nature od stream video dom element ready...]

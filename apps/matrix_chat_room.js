@@ -114,6 +114,7 @@ export var runThis = world => {
   })
 
   world.Add("cubeLightTex", 3, "outsideBox2", tex);
+  
   App.scene.outsideBox2.position.x = 0;
   App.scene.outsideBox2.position.y = 2;
   App.scene.outsideBox2.position.z = -24;

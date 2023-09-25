@@ -46,7 +46,7 @@ import {runThis as fps_player_controller } from './apps/fps_player_controller';
 import {runThis as basic_fbo } from './apps/basic_fbo';
 import {runThis as video_texture_lava} from './apps/video_texture_lava';
 import {runThis as matrix_chat_room} from './apps/matrix_chat_room';
-
+import { runThis as torus_geometry } from './apps/torus_geometry';
 /**
  * @description
  * All examples instances.
@@ -56,6 +56,7 @@ import {runThis as matrix_chat_room} from './apps/matrix_chat_room';
  * public/query-build.html?u=spot_light_shadows
  */
 var Examples = {
+  torus_geometry: torus_geometry,
   matrix_chat_room: matrix_chat_room,
   video_texture_lava: video_texture_lava,
   basic_fbo: basic_fbo,
