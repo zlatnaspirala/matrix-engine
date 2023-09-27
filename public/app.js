@@ -671,13 +671,6 @@ class ClientConfig {
   broadcasterPort = 999;
   /**
    * @description
-   * broadcaster socket.io address.
-   * Change it for production regime
-   */
-
-  broadcastAutoConnect = false;
-  /**
-   * @description
    * broadcaster rtc session init values.
    * Change it for production regime
    */
@@ -726,6 +719,7 @@ class ClientConfig {
   }
 
   getDomain() {
+    // localhost vs prodc domain not works CORS not equal!
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
       return window.location.hostname;
     }
@@ -874,6 +868,7 @@ exports.VIDEO_TEXTURE = VIDEO_TEXTURE;
 exports.VT = VT;
 exports.Vjs3 = Vjs3;
 exports.anyCanvas = anyCanvas;
+exports.DOM_VT = DOM_VT;
 exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateCubeMapShader = exports.RegenerateShader = exports.activateNet = exports.net = exports.looper = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
 
 var _net = require("./net");
@@ -938,6 +933,7 @@ let activateNet = () => {
   if (typeof _manifest.default.net !== 'undefinde' && _manifest.default.net === true) {
     var t = new _clientConfig.default();
     exports.net = net = new _net.Broadcaster(t);
+    _manifest.default.network = net;
     console.info('Networking is active.', net);
   }
 };
@@ -1778,6 +1774,89 @@ function anyCanvas(path_, nameOfCanvas) {
   };
 
   ROOT.iframe.data = path_;
+}
+
+function DOM_VT(video, name, options) {
+  if (typeof name === 'undefined') name = 'vtex' + (0, _utility.randomIntFromTo)(1, 999999);
+
+  if (typeof options === 'undefined') {
+    options = {
+      mixWithCanvas2d: false
+    };
+  }
+
+  function fixAutoPlay() {
+    console.log("Autoplay fixing...? ", ROOT.video);
+    window.addEventListener('click', FirstClickAutoPlay, {
+      passive: false
+    });
+  }
+
+  function FirstClickAutoPlay() {
+    var t = ROOT.video.play();
+    t.then(() => {
+      console.info("Autoplay fixed.");
+      window.removeEventListener('click', FirstClickAutoPlay);
+    }).catch(() => {
+      console.warn("Autoplay error.");
+    });
+  }
+
+  var ROOT = this;
+  ROOT.video = video;
+
+  let READY = function (e) {
+    ROOT.videoImage = document.createElement('canvas');
+    ROOT.videoImage.id = 'vtex-' + name;
+    ROOT.videoImage.setAttribute('width', '512px');
+    ROOT.videoImage.setAttribute('height', '512px');
+    ROOT.video.mute = true;
+    ROOT.video.autoplay = true;
+    ROOT.video.loop = true;
+    var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
+    DIV_CONTENT_STREAMS.appendChild(ROOT.videoImage);
+    ROOT.options = options;
+
+    if (options.mixWithCanvas2d == true) {
+      ROOT.videoImageContext = ROOT.videoImage.getContext('2d');
+      ROOT.videoImageContext.fillStyle = '#00003F';
+      ROOT.videoImageContext.fillRect(0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
+      ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.videoImage);
+    } else {
+      ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.video);
+    }
+
+    try {
+      var testAutoplay = ROOT.video.play();
+      testAutoplay.catch(() => {
+        fixAutoPlay();
+      });
+    } catch (err) {}
+
+    _manifest.default.updateBeforeDraw.push(ROOT);
+
+    console.info("Video 2dcanvas texture created!!!.", ROOT.video);
+  };
+
+  READY();
+  ROOT.video.addEventListener('loadeddata', ROOT.video.READY, false);
+  ROOT.video.load();
+
+  ROOT.UPDATE = function () {
+    if (ROOT.options.mixWithCanvas2d == false) return;
+
+    if (ROOT.video.readyState === ROOT.video.HAVE_ENOUGH_DATA) {
+      ROOT.videoImageContext.drawImage(ROOT.video, 0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
+      ROOT.videoImageContext.font = '30px Georgia';
+      ROOT.videoImageContext.fillStyle = 'black';
+      ROOT.videoImageContext.fillText('Matrix-Engine [1.8.10] ', 0, 85);
+      ROOT.videoImageContext.fillText('Video texture', 20, 50);
+    }
+  };
+
+  return {
+    video: video
+  };
 }
 
 },{"../client-config":3,"../program/manifest":37,"./events":6,"./matrix-render":13,"./matrix-shaders":14,"./matrix-world":18,"./net":19,"./sounds":27,"./utility":28,"./webgl-utils":29}],6:[function(require,module,exports){
@@ -3084,7 +3163,9 @@ _manifest.default.operation.squareTex_buffer_procedure = function (object) {
 };
 
 _manifest.default.operation.sphere_buffer_procedure = function (object) {
+  console.log('TEST sphere_buffer_procedure');
   /* Vertex */
+
   object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
 
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -4875,8 +4956,11 @@ _manifest.default.operation.draws.sphere = function (object) {
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
 
     if (object.streamTextures != null) {
-      // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
-      _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
+      if (object.streamTextures.video) {
+        _manifest.default.tools.loadVideoTexture('glVideoTextureTorus', object.streamTextures.video);
+      } else {
+        _manifest.default.tools.loadVideoTexture('glVideoTextureTorus', object.streamTextures.videoImage);
+      }
 
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else {
@@ -4957,7 +5041,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.COLOR = COLOR;
 exports.COLOR_ALPHA = COLOR_ALPHA;
-exports.ring = ring;
 exports.GeoOfColor = exports.customVertex_1 = exports.customVertex = exports.sphereVertex = exports.PiramideVertex = exports.CubeVertex = exports.SquareVertex = exports.TriangleVertex = exports.Position = exports.RotationVector = exports.Point = exports.Scale = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
@@ -6561,6 +6644,7 @@ exports.sphereVertex = sphereVertex;
 
 class customVertex {
   createGeoData(root) {
+    console.log("CUSTOM CREATE DATA");
     this.size = root.size;
     this.basePoint = 1.0 * this.size;
     this.basePointNeg = -1.0 * this.size;
@@ -6638,6 +6722,53 @@ class customVertex {
         this.indexData.push(second);
         this.indexData.push(second + 1);
         this.indexData.push(first + 1);
+      }
+    } else if (this.root.custom_type == "torus") {
+      for (let slice = 0; slice <= this.root.slices; ++slice) {
+        const v = slice / this.root.slices;
+        const slice_angle = v * 2 * Math.PI;
+        const cos_slices = Math.cos(slice_angle);
+        const sin_slices = Math.sin(slice_angle);
+        const slice_rad = this.root.outerRad + this.root.inner_rad * cos_slices;
+
+        for (let loop = 0; loop <= this.root.loops; ++loop) {
+          //   x=(R+r·cos(v))cos(w)
+          //   y=(R+r·cos(v))sin(w)
+          //             z=r.sin(v)
+          const u = loop / this.root.loops;
+          const loop_angle = u * 2 * Math.PI;
+          const cos_loops = Math.cos(loop_angle);
+          const sin_loops = Math.sin(loop_angle);
+          const x = slice_rad * cos_loops;
+          const y = slice_rad * sin_loops;
+          const z = this.root.inner_rad * sin_slices;
+          this.vertexPositionData.push(x, y, z);
+          this.normalData.push(cos_loops * sin_slices, sin_loops * sin_slices, cos_slices);
+          this.textureCoordData.push(u);
+          this.textureCoordData.push(v);
+        }
+      } // 0  1  2  3  4  5
+      // 6  7  8  9  10 11
+      // 12 13 14 15 16 17
+
+
+      this.indexData = [];
+      const vertsPerSlice = this.root.loops + 1;
+
+      for (let i = 0; i < this.root.slices; ++i) {
+        let v1 = i * vertsPerSlice;
+        let v2 = v1 + vertsPerSlice;
+
+        for (let j = 0; j < this.root.loops; ++j) {
+          this.indexData.push(v1);
+          this.indexData.push(v1 + 1);
+          this.indexData.push(v2);
+          this.indexData.push(v2);
+          this.indexData.push(v1 + 1);
+          this.indexData.push(v2 + 1);
+          v1 += 1;
+          v2 += 1;
+        }
       }
     }
   }
@@ -6907,11 +7038,10 @@ class GeoOfColor {
     }
   }
 
-}
+} // export function ring(innerRadius, outerRadius, slices) {}
+
 
 exports.GeoOfColor = GeoOfColor;
-
-function ring(innerRadius, outerRadius, slices) {}
 
 },{"../program/manifest":37,"./engine":5,"./utility":28}],12:[function(require,module,exports){
 "use strict";
@@ -9729,7 +9859,8 @@ function defineworld(canvas, renderType) {
    * @MatrixAnimationLine
    * @globalAnimCounter Counter  READONLY
    * @globalAnimSequenceSize = 5000
-   * After globalAnimCounter reach globalAnimSequenceSize value will reset to the zero.
+   * After globalAnimCounter reach globalAnimSequenceSize value will
+   * reset to the zero.
    */
 
 
@@ -9760,7 +9891,7 @@ function defineworld(canvas, renderType) {
   };
   /**
    * @description
-   *  TEST GLOBAL LIGHT PARAMS
+   * TEST GLOBAL LIGHT PARAMS
    * this.uLightPosition = new Float32Array([0.0,0.0,0.0]);
    */
 
@@ -9780,6 +9911,7 @@ function defineworld(canvas, renderType) {
       object.rotation       =  Rotator
       object.color          =  Will contain colors based on the sides clockwise. One vertice -> [R,G,B,alpha]
       object.texture        =  If texture is present then this will be used.           (To be built and used)
+      object.mesh           =  For objs and custom geometry - geometry buffers container
       object.vertexPositionBuffer =  allocated during buffering
       object.vertexColorBuffer    =  allocated during buffering
       object.vertexTexCoordBuffer =  allocated during buffering
@@ -9823,8 +9955,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(triangleObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      triangleObject.raycast = {
+        enabled: true
+      }; // Physics
 
       triangleObject.physics = {
         enabled: false
@@ -9846,8 +9981,9 @@ function defineworld(canvas, renderType) {
         triangleObject.glDrawElements = new _utility._DrawElements(triangleObject.vertexColorBuffer.numItems);
         this.contentList[this.contentList.length] = triangleObject;
         _manifest.default.scene[triangleObject.name] = triangleObject; // console.log("Buffer the " + filler + ":Store at:" + this.contentList.length);
-      } else {// console.log("Triangle shader failure...");
-        }
+      } else {
+        console.warn("Triangle shader failure...");
+      }
     }
 
     if ('square' == filler) {
@@ -9886,8 +10022,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      squareObject.raycast = {
+        enabled: true
+      }; // Physics
 
       squareObject.physics = {
         enabled: false
@@ -9906,13 +10045,13 @@ function defineworld(canvas, renderType) {
 
       if (squareObject.shaderProgram) {
         // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
-        this.bufferSquare(squareObject); // LOOK BETTER
-
+        this.bufferSquare(squareObject);
         squareObject.glDrawElements = new _utility._DrawElements(squareObject.vertexColorBuffer.numItems);
         squareObject.glDrawElements.mode = 'TRIANGLE_STRIP';
         this.contentList[this.contentList.length] = squareObject;
         _manifest.default.scene[squareObject.name] = squareObject;
-      } else {// console.log("Square shader failure...");
+      } else {
+        console.warn("Square shader failure...");
       }
     }
 
@@ -9956,8 +10095,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      squareObject.raycast = {
+        enabled: true
+      }; // Physics
 
       squareObject.physics = {
         enabled: false
@@ -10111,8 +10253,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      cubeObject.raycast = {
+        enabled: true
+      }; // Physics
 
       cubeObject.physics = {
         enabled: false
@@ -10130,7 +10275,8 @@ function defineworld(canvas, renderType) {
         cubeObject.glDrawElements = new _utility._DrawElements(cubeObject.vertexIndexBuffer.numItems);
         this.contentList[this.contentList.length] = cubeObject;
         _manifest.default.scene[cubeObject.name] = cubeObject;
-      } else {// console.warn("   Cube shader failure");
+      } else {
+        console.warn("Cube shader failure");
       }
     }
 
@@ -10170,8 +10316,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(sphereObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      sphereObject.raycast = {
+        enabled: true
+      }; // Physics
 
       sphereObject.physics = {
         enabled: false
@@ -10241,8 +10390,7 @@ function defineworld(canvas, renderType) {
         this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
       };
 
-      sphereObject.mvMatrix = mat4.create(); //sphereObject.LightMap   = new GeoOfColor("cube light");
-
+      sphereObject.mvMatrix = mat4.create();
       sphereObject.LightMap = undefined;
 
       if (typeof mesh_ !== 'undefined') {
@@ -10271,7 +10419,8 @@ function defineworld(canvas, renderType) {
         sphereObject.glDrawElements = new _utility._DrawElements(sphereObject.vertexIndexBuffer.numItems);
         this.contentList[this.contentList.length] = sphereObject;
         _manifest.default.scene[sphereObject.name] = sphereObject;
-      } else {// console.warn("   Cube shader failure");
+      } else {
+        console.warn("Cube shader failure");
       }
     }
 
@@ -10309,8 +10458,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(pyramidObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      pyramidObject.raycast = {
+        enabled: true
+      }; // Physics
 
       pyramidObject.physics = {
         enabled: false
@@ -10335,7 +10487,8 @@ function defineworld(canvas, renderType) {
 
         this.contentList[this.contentList.length] = pyramidObject;
         _manifest.default.scene[pyramidObject.name] = pyramidObject;
-      } else {// console.warn("   Pyramid shader failure");
+      } else {
+        console.warn("Pyramid shader failure");
       }
     } // no physics for now
 
@@ -10383,8 +10536,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(objObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      objObject.raycast = {
+        enabled: true
+      }; // Physics
 
       objObject.physics = {
         enabled: false
@@ -10483,8 +10639,7 @@ function defineworld(canvas, renderType) {
         this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
       };
 
-      objObject.mvMatrix = mat4.create(); // eslint-disable-next-line valid-typeof
-      // update
+      objObject.mvMatrix = mat4.create(); // update
 
       objObject.meshList = {};
 
@@ -10517,7 +10672,7 @@ function defineworld(canvas, renderType) {
         this.contentList[this.contentList.length] = objObject;
         _manifest.default.scene[objObject.name] = objObject;
       } else {
-        console.log('obj file shader failure');
+        console.warn('obj file shader failure');
       }
     }
 
@@ -10564,8 +10719,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      cubeObject.raycast = {
+        enabled: true
+      }; // Physics
 
       cubeObject.physics = {
         enabled: false
@@ -10646,7 +10804,7 @@ function defineworld(canvas, renderType) {
 
           cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
         } else {
-          console.warn("Exec add obj : cubeObject texturePaths : path is unknow !");
+          console.warn("Exec add obj : cubeObject wrong texturePaths!");
         }
       } else {
         // no textures , use default single textures
@@ -10685,7 +10843,7 @@ function defineworld(canvas, renderType) {
         this.contentList[this.contentList.length] = cubeObject;
         _manifest.default.scene[cubeObject.name] = cubeObject;
       } else {
-        console.log('Cube shader failure');
+        console.warn('Cube shader failure');
       }
     }
 
@@ -10727,8 +10885,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      cubeObject.raycast = {
+        enabled: true
+      }; // Physics
 
       cubeObject.physics = {
         enabled: false
@@ -10787,7 +10948,7 @@ function defineworld(canvas, renderType) {
           cubeObject.textures = [];
           cubeObject.texture = true; // cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler+"-shader-fs", filler+"-shader-vs");
 
-          (0, _engine.RegenerateCubeMapShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
+          (0, _engine.RegenerateCubeMapShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {// cubeObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t], texturesPaths.params));
           }
@@ -10960,6 +11121,15 @@ function defineworld(canvas, renderType) {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
         ambientLight: new _matrixGeometry.COLOR(1, 1, 1),
         lightingDirection: new _matrixGeometry.COLOR(1, 1, 0)
+      }; // Physics
+
+      customObject.physics = {
+        enabled: false
+      };
+      customObject.instancedDraws = {
+        numberOfInstance: 10,
+        array_of_local_offset: [12, 0, 0],
+        overrideDrawArraysInstance: function (object_) {}
       };
       customObject.textures = [];
 
@@ -10973,7 +11143,7 @@ function defineworld(canvas, renderType) {
           customObject.textures = [];
           customObject.texture = true; // cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler+"-shader-fs", filler+"-shader-vs");
 
-          (0, _engine.RegenerateShader)('sphereLightTex' + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation); // eslint-disable-next-line no-redeclare
+          (0, _engine.RegenerateShader)('sphereLightTex' + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30'); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             customObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
@@ -11002,19 +11172,31 @@ function defineworld(canvas, renderType) {
         this.shaderProgram = world.initShaders(world.GL.gl, 'sphereLightTex' + '-shader-fs', 'sphereLightTex' + '-shader-vs');
       };
 
-      customObject.mvMatrix = mat4.create(); //sphereObject.LightMap   = new GeoOfColor("cube light");
-
+      customObject.mvMatrix = mat4.create();
       customObject.LightMap = undefined;
 
       if (typeof mesh_ !== 'undefined') {
         customObject.latitudeBands = mesh_.latitudeBands;
         customObject.longitudeBands = mesh_.longitudeBands;
         customObject.radius = mesh_.radius;
-        customObject.custom_type = mesh_.custom_type;
+        customObject.custom_type = mesh_.custom_type; // torus
+
+        if (mesh_.custom_type == 'torus') {
+          customObject.slices = mesh_.slices;
+          customObject.loops = mesh_.loops;
+          customObject.inner_rad = mesh_.inner_rad;
+          customObject.outerRad = mesh_.outerRad;
+        }
       } else {
         customObject.latitudeBands = 30;
         customObject.longitudeBands = 30;
         customObject.radius = 2;
+        customObject.custom_type = 'torus'; // torus is default
+
+        customObject.slices = 8;
+        customObject.loops = 20;
+        customObject.inner_rad = 0.5;
+        customObject.outerRad = 2;
       }
 
       customObject.geometry = new _matrixGeometry.customVertex(customObject); //draws params
@@ -11022,21 +11204,19 @@ function defineworld(canvas, renderType) {
       customObject.glBlend = new _utility._glBlend();
 
       if (customObject.shaderProgram) {
-        // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
+        console.log("Buffer the " + filler + ":Store at:" + this.contentList.length);
         this.bufferSphere(customObject);
         customObject.glDrawElements = new _utility._DrawElements(customObject.vertexIndexBuffer.numItems);
         this.contentList[this.contentList.length] = customObject;
+        console.log("Buffer the ");
         _manifest.default.scene[customObject.name] = customObject;
-      } else {// console.log("   customObject shader failure");
+      } else {
+        console.log("   customObject shader failure");
       }
     }
   };
 
   world.callReDraw = _matrixRender.callReDraw_;
-  /**
-   * Destructor
-   */
-
   world.destroy = _manifest.default.operation.destroyWorld;
   return world;
 }
@@ -11090,15 +11270,21 @@ class Broadcaster {
 
       init(rtcEvent) {
         console.log("rtcEvent add new net object -> ", rtcEvent.userid);
-        dispatchEvent(new CustomEvent('net.new-user', {detail: {data: rtcEvent}}))
+        dispatchEvent(new CustomEvent('net-new-user', {
+          detail: {
+            data: rtcEvent
+          }
+        }));
       },
 
       update(e) {
         if (e.data.netPos) {
           // console.log('INFO ZA UPDATE', e);
-          if (e.data.netPos.x) _manifest.default.scene[e.data.netObjId].position.SetX(e.data.netPos.x, 'noemit');
-          if (e.data.netPos.y) _manifest.default.scene[e.data.netObjId].position.SetY(e.data.netPos.y, 'noemit');
-          if (e.data.netPos.z) _manifest.default.scene[e.data.netObjId].position.SetZ(e.data.netPos.z, 'noemit');
+          if (_manifest.default.scene[e.data.netObjId]) {
+            if (e.data.netPos.x) _manifest.default.scene[e.data.netObjId].position.SetX(e.data.netPos.x, 'noemit');
+            if (e.data.netPos.y) _manifest.default.scene[e.data.netObjId].position.SetY(e.data.netPos.y, 'noemit');
+            if (e.data.netPos.z) _manifest.default.scene[e.data.netObjId].position.SetZ(e.data.netPos.z, 'noemit');
+          }
         } else if (e.data.netRot) {
           // console.log('ROT INFO ZA UPDATE', e);
           if (e.data.netRot.x) _manifest.default.scene[e.data.netObjId].rotation.rotx = e.data.netRot.x; // , 'noemit');
@@ -11130,6 +11316,11 @@ class Broadcaster {
        */
       leaveGamePlay(rtcEvent) {
         console.info("rtcEvent LEAVE GAME: ", rtcEvent.userid);
+        dispatchEvent(new CustomEvent('net.remove-user', {
+          detail: {
+            data: rtcEvent
+          }
+        }));
       }
 
     };
@@ -11880,6 +12071,7 @@ function checkingProcedureCalc(object) {
     object.raycastFace.push(triangle);
 
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
+      if (object.raycast.enabled == false) return;
       rayHitEvent = new CustomEvent('ray.hit.event', {
         detail: {
           touchCoordinate: {
@@ -13445,7 +13637,7 @@ var RTCMultiConnection3 = function(roomid, forceOptions) {
 
         if (connection.enableLogs) {
             if (connection.socketURL == '/') {
-                connection.socketURL = "http://localhost:999/";
+                connection.socketURL = "https://localhost:999/";
             }
         }
 

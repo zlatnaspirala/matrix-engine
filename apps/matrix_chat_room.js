@@ -43,12 +43,8 @@ export var runThis = world => {
   }
   // objGenerator(1)
 
-  // Must be activate
   matrixEngine.Engine.activateNet();
-  // Must be activate for scene objects also.
-  // This is only to force avoid unnecessary networking emit!
   // let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-
   addEventListener('stream-loaded', (e) => {
     var _ = document.querySelectorAll('.media-box')
     var name = "videochat-" + e.detail.data.userId;
@@ -68,7 +64,6 @@ export var runThis = world => {
         objGenerator(App.scene[name])
 
         App.CUSTOM_TIMER = setInterval(() => {
-
           try {
             if(typeof App.scene[name] !== 'undefined' && typeof App.scene[name].geometry !== 'undefined') {
               App.scene[name].geometry.texCoordsPoints.front.right_top.x += 0.001;
@@ -93,9 +88,7 @@ export var runThis = world => {
             App.scene[n].selfDestroy(1)
           }
         })
-
       } else {
-        // console.log('OWN STREAM !!!!!!!!!!!!!!')
         // own stream 
         function onLoadObj(meshes) {
           App.meshes = meshes;

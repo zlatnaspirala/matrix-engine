@@ -2,6 +2,15 @@
 # Matrix Engine [CHANGES]
 ## ---------------------------------
 
+[1.9.19]
+Improved raycaster code :
+
+```js
+    if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
+      if (object.raycast.enabled == false) return;
+      rayHitEvent = new CustomEvent('ray.hit.event', ...
+```
+
 [1.9.18] 
 - Implemented torus geometry with 'generatorLightTex' flag type.
   support for stream textures but not physics and net for `generatorLightTex`

@@ -190,6 +190,7 @@ Take a look at query-build.html
 - specular_light_basic -> global light position test [WIP]
 - Lens effect shaders for cube [WIP]
 - Basic FBO + timeline test [WIP]
+- Matrix Video Chat - webGL vs webRTC
 
 ## Features description
 
@@ -399,8 +400,13 @@ Except activation.
 
   ➡ geometry.setSpitz()
 
-#### Networking minimal example
 
+#### Networking also can be used for video chat
+ Matrix server is broadcaster/signaling server based on NODE.js
+ Perfect for serverless methodology.
+ - See example matrix_chat_room.js
+
+#### Networking minimal example
 ```js
 export var runThis = world => {
 

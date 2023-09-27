@@ -2692,12 +2692,9 @@ var runThis = world => {
     meObj.physics.currentBody = b2;
     meObj.physics.enabled = true;
   }; // objGenerator(1)
-  // Must be activate
 
 
-  matrixEngine.Engine.activateNet(); // Must be activate for scene objects also.
-  // This is only to force avoid unnecessary networking emit!
-  // let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+  matrixEngine.Engine.activateNet(); // let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 
   addEventListener('stream-loaded', e => {
     var _ = document.querySelectorAll('.media-box');
@@ -2747,7 +2744,6 @@ var runThis = world => {
           }
         });
       } else {
-        // console.log('OWN STREAM !!!!!!!!!!!!!!')
         // own stream 
         function onLoadObj(meshes) {
           _manifest.default.meshes = meshes;
@@ -13885,8 +13881,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(triangleObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      triangleObject.raycast = {
+        enabled: true
+      }; // Physics
 
       triangleObject.physics = {
         enabled: false
@@ -13949,8 +13948,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      squareObject.raycast = {
+        enabled: true
+      }; // Physics
 
       squareObject.physics = {
         enabled: false
@@ -14019,8 +14021,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      squareObject.raycast = {
+        enabled: true
+      }; // Physics
 
       squareObject.physics = {
         enabled: false
@@ -14174,8 +14179,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      cubeObject.raycast = {
+        enabled: true
+      }; // Physics
 
       cubeObject.physics = {
         enabled: false
@@ -14234,8 +14242,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(sphereObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      sphereObject.raycast = {
+        enabled: true
+      }; // Physics
 
       sphereObject.physics = {
         enabled: false
@@ -14373,8 +14384,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(pyramidObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      pyramidObject.raycast = {
+        enabled: true
+      }; // Physics
 
       pyramidObject.physics = {
         enabled: false
@@ -14448,8 +14462,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(objObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      objObject.raycast = {
+        enabled: true
+      }; // Physics
 
       objObject.physics = {
         enabled: false
@@ -14628,8 +14645,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      cubeObject.raycast = {
+        enabled: true
+      }; // Physics
 
       cubeObject.physics = {
         enabled: false
@@ -14791,8 +14811,11 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; // Physics
+      };
 
+      cubeObject.raycast = {
+        enabled: true
+      }; // Physics
 
       cubeObject.physics = {
         enabled: false
@@ -15974,6 +15997,7 @@ function checkingProcedureCalc(object) {
     object.raycastFace.push(triangle);
 
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
+      if (object.raycast.enabled == false) return;
       rayHitEvent = new CustomEvent('ray.hit.event', {
         detail: {
           touchCoordinate: {
