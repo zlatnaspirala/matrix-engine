@@ -4369,31 +4369,35 @@ var runThis = world => {
   let physics = world.loadPhysics(gravityVector); // Add ground
 
   physics.addGround(_manifest.default, world, tex);
-
-  const objGenerator = meObj => {
-    var b2 = new CANNON.Body({
-      mass: 1,
-      linearDamping: 0.01,
-      position: new CANNON.Vec3(0, -14.5, 15),
-      shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
-    });
-    physics.world.addBody(b2);
-    meObj.physics.currentBody = b2;
-    meObj.physics.enabled = true;
-  }; // objGenerator(1)
-
-
   world.Add("generatorLightTex", 1, "outsideBox2", tex, {
     custom_type: 'torus',
     slices: 8,
     loops: 20,
     inner_rad: 1.5,
     outerRad: 2
-  });
-  _manifest.default.scene.outsideBox2.position.x = 0;
-  _manifest.default.scene.outsideBox2.position.y = 2;
-  _manifest.default.scene.outsideBox2.position.z = -14;
-  _manifest.default.scene.outsideBox2.streamTextures = new VT("res/video-texture/me.mkv", 'mytorusStreamTex'); // App.scene.outsideBox2.glBlend.blendEnabled = true;
+  }); // App.scene.outsideBox2.streamTextures = new VT(
+  //   "res/video-texture/me.mkv", 'mytorusStreamTex'
+  // );
+
+  var wheelsPoly = 32;
+  var wheelInput1 = 2;
+  var wheelInput2 = 1;
+  var bigWheel = new CANNON.Body({
+    mass: 1,
+    type: CANNON.Body.DYNAMIC,
+    shape: CANNON.Trimesh.createTorus(wheelInput1, wheelInput2, wheelsPoly, wheelsPoly),
+    position: new CANNON.Vec3(0, -16.5, 2)
+  }); // var testRot = new CANNON.Quaternion(0,0,0,0);
+  // bigWheel.quaternion.setFromEuler(0, -Math.PI / 2, 0)
+  // bigWheel.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), Math.PI / 4);
+  // dev
+
+  window.bigWheel = bigWheel; // console.log('TORUS TEST RENDER PHYS')
+  // App.scene.outsideBox2.physics.currentBody.force.set(0, 10000, 0);
+
+  physics.world.addBody(bigWheel);
+  _manifest.default.scene.outsideBox2.physics.currentBody = bigWheel;
+  _manifest.default.scene.outsideBox2.physics.enabled = true; // App.scene.outsideBox2.glBlend.blendEnabled = true;
   // App.scene.outsideBox2.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[1];
   // App.scene.outsideBox2.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[1];
 };
@@ -9065,7 +9069,22 @@ class RotationVector {
       x: 0,
       y: 0,
       z: 0
+    }; // test
+
+    this.adapt_quaternion = () => {
+      this.getRotDirX = () => {
+        return this.RotationVector;
+      };
+
+      this.getRotDirY = () => {
+        return this.RotationVector;
+      };
+
+      this.getRotDirZ = () => {
+        return this.RotationVector;
+      };
     };
+
     return this;
   }
 
@@ -11835,9 +11854,16 @@ _manifest.default.operation.reDrawGlobal = function (time) {
         local.position.SetX(local.physics.currentBody.position.x);
         local.position.SetZ(local.physics.currentBody.position.y);
         local.position.SetY(local.physics.currentBody.position.z);
-        _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
         _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-        _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]); // matrixEngine.matrixWorld.world.physics.toDeg
+        _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+
+        if (_matrixWorld.world.contentList[physicsLooper].custom_type && _matrixWorld.world.contentList[physicsLooper].custom_type == 'torus') {
+          _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]) + 90; // world.contentList[physicsLooper].rotation.y = (local.physics.currentBody.quaternion.toAxisAngle()[0].y);
+          // world.contentList[physicsLooper].rotation.x = (local.physics.currentBody.quaternion.toAxisAngle()[0].x);
+          // world.contentList[physicsLooper].rotation.z = (local.physics.currentBody.quaternion.toAxisAngle()[0].z);
+        } else {
+          _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+        }
       }
 
       physicsLooper++;

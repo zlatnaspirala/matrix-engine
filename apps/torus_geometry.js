@@ -32,19 +32,6 @@ export var runThis = world => {
   // Add ground
   physics.addGround(App, world, tex);
 
-  const objGenerator = (meObj) => {
-    var b2 = new CANNON.Body({
-      mass: 1,
-      linearDamping: 0.01,
-      position: new CANNON.Vec3(0, -14.5, 15),
-      shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
-    });
-    physics.world.addBody(b2);
-    meObj.physics.currentBody = b2;
-    meObj.physics.enabled = true;
-  }
-  // objGenerator(1)
-
   world.Add("generatorLightTex", 1, "outsideBox2", tex, {
       custom_type: 'torus',
       slices: 8,
@@ -52,12 +39,32 @@ export var runThis = world => {
       inner_rad: 1.5,
       outerRad: 2
   });
-  App.scene.outsideBox2.position.x = 0;
-  App.scene.outsideBox2.position.y = 2;
-  App.scene.outsideBox2.position.z = -14;
-  App.scene.outsideBox2.streamTextures = new VT(
-    "res/video-texture/me.mkv", 'mytorusStreamTex'
-  );
+  // App.scene.outsideBox2.streamTextures = new VT(
+  //   "res/video-texture/me.mkv", 'mytorusStreamTex'
+  // );
+
+  var wheelsPoly = 32;
+  var wheelInput1 = 2;
+  var wheelInput2 = 1;
+  var bigWheel = new CANNON.Body({
+    mass: 1,
+    type: CANNON.Body.DYNAMIC,
+    shape: CANNON.Trimesh.createTorus(wheelInput1, wheelInput2, wheelsPoly, wheelsPoly),
+    position: new CANNON.Vec3(0, -16.5, 2)
+  });
+  // var testRot = new CANNON.Quaternion(0,0,0,0);
+  // bigWheel.quaternion.setFromEuler(0, -Math.PI / 2, 0)
+  // bigWheel.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), Math.PI / 4);
+  // dev
+  window.bigWheel = bigWheel;
+
+  // console.log('TORUS TEST RENDER PHYS')
+  // App.scene.outsideBox2.physics.currentBody.force.set(0, 10000, 0);
+  
+  physics.world.addBody(bigWheel);
+  App.scene.outsideBox2.physics.currentBody = bigWheel;
+  App.scene.outsideBox2.physics.enabled = true;
+
   // App.scene.outsideBox2.glBlend.blendEnabled = true;
   // App.scene.outsideBox2.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[1];
   // App.scene.outsideBox2.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[1];

@@ -2,6 +2,18 @@
 # Matrix Engine [CHANGES]
 ## ---------------------------------
 
+
+[1.9.20] Added basic physics for torus
+Render exception:
+```js
+  if (world.contentList[physicsLooper].custom_type &&
+    world.contentList[physicsLooper].custom_type == 'torus')  {
+      world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]) + 90;
+    } else {
+      world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+    }
+```
+
 [1.9.19]
 Improved raycaster code :
 
@@ -11,47 +23,54 @@ Improved raycaster code :
       rayHitEvent = new CustomEvent('ray.hit.event', ...
 ```
 
-[1.9.18] 
+[1.9.18]
+
 - Implemented torus geometry with 'generatorLightTex' flag type.
   support for stream textures but not physics and net for `generatorLightTex`
+
 ```js
-  world.Add("generatorLightTex", 1, "outsideBox2", tex, {
-      custom_type: 'torus',
-      slices: 8,
-      loops: 20,
-      inner_rad: 1.5,
-      outerRad: 2
-  });
+world.Add('generatorLightTex', 1, 'outsideBox2', tex, {
+  custom_type: 'torus',
+  slices: 8,
+  loops: 20,
+  inner_rad: 1.5,
+  outerRad: 2
+});
 ```
 
 [1.9.17]
- Added new net example script - video chat.
-  - added new branch [asyn nature od stream video dom element ready...]
-  ```js
-   if(App.scene[e.data.netObjId]) 
-  ```
+Added new net example script - video chat.
+
+- added new branch [asyn nature od stream video dom element ready...]
+
+```js
+ if(App.scene[e.data.netObjId])
+```
 
 [1.9.16]
- - New custom event `net.new-user` to make easy detect on top level
-   used direct for new example video chat matrix.
 
-  - New access point for broadcaster/networking
-  ```js
-  net = new Broadcaster(t);
-  App.network = net;
-  ```
+- New custom event `net.new-user` to make easy detect on top level
+  used direct for new example video chat matrix.
+
+- New access point for broadcaster/networking
+
+```js
+net = new Broadcaster(t);
+App.network = net;
+```
 
 #### [1.9.14] New optimal arg2 for defineWorld (arg1, arg2)
-Related wwith FBO render func, 
-Can be undefined in that place  engine use full FBO render,
+
+Related wwith FBO render func,
+Can be undefined in that place engine use full FBO render,
 With arg2 = 'simply' tooks simplyRender func.
 
 ```js
-  if (typeof renderType === 'undefined') {
-    exports.reDraw = reDraw = _manifest.default.operation.reDrawGlobal;
-  } else if (renderType == 'simply') {
-    exports.reDraw = reDraw = _manifest.default.operation.simplyRender;
-  }
+if (typeof renderType === 'undefined') {
+  exports.reDraw = reDraw = _manifest.default.operation.reDrawGlobal;
+} else if (renderType == 'simply') {
+  exports.reDraw = reDraw = _manifest.default.operation.simplyRender;
+}
 ```
 
 #### [1.9.7] Small hotfix for stremasTextures for squareTex obj in draw func.
@@ -59,64 +78,60 @@ With arg2 = 'simply' tooks simplyRender func.
 #### [1.9.6] FBO example + Scene global Timeline function with visual dom preview.
 
 ```js
-matrixEngine.matrixWorld.world.useAnimationLine({ sequenceSize: 500 });
+matrixEngine.matrixWorld.world.useAnimationLine({sequenceSize: 500});
 ```
+
 Idea about timeline is to simple count redraws. Nothig other comes from timeline.
-In app level you need to write logic to use 
+In app level you need to write logic to use
 `matrixEngine.matrixWorld.world.globalAnimCounter` and
 `matrixEngine.matrixWorld.world.globalAnimCurSequence`
 
-globalAnimCurSequence exist only to reduce number of redraws. 
+globalAnimCurSequence exist only to reduce number of redraws.
 You can setup sequenceSize.
-
 
 #### [1.9.5] Added local shadows for obj mesh.
 
 #### [1.9.1 Thunder BETA 2023]
 
- - Improved FPShooter controller
- - FBO implemented BASIC
- - Migrated to the opengles300 GLSL version
- - Add cef and cefSharp Visual Studio projects for building executive native apps.
-   Support:
-    - Windows
-    - MAC
-    - Linux
-  - GUI Texture editor based on Visualjs3 in background.
-    Make gui fast tex editor running - wip
+- Improved FPShooter controller
+- FBO implemented BASIC
+- Migrated to the opengles300 GLSL version
+- Add cef and cefSharp Visual Studio projects for building executive native apps.
+  Support:
+  - Windows
+  - MAC
+  - Linux
+- GUI Texture editor based on Visualjs3 in background.
+  Make gui fast tex editor running - wip
 
-  New scene object functions (Cube and square):
-    - setTexCoordScaleXFactor
-    - setTexCoordScaleYFactor
+New scene object functions (Cube and square): - setTexCoordScaleXFactor - setTexCoordScaleYFactor
 
-  - Improvements for visual-js game engine 
+- Improvements for visual-js game engine
 
 GLSL Note:
 Note: This extension is only available to WebGL1 contexts. In WebGL2, the functionality of this extension is available on the WebGL2 context by default. The constant in WebGL2 is gl.UNSIGNED_INT_24_8.
 
-
-
 #### From [1.8.15] Improved camera
 
- - 'hit.keyDown' && 'hit.keyUp' dispatch events added. See FPS Example.
- - Added basic JUMP with physics / not calibrated.
+- 'hit.keyDown' && 'hit.keyUp' dispatch events added. See FPS Example.
+- Added basic JUMP with physics / not calibrated.
 
 ```js
-  addEventListener('hit.keyDown', (e) => {
-    // console.log('Bring to the top level', e.detail.keyCode);
-  })
+addEventListener('hit.keyDown', (e) => {
+  // console.log('Bring to the top level', e.detail.keyCode);
+});
 ```
 
 #### From [1.8.14] Html's Every static file / resource moved to the new folder ./public
 
 Improved FPShooter example , added collision box for player.
 
-
 #### From [1.8.13] MatrixSounds
 
 Access object `App.sounds`.
 
 Usage:
+
 ```js
 // Play source audio [single instance].
 App.sounds.createAudio('music', 'res/music/background-music.mp3');
@@ -125,9 +140,11 @@ App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
 ```
 
 #### From [1.8.12]
+
 Draw scene list swap items options must be done!
 
 #### From [1.8.0]
+
 Added watchify.
 We have support for real time connections based on webRTC.
 You must work on https protocol even in localhost.
@@ -136,6 +153,7 @@ Change in program/manifest `net = false` if you dont wanna use networking.
 Node.js Multiplayer Server based on webRTC. Take a look at the folder `./netwotking`.
 
 Run it:
+
 ```js
 cd networking
 node matrix.server.js
@@ -144,19 +162,21 @@ node matrix.server.js
 If you wanna in terminal popup then run (bash/work on win also if you have bash) `dedicated.sh./`
 or `dedicated.bat`.
 
-
 [1.8.6] Improve of cubeMap
 
 [1.8.5] Added new scene type of object `"cubeMap"` with Opengles native 'uniform samplerCube' sampler:
+
 ```js
-var tex = {source: [], mix_operation: "multiply"};
-world.Add("cubeMap", 1, "myCubeMapObj", tex);
+var tex = {source: [], mix_operation: 'multiply'};
+world.Add('cubeMap', 1, 'myCubeMapObj', tex);
 ```
+
 For now it is predefinited inside engine.
 It is canvas2d with center-middle text position.
 Index is 0,1,2,3,4,5 for all six faces of cube geometry.
+
 ```js
-App.scene.myCubeMapObj.cubeMap2dCanvasSet[index] 
+App.scene.myCubeMapObj.cubeMap2dCanvasSet[index];
 ```
 
 [1.8.4] From 1.8.4 raycast hit trigger works for obj's.
@@ -173,7 +193,7 @@ App.scene.myCubeMapObj.cubeMap2dCanvasSet[index]
 
 [1.7.10] Shadows VS Lights (Local SpotLight implementation) , improvments for GLSL part.
 
-[1.7.5] Added modifier to the Array.swap Added  Array.prototype.swap used for obj loader initial orientation control.
+[1.7.5] Added modifier to the Array.swap Added Array.prototype.swap used for obj loader initial orientation control.
 
 [1.7.0] Test basic [cube] physics cannon.js implementation , improved SceneController.
 
@@ -181,4 +201,4 @@ App.scene.myCubeMapObj.cubeMap2dCanvasSet[index]
 
 [1.5.4] Fix sphereObject size/scale input.
 
-[1.5.0] Comes with bvh loader and skeletal basic bone system draws . Added passive:false for mobile events because e.preventDefault call, Added isMobile func,  fix roty i roty with rotx=180 make raycast fully works. ray fixed for rx and ry, Raycast fixed for one of rx,ry,rz local rotation, setScale implemented for obj loaded meshes, Raycast basic for triangle implemented, auto cache update ref by cache version var ,auto update position translate operation, added translate operation on base class Position, remove esmify to dev dep, added set Solid bg vertex color for cube shema .Fix missing setScaleByY , setScaleByX for square geometry. Added 2 type of resize system. Fixed demo links, Fixed pwa initial status installed or not.Added Adding uglify-js build options, Improve import export adding bundle build options with browserify, PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction.
+[1.5.0] Comes with bvh loader and skeletal basic bone system draws . Added passive:false for mobile events because e.preventDefault call, Added isMobile func, fix roty i roty with rotx=180 make raycast fully works. ray fixed for rx and ry, Raycast fixed for one of rx,ry,rz local rotation, setScale implemented for obj loaded meshes, Raycast basic for triangle implemented, auto cache update ref by cache version var ,auto update position translate operation, added translate operation on base class Position, remove esmify to dev dep, added set Solid bg vertex color for cube shema .Fix missing setScaleByY , setScaleByX for square geometry. Added 2 type of resize system. Fixed demo links, Fixed pwa initial status installed or not.Added Adding uglify-js build options, Improve import export adding bundle build options with browserify, PWA Fully powered with static/dynamic cache , add to home page in same time fixed autoplay audio/video context construction.
