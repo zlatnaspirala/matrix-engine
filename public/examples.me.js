@@ -5414,10 +5414,10 @@ var RegenerateShader = function (id_elem, numOfSamplerInUse, mixOperand, lightTy
   }
 
   if (typeof lightType !== 'undefined') {
-    console.log('shader version: 300 ', lightType);
+    // console.log('shader version: 300 ', lightType)
     e.innerHTML = (0, _matrixShaders.generateShaderSrc3)(numOfSamplerInUse, mixOperand, lightType);
   } else {
-    console.warn('shader version: 2 ', lightType);
+    // console.warn('shader version: 2 ', lightType)
     e.innerHTML = (0, _matrixShaders.generateShaderSrc)(numOfSamplerInUse, mixOperand);
   }
 }; // Modify shaders in runtime.
@@ -7093,9 +7093,7 @@ _manifest.default.operation.squareTex_buffer_procedure = function (object) {
 };
 
 _manifest.default.operation.sphere_buffer_procedure = function (object) {
-  console.log('TEST sphere_buffer_procedure');
   /* Vertex */
-
   object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
 
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -10589,7 +10587,6 @@ exports.sphereVertex = sphereVertex;
 
 class customVertex {
   createGeoData(root) {
-    console.log("CUSTOM CREATE DATA");
     this.size = root.size;
     this.basePoint = 1.0 * this.size;
     this.basePointNeg = -1.0 * this.size;
@@ -11603,9 +11600,8 @@ function getInitVSSquareTex() {
   }
 `;
 
-  _utility.scriptManager.LOAD(f, "squareTex-shader-vs", "x-shader/x-vertex", "shaders");
+  _utility.scriptManager.LOAD(f, "squareTex-shader-vs", "x-shader/x-vertex", "shaders"); // console.log(" squareTex-shader-vs v")
 
-  console.log(" squareTex-shader-vs v");
 }
 
 function getInitFSSphereLightTex() {
@@ -11851,18 +11847,31 @@ _manifest.default.operation.reDrawGlobal = function (time) {
     while (physicsLooper <= _matrixWorld.world.contentList.length - 1) {
       if (_matrixWorld.world.contentList[physicsLooper].physics.enabled) {
         var local = _matrixWorld.world.contentList[physicsLooper];
-        local.position.SetX(local.physics.currentBody.position.x);
-        local.position.SetZ(local.physics.currentBody.position.y);
-        local.position.SetY(local.physics.currentBody.position.z);
-        _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-        _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
 
-        if (_matrixWorld.world.contentList[physicsLooper].custom_type && _matrixWorld.world.contentList[physicsLooper].custom_type == 'torus') {
-          _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]) + 90; // world.contentList[physicsLooper].rotation.y = (local.physics.currentBody.quaternion.toAxisAngle()[0].y);
-          // world.contentList[physicsLooper].rotation.x = (local.physics.currentBody.quaternion.toAxisAngle()[0].x);
-          // world.contentList[physicsLooper].rotation.z = (local.physics.currentBody.quaternion.toAxisAngle()[0].z);
-        } else {
-          _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+        if (local.physics.currentBody.shapeOrientations.length == 1) {
+          local.position.SetX(local.physics.currentBody.position.x);
+          local.position.SetZ(local.physics.currentBody.position.y);
+          local.position.SetY(local.physics.currentBody.position.z);
+
+          if (_matrixWorld.world.contentList[physicsLooper].custom_type && _matrixWorld.world.contentList[physicsLooper].custom_type == 'torus') {
+            _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]) + 90;
+            _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+            _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+          } else {
+            if (local.physics.currentBody.quaternion.x != 0) _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+            if (local.physics.currentBody.quaternion.y != 0) _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+            if (local.physics.currentBody.quaternion.z != 0) _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+          }
+        } else if (local.physics.currentBody.shapeOrientations.length > 1) {
+          // subObjs
+          for (var x = 0; x < local.subObjs.length; x++) {
+            local.subObjs[x].position.SetX(local.physics.currentBody.shapeOffsets[x].x);
+            local.subObjs[x].position.SetZ(local.physics.currentBody.shapeOffsets[x].y);
+            local.subObjs[x].position.SetY(local.physics.currentBody.shapeOffsets[x].z);
+            if (local.physics.currentBody.quaternion.x != 0) local.subObjs[x].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.shapeOrientations[x].toAxisAngle()[1]);
+            if (local.physics.currentBody.quaternion.y != 0) local.subObjs[x].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.shapeOrientations[x].toAxisAngle()[1]);
+            if (local.physics.currentBody.quaternion.z != 0) local.subObjs[x].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.shapeOrientations[x].toAxisAngle()[1]);
+          }
         }
       }
 
@@ -13326,8 +13335,7 @@ _manifest.default.tools.loadTextureImage = function (gl, src, params) {
   texture.image.crossOrigin = 'anonymous';
 
   texture.image.onload = () => {
-    console.log("params??? ", params);
-
+    // console.log("params tex: ", params)
     _matrixWorld.world.handleLoadedTexture(texture, gl, params);
   };
 
@@ -14539,7 +14547,6 @@ function defineworld(canvas, renderType) {
 
           objObject.textures[0] = objObject.texture;
         } else if (typeof texturesPaths == 'object') {
-          console.info("path is object FO R OBJ");
           objObject.textures = [];
           objObject.textures_texParameteri = []; //new
 
@@ -15156,11 +15163,10 @@ function defineworld(canvas, renderType) {
       customObject.glBlend = new _utility._glBlend();
 
       if (customObject.shaderProgram) {
-        console.log("Buffer the " + filler + ":Store at:" + this.contentList.length);
+        // console.log("Buffer the " + filler + ":Store at:" + this.contentList.length);
         this.bufferSphere(customObject);
         customObject.glDrawElements = new _utility._DrawElements(customObject.vertexIndexBuffer.numItems);
         this.contentList[this.contentList.length] = customObject;
-        console.log("Buffer the ");
         _manifest.default.scene[customObject.name] = customObject;
       } else {
         console.log("   customObject shader failure");
@@ -15775,7 +15781,8 @@ exports.touchCoordinate = void 0;
 
 /**
  * @author Nikola Lukic
- * @info maximumroulette.com
+ * @email zlatnaspirala@gmail.com
+ * @site https://maximumroulette.com
  * @Licence GPL v3
  * Inspired with original code from:
  * https://github.com/Necolo/raycaster
@@ -15788,7 +15795,8 @@ let touchCoordinate = {
   stopOnFirstDetectedHit: false
 };
 /**
- * Ray triangle intersection algorithm
+ * @description 
+ * Ray triangle intersection algorithm.
  * @param rayOrigin ray origin point
  * @param rayVector ray direction
  * @param triangle three points of triangle, should be ccw order
@@ -15799,10 +15807,10 @@ let touchCoordinate = {
 
 exports.touchCoordinate = touchCoordinate;
 
-function rayIntersectsTriangle(rayOrigin, // :vec3,
-rayVector, // :vec3,
-triangle, // :vec3[],
-out, // :vec3,
+function rayIntersectsTriangle(rayOrigin, // vec3,
+rayVector, // vec3,
+triangle, // vec3[],
+out, // vec3,
 objPos) {
   if (matrixEngine.Events.camera.zPos < objPos.z) {
     rayOrigin[2] = matrixEngine.Events.camera.zPos - objPos.z;
@@ -15855,8 +15863,8 @@ objPos) {
   return false;
 }
 /**
+ * @description
  * Unproject a 2D point into a 3D world.
- *
  * @param screenCoord [screenX, screenY]
  * @param viewport [left, top, width, height]
  * @param invProjection invert projection matrix
@@ -15865,12 +15873,11 @@ objPos) {
  */
 
 
-function unproject(screenCoord, // :[number, number],
-viewport, // :[number, number, number, number],
-invProjection, // :mat4,
-invView // :mat4,
-) {
-  // : vec3
+function unproject(screenCoord, // [number, number]
+viewport, // [number, number, number, number]
+invProjection, // mat4
+invView) {
+  // return vec3
   const [left, top, width, height] = viewport;
   const [x, y] = screenCoord;
   const out = vec4.fromValues(2 * x / width - 1 - left, 2 * (height - y - 1) / height - 1, 1, 1);
@@ -15880,7 +15887,8 @@ invView // :mat4,
   return vec3.normalize(vec3.create(), out);
 }
 /**
- * @description Fix local rotation raycast bug test.
+ * @description 
+ * Fix local rotation raycast bug test.
  */
 
 
@@ -15914,11 +15922,10 @@ function checkingProcedure(ev, customArg) {
 }
 
 function checkingProcedureCalc(object) {
+  if (object.raycast.enabled == false || touchCoordinate.enabled == false) return;
   var world = matrixEngine.matrixWorld.world;
-  if (touchCoordinate.enabled == false) return;
   let mvMatrix = [...object.mvMatrix];
-  let ray; // console.info('Raycast hits after test... -> ', mvMatrix)
-
+  let ray;
   let outp = mat4.create();
   let outv = mat4.create();
   let myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos);
@@ -16023,7 +16030,6 @@ function checkingProcedureCalc(object) {
     object.raycastFace.push(triangle);
 
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
-      if (object.raycast.enabled == false) return;
       rayHitEvent = new CustomEvent('ray.hit.event', {
         detail: {
           touchCoordinate: {
@@ -16040,18 +16046,16 @@ function checkingProcedureCalc(object) {
 
       if (touchCoordinate.enabled == true && touchCoordinate.stopOnFirstDetectedHit == true) {
         touchCoordinate.enabled = false;
-      } // console.info('raycast hits for Object: ' + object.name + '  -> face[/3]  : ' + f + ' -> intersectionPoint: ' + intersectionPoint);
-
+      }
     }
   }
 }
 
 function checkingProcedureCalcObj(object) {
+  if (object.raycast.enabled == false || touchCoordinate.enabled == false) return;
   var world = matrixEngine.matrixWorld.world;
-  if (touchCoordinate.enabled == false) return;
   let mvMatrix = [...object.mvMatrix];
-  let ray; // console.info('Raycast hits after test... -> ', mvMatrix)
-
+  let ray;
   let outp = mat4.create();
   let outv = mat4.create();
   let myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos);
@@ -16076,7 +16080,7 @@ function checkingProcedureCalcObj(object) {
       rez0 = rotate2dPlot(0, 0, triangleInZero[0][1], triangleInZero[0][2], object.rotation.rx);
       rez1 = rotate2dPlot(0, 0, triangleInZero[1][1], triangleInZero[1][2], object.rotation.rx);
       rez2 = rotate2dPlot(0, 0, triangleInZero[2][1], triangleInZero[2][2], object.rotation.rx);
-      triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], rez0[0] + object.position.worldLocation[1], rez0[1]], [triangleInZero[1][0] + object.position.worldLocation[0], rez1[0] + object.position.worldLocation[1], rez1[1]], [triangleInZero[2][0] + object.position.worldLocation[0], rez2[0] + object.position.worldLocation[1], rez2[1]]]; // console.log("only x rot => ", triangle);
+      triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], rez0[0] + object.position.worldLocation[1], rez0[1]], [triangleInZero[1][0] + object.position.worldLocation[0], rez1[0] + object.position.worldLocation[1], rez1[1]], [triangleInZero[2][0] + object.position.worldLocation[0], rez2[0] + object.position.worldLocation[1], rez2[1]]];
     } // y z changed - rez0[1] is z
 
 
@@ -16142,8 +16146,8 @@ function checkingProcedureCalcObj(object) {
           rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][1], object.rotation.rz);
           rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][1], object.rotation.rz);
           triangle = [[rez0[0] + object.position.worldLocation[0], rez0[1] + object.position.worldLocation[1], triangleInZero[0][2]], [rez1[0] + object.position.worldLocation[0], rez1[1] + object.position.worldLocation[1], triangleInZero[1][2]], [rez2[0] + object.position.worldLocation[0], rez2[1] + object.position.worldLocation[1], triangleInZero[2][2]]];
-        } else {
-          var test; // console.info('must be handled rz vs rx');
+        } else {// var test;
+          // console.info('must be handled rz vs rx');
         }
       }
     } // no rot

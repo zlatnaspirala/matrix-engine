@@ -1,8 +1,9 @@
-import Broadcaster from "./broadcaster";
+// var Broadcaster = require("./broadcaster");
+import Broadcaster from './broadcaster.js';
 
-var test = 'test matrix-network module export for npm';
+var about = 'matrix-network is broadcaster signaling server.';
 
 export {
-  test,
+  about,
   Broadcaster
 }

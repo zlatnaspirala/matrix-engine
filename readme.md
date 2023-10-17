@@ -1,7 +1,7 @@
 ![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/webgl2glmatrix2.jpg)
 
 ## About Matrix Engine project
-### Name: `MATRIX-ENGINE` `1.9.6` THUNDER
+### Name: `MATRIX-ENGINE` `1.9.21` THUNDER
 
 #### Logo
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/public/res/icons/ms-icon.png" width="128" height="128" />
@@ -20,8 +20,8 @@
 
 ### Description ℹ
   This is small but inspiring project.
-  The benefits of this project is offering an overview of the entire application logic,
-  easy native implementations (hybrid app), object structural. Thanks to Mr.Keestu i use
+  The benefits of this project is offering an overview of the entire opengles program logic,
+  easy native implementations (hybrid app/ CEF), object structural. Thanks to Mr.Keestu i use
   (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in 
    opengles 1.1. Also can be downgraded to openGLES 1.1. webGL Lightweight library based on glmatrix engine.
   For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js. I use free software Blender 2.90.1 for 3d Object mesh works. MatrixEngine is Blender frendly orientend lib. Another frendly tools comes from mixamo.com. Mixamo is great service used for creating my 3d assets. GIMP and MsPaint
@@ -36,7 +36,8 @@
 ### Next Features 🔜
 
 - General improvements in Lights section.
-  Shaders must be improved based on work
+  Shaders must be improved based on work.
+  More examples code.
   Links -> https://webglfundamentals.org/webgl/lessons/
 
 ### For npm users recommended
@@ -148,7 +149,7 @@ After all for production is recommended to use compressed script.
 
   https://localhost/matrix-engine/query-build.html?u=adding_color_cube
 
-Code access:
+URL Params - code access:
 ```js
 const QueryString = matrixEngine.utility.QueryString;
 ```

@@ -1,18 +1,25 @@
-class Broadcaster {
+import fs from "fs";
+import path from "path";
+import url from "url";
+import {Server} from "socket.io";
+
+import RTCMultiConnectionServer from "rtcmulticonnection-server";
+import https from "https";
+
+export default class Broadcaster {
   constructor(serverConfig) {
-    const fs = require("fs");
-    const path = require("path");
-    const url = require("url");
-    const ioServer = require("socket.io");
-    const RTCMultiConnectionServer = require("rtcmulticonnection-server");
-    var httpServer = null;
+    // const fs = require("fs");
+    // const path = require("path");
+    // const url = require("url");
+    // const Server = require("socket.io");
+    // const RTCMultiConnectionServer = require("rtcmulticonnection-server");
 
     // Direct input flags
     var PORT = serverConfig.getRtc3ServerPort;
 
     let jsonPath;
 
-    if (serverConfig.serverMode == "dev") {
+    if(serverConfig.serverMode == "dev") {
       jsonPath = {
         config: "./broadcaster-config.dev.json",
         logs: "logs.json",
@@ -65,7 +72,6 @@ class Broadcaster {
     }
 
     var httpApp;
-    httpServer = require("https");
 
     var options = {
       key: null,
@@ -98,7 +104,7 @@ class Broadcaster {
     var pfx = false;
     console.info("Server runs `https` protocol.");
 
-    httpApp = httpServer.createServer(options, serverHandler);
+    httpApp = https.createServer(options, serverHandler);
 
     RTCMultiConnectionServer.beforeHttpListen(httpApp, config);
     httpApp = httpApp.listen(
@@ -121,7 +127,7 @@ class Broadcaster {
     }
 
     console.log("Cors Domain: ", collectCorsDomain);
-    ioServer(httpApp, {
+    new Server(httpApp, {
       cors: {
         origin: collectCorsDomain,
         methods: ["GET", "POST", "OPTIONS", "*"],
@@ -149,4 +155,3 @@ class Broadcaster {
     console.log('\x1b[42m', `Matrix Server Broadcster ready... 🤘 [Enjoy]`, Reset);
   }
 }
-module.exports = Broadcaster;

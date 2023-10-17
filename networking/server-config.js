@@ -1,5 +1,5 @@
 
-class ServerConfig {
+export default class ServerConfig {
 
   constructor() {
     /**
@@ -10,7 +10,7 @@ class ServerConfig {
      * no database server part - it will be used rocketcraftingserver platform.
      */
     this.version = "1.0";
-    this.serverMode = "prod";
+    this.serverMode = "dev";
     this.networkDeepLogs = false;
     this.rtc3ServerPort = 999;
 
@@ -72,11 +72,7 @@ class ServerConfig {
     this.appUseBroadcaster = true;
     console.log("Server running under configuration => ", this.serverMode);
 
-    if(this.serverMode == "dev") {
-      console.log("-rtc domain dev", this.domain.dev);
-    } else if(this.serverMode == "prod") {
-      console.log("-rtc domain prod", this.domain.prod);
-    }
+    console.log("-rtc domain dev", this.domain.dev);
 
     var Reset = '\x1b[0m';
     console.log('\x1b[42m', 'Matrix Server params 🧪 ', Reset);
@@ -104,18 +100,6 @@ class ServerConfig {
     return this.rtc3ServerPort;
   }
 
-  get getDatabaseRoot() {
-
-    if(this.serverMode == "dev") {
-      return this.databaseRoot.dev;
-    } else if(this.serverMode == "prod") {
-      return this.databaseRoot.prod;
-    } else if(this.serverMode == "mongodb.net" || this.serverMode === "mongodb.net-dev") {
-      return this.databaseRoot.freeService;
-    }
-
-  }
-
   set setNetworkDeepLog(newState) {
     this.networkDeepLogs = newState;
   }
@@ -129,4 +113,4 @@ class ServerConfig {
   }
 
 }
-module.exports = ServerConfig;
+// module.exports = ServerConfig;

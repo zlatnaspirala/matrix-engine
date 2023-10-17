@@ -2,6 +2,11 @@
 # Matrix Engine [CHANGES]
 ## ---------------------------------
 
+[1.9.25] Just remove some console logs.
+
+[1.9.21] 
+ - Added raycast enabled flag
+ - Improved render physics related - draw subObjs eg. cannonjs multi shapes one body
 
 [1.9.20] Added basic physics for torus
 Render exception:
