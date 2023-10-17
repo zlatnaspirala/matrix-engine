@@ -1,6 +1,6 @@
 {
   "name": "matrix-network",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Networking server part for matrix-engine 1.8.0",
   "type": "module",
   "main": "index.js",

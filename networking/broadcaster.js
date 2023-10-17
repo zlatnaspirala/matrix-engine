@@ -38,7 +38,7 @@ export default class Broadcaster {
 
     var config = getValuesFromConfigJson(jsonPath);
     config = getBashParameters(config, BASH_COLORS_HELPER);
-    PORT = config.port;
+    // PORT = config.port;
 
     function serverHandler(request, response) {
       console.log("++++++++++++++++serverHandler++++++++++++++++");
