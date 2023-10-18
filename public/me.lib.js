@@ -345,9 +345,14 @@ function resizeView() {
 let net = null;
 exports.net = net;
 
-let activateNet = () => {
-  if (typeof _manifest.default.net !== 'undefinde' && _manifest.default.net === true) {
-    var t = new _clientConfig.default();
+let activateNet = customConfig => {
+  if (typeof _manifest.default.net !== 'undefined' && _manifest.default.net === true) {
+    if (typeof customConfig !== 'undefined') {
+      var t = new customConfig();
+    } else {
+      var t = new _clientConfig.default();
+    }
+
     exports.net = net = new _net.Broadcaster(t);
     _manifest.default.network = net;
     console.info('Networking is active.', net);
@@ -4845,7 +4850,7 @@ class Position {
     this.targetX = newx;
     this.inMove = false;
 
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') {
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) {
       _engine.net.connection.send({
         netPos: {
           x: this.x,
@@ -4861,7 +4866,7 @@ class Position {
     this.y = newy;
     this.targetY = newy;
     this.inMove = false;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
         x: this.x,
         y: this.y,
@@ -4875,7 +4880,7 @@ class Position {
     this.z = newz;
     this.targetZ = newz;
     this.inMove = false;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
         x: this.x,
         y: this.y,
@@ -4893,7 +4898,7 @@ class Position {
     this.targetY = newy;
     this.targetZ = newz;
     this.inMove = false;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
         x: this.x,
         y: this.y,

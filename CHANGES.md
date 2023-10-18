@@ -2,7 +2,16 @@
 # Matrix Engine [CHANGES]
 ## ---------------------------------
 
-[1.9.25] Just remove some console logs.
+[1.9.27] 
+ For npm users , it is possible to inject custom client config for networking.
+ activateNet = (CustomConfig) => {
+
+ Catch possible undefined state.
+```   if(root.injector) root.injector ```
+
+[1.9.25] Position net send branch only for net.enable == true
+
+[1.9.22-23-24] Just remove some console logs.
 
 [1.9.21] 
  - Added raycast enabled flag
