@@ -8,6 +8,11 @@ import https from "https";
 
 export default class Broadcaster {
   constructor(serverConfig) {
+
+    // Class ref
+    this.RTCMultiConnectionServer = RTCMultiConnectionServer;
+    // obj reg
+    this.mySockets = [];
     // const fs = require("fs");
     // const path = require("path");
     // const url = require("url");
@@ -38,7 +43,6 @@ export default class Broadcaster {
 
     var config = getValuesFromConfigJson(jsonPath);
     config = getBashParameters(config, BASH_COLORS_HELPER);
-    // PORT = config.port;
 
     function serverHandler(request, response) {
       console.log("++++++++++++++++serverHandler++++++++++++++++");
@@ -134,8 +138,10 @@ export default class Broadcaster {
         allowedHeaders: ["*"],
         credentials: true,
       },
-    }).on("connection", function(socket) {
-      console.log("MultiRTC3: new client.");
+    }).on("connection", (socket) => {
+      console.log("New user.", socket.id);
+      this.mySockets.push(socket)
+
       RTCMultiConnectionServer.addSocket(socket, config);
 
       const params = socket.handshake.query;
