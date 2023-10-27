@@ -434,6 +434,13 @@ export var runThis = world => {
 
 It is perfect solution webGL vs webRTC. Origin code used `broadcaster class` from visual-ts game engine project.
 
+If yor wann inject your own client config:
+`matrixEngine.Engine.activateNet(CustomClientConfig);`
+
+Also matrix-network support inject method intro yor own custom server logic part.
+Example for this case: 
+https://github.com/zlatnaspirala/matrix-engine-starter/blob/8fccc3ba5d4aa21b7c24794251a2fceed97cbb30/projects/matrix-roulette/scripts/roulette.js#L208
+
 
 ### Custom textures
 We just override function for texture executing code.

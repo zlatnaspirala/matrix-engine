@@ -2,6 +2,9 @@
 # Matrix Engine [CHANGES]
 ## ---------------------------------
 
+
+[1.9.29] Fix `export let activateNet = (CustomConfig) => {`
+
 [1.9.27] 
  For npm users , it is possible to inject custom client config for networking.
  activateNet = (CustomConfig) => {
