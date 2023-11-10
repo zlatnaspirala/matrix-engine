@@ -2,8 +2,11 @@
 # Matrix Engine [CHANGES]
 ## ---------------------------------
 
+[1.9.30] App.offScreenCanvas new feature,
+         implementing hacker-timer.js worker library.
 
 [1.9.29] Fix `export let activateNet = (CustomConfig) => {`
+         In matrix-engine-starter for project matrix-roulette there is a example for injecting custom config.
 
 [1.9.27] 
  For npm users , it is possible to inject custom client config for networking.
