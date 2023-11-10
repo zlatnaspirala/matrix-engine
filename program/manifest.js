@@ -2,14 +2,15 @@
 
 var App = {
   name: "Matrix Engine Manifest",
-  version: "1.1.0",
+  version: "1.1.1",
   events: true,
   sounds: true,
   logs: false,
   draw_interval: 10,
   antialias: false,
   openglesShaderVersion: '3',
-  offScreenCanvas: true,
+  offScreenCanvas: false,
+  redrawInterval: 30,
   camera: {
     viewAngle: 45,
     nearViewpoint: 0.1,
