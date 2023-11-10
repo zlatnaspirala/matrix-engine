@@ -896,10 +896,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable no-undef */
 
 /* eslint-disable no-unused-vars */
-if (_manifest.default.offScreenCanvas == true) {
+if (_manifest.default.offScreenCanvas == true && (_utility.QueryString.offScreen == null || Boolean(_utility.QueryString.offScreen) == true)) {
   console.log('App.offScreenCanvas =>', _manifest.default.offScreenCanvas);
 
   _utility.scriptManager.LOAD('./hacker-timer/hack-timer.js');
+} else {
+  _manifest.default.offScreenCanvas = false;
 }
 
 var wd = 0,
@@ -8359,7 +8361,7 @@ _manifest.default.operation.simplyRender = function (time) {
   secondPass++;
   physicsLooper = 0;
   (0, _engine.updateFPS)(1);
-  if (_manifest.default.offScreenCanvas == true) exports.reDrawID = reDrawID = setTimeout(() => _manifest.default.operation.simplyRender(), 5);
+  if (_manifest.default.offScreenCanvas == true) exports.reDrawID = reDrawID = setTimeout(() => _manifest.default.operation.simplyRender(), 25);
 
   if (_matrixWorld.world.animLine) {
     // animatinLine

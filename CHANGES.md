@@ -1,37 +1,52 @@
 ## ---------------------------------
+
 # Matrix Engine [CHANGES]
+
 ## ---------------------------------
 
 [1.9.30] App.offScreenCanvas new feature,
-         implementing hacker-timer.js worker library.
+implementing hacker-timer.js worker library.
+
+QueryString is urlParam.
+
+```js
+if (App.offScreenCanvas == true && (QueryString.offScreen == null || Boolean(QueryString.offScreen) == true)) {
+
+console.log('App.offScreenCanvas =>', App.offScreenCanvas)
+scriptManager.LOAD('./hacker-timer/hack-timer.js')
+} else {
+App.offScreenCanvas = false;
+}
+```
 
 [1.9.29] Fix `export let activateNet = (CustomConfig) => {`
-         In matrix-engine-starter for project matrix-roulette there is a example for injecting custom config.
+In matrix-engine-starter for project matrix-roulette there is a example for injecting custom config.
 
-[1.9.27] 
- For npm users , it is possible to inject custom client config for networking.
- activateNet = (CustomConfig) => {
+[1.9.27]
+For npm users , it is possible to inject custom client config for networking.
+activateNet = (CustomConfig) => {
 
- Catch possible undefined state.
-```   if(root.injector) root.injector ```
+Catch possible undefined state.
+`  if(root.injector) root.injector`
 
 [1.9.25] Position net send branch only for net.enable == true
 
 [1.9.22-23-24] Just remove some console logs.
 
-[1.9.21] 
- - Added raycast enabled flag
- - Improved render physics related - draw subObjs eg. cannonjs multi shapes one body
+[1.9.21]
+
+- Added raycast enabled flag
+- Improved render physics related - draw subObjs eg. cannonjs multi shapes one body
 
 [1.9.20] Added basic physics for torus
 Render exception:
+
 ```js
-  if (world.contentList[physicsLooper].custom_type &&
-    world.contentList[physicsLooper].custom_type == 'torus')  {
-      world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]) + 90;
-    } else {
-      world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-    }
+if (world.contentList[physicsLooper].custom_type && world.contentList[physicsLooper].custom_type == 'torus') {
+  world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]) + 90;
+} else {
+  world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+}
 ```
 
 [1.9.19]
