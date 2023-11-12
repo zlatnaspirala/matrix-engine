@@ -1,6 +1,6 @@
 {
   "name": "matrix-engine",
-  "version": "1.9.34",
+  "version": "1.9.35",
   "description": "[1.9.5 Thunder] Local shadows for obj mesh implemented , Adding cef projects for native porting, Detect colliding in first person shooter controller example, full migration shaders to the opengles300 [1.8.15] addEventListener 'hit.keyDown' & 'hit.keyUp', Html's moved intro builds folder.",
   "main": "index.js",
   "directories": {
@@ -8,14 +8,12 @@
   },
   "scripts": {
     "install.dep": "npm i | npm install -g uglify-js browserify watchify",
-
     "examples": "watchify App-Examples.js -p [esmify --noImplicitAny] -o public/examples.me.js",
     "app": "watchify App.js -p [esmify --noImplicitAny] -o public/app.js",
     "tex.actual": "watchify ./2DTextureEditor/actual.js -p [esmify --noImplicitAny] -o ./2DTextureEditor/builds/actual.tex.js",
     "tex.texFromCode": "watchify ./2DTextureEditor/tex-from-code.js -p esmify -o ./2DTextureEditor/builds/tex-from-code.tex.js",
     "tex.tex1": "watchify ./2DTextureEditor/tex1.js -p esmify -o ./2DTextureEditor/builds/tex1.tex.js",
     "tex.particle": "watchify ./2DTextureEditor/particle.js -p esmify -o ./2DTextureEditor/builds/particle.tex.js",
-
     "build.examples": "browserify App-Examples.js -p esmify > public/examples.me.js",
     "build.app": "browserify App.js -p esmify > public/app.js",
     "build.tex.actual": "browserify ./2DTextureEditor/actual.js -p esmify > ./2DTextureEditor/builds/actual.tex.js",
@@ -25,12 +23,11 @@
     "build.lib": "browserify entry-lib-build.js -p esmify > public/me.lib.js",
     "build.app.ugly": "browserify App.js -p esmify | uglifyjs -cm > public/app.ugly.js",
     "build.all": "npm run build.tex.editor | npm run build.examples | npm run build.app | npm run build.lib | npm run build.app.ugly",
-
     "te": "node ./2DTextureEditor/editor.js",
     "res.tex.editor": "node ./2DTextureEditor/res.js",
     "build.tex.editor": "node ./2DTextureEditor/build.js",
-
     "windows": "matrix-engine-desktop.bat",
+    "host-for-gui": "http-server ./2DTextureEditor",
     "test": "echo \"matrix engine\" && exit 1"
   },
   "dependencies": {
@@ -38,6 +35,7 @@
     "bvh-loader": "0.0.9",
     "cannon": "^0.6.2",
     "cannon-es": "^0.20.0",
+    "http-server": "^14.1.1",
     "socket.io-client": "^4.5.1",
     "visual-js": "^3.0.26",
     "visual-js-server": "3.0.13"

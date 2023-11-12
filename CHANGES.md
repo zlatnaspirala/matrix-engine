@@ -4,6 +4,10 @@
 
 ## ---------------------------------
 
+[1.9.35] Add simple http server for GUI new part.
+        `npm run host-for-gui`
+        It is host of `./2DTextureEditor` folder.
+
 [1.9.30] App.offScreenCanvas new feature,
 implementing hacker-timer.js worker library.
 
