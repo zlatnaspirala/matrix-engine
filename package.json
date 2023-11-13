@@ -1,6 +1,6 @@
 {
   "name": "matrix-engine",
-  "version": "1.9.35",
+  "version": "1.9.36",
   "description": "[1.9.5 Thunder] Local shadows for obj mesh implemented , Adding cef projects for native porting, Detect colliding in first person shooter controller example, full migration shaders to the opengles300 [1.8.15] addEventListener 'hit.keyDown' & 'hit.keyUp', Html's moved intro builds folder.",
   "main": "index.js",
   "directories": {
@@ -28,6 +28,7 @@
     "build.tex.editor": "node ./2DTextureEditor/build.js",
     "windows": "matrix-engine-desktop.bat",
     "host-for-gui": "http-server ./2DTextureEditor",
+    "host-public": "http-server ./public",
     "test": "echo \"matrix engine\" && exit 1"
   },
   "dependencies": {
