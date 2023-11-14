@@ -6631,7 +6631,7 @@ function _deconstructPacket(data, buffers) {
 
 function reconstructPacket(packet, buffers) {
   packet.data = _reconstructPacket(packet.data, buffers);
-  packet.attachments = undefined; // no longer useful
+  delete packet.attachments; // no longer useful
 
   return packet;
 }
@@ -6720,8 +6720,12 @@ class Encoder {
   encode(obj) {
     if (obj.type === PacketType.EVENT || obj.type === PacketType.ACK) {
       if ((0, _isBinary.hasBinary)(obj)) {
-        obj.type = obj.type === PacketType.EVENT ? PacketType.BINARY_EVENT : PacketType.BINARY_ACK;
-        return this.encodeAsBinary(obj);
+        return this.encodeAsBinary({
+          type: obj.type === PacketType.EVENT ? PacketType.BINARY_EVENT : PacketType.BINARY_ACK,
+          nsp: obj.nsp,
+          data: obj.data,
+          id: obj.id
+        });
       }
     }
 
@@ -6810,9 +6814,11 @@ class Decoder extends _componentEmitter.Emitter {
       }
 
       packet = this.decodeString(obj);
+      const isBinaryEvent = packet.type === PacketType.BINARY_EVENT;
 
-      if (packet.type === PacketType.BINARY_EVENT || packet.type === PacketType.BINARY_ACK) {
-        // binary packet's json
+      if (isBinaryEvent || packet.type === PacketType.BINARY_ACK) {
+        packet.type = isBinaryEvent ? PacketType.EVENT : PacketType.ACK; // binary packet's json
+
         this.reconstructor = new BinaryReconstructor(packet); // no attachments, labeled binary but no binary data to follow
 
         if (packet.attachments === 0) {
@@ -6943,7 +6949,7 @@ class Decoder extends _componentEmitter.Emitter {
 
       case PacketType.EVENT:
       case PacketType.BINARY_EVENT:
-        return Array.isArray(payload) && payload.length > 0;
+        return Array.isArray(payload) && (typeof payload[0] === "string" || typeof payload[0] === "number");
 
       case PacketType.ACK:
       case PacketType.BINARY_ACK:
@@ -6958,6 +6964,7 @@ class Decoder extends _componentEmitter.Emitter {
   destroy() {
     if (this.reconstructor) {
       this.reconstructor.finishedReconstruction();
+      this.reconstructor = null;
     }
   }
 
