@@ -29,7 +29,8 @@
     "windows": "matrix-engine-desktop.bat",
     "host-for-gui": "http-server ./2DTextureEditor",
     "host-public": "http-server ./public",
-    "gui-editor": "watchify ./2DTextureEditor/gui-texture-editor.js -p [esmify --noImplicitAny] -o ./2DTextureEditor/builds/gui.tex.js",
+    "gui-editor-watch": "watchify ./2DTextureEditor/gui-texture-editor.js -p [esmify --noImplicitAny] -o ./2DTextureEditor/builds/gui.tex.js",
+    "gui-editor": "browserify ./2DTextureEditor/gui-texture-editor.js -p esmify > ./2DTextureEditor/builds/gui.tex.js",
     "test": "echo \"matrix engine\" && exit 1"
   },
   "dependencies": {
