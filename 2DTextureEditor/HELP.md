@@ -53,7 +53,7 @@ Install paths [node.js dev tool `install-paths.js`]:
 or 
 
 ```js
-  npm run 
+  npm run install.paths
 ```
 
 
