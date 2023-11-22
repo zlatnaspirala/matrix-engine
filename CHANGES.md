@@ -4,6 +4,11 @@
 
 ## ---------------------------------
 
+[1.9.37] Add dev tool for configs paths.
+         Node.js tool `install-paths.js`
+         For `./2DTextureEditor` folder. Setup absolute paths intro config.js and editor.js .
+
+
 [1.9.35] Add simple http server for GUI new part.
         `npm run host-for-gui`
         It is host of `./2DTextureEditor` folder.

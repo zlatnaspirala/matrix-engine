@@ -44,6 +44,21 @@ You can make multi instance like tex1.html/tex1.js , tex2.html/tex2.js etc...
 
 Click on Iframe dom element to make focus and then press key `F4` for editor mode.
 
+
+Install paths [node.js dev tool `install-paths.js`]:
+```js
+  node install-paths.js
+```
+
+or 
+
+```js
+  npm run 
+```
+
+
+
+
 ## Links
 
 EDITOR REGIME:

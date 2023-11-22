@@ -1,7 +1,7 @@
 ![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/webgl2glmatrix2.jpg)
 
 ## About Matrix Engine project
-### Name: `MATRIX-ENGINE` `1.9.30` THUNDER
+### Name: `MATRIX-ENGINE` `1.9.37` THUNDER
 
 #### Logo
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/public/res/icons/ms-icon.png" width="128" height="128" />
