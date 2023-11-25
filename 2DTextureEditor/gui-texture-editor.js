@@ -1,5 +1,5 @@
 // Editor mode
-import {sys, ActivateModifiers,  loadEditor, runEditor, loadEditorObjects} from 'visual-js';
+import {sys, ActivateModifiers, loadEditor, runEditor, loadEditorObjects} from 'visual-js';
 
 var runTextureEditor = (curTexId) => {
   // Visual-JS 3 part
@@ -19,11 +19,49 @@ var runTextureEditor = (curTexId) => {
   actualTexture.ENGINE.CREATE_MODUL("STARTER");
   let smodul = actualTexture.ENGINE.MODULES.ACCESS_MODULE("STARTER");
 
+  // FIX ONLY FOR GUI EDITOR
+  // document.body.style.marginTop = '-19px'
+
   // Run editor only !
   loadEditorObjects();
 
   sys.SCRIPT.LOAD("res/animations/resource.js").then(() => {
     console.log('res/animations/resource.js ...')
+    addEventListener('postScriptReady', () => {
+      console.log('Now access object created from editor TEST ! => ', smodul)
+      //  return;
+      // --------------------------
+      //  Manual code
+      // --------------------------
+      console.log('NIDZA TEST EDITOR!', noname)
+      // if you setup in manifest 
+      // IMAGE_LOADER_PREFIX : false , you can put full url
+      // if you setup true , path have prefix /res/animations/ 
+
+      // RESOURCE.Tiles = {source: ["pil_black/pil-black.png"]};
+      // RESOURCE.Lock = {source: ["pil_black/pil-black.png"]};
+
+      // smodul.GAME_OBJECTS.ACCESS("HELLO").CREATE_ANIMATION( SURF , "DRAW_FRAME" ,0 , RESOURCE.Lock , 1111123123 , "no" , 1,11,1,1,1) ;
+      /*
+      var ROT_DELTA = new sys.MATH.OSCILLATOR(0, 90, 5);
+      var POS_DELTA = new sys.MATH.OSCILLATOR(1, 80, 1);
+
+      HELLO.ON_UPDATE = function() {
+        HELLO.POSITION.TRANSLATE(10, POS_DELTA.UPDATE());
+      };
+
+
+      noname.ON_UPDATE = function() {
+        noname.ANIMATION.ROTATE.ANGLE = ROT_DELTA.UPDATE();
+        noname.POSITION.TRANSLATE(POS_DELTA.UPDATE(), 45);
+      };
+
+      TEST.ON_UPDATE = function() {
+        TEST.ANIMATION.ROTATE.ANGLE = ROT_DELTA.UPDATE();
+      };
+      */
+      // --------------------------
+    })
   });
 }
 
