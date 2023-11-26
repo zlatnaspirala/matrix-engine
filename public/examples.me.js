@@ -3660,24 +3660,49 @@ var runThis = world => {
   physics.world.addBody(b); // Physics
 
   _manifest.default.scene.CUBE.physics.currentBody = b;
-  _manifest.default.scene.CUBE.physics.enabled = true;
+  _manifest.default.scene.CUBE.physics.enabled = true; // test 
+
+  let anyCanvas = matrixEngine.Engine.anyCanvas; // THIS IS BAD EVERY anCanvas make own canvas2d element
+  // Asunc timers vs for loop !!
+  // 
 
   const objGenerator = n => {
     for (var j = 0; j < n; j++) {
-      setTimeout(() => {
-        world.Add("cubeLightTex", 1, "CUBE" + j, tex);
-        var b2 = new CANNON.Body({
-          mass: 1,
-          linearDamping: 0.01,
-          position: new CANNON.Vec3(1, -14.5, 15),
-          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-        });
-        physics.world.addBody(b2);
-        _manifest.default.scene['CUBE' + j].physics.currentBody = b2;
-        _manifest.default.scene['CUBE' + j].physics.enabled = true;
-      }, 1000 * j);
+      var t = new Promise((resolve, reject) => {
+        function callme(j) {
+          setTimeout(() => {
+            // console.log('J = ', j)
+            world.Add("cubeLightTex", 1, "CUBE" + j, tex);
+            var b2 = new CANNON.Body({
+              mass: 1,
+              linearDamping: 0.01,
+              position: new CANNON.Vec3(1, -14.5, 15),
+              shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+            });
+            physics.world.addBody(b2);
+            _manifest.default.scene['CUBE' + j].physics.currentBody = b2;
+            _manifest.default.scene['CUBE' + j].physics.enabled = true; // test 
+
+            if (j == 0) {
+              console.log('i = ', j);
+              _manifest.default.scene['CUBE' + j].streamTextures = new anyCanvas("../2DTextureEditor/templates/slot/", "HELLO_WORLD");
+
+              _manifest.default.scene['CUBE' + j].streamTextures.showTextureEditor();
+            } else {
+              console.log(' - i = ', j); // i am not sure !!
+
+              _manifest.default.scene['CUBE' + j].streamTextures = _manifest.default.scene['CUBE0'].streamTextures;
+            }
+
+            resolve();
+          }, 1000 * j);
+        }
+
+        callme(j);
+      });
     }
-  };
+  }; // 100 gamepaly render views TEST STRES
+
 
   objGenerator(100);
 };
