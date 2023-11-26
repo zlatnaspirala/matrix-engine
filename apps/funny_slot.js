@@ -4,9 +4,9 @@
  */
 
 /* globals world App world */
-import App from "../program/manifest";
+import App from "../program/manifest.js";
 import * as matrixEngine from "../index.js";
-import {anyCanvas} from "../lib/engine";
+import {anyCanvas} from "../lib/engine.js";
 let Vjs3 = matrixEngine.Engine.Vjs3;
 
 export var runThis = world => {
@@ -42,7 +42,7 @@ export var runThis = world => {
   E("HOLDER_STREAMS").style.display = "block";
   setTimeout(function () {
     App.scene.outsideBox.streamTextures = new anyCanvas(
-      "./apps/funny-slot/",
+      "./2DTextureEditor/funny-slot/",
       "HELLO_WORLD")
     App.scene.outsideBox.streamTextures.showTextureEditor();
   }, 500);

@@ -38,7 +38,8 @@ export var runThis = world => {
 
   App.scene.outsideBox.rotation.rotz = -90
   App.scene.outsideBox.streamTextures = new Vjs3(
-    "../2DTextureEditor/particle.html",
+  // "../2DTextureEditor/particle.html",
+    "./2DTextureEditor/particle.html",
     "particle"
   );
   App.scene.outsideBox.streamTextures.showTextureEditor();

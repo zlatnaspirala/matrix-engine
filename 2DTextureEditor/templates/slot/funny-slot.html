@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>visual-js (npm)</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <style>
+    body { overflow: hidden }
+  </style>
+</head>
+<body style="margin:0;padding:0;border:none;background-color:black;">
+  <div id="experiment" style="display:block">
+    <video id="webcam" autoplay width="640" height="480" style="display:none;position:absolute;left:0;top:0;"></video>
+    <canvas id="canvas-blended" width="640" height="480" style="position:absolute;left:0;top:0;display:none;"></canvas>
+    <canvas id="canvas-render" width="640" height="480" style="position:absolute;left:0;top:0;display:none;"></canvas>
+  </div>
+  <!-- <script type="text/javascript" src="builds/slot.build.js"></script> -->
+  <script type="module" src="slot.build.js"></script>
+</body>
+</html>

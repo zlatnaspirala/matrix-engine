@@ -32,19 +32,20 @@
     "host-public": "http-server ./public",
     "gui-editor-watch": "watchify ./2DTextureEditor/gui-texture-editor.js -p [esmify --noImplicitAny] -o ./2DTextureEditor/builds/gui.tex.js",
     "gui-editor": "browserify ./2DTextureEditor/gui-texture-editor.js -p esmify > ./2DTextureEditor/builds/gui.tex.js",
-    "test": "echo \"matrix engine\" && exit 1"
+    "slotVJS3.build": "browserify ./2DTextureEditor/templates/slot/funny-slot.js -p esmify > ./2DTextureEditor/templates/slot/slot.build.js",
+    "slotVJS3": "watchify ./2DTextureEditor/templates/slot/funny-slot.js -p [esmify --noImplicitAny] -o ./2DTextureEditor/templates/slot/slot.build.js"
   },
   "dependencies": {
-    "browser-resolve": "^2.0.0",
     "bvh-loader": "0.0.9",
     "cannon": "^0.6.2",
     "cannon-es": "^0.20.0",
     "http-server": "^14.1.1",
     "socket.io-client": "^4.5.1",
-    "visual-js": "^3.0.26",
+    "visual-js": "^3.0.28",
     "visual-js-server": "3.0.13"
   },
   "devDependencies": {
+    "browser-resolve": "^2.0.0",
     "browserify": "^17.0.0",
     "esmify": "^2.1.1",
     "watchify": "^4.0.0"

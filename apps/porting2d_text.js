@@ -35,7 +35,8 @@ export var runThis = world => {
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   E("HOLDER_STREAMS").style.display = "block";
   App.scene.outsideBox.streamTextures = new Vjs3(
-    "../2DTextureEditor/tex1.html",
+    // "../2DTextureEditor/tex1.html", FOR PRODC NO GIT CLONE JUST PUBLIC FOLDER
+    "./2DTextureEditor/tex1.html",
     "tex1"
   );
 

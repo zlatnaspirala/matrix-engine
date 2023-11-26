@@ -3803,7 +3803,7 @@ var runThis = world => {
 
   E("HOLDER_STREAMS").style.display = "block";
   setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas("../apps/funny-slot/", "HELLO_WORLD");
+    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas("./apps/funny-slot/", "HELLO_WORLD");
 
     _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
   }, 500);
@@ -3923,7 +3923,8 @@ var runThis = world => {
   E("webcam_beta").style.display = "none";
   E("HOLDER_STREAMS").style.display = "block";
   _manifest.default.scene.outsideBox.rotation.rotz = -90;
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("../2DTextureEditor/particle.html", "particle");
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3( // "../2DTextureEditor/particle.html",
+  "./2DTextureEditor/particle.html", "particle");
 
   _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
 };
@@ -3981,7 +3982,8 @@ var runThis = world => {
 
 
   E("HOLDER_STREAMS").style.display = "block";
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3("../2DTextureEditor/tex1.html", "tex1");
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3( // "../2DTextureEditor/tex1.html", FOR PRODC NO GIT CLONE JUST PUBLIC FOLDER
+  "./2DTextureEditor/tex1.html", "tex1");
 
   _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
 };
@@ -4826,13 +4828,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable no-undef */
 
 /* eslint-disable no-unused-vars */
+if (_manifest.default.offScreenCanvas == true || _utility.QueryString.offScreen == 'true') {
+  console.log('App.offScreenCanvas =>', _manifest.default.offScreenCanvas);
+
+  _utility.scriptManager.LOAD('./hacker-timer/hack-timer.js');
+} else {
+  _manifest.default.offScreenCanvas = false;
+}
+
 var wd = 0,
     ht = 0,
     lastTime = 0,
     totalTime = 0,
     updateTime = 0,
-    updateFrames = 0; // export let EVENTS_INSTANCE = null;
-
+    updateFrames = 0;
 exports.updateFrames = updateFrames;
 exports.updateTime = updateTime;
 exports.totalTime = totalTime;
@@ -4859,10 +4868,10 @@ function resizeView() {
 let net = null;
 exports.net = net;
 
-let activateNet = customConfig => {
+let activateNet = CustomConfig => {
   if (typeof _manifest.default.net !== 'undefined' && _manifest.default.net === true) {
-    if (typeof customConfig !== 'undefined') {
-      var t = new customConfig();
+    if (typeof CustomConfig !== 'undefined') {
+      var t = new CustomConfig();
     } else {
       var t = new _clientConfig.default();
     }
@@ -9192,7 +9201,7 @@ class RotationVector {
 
   rotateX(x, em) {
     this.rotx = x;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netRot: {
         x: this.rotx
       },
@@ -9202,7 +9211,7 @@ class RotationVector {
 
   rotateY(y, em) {
     this.roty = y;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netRot: {
         y: this.roty
       },
@@ -9212,7 +9221,7 @@ class RotationVector {
 
   rotateZ(z, em) {
     this.rotz = z;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netRot: {
         z: this.rotz
       },
@@ -9329,7 +9338,7 @@ class Position {
         this.x += this.velX;
         this.y += this.velY;
         this.z += this.velZ;
-        if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+        if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
           netPos: {
             x: this.x,
             y: this.y,
@@ -9343,7 +9352,7 @@ class Position {
         this.z = this.targetZ;
         this.inMove = false;
         this.onTargetPositionReach();
-        if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+        if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
           netPos: {
             x: this.x,
             y: this.y,
@@ -9364,7 +9373,7 @@ class Position {
     this.targetX = newx;
     this.inMove = false;
 
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) {
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) {
       _engine.net.connection.send({
         netPos: {
           x: this.x,
@@ -9380,7 +9389,7 @@ class Position {
     this.y = newy;
     this.targetY = newy;
     this.inMove = false;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
         x: this.x,
         y: this.y,
@@ -9394,7 +9403,7 @@ class Position {
     this.z = newz;
     this.targetZ = newz;
     this.inMove = false;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
         x: this.x,
         y: this.y,
@@ -9412,7 +9421,7 @@ class Position {
     this.targetY = newy;
     this.targetZ = newz;
     this.inMove = false;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (_manifest.default.scene[this.nameUniq] && _engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
         x: this.x,
         y: this.y,
@@ -9543,7 +9552,7 @@ class SquareVertex {
     this.pointB.x = -scale;
     this.pointC.x = scale;
     this.pointD.x = -scale;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (_manifest.default.scene[this.nameUniq] && _engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         x: scale
       },
@@ -9561,7 +9570,7 @@ class SquareVertex {
     this.pointB.y = scale;
     this.pointC.y = -scale;
     this.pointD.y = -scale;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (_manifest.default.scene[this.nameUniq] && _engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         y: scale
       },
@@ -9576,7 +9585,7 @@ class SquareVertex {
 
   setScale(scale, em) {
     this.size = scale;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (_manifest.default.scene[this.nameUniq] && _engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         scale: scale
       },
@@ -11833,7 +11842,7 @@ window.PLEASE = 'CE';
 
 _manifest.default.operation.reDrawGlobal = function (time) {
   (0, _engine.modifyLooper)(0);
-  exports.reDrawID = reDrawID = requestAnimationFrame(_matrixWorld.reDraw);
+  if (_manifest.default.offScreenCanvas == false) exports.reDrawID = reDrawID = requestAnimationFrame(_manifest.default.operation.reDrawGlobal);
 
   _matrixWorld.world.renderPerspective();
 
@@ -11889,9 +11898,7 @@ _manifest.default.operation.reDrawGlobal = function (time) {
   // - non FBO and FBO option draw coroutine
   // hc 512
 
-  if (_matrixWorld.world.FBOS.length > 0) _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, _matrixWorld.world.FBOS[0].FB); // world.FBOS.forEach((fbo) => {
-  // 
-  // world.GL.gl.bindFramebuffer(world.GL.gl.FRAMEBUFFER, fbo.fb);
+  if (_matrixWorld.world.FBOS.length > 0) _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, _matrixWorld.world.FBOS[0].FB);
 
   _matrixWorld.world.GL.gl.viewport(0, 0, 512, 512);
 
@@ -12140,6 +12147,7 @@ _manifest.default.operation.reDrawGlobal = function (time) {
   secondPass++;
   physicsLooper = 0;
   (0, _engine.updateFPS)(1);
+  if (_manifest.default.offScreenCanvas == true) exports.reDrawID = reDrawID = setTimeout(() => _manifest.default.operation.reDrawGlobal(), _manifest.default.redrawInterval);
 
   if (_matrixWorld.world.animLine) {
     // animatinLine
@@ -12164,15 +12172,14 @@ _manifest.default.operation.CameraPerspective = function () {
   mat4.perspective(this.pMatrix, (0, _engine.degToRad)(_manifest.default.camera.viewAngle), this.GL.gl.viewportWidth / this.GL.gl.viewportHeight, _manifest.default.camera.nearViewpoint, _manifest.default.camera.farViewpoint);
 };
 
-var callReDraw_ = function () {
-  requestAnimationFrame(_matrixWorld.reDraw);
+var callReDraw_ = function () {// requestAnimationFrame(reDraw);
 };
 
 exports.callReDraw_ = callReDraw_;
 
 _manifest.default.operation.simplyRender = function (time) {
   (0, _engine.modifyLooper)(0);
-  exports.reDrawID = reDrawID = requestAnimationFrame(_matrixWorld.reDraw);
+  if (_manifest.default.offScreenCanvas == false) exports.reDrawID = reDrawID = requestAnimationFrame(_manifest.default.operation.simplyRender);
 
   _matrixWorld.world.renderPerspective();
 
@@ -12300,6 +12307,8 @@ _manifest.default.operation.simplyRender = function (time) {
     document.getElementById('globalAnimCounter').innerText = _matrixWorld.world.globalAnimCounter;
     document.getElementById('timeline').value = _matrixWorld.world.globalAnimCounter;
   }
+
+  if (_manifest.default.offScreenCanvas == true) exports.reDrawID = reDrawID = setTimeout(() => _manifest.default.operation.simplyRender(), _manifest.default.redrawInterval);
 };
 
 },{"../program/manifest":82,"./engine":50,"./matrix-world":63,"./raycast":67,"./utility":73}],59:[function(require,module,exports){
@@ -13680,7 +13689,6 @@ var updateFrames = 0;
 
 var objListToDispose = new Array();
 /* Need to stop the redraw when disposing            */
-// var reDrawID = 0;
 
 exports.objListToDispose = objListToDispose;
 var reDraw;
@@ -15179,7 +15187,7 @@ function defineworld(canvas, renderType) {
     }
   };
 
-  world.callReDraw = _matrixRender.callReDraw_;
+  world.callReDraw = reDraw;
   world.destroy = _manifest.default.operation.destroyWorld;
   return world;
 }
@@ -15427,7 +15435,7 @@ class Broadcaster {
     };
 
     this.connection.onclose = function (dataStreamEvent) {
-      root.injector.leaveGamePlay(dataStreamEvent);
+      if (root.injector) root.injector.leaveGamePlay(dataStreamEvent);
 
       if (root.connection.getAllParticipants().length) {
         document.querySelector("#rtc3log").value = "You are still connected with:" + root.connection.getAllParticipants().join(", ");
@@ -15438,7 +15446,7 @@ class Broadcaster {
 
     this.connection.onUserStatusChanged = function (event) {
       if (event.status === "offline") {
-        root.injector.leaveGamePlay(event);
+        if (root.injector) root.injector.leaveGamePlay(event);
       }
     };
 
@@ -16021,8 +16029,7 @@ function checkingProcedureCalc(object) {
           rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][1], object.rotation.rz);
           rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][1], object.rotation.rz);
           triangle = [[rez0[0] + object.position.worldLocation[0], rez0[1] + object.position.worldLocation[1], triangleInZero[0][2]], [rez1[0] + object.position.worldLocation[0], rez1[1] + object.position.worldLocation[1], triangleInZero[1][2]], [rez2[0] + object.position.worldLocation[0], rez2[1] + object.position.worldLocation[1], triangleInZero[2][2]]];
-        } else {
-          console.info('must be handled rz vs rx');
+        } else {// console.info('must be handled rz vs rx');
         }
       }
     } // no rot
@@ -41515,13 +41522,15 @@ exports.default = void 0;
 /* eslint-disable no-unused-vars */
 var App = {
   name: "Matrix Engine Manifest",
-  version: "1.0.9",
+  version: "1.1.1",
   events: true,
   sounds: true,
   logs: false,
   draw_interval: 10,
   antialias: false,
   openglesShaderVersion: '3',
+  offScreenCanvas: false,
+  redrawInterval: 30,
   camera: {
     viewAngle: 45,
     nearViewpoint: 0.1,
