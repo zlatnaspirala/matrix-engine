@@ -3803,7 +3803,7 @@ var runThis = world => {
 
   E("HOLDER_STREAMS").style.display = "block";
   setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas("./apps/funny-slot/", "HELLO_WORLD");
+    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas("../2DTextureEditor/templates/slot/", "HELLO_WORLD");
 
     _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
   }, 500);

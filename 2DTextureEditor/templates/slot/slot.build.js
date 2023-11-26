@@ -4,12 +4,16 @@
 var _visualJs = require("visual-js");
 
 /**
-  Filename : funny.js
+ * @description
+  Filename : funny-slot.js
   Game Template with Visual JS support 
   slot prototype 0.1 FUNNY3
   AllRights Nikola Lukic 2016 januar 
   Copyright 2016, zlatnaspirala@gmail.com
   All rights reserved.
+
+  @note Audio disabled
+  fix must come from visualjs source.
 */
 (0, _visualJs.ActivateModifiers)();
 
@@ -86,6 +90,11 @@ function loadFunnySlotGamePlay() {
   var SYMBOLS_REEL1 = [RESOURCE.character1, RESOURCE.character2, RESOURCE.character3, RESOURCE.character4, RESOURCE.character4, RESOURCE.character4];
   var SYMBOLS_REEL2 = [RESOURCE.character1, RESOURCE.character2, RESOURCE.character3, RESOURCE.character4, RESOURCE.character4];
   var SYMBOLS_REEL3 = [RESOURCE.character1, RESOURCE.character2, RESOURCE.character3, RESOURCE.character4, RESOURCE.character4, RESOURCE.character4, RESOURCE.character4];
+  window.__REELS = {
+    SYMBOLS_REEL1,
+    SYMBOLS_REEL2,
+    SYMBOLS_REEL3
+  };
   var SYMBOLS_REEL1_REZ = {
     rez: ['character1', 'character2', 'character3', 'character4', 'character4', 'character4']
   };
@@ -209,8 +218,8 @@ function loadFunnySlotGamePlay() {
             symbol30.POSITION.TRANSLATE_BY_Y(-1000);
             Csymbol30.POSITION.TRANSLATE_BY_Y(-1000);
           }, 200);
-        }, 200);
-        audio_object_start_reel1.play();
+        }, 200); // audio_object_start_reel1.play();
+
         setTimeout(function () {
           setNormalSpeed(1);
           symbol10.POSITION.TRANSLATE_BY_Y(REELS_OPTIONS.REEL_MAX_Y);
@@ -224,7 +233,7 @@ function loadFunnySlotGamePlay() {
         }, 1200);
         setTimeout(function () {
           //audio_object_start_reel3.play()
-          audio_object_spin.play();
+          // audio_object_spin.play();
           setNormalSpeed(3);
           symbol30.POSITION.TRANSLATE_BY_Y(REELS_OPTIONS.REEL_MAX_Y);
           Csymbol30.POSITION.TRANSLATE_BY_Y(REELS_OPTIONS.REEL_MAX_Y);
@@ -302,8 +311,8 @@ function loadFunnySlotGamePlay() {
     RABIT.POSITION.TRANSLATE(REELS_OPTIONS.REEL1_POSITION_X + 3, 120);
 
     FOX.POSITION.ON_TARGET_POSITION = function () {
-      FOX.POSITION.SET_POSITION(120, 83, 'DIAMETRIC');
-      audio_object_rabitup.play();
+      FOX.POSITION.SET_POSITION(120, 83, 'DIAMETRIC'); // audio_object_rabitup.play();
+
       RABIT.POSITION.TRANSLATE(REELS_OPTIONS.REEL1_POSITION_X + 3, 77);
       setTimeout(function () {
         if (typeof audio_object_rabithide !== 'undefined') audio_object_rabithide.play();
@@ -406,9 +415,9 @@ function loadFunnySlotGamePlay() {
       if (SLOT_MASHINE.BET_VALUE.VALUE + 1 <= SLOT_MASHINE.BET_VALUE.MAX) {
         SLOT_MASHINE.BET_VALUE.VALUE++;
         BET_VALUE.ANIMATION.CURRENT_FRAME = SLOT_MASHINE.BET_VALUE.VALUE;
-      }
+      } // audio_object_bet_btns.play();
 
-      audio_object_bet_btns.play();
+
       BET_PLUS.ANIMATION.ROTATE.ANGLE = 5;
       setTimeout(function () {
         BET_PLUS.ANIMATION.ROTATE.ANGLE = 0;
@@ -419,9 +428,9 @@ function loadFunnySlotGamePlay() {
       if (SLOT_MASHINE.BET_VALUE.VALUE - 1 >= SLOT_MASHINE.BET_VALUE.MIN) {
         SLOT_MASHINE.BET_VALUE.VALUE--;
         BET_VALUE.ANIMATION.CURRENT_FRAME = SLOT_MASHINE.BET_VALUE.VALUE;
-      }
+      } // audio_object_bet_btns.play();
 
-      audio_object_bet_btns.play();
+
       BET_MINUS.ANIMATION.ROTATE.ANGLE = -5;
       setTimeout(function () {
         BET_MINUS.ANIMATION.ROTATE.ANGLE = 0;
@@ -608,7 +617,7 @@ function loadFunnySlotGamePlay() {
         if (OBJ.POSITION.BAYPASS_FIRST == true) {
           OBJ.POSITION.BAYPASS_FIRST = false;
         } else {
-          var NEW_LOCATION = window['CLONE_TOP' + index] - (window['SYMBOLS_REEL' + index].length - 3) * (REELS_OPTIONS.SYMBOL_HEIGHT + REELS_OPTIONS.REELS_MARGIN);
+          var NEW_LOCATION = window['CLONE_TOP' + index] - (__REELS['SYMBOLS_REEL' + index].length - 3) * (REELS_OPTIONS.SYMBOL_HEIGHT + REELS_OPTIONS.REELS_MARGIN);
           eval(' OBJ.POSITION.SET_POSITION( REELS_OPTIONS.REEL' + index + "_POSITION_X , NEW_LOCATION  , 'DIAMETRIC'); ");
           OBJ.POSITION.TRANSLATE_BY_Y(REELS_OPTIONS.REEL_MAX_Y);
 
@@ -688,8 +697,7 @@ function loadFunnySlotGamePlay() {
           var distance = REELS_OPTIONS.TOP + REELS_OPTIONS.SYMBOL_HEIGHT + REELS_OPTIONS.REELS_MARGIN;
 
           if (window['symbol1' + RESULTS.R1].POSITION.y > distance - REELS_OPTIONS.REELS_MARGIN && window['symbol1' + RESULTS.R1].POSITION.y < distance + REELS_OPTIONS.REELS_MARGIN && REELS_OPTIONS.REEL1_STOPED == false) {
-            audio_object_stop.play();
-
+            // audio_object_stop.play();
             if (RESULTS.R1 == 0) {
               window['symbol10'].POSITION.SET_POSITION(REELS_OPTIONS.REEL1_POSITION_X, distance, 'DIAMETRIC');
             } else if (RESULTS.R1 == 1) {
@@ -720,8 +728,7 @@ function loadFunnySlotGamePlay() {
           var distance = REELS_OPTIONS.TOP + REELS_OPTIONS.SYMBOL_HEIGHT + REELS_OPTIONS.REELS_MARGIN;
 
           if (window['symbol2' + RESULTS.R2].POSITION.y > distance - REELS_OPTIONS.REELS_MARGIN && window['symbol2' + RESULTS.R2].POSITION.y < distance + REELS_OPTIONS.REELS_MARGIN && REELS_OPTIONS.REEL1_STOPED == true) {
-            audio_object_stop.play();
-
+            // audio_object_stop.play();
             if (RESULTS.R2 == 0) {
               window['symbol20'].POSITION.SET_POSITION(REELS_OPTIONS.REEL2_POSITION_X, distance, 'DIAMETRIC');
             } else if (RESULTS.R2 == 1) {
@@ -752,8 +759,7 @@ function loadFunnySlotGamePlay() {
           var distance = REELS_OPTIONS.TOP + REELS_OPTIONS.SYMBOL_HEIGHT + REELS_OPTIONS.REELS_MARGIN;
 
           if (window['symbol3' + RESULTS.R3].POSITION.y > distance - 2 * REELS_OPTIONS.REELS_MARGIN && window['symbol3' + RESULTS.R3].POSITION.y < distance + 2 * REELS_OPTIONS.REELS_MARGIN && REELS_OPTIONS.REEL2_STOPED == true) {
-            audio_object_stop.play();
-
+            // audio_object_stop.play();
             if (RESULTS.R3 == 0) {
               window['symbol30'].POSITION.SET_POSITION(REELS_OPTIONS.REEL3_POSITION_X, distance, 'DIAMETRIC');
             } else if (RESULTS.R3 == 1) {

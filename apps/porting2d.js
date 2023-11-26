@@ -42,7 +42,7 @@ export var runThis = world => {
   E("HOLDER_STREAMS").style.display = "block";
   setTimeout(function () {
     App.scene.outsideBox.streamTextures = new anyCanvas(
-      "./apps/funny-slot/",
+      "../2DTextureEditor/templates/slot/",
       "HELLO_WORLD")
     App.scene.outsideBox.streamTextures.showTextureEditor();
   }, 500);
