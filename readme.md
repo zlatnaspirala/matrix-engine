@@ -1,7 +1,7 @@
 ![webGL2GLMatrix2](https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/blob/master/non-project-files/webgl2glmatrix2.jpg)
 
 ## About Matrix Engine project
-### Name: `MATRIX-ENGINE` `1.9.37` THUNDER
+### Name: `MATRIX-ENGINE` `1.9.38` THUNDER
 
 #### Logo
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/public/res/icons/ms-icon.png" width="128" height="128" />
@@ -13,7 +13,7 @@
 #### - [FirstPersonController fly or classic fp / SceneController Drag and navigation scene] ✔
 #### - [Basic's Shadows vs lights (GLSL)] ✔
 #### - [Migrated to the opengles300]
-#### - [FBO implemented] Basic
+#### - [FBO implemented]
 #### - [Add cef (linux, macos) and cefSharp Visual Studio projects for building executive desktop native apps.
 ####     Support: Windows, MAC, Linux ] ✔
 #### - Texture Editor [tutorial example - from code] ✔
@@ -192,6 +192,7 @@ Take a look at query-build.html
 - Texture uv manipulation
 - Videos textures
 - Physics Cube with force on raycast trigger
+- 100 Physics Cube with [canvas2d] funny-slot
 - Physics Sphere
 - BVH loader, animation play
 - Load obj sequences
@@ -200,6 +201,7 @@ Take a look at query-build.html
 - Lens effect shaders for cube [WIP]
 - Basic FBO + timeline test [WIP]
 - Matrix Video Chat - webGL vs webRTC
+- FBO manipulation - Multi FBO objects
 
 ## Features description
 
@@ -971,6 +973,18 @@ physicsObject.addEventListener("collide",function(e) {
 ### Scene Timeline
     - Basic implementation without example for now!
 
+### FBO camera
+[1.9.38] Implemented multi FBO objects with own camera targets!
+See example -> `public/query-build.html?u=fbo_manipulation`
+```js
+  App.scene.myMirrorUP.setFBO({
+    cameraX: 0,
+    cameraY: 0,
+    cameraZ: 2,
+    pitch: 0,
+    yaw: 1
+  });
+```
 
 ## PWA Fully runned
 

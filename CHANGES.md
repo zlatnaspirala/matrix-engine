@@ -4,6 +4,18 @@
 
 ## ---------------------------------
 
+[1.9.38] Implemented multi FBO objects with own camera targets!
+See example -> `public/query-build.html?u=fbo_manipulation`
+```
+  App.scene.myMirrorUP.setFBO({
+    cameraX: 0,
+    cameraY: 0,
+    cameraZ: 2,
+    pitch: 0,
+    yaw: 1
+  });
+```
+
 [1.9.37] Add dev tool for configs paths.
          Node.js tool `install-paths.js`
          For `./2DTextureEditor` folder. Setup absolute paths intro config.js and editor.js .

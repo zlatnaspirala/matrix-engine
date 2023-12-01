@@ -47,6 +47,9 @@ import {runThis as basic_fbo } from './apps/basic_fbo';
 import {runThis as video_texture_lava} from './apps/video_texture_lava';
 import {runThis as matrix_chat_room} from './apps/matrix_chat_room';
 import { runThis as torus_geometry } from './apps/torus_geometry';
+import { runThis as physics_cube_active_textures } from './apps/physics_cube_active_textures';
+import { runThis as fbo_manipulation } from './apps/fbo_manipulation';
+
 /**
  * @description
  * All examples instances.
@@ -56,6 +59,8 @@ import { runThis as torus_geometry } from './apps/torus_geometry';
  * public/query-build.html?u=spot_light_shadows
  */
 var Examples = {
+  fbo_manipulation: fbo_manipulation,
+  physics_cube_active_textures: physics_cube_active_textures,
   torus_geometry: torus_geometry,
   matrix_chat_room: matrix_chat_room,
   video_texture_lava: video_texture_lava,
