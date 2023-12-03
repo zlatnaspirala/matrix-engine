@@ -3,7 +3,6 @@
   <Import Project="packages\CefSharp.Common.118.6.80\build\CefSharp.Common.props" Condition="Exists('packages\CefSharp.Common.118.6.80\build\CefSharp.Common.props')" />
   <Import Project="packages\cef.redist.x86.118.6.8\build\cef.redist.x86.props" Condition="Exists('packages\cef.redist.x86.118.6.8\build\cef.redist.x86.props')" />
   <Import Project="packages\cef.redist.x64.118.6.8\build\cef.redist.x64.props" Condition="Exists('packages\cef.redist.x64.118.6.8\build\cef.redist.x64.props')" />
-  <Import Project="packages\CefSharp.Common.107.1.90\build\CefSharp.Common.props" Condition="Exists('packages\CefSharp.Common.107.1.90\build\CefSharp.Common.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>

@@ -5,3 +5,4 @@ package-lock.json
 networking/node_modules/**/*
 GPUCache/**/*
 DawnCache/**/*
+Manual_MSBuild_ReleaseVersion_LOG.log
