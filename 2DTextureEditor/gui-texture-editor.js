@@ -7,7 +7,7 @@ var runTextureEditor = (curTexId) => {
   if(typeof window.RESOURCE !== 'undefined') return;
 
   // Final build
-  // application.EDITOR = false;
+  // PRAGMA APPLICATION.EDITOR = false;
 
   ActivateModifiers();
 
