@@ -5100,7 +5100,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* eslint-disable no-unused-vars */
 if (_manifest.default.offScreenCanvas == true || _utility.QueryString.offScreen == 'true') {
-  console.log('App.offScreenCanvas =>', _manifest.default.offScreenCanvas);
+  _manifest.default.offScreenCanvas = true;
+  console.log('App.offScreenCanvas FORCE =>', _manifest.default.offScreenCanvas);
 
   _utility.scriptManager.LOAD('./hacker-timer/hack-timer.js');
 } else {
