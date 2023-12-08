@@ -4,6 +4,16 @@
 
 ## ---------------------------------
 
+[1.9.39] 
+  OffScreenCanvas [Turbo super power speed]
+- Control from manifest `App.offScreenCanvas` | Boolean
+Default `true`. This feature means that your render will work event in inactive mode / hidden tab mode.
+
+- Other easy way for activating:
+Put in url param next data `query-build.html?u=fbo_manipulation&offScreen=true&offScreenSpeed=10`
+Max render speed is [1]: `query-build.html?u=fbo_manipulation&offScreen=true&offScreenSpeed=1`
+Optimal is ~ 15.
+
 [1.9.38] Implemented multi FBO objects with own camera targets!
 See example -> `public/query-build.html?u=fbo_manipulation`
 ```

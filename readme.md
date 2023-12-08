@@ -192,7 +192,8 @@ URL Params - code access:
 const QueryString = matrixEngine.utility.QueryString;
 ```
 
-Take a look at query-build.html
+To avoid iframe from examples.html you can use `query-build.html?u=<NAME_OF_EXAMPLE>`
+ ->  `query-build.html?u=fbo_manipulation`
 
 ### List of examples:
 
@@ -736,7 +737,7 @@ MatrixBVHCharacter feature use class `matrixEngine.MEBvhAnimation`.
 Its load primitives for bvh skeletal. MatrixBVHCharacter is proccess
 where we load pre defined skelatal obj parts(head, neck, legs...) .
 
-### @Note Human character failed for now but func works.
+#### @Note Human character failed for now but func works.
 
 Nice for primitive obj mesh bur rig must have nice description of
 position/rotation. In maximo skeletal bones simple not fit.
@@ -1002,14 +1003,19 @@ physicsObject.addEventListener("collide",function(e) {
 });
 ```
 
-### OffScreenCanvas
+### OffScreenCanvas [Turbo super power speed]
 
-Control from manifest App.offScreenCanvas / Boolean
-Default `true`
+- Control from manifest `App.offScreenCanvas` | Boolean
+Default `true`. This feature means that your render will work event in inactive mode / hidden tab mode.
+
+- Other easy way for activating:
+Put in url param next data `query-build.html?u=fbo_manipulation&offScreen=true&offScreenSpeed=10`
+Max render speed is [1]: `query-build.html?u=fbo_manipulation&offScreen=true&offScreenSpeed=1`
+Optimal is ~ 15.
 
 ### Scene Timeline
 
-    - Basic implementation without example for now!
+  - Basic implementation without example for now!
 
 ### FBO camera
 

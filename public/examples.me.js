@@ -14098,6 +14098,13 @@ function defineworld(canvas, renderType) {
     exports.reDraw = reDraw = _manifest.default.operation.reDrawGlobal;
   } else if (renderType == 'simply') {
     exports.reDraw = reDraw = _manifest.default.operation.simplyRender;
+  } // redrawInterval 
+  // console.log("App.redrawInterval", App.redrawInterval)
+
+
+  if (typeof _utility.QueryString.offScreenSpeed !== 'undefined') {
+    console.log("URL param offScreenSpeed is active: ", _utility.QueryString.offScreenSpeed);
+    _manifest.default.redrawInterval = _utility.QueryString.offScreenSpeed;
   }
   /**
    * @MatrixAnimationLine
@@ -41834,8 +41841,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
-/* eslint-disable no-unused-vars */
 var App = {
   name: "Matrix Engine Manifest",
   version: "1.1.1",
@@ -41846,7 +41851,7 @@ var App = {
   antialias: false,
   openglesShaderVersion: '3',
   offScreenCanvas: false,
-  redrawInterval: 30,
+  redrawInterval: 10,
   camera: {
     viewAngle: 45,
     nearViewpoint: 0.1,

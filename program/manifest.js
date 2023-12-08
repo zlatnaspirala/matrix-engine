@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 var App = {
   name: "Matrix Engine Manifest",
   version: "1.1.1",
@@ -10,7 +8,7 @@ var App = {
   antialias: false,
   openglesShaderVersion: '3',
   offScreenCanvas: false,
-  redrawInterval: 30,
+  redrawInterval: 10,
   camera: {
     viewAngle: 45,
     nearViewpoint: 0.1,

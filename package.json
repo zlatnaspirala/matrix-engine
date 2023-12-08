@@ -1,7 +1,7 @@
 {
   "name": "matrix-engine",
-  "version": "1.9.38",
-  "description": "[1.9.5 Thunder] Local shadows for obj mesh implemented , Adding cef projects for native porting, Detect colliding in first person shooter controller example, full migration shaders to the opengles300 [1.8.15] addEventListener 'hit.keyDown' & 'hit.keyUp', Html's moved intro builds folder.",
+  "version": "1.9.39",
+  "description": "[1.9.5 Thunder] Matrix-engine is super fast webgl library based on glmatrix 2.xx engine.",
   "main": "index.js",
   "directories": {
     "lib": "lib"
