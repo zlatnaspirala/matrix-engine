@@ -29,11 +29,12 @@
     "build.tex.editor": "node ./2DTextureEditor/build.js",
     "windows": "matrix-engine-desktop.bat",
     "host-for-gui": "http-server ./2DTextureEditor",
-    "host-public": "http-server ./public",
+    "host-public": "http-server ./ -p 80",
     "gui-editor-watch": "watchify ./2DTextureEditor/gui-texture-editor.js -p [esmify --noImplicitAny] -o ./2DTextureEditor/builds/gui.tex.js",
     "gui-editor": "browserify ./2DTextureEditor/gui-texture-editor.js -p esmify > ./2DTextureEditor/builds/gui.tex.js",
     "slotVJS3.build": "browserify ./2DTextureEditor/templates/slot/funny-slot.js -p esmify > ./2DTextureEditor/templates/slot/slot.build.js",
-    "slotVJS3": "watchify ./2DTextureEditor/templates/slot/funny-slot.js -p [esmify --noImplicitAny] -o ./2DTextureEditor/templates/slot/slot.build.js"
+    "slotVJS3": "watchify ./2DTextureEditor/templates/slot/funny-slot.js -p [esmify --noImplicitAny] -o ./2DTextureEditor/templates/slot/slot.build.js",
+    "gui-app": "watchify ./gui/app.js -p [esmify --noImplicitAny] -o ./public/gui.build.js"
   },
   "dependencies": {
     "bvh-loader": "0.0.9",
