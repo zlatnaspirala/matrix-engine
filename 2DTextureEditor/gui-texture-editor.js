@@ -1,5 +1,5 @@
 // Editor mode
-import {sys, ActivateModifiers, loadEditor, runEditor, loadEditorObjects} from 'visual-js';
+import {sys, ActivateModifiers, loadEditor, runEditor, loadEditorObjects, APPLICATION} from 'visual-js';
 
 var runTextureEditor = (curTexId) => {
   // Visual-JS 3 part
@@ -26,14 +26,16 @@ var runTextureEditor = (curTexId) => {
   loadEditorObjects();
 
   sys.SCRIPT.LOAD("res/animations/resource.js").then(() => {
-    console.log('res/animations/resource.js ...')
-    addEventListener('postScriptReady', () => {
+
+    sys.SCRIPT.LOAD("starter/visual.js").then(() => {
+    console.log('res/animations/resource.js and visual editor objects...')
+    // addEventListener('postScriptReady', () => {
       console.log('Now access object created from editor TEST ! => ', smodul)
       //  return;
       // --------------------------
       //  Manual code
       // --------------------------
-      console.log('NIDZA TEST EDITOR!', noname)
+      console.log('NIDZA TEST EDITOR TEST HELLO ', HELLO)
       // if you setup in manifest 
       // IMAGE_LOADER_PREFIX : false , you can put full url
       // if you setup true , path have prefix /res/animations/ 

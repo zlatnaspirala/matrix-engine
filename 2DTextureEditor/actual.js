@@ -49,7 +49,6 @@ var runTextureEditor = (curTexId) => {
       // Access
       console.log("window.parent.matrixEngine.App.scene.outsideBox.streamTextures ",
         window.parent.matrixEngine.App.scene.outsideBox.streamTextures)
-
       var posGreen = new sys.MATH.OSCILLATOR(10, 80, 1);
       var posBlend1 = new sys.MATH.OSCILLATOR(-30, 120, 2);
       pilLeft.ANIMATION.ROTATE.ANGLE = 90;
