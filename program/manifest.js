@@ -6,7 +6,7 @@ var App = {
   logs: false,
   draw_interval: 10,
   antialias: false,
-  openglesShaderVersion: '3',
+  openglesShaderVersion: 1.3,
   offScreenCanvas: false,
   redrawInterval: 10,
   camera: {

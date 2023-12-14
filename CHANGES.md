@@ -4,6 +4,11 @@
 
 ## ---------------------------------
 
+[1.9.40] First version with both support opengles11/2 and opengles300
+ - Default : 1.3/opengles300
+ - Switch with URL param `GLSL=1.3` for opengle300 and `GLSL=1.1` for opengles1.1/2
+  - Not working all shaders at the moment !!
+
 [1.9.39] 
   OffScreenCanvas [Turbo super power speed]
 - Control from manifest `App.offScreenCanvas` | Boolean

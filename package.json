@@ -1,7 +1,7 @@
 {
   "name": "matrix-engine",
-  "version": "1.9.39",
-  "description": "[1.9.5 Thunder] Matrix-engine is super fast webgl library based on glmatrix 2.xx engine.",
+  "version": "1.9.40",
+  "description": "[1.9.x Thunder] Matrix-engine is super fast webgl library based on glmatrix 2.xx engine. Features comes with matrix-engine : Blending, CameraScene, FBO, FPS, ARRAY-instanced draws, scene object transformation, obj loader, obj seq loader, Networking ,full standalone 3d video chat, active 2d textures etc...",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -34,7 +34,8 @@
     "gui-editor": "browserify ./2DTextureEditor/gui-texture-editor.js -p esmify > ./2DTextureEditor/builds/gui.tex.js",
     "slotVJS3.build": "browserify ./2DTextureEditor/templates/slot/funny-slot.js -p esmify > ./2DTextureEditor/templates/slot/slot.build.js",
     "slotVJS3": "watchify ./2DTextureEditor/templates/slot/funny-slot.js -p [esmify --noImplicitAny] -o ./2DTextureEditor/templates/slot/slot.build.js",
-    "gui-app": "watchify ./gui/app.js -p [esmify --noImplicitAny] -o ./public/gui.build.js"
+    "gui-app": "watchify ./gui/app.js -p [esmify --noImplicitAny] -o ./public/gui.build.js",
+    "build.gui.app": "browserify ./gui/app.js -p esmify > ./public/gui.build.js"
   },
   "dependencies": {
     "bvh-loader": "0.0.9",
