@@ -14700,7 +14700,7 @@ var _overrideMatrixRender = require("./optimizer/override-matrix-render");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable no-unused-vars */
-var CS1 = "font-family: stormfaze;color: #558282; font-size:58px;text-shadow: 2px 2px 4px #f3fff4, 4px 4px 4px gray, 2px 2px 4px lime, 6px 2px 0px lime;background: black;";
+var CS1 = "font-family: stormfaze;color: #152211; font-size:58px;text-shadow: 2px 2px 4px #f3fff4, 4px 4px 4px gray, 2px 2px 4px lime, 6px 2px 0px lime;background: black;";
 exports.CS1 = CS1;
 var CS2 = "font-family: stormfaze;color: #fd1233; font-size:20px;text-shadow: 2px 2px 2px #5321f5, 4px 4px 4px #d6fa16, 3px 0px 3px #c16fa6, 6px 6px 4px #9a0de3;background: black;";
 exports.CS2 = CS2;
