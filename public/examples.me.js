@@ -14667,7 +14667,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.modifyFrames = modifyFrames;
 exports.defineworld = defineworld;
-exports.reDraw = exports.objListToDispose = exports.world = exports.frames = exports.CS2 = exports.CS1 = void 0;
+exports.reDraw = exports.objListToDispose = exports.world = exports.frames = exports.CS4 = exports.CS3 = exports.CS2 = exports.CS1 = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
@@ -14700,24 +14700,39 @@ var _overrideMatrixRender = require("./optimizer/override-matrix-render");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable no-unused-vars */
-var CS1 = "color: #fdff22; font-size:40px;text-shadow: 2px 2px 4px #550de3, 4px 4px 4px #d63f84, 6px 6px 4px #cb1a20, 8px 8px 4px #090de3;background: black;";
+var CS1 = "font-family: stormfaze;color: #558282; font-size:58px;text-shadow: 2px 2px 4px #f3fff4, 4px 4px 4px gray, 2px 2px 4px lime, 6px 2px 0px lime;background: black;";
 exports.CS1 = CS1;
-var CS2 = "color: #fdff22; font-size:24px;text-shadow: 2px 2px 4px #550de3, 4px 4px 4px #d63f84, 6px 6px 4px #cb1f20, 8px 8px 4px #900de3;background: black;";
+var CS2 = "font-family: stormfaze;color: #fd1233; font-size:20px;text-shadow: 2px 2px 2px #5321f5, 4px 4px 4px #d6fa16, 3px 0px 3px #c16fa6, 6px 6px 4px #9a0de3;background: black;";
 exports.CS2 = CS2;
-console.info(`%cMatrix-Engine %c 1.9.40`, CS1, CS1); // fbo
+var CS3 = "font-family: stormfaze;color: #f1f133; font-size:18px;text-shadow: 2px 2px 4px #f335f4, 4px 4px 4px #d64444, 2px 2px 4px #c16fa6, 6px 2px 0px #123de3;background: black;";
+exports.CS3 = CS3;
+var CS4 = "font-family: wargames;color: #lime; font-size:16px;text-shadow: 2px 2px 4px white, 4px 4px 4px green, 2px 2px 4px #c16fa6, 6px 2px 0px #123de3;background: black;";
+exports.CS4 = CS4;
+console.info(`%cMatrix-Engine %c 1.9.40 🏁🏁🏁`, CS1, CS1);
+var lastChanges = `
+[1.9.40] First version with both support opengles11/2 and opengles300
+ - Default : 1.3/opengles300
+ - Switch with URL param 'GLSL=1.3' for opengle300 and 'GLSL=1.1' for opengles1.1/2
+ - Not working all shaders at the moment for 1.1 !w
+ - Implemented URL param for examples-build.html?GLSL=1.1 [Affect after first demo choose.]
+`;
+console.info(`%c ${lastChanges} `, CS4);
+console.info(`%c Render switch from 'requestAnimationFrame' to 'offScreen' with URLParams '?offScreen=true&offScreenSpeed=10'.
+ For now physics stuff not affected. `, CS3);
+console.info(`%c You can downgrade to webgl1 with ?GLSL=1.1 - EXPERIMENTAL DEV - WIP`, CS3); // fbo
 
 _manifest.default.makeFBO = _matrixTextures.makeFBO; // define shaders from code
 
 if (_utility.QueryString.GLSL && _utility.QueryString.GLSL == 1.3) {
   // GLSL 1.30 -> opengles3
-  console.info(`%cActive: GLSL 1.3. for OPENGLES30 %c webGL2`, CS2, CS2); // console.log('Active: GLSL 1.3. for OPENGLES30')
+  console.info(`%cActive cook ⚗️: GLSL 1.3. for OPENGLES30 %c webGL2`, CS2, CS2); // console.log('Active: GLSL 1.3. for OPENGLES30')
 
   _manifest.default.openglesShaderVersion = 1.3;
   (0, _matrixInitShaders.loadShaders2)();
 } else if (_utility.QueryString.GLSL && (_utility.QueryString.GLSL == 1.1 || _utility.QueryString.GLSL == 1.2)) {
   // GLSL 1.10 -> opengles1.1 also 2
   _manifest.default.openglesShaderVersion = 1.1;
-  console.info(`%cActive: GLSL 1.1.-1.2 for OPENGLES1.1/2 %c webGL1`, CS2, CS2);
+  console.info(`%cActive cook ⚗️: GLSL 1.1.-1.2 for OPENGLES1.1/2 %c webGL1`, CS2, CS2);
   (0, _matrixInitShaders2.loadShaders11)();
 } else {
   // GLSL 1.30 -> opengles3
