@@ -1,89 +1,123 @@
 <script>
-  if (location.href.indexOf('localhost') == -1) {
-    if (location.protocol != 'https:') {
+  if(location.href.indexOf('localhost') == -1) {
+    if(location.protocol != 'https:') {
       location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
     }
   }
-
-  function g (i) {
+  function g(i) {
     return document.getElementById(i)
   }
+  // example load iframes
+
+  export var QueryString = (function() {
+    // This function is anonymous, is executed immediately and
+    // the return value is assigned to QueryString!
+    var query_string = {};
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for(var i = 0;i < vars.length;i++) {
+      var pair = vars[i].split('=');
+      // If first entry with this name
+      if(typeof query_string[pair[0]] === 'undefined') {
+        query_string[pair[0]] = decodeURIComponent(pair[1]);
+        // If second entry with this name
+      } else if(typeof query_string[pair[0]] === 'string') {
+        var arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
+        query_string[pair[0]] = arr;
+        // If third or later entry with this name
+      } else {
+        query_string[pair[0]].push(decodeURIComponent(pair[1]));
+      }
+    }
+    return query_string;
+  })();
 </script>
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="manifest" href="manifest.web" />
-    <title>Matrix-Engine-Workspace</title>
-    <meta name="description" content="webGL2 , Scene objects, FBO, transformations, Bvh animation, easy Native implementations (cef), object structural. " />
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link async rel="stylesheet" href="css/style.css" />
-    <link rel="apple-touch-icon" href="res/icons/512.png" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimal-ui" />
-    <link rel="icon" type="image/png" sizes="96x96" href="res/icons/favicon-96x96.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="res/icons/android-icon.png" />
-    <link rel="icon" href="res/icons/favicon.ico" type="image/x-icon" />
-    <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
-  </head>
 
-  <body>
-    <div id="matrix-net"></div>
-    <div id="menu" style="opacity: 0.9;z-index: 1;position: absolute; left: 0; top: 5%; width: 300px; height: auto; color: lime; padding: 1px; text-align: center">
-      <div class="btnShadow" style="width: 100%; height: auto;font-size: larger;">
-        Matrix Engine Examples <br/>
-        version 1.9.38 - dec 2023
-      </div>
-      <div style="width: 100%; height: auto" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_color_cube' " onmousemove="">adding color cube</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_color_triangle' ">adding color triangle</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_color_square' ">adding color square</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_color_piramyde' ">adding color piramyde</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_square_texture' ">adding square with texture</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_tex_square_raycast' ">adding square with raycast</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=cube_geometry' ">adding cube with texture + scale</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=cube_light_dinamic' ">adding cube light dinamic</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=opengles_native_cubemap' ">CubeMap with canvas2D</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=opengles_native_cubemap_images' ">CubeMap with Images</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=sphere_geometry' ">sphere geometry</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=cube_light_and_texture' ">cube_light_and_texture</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=load_obj_file' ">load obj file (UV map-Blender)</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_more_texture_samplers' ">adding more texture samplers</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=custom_texture' ">custom_texture</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=texture_dinamic_manipulation' ">texture_dinamic_manipulation</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=first_person_controller' ">First person controller</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=obj_animation' ">Animation - obj sequence</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=obj_animation_build_mesh_effect' ">obj animation build mesh effect</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=all_variant_of_blending' ">some variant of blending.js</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=video_texture' ">video texture (webcam)</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=camera_texture' ">camera texture (webcam)</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=audio_manipulation' ">audio_manipulation</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=audio_manipulation2' ">audio_manipulation2</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=my_world' ">Draw instanced Forest - primitive</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=porting2d' ">visual-js-2d-porting</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=porting2d_text' ">visual-js-2d-porting Text</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=porting2d_particle' ">visual-js-2d-porting Particle</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=cube_tex_arrays' ">draw scene object arrays</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=my_world' ">My world</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=bvh_loader' ">Bvh raw load</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=bvh_animation_class' ">Bvh animation class</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=physics_cube' ">Physics class - Cube</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=physics_sphere' ">Physics class - Sphere</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=networking_basic' ">Networking Basic</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=load_obj_sequence' ">mixamo.com->dea/fbx->blender->obj seq morph</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=spot_light_basic' ">Basic spot lights</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=lens_effect' ">Basic lens effect</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=fps_player_controller' ">FPShooter example</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=active_editor' ">active_editor [only localhost/dev]</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=basic_fbo' ">Basic FBO</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=fbo_manipulation' ">FBO [Multi FBO objects - same camera target] </div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=video_texture_lava' ">Lava textures - VT</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=matrix_chat_room' ">Matrix video chat - webRTC 🎥</div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=torus_geometry' ">Torus geomtry [custom geometry] </div>
-      <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=physics_cube_active_textures' ">100 Physics Cube with fanny-slot [canvas2d]</div>
+<head>
+  <link rel="manifest" href="manifest.web" />
+  <title>Matrix-Engine-Workspace</title>
+  <meta name="description" content="webGL2 , Scene objects, FBO, transformations, Bvh animation, easy Native implementations (cef), object structural. " />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link async rel="stylesheet" href="css/style.css" />
+  <link rel="apple-touch-icon" href="res/icons/512.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimal-ui" />
+  <link rel="icon" type="image/png" sizes="96x96" href="res/icons/favicon-96x96.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="res/icons/android-icon.png" />
+  <link rel="icon" href="res/icons/favicon.ico" type="image/x-icon" />
+  <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
+</head>
+
+<body>
+  <div id="matrix-net"></div>
+  <div id="menu" style="opacity: 0.9;z-index: 1;position: absolute; left: 0; top: 5%; width: 300px; height: auto; color: lime; padding: 1px; text-align: center">
+    <div class="btnShadow" style="width: 100%; height: auto;font-size: larger;">
+      Matrix Engine Examples <br />
+      version 1.9.38 - dec 2023
     </div>
+    <div style="width: 100%; height: auto" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_color_cube' " onmousemove="">adding color cube</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_color_triangle' ">adding color triangle</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_color_square' ">adding color square</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_color_piramyde' ">adding color piramyde</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_square_texture' ">adding square with texture</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_tex_square_raycast' ">adding square with raycast</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=cube_geometry' ">adding cube with texture + scale</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=cube_light_dinamic' ">adding cube light dinamic</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=opengles_native_cubemap' ">CubeMap with canvas2D</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=opengles_native_cubemap_images' ">CubeMap with Images</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=sphere_geometry' ">sphere geometry</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=cube_light_and_texture' ">cube_light_and_texture</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=load_obj_file' ">load obj file (UV map-Blender)</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=adding_more_texture_samplers' ">adding more texture samplers</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=custom_texture' ">custom_texture</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=texture_dinamic_manipulation' ">texture_dinamic_manipulation</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=first_person_controller' ">First person controller</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=obj_animation' ">Animation - obj sequence</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=obj_animation_build_mesh_effect' ">obj animation build mesh effect</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=all_variant_of_blending' ">some variant of blending.js</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=video_texture' ">video texture (webcam)</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=camera_texture' ">camera texture (webcam)</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=audio_manipulation' ">audio_manipulation</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=audio_manipulation2' ">audio_manipulation2</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=my_world' ">Draw instanced Forest - primitive</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=porting2d' ">visual-js-2d-porting</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=porting2d_text' ">visual-js-2d-porting Text</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=porting2d_particle' ">visual-js-2d-porting Particle</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=cube_tex_arrays' ">draw scene object arrays</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=my_world' ">My world</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=bvh_loader' ">Bvh raw load</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=bvh_animation_class' ">Bvh animation class</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=physics_cube' ">Physics class - Cube</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=physics_sphere' ">Physics class - Sphere</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=networking_basic' ">Networking Basic</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=load_obj_sequence' ">mixamo.com->dea/fbx->blender->obj seq morph</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=spot_light_basic' ">Basic spot lights</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=lens_effect' ">Basic lens effect</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=fps_player_controller' ">FPShooter example</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=active_editor' ">active_editor [only localhost/dev]</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=basic_fbo' ">Basic FBO</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=fbo_manipulation' ">FBO [Multi FBO objects - same camera target] </div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=video_texture_lava' ">Lava textures - VT</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=matrix_chat_room' ">Matrix video chat - webRTC 🎥</div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=torus_geometry' ">Torus geomtry [custom geometry] </div>
+    <div style="width: 100%" class="btnShadow" onclick="g('iframe1').src='query-build.html?u=physics_cube_active_textures' ">100 Physics Cube with fanny-slot [canvas2d]</div>
+  </div>
 
-    <iframe id="iframe1" allowfullscreen allow="autoplay" style="position: absolute; left: 15%; top: 0; width: 85%; height: 99%" class="btnShadow" src="query-build.html" title="live"></iframe>
-  </body>
+  <iframe id="iframe1" allowfullscreen allow="autoplay" style="position: absolute; left: 15%; top: 0; width: 85%; height: 99%" class="btnShadow" src="query-build.html" title="live"></iframe>
+
+  <script>
+    window.onload = function() {
+      if(QueryString.GLSL == 1.1) {
+        console.log('Prefered opengles1.1/2')
+        g('iframe1').src = g('iframe1').src + "&GLSL=1.1";
+      }
+    }
+  </script>
+</body>
+
 </html>

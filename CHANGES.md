@@ -7,9 +7,10 @@
 [1.9.40] First version with both support opengles11/2 and opengles300
  - Default : 1.3/opengles300
  - Switch with URL param `GLSL=1.3` for opengle300 and `GLSL=1.1` for opengles1.1/2
-  - Not working all shaders at the moment !!
+ - Not working all shaders at the moment for 1.1 !
+ - Implemented URL param for examples-build.html
 
-[1.9.39] 
+[1.9.39]
   OffScreenCanvas [Turbo super power speed]
 - Control from manifest `App.offScreenCanvas` | Boolean
 Default `true`. This feature means that your render will work event in inactive mode / hidden tab mode.
