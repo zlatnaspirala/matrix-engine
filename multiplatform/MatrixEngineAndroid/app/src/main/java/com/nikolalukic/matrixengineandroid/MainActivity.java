@@ -19,6 +19,8 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    private String APP_STATUS = "PROD";
+    private String WEBGL_VER = "1";
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -29,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, final android.webkit.JsResult result) {
             Log.d("alert", message);
+            Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
+            result.confirm();
+            return true;
+        };
+        // TEST
+        public boolean onJsConsole (WebView view, String url, String message, final android.webkit.JsResult result) {
+            Log.d("console", message);
             Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
             result.confirm();
             return true;
@@ -46,10 +55,20 @@ public class MainActivity extends AppCompatActivity {
         WebSettings webSettings = web1.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        // web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/query-build.html?u=porting2d_text");
-        web1.loadUrl("https://webglreport.com/?v=2");
-        //web1.loadUrl("https://get.webgl.org/webgl2/");
-
-
+        if (APP_STATUS == "PROD") {
+            if (WEBGL_VER == "1") {
+                web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/query-build.html?u=porting2d_text&GLSL=1.1");
+            } else {
+                web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/query-build.html?u=porting2d_text");
+            }
+        } else if (APP_STATUS == "DEV") {
+            if (WEBGL_VER == "1") {
+                web1.loadUrl("https://localhost/public/gui.html");
+            } else {
+                web1.loadUrl("https://localhost/public/gui.html?GLSL=1.1");
+            }
+        } else if(APP_STATUS == "TEST-WEBGL2") {
+          web1.loadUrl("https://webglreport.com/?v=2");
+        }
     }
 }

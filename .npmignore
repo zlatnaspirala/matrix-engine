@@ -19,3 +19,5 @@ multiplatform/win/cef-sharp
 **/wiki
 .github
 https://github.com/zlatnaspirala/matrix-engine/wiki/
+*.blender
+*.blender1
