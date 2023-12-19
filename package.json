@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "install.paths": "cd ./2DTextureEditor/ & node install-paths.js",
+    "install.paths": "cd ./2DTextureEditor/ | node install-paths.js",
     "install.dep": "npm i | npm install -g uglify-js browserify watchify | npm run install.paths",
     "examples": "watchify App-Examples.js -p [esmify --noImplicitAny] -o public/examples.me.js",
     "app": "watchify App.js -p [esmify --noImplicitAny] -o public/app.js",
