@@ -15,10 +15,11 @@ if ('serviceWorker' in navigator) {
 }
 
 window.webGLStart = () => {
+  window.App = App;
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
   // Make it global for dev - for easy console/debugger access
-  window.App = App;
+
   window.runThis = runThis;
   setTimeout(() => { runThis(world); }, 1);
 };
