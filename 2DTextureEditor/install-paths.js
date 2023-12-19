@@ -35,7 +35,7 @@ function READ(filePath) {
 }
 
 // Run
-READ('./config.js').then((r) => {
+READ('../config.js').then((r) => {
   var tPath = __dirname;
   var path = tPath.replace(/\\/g,'/');
   path = path + "/"
@@ -50,7 +50,7 @@ READ('./config.js').then((r) => {
   });
 })
 
-READ('./editor.js').then((r) => {
+READ('../editor.js').then((r) => {
   var tPath = __dirname;
   var path = tPath.replace(/\\/g,'/');
   path = path + "/"
