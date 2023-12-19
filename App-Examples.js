@@ -49,6 +49,7 @@ import {runThis as matrix_chat_room} from './apps/matrix_chat_room';
 import { runThis as torus_geometry } from './apps/torus_geometry';
 import { runThis as physics_cube_active_textures } from './apps/physics_cube_active_textures';
 import { runThis as fbo_manipulation } from './apps/fbo_manipulation';
+import { runThis as welcome_gui_editor } from './apps/welcome-gui-editor';
 
 /**
  * @description
@@ -106,7 +107,8 @@ var Examples = {
   porting2d_text: porting2d_text,
   sphere_geometry: sphere_geometry,
   texture_dinamic_manipulation: texture_dinamic_manipulation,
-  video_texture: video_texture
+  video_texture: video_texture,
+  welcome_gui_editor: welcome_gui_editor
 };
 
 /**
