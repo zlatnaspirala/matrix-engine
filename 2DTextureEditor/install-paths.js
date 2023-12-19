@@ -35,7 +35,7 @@ function READ(filePath) {
 }
 
 // Run
-READ('../config.js').then((r) => {
+READ('./2DTextureEditor/config.js').then((r) => {
   var tPath = __dirname;
   var path = tPath.replace(/\\/g,'/');
   path = path + "/"
@@ -50,7 +50,7 @@ READ('../config.js').then((r) => {
   });
 })
 
-READ('../editor.js').then((r) => {
+READ('./2DTextureEditor/editor.js').then((r) => {
   var tPath = __dirname;
   var path = tPath.replace(/\\/g,'/');
   path = path + "/"
