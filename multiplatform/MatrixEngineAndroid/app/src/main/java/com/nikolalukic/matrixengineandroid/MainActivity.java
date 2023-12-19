@@ -19,7 +19,7 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private String APP_STATUS = "PROD";
+    private String APP_STATUS = "DEV";
     private String WEBGL_VER = "1";
 
     private AppBarConfiguration appBarConfiguration;

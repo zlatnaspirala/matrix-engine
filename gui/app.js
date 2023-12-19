@@ -48,10 +48,11 @@ var runThis = world => {
 };
 
 window.webGLStart = () => {
-  world = matrixEngine.matrixWorld.defineworld(canvas);
-  world.callReDraw();
   // dev
   window.App = App;
+  world = matrixEngine.matrixWorld.defineworld(canvas);
+  world.callReDraw();
+
   runThis(world)
 };
 
