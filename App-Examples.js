@@ -50,6 +50,7 @@ import { runThis as torus_geometry } from './apps/torus_geometry';
 import { runThis as physics_cube_active_textures } from './apps/physics_cube_active_textures';
 import { runThis as fbo_manipulation } from './apps/fbo_manipulation';
 import { runThis as welcome_gui_editor } from './apps/welcome-gui-editor';
+import { runThis as rolling_the_dice } from './apps/rolling_the_dice';
 
 /**
  * @description
@@ -60,6 +61,7 @@ import { runThis as welcome_gui_editor } from './apps/welcome-gui-editor';
  * public/query-build.html?u=spot_light_shadows
  */
 var Examples = {
+  rolling_the_dice: rolling_the_dice,
   fbo_manipulation: fbo_manipulation,
   physics_cube_active_textures: physics_cube_active_textures,
   torus_geometry: torus_geometry,
