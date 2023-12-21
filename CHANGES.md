@@ -4,10 +4,10 @@
 
 ## ---------------------------------
 
-[1.9.40] First version with both support opengles11/2 and opengles300
+[1.9.40 - 1.9.43]
+ First version with both support opengles11/2 and opengles300
  - Default : 1.3/opengles300
  - Switch with URL param `GLSL=1.3` for opengle300 and `GLSL=1.1` for opengles1.1/2
- - Not working all shaders at the moment for 1.1 !w
  - Implemented URL param for examples-build.html?GLSL=1.1 [Affect after first demo choose.]
 
 [1.9.39]

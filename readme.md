@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.9.38` THUNDER
+### Name: `MATRIX-ENGINE` `1.9.43` THUNDER
 
 #### Logo
 
@@ -32,6 +32,8 @@
 
 #### - MatrixEngineTexture GUI Editor [UNDERCONSTRUCTION]
 
+#### - Swicthing GLSL ver - webGL1 / webGL2 ✔
+
 #### - OffScreenCanvas ✔
 
 ### Description ℹ
@@ -47,7 +49,6 @@ also used for editing images. Networking is part of matrix engine, deeply integr
 ### Limitation ⚠
 
 - Basic implementation for physics (Cube, Sphere).
-- Raycast not work after walk behind the object in first person mode.
 - Only static object cast spot light in right way for now.
 - Need general more improvement on GLSL part.
 

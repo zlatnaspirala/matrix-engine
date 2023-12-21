@@ -258,7 +258,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./lib/engine":4,"./lib/events":5,"./lib/loader-obj":6,"./lib/matrix-buffers":7,"./lib/matrix-bvh":8,"./lib/matrix-geometry":10,"./lib/matrix-render":13,"./lib/matrix-textures":17,"./lib/matrix-world":18,"./lib/raycast":22,"./lib/utility":28,"./program/manifest":37}],4:[function(require,module,exports){
+},{"./lib/engine":4,"./lib/events":5,"./lib/loader-obj":6,"./lib/matrix-buffers":7,"./lib/matrix-bvh":8,"./lib/matrix-geometry":10,"./lib/matrix-render":13,"./lib/matrix-textures":18,"./lib/matrix-world":19,"./lib/raycast":23,"./lib/utility":29,"./program/manifest":38}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -285,7 +285,7 @@ exports.VT = VT;
 exports.Vjs3 = Vjs3;
 exports.anyCanvas = anyCanvas;
 exports.DOM_VT = DOM_VT;
-exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateCubeMapShader = exports.RegenerateShader = exports.activateNet = exports.net = exports.looper = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
+exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateCubeMapShader = exports.RegenerateShader = exports.activateNet = exports.looper = exports.net = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
 
 var _net = require("./net");
 
@@ -301,7 +301,9 @@ var _matrixRender = require("./matrix-render");
 
 var _matrixWorld = require("./matrix-world");
 
-var _matrixShaders = require("./matrix-shaders");
+var _matrixShaders = require("./matrix-shaders3");
+
+var _matrixShaders2 = require("./matrix-shaders1");
 
 var _clientConfig = _interopRequireDefault(require("../client-config"));
 
@@ -309,12 +311,9 @@ var _sounds = require("./sounds");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* eslint-disable no-undef */
-
-/* eslint-disable no-unused-vars */
 if (_manifest.default.offScreenCanvas == true || _utility.QueryString.offScreen == 'true') {
   _manifest.default.offScreenCanvas = true;
-  console.log('App.offScreenCanvas FORCE =>', _manifest.default.offScreenCanvas);
+  console.log('[matrix-engine] offScreenCanvas activated =>', _manifest.default.offScreenCanvas);
 
   _utility.scriptManager.LOAD('./hacker-timer/hack-timer.js');
 } else {
@@ -333,6 +332,8 @@ exports.totalTime = totalTime;
 exports.lastTime = lastTime;
 exports.ht = ht;
 exports.wd = wd;
+let net = null;
+exports.net = net;
 let looper = 0;
 exports.looper = looper;
 
@@ -349,9 +350,6 @@ function resizeView() {
     exports.ht = ht = document.documentElement.clientHeight - 4;
   }
 }
-
-let net = null;
-exports.net = net;
 
 let activateNet = CustomConfig => {
   if (typeof _manifest.default.net !== 'undefined' && _manifest.default.net === true) {
@@ -370,7 +368,6 @@ let activateNet = CustomConfig => {
 exports.activateNet = activateNet;
 
 function initApp(callback) {
-  /* Calculate Width and Height before rendering */
   resizeView();
   drawCanvas();
   window.canvas = document.getElementById('canvas');
@@ -384,7 +381,6 @@ function initApp(callback) {
   }
 
   if (typeof callback !== 'undefined') {
-    // E('canvas').webGLStartCallBack = callback;
     window.webGLStartCallBack = callback;
     callback();
   }
@@ -406,7 +402,7 @@ async function load_shaders(href) {
         resolve();
       } else {
         reject();
-        console.warn('Something went wrong on shaders load procces!');
+        console.warn('Something went wrong on shaders load procces! => ', href);
       }
     }
 
@@ -420,14 +416,12 @@ async function load_shaders(href) {
 function loadHtmlPowerAsset(href, callback) {
   function handler() {
     if (this.status == 200 && this.responseText != null) {
-      // Success
       document.getElementById('media-holder').innerHTML = this.responseText;
 
       if (typeof callback !== 'undefined') {
         callback();
       }
-    } else {// something went wrong
-      // console.log("something went wrong on shaders load procces!");
+    } else {// console.log("something went wrong on shaders load procces!");
     }
   }
 
@@ -439,17 +433,14 @@ function loadHtmlPowerAsset(href, callback) {
 /**
  * @description
  * WebGL start
- * Base environment property for totality of WEBGL 
+ * Base environment property for totality of WEBGL.
  */
 
 
 function defineWebGLWorld(cavnas) {
-  // console.log("Define the WEBGL base pocket");
   var world = new Object();
-  /* Constructor for a particular GL environment */
 
   try {
-    // console.log('TEST MOMENT BEFORE');
     var gl = _webglUtils.WebGLUtils.setupWebGL(canvas);
 
     gl.viewportWidth = canvas.width;
@@ -459,9 +450,9 @@ function defineWebGLWorld(cavnas) {
     const test_depth_texture = gl.getExtension('WEBGL_depth_texture');
 
     if (!test_depth_texture) {// console.warn('No support for WEBGL_depth_texture [opengles1.1] !', ext);
-    }
+    } // console.info("WEBGL base pocket: SUCCESS , Lets see list of ext : ", available_extensions);
 
-    console.info("WEBGL base pocket: SUCCESS , Lets see list of ext : ", available_extensions);
+
     const extTFAnisotropic = gl.getExtension('EXT_texture_filter_anisotropic') || gl.getExtension('MOZ_EXT_texture_filter_anisotropic') || gl.getExtension('WEBKIT_EXT_texture_filter_anisotropic');
 
     if (extTFAnisotropic) {
@@ -471,7 +462,6 @@ function defineWebGLWorld(cavnas) {
       world.extTFAnisotropic = extTFAnisotropic;
     }
   } catch (e) {
-    /* Exception: Could not initialise WebGL     */
     console.error("Exception in WEBGL base pocket: " + e);
   }
   /* Destructor */
@@ -483,8 +473,7 @@ function defineWebGLWorld(cavnas) {
   };
 
   return world;
-} // Update the frame rate FPS counter
-
+}
 
 function updateFPS(elements) {
   // console.log(" Update FPS");
@@ -511,9 +500,7 @@ function drawCanvas() {
 
   if (_manifest.default.resize.canvas == 'full-screen') {
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    _events.SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ');
+    canvas.height = window.innerHeight; // SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ');
   } else {
     canvas.width = window.innerHeight * _manifest.default.resize.aspectRatio;
     canvas.height = window.innerHeight;
@@ -522,18 +509,16 @@ function drawCanvas() {
   }
 
   document.body.append(canvas);
-}
-/* Degree to Radian converter */
+} // Degree to Radian converter 
 
 
 function degToRad(degrees) {
   return degrees * Math.PI / 180;
 }
-/* One time initiation of FPS to store initial time */
 
+; // One time initiation of FPS to store initial time 
 
 function initiateFPS() {
-  // console.log("    Initiate FPS");
   exports.lastTime = lastTime = new Date().getTime();
 } // Help the browser Garbage collect
 
@@ -548,10 +533,6 @@ window.cancelRequestAnimFrame = function () {
 
 
 function onExit() {
-  /* RIP Mouse object */
-  // mouseLoc.destroy();
-
-  /* RIP Objects */
   exports.looper = looper = 0;
 
   while (looper <= _matrixWorld.objListToDispose.length - 1) {
@@ -565,8 +546,6 @@ function onExit() {
 
 _manifest.default.operation.destroyWorld = function () {
   // console.log("Destroy at iteration:" + reDrawID);
-
-  /* Stop the render */
   cancelRequestAnimFrame(_matrixRender.reDrawID);
   delete this.pMatrix;
   delete this.mvMatrixStack;
@@ -580,13 +559,11 @@ _manifest.default.operation.destroyWorld = function () {
     /* Dispose the shaders */
 
     if (this.contentList[looper].shaderProgram.fragmentShader) {
-      // console.log("Dispose Fragment Shader");
       this.GL.gl.deleteShader(this.contentList[looper].shaderProgram.fragmentShader);
       delete this.contentList[looper].shaderProgram.fragmentShader;
     }
 
     if (this.contentList[looper].shaderProgram.vertexShader) {
-      // console.log("Dispose Vertex Shader");
       this.GL.gl.deleteShader(this.contentList[looper].shaderProgram.vertexShader);
       delete this.contentList[looper].shaderProgram.vertexShader;
     }
@@ -594,12 +571,10 @@ _manifest.default.operation.destroyWorld = function () {
 
 
     if (this.contentList[looper].texture) {
-      // console.log("Dispose Texture");
-      // must be improved Nikola Lukic
       try {
         this.GL.gl.deleteTexture(this.contentList[looper].texture);
       } catch (e) {
-        _events.SYS.DEBUG.WARNING('Problem in destroying function : This is e log : ' + e);
+        console.warn('Problem in destroying function : This is e log : ' + e);
       }
 
       delete this.contentList[looper].texture;
@@ -608,34 +583,28 @@ _manifest.default.operation.destroyWorld = function () {
 
 
     if (this.contentList[looper].shaderProgram) {
-      // console.log("Dispose Shader program");
       this.GL.gl.deleteProgram(this.contentList[looper].shaderProgram);
       delete this.contentList[looper].shaderProgram;
     }
     /* Empty the buffers */
-    // console.log(" Dispose buffers");
 
 
     if (this.contentList[looper].vertexPositionBuffer) {
-      // console.log("Dispose Vertex Position Buffer");
       this.GL.gl.deleteBuffer(this.contentList[looper].vertexPositionBuffer);
       delete this.contentList[looper].vertexPositionBuffer;
     }
 
     if (this.contentList[looper].vertexTexCoordBuffer) {
-      // console.log("Dispose Vertex Coordinate Buffer");
       this.GL.gl.deleteBuffer(this.contentList[looper].vertexTexCoordBuffer);
       delete this.contentList[looper].vertexTexCoordBuffer;
     }
 
     if (this.contentList[looper].vertexColorBuffer) {
-      // console.log("Dispose Vertex Color Buffer");
       this.GL.gl.deleteBuffer(this.contentList[looper].vertexColorBuffer);
       delete this.contentList[looper].vertexColorBuffer;
     }
 
     if (this.contentList[looper].vertexIndexBuffer) {
-      // console.log("Dispose Vertex Index Buffer");
       this.GL.gl.deleteBuffer(this.contentList[looper].vertexIndexBuffer);
       delete this.contentList[looper].vertexIndexBuffer;
     }
@@ -648,16 +617,8 @@ _manifest.default.operation.destroyWorld = function () {
 
   this.contentList.length = 0;
   this.GL.destroy();
-
-  _events.SYS.DEBUG.WARNING('exit');
-
   delete this;
 };
-/**
- * @description
- * LOAD SHADERS DYNAMIC
- */
-
 
 function loadShaders(gl, id) {
   // console.log("          Get the Shader");
@@ -695,6 +656,7 @@ function loadShaders(gl, id) {
       return shader;
     } else {
       console.warn('Shader Program compile failed:' + gl.getShaderInfoLog(shader));
+      console.warn('Shader Program name :' + id);
       return 0;
     }
   } else {
@@ -841,9 +803,7 @@ function initShaders(gl, fragment, vertex) {
 
       if (null !== gl.getUniformLocation(shaderProgram, 'u_bias')) {
         shaderProgram.u_bias = gl.getUniformLocation(shaderProgram, 'u_bias');
-      } // 
-      //
-      // 1.8.4 cubeMap
+      } // 1.8.4 cubeMap
 
 
       if (null !== gl.getUniformLocation(shaderProgram, 'u_texture')) {
@@ -876,11 +836,11 @@ function initShaders(gl, fragment, vertex) {
       shaderProgram.vertexShader = vertexShader;
       return shaderProgram;
     } else {
-      console.warn('Returning Shader fragment failed!');
+      console.warn('Returning Shader fragment failed! \n ', gl.getProgramInfoLog(shaderProgram));
       return 0;
     }
   }
-} // END OF SHADERS DYNAMIC
+} // END OF SHADERS
 // MATRIX OPETARION
 
 
@@ -901,8 +861,7 @@ _manifest.default.operation.POP_MATRIX = function (mvMatrix, mvMatrixStack) {
 _manifest.default.operation.SET_MATRIX_UNIFORMS = function (object, pMatrix) {
   this.GL.gl.uniformMatrix4fv(object.shaderProgram.pMatrixUniform, false, pMatrix);
   this.GL.gl.uniformMatrix4fv(object.shaderProgram.mvMatrixUniform, false, object.mvMatrix);
-}; // Modify shaders in runtime.
-
+};
 
 var RegenerateShader = function (id_elem, numOfSamplerInUse, mixOperand, lightType) {
   var e = document.getElementById(id_elem);
@@ -913,15 +872,14 @@ var RegenerateShader = function (id_elem, numOfSamplerInUse, mixOperand, lightTy
     mixOperand = 1;
   }
 
-  if (typeof lightType !== 'undefined' && _manifest.default.openglesShaderVersion == 1.3) {
-    // console.log('shader version: 300 ', lightType)
+  if (_manifest.default.openglesShaderVersion == 1.3) {
+    console.log('RegenerateShader 300 => ', lightType);
     e.innerHTML = (0, _matrixShaders.generateShaderSrc3)(numOfSamplerInUse, mixOperand, lightType);
   } else {
-    // console.warn('shader version: 2 ', lightType)
-    e.innerHTML = (0, _matrixShaders.generateShaderSrc)(numOfSamplerInUse, mixOperand);
+    console.warn('RegenerateShader 2 => ', lightType);
+    e.innerHTML = (0, _matrixShaders2.generateShaderSrc)(numOfSamplerInUse, mixOperand, lightType);
   }
-}; // Modify shaders in runtime.
-
+};
 
 exports.RegenerateShader = RegenerateShader;
 
@@ -934,22 +892,12 @@ var RegenerateCubeMapShader = function (id_elem, numOfSamplerInUse, mixOperand, 
     mixOperand = 1;
   }
 
-  if (typeof lightType !== 'undefined') {
-    e.innerHTML = (0, _matrixShaders.generateCubeMapShaderSrc)(numOfSamplerInUse, mixOperand, lightType);
+  if (_manifest.default.openglesShaderVersion == 1.3) {
+    e.innerHTML = (0, _matrixShaders.generateCubeMapShaderSrc3)(numOfSamplerInUse, mixOperand, lightType);
   } else {
-    e.innerHTML = (0, _matrixShaders.generateCubeMapShaderSrc)(numOfSamplerInUse, mixOperand);
+    e.innerHTML = (0, _matrixShaders2.generateCubeMapShaderSrc1)(numOfSamplerInUse, mixOperand);
   }
-}; // Not active
-// export var RegenerateShaderSimpleDirectionLight = function (id_elem) {
-//   var e = document.getElementById(id_elem);
-//   e.innerHTML = generateShaderSimpleDirection();
-// };
-// // Not active
-// export var RegenerateVShaderSimpleDirectionLight = function (id_elem) {
-//   var e = document.getElementById(id_elem);
-//   e.innerHTML = generateVShaderSimpleDirectionLight();
-// };
-
+};
 
 exports.RegenerateCubeMapShader = RegenerateCubeMapShader;
 
@@ -963,7 +911,8 @@ var RegenerateCustomShader = function (id_elem, numOfSamplerInUse, mixOperand, c
   }
 
   e.innerHTML = (0, _matrixShaders.generateCustomShaderSrc)(numOfSamplerInUse, mixOperand, code_);
-};
+}; // Streams stuff
+
 
 exports.RegenerateCustomShader = RegenerateCustomShader;
 
@@ -1289,7 +1238,7 @@ function DOM_VT(video, name, options) {
   };
 }
 
-},{"../client-config":1,"../program/manifest":37,"./events":5,"./matrix-render":13,"./matrix-shaders":14,"./matrix-world":18,"./net":19,"./sounds":27,"./utility":28,"./webgl-utils":29}],5:[function(require,module,exports){
+},{"../client-config":1,"../program/manifest":38,"./events":5,"./matrix-render":13,"./matrix-shaders1":14,"./matrix-shaders3":15,"./matrix-world":19,"./net":20,"./sounds":28,"./utility":29,"./webgl-utils":30}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1307,9 +1256,6 @@ var _utility = require("./utility");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* eslint-disable no-unused-vars */
-
-/* globals LOG App NOMOBILE keyboardPress printLog degToRad mat4 */
 var SYS = {};
 exports.SYS = SYS;
 SYS.MOUSE = {
@@ -1326,7 +1272,9 @@ SYS.MOUSE = {
   ON_MID_BTN_PRESSED: function () {},
   MOUSE_MOVING: false
 };
-SYS.DEBUG = new _utility.LOG();
+SYS.DEBUG = new _utility.LOG(); // from 1.9.44
+
+_manifest.default.sys = SYS;
 
 function EVENTS(canvas) {
   var ROOT_EVENTS = this; //Mobile device
@@ -1429,8 +1377,7 @@ function EVENTS(canvas) {
     if (_manifest.default.resize.canvas == "full-screen") {
       //canvas.width =  window.innerHeight * App.resize.aspectRatio;
       canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ' + _matrixWorld.world);
+      canvas.height = window.innerHeight; // SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ' + world);
     } else {
       canvas.width = window.innerHeight * _manifest.default.resize.aspectRatio;
       canvas.height = window.innerHeight;
@@ -1469,13 +1416,15 @@ function EVENTS(canvas) {
       camera.yawRate += deltaX * 1;
 
       if (SYS.MOUSE.x < _manifest.default.camera.edgeMarginValue - center_x) {
-        _manifest.default.camera.leftEdge = true; // SYS.DEBUG.LOG(" mouse on edge ! ");
+        _manifest.default.camera.leftEdge = true;
+        SYS.DEBUG.LOG("Mouse on edge!");
       } else {
         _manifest.default.camera.leftEdge = false;
       }
 
       if (SYS.MOUSE.x > center_x - _manifest.default.camera.edgeMarginValue) {
-        _manifest.default.camera.rightEdge = true; //SYS.DEBUG.LOG(" mouse on edge ! ");
+        _manifest.default.camera.rightEdge = true;
+        SYS.DEBUG.LOG("Mouse on edge!");
       } else {
         _manifest.default.camera.rightEdge = false;
       }
@@ -1483,14 +1432,14 @@ function EVENTS(canvas) {
 
     if (_manifest.default.camera.SceneController === true && SYS.MOUSE.BUTTON_PRESSED == 'MID') {
       if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0) {
-        //left
+        // left
         if (SYS.MOUSE.LAST_POSITION.x < SYS.MOUSE.x) {
           this.virtualLeftRightScene -= _manifest.default.camera.sceneControllerDragAmp;
         } else if (SYS.MOUSE.LAST_POSITION.x > SYS.MOUSE.x) {
           this.virtualLeftRightScene += _manifest.default.camera.sceneControllerDragAmp;
         }
       } else if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0) {
-        //right
+        // right
         if (SYS.MOUSE.LAST_POSITION.x < SYS.MOUSE.x) {
           this.virtualLeftRightScene -= _manifest.default.camera.sceneControllerDragAmp;
         } else if (SYS.MOUSE.LAST_POSITION.x > SYS.MOUSE.x) {
@@ -1525,7 +1474,8 @@ function EVENTS(canvas) {
     SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH UP ');
   };
 
-  this.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = function (ev, m) {// SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH DOWN ');
+  this.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = function (ev, m) {
+    SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH DOWN ');
   };
 }
 
@@ -1798,7 +1748,7 @@ if (_manifest.default.pwa.addToHomePage === true) {
   } catch (err) {}
 }
 
-},{"../program/manifest":37,"./matrix-world":18,"./utility":28}],6:[function(require,module,exports){
+},{"../program/manifest":38,"./matrix-world":19,"./utility":29}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2318,7 +2268,7 @@ function play(nameAni) {
   this.animation.currentAni = this.animation.anims[this.animation.anims.active].from;
 }
 
-},{"./matrix-world":18}],7:[function(require,module,exports){
+},{"./matrix-world":19}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2726,7 +2676,7 @@ _manifest.default.operation.cubemap_buffer_procedure = function (object) {
 var _default = _manifest.default.operation;
 exports.default = _default;
 
-},{"../program/manifest":37,"./matrix-world":18}],8:[function(require,module,exports){
+},{"../program/manifest":38,"./matrix-world":19}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3022,7 +2972,7 @@ class MEBvhAnimation {
 
 exports.default = MEBvhAnimation;
 
-},{"./matrix-world":18,"./utility":28,"bvh-loader":32}],9:[function(require,module,exports){
+},{"./matrix-world":19,"./utility":29,"bvh-loader":33}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3291,7 +3241,6 @@ _manifest.default.operation.draws.cube = function (object, ray) {
 
       if (object.cubeMap.type == 'images') {
         object.cubeMap.cubeMap2dCanvasSet.forEach((faceInfo, index) => {
-          // Upload the canvas to the cubemap face.
           const level = 0;
           const internalFormat = gl.RGBA;
           const format = gl.RGBA;
@@ -3318,14 +3267,12 @@ _manifest.default.operation.draws.cube = function (object, ray) {
               text
             } = faceInfo;
             (0, _utility.gen2DTextFace)(object.cubeMap.cubeMap2dCtx, faceColor, textColor, text);
-          } // Upload the canvas to the cubemap face.
-
+          }
 
           const level = 0;
           const internalFormat = gl.RGBA;
           const format = gl.RGBA;
-          const type = gl.UNSIGNED_BYTE; // gl.texImage2D(faceInfo.target, level, internalFormat, format, type, object.cubeMap.images[0]);
-
+          const type = gl.UNSIGNED_BYTE;
           gl.texImage2D(faceInfo.target, level, internalFormat, format, type, object.cubeMap.cubeMap2dCtx.canvas);
           gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
         });
@@ -4441,7 +4388,7 @@ var drawsOperation = _manifest.default.operation.draws;
 var _default = drawsOperation;
 exports.default = _default;
 
-},{"../program/manifest":37,"./events":5,"./matrix-shadows":15,"./matrix-textures":17,"./matrix-world":18,"./raycast":22,"./utility":28}],10:[function(require,module,exports){
+},{"../program/manifest":38,"./events":5,"./matrix-shadows":16,"./matrix-textures":18,"./matrix-world":19,"./raycast":23,"./utility":29}],10:[function(require,module,exports){
 /* eslint-disable no-redeclare */
 
 /* eslint-disable no-unused-vars */
@@ -6468,13 +6415,13 @@ class GeoOfColor {
 
 exports.GeoOfColor = GeoOfColor;
 
-},{"../program/manifest":37,"./engine":4,"./utility":28}],11:[function(require,module,exports){
+},{"../program/manifest":38,"./engine":4,"./utility":29}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.loadShaders2 = loadShaders2;
+exports.loadShaders11 = loadShaders11;
 exports.genInitFSTriangle = genInitFSTriangle;
 exports.getInitVSTriangle = getInitVSTriangle;
 exports.getInitFSCubeTexLight = getInitFSCubeTexLight;
@@ -6502,13 +6449,13 @@ var _utility = require("./utility");
  * @description From 1.7.11
  * Initial Shaders coming from code.
  * loadShaders will be adapted for deplacement
- * This is OPENGLES VER 3 / webGL2
+ * This is for `opengles 2.0 or 1.1` - GLSL It is a webGL1
  * 
  * - Can be overrided
  * - For textures program use regenerate shader procedure.
  * - Can be selective for optimisation.
  */
-function loadShaders2() {
+function loadShaders11() {
   genInitFSTriangle();
   getInitVSTriangle();
   getInitVSCube();
@@ -6528,8 +6475,721 @@ function loadShaders2() {
   getInitVSCubeMap();
   getInitFSCubeMap();
   getInitFSSquareTex();
-  getInitVSSquareTex();
-  console.info("Shaders ready.");
+  getInitVSSquareTex(); // console.info("Shaders ready.");
+}
+
+function genInitFSTriangle() {
+  const f = `
+  precision mediump float;
+
+  varying vec4 vColor;
+
+  void main(void) {
+    gl_FragColor = vColor;
+  }
+  `;
+
+  _utility.scriptManager.LOAD(f, "triangle-shader-fs", "x-shader/x-fragment", "shaders");
+}
+
+function getInitVSTriangle() {
+  const f = `
+  attribute vec3 aVertexPosition;
+  attribute vec4 aVertexColor;
+
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+
+  varying vec4 vColor;
+
+  void main(void) {
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vColor      = aVertexColor;
+  }
+  `;
+
+  _utility.scriptManager.LOAD(f, "triangle-shader-vs", "x-shader/x-vertex", "shaders");
+}
+
+function getInitFSCubeTexLight() {
+  const f = `
+  precision mediump float;
+
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+
+  uniform sampler2D uSampler;
+  uniform sampler2D uSampler1;
+  uniform sampler2D uSampler2;
+  uniform sampler2D uSampler3;
+  uniform sampler2D uSampler4;
+  uniform sampler2D uSampler5;
+
+  // The CubeMap texture.
+  uniform samplerCube u_texture;
+  // cube map
+  varying vec3 v_normal_cubemap;
+
+  uniform float numberOfsamplers;
+
+  // Spot
+  // Passed in from the vertex shader.
+  varying vec3 v_normal;
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
+
+  uniform vec4 u_color;
+  uniform float u_shininess;
+  uniform vec3 u_lightDirection;
+  uniform float u_innerLimit;          // in dot space
+  uniform float u_outerLimit;          // in dot space
+
+  void main(void) {
+    // because v_normal is a varying it's interpolated
+    // so it will not be a unit vector. Normalizing it
+    // will make it a unit vector again
+    vec3 normal = normalize(v_normal);
+
+    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+
+    float dotFromDirection = dot(surfaceToLightDirection,
+                                 -u_lightDirection);
+    float limitRange = u_innerLimit - u_outerLimit;
+    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+    float light = inLight * dot(normal, surfaceToLightDirection);
+    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+
+    // Directioin vs uAmbientColor
+    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+
+    vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
+
+    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+
+    // Lets multiply just the color portion (not the alpha)
+    // by the light
+    gl_FragColor.rgb *= light;
+    // Just add in the specular
+    gl_FragColor.rgb += specular;
+  }
+  `;
+
+  _utility.scriptManager.LOAD(f, "cubeLightTex-shader-fs", "x-shader/x-fragment", "shaders");
+}
+
+function getInitVSCubeTexLight() {
+  const f = `
+  attribute vec3 aVertexPosition;
+  attribute vec3 aVertexNormal;
+  attribute vec2 aTextureCoord;
+
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+  uniform mat3 uNMatrix;
+
+  uniform vec3 uAmbientColor;
+
+  uniform vec3 uLightingDirection;
+  uniform vec3 uDirectionalColor;
+
+  uniform bool uUseLighting;
+
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+
+  // Spot
+  uniform vec3 u_lightWorldPosition;
+  varying vec3 v_normal;
+  varying vec3 v_normal_cubemap;
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
+
+  // Specular
+  varying mat4 uMVMatrixINTER;
+  varying mat3 uNMatrixINTER;
+  varying mat4 uPMatrixINNTER;
+
+  attribute vec4 specularColor;
+  varying vec4 vColor;
+  varying vec3 vNormal;
+  varying vec4 vPosition;
+  varying float vDist;
+
+  void main(void) {
+    uMVMatrixINTER = uMVMatrix;
+    uNMatrixINTER = uNMatrix;
+    uPMatrixINNTER = uPMatrix;
+
+    // GLOBAL POS SPECULAR
+    vColor = specularColor;
+    vNormal = normalize(uNMatrix * vec3(aVertexNormal));
+    // Calculate the modelView of the model, and set the vPosition
+    // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
+    vPosition = uMVMatrix * vec4(1,1,1,1);
+    vDist = gl_Position.w;
+
+    // SPOT
+    // orient the normals and pass to the fragment shader
+    v_normal = mat3(uNMatrix) * aVertexNormal;
+
+    // normalize
+    v_normal_cubemap = normalize(aVertexPosition.xyz);
+
+    // compute the world position of the surfoace
+    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+
+    // compute the vector of the surface to the light
+    // and pass it to the fragment shader
+    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+
+    // compute the vector of the surface to the view/camera
+    // and pass it to the fragment shader
+    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
+
+    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
+
+    if (!uUseLighting) {
+      vLightWeighting = vec3(1.0, 1.0, 1.0);
+    }
+    else {
+      vec3 transformedNormal          = uNMatrix * aVertexNormal;
+      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+    }
+  } `;
+
+  _utility.scriptManager.LOAD(f, "cubeLightTex-shader-vs", "x-shader/x-vertex", "shaders");
+}
+
+function getInitFSSquare() {
+  const f = `
+  precision mediump float;
+
+  varying vec4 vColor;
+
+  void main(void) {
+    gl_FragColor = vColor;
+  }
+  `;
+
+  _utility.scriptManager.LOAD(f, "square-shader-fs", "x-shader/x-fragment", "shaders");
+}
+
+function getInitVSSquare() {
+  const f = `
+  attribute vec3 aVertexPosition;
+  attribute vec4 aVertexColor;
+
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+
+  varying vec4 vColor;
+
+  void main(void) {
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vColor      = aVertexColor;
+  }`;
+
+  _utility.scriptManager.LOAD(f, "square-shader-vs", "x-shader/x-vertex", "shaders");
+}
+
+function getInitFSCube() {
+  const f = `
+  precision mediump float;
+
+  varying vec4 vColor;
+
+  void main(void) {
+    gl_FragColor = vColor;
+  }`;
+
+  _utility.scriptManager.LOAD(f, "cube-shader-fs", "x-shader/x-fragment", "shaders");
+}
+
+function getInitVSCube() {
+  const f = `
+  attribute vec3 aVertexPosition;
+  attribute vec4 aVertexColor;
+
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+
+  varying vec4 vColor;
+
+  void main(void) {
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vColor      = aVertexColor;
+  }`;
+
+  _utility.scriptManager.LOAD(f, "cube-shader-vs", "x-shader/x-vertex", "shaders");
+}
+
+function getInitFSCubeTex() {
+  const f = `
+  precision mediump float;
+
+  varying vec2 vTextureCoord;
+  uniform sampler2D uSampler;
+
+  void main(void) {
+    gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+  }`;
+
+  _utility.scriptManager.LOAD(f, "cubeTex-shader-fs", "x-shader/x-fragment", "shaders");
+}
+
+function getInitVSCubeTex() {
+  const f = `
+  #version 300 es
+  #define POSITION_LOCATION 0
+
+  attribute vec3 aVertexPosition;
+  attribute vec2 aTextureCoord;
+
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+
+  varying vec2 vTextureCoord;
+
+  void main(void) {
+    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
+  }`;
+
+  _utility.scriptManager.LOAD(f, "cubeTex-shader-vs", "x-shader/x-vertex", "shaders");
+}
+
+function getInitFSObj() {
+  const f = `
+  precision mediump float;
+
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+
+  uniform sampler2D uSampler;
+  uniform sampler2D uSampler1;
+  uniform sampler2D uSampler2;
+
+  void main(void) {
+    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+  }`;
+
+  _utility.scriptManager.LOAD(f, "obj-shader-fs", "x-shader/x-fragment", "shaders");
+}
+
+function getInitVSObj() {
+  const f = `
+  attribute vec3 aVertexPosition;
+  attribute vec3 aVertexNormal;
+  attribute vec2 aTextureCoord;
+
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+  uniform mat3 uNMatrix;
+
+  uniform vec3 uAmbientColor;
+
+  uniform vec3 uLightingDirection;
+  uniform vec3 uDirectionalColor;
+
+  uniform bool uUseLighting;
+
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+
+  void main(void) {
+    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
+
+    if (!uUseLighting) {
+      vLightWeighting = vec3( 1.0, 1.0, 1.0);
+    }
+    else {
+      vec3 transformedNormal          = uNMatrix * aVertexNormal;
+      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+    }
+  }
+`;
+
+  _utility.scriptManager.LOAD(f, "obj-shader-vs", "x-shader/x-vertex", "shaders");
+}
+
+function getInitFSPyramid() {
+  const f = `
+  precision mediump float;
+  varying vec4 vColor;
+
+  void main(void) {
+    gl_FragColor = vColor;
+  }`;
+
+  _utility.scriptManager.LOAD(f, "pyramid-shader-fs", "x-shader/x-fragment", "shaders");
+}
+
+function getInitVSPyramid() {
+  const f = `
+  attribute vec3 aVertexPosition;
+  attribute vec4 aVertexColor;
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+  varying vec4 vColor;
+
+  void main(void) {
+    // instance = gl_InstanceID;
+    // gl_Position = vec4(aVertexPosition + vec2(float(gl_InstanceID) - 0.5, 0.0), 0.0, 1.0);
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vColor      = aVertexColor;
+  }
+`;
+
+  _utility.scriptManager.LOAD(f, "pyramid-shader-vs", "x-shader/x-vertex", "shaders");
+}
+
+function getInitFSSquareTex() {
+  const f = `
+  precision mediump float;
+
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+
+  uniform sampler2D uSampler;
+  uniform sampler2D uSampler1;
+  uniform sampler2D uSampler2;
+  uniform sampler2D uSampler3;
+  uniform sampler2D uSampler4;
+  uniform sampler2D uSampler5;
+  uniform float numberOfsamplers;
+
+  // Spot
+  // Passed in from the vertex shader.
+  varying vec3 v_normal;
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
+
+  uniform vec4 u_color;
+  uniform float u_shininess;
+  uniform vec3 u_lightDirection;
+  uniform float u_innerLimit;          // in dot space
+  uniform float u_outerLimit;          // in dot space
+
+  void main(void) {
+    vec3 normal = normalize(v_normal);
+    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+    float dotFromDirection = dot(surfaceToLightDirection,
+                                 -u_lightDirection);
+    float limitRange = u_innerLimit - u_outerLimit;
+    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+    float light = inLight * dot(normal, surfaceToLightDirection);
+    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+    vec4 textureColor  = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+    gl_FragColor       = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+
+    // gl_FragColor.rgb *= light;
+    // gl_FragColor.rgb += specular;
+  }
+  `;
+
+  _utility.scriptManager.LOAD(f, "squareTex-shader-fs", "x-shader/x-fragment", "shaders");
+}
+
+function getInitVSSquareTex() {
+  const f = `
+  attribute vec3 aVertexPosition;
+  attribute vec3 aVertexNormal;
+  attribute vec2 aTextureCoord;
+
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+  uniform mat3 uNMatrix;
+
+  uniform vec3 uAmbientColor;
+
+  uniform vec3 uLightingDirection;
+  uniform vec3 uDirectionalColor;
+
+  uniform bool uUseLighting;
+
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+
+  // Spot
+  uniform vec3 u_lightWorldPosition;
+  uniform vec3 u_viewWorldPosition;
+
+  // uniform mat4 u_world;
+  // uniform mat4 u_worldViewProjection;
+  // uniform mat4 u_worldInverseTranspose;
+
+  varying vec3 v_normal;
+
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
+
+  void main(void) {
+    // Spot
+    v_normal = mat3(uPMatrix) * aVertexNormal;
+    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+    v_surfaceToView = -surfaceWorldPosition;
+
+    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
+
+    if (!uUseLighting) {
+      vLightWeighting = vec3(1.0, 1.0, 1.0);
+    }
+    else {
+      vec3 transformedNormal          = uNMatrix * aVertexNormal;
+      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+    }
+  }
+`;
+
+  _utility.scriptManager.LOAD(f, "squareTex-shader-vs", "x-shader/x-vertex", "shaders"); // console.log(" squareTex-shader-vs v")
+
+}
+
+function getInitFSSphereLightTex() {
+  const f = `// #version 300 es
+  precision mediump float;
+
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+
+  uniform sampler2D uSampler;
+  uniform sampler2D uSampler1;
+  uniform sampler2D uSampler2;
+  uniform sampler2D uSampler3;
+  uniform sampler2D uSampler4;
+  uniform sampler2D uSampler5;
+  uniform float numberOfsamplers;
+
+  void main(void) {
+
+    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+
+  }
+  `;
+
+  _utility.scriptManager.LOAD(f, "sphereLightTex-shader-fs", "x-shader/x-fragment", "shaders");
+}
+
+function getInitVSSphereLightTex() {
+  const f = `
+  attribute vec3 aVertexPosition;
+  attribute vec3 aVertexNormal;
+  attribute vec2 aTextureCoord;
+
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+  uniform mat3 uNMatrix;
+
+  uniform vec3 uAmbientColor;
+
+  uniform vec3 uLightingDirection;
+  uniform vec3 uDirectionalColor;
+
+  uniform bool uUseLighting;
+
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+
+  void main(void) {
+    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
+
+    if (!uUseLighting) {
+      vLightWeighting = vec3(1.0, 1.0, 1.0);
+    }
+    else {
+      vec3 transformedNormal          = uNMatrix * aVertexNormal;
+      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+    }
+  }
+`;
+
+  _utility.scriptManager.LOAD(f, "sphereLightTex-shader-vs", "x-shader/x-vertex", "shaders");
+}
+
+function getInitFSCubeMap() {
+  const f = `
+  precision mediump float;
+
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+
+  // The CubeMap texture.
+  uniform samplerCube u_texture;
+  // cube map
+  varying vec3 v_normal_cubemap;
+
+  uniform float numberOfsamplers;
+
+  // Spot
+  // Passed in from the vertex shader.
+  varying vec3 v_normal;
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
+
+  uniform vec4 u_color;
+  uniform float u_shininess;
+  uniform vec3 u_lightDirection;
+  uniform float u_innerLimit;          // in dot space
+  uniform float u_outerLimit;          // in dot space
+
+  void main(void) {
+    // because v_normal is a varying it's interpolated
+    // so it will not be a unit vector. Normalizing it
+    // will make it a unit vector again
+    vec3 normal = normalize(v_normal);
+
+    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+
+    float dotFromDirection = dot(surfaceToLightDirection,
+                                 -u_lightDirection);
+    float limitRange = u_innerLimit - u_outerLimit;
+    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+    float light = inLight * dot(normal, surfaceToLightDirection);
+    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+
+    // Directioin vs uAmbientColor
+    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+
+    vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
+
+     gl_FragColor = textureCube(u_texture, normal);
+
+    // gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+
+    // Lets multiply just the color portion (not the alpha)
+    // by the light
+    gl_FragColor.rgb *= light;
+    // Just add in the specular
+    gl_FragColor.rgb += specular;
+  }
+  `;
+
+  _utility.scriptManager.LOAD(f, "cubeMap-shader-fs", "x-shader/x-fragment", "shaders");
+}
+
+function getInitVSCubeMap() {
+  const f = `
+  attribute vec3 aVertexPosition;
+  attribute vec3 aVertexNormal;
+
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+  uniform mat3 uNMatrix;
+
+  varying vec3 v_normal;
+  varying vec3 v_normal_cubemap;
+
+  // lights
+  uniform vec3 uAmbientColor;
+  uniform vec3 uLightingDirection;
+  uniform vec3 uDirectionalColor;
+  uniform bool uUseLighting;
+  // varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+
+  void main(void) {
+
+    v_normal = mat3(uNMatrix) * aVertexNormal;
+    v_normal_cubemap = normalize(aVertexPosition.xyz);
+    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+
+    // lights
+    // vTextureCoord = aTextureCoord;
+
+    if (!uUseLighting) {
+      vLightWeighting = vec3(1.0, 1.0, 1.0);
+    }
+    else {
+      vec3 transformedNormal          = uNMatrix * aVertexNormal;
+      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+    }
+
+  } `;
+
+  _utility.scriptManager.LOAD(f, "cubeMap-shader-vs", "x-shader/x-vertex", "shaders");
+}
+
+},{"./utility":29}],12:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.loadShaders300 = loadShaders300;
+exports.genInitFSTriangle = genInitFSTriangle;
+exports.getInitVSTriangle = getInitVSTriangle;
+exports.getInitFSCubeTexLight = getInitFSCubeTexLight;
+exports.getInitVSCubeTexLight = getInitVSCubeTexLight;
+exports.getInitFSSquare = getInitFSSquare;
+exports.getInitVSSquare = getInitVSSquare;
+exports.getInitFSCube = getInitFSCube;
+exports.getInitVSCube = getInitVSCube;
+exports.getInitFSCubeTex = getInitFSCubeTex;
+exports.getInitVSCubeTex = getInitVSCubeTex;
+exports.getInitFSObj = getInitFSObj;
+exports.getInitVSObj = getInitVSObj;
+exports.getInitFSPyramid = getInitFSPyramid;
+exports.getInitVSPyramid = getInitVSPyramid;
+exports.getInitFSSquareTex = getInitFSSquareTex;
+exports.getInitVSSquareTex = getInitVSSquareTex;
+exports.getInitFSSphereLightTex = getInitFSSphereLightTex;
+exports.getInitVSSphereLightTex = getInitVSSphereLightTex;
+exports.getInitFSCubeMap = getInitFSCubeMap;
+exports.getInitVSCubeMap = getInitVSCubeMap;
+
+var _utility = require("./utility");
+
+/**
+ * @description From 1.9.43
+ * Opengles300 in single file.
+ */
+function loadShaders300() {
+  genInitFSTriangle();
+  getInitVSTriangle();
+  getInitVSCube();
+  getInitFSCube();
+  getInitFSCubeTex();
+  getInitVSCubeTex();
+  getInitFSCubeTexLight();
+  getInitVSCubeTexLight();
+  getInitFSSquare();
+  getInitVSSquare();
+  getInitFSObj();
+  getInitVSObj();
+  getInitFSPyramid();
+  getInitVSPyramid();
+  getInitFSSphereLightTex();
+  getInitVSSphereLightTex();
+  getInitVSCubeMap();
+  getInitFSCubeMap();
+  getInitFSSquareTex();
+  getInitVSSquareTex(); // console.info("Shaders ready GLSL 1.3");
 }
 
 function genInitFSTriangle() {
@@ -6575,7 +7235,7 @@ function getInitFSCubeTexLight() {
   // The CubeMap texture.
   uniform samplerCube u_texture;
   // cube map
-  in vec3 v_normal_cubemap;
+  // in vec3 v_normal_cubemap;
   uniform float numberOfsamplers;
 
   // Spot
@@ -6647,7 +7307,7 @@ function getInitVSCubeTexLight() {
   // Spot
   uniform vec3 u_lightWorldPosition;
   out vec3 v_normal;
-  out vec3 v_normal_cubemap;
+  // out vec3 v_normal_cubemap;
   out vec3 v_surfaceToLight;
   out vec3 v_surfaceToView;
 
@@ -6680,7 +7340,7 @@ function getInitVSCubeTexLight() {
     v_normal = mat3(uNMatrix) * aVertexNormal;
 
     // normalize
-    v_normal_cubemap = normalize(aVertexPosition.xyz);
+    // v_normal_cubemap = normalize(aVertexPosition.xyz);
 
     // compute the world position of the surfoace
     vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
@@ -7152,15 +7812,13 @@ function getInitFSCubeMap() {
   in vec2 vTextureCoord;
   in vec3 vLightWeighting;
 
-  // The CubeMap texture.
+  // The CubeMap texture test.
   uniform samplerCube u_texture;
   // cube map
   in vec3 v_normal_cubemap;
-
   uniform float numberOfsamplers;
 
   // Spot
-  // Passed in from the vertex shader.
   in vec3 v_normal;
   in vec3 v_surfaceToLight;
   in vec3 v_surfaceToView;
@@ -7174,36 +7832,21 @@ function getInitFSCubeMap() {
   out vec4 outColor;
 
   void main(void) {
-    // because v_normal is a varying it's interpolated
-    // so it will not be a unit vector. Normalizing it
-    // will make it a unit vector again
     vec3 normal = normalize(v_normal);
 
     vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
     vec3 surfaceToViewDirection = normalize(v_surfaceToView);
     vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
 
-    float dotFromDirection = dot(surfaceToLightDirection,
-                                 -u_lightDirection);
+    float dotFromDirection = dot(surfaceToLightDirection, -u_lightDirection);
     float limitRange = u_innerLimit - u_outerLimit;
     float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
     float light = inLight * dot(normal, surfaceToLightDirection);
     float specular = inLight * pow(dot(normal, halfVector), u_shininess);
 
-    // Directioin vs uAmbientColor
-    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
-
-    outColor = textureCube(u_texture, normal);
-    // Lets multiply just the color portion (not the alpha)
-    // by the light
-    outColor.rgb *= light;
-    // Just add in the specular
+    outColor = texture(u_texture, normal);
     outColor.rgb += specular;
-  }
-  `;
+  }`;
 
   _utility.scriptManager.LOAD(f, "cubeMap-shader-fs", "x-shader/x-fragment", "shaders");
 }
@@ -7228,777 +7871,50 @@ function getInitVSCubeMap() {
   // varying vec2 vTextureCoord;
   out vec3 vLightWeighting;
 
-  void main(void) {
-
-    v_normal = mat3(uNMatrix) * aVertexNormal;
-    v_normal_cubemap = normalize(aVertexPosition.xyz);
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-
-    // lights
-    // vTextureCoord = aTextureCoord;
-
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-
-  } `;
-
-  _utility.scriptManager.LOAD(f, "cubeMap-shader-vs", "x-shader/x-vertex", "shaders");
-}
-
-},{"./utility":28}],12:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.loadShaders11 = loadShaders11;
-exports.genInitFSTriangle = genInitFSTriangle;
-exports.getInitVSTriangle = getInitVSTriangle;
-exports.getInitFSCubeTexLight = getInitFSCubeTexLight;
-exports.getInitVSCubeTexLight = getInitVSCubeTexLight;
-exports.getInitFSSquare = getInitFSSquare;
-exports.getInitVSSquare = getInitVSSquare;
-exports.getInitFSCube = getInitFSCube;
-exports.getInitVSCube = getInitVSCube;
-exports.getInitFSCubeTex = getInitFSCubeTex;
-exports.getInitVSCubeTex = getInitVSCubeTex;
-exports.getInitFSObj = getInitFSObj;
-exports.getInitVSObj = getInitVSObj;
-exports.getInitFSPyramid = getInitFSPyramid;
-exports.getInitVSPyramid = getInitVSPyramid;
-exports.getInitFSSquareTex = getInitFSSquareTex;
-exports.getInitVSSquareTex = getInitVSSquareTex;
-exports.getInitFSSphereLightTex = getInitFSSphereLightTex;
-exports.getInitVSSphereLightTex = getInitVSSphereLightTex;
-exports.getInitFSCubeMap = getInitFSCubeMap;
-exports.getInitVSCubeMap = getInitVSCubeMap;
-
-var _utility = require("./utility");
-
-/**
- * @description From 1.7.11
- * Initial Shaders coming from code.
- * loadShaders will be adapted for deplacement
- * This is for `opengles 2.0 or 1.1` - GLSL It is a webGL1
- * 
- * - Can be overrided
- * - For textures program use regenerate shader procedure.
- * - Can be selective for optimisation.
- */
-function loadShaders11() {
-  genInitFSTriangle();
-  getInitVSTriangle();
-  getInitVSCube();
-  getInitFSCube();
-  getInitFSCubeTex();
-  getInitVSCubeTex();
-  getInitFSCubeTexLight();
-  getInitVSCubeTexLight();
-  getInitFSSquare();
-  getInitVSSquare();
-  getInitFSObj();
-  getInitVSObj();
-  getInitFSPyramid();
-  getInitVSPyramid();
-  getInitFSSphereLightTex();
-  getInitVSSphereLightTex();
-  getInitVSCubeMap();
-  getInitFSCubeMap();
-  getInitFSSquareTex();
-  getInitVSSquareTex();
-  console.info("Shaders ready.");
-}
-
-function genInitFSTriangle() {
-  const f = `
-  precision mediump float;
-
-  varying vec4 vColor;
-
-  void main(void) {
-    gl_FragColor = vColor;
-  }
-  `;
-
-  _utility.scriptManager.LOAD(f, "triangle-shader-fs", "x-shader/x-fragment", "shaders");
-}
-
-function getInitVSTriangle() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec4 aVertexColor;
-
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-
-  varying vec4 vColor;
-
-  void main(void) {
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vColor      = aVertexColor;
-  }
-  `;
-
-  _utility.scriptManager.LOAD(f, "triangle-shader-vs", "x-shader/x-vertex", "shaders");
-}
-
-function getInitFSCubeTexLight() {
-  const f = `
-  precision mediump float;
-
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
-
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-  uniform sampler2D uSampler3;
-  uniform sampler2D uSampler4;
-  uniform sampler2D uSampler5;
-
-  // The CubeMap texture.
-  uniform samplerCube u_texture;
-  // cube map
-  varying vec3 v_normal_cubemap;
-
-  uniform float numberOfsamplers;
-
-  // Spot
-  // Passed in from the vertex shader.
-  varying vec3 v_normal;
-  varying vec3 v_surfaceToLight;
-  varying vec3 v_surfaceToView;
-
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;          // in dot space
-  uniform float u_outerLimit;          // in dot space
-
-  void main(void) {
-    // because v_normal is a varying it's interpolated
-    // so it will not be a unit vector. Normalizing it
-    // will make it a unit vector again
-    vec3 normal = normalize(v_normal);
-
-    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-
-    float dotFromDirection = dot(surfaceToLightDirection,
-                                 -u_lightDirection);
-    float limitRange = u_innerLimit - u_outerLimit;
-    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-    float light = inLight * dot(normal, surfaceToLightDirection);
-    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
-
-    // Directioin vs uAmbientColor
-    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-
-    vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
-
-    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-
-    // Lets multiply just the color portion (not the alpha)
-    // by the light
-    gl_FragColor.rgb *= light;
-    // Just add in the specular
-    gl_FragColor.rgb += specular;
-  }
-  `;
-
-  _utility.scriptManager.LOAD(f, "cubeLightTex-shader-fs", "x-shader/x-fragment", "shaders");
-}
-
-function getInitVSCubeTexLight() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec3 aVertexNormal;
-  attribute vec2 aTextureCoord;
-
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-
-  uniform vec3 uAmbientColor;
-
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-
-  uniform bool uUseLighting;
-
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
-
+  // test 
   // Spot
   uniform vec3 u_lightWorldPosition;
-  varying vec3 v_normal;
-  varying vec3 v_normal_cubemap;
-  varying vec3 v_surfaceToLight;
-  varying vec3 v_surfaceToView;
-
-  // Specular
-  varying mat4 uMVMatrixINTER;
-  varying mat3 uNMatrixINTER;
-  varying mat4 uPMatrixINNTER;
-
-  attribute vec4 specularColor;
-  varying vec4 vColor;
-  varying vec3 vNormal;
-  varying vec4 vPosition;
-  varying float vDist;
-
-  void main(void) {
-    uMVMatrixINTER = uMVMatrix;
-    uNMatrixINTER = uNMatrix;
-    uPMatrixINNTER = uPMatrix;
-
-    // GLOBAL POS SPECULAR
-    vColor = specularColor;
-    vNormal = normalize(uNMatrix * vec3(aVertexNormal));
-    // Calculate the modelView of the model, and set the vPosition
-    // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
-    vPosition = uMVMatrix * vec4(1,1,1,1);
-    vDist = gl_Position.w;
-
-    // SPOT
-    // orient the normals and pass to the fragment shader
-    v_normal = mat3(uNMatrix) * aVertexNormal;
-
-    // normalize
-    v_normal_cubemap = normalize(aVertexPosition.xyz);
-
-    // compute the world position of the surfoace
-    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
-
-    // compute the vector of the surface to the light
-    // and pass it to the fragment shader
-    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
-
-    // compute the vector of the surface to the view/camera
-    // and pass it to the fragment shader
-    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
-
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
-
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  } `;
-
-  _utility.scriptManager.LOAD(f, "cubeLightTex-shader-vs", "x-shader/x-vertex", "shaders");
-}
-
-function getInitFSSquare() {
-  const f = `
-  precision mediump float;
-
-  varying vec4 vColor;
-
-  void main(void) {
-    gl_FragColor = vColor;
-  }
-  `;
-
-  _utility.scriptManager.LOAD(f, "square-shader-fs", "x-shader/x-fragment", "shaders");
-}
-
-function getInitVSSquare() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec4 aVertexColor;
-
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-
-  varying vec4 vColor;
-
-  void main(void) {
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vColor      = aVertexColor;
-  }`;
-
-  _utility.scriptManager.LOAD(f, "square-shader-vs", "x-shader/x-vertex", "shaders");
-}
-
-function getInitFSCube() {
-  const f = `
-  precision mediump float;
-
-  varying vec4 vColor;
-
-  void main(void) {
-    gl_FragColor = vColor;
-  }`;
-
-  _utility.scriptManager.LOAD(f, "cube-shader-fs", "x-shader/x-fragment", "shaders");
-}
-
-function getInitVSCube() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec4 aVertexColor;
-
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-
-  varying vec4 vColor;
-
-  void main(void) {
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vColor      = aVertexColor;
-  }`;
-
-  _utility.scriptManager.LOAD(f, "cube-shader-vs", "x-shader/x-vertex", "shaders");
-}
-
-function getInitFSCubeTex() {
-  const f = `
-  precision mediump float;
-
-  varying vec2 vTextureCoord;
-  uniform sampler2D uSampler;
-
-  void main(void) {
-    gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-  }`;
-
-  _utility.scriptManager.LOAD(f, "cubeTex-shader-fs", "x-shader/x-fragment", "shaders");
-}
-
-function getInitVSCubeTex() {
-  const f = `
-  #version 300 es
-  #define POSITION_LOCATION 0
-
-  attribute vec3 aVertexPosition;
-  attribute vec2 aTextureCoord;
-
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-
-  varying vec2 vTextureCoord;
-
-  void main(void) {
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
-  }`;
-
-  _utility.scriptManager.LOAD(f, "cubeTex-shader-vs", "x-shader/x-vertex", "shaders");
-}
-
-function getInitFSObj() {
-  const f = `
-  precision mediump float;
-
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
-
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-
-  void main(void) {
-    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-  }`;
-
-  _utility.scriptManager.LOAD(f, "obj-shader-fs", "x-shader/x-fragment", "shaders");
-}
-
-function getInitVSObj() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec3 aVertexNormal;
-  attribute vec2 aTextureCoord;
-
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-
-  uniform vec3 uAmbientColor;
-
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-
-  uniform bool uUseLighting;
-
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
-
-  void main(void) {
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
-
-    if (!uUseLighting) {
-      vLightWeighting = vec3( 1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  }
-`;
-
-  _utility.scriptManager.LOAD(f, "obj-shader-vs", "x-shader/x-vertex", "shaders");
-}
-
-function getInitFSPyramid() {
-  const f = `
-  precision mediump float;
-  varying vec4 vColor;
-
-  void main(void) {
-    gl_FragColor = vColor;
-  }`;
-
-  _utility.scriptManager.LOAD(f, "pyramid-shader-fs", "x-shader/x-fragment", "shaders");
-}
-
-function getInitVSPyramid() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec4 aVertexColor;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  varying vec4 vColor;
-
-  void main(void) {
-    // instance = gl_InstanceID;
-    // gl_Position = vec4(aVertexPosition + vec2(float(gl_InstanceID) - 0.5, 0.0), 0.0, 1.0);
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vColor      = aVertexColor;
-  }
-`;
-
-  _utility.scriptManager.LOAD(f, "pyramid-shader-vs", "x-shader/x-vertex", "shaders");
-}
-
-function getInitFSSquareTex() {
-  const f = `#version 300 es
-  precision mediump float;
-
-  in vec2 vTextureCoord;
-  in vec3 vLightWeighting;
-
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-  uniform sampler2D uSampler3;
-  uniform sampler2D uSampler4;
-  uniform sampler2D uSampler5;
-  uniform float numberOfsamplers;
-
-  // Spot
-  // Passed in from the vertex shader.
-  in vec3 v_normal;
-  in vec3 v_surfaceToLight;
-  in vec3 v_surfaceToView;
-
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;          // in dot space
-  uniform float u_outerLimit;          // in dot space
-
-  out vec4 outColor;
-
-  void main(void) {
-    vec3 normal = normalize(v_normal);
-    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-    float dotFromDirection = dot(surfaceToLightDirection,
-                                 -u_lightDirection);
-    float limitRange = u_innerLimit - u_outerLimit;
-    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-    float light = inLight * dot(normal, surfaceToLightDirection);
-    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
-    vec4 textureColor  = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-    outColor       = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-
-    outColor.rgb *= light;
-    // gl_FragColor.rgb += specular;
-  }
-  `;
-
-  _utility.scriptManager.LOAD(f, "squareTex-shader-fs", "x-shader/x-fragment", "shaders");
-}
-
-function getInitVSSquareTex() {
-  const f = `#version 300 es
-
-  in vec3 aVertexPosition;
-  in vec3 aVertexNormal;
-  in vec2 aTextureCoord;
-
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-  uniform vec3 uAmbientColor;
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
-
-  out vec2 vTextureCoord;
-  out vec3 vLightWeighting;
-
-  // Spot
-  uniform vec3 u_lightWorldPosition;
-  out vec3 v_normal;
-
+  // out vec3 v_normal;
   out vec3 v_surfaceToLight;
   out vec3 v_surfaceToView;
 
-  // spot-Shadow
-  uniform mat4 u_textureMatrix;
-  out vec2 v_texcoord;
-  out vec4 v_projectedTexcoord;
-
   // Specular
-  // out mat4 uMVMatrixINTER;
-  // out mat3 uNMatrixINTER;
-  // out mat4 uPMatrixINNTER;
+  out mat4 uMVMatrixINTER;
+  out mat3 uNMatrixINTER;
+  out mat4 uPMatrixINNTER;
 
-  // out vec4 specularColor;
-  // out vec4 vColor;
-  // out vec3 vNormal;
-  // out vec4 vPosition;
-  // out float vDist;
+  in vec4 specularColor;
+  out vec4 vColor;
+  out vec3 vNormal;
+  out vec4 vPosition;
+  out float vDist;
+  // end test
 
   void main(void) {
-    // uMVMatrixINTER = uMVMatrix;
-    // uNMatrixINTER = uNMatrix;
-    // uPMatrixINNTER = uPMatrix;
+    v_normal = mat3(uNMatrix) * aVertexNormal;
+    // v_normal_cubemap = normalize(aVertexPosition.xyz);
 
-    // GLOBAL POS SPECULAR
-    // vColor = specularColor;
-
-    // vNormal = normalize(uNMatrix * vec3(aVertexNormal));
-
-    // Calculate the modelView of the model, and set the vPosition
-    // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
-    // vPosition = uMVMatrix * vec4(1,1,1,1);
-    // vDist = gl_Position.w;
-
+    // test
     // SPOT
     // orient the normals and pass to the fragment shader
     v_normal = mat3(uNMatrix) * aVertexNormal;
 
-    // normalize
-    // v_normal_cubemap = normalize(aVertexPosition.xyz);
+    // // normalize
+     v_normal_cubemap = normalize(aVertexPosition.xyz);
 
-    // compute the world position of the surfoace
+    // // compute the world position of the surfoace
     vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+
+    // // compute the vector of the surface to the light
+    // // and pass it to the fragment shader
     v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
-    v_surfaceToView = -surfaceWorldPosition;
 
-    // spot shadow
-    // Pass the texture coord to the fragment shader. maybe duplicated
-
-    // Multiply the position by the matrix.
-    // vec4 worldPosition = u_world * a_position;
-    vec4 worldPosition = vec4(1,1,1,1) * vec4( aVertexPosition, 1.0);
-
-    v_texcoord = aTextureCoord;
-    v_projectedTexcoord = u_textureMatrix * worldPosition;
-
+    // // compute the vector of the surface to the view/camera
+    // // and pass it to the fragment shader
+    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
+    // end test
 
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
-
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  }
-`;
-
-  _utility.scriptManager.LOAD(f, "squareTex-shader-vs", "x-shader/x-vertex", "shaders"); // console.log(" squareTex-shader-vs v")
-
-}
-
-function getInitFSSphereLightTex() {
-  const f = `// #version 300 es
-  precision mediump float;
-
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
-
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-  uniform sampler2D uSampler3;
-  uniform sampler2D uSampler4;
-  uniform sampler2D uSampler5;
-  uniform float numberOfsamplers;
-
-  void main(void) {
-
-    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-    gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-
-  }
-  `;
-
-  _utility.scriptManager.LOAD(f, "sphereLightTex-shader-fs", "x-shader/x-fragment", "shaders");
-}
-
-function getInitVSSphereLightTex() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec3 aVertexNormal;
-  attribute vec2 aTextureCoord;
-
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-
-  uniform vec3 uAmbientColor;
-
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-
-  uniform bool uUseLighting;
-
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
-
-  void main(void) {
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
-
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  }
-`;
-
-  _utility.scriptManager.LOAD(f, "sphereLightTex-shader-vs", "x-shader/x-vertex", "shaders");
-}
-
-function getInitFSCubeMap() {
-  const f = `
-  precision mediump float;
-
-  varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
-
-  // The CubeMap texture.
-  uniform samplerCube u_texture;
-  // cube map
-  varying vec3 v_normal_cubemap;
-
-  uniform float numberOfsamplers;
-
-  // Spot
-  // Passed in from the vertex shader.
-  varying vec3 v_normal;
-  varying vec3 v_surfaceToLight;
-  varying vec3 v_surfaceToView;
-
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;          // in dot space
-  uniform float u_outerLimit;          // in dot space
-
-  void main(void) {
-    // because v_normal is a varying it's interpolated
-    // so it will not be a unit vector. Normalizing it
-    // will make it a unit vector again
-    vec3 normal = normalize(v_normal);
-
-    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-
-    float dotFromDirection = dot(surfaceToLightDirection,
-                                 -u_lightDirection);
-    float limitRange = u_innerLimit - u_outerLimit;
-    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-    float light = inLight * dot(normal, surfaceToLightDirection);
-    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
-
-    // Directioin vs uAmbientColor
-    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-
-    vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
-
-     gl_FragColor = textureCube(u_texture, normal);
-
-    // gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-
-    // Lets multiply just the color portion (not the alpha)
-    // by the light
-    gl_FragColor.rgb *= light;
-    // Just add in the specular
-    gl_FragColor.rgb += specular;
-  }
-  `;
-
-  _utility.scriptManager.LOAD(f, "cubeMap-shader-fs", "x-shader/x-fragment", "shaders");
-}
-
-function getInitVSCubeMap() {
-  const f = `
-  attribute vec3 aVertexPosition;
-  attribute vec3 aVertexNormal;
-
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-
-  varying vec3 v_normal;
-  varying vec3 v_normal_cubemap;
-
-  // lights
-  uniform vec3 uAmbientColor;
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
-  // varying vec2 vTextureCoord;
-  varying vec3 vLightWeighting;
-
-  void main(void) {
-
-    v_normal = mat3(uNMatrix) * aVertexNormal;
-    v_normal_cubemap = normalize(aVertexPosition.xyz);
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-
-    // lights
-    // vTextureCoord = aTextureCoord;
-
     if (!uUseLighting) {
       vLightWeighting = vec3(1.0, 1.0, 1.0);
     }
@@ -8013,7 +7929,7 @@ function getInitVSCubeMap() {
   _utility.scriptManager.LOAD(f, "cubeMap-shader-vs", "x-shader/x-vertex", "shaders");
 }
 
-},{"./utility":28}],13:[function(require,module,exports){
+},{"./utility":29}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8548,30 +8464,386 @@ _manifest.default.operation.simplyRender = function (time) {
   if (_manifest.default.offScreenCanvas == true) exports.reDrawID = reDrawID = setTimeout(() => _manifest.default.operation.simplyRender(), _manifest.default.redrawInterval);
 };
 
-},{"../program/manifest":37,"./engine":4,"./matrix-world":18,"./raycast":22,"./utility":28}],14:[function(require,module,exports){
+},{"../program/manifest":38,"./engine":4,"./matrix-world":19,"./raycast":23,"./utility":29}],14:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.generateShaderSrc = generateShaderSrc;
+exports.generateLensDefinitions11 = generateLensDefinitions11;
+exports.generateLensMain11 = generateLensMain11;
+exports.generateCubeMapShaderSrc1 = generateCubeMapShaderSrc1;
+exports.generateCustomShaderSrc1 = generateCustomShaderSrc1;
+exports.generateSpotLightShadowDefinitions1 = generateSpotLightShadowDefinitions1;
+exports.generateSpotLightShadowMain1 = generateSpotLightShadowMain1;
+
+/**
+* @description
+* UNDERCONSTRUCT 
+* Must be converted to GLSL 1.1/1.2
+**/
+function generateShaderSrc(numTextures, mixOperand, lightType) {
+  return `// Matrix-engine shader for ${numTextures} textures samples.
+    precision mediump float;
+    precision highp float;
+    varying vec2 vTextureCoord;
+    varying vec3 vLightWeighting;
+
+    uniform float textureSamplerAmount[${numTextures}];
+    int MixOperandString = ${mixOperand};
+
+    uniform sampler2D uSampler;
+    uniform sampler2D uSampler1;
+    uniform sampler2D uSampler2;
+    uniform sampler2D uSampler3;
+    uniform sampler2D uSampler4;
+    varying vec3 v_normal;
+    
+    ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightDefinitions1() : ``) + `
+
+    ` + (typeof lightType !== 'undefined' && lightType == 'specular' ? generateSpecularLightDefinitions1() : ``) + `
+
+    ` + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensDefinitions1() : ``) + `
+
+    void main(void) {
+
+        vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+        vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+        vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+        vec4 textureColor3 = texture2D(uSampler3, vec2(vTextureCoord.s, vTextureCoord.t));
+        vec4 textureColor4 = texture2D(uSampler4, vec2(vTextureCoord.s, vTextureCoord.t));
+
+        if (${numTextures} == 1) {
+          gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+          // gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b,textureColor.g ) , smoothstep(textureColor.r, textureColor.b,textureColor.g ) ,0 ,smoothstep(textureColor.r, textureColor.b,textureColor.g));
+        } else if (${numTextures} == 2) {
+          if ( ${mixOperand} == 0) {
+            gl_FragColor    = vec4( (textureColor.rgb * textureColor1.rgb) * vLightWeighting, textureColor.a);
+          } else if (${mixOperand} == 1) {
+            gl_FragColor    = vec4( (textureColor.rgb / textureColor1.rgb) * vLightWeighting, textureColor.a);
+          }
+        } else if (${numTextures} == 3) {
+          if (${mixOperand} == 0) {
+            gl_FragColor =vec4( (textureColor.rgb * textureColor1.rgb * textureColor2.rgb ) * vLightWeighting, textureColor.a);
+          }
+          else if (${mixOperand} == 1) {
+            gl_FragColor = vec4( (textureColor.rgb * textureColor1.rgb / textureColor2.rgb ) * vLightWeighting, textureColor.a);
+          }
+        } else if (${numTextures} == 4) {
+            if (${mixOperand} == 0) {
+              gl_FragColor = textureColor * textureColor1 * textureColor2 * textureColor3;
+            }
+            else if (${mixOperand} == 1) {
+              gl_FragColor = textureColor / textureColor1 / textureColor2 /  textureColor3;
+            }
+        }
+
+    ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightMain1() : ``) + `
+
+    ` + (typeof lightType !== 'undefined' && lightType == 'specular' ? generateSpecularLightMain1() : ``) + `
+
+    ` + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensMain1(numTextures) : ``) + `
+
+    }`;
+}
+
+function generateSpotLightDefinitions1() {
+  return `
+  // inject generateSpotLightDefinitions1
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
+
+  uniform vec4 u_color;
+  uniform float u_shininess;
+  uniform vec3 u_lightDirection;
+  uniform float u_innerLimit;
+  uniform float u_outerLimit;
+  // inject generateSpotLightDefinitions1 end
+  `;
+}
+
+function generateSpotLightMain1() {
+  return `
+  vec3 normal = normalize(v_normal);
+
+  vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+  vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+  vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+  float dotFromDirection = dot(surfaceToLightDirection, -u_lightDirection);
+  float limitRange = u_innerLimit - u_outerLimit;
+  float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+  float light = inLight * dot(normal, surfaceToLightDirection);
+  float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+  gl_FragColor.rgb *= light;
+  gl_FragColor.rgb += specular;
+  `;
+}
+
+function generateSpecularLightDefinitions1() {
+  return `// Passed varying from the vertex shader.
+  uniform mat4 uMVMatrixINTER;
+  uniform mat3 uNMatrixINTER;
+  uniform mat4 uPMatrixINNTER;
+
+  uniform vec3 uLightPosition;
+  uniform vec3 uFogColor;
+  uniform vec2 uFogDist;
+
+  varying vec4 vColor;
+  varying vec3 vNormal;
+  varying vec4 vPosition;
+  varying float vDist;
+  `;
+}
+
+function generateSpecularLightMain1() {
+  return `
+  vec3 normal = normalize(v_normal);
+  vec3 lightPosition = vec3(uMVMatrixINTER * vec4(uLightPosition, 1) - vPosition);
+  vec3 lightDirection = normalize(lightPosition);
+
+  // The dot product of the light direction and the orientation of a surface (the normal)
+  // This will be the "diffuse factor"
+  float nDotL = max(dot(lightDirection, normal), 0.1);
+
+  // Specular vars to canculate
+  float specularPower = 0.1;
+  float specular = 0.0;
+
+  if (nDotL > 0.0) {
+    vec3 viewVec = vec3(0,0,1);
+    // reflective vector
+    vec3 reflectVec = reflect(-lightDirection, normal);
+    // determine the specularFactor based on the dot product of viewing and reflective,
+    // taking at least a minimum of 0.0
+    float specularFactor = max(dot(reflectVec, viewVec), 0.0);
+    specular = pow(specularFactor, specularPower);
+  }
+  gl_FragColor.rgb =  textureColor.rgb * vLightWeighting * nDotL - specular;
+  gl_FragColor.a = textureColor.a;
+  `;
+}
+
+function generateLensDefinitions11() {
+  return `// lens effect
+  uniform vec3 uLightPosition;
+  uniform vec3 uResolution;
+  uniform vec3 uControl;
+  `;
+}
+
+function generateLensMain11(numTextures) {
+  return `
+  vec2 rez = vec2(uResolution.x , uResolution.y );
+  vec2 uC = vec2(uControl.x, uControl.y);
+  vec3 pixel_color;
+  float lens_radius = min(0.3 * rez.x, 250.0);
+  vec2 mouse_direction = uC - gl_FragCoord.xy;
+  float mouse_distance = length(mouse_direction);
+  float exp = 1.0;
+  vec2 offset = (1.0 - pow(mouse_distance / lens_radius, exp)) * mouse_direction;
+  if (mouse_distance < lens_radius) {
+    pixel_color = texture(uSampler, vTextureCoord + offset / rez ).rgb;
+    pixel_color.rgb =  pixel_color.rgb * vLightWeighting;
+  } else {
+    pixel_color.rgb =  textureColor.rgb * vLightWeighting;
+  }
+  // todo
+  // if (${numTextures} == 1) { }
+  gl_FragColor = vec4(pixel_color, 1.0);
+  gl_FragColor.a = textureColor.a;
+  `;
+}
+
+function generateCubeMapShaderSrc1(numTextures, mixOperand, lightType) {
+  return `
+  precision mediump float;
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+  // The CubeMap texture test.
+  uniform samplerCube u_texture;
+  varying vec3 v_normal_cubemap;
+  uniform float numberOfsamplers; 
+  varying vec3 v_normal;
+  void main(void) {
+    vec3 normal = normalize(v_normal_cubemap);
+    vec4 textureColor = textureCube(u_texture, normal) * vec4(1,1,1,1);
+    gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+}`;
+}
+
+function generateCustomShaderSrc1(numTextures, mixOperand, code_) {
+  return `
+    // shader for ${numTextures} textures
+    precision mediump float;
+    precision highp float;
+
+    varying vec2 vTextureCoord;
+    varying vec3 vLightWeighting;
+
+    uniform float textureSamplerAmount[${numTextures}];
+    float TimeFor;
+
+    int MixOperandString = ${mixOperand};
+    int CODE = ${code_};
+
+    uniform sampler2D uSampler;
+    uniform sampler2D uSampler1;
+    uniform sampler2D uSampler2;
+    uniform sampler2D uSampler3;
+    uniform sampler2D uSampler4;
+    uniform sampler2D uSampler5;
+    uniform sampler2D uSampler6;
+    uniform sampler2D uSampler7;
+
+    void main(void) {
+
+        vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+        vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+        vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+        vec4 textureColor3 = texture2D(uSampler3, vec2(vTextureCoord.s, vTextureCoord.t));
+        vec4 textureColor4 = texture2D(uSampler4, vec2(vTextureCoord.s, vTextureCoord.t));
+        vec4 textureColor5 = texture2D(uSampler5, vec2(vTextureCoord.s, vTextureCoord.t));
+        vec4 textureColor6 = texture2D(uSampler6, vec2(vTextureCoord.s, vTextureCoord.t));
+        vec4 textureColor7 = texture2D(uSampler7, vec2(vTextureCoord.s, vTextureCoord.t));
+
+        // MixOperandString  make it with eval todo task
+        if(${numTextures} == 1){
+            if(CODE == 0){
+              gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+            }
+            else if(CODE == 1){
+                gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b,textureColor.g ) , smoothstep(textureColor.r, textureColor.b,textureColor.g ) , 0 , 1 );
+            }
+            else if(CODE == 2){
+              gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b , textureColor.g ) , 1 , 0 , 1 );
+            }
+            else if(CODE == 3){
+              gl_FragColor = vec4( smoothstep( textureColor.g , textureColor.b , 0.5 ) , 1 , 0 , 1 );
+            }
+            else if(CODE == 4){
+              // textureColor
+              vec2 position =  vTextureCoord;
+              float color = 0.3;
+              gl_FragColor = vec4( vec3( color , color * 0.5, sin( color + TimeFor / 3.0 ) * 0.75 ), 1.0 );
+            }
+        }
+        else if(${numTextures} == 2){
+            if( ${mixOperand} == 0){
+              gl_FragColor = vec4((textureColor.rgb * textureColor1.rgb) * vLightWeighting, textureColor.a);
+            }
+            else if (${mixOperand} == 1){
+              gl_FragColor = vec4((textureColor.rgb / textureColor1.rgb) * vLightWeighting, textureColor.a);
+            }
+        }
+        else if (${numTextures} == 3) {
+            if (MixOperandString == 0){
+              gl_FragColor =vec4( (textureColor.rgb * textureColor1.rgb * textureColor2.rgb ) * vLightWeighting, textureColor.a);
+            }
+            else if (MixOperandString == 1){
+              gl_FragColor = vec4( (textureColor.rgb * textureColor1.rgb / textureColor2.rgb ) * vLightWeighting, textureColor.a);
+            }
+        }
+        else if (${numTextures} == 4) {
+            if (MixOperandString == 0){
+                gl_FragColor = textureColor * textureColor1 * textureColor2 * textureColor3;
+            }
+            else if (MixOperandString == 1){
+                gl_FragColor = textureColor / textureColor1 / textureColor2 /  textureColor3;
+            }
+        }
+    }
+
+    // uniform sampler2D uSampler[${numTextures}];
+    // uniform float uMixAmount[${numTextures}];
+    /*
+     void main() {
+     vec4 color = vec4(0);
+     for (int i = 0; i < ${numTextures}; ++i) {
+     vec4 texColor = texture2D(uSampler[i], vTextureCoord);
+     color = mix(color, texColor, uMixAmount[i]);
+     }
+     gl_FragColor = color;
+     }
+     */
+    `;
+}
+
+function generateSpotLightShadowDefinitions1() {
+  return `// inject generateSpotLightShadowDefinitions
+  uniform sampler2D u_projectedTexture;
+  uniform sampler2D u_texture;
+  varying vec2 v_texcoord;
+  uniform float u_bias;
+  varying vec4 v_projectedTexcoord;
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
+  uniform vec4 u_color;
+  uniform float u_shininess;
+  uniform vec3 u_lightDirection;
+  uniform float u_innerLimit;
+  uniform float u_outerLimit;
+  uniform mat4 u_projection;
+  uniform mat4 u_view;
+  uniform mat4 u_world;
+  uniform mat4 u_textureMatrix;
+  // inject generateSpotLightShadowDefinitions end
+  `;
+}
+
+function generateSpotLightShadowMain1() {
+  return `
+  // vec3 normal = normalize(v_normal);
+  vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+  vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+  vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+  float dotFromDirection = dot(surfaceToLightDirection, -u_lightDirection);
+  float limitRange = u_innerLimit - u_outerLimit;
+  float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+  float light = inLight * dot(normal, surfaceToLightDirection);
+  float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+
+  vec3 projectedTexcoord = v_projectedTexcoord.xyz / v_projectedTexcoord.w;
+  float currentDepth = projectedTexcoord.z + u_bias;
+
+  bool inRange =
+      projectedTexcoord.x >= 0.0 &&
+      projectedTexcoord.x <= 1.0 &&
+      projectedTexcoord.y >= 0.0 &&
+      projectedTexcoord.y <= 1.0;
+
+  // the 'r' channel has the depth values
+  float projectedDepth = texture(u_projectedTexture, projectedTexcoord.xy).r;
+  float shadowLight = (inRange && projectedDepth <= currentDepth) ? 0.0 : 1.0;
+  vec4 texColor = texture(u_texture, v_texcoord) * vec4(0.5, 0.5, 1, 1);
+  gl_FragColor = vec4(
+    texColor.rgb * light * shadowLight +
+    specular * shadowLight,
+    texColor.a);
+  `;
+}
+
+},{}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.generateShaderSrc3 = generateShaderSrc3;
-exports.generateShaderSrc = generateShaderSrc;
 exports.generateLensDefinitions = generateLensDefinitions;
 exports.generateLensMain = generateLensMain;
-exports.generateCubeMapShaderSrc = generateCubeMapShaderSrc;
+exports.generateCubeMapShaderSrc3 = generateCubeMapShaderSrc3;
 exports.generateCustomShaderSrc = generateCustomShaderSrc;
 exports.generateSpotLightShadowDefinitions = generateSpotLightShadowDefinitions;
 exports.generateSpotLightShadowMain = generateSpotLightShadowMain;
 
-/**
- * @description
- * Fragment shader CUBE SQUARETex - general/main
- * OPENGLES30  SQUARE !!!
- **/
+// OPENGLES 300
 function generateShaderSrc3(numTextures, mixOperand, lightType) {
   return `#version 300 es
-    // Matrix-engine 1.9.0 shader[300es] for ${numTextures} textures samples.
+    // Matrix-engine 1.9.40 shader[300es] for ${numTextures} textures samples.
     // With lightType: ${lightType}
+    // HOT FIX GLSL SWITCH
     precision highp float;
     in vec2 vTextureCoord;
     in vec3 vLightWeighting;
@@ -8586,11 +8858,9 @@ function generateShaderSrc3(numTextures, mixOperand, lightType) {
     in vec3 v_normal;
 
     out vec4 outColor;
-
     ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightDefinitions() : ``) + (typeof lightType !== 'undefined' && lightType == 'specular' ? generateSpecularLightDefinitions() : ``) + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensDefinitions() : ``) + (typeof lightType !== 'undefined' && lightType == 'spot-shadow' ? generateSpotLightShadowDefinitions() : ``) + `
 
     void main(void) {
-
         vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
         vec4 textureColor1 = texture(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
         vec4 textureColor2 = texture(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
@@ -8630,113 +8900,10 @@ function generateShaderSrc3(numTextures, mixOperand, lightType) {
 
     }`;
 }
-/**
- * @description
- * Fragment shader CUBE SQUARETex - general/main
- **/
-
-
-function generateShaderSrc(numTextures, mixOperand, lightType) {
-  return `
-    // Matrix-engine shader for ${numTextures} textures samples.
-    precision mediump float;
-    precision highp float;
-    varying vec2 vTextureCoord;
-    varying vec3 vLightWeighting;
-
-    uniform float textureSamplerAmount[${numTextures}];
-    int MixOperandString = ${mixOperand};
-
-    uniform sampler2D uSampler;
-    uniform sampler2D uSampler1;
-    uniform sampler2D uSampler2;
-    uniform sampler2D uSampler3;
-    uniform sampler2D uSampler4;
-    varying vec3 v_normal;
-    
-    ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightDefinitions() : ``) + `
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'specular' ? generateSpecularLightDefinitions() : ``) + `
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensDefinitions() : ``) + `
-
-    void main(void) {
-
-        vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor3 = texture2D(uSampler3, vec2(vTextureCoord.s, vTextureCoord.t));
-        vec4 textureColor4 = texture2D(uSampler4, vec2(vTextureCoord.s, vTextureCoord.t));
-
-        if (${numTextures} == 1) {
-          gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-          // gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b,textureColor.g ) , smoothstep(textureColor.r, textureColor.b,textureColor.g ) ,0 ,smoothstep(textureColor.r, textureColor.b,textureColor.g));
-        } else if (${numTextures} == 2) {
-          if ( ${mixOperand} == 0) {
-            gl_FragColor    = vec4( (textureColor.rgb * textureColor1.rgb) * vLightWeighting, textureColor.a);
-          } else if (${mixOperand} == 1) {
-            gl_FragColor    = vec4( (textureColor.rgb / textureColor1.rgb) * vLightWeighting, textureColor.a);
-          }
-        } else if (${numTextures} == 3) {
-          if (${mixOperand} == 0) {
-            gl_FragColor =vec4( (textureColor.rgb * textureColor1.rgb * textureColor2.rgb ) * vLightWeighting, textureColor.a);
-          }
-          else if (${mixOperand} == 1) {
-            gl_FragColor = vec4( (textureColor.rgb * textureColor1.rgb / textureColor2.rgb ) * vLightWeighting, textureColor.a);
-          }
-        } else if (${numTextures} == 4) {
-            if (${mixOperand} == 0) {
-              gl_FragColor = textureColor * textureColor1 * textureColor2 * textureColor3;
-            }
-            else if (${mixOperand} == 1) {
-              gl_FragColor = textureColor / textureColor1 / textureColor2 /  textureColor3;
-            }
-        }
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'spot' ? generateSpotLightMain() : ``) + `
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'specular' ? generateSpecularLightMain() : ``) + `
-
-    ` + (typeof lightType !== 'undefined' && lightType == 'lens' ? generateLensMain(numTextures) : ``) + `
-
-    }`;
-} // export function generateShaderSimpleDirection() {
-//   return `
-//   precision mediump float;
-//   precision highp float;
-//   varying vec4 vColor;
-//   varying vec3 vLightWeighting;
-//   void main(void) {
-//     gl_FragColor      = vec4(vColor.rgb * vLightWeighting, vColor.a);
-//   }
-//   `;
-// }
-// export function generateVShaderSimpleDirectionLight() {
-//   return `
-//   attribute vec3 aVertexPosition;
-//   attribute vec4 aVertexColor;
-//   attribute vec3 aVertexNormal;
-//   uniform mat4 uMVMatrix;
-//   uniform mat4 uPMatrix;
-//   uniform mat3 uNMatrix;
-//   uniform vec3 uLightingDirection;
-//   uniform vec3 uDirectionalColor;
-//   uniform bool uUseLighting;
-//   varying vec3 vLightWeighting;
-//   varying vec4 vColor;
-//   void main(void) {
-//     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-//     vec3 transformedNormal          = uNMatrix * aVertexNormal;
-//     float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-//     vLightWeighting                 = uDirectionalColor * directionalLightWeighting;
-//     vColor      = aVertexColor;
-//   }
-//   `;
-// }
-
 
 function generateSpotLightDefinitions() {
-  return `// inject generateSpotLightDefinitions
+  return `// #version 300 es
+  // inject generateSpotLightDefinitions
   in vec3 v_surfaceToLight;
   in vec3 v_surfaceToView;
 
@@ -8750,44 +8917,19 @@ function generateSpotLightDefinitions() {
 }
 
 function generateSpotLightMain() {
-  return `
-  //
-  // because v_normal is a varying it's interpolated
-  // so it will not be a unit vector. Normalizing it
-  // will make it a unit vector again
-  vec3 normal = normalize(v_normal);
-
+  return `vec3 normal = normalize(v_normal);
   vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
   vec3 surfaceToViewDirection = normalize(v_surfaceToView);
   vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-
-  float dotFromDirection = dot(surfaceToLightDirection,
-                               -u_lightDirection);
+  float dotFromDirection = dot(surfaceToLightDirection, -u_lightDirection);
   float limitRange = u_innerLimit - u_outerLimit;
   float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
   float light = inLight * dot(normal, surfaceToLightDirection);
   float specular = inLight * pow(dot(normal, halfVector), u_shininess);
-
-  // Lets multiply just the color portion (not the alpha)
-  // by the light
   outColor.rgb *= light;
-  // Just add in the specular
   outColor.rgb += specular;
-
-  // outColor = vec4(
-  //   texColor.rgb * light * shadowLight +
-  //   specular * shadowLight,
-  //   texColor.a);
-  //
-  `;
+`;
 }
-/**
- * @description
- * Specular lights.
- * Definition scope.
- * Global world scene position.
- */
-
 
 function generateSpecularLightDefinitions() {
   return `// Passed in from the vertex shader.
@@ -8805,13 +8947,6 @@ function generateSpecularLightDefinitions() {
   in float vDist;
   `;
 }
-/**
- * @description
- * Specular lights.
- * Main function.
- * Global world scene position.
- */
-
 
 function generateSpecularLightMain() {
   return `
@@ -8840,13 +8975,6 @@ function generateSpecularLightMain() {
   outColor.a = textureColor.a;
   `;
 }
-/**
- * @description
- * Lens effect.
- * Definition scope.
- * Global world scene position.
- */
-
 
 function generateLensDefinitions() {
   return `// lens effect
@@ -8855,12 +8983,6 @@ function generateLensDefinitions() {
   uniform vec3 uControl;
   `;
 }
-/**
- * @description
- * Lens effect.
- * Main function.
- */
-
 
 function generateLensMain(numTextures) {
   return `
@@ -8884,45 +9006,29 @@ function generateLensMain(numTextures) {
   outColor.a = textureColor.a;
   `;
 }
-/**
- * @description
- * Make cubeMap Fragment shader.
- */
 
-
-function generateCubeMapShaderSrc(numTextures, mixOperand, lightType) {
-  return `
-    // shader for opengles native 
-    // 'uniform samplerCube' CubeMap canvas2d textures.
-
-    precision mediump float;
-    precision highp float;
-
-    in vec3 vLightWeighting;
-
-    uniform float textureSamplerAmount[1];
-    int MixOperandString = ${mixOperand};
-    // The CubeMap texture.
-    uniform samplerCube u_texture;
-    in vec3 v_normal;
-    in vec3 v_normal_cubemap;
-
-    void main(void) {
-      // without light
-      // gl_FragColor = textureCube(u_texture, v_normal_cubemap);
-      vec4 lightMapColor = textureCube(u_texture, v_normal_cubemap);
-      outColor = vec4(lightMapColor.rgb * vLightWeighting, lightMapColor.a);
-    }
-    `;
+function generateCubeMapShaderSrc3(numTextures, mixOperand, lightType) {
+  return `#version 300 es
+  precision mediump float;
+  in vec2 vTextureCoord;
+  in vec3 vLightWeighting;
+  // The CubeMap texture test.
+  uniform samplerCube u_texture;
+  // cube map
+  in vec3 v_normal_cubemap;
+  uniform float numberOfsamplers; 
+  in vec3 v_normal;
+  out vec4 outColor;
+  void main(void) {
+    vec3 normal = normalize(v_normal_cubemap);
+    vec4 textureColor = texture(u_texture, normal) * vec4(1,1,1,1);
+    outColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+    // outColor.rgb += texture(u_texture, normal);
+}`;
 }
-/**
- * @description
- * Make Custom shader*/
-
 
 function generateCustomShaderSrc(numTextures, mixOperand, code_) {
   return `
-
     // shader for ${numTextures} textures
     precision mediump float;
     precision highp float;
@@ -8957,92 +9063,66 @@ function generateCustomShaderSrc(numTextures, mixOperand, code_) {
         vec4 textureColor7 = texture2D(uSampler7, vec2(vTextureCoord.s, vTextureCoord.t));
 
         // MixOperandString  make it with eval todo task
-
-        if (  ${numTextures} == 1)
-        {
-
-            if  ( CODE == 0 ) {
-
-                gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-
+        if(${numTextures} == 1){
+            if(CODE == 0){
+              gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
             }
-            else if (CODE == 1){
-
+            else if(CODE == 1){
                 gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b,textureColor.g ) , smoothstep(textureColor.r, textureColor.b,textureColor.g ) , 0 , 1 );
-
             }
-            else if (CODE == 2){
-
-                gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b , textureColor.g ) , 1 , 0 , 1 );
-
+            else if(CODE == 2){
+              gl_FragColor = vec4( smoothstep(textureColor.r, textureColor.b , textureColor.g ) , 1 , 0 , 1 );
             }
-            else if (CODE == 3){
-
-                gl_FragColor = vec4( smoothstep( textureColor.g , textureColor.b , 0.5 ) , 1 , 0 , 1 );
-
+            else if(CODE == 3){
+              gl_FragColor = vec4( smoothstep( textureColor.g , textureColor.b , 0.5 ) , 1 , 0 , 1 );
             }
-            else if (CODE == 4){
-
-                // textureColor
-                vec2 position =  vTextureCoord;
-                float color = 0.3;
-                gl_FragColor = vec4( vec3( color , color * 0.5, sin( color + TimeFor / 3.0 ) * 0.75 ), 1.0 );
-
+            else if(CODE == 4){
+              // textureColor
+              vec2 position =  vTextureCoord;
+              float color = 0.3;
+              gl_FragColor = vec4( vec3( color , color * 0.5, sin( color + TimeFor / 3.0 ) * 0.75 ), 1.0 );
             }
-
         }
-        else if (${numTextures} == 2)
-        {
-            if ( ${mixOperand} == 0){
-                gl_FragColor      = vec4( (textureColor.rgb * textureColor1.rgb) * vLightWeighting, textureColor.a);
+        else if(${numTextures} == 2){
+            if( ${mixOperand} == 0){
+              gl_FragColor = vec4((textureColor.rgb * textureColor1.rgb) * vLightWeighting, textureColor.a);
             }
             else if (${mixOperand} == 1){
-                gl_FragColor      = vec4( (textureColor.rgb / textureColor1.rgb) * vLightWeighting, textureColor.a);
+              gl_FragColor = vec4((textureColor.rgb / textureColor1.rgb) * vLightWeighting, textureColor.a);
             }
-
         }
-        else if (${numTextures} == 3)
-        {
+        else if (${numTextures} == 3) {
             if (MixOperandString == 0){
-                gl_FragColor =vec4( (textureColor.rgb * textureColor1.rgb * textureColor2.rgb ) * vLightWeighting, textureColor.a);
+              gl_FragColor =vec4( (textureColor.rgb * textureColor1.rgb * textureColor2.rgb ) * vLightWeighting, textureColor.a);
             }
             else if (MixOperandString == 1){
-                gl_FragColor = vec4( (textureColor.rgb * textureColor1.rgb / textureColor2.rgb ) * vLightWeighting, textureColor.a);
+              gl_FragColor = vec4( (textureColor.rgb * textureColor1.rgb / textureColor2.rgb ) * vLightWeighting, textureColor.a);
             }
-
         }
-        else if (${numTextures} == 4)
-        {
+        else if (${numTextures} == 4) {
             if (MixOperandString == 0){
                 gl_FragColor = textureColor * textureColor1 * textureColor2 * textureColor3;
             }
             else if (MixOperandString == 1){
                 gl_FragColor = textureColor / textureColor1 / textureColor2 /  textureColor3;
             }
-
         }
-
     }
 
     // uniform sampler2D uSampler[${numTextures}];
     // uniform float uMixAmount[${numTextures}];
-
     /*
      void main() {
      vec4 color = vec4(0);
-
      for (int i = 0; i < ${numTextures}; ++i) {
      vec4 texColor = texture2D(uSampler[i], vTextureCoord);
      color = mix(color, texColor, uMixAmount[i]);
      }
-
      gl_FragColor = color;
      }
      */
-
     `;
-} // OPENGLE30 !!!
-
+}
 
 function generateSpotLightShadowDefinitions() {
   return `// inject generateSpotLightShadowDefinitions
@@ -9068,16 +9148,11 @@ function generateSpotLightShadowDefinitions() {
 
 function generateSpotLightShadowMain() {
   return `
-  //
-  // because v_normal is a varying it's interpolated
-  // so it will not be a unit vector. Normalizing it
-  // will make it a unit vector again
   vec3 normal = normalize(v_normal);
   vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
   vec3 surfaceToViewDirection = normalize(v_surfaceToView);
   vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-  float dotFromDirection = dot(surfaceToLightDirection,
-                               -u_lightDirection);
+  float dotFromDirection = dot(surfaceToLightDirection, -u_lightDirection);
   float limitRange = u_innerLimit - u_outerLimit;
   float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
   float light = inLight * dot(normal, surfaceToLightDirection);
@@ -9100,17 +9175,10 @@ function generateSpotLightShadowMain() {
     texColor.rgb * light * shadowLight +
     specular * shadowLight,
     texColor.a);
-
-  // Lets multiply just the color portion (not the alpha)
-  // by the light
-  // outColor.rgb *= light;
-  // Just add in the specular
-  // outColor.rgb += specular;
-  //
   `;
 }
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9468,7 +9536,7 @@ class MatrixShadowSpotShadowTest {
 
 exports.MatrixShadowSpotShadowTest = MatrixShadowSpotShadowTest;
 
-},{"../program/manifest":37,"./utility":28}],16:[function(require,module,exports){
+},{"../program/manifest":38,"./utility":29}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9559,7 +9627,7 @@ class MatrixButton extends HTMLButtonElement {
 
 exports.MatrixButton = MatrixButton;
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /* globals App world */
 'use strict';
 
@@ -9721,20 +9789,17 @@ _manifest.default.tools.createPixelsTex = function (options) {
 
 
 const cubeMapTextures = async function (sources, callback) {
-  var cubeMapImgTex = [];
   var promiseMe = [];
   sources.forEach(src => {
     promiseMe.push(new Promise(resolve => {
       var image = new Image();
       image.addEventListener("load", () => {
-        cubeMapImgTex.push(image);
         resolve(image);
       });
       image.src = src;
     }));
   });
   await Promise.all([...promiseMe]).then(values => {
-    // console.log(values + ' promise all !');
     callback(values);
   });
 };
@@ -9872,7 +9937,7 @@ exports.makeFBO = makeFBO;
 var _default = _manifest.default.tools;
 exports.default = _default;
 
-},{"../program/manifest":37,"./matrix-world":18,"./utility":28}],18:[function(require,module,exports){
+},{"../program/manifest":38,"./matrix-world":19,"./utility":29}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9880,7 +9945,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.modifyFrames = modifyFrames;
 exports.defineworld = defineworld;
-exports.reDraw = exports.objListToDispose = exports.world = exports.frames = exports.CS2 = exports.CS1 = void 0;
+exports.reDraw = exports.objListToDispose = exports.world = exports.frames = exports.CS4 = exports.CS3 = exports.CS2 = exports.CS1 = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
@@ -9900,7 +9965,7 @@ var _physics = _interopRequireDefault(require("./physics"));
 
 var _matrixShadows = require("./matrix-shadows");
 
-var _matrixInitShaders = require("./matrix-init-shaders");
+var _matrixInitShaders = require("./matrix-init-shaders3");
 
 var _matrixInitShaders2 = require("./matrix-init-shaders1");
 
@@ -9912,31 +9977,45 @@ var _overrideMatrixRender = require("./optimizer/override-matrix-render");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* eslint-disable no-unused-vars */
-var CS1 = "color: #fdff22; font-size:40px;text-shadow: 2px 2px 4px #550de3, 4px 4px 4px #d63f84, 6px 6px 4px #cb1a20, 8px 8px 4px #090de3;background: black;";
+var CS1 = "font-family: stormfaze;color: #d64444; font-size:58px;text-shadow: 2px 2px 4px #fff554, 4px 4px 4px gray, 2px 2px 4px lime, 6px 2px 0px lime;background: black;";
 exports.CS1 = CS1;
-var CS2 = "color: #fdff22; font-size:24px;text-shadow: 2px 2px 4px #550de3, 4px 4px 4px #d63f84, 6px 6px 4px #cb1f20, 8px 8px 4px #900de3;background: black;";
+var CS2 = "font-family: stormfaze;color: #fd1233; font-size:20px;text-shadow: 2px 2px 2px #5321f5, 4px 4px 4px #d6fa16, 3px 0px 3px #c160a6, 6px 6px 4px #9a0de3;background: black;";
 exports.CS2 = CS2;
-console.info(`%cMatrix-Engine %c 1.9.40`, CS1, CS1); // fbo
+var CS3 = "font-family: stormfaze;color: #f1f033; font-size:14px;text-shadow: 2px 2px 4px #f335f4, 4px 4px 4px #d64444, 2px 2px 4px #c160a6, 6px 2px 0px #123de3;background: black;";
+exports.CS3 = CS3;
+var CS4 = "font-family: wargames;color: #lime; font-size:16px;text-shadow: 2px 2px 4px white, 4px 4px 4px green, 2px 2px 4px #c16fa6, 6px 2px 0px #123de3;background: black;";
+exports.CS4 = CS4;
+console.info(`%cMatrix-Engine %c 1.9.40 🛸`, CS1, CS1);
+var lastChanges = `
+[1.9.40] First version with both support opengles11/2 and opengles300
+ - Default : 1.3/opengles300
+ - Switch with URL param 'GLSL=1.3' for opengle300 and 'GLSL=1.1' for opengles1.1/2
+ - Not working all shaders at the moment for 1.1 !w
+ - Implemented URL param for examples-build.html?GLSL=1.1 [Affect after first demo choose.]
+`;
+console.info(`%c ${lastChanges} `, CS4);
+console.info(`%c Render switch from 'requestAnimationFrame' to 'offScreen' with URLParams '?offScreen=true&offScreenSpeed=10'.
+ For now physics stuff not affected. `, CS3);
+console.info(`%c You can downgrade to webgl1 with ?GLSL=1.1 - EXPERIMENTAL DEV - WIP`, CS3); // fbo
 
 _manifest.default.makeFBO = _matrixTextures.makeFBO; // define shaders from code
 
 if (_utility.QueryString.GLSL && _utility.QueryString.GLSL == 1.3) {
   // GLSL 1.30 -> opengles3
-  console.info(`%cActive: GLSL 1.3. for OPENGLES30 %c webGL2`, CS2, CS2); // console.log('Active: GLSL 1.3. for OPENGLES30')
+  console.info(`%cActive cook ⚗️: GLSL 1.3. for OPENGLES30 %c webGL2`, CS3, CS3); // console.log('Active: GLSL 1.3. for OPENGLES30')
 
   _manifest.default.openglesShaderVersion = 1.3;
-  (0, _matrixInitShaders.loadShaders2)();
+  (0, _matrixInitShaders.loadShaders300)();
 } else if (_utility.QueryString.GLSL && (_utility.QueryString.GLSL == 1.1 || _utility.QueryString.GLSL == 1.2)) {
   // GLSL 1.10 -> opengles1.1 also 2
   _manifest.default.openglesShaderVersion = 1.1;
-  console.info(`%cActive: GLSL 1.1.-1.2 for OPENGLES1.1/2 %c webGL1`, CS2, CS2);
+  console.info(`%cActive cook ⚗️: GLSL 1.1.-1.2 for OPENGLES1.1/2 %c webGL1`, CS3, CS3);
   (0, _matrixInitShaders2.loadShaders11)();
 } else {
   // GLSL 1.30 -> opengles3
   _manifest.default.openglesShaderVersion = 1.3;
-  console.info(`%cActive: GLSL 1.3. for OPENGLES30 %c webGL2`, CS2, CS2);
-  (0, _matrixInitShaders.loadShaders2)();
+  console.info(`%cActive: GLSL 1.3. for OPENGLES30 %c webGL2`, CS3, CS3);
+  (0, _matrixInitShaders.loadShaders300)();
 }
 /* Width and Height variables of the browser screen  */
 
@@ -10384,23 +10463,25 @@ function defineworld(canvas, renderType) {
       squareObject.useShadows = false;
 
       squareObject.activateShadows = t => {
-        if (typeof t === 'undefined' || t == 'spot') {
-          t = 'spot';
-          squareObject.useShadows = true;
-          squareObject.shadows = new _matrixShadows.MatrixShadowSpot();
-        } else if (t == 'specular') {
-          squareObject.useShadows = true;
-          squareObject.shadows = new _matrixShadows.MatrixShadowSpecular();
-        } else if (t == 'lens') {
-          squareObject.useShadows = true;
-          squareObject.shadows = new _matrixShadows.MatrixEffectLens();
-        } else if (t == 'spot-shadow') {
-          squareObject.useShadows = true;
-          squareObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
-        }
+        setTimeout(() => {
+          if (typeof t === 'undefined' || t == 'spot') {
+            t = 'spot';
+            squareObject.useShadows = true;
+            squareObject.shadows = new _matrixShadows.MatrixShadowSpot();
+          } else if (t == 'specular') {
+            squareObject.useShadows = true;
+            squareObject.shadows = new _matrixShadows.MatrixShadowSpecular();
+          } else if (t == 'lens') {
+            squareObject.useShadows = true;
+            squareObject.shadows = new _matrixShadows.MatrixEffectLens();
+          } else if (t == 'spot-shadow') {
+            squareObject.useShadows = true;
+            squareObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
+          }
 
-        (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
-        squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
+          squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
+        }, 10);
       }; // gen tex
 
 
@@ -10430,7 +10511,7 @@ function defineworld(canvas, renderType) {
             squareObject.texParams = texturesPaths.params;
           }
 
-          (0, _engine.RegenerateShader)('' + filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30');
+          (0, _engine.RegenerateShader)('' + filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             squareObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
@@ -10496,22 +10577,11 @@ function defineworld(canvas, renderType) {
         array_of_local_offset: [12, 0, 0],
         overrideDrawArraysInstance: function (object_) {}
       };
-      cubeObject.glBlend = new _utility._glBlend(); // ? NEXT
-      // cubeObject.useDirectionLight = false;
-      // cubeObject.activateDirLight = () => {
-      //   RegenerateShaderSimpleDirectionLight(
-      //     filler + '-shader-fs');
-      //   RegenerateVShaderSimpleDirectionLight(
-      //     filler + '-shader-vs');
-      //   cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-      //   cubeObject.useDirectionLight = true;
-      // };
-      // destroy self
+      cubeObject.glBlend = new _utility._glBlend();
 
       cubeObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
-            // destroy me
             let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
             _manifest.default.scene[objForDelete.name] = null;
           }, after);
@@ -10618,7 +10688,7 @@ function defineworld(canvas, renderType) {
             sphereObject.texParams = texturesPaths.params;
           }
 
-          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30'); // eslint-disable-next-line no-redeclare
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles'); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             sphereObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
@@ -10637,7 +10707,7 @@ function defineworld(canvas, renderType) {
       }
 
       sphereObject.changeMaterial = function (texturesPaths) {
-        (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30');
+        (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
 
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t], texturesPaths.params));
@@ -10874,7 +10944,7 @@ function defineworld(canvas, renderType) {
             objObject.texParams = texturesPaths.params;
           }
 
-          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30'); // eslint-disable-next-line no-redeclare
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles'); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             objObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t], texturesPaths.params));
@@ -11048,6 +11118,7 @@ function defineworld(canvas, renderType) {
         }
 
         (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
+        console.log('REGEN');
         cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       };
 
@@ -11090,7 +11161,8 @@ function defineworld(canvas, renderType) {
             cubeObject.texParams = texturesPaths.params;
           }
 
-          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30'); // eslint-disable-next-line no-redeclare
+          console.log("TEST ON LOAD EXEC !!! cubetexlight");
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles'); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             cubeObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
@@ -11109,7 +11181,7 @@ function defineworld(canvas, renderType) {
       }
 
       cubeObject.changeMaterial = function (texturesPaths) {
-        (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30');
+        (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
 
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
@@ -11193,7 +11265,8 @@ function defineworld(canvas, renderType) {
         activate: () => {
           _engine.net.activateDataStream();
         }
-      }; // Update others start
+      }; // Update others start NOT ACTIVE NOW
+      // Calling with no error
 
       cubeObject.useShadows = false;
 
@@ -11214,7 +11287,7 @@ function defineworld(canvas, renderType) {
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
         }
 
-        (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, type);
+        (0, _engine.RegenerateCubeMapShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
         cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       };
 
@@ -11235,24 +11308,25 @@ function defineworld(canvas, renderType) {
 
       if (typeof texturesPaths !== 'undefined') {
         if (typeof texturesPaths == 'string') {
-          alert('path is string');
+          console.log('tex path is string... use it...');
           cubeObject.texture = this.initTexture(this.GL.gl, texturesPaths);
           cubeObject.textures.push(cubeObject.texture);
         } else if (typeof texturesPaths == 'object') {
           cubeObject.textures = [];
-          cubeObject.texture = true; // cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler+"-shader-fs", filler+"-shader-vs");
+          cubeObject.texture = true;
 
-          (0, _engine.RegenerateCubeMapShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
-
-          for (var t = 0; t < texturesPaths.source.length; ++t) {// cubeObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t], texturesPaths.params));
+          if (_manifest.default.openglesShaderVersion == 1.3) {
+            (0, _engine.RegenerateCubeMapShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'spot');
+          } else {
+            (0, _engine.RegenerateCubeMapShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
           }
 
           cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-        } else {// console.warn("Exec add obj : texturePaths : path is unknow typeof");
+        } else {// console.warn(" error in texturesPaths arg ...");
         }
       } else {
         // no textures , use default single textures
-        console.log('Filter type : cubeMap load default texture !');
+        console.warn('Filter type : cubeMap not loaded!  Default texture used!');
         cubeObject.texture = this.initTexture(this.GL.gl, 'res/images/texture_spiral1.png');
         cubeObject.textures.push(cubeObject.texture);
         cubeObject.texture = true;
@@ -11314,8 +11388,7 @@ function defineworld(canvas, renderType) {
               for (let key in side) {
                 cubeObject.cubeMap.cubeMap2dCanvasSet[index][key] = side[key];
               }
-            }); // maybe no need ...
-
+            });
             cubeObject.cubeMap.images = texturesPaths.source;
           } else if (texturesPaths.cubeMap.type == 'images') {
             cubeObject.cubeMap.cubeMap2dCanvasSet = [{
@@ -11429,15 +11502,12 @@ function defineworld(canvas, renderType) {
 
       if (typeof texturesPaths !== 'undefined') {
         if (typeof texturesPaths == 'string') {
-          //alert('path is string')
           customObject.texture = this.initTexture(this.GL.gl, texturesPaths);
           customObject.textures.push(customObject.texture);
         } else if (typeof texturesPaths == 'object') {
-          // console.log("path is object");
           customObject.textures = [];
-          customObject.texture = true; // cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler+"-shader-fs", filler+"-shader-vs");
-
-          (0, _engine.RegenerateShader)('sphereLightTex' + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles30'); // eslint-disable-next-line no-redeclare
+          customObject.texture = true;
+          (0, _engine.RegenerateShader)('sphereLightTex' + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             customObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
@@ -11448,7 +11518,7 @@ function defineworld(canvas, renderType) {
           alert('Exec add obj : texturePaths : path is unknow typeof');
         }
       } else {
-        // no textures , use default single textures
+        // no textures, use default single textures
         customObject.texture = this.initTexture(this.GL.gl, 'res/images/texture_spiral1.png');
         customObject.textures.push(customObject.texture);
         customObject.texture = true;
@@ -11460,8 +11530,7 @@ function defineworld(canvas, renderType) {
 
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
-        } //this.shaderProgram = world.initShaders(world.GL.gl, this.type +"-shader-fs", this.type + "-shader-vs");
-
+        }
 
         this.shaderProgram = world.initShaders(world.GL.gl, 'sphereLightTex' + '-shader-fs', 'sphereLightTex' + '-shader-vs');
       };
@@ -11514,7 +11583,7 @@ function defineworld(canvas, renderType) {
   return world;
 }
 
-},{"../program/manifest":37,"./engine":4,"./loader-obj":6,"./matrix-draws":9,"./matrix-geometry":10,"./matrix-init-shaders":11,"./matrix-init-shaders1":12,"./matrix-render":13,"./matrix-shadows":15,"./matrix-tags":16,"./matrix-textures":17,"./optimizer/override-matrix-render":20,"./physics":21,"./utility":28}],19:[function(require,module,exports){
+},{"../program/manifest":38,"./engine":4,"./loader-obj":6,"./matrix-draws":9,"./matrix-geometry":10,"./matrix-init-shaders1":11,"./matrix-init-shaders3":12,"./matrix-render":13,"./matrix-shadows":16,"./matrix-tags":17,"./matrix-textures":18,"./optimizer/override-matrix-render":21,"./physics":22,"./utility":29}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12012,7 +12081,7 @@ class Broadcaster {
 
 exports.Broadcaster = Broadcaster;
 
-},{"../program/manifest.js":37,"./rtc-multi-connection/FileBufferReader.js":23,"./rtc-multi-connection/RTCMultiConnection3":24,"./rtc-multi-connection/getHTMLMediaElement":25,"./rtc-multi-connection/socket.io":26,"./utility":28}],20:[function(require,module,exports){
+},{"../program/manifest.js":38,"./rtc-multi-connection/FileBufferReader.js":24,"./rtc-multi-connection/RTCMultiConnection3":25,"./rtc-multi-connection/getHTMLMediaElement":26,"./rtc-multi-connection/socket.io":27,"./utility":29}],21:[function(require,module,exports){
 
 /**
  * @description
@@ -12020,7 +12089,7 @@ exports.Broadcaster = Broadcaster;
  * @simplyRender
  * No FBO draw flow
  */
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12029,6 +12098,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var CANNON = _interopRequireWildcard(require("cannon"));
+
+var _matrixWorld = require("./matrix-world");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -12039,11 +12110,12 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
  * Used cannon.js version 0.6 library.
  * Source code at:
  * https://schteppe.github.io/cannon.js/
+ * Integrated in matrix-engine.
  */
 class MatrixPhysics {
   constructor(gravityVector = [0, 0, -9.82]) {
-    console.log("MatrixPhysics [cannon.js] running =>", CANNON); // Setup our world
-
+    // console.log("MatrixPhysics [cannon.js] running =>", CANNON);
+    console.info(`%cMatrixPhysics [cannon.js] running. %c`, _matrixWorld.CS3, _matrixWorld.CS1);
     this.world = new CANNON.World();
     this.world.gravity.set(gravityVector[0], gravityVector[1], gravityVector[2]);
 
@@ -12100,7 +12172,7 @@ class MatrixPhysics {
 
 exports.default = MatrixPhysics;
 
-},{"cannon":34}],22:[function(require,module,exports){
+},{"./matrix-world":19,"cannon":35}],23:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12516,7 +12588,7 @@ function checkingProcedureCalcObj(object) {
   }
 }
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 (function (Buffer){(function (){
 // Last time updated: 2017-08-27 5:48:35 AM UTC
 
@@ -13756,7 +13828,7 @@ function checkingProcedureCalcObj(object) {
 })();
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":31}],24:[function(require,module,exports){
+},{"buffer":32}],25:[function(require,module,exports){
 (function (process,global){(function (){
 'use strict';
 
@@ -19674,7 +19746,7 @@ if (typeof define === 'function' && define.amd) {
 }
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":36}],25:[function(require,module,exports){
+},{"_process":37}],26:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -20184,7 +20256,7 @@ function getAudioElement(mediaElement, config) {
   return mediaElementContainer;
 }
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 (function (Buffer){(function (){
 /*!
  * Socket.IO v3.1.3
@@ -20194,7 +20266,7 @@ function getAudioElement(mediaElement, config) {
 !function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports.io=e():t.io=e()}(self,(function(){return function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)n.d(r,o,function(e){return t[e]}.bind(null,o));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=17)}([function(t,e,n){function r(t){if(t)return function(t){for(var e in r.prototype)t[e]=r.prototype[e];return t}(t)}t.exports=r,r.prototype.on=r.prototype.addEventListener=function(t,e){return this._callbacks=this._callbacks||{},(this._callbacks["$"+t]=this._callbacks["$"+t]||[]).push(e),this},r.prototype.once=function(t,e){function n(){this.off(t,n),e.apply(this,arguments)}return n.fn=e,this.on(t,n),this},r.prototype.off=r.prototype.removeListener=r.prototype.removeAllListeners=r.prototype.removeEventListener=function(t,e){if(this._callbacks=this._callbacks||{},0==arguments.length)return this._callbacks={},this;var n,r=this._callbacks["$"+t];if(!r)return this;if(1==arguments.length)return delete this._callbacks["$"+t],this;for(var o=0;o<r.length;o++)if((n=r[o])===e||n.fn===e){r.splice(o,1);break}return 0===r.length&&delete this._callbacks["$"+t],this},r.prototype.emit=function(t){this._callbacks=this._callbacks||{};for(var e=new Array(arguments.length-1),n=this._callbacks["$"+t],r=1;r<arguments.length;r++)e[r-1]=arguments[r];if(n){r=0;for(var o=(n=n.slice(0)).length;r<o;++r)n[r].apply(this,e)}return this},r.prototype.listeners=function(t){return this._callbacks=this._callbacks||{},this._callbacks["$"+t]||[]},r.prototype.hasListeners=function(t){return!!this.listeners(t).length}},function(t,e,n){var r=n(23),o=n(24),i=String.fromCharCode(30);t.exports={protocol:4,encodePacket:r,encodePayload:function(t,e){var n=t.length,o=new Array(n),s=0;t.forEach((function(t,c){r(t,!1,(function(t){o[c]=t,++s===n&&e(o.join(i))}))}))},decodePacket:o,decodePayload:function(t,e){for(var n=t.split(i),r=[],s=0;s<n.length;s++){var c=o(n[s],e);if(r.push(c),"error"===c.type)break}return r}}},function(t,e){t.exports="undefined"!=typeof self?self:"undefined"!=typeof window?window:Function("return this")()},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e){return(i=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function s(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=a(t);if(e){var o=a(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return c(this,n)}}function c(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function a(t){return(a=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var u=n(1),f=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&i(t,e)}(a,t);var e,n,r,c=s(a);function a(t){var e;return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,a),(e=c.call(this)).opts=t,e.query=t.query,e.readyState="",e.socket=t.socket,e}return e=a,(n=[{key:"onError",value:function(t,e){var n=new Error(t);return n.type="TransportError",n.description=e,this.emit("error",n),this}},{key:"open",value:function(){return"closed"!==this.readyState&&""!==this.readyState||(this.readyState="opening",this.doOpen()),this}},{key:"close",value:function(){return"opening"!==this.readyState&&"open"!==this.readyState||(this.doClose(),this.onClose()),this}},{key:"send",value:function(t){if("open"!==this.readyState)throw new Error("Transport not open");this.write(t)}},{key:"onOpen",value:function(){this.readyState="open",this.writable=!0,this.emit("open")}},{key:"onData",value:function(t){var e=u.decodePacket(t,this.socket.binaryType);this.onPacket(e)}},{key:"onPacket",value:function(t){this.emit("packet",t)}},{key:"onClose",value:function(){this.readyState="closed",this.emit("close")}}])&&o(e.prototype,n),r&&o(e,r),a}(n(0));t.exports=f},function(t,e){e.encode=function(t){var e="";for(var n in t)t.hasOwnProperty(n)&&(e.length&&(e+="&"),e+=encodeURIComponent(n)+"="+encodeURIComponent(t[n]));return e},e.decode=function(t){for(var e={},n=t.split("&"),r=0,o=n.length;r<o;r++){var i=n[r].split("=");e[decodeURIComponent(i[0])]=decodeURIComponent(i[1])}return e}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e,n){return(o="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=a(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(n):o.value}})(t,e,n||t)}function i(t,e){return(i=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function s(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=a(t);if(e){var o=a(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return c(this,n)}}function c(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function a(t){return(a=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}function u(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function f(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function p(t,e,n){return e&&f(t.prototype,e),n&&f(t,n),t}Object.defineProperty(e,"__esModule",{value:!0}),e.Decoder=e.Encoder=e.PacketType=e.protocol=void 0;var l,h=n(0),y=n(29),d=n(15);e.protocol=5,function(t){t[t.CONNECT=0]="CONNECT",t[t.DISCONNECT=1]="DISCONNECT",t[t.EVENT=2]="EVENT",t[t.ACK=3]="ACK",t[t.CONNECT_ERROR=4]="CONNECT_ERROR",t[t.BINARY_EVENT=5]="BINARY_EVENT",t[t.BINARY_ACK=6]="BINARY_ACK"}(l=e.PacketType||(e.PacketType={}));var v=function(){function t(){u(this,t)}return p(t,[{key:"encode",value:function(t){return t.type!==l.EVENT&&t.type!==l.ACK||!d.hasBinary(t)?[this.encodeAsString(t)]:(t.type=t.type===l.EVENT?l.BINARY_EVENT:l.BINARY_ACK,this.encodeAsBinary(t))}},{key:"encodeAsString",value:function(t){var e=""+t.type;return t.type!==l.BINARY_EVENT&&t.type!==l.BINARY_ACK||(e+=t.attachments+"-"),t.nsp&&"/"!==t.nsp&&(e+=t.nsp+","),null!=t.id&&(e+=t.id),null!=t.data&&(e+=JSON.stringify(t.data)),e}},{key:"encodeAsBinary",value:function(t){var e=y.deconstructPacket(t),n=this.encodeAsString(e.packet),r=e.buffers;return r.unshift(n),r}}]),t}();e.Encoder=v;var b=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&i(t,e)}(n,t);var e=s(n);function n(){return u(this,n),e.call(this)}return p(n,[{key:"add",value:function(t){var e;if("string"==typeof t)(e=this.decodeString(t)).type===l.BINARY_EVENT||e.type===l.BINARY_ACK?(this.reconstructor=new m(e),0===e.attachments&&o(a(n.prototype),"emit",this).call(this,"decoded",e)):o(a(n.prototype),"emit",this).call(this,"decoded",e);else{if(!d.isBinary(t)&&!t.base64)throw new Error("Unknown type: "+t);if(!this.reconstructor)throw new Error("got binary data when not reconstructing a packet");(e=this.reconstructor.takeBinaryData(t))&&(this.reconstructor=null,o(a(n.prototype),"emit",this).call(this,"decoded",e))}}},{key:"decodeString",value:function(t){var e=0,r={type:Number(t.charAt(0))};if(void 0===l[r.type])throw new Error("unknown packet type "+r.type);if(r.type===l.BINARY_EVENT||r.type===l.BINARY_ACK){for(var o=e+1;"-"!==t.charAt(++e)&&e!=t.length;);var i=t.substring(o,e);if(i!=Number(i)||"-"!==t.charAt(e))throw new Error("Illegal attachments");r.attachments=Number(i)}if("/"===t.charAt(e+1)){for(var s=e+1;++e;){if(","===t.charAt(e))break;if(e===t.length)break}r.nsp=t.substring(s,e)}else r.nsp="/";var c=t.charAt(e+1);if(""!==c&&Number(c)==c){for(var a=e+1;++e;){var u=t.charAt(e);if(null==u||Number(u)!=u){--e;break}if(e===t.length)break}r.id=Number(t.substring(a,e+1))}if(t.charAt(++e)){var f=function(t){try{return JSON.parse(t)}catch(t){return!1}}(t.substr(e));if(!n.isPayloadValid(r.type,f))throw new Error("invalid payload");r.data=f}return r}},{key:"destroy",value:function(){this.reconstructor&&this.reconstructor.finishedReconstruction()}}],[{key:"isPayloadValid",value:function(t,e){switch(t){case l.CONNECT:return"object"===r(e);case l.DISCONNECT:return void 0===e;case l.CONNECT_ERROR:return"string"==typeof e||"object"===r(e);case l.EVENT:case l.BINARY_EVENT:return Array.isArray(e)&&e.length>0;case l.ACK:case l.BINARY_ACK:return Array.isArray(e)}}}]),n}(h);e.Decoder=b;var m=function(){function t(e){u(this,t),this.packet=e,this.buffers=[],this.reconPack=e}return p(t,[{key:"takeBinaryData",value:function(t){if(this.buffers.push(t),this.buffers.length===this.reconPack.attachments){var e=y.reconstructPacket(this.reconPack,this.buffers);return this.finishedReconstruction(),e}return null}},{key:"finishedReconstruction",value:function(){this.reconPack=null,this.buffers=[]}}]),t}()},function(t,e){var n=/^(?:(?![^:@]+:[^:@\/]*@)(http|https|ws|wss):\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?((?:[a-f0-9]{0,4}:){2,7}[a-f0-9]{0,4}|[^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/,r=["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"];t.exports=function(t){var e=t,o=t.indexOf("["),i=t.indexOf("]");-1!=o&&-1!=i&&(t=t.substring(0,o)+t.substring(o,i).replace(/:/g,";")+t.substring(i,t.length));for(var s,c,a=n.exec(t||""),u={},f=14;f--;)u[r[f]]=a[f]||"";return-1!=o&&-1!=i&&(u.source=e,u.host=u.host.substring(1,u.host.length-1).replace(/;/g,":"),u.authority=u.authority.replace("[","").replace("]","").replace(/;/g,":"),u.ipv6uri=!0),u.pathNames=function(t,e){var n=e.replace(/\/{2,9}/g,"/").split("/");"/"!=e.substr(0,1)&&0!==e.length||n.splice(0,1);"/"==e.substr(e.length-1,1)&&n.splice(n.length-1,1);return n}(0,u.path),u.queryKey=(s=u.query,c={},s.replace(/(?:^|&)([^&=]*)=?([^&]*)/g,(function(t,e,n){e&&(c[e]=n)})),c),u}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e,n){return(i="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=u(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(n):o.value}})(t,e,n||t)}function s(t,e){return(s=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function c(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=u(t);if(e){var o=u(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return a(this,n)}}function a(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function u(t){return(u=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.Manager=void 0;var f=n(19),p=n(14),l=n(0),h=n(5),y=n(16),d=n(30),v=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&s(t,e)}(v,t);var e,n,a,l=c(v);function v(t,e){var n;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,v),(n=l.call(this)).nsps={},n.subs=[],t&&"object"===r(t)&&(e=t,t=void 0),(e=e||{}).path=e.path||"/socket.io",n.opts=e,n.reconnection(!1!==e.reconnection),n.reconnectionAttempts(e.reconnectionAttempts||1/0),n.reconnectionDelay(e.reconnectionDelay||1e3),n.reconnectionDelayMax(e.reconnectionDelayMax||5e3),n.randomizationFactor(e.randomizationFactor||.5),n.backoff=new d({min:n.reconnectionDelay(),max:n.reconnectionDelayMax(),jitter:n.randomizationFactor()}),n.timeout(null==e.timeout?2e4:e.timeout),n._readyState="closed",n.uri=t;var o=e.parser||h;return n.encoder=new o.Encoder,n.decoder=new o.Decoder,n._autoConnect=!1!==e.autoConnect,n._autoConnect&&n.open(),n}return e=v,(n=[{key:"reconnection",value:function(t){return arguments.length?(this._reconnection=!!t,this):this._reconnection}},{key:"reconnectionAttempts",value:function(t){return void 0===t?this._reconnectionAttempts:(this._reconnectionAttempts=t,this)}},{key:"reconnectionDelay",value:function(t){var e;return void 0===t?this._reconnectionDelay:(this._reconnectionDelay=t,null===(e=this.backoff)||void 0===e||e.setMin(t),this)}},{key:"randomizationFactor",value:function(t){var e;return void 0===t?this._randomizationFactor:(this._randomizationFactor=t,null===(e=this.backoff)||void 0===e||e.setJitter(t),this)}},{key:"reconnectionDelayMax",value:function(t){var e;return void 0===t?this._reconnectionDelayMax:(this._reconnectionDelayMax=t,null===(e=this.backoff)||void 0===e||e.setMax(t),this)}},{key:"timeout",value:function(t){return arguments.length?(this._timeout=t,this):this._timeout}},{key:"maybeReconnectOnOpen",value:function(){!this._reconnecting&&this._reconnection&&0===this.backoff.attempts&&this.reconnect()}},{key:"open",value:function(t){var e=this;if(~this._readyState.indexOf("open"))return this;this.engine=f(this.uri,this.opts);var n=this.engine,r=this;this._readyState="opening",this.skipReconnect=!1;var o=y.on(n,"open",(function(){r.onopen(),t&&t()})),s=y.on(n,"error",(function(n){r.cleanup(),r._readyState="closed",i(u(v.prototype),"emit",e).call(e,"error",n),t?t(n):r.maybeReconnectOnOpen()}));if(!1!==this._timeout){var c=this._timeout;0===c&&o();var a=setTimeout((function(){o(),n.close(),n.emit("error",new Error("timeout"))}),c);this.subs.push((function(){clearTimeout(a)}))}return this.subs.push(o),this.subs.push(s),this}},{key:"connect",value:function(t){return this.open(t)}},{key:"onopen",value:function(){this.cleanup(),this._readyState="open",i(u(v.prototype),"emit",this).call(this,"open");var t=this.engine;this.subs.push(y.on(t,"ping",this.onping.bind(this)),y.on(t,"data",this.ondata.bind(this)),y.on(t,"error",this.onerror.bind(this)),y.on(t,"close",this.onclose.bind(this)),y.on(this.decoder,"decoded",this.ondecoded.bind(this)))}},{key:"onping",value:function(){i(u(v.prototype),"emit",this).call(this,"ping")}},{key:"ondata",value:function(t){this.decoder.add(t)}},{key:"ondecoded",value:function(t){i(u(v.prototype),"emit",this).call(this,"packet",t)}},{key:"onerror",value:function(t){i(u(v.prototype),"emit",this).call(this,"error",t)}},{key:"socket",value:function(t,e){var n=this.nsps[t];return n||(n=new p.Socket(this,t,e),this.nsps[t]=n),n}},{key:"_destroy",value:function(t){for(var e=0,n=Object.keys(this.nsps);e<n.length;e++){var r=n[e];if(this.nsps[r].active)return}this._close()}},{key:"_packet",value:function(t){for(var e=this.encoder.encode(t),n=0;n<e.length;n++)this.engine.write(e[n],t.options)}},{key:"cleanup",value:function(){this.subs.forEach((function(t){return t()})),this.subs.length=0,this.decoder.destroy()}},{key:"_close",value:function(){this.skipReconnect=!0,this._reconnecting=!1,"opening"===this._readyState&&this.cleanup(),this.backoff.reset(),this._readyState="closed",this.engine&&this.engine.close()}},{key:"disconnect",value:function(){return this._close()}},{key:"onclose",value:function(t){this.cleanup(),this.backoff.reset(),this._readyState="closed",i(u(v.prototype),"emit",this).call(this,"close",t),this._reconnection&&!this.skipReconnect&&this.reconnect()}},{key:"reconnect",value:function(){var t=this;if(this._reconnecting||this.skipReconnect)return this;var e=this;if(this.backoff.attempts>=this._reconnectionAttempts)this.backoff.reset(),i(u(v.prototype),"emit",this).call(this,"reconnect_failed"),this._reconnecting=!1;else{var n=this.backoff.duration();this._reconnecting=!0;var r=setTimeout((function(){e.skipReconnect||(i(u(v.prototype),"emit",t).call(t,"reconnect_attempt",e.backoff.attempts),e.skipReconnect||e.open((function(n){n?(e._reconnecting=!1,e.reconnect(),i(u(v.prototype),"emit",t).call(t,"reconnect_error",n)):e.onreconnect()})))}),n);this.subs.push((function(){clearTimeout(r)}))}}},{key:"onreconnect",value:function(){var t=this.backoff.attempts;this._reconnecting=!1,this.backoff.reset(),i(u(v.prototype),"emit",this).call(this,"reconnect",t)}}])&&o(e.prototype,n),a&&o(e,a),v}(l);e.Manager=v},function(t,e,n){var r=n(9),o=n(22),i=n(26),s=n(27);e.polling=function(t){var e=!1,n=!1,s=!1!==t.jsonp;if("undefined"!=typeof location){var c="https:"===location.protocol,a=location.port;a||(a=c?443:80),e=t.hostname!==location.hostname||a!==t.port,n=t.secure!==c}if(t.xdomain=e,t.xscheme=n,"open"in new r(t)&&!t.forceJSONP)return new o(t);if(!s)throw new Error("JSONP disabled");return new i(t)},e.websocket=s},function(t,e,n){var r=n(21),o=n(2);t.exports=function(t){var e=t.xdomain,n=t.xscheme,i=t.enablesXDR;try{if("undefined"!=typeof XMLHttpRequest&&(!e||r))return new XMLHttpRequest}catch(t){}try{if("undefined"!=typeof XDomainRequest&&!n&&i)return new XDomainRequest}catch(t){}if(!e)try{return new(o[["Active"].concat("Object").join("X")])("Microsoft.XMLHTTP")}catch(t){}}},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function i(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function s(t,e){return(s=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function c(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=u(t);if(e){var o=u(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return a(this,n)}}function a(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function u(t){return(u=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var f=n(3),p=n(4),l=n(1),h=n(12),y=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&s(t,e)}(u,t);var e,n,r,a=c(u);function u(){return o(this,u),a.apply(this,arguments)}return e=u,(n=[{key:"doOpen",value:function(){this.poll()}},{key:"pause",value:function(t){var e=this;function n(){e.readyState="paused",t()}if(this.readyState="pausing",this.polling||!this.writable){var r=0;this.polling&&(r++,this.once("pollComplete",(function(){--r||n()}))),this.writable||(r++,this.once("drain",(function(){--r||n()})))}else n()}},{key:"poll",value:function(){this.polling=!0,this.doPoll(),this.emit("poll")}},{key:"onData",value:function(t){var e=this;l.decodePayload(t,this.socket.binaryType).forEach((function(t,n,r){if("opening"===e.readyState&&"open"===t.type&&e.onOpen(),"close"===t.type)return e.onClose(),!1;e.onPacket(t)})),"closed"!==this.readyState&&(this.polling=!1,this.emit("pollComplete"),"open"===this.readyState&&this.poll())}},{key:"doClose",value:function(){var t=this;function e(){t.write([{type:"close"}])}"open"===this.readyState?e():this.once("open",e)}},{key:"write",value:function(t){var e=this;this.writable=!1,l.encodePayload(t,(function(t){e.doWrite(t,(function(){e.writable=!0,e.emit("drain")}))}))}},{key:"uri",value:function(){var t=this.query||{},e=this.opts.secure?"https":"http",n="";return!1!==this.opts.timestampRequests&&(t[this.opts.timestampParam]=h()),this.supportsBinary||t.sid||(t.b64=1),t=p.encode(t),this.opts.port&&("https"===e&&443!==Number(this.opts.port)||"http"===e&&80!==Number(this.opts.port))&&(n=":"+this.opts.port),t.length&&(t="?"+t),e+"://"+(-1!==this.opts.hostname.indexOf(":")?"["+this.opts.hostname+"]":this.opts.hostname)+n+this.opts.path+t}},{key:"name",get:function(){return"polling"}}])&&i(e.prototype,n),r&&i(e,r),u}(f);t.exports=y},function(t,e){var n=Object.create(null);n.open="0",n.close="1",n.ping="2",n.pong="3",n.message="4",n.upgrade="5",n.noop="6";var r=Object.create(null);Object.keys(n).forEach((function(t){r[n[t]]=t}));t.exports={PACKET_TYPES:n,PACKET_TYPES_REVERSE:r,ERROR_PACKET:{type:"error",data:"parser error"}}},function(t,e,n){"use strict";var r,o="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_".split(""),i={},s=0,c=0;function a(t){var e="";do{e=o[t%64]+e,t=Math.floor(t/64)}while(t>0);return e}function u(){var t=a(+new Date);return t!==r?(s=0,r=t):t+"."+a(s++)}for(;c<64;c++)i[o[c]]=c;u.encode=a,u.decode=function(t){var e=0;for(c=0;c<t.length;c++)e=64*e+i[t.charAt(c)];return e},t.exports=u},function(t,e){t.exports.pick=function(t){for(var e=arguments.length,n=new Array(e>1?e-1:0),r=1;r<e;r++)n[r-1]=arguments[r];return n.reduce((function(e,n){return t.hasOwnProperty(n)&&(e[n]=t[n]),e}),{})}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){var n;if("undefined"==typeof Symbol||null==t[Symbol.iterator]){if(Array.isArray(t)||(n=function(t,e){if(!t)return;if("string"==typeof t)return i(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Array.from(t);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return i(t,e)}(t))||e&&t&&"number"==typeof t.length){n&&(t=n);var r=0,o=function(){};return{s:o,n:function(){return r>=t.length?{done:!0}:{done:!1,value:t[r++]}},e:function(t){throw t},f:o}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var s,c=!0,a=!1;return{s:function(){n=t[Symbol.iterator]()},n:function(){var t=n.next();return c=t.done,t},e:function(t){a=!0,s=t},f:function(){try{c||null==n.return||n.return()}finally{if(a)throw s}}}}function i(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,r=new Array(e);n<e;n++)r[n]=t[n];return r}function s(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function c(t,e,n){return(c="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=p(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(n):o.value}})(t,e,n||t)}function a(t,e){return(a=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function u(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=p(t);if(e){var o=p(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return f(this,n)}}function f(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function p(t){return(p=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.Socket=void 0;var l=n(5),h=n(0),y=n(16),d=Object.freeze({connect:1,connect_error:1,disconnect:1,disconnecting:1,newListener:1,removeListener:1}),v=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&a(t,e)}(f,t);var e,n,r,i=u(f);function f(t,e,n){var r;return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,f),(r=i.call(this)).receiveBuffer=[],r.sendBuffer=[],r.ids=0,r.acks={},r.flags={},r.io=t,r.nsp=e,r.ids=0,r.acks={},r.receiveBuffer=[],r.sendBuffer=[],r.connected=!1,r.disconnected=!0,r.flags={},n&&n.auth&&(r.auth=n.auth),r.io._autoConnect&&r.open(),r}return e=f,(n=[{key:"subEvents",value:function(){if(!this.subs){var t=this.io;this.subs=[y.on(t,"open",this.onopen.bind(this)),y.on(t,"packet",this.onpacket.bind(this)),y.on(t,"error",this.onerror.bind(this)),y.on(t,"close",this.onclose.bind(this))]}}},{key:"connect",value:function(){return this.connected||(this.subEvents(),this.io._reconnecting||this.io.open(),"open"===this.io._readyState&&this.onopen()),this}},{key:"open",value:function(){return this.connect()}},{key:"send",value:function(){for(var t=arguments.length,e=new Array(t),n=0;n<t;n++)e[n]=arguments[n];return e.unshift("message"),this.emit.apply(this,e),this}},{key:"emit",value:function(t){if(d.hasOwnProperty(t))throw new Error('"'+t+'" is a reserved event name');for(var e=arguments.length,n=new Array(e>1?e-1:0),r=1;r<e;r++)n[r-1]=arguments[r];n.unshift(t);var o={type:l.PacketType.EVENT,data:n,options:{}};o.options.compress=!1!==this.flags.compress,"function"==typeof n[n.length-1]&&(this.acks[this.ids]=n.pop(),o.id=this.ids++);var i=this.io.engine&&this.io.engine.transport&&this.io.engine.transport.writable,s=this.flags.volatile&&(!i||!this.connected);return s||(this.connected?this.packet(o):this.sendBuffer.push(o)),this.flags={},this}},{key:"packet",value:function(t){t.nsp=this.nsp,this.io._packet(t)}},{key:"onopen",value:function(){var t=this;"function"==typeof this.auth?this.auth((function(e){t.packet({type:l.PacketType.CONNECT,data:e})})):this.packet({type:l.PacketType.CONNECT,data:this.auth})}},{key:"onerror",value:function(t){this.connected||c(p(f.prototype),"emit",this).call(this,"connect_error",t)}},{key:"onclose",value:function(t){this.connected=!1,this.disconnected=!0,delete this.id,c(p(f.prototype),"emit",this).call(this,"disconnect",t)}},{key:"onpacket",value:function(t){if(t.nsp===this.nsp)switch(t.type){case l.PacketType.CONNECT:if(t.data&&t.data.sid){var e=t.data.sid;this.onconnect(e)}else c(p(f.prototype),"emit",this).call(this,"connect_error",new Error("It seems you are trying to reach a Socket.IO server in v2.x with a v3.x client, but they are not compatible (more information here: https://socket.io/docs/v3/migrating-from-2-x-to-3-0/)"));break;case l.PacketType.EVENT:case l.PacketType.BINARY_EVENT:this.onevent(t);break;case l.PacketType.ACK:case l.PacketType.BINARY_ACK:this.onack(t);break;case l.PacketType.DISCONNECT:this.ondisconnect();break;case l.PacketType.CONNECT_ERROR:var n=new Error(t.data.message);n.data=t.data.data,c(p(f.prototype),"emit",this).call(this,"connect_error",n)}}},{key:"onevent",value:function(t){var e=t.data||[];null!=t.id&&e.push(this.ack(t.id)),this.connected?this.emitEvent(e):this.receiveBuffer.push(Object.freeze(e))}},{key:"emitEvent",value:function(t){if(this._anyListeners&&this._anyListeners.length){var e,n=o(this._anyListeners.slice());try{for(n.s();!(e=n.n()).done;)e.value.apply(this,t)}catch(t){n.e(t)}finally{n.f()}}c(p(f.prototype),"emit",this).apply(this,t)}},{key:"ack",value:function(t){var e=this,n=!1;return function(){if(!n){n=!0;for(var r=arguments.length,o=new Array(r),i=0;i<r;i++)o[i]=arguments[i];e.packet({type:l.PacketType.ACK,id:t,data:o})}}}},{key:"onack",value:function(t){var e=this.acks[t.id];"function"==typeof e&&(e.apply(this,t.data),delete this.acks[t.id])}},{key:"onconnect",value:function(t){this.id=t,this.connected=!0,this.disconnected=!1,c(p(f.prototype),"emit",this).call(this,"connect"),this.emitBuffered()}},{key:"emitBuffered",value:function(){var t=this;this.receiveBuffer.forEach((function(e){return t.emitEvent(e)})),this.receiveBuffer=[],this.sendBuffer.forEach((function(e){return t.packet(e)})),this.sendBuffer=[]}},{key:"ondisconnect",value:function(){this.destroy(),this.onclose("io server disconnect")}},{key:"destroy",value:function(){this.subs&&(this.subs.forEach((function(t){return t()})),this.subs=void 0),this.io._destroy(this)}},{key:"disconnect",value:function(){return this.connected&&this.packet({type:l.PacketType.DISCONNECT}),this.destroy(),this.connected&&this.onclose("io client disconnect"),this}},{key:"close",value:function(){return this.disconnect()}},{key:"compress",value:function(t){return this.flags.compress=t,this}},{key:"onAny",value:function(t){return this._anyListeners=this._anyListeners||[],this._anyListeners.push(t),this}},{key:"prependAny",value:function(t){return this._anyListeners=this._anyListeners||[],this._anyListeners.unshift(t),this}},{key:"offAny",value:function(t){if(!this._anyListeners)return this;if(t){for(var e=this._anyListeners,n=0;n<e.length;n++)if(t===e[n])return e.splice(n,1),this}else this._anyListeners=[];return this}},{key:"listenersAny",value:function(){return this._anyListeners||[]}},{key:"active",get:function(){return!!this.subs}},{key:"volatile",get:function(){return this.flags.volatile=!0,this}}])&&s(e.prototype,n),r&&s(e,r),f}(h);e.Socket=v},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.hasBinary=e.isBinary=void 0;var o="function"==typeof ArrayBuffer,i=Object.prototype.toString,s="function"==typeof Blob||"undefined"!=typeof Blob&&"[object BlobConstructor]"===i.call(Blob),c="function"==typeof File||"undefined"!=typeof File&&"[object FileConstructor]"===i.call(File);function a(t){return o&&(t instanceof ArrayBuffer||function(t){return"function"==typeof ArrayBuffer.isView?ArrayBuffer.isView(t):t.buffer instanceof ArrayBuffer}(t))||s&&t instanceof Blob||c&&t instanceof File}e.isBinary=a,e.hasBinary=function t(e,n){if(!e||"object"!==r(e))return!1;if(Array.isArray(e)){for(var o=0,i=e.length;o<i;o++)if(t(e[o]))return!0;return!1}if(a(e))return!0;if(e.toJSON&&"function"==typeof e.toJSON&&1===arguments.length)return t(e.toJSON(),!0);for(var s in e)if(Object.prototype.hasOwnProperty.call(e,s)&&t(e[s]))return!0;return!1}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.on=void 0,e.on=function(t,e,n){return t.on(e,n),function(){t.off(e,n)}}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.Socket=e.io=e.Manager=e.protocol=void 0;var o=n(18),i=n(7),s=n(14);Object.defineProperty(e,"Socket",{enumerable:!0,get:function(){return s.Socket}}),t.exports=e=a;var c=e.managers={};function a(t,e){"object"===r(t)&&(e=t,t=void 0),e=e||{};var n,s=o.url(t,e.path),a=s.source,u=s.id,f=s.path,p=c[u]&&f in c[u].nsps;return e.forceNew||e["force new connection"]||!1===e.multiplex||p?n=new i.Manager(a,e):(c[u]||(c[u]=new i.Manager(a,e)),n=c[u]),s.query&&!e.query&&(e.query=s.queryKey),n.socket(s.path,e)}e.io=a;var u=n(5);Object.defineProperty(e,"protocol",{enumerable:!0,get:function(){return u.protocol}}),e.connect=a;var f=n(7);Object.defineProperty(e,"Manager",{enumerable:!0,get:function(){return f.Manager}})},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.url=void 0;var r=n(6);e.url=function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"",n=arguments.length>2?arguments[2]:void 0,o=t;n=n||"undefined"!=typeof location&&location,null==t&&(t=n.protocol+"//"+n.host),"string"==typeof t&&("/"===t.charAt(0)&&(t="/"===t.charAt(1)?n.protocol+t:n.host+t),/^(https?|wss?):\/\//.test(t)||(t=void 0!==n?n.protocol+"//"+t:"https://"+t),o=r(t)),o.port||(/^(http|ws)$/.test(o.protocol)?o.port="80":/^(http|ws)s$/.test(o.protocol)&&(o.port="443")),o.path=o.path||"/";var i=-1!==o.host.indexOf(":"),s=i?"["+o.host+"]":o.host;return o.id=o.protocol+"://"+s+":"+o.port+e,o.href=o.protocol+"://"+s+(n&&n.port===o.port?"":":"+o.port),o}},function(t,e,n){var r=n(20);t.exports=function(t,e){return new r(t,e)},t.exports.Socket=r,t.exports.protocol=r.protocol,t.exports.Transport=n(3),t.exports.transports=n(8),t.exports.parser=n(1)},function(t,e,n){function r(){return(r=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(t[r]=n[r])}return t}).apply(this,arguments)}function o(t){return(o="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function i(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function s(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function c(t,e){return(c=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function a(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=f(t);if(e){var o=f(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return u(this,n)}}function u(t,e){return!e||"object"!==o(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function f(t){return(f=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var p=n(8),l=n(0),h=n(1),y=n(6),d=n(4),v=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&c(t,e)}(l,t);var e,n,u,f=a(l);function l(t){var e,n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return i(this,l),e=f.call(this),t&&"object"===o(t)&&(n=t,t=null),t?(t=y(t),n.hostname=t.host,n.secure="https"===t.protocol||"wss"===t.protocol,n.port=t.port,t.query&&(n.query=t.query)):n.host&&(n.hostname=y(n.host).host),e.secure=null!=n.secure?n.secure:"undefined"!=typeof location&&"https:"===location.protocol,n.hostname&&!n.port&&(n.port=e.secure?"443":"80"),e.hostname=n.hostname||("undefined"!=typeof location?location.hostname:"localhost"),e.port=n.port||("undefined"!=typeof location&&location.port?location.port:e.secure?443:80),e.transports=n.transports||["polling","websocket"],e.readyState="",e.writeBuffer=[],e.prevBufferLen=0,e.opts=r({path:"/engine.io",agent:!1,withCredentials:!1,upgrade:!0,jsonp:!0,timestampParam:"t",rememberUpgrade:!1,rejectUnauthorized:!0,perMessageDeflate:{threshold:1024},transportOptions:{}},n),e.opts.path=e.opts.path.replace(/\/$/,"")+"/","string"==typeof e.opts.query&&(e.opts.query=d.decode(e.opts.query)),e.id=null,e.upgrades=null,e.pingInterval=null,e.pingTimeout=null,e.pingTimeoutTimer=null,"function"==typeof addEventListener&&addEventListener("beforeunload",(function(){e.transport&&(e.transport.removeAllListeners(),e.transport.close())}),!1),e.open(),e}return e=l,(n=[{key:"createTransport",value:function(t){var e=function(t){var e={};for(var n in t)t.hasOwnProperty(n)&&(e[n]=t[n]);return e}(this.opts.query);e.EIO=h.protocol,e.transport=t,this.id&&(e.sid=this.id);var n=r({},this.opts.transportOptions[t],this.opts,{query:e,socket:this,hostname:this.hostname,secure:this.secure,port:this.port});return new p[t](n)}},{key:"open",value:function(){var t;if(this.opts.rememberUpgrade&&l.priorWebsocketSuccess&&-1!==this.transports.indexOf("websocket"))t="websocket";else{if(0===this.transports.length){var e=this;return void setTimeout((function(){e.emit("error","No transports available")}),0)}t=this.transports[0]}this.readyState="opening";try{t=this.createTransport(t)}catch(t){return this.transports.shift(),void this.open()}t.open(),this.setTransport(t)}},{key:"setTransport",value:function(t){var e=this;this.transport&&this.transport.removeAllListeners(),this.transport=t,t.on("drain",(function(){e.onDrain()})).on("packet",(function(t){e.onPacket(t)})).on("error",(function(t){e.onError(t)})).on("close",(function(){e.onClose("transport close")}))}},{key:"probe",value:function(t){var e=this.createTransport(t,{probe:1}),n=!1,r=this;function o(){if(r.onlyBinaryUpgrades){var t=!this.supportsBinary&&r.transport.supportsBinary;n=n||t}n||(e.send([{type:"ping",data:"probe"}]),e.once("packet",(function(t){if(!n)if("pong"===t.type&&"probe"===t.data){if(r.upgrading=!0,r.emit("upgrading",e),!e)return;l.priorWebsocketSuccess="websocket"===e.name,r.transport.pause((function(){n||"closed"!==r.readyState&&(f(),r.setTransport(e),e.send([{type:"upgrade"}]),r.emit("upgrade",e),e=null,r.upgrading=!1,r.flush())}))}else{var o=new Error("probe error");o.transport=e.name,r.emit("upgradeError",o)}})))}function i(){n||(n=!0,f(),e.close(),e=null)}function s(t){var n=new Error("probe error: "+t);n.transport=e.name,i(),r.emit("upgradeError",n)}function c(){s("transport closed")}function a(){s("socket closed")}function u(t){e&&t.name!==e.name&&i()}function f(){e.removeListener("open",o),e.removeListener("error",s),e.removeListener("close",c),r.removeListener("close",a),r.removeListener("upgrading",u)}l.priorWebsocketSuccess=!1,e.once("open",o),e.once("error",s),e.once("close",c),this.once("close",a),this.once("upgrading",u),e.open()}},{key:"onOpen",value:function(){if(this.readyState="open",l.priorWebsocketSuccess="websocket"===this.transport.name,this.emit("open"),this.flush(),"open"===this.readyState&&this.opts.upgrade&&this.transport.pause)for(var t=0,e=this.upgrades.length;t<e;t++)this.probe(this.upgrades[t])}},{key:"onPacket",value:function(t){if("opening"===this.readyState||"open"===this.readyState||"closing"===this.readyState)switch(this.emit("packet",t),this.emit("heartbeat"),t.type){case"open":this.onHandshake(JSON.parse(t.data));break;case"ping":this.resetPingTimeout(),this.sendPacket("pong"),this.emit("pong");break;case"error":var e=new Error("server error");e.code=t.data,this.onError(e);break;case"message":this.emit("data",t.data),this.emit("message",t.data)}}},{key:"onHandshake",value:function(t){this.emit("handshake",t),this.id=t.sid,this.transport.query.sid=t.sid,this.upgrades=this.filterUpgrades(t.upgrades),this.pingInterval=t.pingInterval,this.pingTimeout=t.pingTimeout,this.onOpen(),"closed"!==this.readyState&&this.resetPingTimeout()}},{key:"resetPingTimeout",value:function(){var t=this;clearTimeout(this.pingTimeoutTimer),this.pingTimeoutTimer=setTimeout((function(){t.onClose("ping timeout")}),this.pingInterval+this.pingTimeout)}},{key:"onDrain",value:function(){this.writeBuffer.splice(0,this.prevBufferLen),this.prevBufferLen=0,0===this.writeBuffer.length?this.emit("drain"):this.flush()}},{key:"flush",value:function(){"closed"!==this.readyState&&this.transport.writable&&!this.upgrading&&this.writeBuffer.length&&(this.transport.send(this.writeBuffer),this.prevBufferLen=this.writeBuffer.length,this.emit("flush"))}},{key:"write",value:function(t,e,n){return this.sendPacket("message",t,e,n),this}},{key:"send",value:function(t,e,n){return this.sendPacket("message",t,e,n),this}},{key:"sendPacket",value:function(t,e,n,r){if("function"==typeof e&&(r=e,e=void 0),"function"==typeof n&&(r=n,n=null),"closing"!==this.readyState&&"closed"!==this.readyState){(n=n||{}).compress=!1!==n.compress;var o={type:t,data:e,options:n};this.emit("packetCreate",o),this.writeBuffer.push(o),r&&this.once("flush",r),this.flush()}}},{key:"close",value:function(){var t=this;function e(){t.onClose("forced close"),t.transport.close()}function n(){t.removeListener("upgrade",n),t.removeListener("upgradeError",n),e()}function r(){t.once("upgrade",n),t.once("upgradeError",n)}return"opening"!==this.readyState&&"open"!==this.readyState||(this.readyState="closing",this.writeBuffer.length?this.once("drain",(function(){this.upgrading?r():e()})):this.upgrading?r():e()),this}},{key:"onError",value:function(t){l.priorWebsocketSuccess=!1,this.emit("error",t),this.onClose("transport error",t)}},{key:"onClose",value:function(t,e){"opening"!==this.readyState&&"open"!==this.readyState&&"closing"!==this.readyState||(clearTimeout(this.pingIntervalTimer),clearTimeout(this.pingTimeoutTimer),this.transport.removeAllListeners("close"),this.transport.close(),this.transport.removeAllListeners(),this.readyState="closed",this.id=null,this.emit("close",t,e),this.writeBuffer=[],this.prevBufferLen=0)}},{key:"filterUpgrades",value:function(t){for(var e=[],n=0,r=t.length;n<r;n++)~this.transports.indexOf(t[n])&&e.push(t[n]);return e}}])&&s(e.prototype,n),u&&s(e,u),l}(l);v.priorWebsocketSuccess=!1,v.protocol=h.protocol,t.exports=v},function(t,e){try{t.exports="undefined"!=typeof XMLHttpRequest&&"withCredentials"in new XMLHttpRequest}catch(e){t.exports=!1}},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(){return(o=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(t[r]=n[r])}return t}).apply(this,arguments)}function i(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function s(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function c(t,e,n){return e&&s(t.prototype,e),n&&s(t,n),t}function a(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&u(t,e)}function u(t,e){return(u=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function f(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=l(t);if(e){var o=l(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return p(this,n)}}function p(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function l(t){return(l=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var h=n(9),y=n(10),d=n(0),v=n(13).pick,b=n(2);function m(){}var g=null!=new h({xdomain:!1}).responseType,k=function(t){a(n,t);var e=f(n);function n(t){var r;if(i(this,n),r=e.call(this,t),"undefined"!=typeof location){var o="https:"===location.protocol,s=location.port;s||(s=o?443:80),r.xd="undefined"!=typeof location&&t.hostname!==location.hostname||s!==t.port,r.xs=t.secure!==o}var c=t&&t.forceBase64;return r.supportsBinary=g&&!c,r}return c(n,[{key:"request",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return o(t,{xd:this.xd,xs:this.xs},this.opts),new w(this.uri(),t)}},{key:"doWrite",value:function(t,e){var n=this.request({method:"POST",data:t}),r=this;n.on("success",e),n.on("error",(function(t){r.onError("xhr post error",t)}))}},{key:"doPoll",value:function(){var t=this.request(),e=this;t.on("data",(function(t){e.onData(t)})),t.on("error",(function(t){e.onError("xhr poll error",t)})),this.pollXhr=t}}]),n}(y),w=function(t){a(n,t);var e=f(n);function n(t,r){var o;return i(this,n),(o=e.call(this)).opts=r,o.method=r.method||"GET",o.uri=t,o.async=!1!==r.async,o.data=void 0!==r.data?r.data:null,o.create(),o}return c(n,[{key:"create",value:function(){var t=v(this.opts,"agent","enablesXDR","pfx","key","passphrase","cert","ca","ciphers","rejectUnauthorized");t.xdomain=!!this.opts.xd,t.xscheme=!!this.opts.xs;var e=this.xhr=new h(t),r=this;try{e.open(this.method,this.uri,this.async);try{if(this.opts.extraHeaders)for(var o in e.setDisableHeaderCheck&&e.setDisableHeaderCheck(!0),this.opts.extraHeaders)this.opts.extraHeaders.hasOwnProperty(o)&&e.setRequestHeader(o,this.opts.extraHeaders[o])}catch(t){}if("POST"===this.method)try{e.setRequestHeader("Content-type","text/plain;charset=UTF-8")}catch(t){}try{e.setRequestHeader("Accept","*/*")}catch(t){}"withCredentials"in e&&(e.withCredentials=this.opts.withCredentials),this.opts.requestTimeout&&(e.timeout=this.opts.requestTimeout),this.hasXDR()?(e.onload=function(){r.onLoad()},e.onerror=function(){r.onError(e.responseText)}):e.onreadystatechange=function(){4===e.readyState&&(200===e.status||1223===e.status?r.onLoad():setTimeout((function(){r.onError("number"==typeof e.status?e.status:0)}),0))},e.send(this.data)}catch(t){return void setTimeout((function(){r.onError(t)}),0)}"undefined"!=typeof document&&(this.index=n.requestsCount++,n.requests[this.index]=this)}},{key:"onSuccess",value:function(){this.emit("success"),this.cleanup()}},{key:"onData",value:function(t){this.emit("data",t),this.onSuccess()}},{key:"onError",value:function(t){this.emit("error",t),this.cleanup(!0)}},{key:"cleanup",value:function(t){if(void 0!==this.xhr&&null!==this.xhr){if(this.hasXDR()?this.xhr.onload=this.xhr.onerror=m:this.xhr.onreadystatechange=m,t)try{this.xhr.abort()}catch(t){}"undefined"!=typeof document&&delete n.requests[this.index],this.xhr=null}}},{key:"onLoad",value:function(){var t=this.xhr.responseText;null!==t&&this.onData(t)}},{key:"hasXDR",value:function(){return"undefined"!=typeof XDomainRequest&&!this.xs&&this.enablesXDR}},{key:"abort",value:function(){this.cleanup()}}]),n}(d);if(w.requestsCount=0,w.requests={},"undefined"!=typeof document)if("function"==typeof attachEvent)attachEvent("onunload",_);else if("function"==typeof addEventListener){addEventListener("onpagehide"in b?"pagehide":"unload",_,!1)}function _(){for(var t in w.requests)w.requests.hasOwnProperty(t)&&w.requests[t].abort()}t.exports=k,t.exports.Request=w},function(t,e,n){var r=n(11).PACKET_TYPES,o="function"==typeof Blob||"undefined"!=typeof Blob&&"[object BlobConstructor]"===Object.prototype.toString.call(Blob),i="function"==typeof ArrayBuffer,s=function(t,e){var n=new FileReader;return n.onload=function(){var t=n.result.split(",")[1];e("b"+t)},n.readAsDataURL(t)};t.exports=function(t,e,n){var c,a=t.type,u=t.data;return o&&u instanceof Blob?e?n(u):s(u,n):i&&(u instanceof ArrayBuffer||(c=u,"function"==typeof ArrayBuffer.isView?ArrayBuffer.isView(c):c&&c.buffer instanceof ArrayBuffer))?e?n(u instanceof ArrayBuffer?u:u.buffer):s(new Blob([u]),n):n(r[a]+(u||""))}},function(t,e,n){var r,o=n(11),i=o.PACKET_TYPES_REVERSE,s=o.ERROR_PACKET;"function"==typeof ArrayBuffer&&(r=n(25));var c=function(t,e){if(r){var n=r.decode(t);return a(n,e)}return{base64:!0,data:t}},a=function(t,e){switch(e){case"blob":return t instanceof ArrayBuffer?new Blob([t]):t;case"arraybuffer":default:return t}};t.exports=function(t,e){if("string"!=typeof t)return{type:"message",data:a(t,e)};var n=t.charAt(0);return"b"===n?{type:"message",data:c(t.substring(1),e)}:i[n]?t.length>1?{type:i[n],data:t.substring(1)}:{type:i[n]}:s}},function(t,e){!function(t){"use strict";e.encode=function(e){var n,r=new Uint8Array(e),o=r.length,i="";for(n=0;n<o;n+=3)i+=t[r[n]>>2],i+=t[(3&r[n])<<4|r[n+1]>>4],i+=t[(15&r[n+1])<<2|r[n+2]>>6],i+=t[63&r[n+2]];return o%3==2?i=i.substring(0,i.length-1)+"=":o%3==1&&(i=i.substring(0,i.length-2)+"=="),i},e.decode=function(e){var n,r,o,i,s,c=.75*e.length,a=e.length,u=0;"="===e[e.length-1]&&(c--,"="===e[e.length-2]&&c--);var f=new ArrayBuffer(c),p=new Uint8Array(f);for(n=0;n<a;n+=4)r=t.indexOf(e[n]),o=t.indexOf(e[n+1]),i=t.indexOf(e[n+2]),s=t.indexOf(e[n+3]),p[u++]=r<<2|o>>4,p[u++]=(15&o)<<4|i>>2,p[u++]=(3&i)<<6|63&s;return f}}("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/")},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e,n){return(i="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=f(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(n):o.value}})(t,e,n||t)}function s(t,e){return(s=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function c(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=f(t);if(e){var o=f(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return a(this,n)}}function a(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?u(t):e}function u(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}function f(t){return(f=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var p,l=n(10),h=n(2),y=/\n/g,d=/\\n/g,v=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&s(t,e)}(l,t);var e,n,r,a=c(l);function l(t){var e;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,l),(e=a.call(this,t)).query=e.query||{},p||(p=h.___eio=h.___eio||[]),e.index=p.length;var n=u(e);return p.push((function(t){n.onData(t)})),e.query.j=e.index,e}return e=l,(n=[{key:"doClose",value:function(){this.script&&(this.script.onerror=function(){},this.script.parentNode.removeChild(this.script),this.script=null),this.form&&(this.form.parentNode.removeChild(this.form),this.form=null,this.iframe=null),i(f(l.prototype),"doClose",this).call(this)}},{key:"doPoll",value:function(){var t=this,e=document.createElement("script");this.script&&(this.script.parentNode.removeChild(this.script),this.script=null),e.async=!0,e.src=this.uri(),e.onerror=function(e){t.onError("jsonp poll error",e)};var n=document.getElementsByTagName("script")[0];n?n.parentNode.insertBefore(e,n):(document.head||document.body).appendChild(e),this.script=e,"undefined"!=typeof navigator&&/gecko/i.test(navigator.userAgent)&&setTimeout((function(){var t=document.createElement("iframe");document.body.appendChild(t),document.body.removeChild(t)}),100)}},{key:"doWrite",value:function(t,e){var n,r=this;if(!this.form){var o=document.createElement("form"),i=document.createElement("textarea"),s=this.iframeId="eio_iframe_"+this.index;o.className="socketio",o.style.position="absolute",o.style.top="-1000px",o.style.left="-1000px",o.target=s,o.method="POST",o.setAttribute("accept-charset","utf-8"),i.name="d",o.appendChild(i),document.body.appendChild(o),this.form=o,this.area=i}function c(){a(),e()}function a(){if(r.iframe)try{r.form.removeChild(r.iframe)}catch(t){r.onError("jsonp polling iframe removal error",t)}try{var t='<iframe src="javascript:0" name="'+r.iframeId+'">';n=document.createElement(t)}catch(t){(n=document.createElement("iframe")).name=r.iframeId,n.src="javascript:0"}n.id=r.iframeId,r.form.appendChild(n),r.iframe=n}this.form.action=this.uri(),a(),t=t.replace(d,"\\\n"),this.area.value=t.replace(y,"\\n");try{this.form.submit()}catch(t){}this.iframe.attachEvent?this.iframe.onreadystatechange=function(){"complete"===r.iframe.readyState&&c()}:this.iframe.onload=c}},{key:"supportsBinary",get:function(){return!1}}])&&o(e.prototype,n),r&&o(e,r),l}(l);t.exports=v},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e){return(i=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function s(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=a(t);if(e){var o=a(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return c(this,n)}}function c(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function a(t){return(a=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var u=n(3),f=n(1),p=n(4),l=n(12),h=n(13).pick,y=n(28),d=y.WebSocket,v=y.usingBrowserWebSocket,b=y.defaultBinaryType,m="undefined"!=typeof navigator&&"string"==typeof navigator.product&&"reactnative"===navigator.product.toLowerCase(),g=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&i(t,e)}(a,t);var e,n,r,c=s(a);function a(t){var e;return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,a),(e=c.call(this,t)).supportsBinary=!t.forceBase64,e}return e=a,(n=[{key:"doOpen",value:function(){if(this.check()){var t=this.uri(),e=this.opts.protocols,n=m?{}:h(this.opts,"agent","perMessageDeflate","pfx","key","passphrase","cert","ca","ciphers","rejectUnauthorized","localAddress","protocolVersion","origin","maxPayload","family","checkServerIdentity");this.opts.extraHeaders&&(n.headers=this.opts.extraHeaders);try{this.ws=v&&!m?e?new d(t,e):new d(t):new d(t,e,n)}catch(t){return this.emit("error",t)}this.ws.binaryType=this.socket.binaryType||b,this.addEventListeners()}}},{key:"addEventListeners",value:function(){var t=this;this.ws.onopen=function(){t.onOpen()},this.ws.onclose=function(){t.onClose()},this.ws.onmessage=function(e){t.onData(e.data)},this.ws.onerror=function(e){t.onError("websocket error",e)}}},{key:"write",value:function(t){var e=this;this.writable=!1;for(var n=t.length,r=0,o=n;r<o;r++)!function(t){f.encodePacket(t,e.supportsBinary,(function(r){var o={};v||(t.options&&(o.compress=t.options.compress),e.opts.perMessageDeflate&&("string"==typeof r?Buffer.byteLength(r):r.length)<e.opts.perMessageDeflate.threshold&&(o.compress=!1));try{v?e.ws.send(r):e.ws.send(r,o)}catch(t){}--n||(e.emit("flush"),setTimeout((function(){e.writable=!0,e.emit("drain")}),0))}))}(t[r])}},{key:"onClose",value:function(){u.prototype.onClose.call(this)}},{key:"doClose",value:function(){void 0!==this.ws&&(this.ws.close(),this.ws=null)}},{key:"uri",value:function(){var t=this.query||{},e=this.opts.secure?"wss":"ws",n="";return this.opts.port&&("wss"===e&&443!==Number(this.opts.port)||"ws"===e&&80!==Number(this.opts.port))&&(n=":"+this.opts.port),this.opts.timestampRequests&&(t[this.opts.timestampParam]=l()),this.supportsBinary||(t.b64=1),(t=p.encode(t)).length&&(t="?"+t),e+"://"+(-1!==this.opts.hostname.indexOf(":")?"["+this.opts.hostname+"]":this.opts.hostname)+n+this.opts.path+t}},{key:"check",value:function(){return!(!d||"__initialize"in d&&this.name===a.prototype.name)}},{key:"name",get:function(){return"websocket"}}])&&o(e.prototype,n),r&&o(e,r),a}(u);t.exports=g},function(t,e,n){var r=n(2);t.exports={WebSocket:r.WebSocket||r.MozWebSocket,usingBrowserWebSocket:!0,defaultBinaryType:"arraybuffer"}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.reconstructPacket=e.deconstructPacket=void 0;var o=n(15);e.deconstructPacket=function(t){var e=[],n=t.data,i=t;return i.data=function t(e,n){if(!e)return e;if(o.isBinary(e)){var i={_placeholder:!0,num:n.length};return n.push(e),i}if(Array.isArray(e)){for(var s=new Array(e.length),c=0;c<e.length;c++)s[c]=t(e[c],n);return s}if("object"===r(e)&&!(e instanceof Date)){var a={};for(var u in e)e.hasOwnProperty(u)&&(a[u]=t(e[u],n));return a}return e}(n,e),i.attachments=e.length,{packet:i,buffers:e}},e.reconstructPacket=function(t,e){return t.data=function t(e,n){if(!e)return e;if(e&&e._placeholder)return n[e.num];if(Array.isArray(e))for(var o=0;o<e.length;o++)e[o]=t(e[o],n);else if("object"===r(e))for(var i in e)e.hasOwnProperty(i)&&(e[i]=t(e[i],n));return e}(t.data,e),t.attachments=void 0,t}},function(t,e){function n(t){t=t||{},this.ms=t.min||100,this.max=t.max||1e4,this.factor=t.factor||2,this.jitter=t.jitter>0&&t.jitter<=1?t.jitter:0,this.attempts=0}t.exports=n,n.prototype.duration=function(){var t=this.ms*Math.pow(this.factor,this.attempts++);if(this.jitter){var e=Math.random(),n=Math.floor(e*this.jitter*t);t=0==(1&Math.floor(10*e))?t-n:t+n}return 0|Math.min(t,this.max)},n.prototype.reset=function(){this.attempts=0},n.prototype.setMin=function(t){this.ms=t},n.prototype.setMax=function(t){this.max=t},n.prototype.setJitter=function(t){this.jitter=t}}])}));
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":31}],27:[function(require,module,exports){
+},{"buffer":32}],28:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -20253,7 +20325,7 @@ class MatrixSounds {
 
 exports.MatrixSounds = MatrixSounds;
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /* eslint-disable no-unused-vars */
 
 /* eslint-disable no-undef */
@@ -20486,24 +20558,18 @@ window.BROWSER = new window.DETECTBROWSER();
  */
 
 function LOG() {
-  this.ENABLE = true;
+  this.ENABLE = false;
 
   this.LOG = function (data) {
-    if (this.ENABLE == true) {
-      console.log('%c' + data, 'background: #333; color: lime');
-    }
+    if (this.ENABLE == true) console.log('%c' + data, 'background: #333; color: lime');
   };
 
   this.WARNING = function (data) {
-    if (this.ENABLE == true) {
-      console.log('%c Warning : ' + data, 'background: #333; color: yellow');
-    }
+    if (this.ENABLE == true) console.log('%c Warning : ' + data, 'background: #333; color: yellow');
   };
 
   this.CRITICAL = function (data) {
-    if (this.ENABLE == true) {
-      console.log('%c Critical : ' + data, 'background: #333; color: red');
-    }
+    if (this.ENABLE == true) console.log('%c Critical : ' + data, 'background: #333; color: red');
   };
 
   this.NETWORK_LOG = function (data) {
@@ -21022,7 +21088,7 @@ function gen2DTextFace(ctx, faceColor, textColor, text) {
   ctx.fillText(text, width / 2, height / 2);
 }
 
-},{"../program/manifest":37,"./events":5}],29:[function(require,module,exports){
+},{"../program/manifest":38,"./events":5}],30:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21190,7 +21256,7 @@ if (!window.requestAnimationFrame) {
   }();
 }
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -21342,7 +21408,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 (function (Buffer){(function (){
 /*!
  * The buffer module from node.js, for the browser.
@@ -23123,7 +23189,7 @@ function numberIsNaN (obj) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"base64-js":30,"buffer":31,"ieee754":35}],32:[function(require,module,exports){
+},{"base64-js":31,"buffer":32,"ieee754":36}],33:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -23136,7 +23202,7 @@ var _bvhLoader = require("./module/bvh-loader");
 var _default = _bvhLoader.MEBvh;
 exports.default = _default;
 
-},{"./module/bvh-loader":33}],33:[function(require,module,exports){
+},{"./module/bvh-loader":34}],34:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -23849,7 +23915,7 @@ class MEBvh {
 
 exports.MEBvh = MEBvh;
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 (function (global){(function (){
 /*
  * Copyright (c) 2015 cannon.js Authors
@@ -37539,7 +37605,7 @@ World.prototype.clearForces = function(){
 (2)
 });
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
@@ -37626,7 +37692,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -37812,7 +37878,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
