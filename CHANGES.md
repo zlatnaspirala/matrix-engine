@@ -4,6 +4,9 @@
 
 ## ---------------------------------
 
+[1.9.44] Correction for cube physics
+ Internal note: rotx + 90
+
 [1.9.40 - 1.9.43]
  First version with both support opengles11/2 and opengles300
  - Default : 1.3/opengles300

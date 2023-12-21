@@ -4289,8 +4289,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *@Author Nikola Lukic zlatnaspirala@
  *@Description Matrix Engine Api Example
  * WORKSHOP SCRIPT
- * Current theme : SceneController and 
- * physics (cannon.js) implementation.
+ * New example
  */
 var runThis = world => {
   _manifest.default.camera.SceneController = true;
@@ -4304,7 +4303,7 @@ var runThis = world => {
      */
 
     if (ev.detail.hitObject.physics.enabled == true) {
-      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+      ev.detail.hitObject.physics.currentBody.force.set(510, -1000, 1000);
     }
   });
   var tex = {
@@ -12930,7 +12929,7 @@ _manifest.default.operation.reDrawGlobal = function (time) {
             _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
             _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
           } else {
-            if (local.physics.currentBody.quaternion.x != 0) _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+            if (local.physics.currentBody.quaternion.x != 0) _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]) + 90;
             if (local.physics.currentBody.quaternion.y != 0) _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
             if (local.physics.currentBody.quaternion.z != 0) _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
           }

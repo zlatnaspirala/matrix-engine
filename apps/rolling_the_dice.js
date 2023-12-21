@@ -2,8 +2,7 @@
  *@Author Nikola Lukic zlatnaspirala@
  *@Description Matrix Engine Api Example
  * WORKSHOP SCRIPT
- * Current theme : SceneController and 
- * physics (cannon.js) implementation.
+ * New example
  */
 import App from "../program/manifest";
 import * as CANNON from 'cannon';
@@ -13,12 +12,11 @@ export var runThis = (world) => {
   canvas.addEventListener('mousedown', (ev) => {matrixEngine.raycaster.checkingProcedure(ev)});
   window.addEventListener('ray.hit.event', (ev) => {
     console.log("You shoot the object! Nice!", ev)
-
     /**
      * Physics force apply
      */
     if(ev.detail.hitObject.physics.enabled == true) {
-      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000)
+      ev.detail.hitObject.physics.currentBody.force.set(510, -1000, 1000)
     }
   });
 
