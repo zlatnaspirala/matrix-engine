@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import androidx.core.view.WindowCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+//import androidx.navigation.NavController;
+//import androidx.navigation.Navigation;
+//import androidx.navigation.ui.AppBarConfiguration;
+//import androidx.navigation.ui.NavigationUI;
 import com.nikolalukic.matrixengineandroid.databinding.ActivityMainBinding;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,12 +17,13 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
+import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
     private String APP_STATUS = "DEV";
     private String WEBGL_VER = "1";
-
-    private AppBarConfiguration appBarConfiguration;
+    private String GUI_DEV_ARG = "null";
+//    private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     WebView web1;
     public class MyWebChromeClient extends WebChromeClient {
@@ -54,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
         web1.setWebChromeClient(new MyWebChromeClient());
         WebSettings webSettings = web1.getSettings();
         webSettings.setJavaScriptEnabled(true);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            GUI_DEV_ARG = bundle.getString("GUI_DEV_ARG");
+            web1.loadUrl(GUI_DEV_ARG);
+            return;
+        }
 
         if (APP_STATUS == "PROD") {
             if (WEBGL_VER == "1") {
