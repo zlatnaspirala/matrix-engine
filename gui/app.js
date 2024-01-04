@@ -4,15 +4,16 @@ import {anyCanvas} from "../lib/engine.js";
 let Vjs3 = matrixEngine.Engine.Vjs3;
 var world;
 
-if('serviceWorker' in navigator) {
-  window.addEventListener('load', function(e) {
+
+window.addEventListener('load', function(e) {
+  if('serviceWorker' in navigator) {
     // navigator.serviceWorker.register('worker.js');
-    App.ready = true;
-    matrixEngine.Engine.initApp(webGLStart);
-  })
-} else {
-  console.warn('Matrix Engine: No support for web workers in this browser.');
-}
+  } else {
+    console.warn('Matrix Engine: No support for web workers in this browser.');
+  }
+  App.ready = true;
+  matrixEngine.Engine.initApp(webGLStart);
+})
 
 var runThis = world => {
   let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
@@ -38,7 +39,8 @@ var runThis = world => {
   /////////////////////////////////////////
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   /////////////////////////////////////////
-  E("HOLDER_STREAMS").style.display = "block";
+  // E("HOLDER_STREAMS").style.display = "block";
+
   setTimeout(function() {
     App.scene.outsideBox.streamTextures = new anyCanvas(
       "../../2DTextureEditor/templates/slot/",

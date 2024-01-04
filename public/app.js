@@ -1457,10 +1457,10 @@ var RegenerateShader = function (id_elem, numOfSamplerInUse, mixOperand, lightTy
   }
 
   if (_manifest.default.openglesShaderVersion == 1.3) {
-    console.log('RegenerateShader 300 => ', lightType);
+    // console.log('RegenerateShader 300 => ', lightType)
     e.innerHTML = (0, _matrixShaders.generateShaderSrc3)(numOfSamplerInUse, mixOperand, lightType);
   } else {
-    console.warn('RegenerateShader 2 => ', lightType);
+    // console.warn('RegenerateShader 2 => ', lightType)
     e.innerHTML = (0, _matrixShaders2.generateShaderSrc)(numOfSamplerInUse, mixOperand, lightType);
   }
 };
@@ -10561,26 +10561,25 @@ var _overrideMatrixRender = require("./optimizer/override-matrix-render");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var CS1 = "font-family: stormfaze;color: #d64444; font-size:58px;text-shadow: 2px 2px 4px #fff554, 4px 4px 4px gray, 2px 2px 4px lime, 6px 2px 0px lime;background: black;";
+var CS1 = "font-family: stormfaze;color: #001100; font-size:58px;text-shadow: 2px 2px 4px #fff554, 4px 4px 4px gray, 2px 2px 4px lime, 6px 2px 0px lime;background: gray;";
 exports.CS1 = CS1;
 var CS2 = "font-family: stormfaze;color: #fd1233; font-size:20px;text-shadow: 2px 2px 2px #5321f5, 4px 4px 4px #d6fa16, 3px 0px 3px #c160a6, 6px 6px 4px #9a0de3;background: black;";
 exports.CS2 = CS2;
 var CS3 = "font-family: stormfaze;color: #f1f033; font-size:14px;text-shadow: 2px 2px 4px #f335f4, 4px 4px 4px #d64444, 2px 2px 4px #c160a6, 6px 2px 0px #123de3;background: black;";
 exports.CS3 = CS3;
-var CS4 = "font-family: wargames;color: #lime; font-size:16px;text-shadow: 2px 2px 4px white, 4px 4px 4px green, 2px 2px 4px #c16fa6, 6px 2px 0px #123de3;background: black;";
+var CS4 = "font-family: verdana;color: #lime; font-size:16px;text-shadow: 2px 2px 4px orangered;background: black;";
 exports.CS4 = CS4;
-console.info(`%cMatrix-Engine %c 1.9.40 🛸`, CS1, CS1);
+console.info(`%cMatrix-Engine %c 1.9.43 🛸`, CS1, CS1);
 var lastChanges = `
 [1.9.40] First version with both support opengles11/2 and opengles300
  - Default : 1.3/opengles300
  - Switch with URL param 'GLSL=1.3' for opengle300 and 'GLSL=1.1' for opengles1.1/2
- - Not working all shaders at the moment for 1.1 !w
  - Implemented URL param for examples-build.html?GLSL=1.1 [Affect after first demo choose.]
 `;
 console.info(`%c ${lastChanges} `, CS4);
 console.info(`%c Render switch from 'requestAnimationFrame' to 'offScreen' with URLParams '?offScreen=true&offScreenSpeed=10'.
  For now physics stuff not affected. `, CS3);
-console.info(`%c You can downgrade to webgl1 with ?GLSL=1.1 - EXPERIMENTAL DEV - WIP`, CS3); // fbo
+console.info(`%c You can switch webGL ver 1/2 with ?GLSL=1.1 or ?GLSL=1.3 - EXPERIMENTAL`, CS3); // fbo
 
 _manifest.default.makeFBO = _matrixTextures.makeFBO; // define shaders from code
 
@@ -11745,7 +11744,6 @@ function defineworld(canvas, renderType) {
             cubeObject.texParams = texturesPaths.params;
           }
 
-          console.log("TEST ON LOAD EXEC !!! cubetexlight");
           (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles'); // eslint-disable-next-line no-redeclare
 
           for (var t = 0; t < texturesPaths.source.length; ++t) {

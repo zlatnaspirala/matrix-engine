@@ -3,6 +3,8 @@
 # Matrix Engine [CHANGES]
 
 ## ---------------------------------
+[1.9.45] http on emulator android from LAN - no workers [browser related/ security reason]!
+ Change main file for GUI instance.
 
 [1.9.44] Correction for cube physics
  Internal note: rotx + 90
