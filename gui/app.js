@@ -43,9 +43,10 @@ var runThis = world => {
 
   setTimeout(function() {
     App.scene.outsideBox.streamTextures = new anyCanvas(
-      "../../2DTextureEditor/templates/slot/",
+      "2DTextureEditor/templates/slot/",
       "HELLO_WORLD")
     App.scene.outsideBox.streamTextures.showTextureEditor();
+    setTimeout(function() { E("HOLDER_STREAMS").style.display = "none" }, 1000);
   }, 500);
 };
 

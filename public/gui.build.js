@@ -213,9 +213,13 @@ var runThis = world => {
   // E("HOLDER_STREAMS").style.display = "block";
 
   setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas("../../2DTextureEditor/templates/slot/", "HELLO_WORLD");
+    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas("2DTextureEditor/templates/slot/", "HELLO_WORLD");
 
     _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
+
+    setTimeout(function () {
+      E("HOLDER_STREAMS").style.display = "none";
+    }, 1000);
   }, 500);
 };
 
@@ -1190,8 +1194,8 @@ function anyCanvas(path_, nameOfCanvas) {
     }
 
     ROOT.canvasTexture = ROOT.videoImage.getContext('2d'); // App.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
+    // E('HOLDER_STREAMS').style.display = 'block';
 
-    (0, _utility.E)('HOLDER_STREAMS').style.display = 'block';
     ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage);
   };
 
@@ -1326,7 +1330,7 @@ SYS.DEBUG = new _utility.LOG(); // from 1.9.44
 _manifest.default.sys = SYS;
 
 function EVENTS(canvas) {
-  var ROOT_EVENTS = this; //Mobile device
+  var ROOT_EVENTS = this; // Mobile device
 
   if (NOMOBILE == 0) {
     canvas.addEventListener('touchstart', function (e) {
@@ -1366,12 +1370,15 @@ function EVENTS(canvas) {
 
       SYS.MOUSE.x = touchList[0].pageX;
       SYS.MOUSE.y = touchList[0].pageY;
-      ROOT_EVENTS.CALCULATE_TOUCH_MOVE_OR_MOUSE_MOVE();
+      ROOT_EVENTS.CALCULATE_TOUCH_MOVE_OR_MOUSE_MOVE({
+        x: touchList[0].pageX,
+        y: touchList[0].pageY
+      });
     }, {
       passive: false
     });
   } else {
-    //Desktop device
+    //D esktop device
     canvas.addEventListener('click', function (e) {
       //SYS.MOUSE.PRESS = true;
       SYS.MOUSE.x = e.layerX;
@@ -1395,7 +1402,10 @@ function EVENTS(canvas) {
       SYS.MOUSE.MOUSE_MOVING = true;
       SYS.MOUSE.x = e.layerX;
       SYS.MOUSE.y = e.layerY;
-      ROOT_EVENTS.CALCULATE_TOUCH_MOVE_OR_MOUSE_MOVE(e);
+      ROOT_EVENTS.CALCULATE_TOUCH_MOVE_OR_MOUSE_MOVE({
+        x: e.layerX,
+        y: e.layerY
+      });
     };
 
     canvas.onmousedown = function (e) {
@@ -1450,8 +1460,8 @@ function EVENTS(canvas) {
   this.CALCULATE_TOUCH_MOVE_OR_MOUSE_MOVE = function (e) {
     var center_x = window.innerWidth / 2;
     var center_y = window.innerHeight / 2;
-    SYS.MOUSE.x = e.layerX - center_x;
-    SYS.MOUSE.y = e.layerY - center_y; //check to make sure there is data to compare against
+    SYS.MOUSE.x = e.x - center_x;
+    SYS.MOUSE.y = e.y - center_y; //check to make sure there is data to compare against
 
     if (typeof SYS.MOUSE.LAST_POSITION.x != 'undefined') {
       //get the change from last position to this position

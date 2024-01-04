@@ -142,9 +142,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (APP_STATUS == "PROD") {
             if (WEBGL_VER == "1") {
-                web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/query-build.html?u=porting2d_text&GLSL=1.1");
+                web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/gui.html?GLSL=1.1");
             } else {
-                web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/query-build.html?u=porting2d_text");
+                web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/gui.html?GLSL=1.3");
             }
         } else if (APP_STATUS == "DEV") {
             if (WEBGL_VER == "1") {
