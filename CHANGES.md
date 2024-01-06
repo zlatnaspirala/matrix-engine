@@ -8,10 +8,13 @@
 
 ## ---------------------------------
 
-[1.9.45] http on emulator android from LAN - no workers [browser related/ security reason]!
+
+[1.9.45+] http on emulator android from LAN - no workers [browser related/ security reason]!
  Change main file for GUI instance.
 
  [mobile optimisation ios fix web_cam visibility](lib/engine.js)
+
+ supportsTouch added for better detecting isMobile()
 
 [1.9.44] Correction for cube physics
  Internal note: rotx + 90

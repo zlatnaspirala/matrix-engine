@@ -15,7 +15,7 @@
 
 import App from '../program/manifest';
 import * as CANNON from 'cannon';
-import {ENUMERATORS, ORBIT_FROM_ARRAY, OSCILLATOR, randomFloatFromTo} from '../lib/utility';
+import {ENUMERATORS, ORBIT_FROM_ARRAY, OSCILLATOR, isMobile, randomFloatFromTo} from '../lib/utility';
 
 export var runThis = (world) => {
 
@@ -34,6 +34,7 @@ export var runThis = (world) => {
 
   // Override mouse up
   App.events.CALCULATE_TOUCH_UP_OR_MOUSE_UP = () => {
+    console.log('TEST APP CLICK')
     App.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     App.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     App.scene.FPSTarget.geometry.setScale(0.1);
@@ -48,20 +49,37 @@ export var runThis = (world) => {
     App.scene.xrayTarget.visible = true;
   };
 
-  // Override mouse down
-  App.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
-    // `checkingProcedure` gets secound optimal argument
-    // for custom ray origin target.
-    if(mouse.BUTTON_PRESSED == 'RIGHT') {
-      // Zoom
-    } else {
-      // This call represent `SHOOT` Action. And it is center of screen!
+  App.events.multiTouch = function (ev, e) {
+    if (e.length > 1) {
+      // second touch detected
+      // e[1].pageX
       matrixEngine.raycaster.checkingProcedure(ev, {
         clientX: ev.target.width / 2,
         clientY: ev.target.height / 2
       });
       App.sounds.play('shoot');
     }
+  }
+  // Override mouse down
+  App.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
+
+    if(isMobile() == false) {
+      // `checkingProcedure` gets secound optimal argument
+      // for custom ray origin target.
+      if(mouse.BUTTON_PRESSED == 'RIGHT') {
+        // Zoom
+      } else {
+        // This call represent `SHOOT` Action. And it is center of screen!
+        matrixEngine.raycaster.checkingProcedure(ev, {
+          clientX: ev.target.width / 2,
+          clientY: ev.target.height / 2
+        });
+        App.sounds.play('shoot');
+      }
+    } else {
+
+    }
+
   };
 
   window.addEventListener('ray.hit.event', (ev) => {
@@ -533,23 +551,24 @@ export var runThis = (world) => {
   App.scene['WALL_BLOCK'].physics.currentBody = b5;
   App.scene['WALL_BLOCK'].physics.enabled = true;
 
+
   // Damage object test
-  // world.Add("cubeLightTex", 1, "LAVA", tex);
-  // var b4 = new CANNON.Body({
-  //   mass: 0,
-  //   linearDamping: 0.01,
-  //   position: new CANNON.Vec3(-6, -16.5, -1),
-  //   shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-  // });
-  // b4._name = 'damage';
-  // physics.world.addBody(b4);
-  // App.scene.LAVA.position.setPosition(-6, -1, -16.5)
-  // // App.scene.LAVA.geometry.setScaleByX(1);
-  // App.scene.LAVA.physics.currentBody = b4;
-  // App.scene.LAVA.physics.enabled = true;
-  // App.scene.LAVA.LightsData.ambientLight.set(0, 0, 0);
-  // App.scene.LAVA.streamTextures = new matrixEngine.Engine.VT(
-  //   "res/video-texture/lava1.mkv"
-  // );
+  world.Add("cubeLightTex", 1, "LAVA", tex);
+  var b4 = new CANNON.Body({
+    mass: 0,
+    linearDamping: 0.01,
+    position: new CANNON.Vec3(-6, -16.5, -1),
+    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+  });
+  b4._name = 'damage';
+  physics.world.addBody(b4);
+  App.scene.LAVA.position.setPosition(-6, -1, -16.5)
+  // App.scene.LAVA.geometry.setScaleByX(1);
+  App.scene.LAVA.physics.currentBody = b4;
+  App.scene.LAVA.physics.enabled = true;
+  App.scene.LAVA.LightsData.ambientLight.set(0, 0, 0);
+  App.scene.LAVA.streamTextures = new matrixEngine.Engine.VT(
+    "res/video-texture/lava1.mkv"
+  );
 
 };

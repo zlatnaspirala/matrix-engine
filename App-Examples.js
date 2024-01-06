@@ -124,13 +124,14 @@ var world;
 var App = matrixEngine.App;
 
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    // navigator.serviceWorker.register('worker.js');
-    setTimeout( () => { matrixEngine.Engine.initApp(webGLStart); }, 1000)
-  });
+  // navigator.serviceWorker.register('worker.js');
 } else {
   console.warn('Matrix Engine: No support for web workers in this browser.');
 }
+
+window.addEventListener('load', function () {
+  setTimeout( () => { matrixEngine.Engine.initApp(webGLStart); }, 1000)
+});
 
 function webGLStart() {
   world = matrixEngine.matrixWorld.defineworld(canvas);

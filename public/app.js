@@ -85,6 +85,7 @@ var runThis = world => {
   }); // Override mouse up
 
   _manifest.default.events.CALCULATE_TOUCH_UP_OR_MOUSE_UP = () => {
+    console.log('TEST APP CLICK');
     _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
 
@@ -100,15 +101,12 @@ var runThis = world => {
     _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
     _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
     _manifest.default.scene.xrayTarget.visible = true;
-  }; // Override mouse down
+  };
 
-
-  _manifest.default.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
-    // `checkingProcedure` gets secound optimal argument
-    // for custom ray origin target.
-    if (mouse.BUTTON_PRESSED == 'RIGHT') {// Zoom
-    } else {
-      // This call represent `SHOOT` Action. And it is center of screen!
+  _manifest.default.events.multiTouch = function (ev, e) {
+    if (e.length > 1) {
+      // second touch detected
+      // e[1].pageX
       matrixEngine.raycaster.checkingProcedure(ev, {
         clientX: ev.target.width / 2,
         clientY: ev.target.height / 2
@@ -116,6 +114,24 @@ var runThis = world => {
 
       _manifest.default.sounds.play('shoot');
     }
+  }; // Override mouse down
+
+
+  _manifest.default.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
+    if ((0, _utility.isMobile)() == false) {
+      // `checkingProcedure` gets secound optimal argument
+      // for custom ray origin target.
+      if (mouse.BUTTON_PRESSED == 'RIGHT') {// Zoom
+      } else {
+        // This call represent `SHOOT` Action. And it is center of screen!
+        matrixEngine.raycaster.checkingProcedure(ev, {
+          clientX: ev.target.width / 2,
+          clientY: ev.target.height / 2
+        });
+
+        _manifest.default.sounds.play('shoot');
+      }
+    } else {}
   };
 
   window.addEventListener('ray.hit.event', ev => {
@@ -582,23 +598,26 @@ var runThis = world => {
 
   _manifest.default.scene['WALL_BLOCK'].physics.currentBody = b5;
   _manifest.default.scene['WALL_BLOCK'].physics.enabled = true; // Damage object test
-  // world.Add("cubeLightTex", 1, "LAVA", tex);
-  // var b4 = new CANNON.Body({
-  //   mass: 0,
-  //   linearDamping: 0.01,
-  //   position: new CANNON.Vec3(-6, -16.5, -1),
-  //   shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-  // });
-  // b4._name = 'damage';
-  // physics.world.addBody(b4);
-  // App.scene.LAVA.position.setPosition(-6, -1, -16.5)
-  // // App.scene.LAVA.geometry.setScaleByX(1);
-  // App.scene.LAVA.physics.currentBody = b4;
-  // App.scene.LAVA.physics.enabled = true;
-  // App.scene.LAVA.LightsData.ambientLight.set(0, 0, 0);
-  // App.scene.LAVA.streamTextures = new matrixEngine.Engine.VT(
-  //   "res/video-texture/lava1.mkv"
-  // );
+
+  world.Add("cubeLightTex", 1, "LAVA", tex);
+  var b4 = new CANNON.Body({
+    mass: 0,
+    linearDamping: 0.01,
+    position: new CANNON.Vec3(-6, -16.5, -1),
+    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+  });
+  b4._name = 'damage';
+  physics.world.addBody(b4);
+
+  _manifest.default.scene.LAVA.position.setPosition(-6, -1, -16.5); // App.scene.LAVA.geometry.setScaleByX(1);
+
+
+  _manifest.default.scene.LAVA.physics.currentBody = b4;
+  _manifest.default.scene.LAVA.physics.enabled = true;
+
+  _manifest.default.scene.LAVA.LightsData.ambientLight.set(0, 0, 0);
+
+  _manifest.default.scene.LAVA.streamTextures = new matrixEngine.Engine.VT("res/video-texture/lava1.mkv");
 };
 
 exports.runThis = runThis;
@@ -1865,7 +1884,7 @@ _manifest.default.sys = SYS;
 function EVENTS(canvas) {
   var ROOT_EVENTS = this; // Mobile device
 
-  if (NOMOBILE == 0) {
+  if ((0, _utility.isMobile)() == true) {
     canvas.addEventListener('touchstart', function (e) {
       e.preventDefault();
       var touchList = e.changedTouches;
@@ -1873,6 +1892,8 @@ function EVENTS(canvas) {
       SYS.MOUSE.x = touchList[0].pageX;
       SYS.MOUSE.y = touchList[0].pageY;
       ROOT_EVENTS.CALCULATE_TOUCH_OR_CLICK();
+      ROOT_EVENTS.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN(e, SYS.MOUSE);
+      ROOT_EVENTS.multiTouch(e, touchList);
     }, {
       passive: false
     });
@@ -1984,7 +2005,13 @@ function EVENTS(canvas) {
   }); // Calculate touch or click event
 
   this.CALCULATE_TOUCH_OR_CLICK = function () {
+    console.log('TEST EVENTS CALCULATE_TOUCH_OR_CLICK');
     SYS.DEBUG.LOG('EVENT: MOUSE/TOUCH CLICK');
+  }; // Calculate touch or click event
+
+
+  this.multiTouch = function (e) {
+    SYS.DEBUG.LOG('EVENT: MOUSE/TOUCH CLICK', e);
   };
 
   this.virtualUpDownScene = 0;
@@ -20938,7 +20965,7 @@ exports._glBlend = _glBlend;
 exports._DrawElements = _DrawElements;
 exports._glTexParameteri = _glTexParameteri;
 exports.gen2DTextFace = gen2DTextFace;
-exports.BiquadFilterType = exports.ENUMERATORS = exports.QueryString = exports.byId = exports.E = exports.scriptManager = exports.loadImage = exports.htmlHeader = exports.jsonHeaders = exports.HeaderTypes = void 0;
+exports.BiquadFilterType = exports.ENUMERATORS = exports.QueryString = exports.byId = exports.E = exports.scriptManager = exports.loadImage = exports.supportsTouch = exports.htmlHeader = exports.jsonHeaders = exports.HeaderTypes = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
@@ -21121,6 +21148,7 @@ window.DETECTBROWSER = function () {
 };
 
 function isMobile() {
+  if (supportsTouch == true) return true;
   const toMatch = [/Android/i, /webOS/i, /iPhone/i, /iPad/i, /iPod/i, /BlackBerry/i, /Windows Phone/i];
   return toMatch.some(toMatchItem => {
     return navigator.userAgent.match(toMatchItem);
@@ -21128,6 +21156,8 @@ function isMobile() {
 }
 
 ;
+var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+exports.supportsTouch = supportsTouch;
 
 const loadImage = function (url, onload) {
   var img = new Image();
