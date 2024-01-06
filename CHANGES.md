@@ -2,9 +2,16 @@
 
 # Matrix Engine [CHANGES]
 
+[2.0.0 beta version Vampir] Objective
+ - Mobile device ready 
+ - GUI basic version ready
+
 ## ---------------------------------
+
 [1.9.45] http on emulator android from LAN - no workers [browser related/ security reason]!
  Change main file for GUI instance.
+
+ [mobile optimisation ios fix web_cam visibility](lib/engine.js)
 
 [1.9.44] Correction for cube physics
  Internal note: rotx + 90

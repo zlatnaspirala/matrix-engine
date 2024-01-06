@@ -33,7 +33,7 @@
   })();
 
   function loadDemo(currentDemo) {
-    if (typeof QueryString.GLSL === "undefined") {
+    if(typeof QueryString.GLSL === "undefined") {
       GLSLver = 1.3;
     } else {
       GLSLver = QueryString.GLSL;
@@ -65,7 +65,7 @@
 <body>
   <div id="matrix-net"></div>
   <div id="menu" style="opacity: 0.9;z-index: 1;position: absolute; left: 0; top: 5%; width: 300px; height: auto; color: lime; padding: 1px; text-align: center">
-    <div class="btnShadow" style="width: 100%; height: auto;font-size: larger;">
+    <div id='title' class="btnShadow" style="width: 100%; height: auto;font-size: larger;">
       Matrix Engine Demos <br />
       version 1.9.43 - dec 2023
     </div>
@@ -119,5 +119,22 @@
 
   <iframe id="iframe1" allowfullscreen allow="autoplay" style="position: absolute; left: 15%; top: 0; width: 85%; height: 99%" class="btnShadow" src="query-build.html" title="live"></iframe>
 </body>
+<script>
+  function isMobile() {
+    const toMatch = [/Android/i, /webOS/i, /iPhone/i, /iPad/i, /iPod/i, /BlackBerry/i, /Windows Phone/i];
+    return toMatch.some(toMatchItem => {
+      return navigator.userAgent.match(toMatchItem);
+    });
+  }
+  if(isMobile() == true) {
+    document.body.style.fontSize = '10px';
+    var menu = document.getElementById('menu').style;
+    menu.overflow = 'auto';
+    menu.width = '100%';
+    menu.height = '16%';
+    menu.top = '0%';
+    document.getElementById('title').innerHTML += "Scroll example list.";
+  }
+</script>
 
 </html>

@@ -219,7 +219,7 @@ var runThis = world => {
 
     setTimeout(function () {
       E("HOLDER_STREAMS").style.display = "none";
-    }, 1000);
+    }, 10000);
   }, 500);
 };
 
@@ -1200,7 +1200,9 @@ function anyCanvas(path_, nameOfCanvas) {
   };
 
   ROOT.showTextureEditor = function () {
-    var T = (0, _utility.E)('HOLDER_STREAMS').style;
+    var T = (0, _utility.E)('HOLDER_STREAMS').style; // fix for ios defoult screen
+
+    (0, _utility.E)('webcam_beta').style.display = 'none';
     T.display = 'block';
     T.left = '0';
   };

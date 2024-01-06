@@ -46,7 +46,7 @@ var runThis = world => {
       "2DTextureEditor/templates/slot/",
       "HELLO_WORLD")
     App.scene.outsideBox.streamTextures.showTextureEditor();
-    setTimeout(function() { E("HOLDER_STREAMS").style.display = "none" }, 1000);
+    setTimeout(function() { E("HOLDER_STREAMS").style.display = "none" }, 10000);
   }, 500);
 };
 

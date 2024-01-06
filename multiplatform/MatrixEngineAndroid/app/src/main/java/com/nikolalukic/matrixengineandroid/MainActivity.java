@@ -28,7 +28,7 @@ import android.content.Intent;
 import java.security.AllPermission;
 
 public class MainActivity extends AppCompatActivity {
-    private String APP_STATUS = "PROD"; // "DEV";
+    private String APP_STATUS = "DEV"; // "DEV";
     private String WEBGL_VER = "1";
     private String GUI_DEV_ARG = "null";
     private static final int MY_CAMERA_REQUEST_CODE = 100;
@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     WebView web1;
     public class MyWebChromeClient extends WebChromeClient {
-
-
         // Handle javascript alerts:
         // @SuppressLint("WrongConstant")
         @Override
@@ -54,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
             result.confirm();
             return true;
         };
-
     }
 
     @Override
@@ -66,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
-
                 } else {
                     // permission denied
 
@@ -148,10 +144,10 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if (APP_STATUS == "DEV") {
             if (WEBGL_VER == "1") {
-                web1.loadUrl("http://192.168.0.30/public/examples-build.html?GLSL=1.1");
+                web1.loadUrl("https://192.168.0.30/public/examples-build.html?GLSL=1.1");
                 Log.e("app", "onCreate: http://192.168.0.30/ YEAP");
             } else {
-                web1.loadUrl("http://192.168.0.30/public/gui.html?GLSL=1.1");
+                web1.loadUrl("https://192.168.0.30/public/gui.html?GLSL=1.1");
             }
         } else if(APP_STATUS == "TEST-WEBGL2") {
           web1.loadUrl("https://webglreport.com/?v=2");
