@@ -32,6 +32,8 @@ export var runThis = (world) => {
   // Prevent right click context menu
   window.addEventListener("contextmenu", (e) => {e.preventDefault()});
 
+  matrixEngine.utility.createDomFPSController();
+
   // Override mouse up
   App.events.CALCULATE_TOUCH_UP_OR_MOUSE_UP = () => {
     console.log('TEST APP CLICK')

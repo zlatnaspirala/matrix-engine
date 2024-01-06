@@ -82,7 +82,8 @@ var runThis = world => {
 
   window.addEventListener("contextmenu", e => {
     e.preventDefault();
-  }); // Override mouse up
+  });
+  matrixEngine.utility.createDomFPSController(); // Override mouse up
 
   _manifest.default.events.CALCULATE_TOUCH_UP_OR_MOUSE_UP = () => {
     console.log('TEST APP CLICK');
@@ -20965,6 +20966,8 @@ exports._glBlend = _glBlend;
 exports._DrawElements = _DrawElements;
 exports._glTexParameteri = _glTexParameteri;
 exports.gen2DTextFace = gen2DTextFace;
+exports.showDomFPSController = showDomFPSController;
+exports.createDomFPSController = createDomFPSController;
 exports.BiquadFilterType = exports.ENUMERATORS = exports.QueryString = exports.byId = exports.E = exports.scriptManager = exports.loadImage = exports.supportsTouch = exports.htmlHeader = exports.jsonHeaders = exports.HeaderTypes = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
@@ -21147,6 +21150,9 @@ window.DETECTBROWSER = function () {
   this.NOMOBILE = NOMOBILE;
 };
 
+var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+exports.supportsTouch = supportsTouch;
+
 function isMobile() {
   if (supportsTouch == true) return true;
   const toMatch = [/Android/i, /webOS/i, /iPhone/i, /iPad/i, /iPod/i, /BlackBerry/i, /Windows Phone/i];
@@ -21156,8 +21162,6 @@ function isMobile() {
 }
 
 ;
-var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
-exports.supportsTouch = supportsTouch;
 
 const loadImage = function (url, onload) {
   var img = new Image();
@@ -21706,6 +21710,146 @@ function gen2DTextFace(ctx, faceColor, textColor, text) {
   ctx.textBaseline = 'middle';
   ctx.fillStyle = textColor;
   ctx.fillText(text, width / 2, height / 2);
+}
+
+function showDomFPSController() {
+  byId('mobSpace').style.display = 'grid';
+  byId('mobRight').style.display = 'grid';
+  byId('mobLeft').style.display = 'grid';
+  byId('mobUp').style.display = 'grid';
+  byId('mobDown').style.display = 'grid';
+  byId('domAngleAxis').style.display = 'grid';
+} // Create DOM elements fort FPS template
+
+
+function createDomFPSController() {
+  var domSpace = document.createElement('div');
+  domSpace.id = 'mobSpace';
+  domSpace.classList.add('noselect');
+  domSpace.setAttribute('style', `
+      text-align: center;
+      display: none;
+      position:absolute;
+      left: 80%;
+      top: 80%;
+      width: 14%;
+      height: 4%;
+      background: rgba(255,255,255,0.2);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domSpace.innerText = `JUMP`;
+  domSpace.addEventListener('touchstart', e => {});
+  document.body.append(domSpace);
+  var domRight = document.createElement('div');
+  domRight.id = 'mobRight';
+  domRight.classList.add('noselect');
+  domRight.setAttribute('style', `
+      text-align: center;
+      display: none;
+      position:absolute;
+      left: 85%;
+      top: 90%;
+      width: 14%;
+      height: 4%;
+      background: rgba(255,255,255,0.2);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domRight.innerText = `RIGHT`;
+  domRight.addEventListener('touchstart', e => {
+    console.log('TEST RIGHT');
+  });
+  domRight.addEventListener('touchend', e => {});
+  document.body.append(domRight);
+  var domLeft = document.createElement('div');
+  domLeft.id = 'mobLeft';
+  domLeft.classList.add('noselect');
+  domLeft.setAttribute('style', `
+      text-align: center;
+      display: none;
+      position:absolute;
+      left: 70%;
+      top: 90%;
+      width: 14%;
+      height: 4%;
+      background: rgba(255,255,255,0.2);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domLeft.innerText = `LEFT`;
+  domLeft.addEventListener('touchstart', e => {
+    console.log('TEST domLeft');
+  });
+  domLeft.addEventListener('touchend', e => {});
+  document.body.append(domLeft);
+  var domUp = document.createElement('div');
+  domUp.id = 'mobUp';
+  domUp.classList.add('noselect');
+  domUp.setAttribute('style', `
+      text-align: center;
+      display: none;
+      position:absolute;
+      left: 78%;
+      top: 86%;
+      width: 14%;
+      height: 4%;
+      background: rgba(255,255,255,0.2);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domUp.innerText = `UP`;
+  domUp.addEventListener('touchstart', e => {
+    console.log('TEST domUp');
+  });
+  domUp.addEventListener('touchend', e => {
+    this.moveForward = false;
+  });
+  document.body.append(domUp);
+  var domDown = document.createElement('div');
+  domDown.id = 'mobDown';
+  domDown.classList.add('noselect');
+  domDown.setAttribute('style', `
+      text-align: center;
+      display: none;
+      position:absolute;
+      left: 78%;
+      top: 94%;
+      width: 14%;
+      height: 4%;
+      background: rgba(255,255,255,0.1);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domDown.innerText = `DOWN`;
+  domDown.addEventListener('touchstart', e => {});
+  domDown.addEventListener('touchend', e => {});
+  document.body.append(domDown);
+  var domAngleAxis = document.createElement('div');
+  domAngleAxis.id = 'domAngleAxis';
+  domAngleAxis.classList.add('noselect');
+  domAngleAxis.setAttribute('style', `
+      text-align: center;
+      display: none;
+      position:absolute;
+      left: 9%;
+      top: 82%;
+      width: 28%;
+      height: 28%;
+      background: rgba(255,255,255,0.1);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domAngleAxis.innerHTML = `    `;
+  domAngleAxis.addEventListener('touchstart', e => {});
+  document.body.append(domAngleAxis);
+  showDomFPSController();
 }
 
 },{"../program/manifest":39,"./events":6}],31:[function(require,module,exports){
