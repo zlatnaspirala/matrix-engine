@@ -25480,6 +25480,9 @@ window.DETECTBROWSER = function () {
   this.NOMOBILE = NOMOBILE;
 };
 
+var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+exports.supportsTouch = supportsTouch;
+
 function isMobile() {
   if (supportsTouch == true) return true;
   const toMatch = [/Android/i, /webOS/i, /iPhone/i, /iPad/i, /iPod/i, /BlackBerry/i, /Windows Phone/i];
@@ -25489,8 +25492,6 @@ function isMobile() {
 }
 
 ;
-var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
-exports.supportsTouch = supportsTouch;
 
 const loadImage = function (url, onload) {
   var img = new Image();
