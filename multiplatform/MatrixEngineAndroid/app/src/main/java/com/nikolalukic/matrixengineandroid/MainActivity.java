@@ -3,6 +3,7 @@ package com.nikolalukic.matrixengineandroid;
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -18,6 +19,7 @@ import androidx.core.view.WindowCompat;
 import com.nikolalukic.matrixengineandroid.databinding.ActivityMainBinding;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.PermissionRequest;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -28,14 +30,21 @@ import android.content.Intent;
 import java.security.AllPermission;
 
 public class MainActivity extends AppCompatActivity {
-    private String APP_STATUS = "DEV"; // "DEV";
-    private String WEBGL_VER = "1";
+    private String APP_STATUS = "PROD"; // "DEV";
+    private String WEBGL_VER = "2";
     private String GUI_DEV_ARG = "null";
     private static final int MY_CAMERA_REQUEST_CODE = 100;
 
     private ActivityMainBinding binding;
     WebView web1;
     public class MyWebChromeClient extends WebChromeClient {
+
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public void onPermissionRequest(final PermissionRequest request) {
+            request.grant(request.getResources());
+        }
+
         // Handle javascript alerts:
         // @SuppressLint("WrongConstant")
         @Override
@@ -111,7 +120,10 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setDomStorageEnabled(true);
         // webSettings.setDisplayZoomControls(false);
         webSettings.setAllowContentAccess(true);
-        // webSettings.setSafeBrowsingEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            webSettings.setSafeBrowsingEnabled(true);
+        }
+        webSettings.setMediaPlaybackRequiresUserGesture(true);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -123,7 +135,9 @@ public class MainActivity extends AppCompatActivity {
                     Manifest.permission.READ_MEDIA_IMAGES,
                     Manifest.permission.READ_MEDIA_AUDIO,
                     Manifest.permission.READ_MEDIA_VIDEO,
-                    Manifest.permission.CAMERA
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.MODIFY_AUDIO_SETTINGS
             }, MY_CAMERA_REQUEST_CODE);
 
           // ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION );
@@ -140,7 +154,8 @@ public class MainActivity extends AppCompatActivity {
             if (WEBGL_VER == "1") {
                 web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/gui.html?GLSL=1.1");
             } else {
-                web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/gui.html?GLSL=1.3");
+                // web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/gui.html?GLSL=1.3");
+                web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/examples-build.html");
             }
         } else if (APP_STATUS == "DEV") {
             if (WEBGL_VER == "1") {
