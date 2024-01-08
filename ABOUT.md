@@ -1,7 +1,7 @@
 
 ## Mobile browsers support list:
 
-- Android chrome `WORKS ALL EXAMPLES`
+- Android chrome `ALL EXAMPLES WORKS`
 
 ## Hybrid mobile platforms
 
