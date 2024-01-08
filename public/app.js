@@ -1527,35 +1527,61 @@ var webcamError = function (e) {
 exports.webcamError = webcamError;
 
 function SET_STREAM(video) {
-  if (navigator.getUserMedia) {
-    navigator.getUserMedia({
-      audio: true,
-      video: true
-    }, function (stream) {
-      try {
-        video.srcObject = stream;
-      } catch (error) {
-        video.src = window.URL.createObjectURL(stream);
+  var videoSrc = null;
+  navigator.mediaDevices.enumerateDevices().then(getDevices).then(getStream).catch(() => {
+    alert('ERR MEDIA');
+  });
+
+  function getDevices(deviceInfos) {
+    for (var i = 0; i !== deviceInfos.length; ++i) {
+      var deviceInfo = deviceInfos[i];
+
+      if (deviceInfo.kind === 'videoinput') {
+        videoSrc = deviceInfo.deviceId;
+        break;
       }
-    }, webcamError);
-  } else if (navigator.webkitGetUserMedia) {
-    navigator.webkitGetUserMedia({
-      audio: true,
-      video: true
-    }, function (stream) {
-      try {
-        video.srcObject = stream;
-      } catch (error) {
-        video.src = window.URL.createObjectURL(stream);
-      }
-    }, webcamError);
-  } else {
-    alert('webcam broken.');
+    }
+  }
+
+  function getStream() {
+    if (navigator.getUserMedia) {
+      navigator.getUserMedia({
+        audio: true,
+        video: {
+          deviceId: {
+            exact: videoSrc
+          },
+          facingMode: 'user'
+        }
+      }, function (stream) {
+        try {
+          console.log('stream1', stream);
+          video.srcObject = stream;
+          console.log('stream2', stream);
+        } catch (error) {
+          video.src = window.URL.createObjectURL(stream);
+        }
+      }, webcamError);
+    } else if (navigator.webkitGetUserMedia) {
+      navigator.webkitGetUserMedia({
+        audio: true,
+        video: true
+      }, function (stream) {
+        try {
+          video.srcObject = stream;
+        } catch (error) {
+          video.src = window.URL.createObjectURL(stream);
+        }
+      }, webcamError);
+    } else {
+      alert('webcam broken.');
+    }
   }
 }
 
 function ACCESS_CAMERA(htmlElement) {
   var ROOT = this;
+  console.log('?????????????????????????');
   ROOT.video = document.getElementById(htmlElement);
   SET_STREAM(ROOT.video);
   var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
@@ -4300,8 +4326,8 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
 
       if (object.streamTextures != null) {
         // video/webcam tex
-        // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
         if (object.streamTextures.video) {
+          // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
           _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
         } else {
           _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);

@@ -8,9 +8,12 @@
 
 ## ---------------------------------
 
-
-[1.9.45+] http on emulator android from LAN - no workers [browser related/ security reason]!
- Change main file for GUI instance.
+[1.9.45+]
+ All examples now works on android devices[android 13 tested]!
+ - Improved ACCESS_CAMERA for android devices!
+ - Improved SET_STREAM function [adapting for mobile devices - android]
+ - http on emulator android from LAN - no workers [browser related/ security reason]!
+ - Change main file for GUI instance.
 
  [mobile optimisation ios fix web_cam visibility](lib/engine.js)
 

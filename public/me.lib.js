@@ -923,35 +923,61 @@ var webcamError = function (e) {
 exports.webcamError = webcamError;
 
 function SET_STREAM(video) {
-  if (navigator.getUserMedia) {
-    navigator.getUserMedia({
-      audio: true,
-      video: true
-    }, function (stream) {
-      try {
-        video.srcObject = stream;
-      } catch (error) {
-        video.src = window.URL.createObjectURL(stream);
+  var videoSrc = null;
+  navigator.mediaDevices.enumerateDevices().then(getDevices).then(getStream).catch(() => {
+    alert('ERR MEDIA');
+  });
+
+  function getDevices(deviceInfos) {
+    for (var i = 0; i !== deviceInfos.length; ++i) {
+      var deviceInfo = deviceInfos[i];
+
+      if (deviceInfo.kind === 'videoinput') {
+        videoSrc = deviceInfo.deviceId;
+        break;
       }
-    }, webcamError);
-  } else if (navigator.webkitGetUserMedia) {
-    navigator.webkitGetUserMedia({
-      audio: true,
-      video: true
-    }, function (stream) {
-      try {
-        video.srcObject = stream;
-      } catch (error) {
-        video.src = window.URL.createObjectURL(stream);
-      }
-    }, webcamError);
-  } else {
-    alert('webcam broken.');
+    }
+  }
+
+  function getStream() {
+    if (navigator.getUserMedia) {
+      navigator.getUserMedia({
+        audio: true,
+        video: {
+          deviceId: {
+            exact: videoSrc
+          },
+          facingMode: 'user'
+        }
+      }, function (stream) {
+        try {
+          console.log('stream1', stream);
+          video.srcObject = stream;
+          console.log('stream2', stream);
+        } catch (error) {
+          video.src = window.URL.createObjectURL(stream);
+        }
+      }, webcamError);
+    } else if (navigator.webkitGetUserMedia) {
+      navigator.webkitGetUserMedia({
+        audio: true,
+        video: true
+      }, function (stream) {
+        try {
+          video.srcObject = stream;
+        } catch (error) {
+          video.src = window.URL.createObjectURL(stream);
+        }
+      }, webcamError);
+    } else {
+      alert('webcam broken.');
+    }
   }
 }
 
 function ACCESS_CAMERA(htmlElement) {
   var ROOT = this;
+  console.log('?????????????????????????');
   ROOT.video = document.getElementById(htmlElement);
   SET_STREAM(ROOT.video);
   var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
@@ -1281,7 +1307,7 @@ _manifest.default.sys = SYS;
 function EVENTS(canvas) {
   var ROOT_EVENTS = this; // Mobile device
 
-  if (NOMOBILE == 0) {
+  if ((0, _utility.isMobile)() == true) {
     canvas.addEventListener('touchstart', function (e) {
       e.preventDefault();
       var touchList = e.changedTouches;
@@ -1289,6 +1315,8 @@ function EVENTS(canvas) {
       SYS.MOUSE.x = touchList[0].pageX;
       SYS.MOUSE.y = touchList[0].pageY;
       ROOT_EVENTS.CALCULATE_TOUCH_OR_CLICK();
+      ROOT_EVENTS.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN(e, SYS.MOUSE);
+      ROOT_EVENTS.multiTouch(e, touchList);
     }, {
       passive: false
     });
@@ -1400,7 +1428,13 @@ function EVENTS(canvas) {
   }); // Calculate touch or click event
 
   this.CALCULATE_TOUCH_OR_CLICK = function () {
+    console.log('TEST EVENTS CALCULATE_TOUCH_OR_CLICK');
     SYS.DEBUG.LOG('EVENT: MOUSE/TOUCH CLICK');
+  }; // Calculate touch or click event
+
+
+  this.multiTouch = function (e) {
+    SYS.DEBUG.LOG('EVENT: MOUSE/TOUCH CLICK', e);
   };
 
   this.virtualUpDownScene = 0;
@@ -3688,8 +3722,8 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
 
       if (object.streamTextures != null) {
         // video/webcam tex
-        // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
         if (object.streamTextures.video) {
+          // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
           _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
         } else {
           _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
@@ -20354,7 +20388,9 @@ exports._glBlend = _glBlend;
 exports._DrawElements = _DrawElements;
 exports._glTexParameteri = _glTexParameteri;
 exports.gen2DTextFace = gen2DTextFace;
-exports.BiquadFilterType = exports.ENUMERATORS = exports.QueryString = exports.byId = exports.E = exports.scriptManager = exports.loadImage = exports.htmlHeader = exports.jsonHeaders = exports.HeaderTypes = void 0;
+exports.showDomFPSController = showDomFPSController;
+exports.createDomFPSController = createDomFPSController;
+exports.BiquadFilterType = exports.ENUMERATORS = exports.QueryString = exports.byId = exports.E = exports.scriptManager = exports.loadImage = exports.supportsTouch = exports.htmlHeader = exports.jsonHeaders = exports.HeaderTypes = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
@@ -20536,7 +20572,11 @@ window.DETECTBROWSER = function () {
   this.NOMOBILE = NOMOBILE;
 };
 
+var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+exports.supportsTouch = supportsTouch;
+
 function isMobile() {
+  if (supportsTouch == true) return true;
   const toMatch = [/Android/i, /webOS/i, /iPhone/i, /iPad/i, /iPod/i, /BlackBerry/i, /Windows Phone/i];
   return toMatch.some(toMatchItem => {
     return navigator.userAgent.match(toMatchItem);
@@ -21092,6 +21132,146 @@ function gen2DTextFace(ctx, faceColor, textColor, text) {
   ctx.textBaseline = 'middle';
   ctx.fillStyle = textColor;
   ctx.fillText(text, width / 2, height / 2);
+}
+
+function showDomFPSController() {
+  byId('mobSpace').style.display = 'grid';
+  byId('mobRight').style.display = 'grid';
+  byId('mobLeft').style.display = 'grid';
+  byId('mobUp').style.display = 'grid';
+  byId('mobDown').style.display = 'grid';
+  byId('domAngleAxis').style.display = 'grid';
+} // Create DOM elements fort FPS template
+
+
+function createDomFPSController() {
+  var domSpace = document.createElement('div');
+  domSpace.id = 'mobSpace';
+  domSpace.classList.add('noselect');
+  domSpace.setAttribute('style', `
+      text-align: center;
+      display: none;
+      position:absolute;
+      left: 80%;
+      top: 80%;
+      width: 14%;
+      height: 4%;
+      background: rgba(255,255,255,0.2);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domSpace.innerText = `JUMP`;
+  domSpace.addEventListener('touchstart', e => {});
+  document.body.append(domSpace);
+  var domRight = document.createElement('div');
+  domRight.id = 'mobRight';
+  domRight.classList.add('noselect');
+  domRight.setAttribute('style', `
+      text-align: center;
+      display: none;
+      position:absolute;
+      left: 85%;
+      top: 90%;
+      width: 14%;
+      height: 4%;
+      background: rgba(255,255,255,0.2);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domRight.innerText = `RIGHT`;
+  domRight.addEventListener('touchstart', e => {
+    console.log('TEST RIGHT');
+  });
+  domRight.addEventListener('touchend', e => {});
+  document.body.append(domRight);
+  var domLeft = document.createElement('div');
+  domLeft.id = 'mobLeft';
+  domLeft.classList.add('noselect');
+  domLeft.setAttribute('style', `
+      text-align: center;
+      display: none;
+      position:absolute;
+      left: 70%;
+      top: 90%;
+      width: 14%;
+      height: 4%;
+      background: rgba(255,255,255,0.2);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domLeft.innerText = `LEFT`;
+  domLeft.addEventListener('touchstart', e => {
+    console.log('TEST domLeft');
+  });
+  domLeft.addEventListener('touchend', e => {});
+  document.body.append(domLeft);
+  var domUp = document.createElement('div');
+  domUp.id = 'mobUp';
+  domUp.classList.add('noselect');
+  domUp.setAttribute('style', `
+      text-align: center;
+      display: none;
+      position:absolute;
+      left: 78%;
+      top: 86%;
+      width: 14%;
+      height: 4%;
+      background: rgba(255,255,255,0.2);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domUp.innerText = `UP`;
+  domUp.addEventListener('touchstart', e => {
+    console.log('TEST domUp');
+  });
+  domUp.addEventListener('touchend', e => {
+    this.moveForward = false;
+  });
+  document.body.append(domUp);
+  var domDown = document.createElement('div');
+  domDown.id = 'mobDown';
+  domDown.classList.add('noselect');
+  domDown.setAttribute('style', `
+      text-align: center;
+      display: none;
+      position:absolute;
+      left: 78%;
+      top: 94%;
+      width: 14%;
+      height: 4%;
+      background: rgba(255,255,255,0.1);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domDown.innerText = `DOWN`;
+  domDown.addEventListener('touchstart', e => {});
+  domDown.addEventListener('touchend', e => {});
+  document.body.append(domDown);
+  var domAngleAxis = document.createElement('div');
+  domAngleAxis.id = 'domAngleAxis';
+  domAngleAxis.classList.add('noselect');
+  domAngleAxis.setAttribute('style', `
+      text-align: center;
+      display: none;
+      position:absolute;
+      left: 9%;
+      top: 82%;
+      width: 28%;
+      height: 28%;
+      background: rgba(255,255,255,0.1);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domAngleAxis.innerHTML = `    `;
+  domAngleAxis.addEventListener('touchstart', e => {});
+  document.body.append(domAngleAxis);
+  showDomFPSController();
 }
 
 },{"../program/manifest":38,"./events":5}],30:[function(require,module,exports){

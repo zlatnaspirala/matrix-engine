@@ -1,9 +1,14 @@
 package com.nikolalukic.matrixengineandroid;
 
+import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA;
+import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION;
+import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE;
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.Service;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -14,8 +19,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
+
 import com.nikolalukic.matrixengineandroid.databinding.ActivityMainBinding;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,12 +36,13 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 import android.content.Intent;
 import java.security.AllPermission;
+import java.security.Provider;
 
 public class MainActivity extends AppCompatActivity {
     private String APP_STATUS = "PROD"; // "DEV";
     private String WEBGL_VER = "2";
     private String GUI_DEV_ARG = "null";
-    private static final int MY_CAMERA_REQUEST_CODE = 100;
+    private static final int MY_CAMERA_REQUEST_CODE = 50;
 
     private ActivityMainBinding binding;
     WebView web1;
@@ -47,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Handle javascript alerts:
         // @SuppressLint("WrongConstant")
+
         @Override
         public boolean onJsAlert(WebView view, String url, String message, final android.webkit.JsResult result) {
             Log.d("alert", message);
@@ -54,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             result.confirm();
             return true;
         };
-        // TEST
+
         public boolean onJsConsole (WebView view, String url, String message, final android.webkit.JsResult result) {
             Log.d("console", message);
             Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
@@ -75,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     // permission denied
 
-                    Toast.makeText(MainActivity.this, "Permission denied to write your External storage", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Permission denied nidza", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
@@ -123,24 +133,36 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             webSettings.setSafeBrowsingEnabled(true);
         }
-        webSettings.setMediaPlaybackRequiresUserGesture(true);
+        webSettings.setMediaPlaybackRequiresUserGesture(false);
+
+         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "MATRIX")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle("Cao ")
+                .setContentText("cao cao ")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);;
+        // Notification notification = builder;
+        // Service.startForeground(builder, FOREGROUND_SERVICE_TYPE_LOCATION | FOREGROUND_SERVICE_TYPE_CAMERA | FOREGROUND_SERVICE_TYPE_MICROPHONE);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
-
             requestPermissions(new String[]{
                     Manifest.permission.READ_MEDIA_IMAGES,
                     Manifest.permission.READ_MEDIA_AUDIO,
                     Manifest.permission.READ_MEDIA_VIDEO,
+                    Manifest.permission.ACCESS_MEDIA_LOCATION,
                     Manifest.permission.CAMERA,
                     Manifest.permission.RECORD_AUDIO,
                     Manifest.permission.MODIFY_AUDIO_SETTINGS
             }, MY_CAMERA_REQUEST_CODE);
 
           // ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION );
+        } else {
+//            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                request.grant(request.getResources());
+//            }
         }
 
         if (bundle != null) {
