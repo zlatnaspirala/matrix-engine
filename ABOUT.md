@@ -1,9 +1,7 @@
 
 ## Mobile browsers support list:
 
-- Android chrome 
-   Works all examples except camera_texture !
-   Audio is on camera on but no textures/black
+- Android chrome `WORKS ALL EXAMPLES`
 
 ## Hybrid mobile platforms
 
