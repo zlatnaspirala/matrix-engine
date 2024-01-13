@@ -10,13 +10,24 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"/>
+        android:fitsSystemWindows="true">
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <WebView
         android:id="@+id/webBrowserMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="641dp"
         android:visibility="visible"
-        tools:visibility="visible" />
+        tools:visibility="visible">
+
+    </WebView>
+
+    <Button
+        android:id="@+id/loadBtn"
+        android:layout_width="215dp"
+        android:layout_height="wrap_content"
+        android:text="Load"
+        app:icon="@android:drawable/ic_media_play" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,61 +1,49 @@
 package com.nikolalukic.matrixengineandroid;
 
-import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA;
-import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION;
-import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE;
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
-
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Notification;
-import android.app.Service;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.WindowCompat;
 
 import com.nikolalukic.matrixengineandroid.databinding.ActivityMainBinding;
-import android.view.Menu;
-import android.view.MenuItem;
+
+import android.view.View;
 import android.webkit.PermissionRequest;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.Toast;
 import android.content.Intent;
-import java.security.AllPermission;
-import java.security.Provider;
 
 public class MainActivity extends AppCompatActivity {
-    private String APP_STATUS = "PROD"; // "DEV";
-    private String WEBGL_VER = "2";
+    private String APP_STATUS = "DEV";
+    private final String WEBGL_VER = "1";
     private String GUI_DEV_ARG = "null";
     private static final int MY_CAMERA_REQUEST_CODE = 50;
-
     private ActivityMainBinding binding;
     WebView web1;
-    public class MyWebChromeClient extends WebChromeClient {
-
+    Button loadBtn;
+    public abstract class MyWebChromeClient extends WebChromeClient {
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onPermissionRequest(final PermissionRequest request) {
             request.grant(request.getResources());
         }
-
-        // Handle javascript alerts:
-        // @SuppressLint("WrongConstant")
 
         @Override
         public boolean onJsAlert(WebView view, String url, String message, final android.webkit.JsResult result) {
@@ -71,6 +59,15 @@ public class MainActivity extends AppCompatActivity {
             result.confirm();
             return true;
         };
+
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+
+        }
+
+        protected abstract boolean shouldOverrideUrlLoading(WebView view, String url);
+
+        @TargetApi(Build.VERSION_CODES.N)
+        public abstract boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request);
     }
 
     @Override
@@ -84,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     // permission was granted
                 } else {
                     // permission denied
-
                     Toast.makeText(MainActivity.this, "Permission denied nidza", Toast.LENGTH_SHORT).show();
                 }
                 return;
@@ -117,29 +113,49 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        loadBtn = (Button)findViewById(R.id.loadBtn);
         web1 = (WebView)findViewById(R.id.webBrowserMain);
-        web1.setWebChromeClient(new MyWebChromeClient());
+        web1.setWebChromeClient(new MyWebChromeClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
+            }
+            @TargetApi(Build.VERSION_CODES.N)
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                view.loadUrl(request.getUrl().toString());
+                return true;
+            }
+        });
         // web1.clearSslPreferences();
         // web1.setWebViewClient(new IgnoreSSLErrortWebViewClient());
-
         WebSettings webSettings = web1.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
-        // webSettings.setDisplayZoomControls(false);
         webSettings.setAllowContentAccess(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setAllowUniversalAccessFromFileURLs(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            webSettings.setSafeBrowsingEnabled(true);
+            // webSettings.setSafeBrowsingEnabled(true);
         }
         webSettings.setMediaPlaybackRequiresUserGesture(false);
+        web1.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+        web1.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        web1.getSettings().setSupportMultipleWindows(true);
 
-         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "MATRIX")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "MATRIX")
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle("Cao ")
                 .setContentText("cao cao ")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);;
+
         // Notification notification = builder;
         // Service.startForeground(builder, FOREGROUND_SERVICE_TYPE_LOCATION | FOREGROUND_SERVICE_TYPE_CAMERA | FOREGROUND_SERVICE_TYPE_MICROPHONE);
 
@@ -157,12 +173,6 @@ public class MainActivity extends AppCompatActivity {
                     Manifest.permission.RECORD_AUDIO,
                     Manifest.permission.MODIFY_AUDIO_SETTINGS
             }, MY_CAMERA_REQUEST_CODE);
-
-          // ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION );
-        } else {
-//            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                request.grant(request.getResources());
-//            }
         }
 
         if (bundle != null) {
@@ -172,22 +182,29 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (APP_STATUS == "PROD") {
-            if (WEBGL_VER == "1") {
-                web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/gui.html?GLSL=1.1");
-            } else {
-                // web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/gui.html?GLSL=1.3");
-                web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/examples-build.html");
+        loadBtn.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (APP_STATUS == "PROD") {
+                    if (WEBGL_VER == "1") {
+                        web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/gui.html?GLSL=1.1");
+                    } else {
+                        // web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/gui.html?GLSL=1.3");
+                        web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/examples-build.html");
+                    }
+                } else if (APP_STATUS == "DEV") {
+                    if (WEBGL_VER == "1") {
+                        web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/examples-build.html?GLSL=1.1");
+                        // web1.loadUrl("http://192.168.0.30/public/examples-build.html?GLSL=1.1");
+                        Log.e("app", "onCreate: http://192.168.0.30/ YEAP");
+                    } else {
+                        web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/examples-build.html");
+                        // web1.loadUrl("https://192.168.0.30/public/gui.html?GLSL=1.1");
+                    }
+                } else if(APP_STATUS == "TEST-WEBGL2") {
+                    web1.loadUrl("https://webglreport.com/?v=2");
+                }
             }
-        } else if (APP_STATUS == "DEV") {
-            if (WEBGL_VER == "1") {
-                web1.loadUrl("https://192.168.0.30/public/examples-build.html?GLSL=1.1");
-                Log.e("app", "onCreate: http://192.168.0.30/ YEAP");
-            } else {
-                web1.loadUrl("https://192.168.0.30/public/gui.html?GLSL=1.1");
-            }
-        } else if(APP_STATUS == "TEST-WEBGL2") {
-          web1.loadUrl("https://webglreport.com/?v=2");
-        }
+        });
     }
 }
