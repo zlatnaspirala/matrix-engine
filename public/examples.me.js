@@ -257,7 +257,6 @@ let Vjs3 = matrixEngine.Engine.Vjs3;
 let E = matrixEngine.utility.E;
 
 var runThis = world => {
-  // Matrix Engine
   _manifest.default.camera.SceneController = true; // eslint-disable-next-line no-unused-vars
 
   var tex = {
@@ -272,10 +271,7 @@ var runThis = world => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
   window.addEventListener('ray.hit.event', ev => {
-    console.log("You shoot the object! Nice!", ev);
-    /**
-     * Physics force apply
-     */
+    console.log("You shoot the object! Nice!", ev); // Physics force apply
 
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
@@ -1539,10 +1535,17 @@ var runThis = world => {
   };
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
   _manifest.default.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
-  var oscilltor_variable = new matrixEngine.utility.OSCILLATOR(0.05, 2, 0.01);
-  setInterval(function () {
-    _manifest.default.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
-  }, 10);
+  var oscilltor_variable = new matrixEngine.utility.OSCILLATOR(0.05, 2, 0.01); // GOOD
+
+  _manifest.default.updateBeforeDraw.push({
+    UPDATE: () => {
+      _manifest.default.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
+    }
+  }); // BAD
+  // setInterval(function () {
+  // App.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
+  // }, 10);
+
 };
 
 exports.runThis = runThis;
@@ -1646,18 +1649,13 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* eslint-disable no-unused-vars */
-
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
-
-/* globals world App world */
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 
 var runThis = world => {
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
@@ -1666,12 +1664,20 @@ var runThis = world => {
   var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
   _manifest.default.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
 
-  _manifest.default.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
+  _manifest.default.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1); // GOOD
 
-  setInterval(function () {
-    _manifest.default.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
-    _manifest.default.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
-  }, 10);
+
+  _manifest.default.updateBeforeDraw.push({
+    UPDATE: () => {
+      _manifest.default.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
+      _manifest.default.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
+    }
+  }); // BAD
+  // setInterval(function () {
+  // App.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
+  // App.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
+  // }, 10);
+
 };
 
 exports.runThis = runThis;

@@ -22,7 +22,15 @@ export var runThis = world => {
 
   var oscilltor_variable = new matrixEngine.utility.OSCILLATOR(0.05, 2, 0.01);
 
-  setInterval(function () {
-    App.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
-  }, 10);
+  // GOOD
+  App.updateBeforeDraw.push({
+    UPDATE: () => {
+      App.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
+    }
+  });
+
+  // BAD
+  // setInterval(function () {
+    // App.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
+  // }, 10);
 };

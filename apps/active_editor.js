@@ -3,7 +3,6 @@
  * @Description Matrix Engine Api Example.
  * How to use texture editor
  */
-
 import App from "../program/manifest";
 import * as matrixEngine from "../index.js";
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
@@ -12,11 +11,7 @@ let E = matrixEngine.utility.E;
 import * as CANNON from 'cannon';
 
 export var runThis = world => {
-
-  // Matrix Engine
-
   App.camera.SceneController = true;
-
   // eslint-disable-next-line no-unused-vars
   var tex = {
     source: [
@@ -37,9 +32,7 @@ export var runThis = world => {
 
   window.addEventListener('ray.hit.event', (ev) => {
     console.log("You shoot the object! Nice!", ev)
-    /**
-     * Physics force apply
-     */
+    // Physics force apply
     if(ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
 
@@ -51,7 +44,6 @@ export var runThis = world => {
       App.scene.outsideBox2.playerHits++;
       var tex1 = document.getElementById('tex1')
       tex1.contentWindow.hits.TEXTBOX.TEXT = 'HITS:' + App.scene.outsideBox2.playerHits;
-
     }
   });
 
@@ -146,9 +138,4 @@ export var runThis = world => {
   App.scene.outsideBox2.physics.enabled = true;
 
   App.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(1);
-
-
-
-
-
 };

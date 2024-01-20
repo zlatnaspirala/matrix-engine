@@ -1,18 +1,12 @@
-/* eslint-disable no-unused-vars */
-
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
-
-/* globals world App world */
 import App from "../program/manifest";
 import * as matrixEngine from "../index.js";
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 
 export var runThis = world => {
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
-
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply",
@@ -24,8 +18,17 @@ export var runThis = world => {
   App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
   App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
 
-  setInterval(function () {
-    App.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
-    App.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
-  }, 10);
+  // GOOD
+  App.updateBeforeDraw.push({
+    UPDATE: () => {
+      App.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
+      App.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
+    }
+  });
+
+  // BAD
+  // setInterval(function () {
+  // App.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
+  // App.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
+  // }, 10);
 };
