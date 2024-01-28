@@ -41,7 +41,8 @@ export var runThis = world => {
   E("HOLDER_STREAMS").style.top = "-10000px";
   setTimeout(function () {
     App.scene.outsideBox.streamTextures = new anyCanvas(
-      "http://localhost/PRIVATE_SERVER/matrix-engine-plugins/nidza-shaders/",
+      "https://maximumroulette.com/apps/canvas2d/shader1/",
+      // "SOURCE -> matrix-engine-plugins/nidza-shaders/",
       "myShader")
     //App.scene.outsideBox.streamTextures.showTextureEditor();
   }, 500);

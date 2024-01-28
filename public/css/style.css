@@ -21,6 +21,52 @@ body {
   text-align: center;
 }
 
+
+.noselection {
+	-webkit-touch-callout: none; /* Safari */
+	user-select: none; /* standard syntax */
+	-webkit-user-select: none; /* webkit (safari, chrome) browsers */
+	-moz-user-select: none; /* mozilla browsers */
+	-khtml-user-select: none; /* webkit (konqueror) browsers */
+	-ms-user-select: none; /* IE10+ */
+}
+
+*::-webkit-media-controls-panel {
+	display: none !important;
+	-webkit-appearance: none;
+}
+
+/* Old shadow dom for play button */
+*::-webkit-media-controls-play-button {
+	display: none !important;
+	-webkit-appearance: none;
+}
+
+/* This one works! */
+*::-webkit-media-controls-start-playback-button {
+	display: none !important;
+	-webkit-appearance: none;
+}
+
+::-webkit-scrollbar {
+	width: 5px;
+}
+
+::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px rgb(102, 102, 102);
+	border-radius: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 9px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, 0.6);
+}
+
+
 textarea:focus, input:focus {
   outline: none;
 }
@@ -52,12 +98,12 @@ iframe {
 }
 
 .btnShadow {
-  -webkit-box-shadow: inset 0px 1px 0px 0px rgb(52, 253, 189);
+  /* -webkit-box-shadow: inset 0px 1px 0px 0px rgb(52, 253, 189);
   -moz-box-shadow: inset 0px 1px 0px 0px rgb(52, 253, 189);
-  box-shadow: inset 0px 1px 0px 0px rgb(52, 253, 189);
+  box-shadow: inset 0px 1px 0px 0px rgb(52, 253, 189); */
   cursor: pointer;
-  color: rgb(0, 255, 10);
-  text-shadow: 0px 0px 7px #80ffe0;
+  /* color: rgb(0, 255, 10);
+  text-shadow: 0px 0px 7px #80ffe0; */
   font-family: stormfaze;
 }
 
