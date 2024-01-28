@@ -1,6 +1,6 @@
 {
   "name": "matrix-engine",
-  "version": "1.9.47",
+  "version": "1.9.48",
   "description": "[1.9.47] All examples works on android mobile browser chrome, [1.9.x Thunder] Matrix-engine is super fast webgl library based on glmatrix 2.xx engine. Features comes with matrix-engine : Blending, CameraScene, FBO, FPS, ARRAY-instanced draws, scene object transformation, obj loader, obj seq loader, Networking ,full standalone 3d video chat, active 2d textures etc...",
   "main": "index.js",
   "directories": {
