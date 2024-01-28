@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/fps_player_controller';
+import {runThis} from './apps/shader1.js';
 
 var world;
 var App = matrixEngine.App;
