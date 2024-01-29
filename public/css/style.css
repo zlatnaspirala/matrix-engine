@@ -150,10 +150,6 @@ textarea {
 }
 
 .add-button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 16px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -161,23 +157,22 @@ textarea {
   margin: 2px 2px;
   transition-duration: 0.4s;
   cursor: pointer;
-  top: 1px;
-  left: 1px;
   width:100%;
   width: -webkit-fill-available;
   height:30%;
   background-color: rgb(27, 27, 27);
-  font-family: "Courier New";
+  font-family: "stormfaze";
+  border-radius: 15px;
 }
 
 .button1 {
   background-color:  rgb(27, 27, 27);; 
-  color: greenyellow; 
-  border: 2px solid #4CAF50;
+  color: rgb(255, 255, 255); 
+  border: 2px solid #80004b;
 }
 
 .button1:hover {
-  background-color: #4CAF50;
+  background-color: #710243;
   color: white;
 }
 

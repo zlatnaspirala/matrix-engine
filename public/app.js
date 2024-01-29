@@ -59,6 +59,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
+ * First time adding direct different FShader.
  */
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 const scriptManager = matrixEngine.utility.scriptManager;
@@ -70,161 +71,11 @@ var runThis = world => {
   };
   world.Add("cubeLightTex", 1, "ToyShader", textuteImageSamplers); // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
 
-  function getInitFSCubeTexLight() {
-    const f = `#version 300 es
-    precision mediump float;
-    in vec2 vTextureCoord;
-    in vec3 vLightWeighting;
-    uniform sampler2D uSampler;
-    uniform sampler2D uSampler1;
-    uniform sampler2D uSampler2;
-    uniform sampler2D uSampler3;
-    uniform sampler2D uSampler4;
-    uniform sampler2D uSampler5;
-    // The CubeMap texture.
-    uniform samplerCube u_texture;
-    // cube map
-    // in vec3 v_normal_cubemap;
-    uniform float numberOfsamplers;
-  
-    // Spot
-    // Passed in from the vertex shader.
-    in vec3 v_normal;
-    in vec3 v_surfaceToLight;
-    in vec3 v_surfaceToView;
-    uniform vec4 u_color;
-    uniform float u_shininess;
-    uniform vec3 u_lightDirection;
-    uniform float u_innerLimit;
-    uniform float u_outerLimit;
-  
-    out vec4 outColor;
-  
-    void main(void) {
-      // because v_normal is a varying it's interpolated
-      // so it will not be a unit vector. Normalizing it
-      // will make it a unit vector again
-      vec3 normal = normalize(v_normal);
-  
-      vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-      vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-      vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-  
-      float dotFromDirection = dot(surfaceToLightDirection,
-                                   -u_lightDirection);
-      float limitRange = u_innerLimit - u_outerLimit;
-      float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-      float light = inLight * dot(normal, surfaceToLightDirection);
-      float specular = inLight * pow(dot(normal, halfVector), u_shininess);
-  
-      // Directioin vs uAmbientColor
-      vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-      vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-      vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-  
-      vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
-  
-      outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-  
-      // Lets multiply just the color portion (not the alpha)
-      // by the light
-      outColor.rgb *= light;
-      // Just add in the specular
-      outColor.rgb += specular;
-    }
-    `;
-    scriptManager.LOAD(f, "cubeLightTex-shader-fs", "x-shader/x-fragment", "shaders");
-  }
-
-  function getInitVSCubeTexLight() {
-    const f = `#version 300 es
-    in vec3 aVertexPosition;
-    in vec3 aVertexNormal;
-    in vec2 aTextureCoord;
-  
-    uniform mat4 uMVMatrix;
-    uniform mat4 uPMatrix;
-    uniform mat3 uNMatrix;
-    uniform vec3 uAmbientColor;
-    uniform vec3 uLightingDirection;
-    uniform vec3 uDirectionalColor;
-    uniform bool uUseLighting;
-    out vec2 vTextureCoord;
-    out vec3 vLightWeighting;
-  
-    // Spot
-    uniform vec3 u_lightWorldPosition;
-    out vec3 v_normal;
-    // out vec3 v_normal_cubemap;
-    out vec3 v_surfaceToLight;
-    out vec3 v_surfaceToView;
-  
-    // Specular
-    out mat4 uMVMatrixINTER;
-    out mat3 uNMatrixINTER;
-    out mat4 uPMatrixINNTER;
-  
-    in vec4 specularColor;
-    out vec4 vColor;
-    out vec3 vNormal;
-    out vec4 vPosition;
-    out float vDist;
-  
-    void main(void) {
-      uMVMatrixINTER = uMVMatrix;
-      uNMatrixINTER = uNMatrix;
-      uPMatrixINNTER = uPMatrix;
-  
-      // GLOBAL POS SPECULAR
-      vColor = specularColor;
-      vNormal = normalize(uNMatrix * vec3(aVertexNormal));
-      // Calculate the modelView of the model, and set the vPosition
-      // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
-      vPosition = uMVMatrix * vec4(1,1,1,1);
-      vDist = gl_Position.w;
-  
-      // SPOT
-      // orient the normals and pass to the fragment shader
-      v_normal = mat3(uNMatrix) * aVertexNormal;
-  
-      // normalize
-      // v_normal_cubemap = normalize(aVertexPosition.xyz);
-  
-      // compute the world position of the surfoace
-      vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
-  
-      // compute the vector of the surface to the light
-      // and pass it to the fragment shader
-      v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
-  
-      // compute the vector of the surface to the view/camera
-      // and pass it to the fragment shader
-      v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
-  
-      gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-      vTextureCoord = aTextureCoord;
-  
-      if (!uUseLighting) {
-        vLightWeighting = vec3(1.0, 1.0, 1.0);
-      }
-      else {
-        vec3 transformedNormal          = uNMatrix * aVertexNormal;
-        float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-        vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-      }
-    } `; // scriptManager.LOAD(f, "cubeLightTex-shader-vs", "x-shader/x-vertex", "shaders")
-
-    scriptManager.LOAD(f, "custom-shader-vs", "x-shader/x-vertex", "shaders");
-  }
-
   var myShader = {};
 
   myShader.initDefaultFSShader = () => {
     return `#version 300 es
     precision highp float;
-
-    // TEST
-    
     uniform vec2 iResolution;
     uniform vec2 iMouse;
     uniform float iTime;
@@ -271,23 +122,13 @@ var runThis = world => {
       mainImage(outColor, gl_FragCoord.xy);
     }
   `;
-  }; // myShader.initDefaultVSShader = () => {
-  //   return `#version 300 es
-  //   in vec4 aPosition;
-  //   void main() {
-  //     gl_Position = aPosition;
-  //   }
-  // `;
-  // }
-
+  };
 
   scriptManager.LOAD(myShader.initDefaultFSShader(), "custom-shader-fs", "x-shader/x-fragment", "shaders", () => {
     _manifest.default.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
     var shaderProgram = _manifest.default.scene.ToyShader.shaderProgram;
     setTimeout(() => {
       if (null !== world.GL.gl.getUniformLocation(shaderProgram, 'iResolution')) {
-        console.log('adaptation initshaders', shaderProgram); // shaderProgram.positionAttributeLocation = world.GL.gl.getAttribLocation(shaderProgram, "a_position");
-
         shaderProgram.resolutionLocation = world.GL.gl.getUniformLocation(shaderProgram, "iResolution");
         shaderProgram.mouseLocation = world.GL.gl.getUniformLocation(shaderProgram, "iMouse");
         shaderProgram.timeLocation = world.GL.gl.getUniformLocation(shaderProgram, "iTime");
@@ -295,13 +136,10 @@ var runThis = world => {
     }, 100);
   });
   var now = 1;
-  let thena = 0;
   let time1 = 0;
   _manifest.default.scene.ToyShader.type = "custom-";
-  _manifest.default.scene.ToyShader.TEST = 0;
 
   _manifest.default.scene.ToyShader.drawCustom = function (object) {
-    // console.log("TOO MENY", this.shaderProgram)
     // Create a vertex array object (attribute state)
     var lighting = true;
     var localLooper = 0;
@@ -574,19 +412,9 @@ var runThis = world => {
     now *= 0.001;
     const elapsedTime = Math.min(now - then, 0.1);
     time1 += elapsedTime;
-    thena = now; // webglUtils.resizeCanvasToDisplaySize(gl.canvas);
-    // Tell WebGL how to convert from clip space to pixels
-    // world.GL.gl.viewport(0, 0, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
-    // Tell it to use our program (pair of shaders)
-    // world.GL.gl.useProgram(program);
-    // Bind the attribute/buffer set we want.
-    // world.GL.gl.bindVertexArray(vao);
-
     world.GL.gl.uniform2f(this.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(this.shaderProgram.TimeDelta, time1);
-    world.GL.gl.uniform1f(this.shaderProgram.timeLocation, time1); // world.GL.gl.drawArrays(world.GL.gl[object.glDrawElements.mode],   App.scene.ToyShader.TEST , object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
-    // world.GL.gl.drawArrays(world.GL.gl.TRIANGLES, 0, object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
-
+    world.GL.gl.uniform1f(this.shaderProgram.timeLocation, time1);
     world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
     world.mvPopMatrix(object.mvMatrix, world.mvMatrixStack);
   };
@@ -1204,12 +1032,10 @@ _manifest.default.operation.destroyWorld = function () {
 };
 
 function loadShaders(gl, id) {
-  // console.log("Get the Shader");
   // console.log("Creating Shader:" + id);
   var shaderScript = document.getElementById(id);
   var shader;
   var str = '';
-  console.log("Creating fragment shader LBLBLBL");
 
   if (shaderScript) {
     var k = shaderScript.firstChild;
@@ -1236,7 +1062,6 @@ function loadShaders(gl, id) {
     gl.compileShader(shader);
 
     if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      // console.log("Shader Program compile success");
       return shader;
     } else {
       console.warn('Shader Program compile failed:' + gl.getShaderInfoLog(shader));
@@ -1265,7 +1090,6 @@ function initShaders(gl, fragment, vertex) {
     gl.linkProgram(shaderProgram);
 
     if (gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-      // console.log("Returning Shader fragment successfully");
       gl.useProgram(shaderProgram);
       shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
       gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
@@ -1414,13 +1238,11 @@ function initShaders(gl, fragment, vertex) {
 
       if (null !== gl.getUniformLocation(shaderProgram, 'iResolution')) {
         // toy adaptatino iResolution indicator
-        console.log('adaptation initshaders for youshaders...');
         shaderProgram.positionAttributeLocation = gl.getAttribLocation(shaderProgram, "a_position");
         shaderProgram.resolutionLocation = gl.getUniformLocation(shaderProgram, "iResolution");
         shaderProgram.mouseLocation = gl.getUniformLocation(shaderProgram, "iMouse");
         shaderProgram.timeLocation = gl.getUniformLocation(shaderProgram, "iTime");
-      } else {
-        console.log('adaptation initshaders for youshaders... UNDEFINED ');
+      } else {// console.log('adaptation initshaders for toyshaders. UNDEFINED')
       }
 
       shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, 'uPMatrix');
