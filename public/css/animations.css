@@ -109,7 +109,7 @@
 }
 
 div.bounceIn:hover {
-  border: solid red 1px;
+  border-radius: 20px;
 }
 
 @-webkit-keyframes bounceIn {
@@ -177,4 +177,22 @@ opacity: 0;
   -webkit-transform: scale3d(1, 1, 1);
   transform: scale3d(1, 1, 1);
 }
+}
+
+.hideMe {
+  -webkit-animation-name: scaleHide;
+  animation-name: scaleHide;
+  -webkit-animation-duration: .75s;
+  animation-duration: .75s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  -webkit-animation-fill-mode: none;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+@keyframes scaleHide {
+  0%   {background-color:rgba(21, 0, 0, 0.9); transform: scale(1, 1);}
+  100% {background-color:rgba(21, 0, 0, 0.9); transform: scale(0, 0); display: none;}
 }

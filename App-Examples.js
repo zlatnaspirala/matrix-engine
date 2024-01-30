@@ -53,6 +53,7 @@ import { runThis as welcome_gui_editor } from './apps/welcome-gui-editor';
 import { runThis as rolling_the_dice } from './apps/rolling_the_dice';
 import { runThis as shader1_direct } from './apps/shader1_direct';
 import { runThis as shader1_porting } from './apps/shader1_porting';
+import { runThis as shader2_direct } from './apps/shader2_direct';
 /**
  * @description
  * All examples instances.
@@ -64,6 +65,7 @@ import { runThis as shader1_porting } from './apps/shader1_porting';
 var Examples = {
   shader1_porting: shader1_porting,
   shader1_direct: shader1_direct,
+  shader2_direct: shader2_direct,
   rolling_the_dice: rolling_the_dice,
   fbo_manipulation: fbo_manipulation,
   physics_cube_active_textures: physics_cube_active_textures,
