@@ -17,6 +17,20 @@ export var runThis = world => {
   }
   world.Add("cubeLightTex", 1, "ToyShader", textuteImageSamplers);
 
+  canvas.addEventListener('mousedown', (ev) => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+  
+  addEventListener("ray.hit.event", function(e) {
+    e.detail.hitObject.LightsData.ambientLight.r =
+      matrixEngine.utility.randomFloatFromTo(0, 2);
+    e.detail.hitObject.LightsData.ambientLight.g =
+      matrixEngine.utility.randomFloatFromTo(0, 2);
+    e.detail.hitObject.LightsData.ambientLight.b =
+      matrixEngine.utility.randomFloatFromTo(0, 2);
+    // console.info(e.detail);
+  });
+  
   var myShader = {};
   myShader.initDefaultFSShader = () => {
     return `${toyShader()}
@@ -70,7 +84,7 @@ export var runThis = world => {
         // mainImage(outColor, vTextureCoord);
         // outColor.rgb += vec3(textureColor.rgb * vLightWeighting);
         mainImage(outColor, gl_FragCoord.xy);
-        // outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
+        outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
       }
     `;
   }
