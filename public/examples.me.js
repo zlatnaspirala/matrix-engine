@@ -5497,6 +5497,18 @@ Object.defineProperty(exports, "MEBvhAnimation", {
     return _matrixBvh.default;
   }
 });
+Object.defineProperty(exports, "standardMatrixEngineShader", {
+  enumerable: true,
+  get: function () {
+    return _buildinShaders.standardMatrixEngineShader;
+  }
+});
+Object.defineProperty(exports, "toyShader", {
+  enumerable: true,
+  get: function () {
+    return _buildinShaders.toyShader;
+  }
+});
 exports.raycaster = exports.utility = exports.objLoader = exports.Events = exports.Engine = exports.matrixRender = exports.matrixGeometry = exports.matrixWorld = void 0;
 
 var _manifest = _interopRequireDefault(require("./program/manifest"));
@@ -5539,13 +5551,15 @@ exports.raycaster = raycaster;
 
 var _matrixBvh = _interopRequireDefault(require("./lib/matrix-bvh"));
 
+var _buildinShaders = require("./lib/optimizer/buildin-shaders");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./lib/engine":57,"./lib/events":58,"./lib/loader-obj":59,"./lib/matrix-buffers":60,"./lib/matrix-bvh":61,"./lib/matrix-geometry":63,"./lib/matrix-render":66,"./lib/matrix-textures":71,"./lib/matrix-world":72,"./lib/raycast":77,"./lib/utility":83,"./program/manifest":92}],57:[function(require,module,exports){
+},{"./lib/engine":57,"./lib/events":58,"./lib/loader-obj":59,"./lib/matrix-buffers":60,"./lib/matrix-bvh":61,"./lib/matrix-geometry":63,"./lib/matrix-render":66,"./lib/matrix-textures":71,"./lib/matrix-world":72,"./lib/optimizer/buildin-shaders":74,"./lib/raycast":77,"./lib/utility":83,"./program/manifest":92}],57:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
