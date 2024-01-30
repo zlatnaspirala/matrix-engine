@@ -3,7 +3,7 @@
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _shader = require("./apps/shader1.js");
+var _shader1_direct = require("./apps/shader1_direct.js");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -27,16 +27,16 @@ window.webGLStart = () => {
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw(); // Make it global for dev - for easy console/debugger access
 
-  window.runThis = _shader.runThis;
+  window.runThis = _shader1_direct.runThis;
   setTimeout(() => {
-    (0, _shader.runThis)(world);
+    (0, _shader1_direct.runThis)(world);
   }, 1);
 };
 
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/shader1.js":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/shader1_direct.js":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -60,8 +60,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  * First time adding direct different FShader.
+ * Also mix divine two shader variants...
+ * It is not in engine manir - too much inline for now...
+ * but works fine!
  */
-let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 const scriptManager = matrixEngine.utility.scriptManager;
 
 var runThis = world => {
@@ -69,20 +71,21 @@ var runThis = world => {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
-  world.Add("cubeLightTex", 1, "ToyShader", textuteImageSamplers); // var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
-
+  world.Add("cubeLightTex", 1, "ToyShader", textuteImageSamplers);
   var myShader = {};
 
   myShader.initDefaultFSShader = () => {
     return `#version 300 es
     precision highp float;
+    // test mix
+    in vec2 vTextureCoord;
+    in vec3 vLightWeighting;
+    uniform sampler2D uSampler;
     uniform vec2 iResolution;
     uniform vec2 iMouse;
     uniform float iTime;
-
     // we need to declare an output for the fragment shader
     out vec4 outColor;
-
     #define SS(a,b,c) smoothstep(a-b,a+b,c)
     #define gyr(p) dot(sin(p.xyz),cos(p.zxy))
     #define T iTime
@@ -119,24 +122,23 @@ var runThis = world => {
         color = vec4(vec3(bw),1.0);
     }
     void main() {
+      vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
+      mainImage(outColor, vTextureCoord);
+      // outColor.rgb += vec3(textureColor.rgb * vLightWeighting);
       mainImage(outColor, gl_FragCoord.xy);
+      outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
     }
   `;
   };
 
   scriptManager.LOAD(myShader.initDefaultFSShader(), "custom-shader-fs", "x-shader/x-fragment", "shaders", () => {
     _manifest.default.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
-    var shaderProgram = _manifest.default.scene.ToyShader.shaderProgram;
-    setTimeout(() => {
-      if (null !== world.GL.gl.getUniformLocation(shaderProgram, 'iResolution')) {
-        shaderProgram.resolutionLocation = world.GL.gl.getUniformLocation(shaderProgram, "iResolution");
-        shaderProgram.mouseLocation = world.GL.gl.getUniformLocation(shaderProgram, "iMouse");
-        shaderProgram.timeLocation = world.GL.gl.getUniformLocation(shaderProgram, "iTime");
-      }
-    }, 100);
   });
   var now = 1;
   let time1 = 0;
+  let then1 = 0;
+  _manifest.default.scene.ToyShader.rotation.rotationSpeed.y = 55;
+  _manifest.default.scene.ToyShader.glBlend.blendEnabled = false;
   _manifest.default.scene.ToyShader.type = "custom-";
 
   _manifest.default.scene.ToyShader.drawCustom = function (object) {
@@ -406,26 +408,20 @@ var runThis = world => {
     } else {
       world.GL.gl.disable(world.GL.gl.BLEND);
       world.GL.gl.enable(world.GL.gl.DEPTH_TEST); // world.GL.gl.enable(world.GL.gl.CULL_FACE);
-    }
+    } //
+
 
     now = Date.now();
     now *= 0.001;
-    const elapsedTime = Math.min(now - then, 0.1);
+    const elapsedTime = Math.min(now - then1, 0.1);
     time1 += elapsedTime;
     world.GL.gl.uniform2f(this.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(this.shaderProgram.TimeDelta, time1);
-    world.GL.gl.uniform1f(this.shaderProgram.timeLocation, time1);
+    world.GL.gl.uniform1f(this.shaderProgram.timeLocation, time1); //
+
     world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
     world.mvPopMatrix(object.mvMatrix, world.mvMatrixStack);
   };
-
-  let then = 0;
-  let time = 0;
-  let mouseY = 50; // GOOD
-
-  _manifest.default.updateBeforeDraw.push({
-    UPDATE: () => {}
-  });
 };
 
 exports.runThis = runThis;

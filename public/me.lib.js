@@ -621,8 +621,7 @@ _manifest.default.operation.destroyWorld = function () {
 };
 
 function loadShaders(gl, id) {
-  // console.log("          Get the Shader");
-  // console.log("            Creating Shader:" + id);
+  // console.log("Creating Shader:" + id);
   var shaderScript = document.getElementById(id);
   var shader;
   var str = '';
@@ -652,7 +651,6 @@ function loadShaders(gl, id) {
     gl.compileShader(shader);
 
     if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      // console.log("Shader Program compile success");
       return shader;
     } else {
       console.warn('Shader Program compile failed:' + gl.getShaderInfoLog(shader));
@@ -660,7 +658,7 @@ function loadShaders(gl, id) {
       return 0;
     }
   } else {
-    console.warn('Shader Program creation failed');
+    console.warn('Shader Program creation failed', gl.getShaderInfoLog(shader));
     return 0;
   }
 }
@@ -681,7 +679,6 @@ function initShaders(gl, fragment, vertex) {
     gl.linkProgram(shaderProgram);
 
     if (gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-      // console.log("Returning Shader fragment successfully");
       gl.useProgram(shaderProgram);
       shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
       gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
@@ -828,6 +825,15 @@ function initShaders(gl, fragment, vertex) {
         shaderProgram.uControl = gl.getUniformLocation(shaderProgram, 'uControl');
       }
 
+      if (null !== gl.getUniformLocation(shaderProgram, 'iResolution')) {
+        // toy adaptatino iResolution indicator
+        shaderProgram.positionAttributeLocation = gl.getAttribLocation(shaderProgram, "a_position");
+        shaderProgram.resolutionLocation = gl.getUniformLocation(shaderProgram, "iResolution");
+        shaderProgram.mouseLocation = gl.getUniformLocation(shaderProgram, "iMouse");
+        shaderProgram.timeLocation = gl.getUniformLocation(shaderProgram, "iTime");
+      } else {// console.log('adaptation initshaders for toyshaders. UNDEFINED')
+      }
+
       shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, 'uPMatrix');
       shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, 'uMVMatrix');
       /* For destroying properly            */
@@ -941,14 +947,22 @@ function SET_STREAM(video) {
 
   function getStream() {
     if (navigator.getUserMedia) {
-      navigator.getUserMedia({
-        audio: true,
-        video: {
+      var VIDEO__;
+
+      if (isMobile() == true) {
+        VIDEO__ = {
           deviceId: {
             exact: videoSrc
           },
           facingMode: 'user'
-        }
+        };
+      } else {
+        VIDEO__ = true;
+      }
+
+      navigator.getUserMedia({
+        audio: true,
+        video: VIDEO__
       }, function (stream) {
         try {
           console.log('stream1', stream);
@@ -4431,9 +4445,6 @@ var _default = drawsOperation;
 exports.default = _default;
 
 },{"../program/manifest":38,"./events":5,"./matrix-shadows":16,"./matrix-textures":18,"./matrix-world":19,"./raycast":23,"./utility":29}],10:[function(require,module,exports){
-/* eslint-disable no-redeclare */
-
-/* eslint-disable no-unused-vars */
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4923,7 +4934,7 @@ class TriangleVertex {
 
     _manifest.default.operation.triangle_buffer_procedure(this.root);
 
-    return "dynamicBuffer is false but i will update vertex array prototypical.";
+    return "update vertex array prototypical";
   }
 
 }
@@ -5020,7 +5031,7 @@ class SquareVertex {
 
     _manifest.default.operation.square_buffer_procedure(this.root);
 
-    return 'dynamicBuffer is false but i will update vertex array prototypical.';
+    return 'update vertex array prototypical';
   }
 
   setScaleByY(scale, em) {
@@ -5038,7 +5049,7 @@ class SquareVertex {
 
     _manifest.default.operation.square_buffer_procedure(this.root);
 
-    return 'dynamicBuffer is false but i will update vertex array prototypical.';
+    return 'update vertex array prototypical';
   }
 
   setScale(scale, em) {
@@ -5053,7 +5064,7 @@ class SquareVertex {
 
     _manifest.default.operation.square_buffer_procedure(this.root);
 
-    return 'DynamicBuffer is false but i will update vertex array prototypical.';
+    return 'update vertex array prototypical';
   }
 
   get color() {
@@ -5516,7 +5527,7 @@ class CubeVertex {
 
     _manifest.default.operation.cube_buffer_procedure(this.root);
 
-    return "dynamicBuffer is false but i will update vertex array prototypical.";
+    return "update vertex array prototypical";
   }
 
   setScaleByY(scale, em) {
@@ -5555,7 +5566,7 @@ class CubeVertex {
 
     _manifest.default.operation.cube_buffer_procedure(this.root);
 
-    return "dynamicBuffer is false but i will update vertex array prototypical.";
+    return "update vertex array prototypical";
   }
 
   setScaleByZ(scale, em) {
@@ -5593,7 +5604,7 @@ class CubeVertex {
 
     _manifest.default.operation.cube_buffer_procedure(this.root);
 
-    return "dynamicBuffer is false but i will update vertex array prototypical.";
+    return "update vertex array prototypical";
   }
 
   setScale(scale, em) {
@@ -5610,7 +5621,7 @@ class CubeVertex {
 
     _manifest.default.operation.cube_buffer_procedure(this.root);
 
-    return "dynamicBuffer is false but i will update vertex array prototypical.";
+    return "update vertex array prototypical";
   }
 
   setTexCoordScaleFactor(newScaleFactror, em) {
@@ -5881,7 +5892,7 @@ class PiramideVertex {
 
     _manifest.default.operation.piramide_buffer_procedure(this.root);
 
-    return "dynamicBuffer is false but i will update vertex array prototypical.";
+    return "update vertex array prototypical";
   }
 
   setSpitz(newValueFloat, em) {
@@ -6033,7 +6044,7 @@ class sphereVertex {
 
       return;
     } //App.operation.sphere_buffer_procedure(this.root)
-    //return 'dynamicBuffer is false but i will update vertex array prototypical.';
+    //return 'update vertex array prototypical';
 
   }
 
@@ -6208,7 +6219,7 @@ class customVertex {
     _manifest.default.operation.sphere_buffer_procedure(this.root);
 
     this.root.glDrawElements.numberOfIndicesRender = this.indices.length;
-    return "dynamicBuffer is false but i will update vertex array prototypical.";
+    return "update vertex array prototypical";
   }
 
   get vertices() {
@@ -6523,7 +6534,6 @@ function loadShaders11() {
 function genInitFSTriangle() {
   const f = `
   precision mediump float;
-
   varying vec4 vColor;
 
   void main(void) {
@@ -7231,7 +7241,7 @@ function loadShaders300() {
   getInitVSCubeMap();
   getInitFSCubeMap();
   getInitFSSquareTex();
-  getInitVSSquareTex(); // console.info("Shaders ready GLSL 1.3");
+  getInitVSSquareTex();
 }
 
 function genInitFSTriangle() {
@@ -8130,6 +8140,15 @@ _manifest.default.operation.reDrawGlobal = function (time) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
           _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper], 'noray');
+        } else if (_matrixWorld.world.contentList[_engine.looper].type.indexOf("custom-") != -1) {
+          // interest part - frst time draw func taken from object inself not from world.
+          // Looks like better solution.
+          _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+          _matrixWorld.world.contentList[_engine.looper].drawCustom(_matrixWorld.world.contentList[_engine.looper]);
+
+          _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]); //
+
         } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
@@ -8173,6 +8192,15 @@ _manifest.default.operation.reDrawGlobal = function (time) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
           _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper], 'noray');
+        } else if (_matrixWorld.world.contentList[_engine.looper].type.indexOf("custom-") != -1) {
+          // interest part - frst time draw func taken from object inself not from world.
+          // Looks like better solution.
+          _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+          _matrixWorld.world.contentList[_engine.looper].drawCustom(_matrixWorld.world.contentList[_engine.looper]);
+
+          _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]); //
+
         } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
@@ -8247,6 +8275,15 @@ _manifest.default.operation.reDrawGlobal = function (time) {
         _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper]);
 
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if (_matrixWorld.world.contentList[_engine.looper].type.indexOf("custom-") != -1) {
+        // interest part - frst time draw func taken from object inself not from world.
+        // Looks like better solution.
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.contentList[_engine.looper].drawCustom(_matrixWorld.world.contentList[_engine.looper]);
+
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]); //
+
       } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
@@ -8303,6 +8340,15 @@ _manifest.default.operation.reDrawGlobal = function (time) {
         _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper]);
 
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+      } else if (_matrixWorld.world.contentList[_engine.looper].type.indexOf("custom-") != -1) {
+        // interest part - frst time draw func taken from object inself not from world.
+        // Looks like better solution.
+        _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
+
+        _matrixWorld.world.contentList[_engine.looper].drawCustom(_matrixWorld.world.contentList[_engine.looper]);
+
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]); //
+
       } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
 
@@ -8522,8 +8568,8 @@ exports.generateSpotLightShadowMain1 = generateSpotLightShadowMain1;
 
 /**
 * @description
-* UNDERCONSTRUCT 
-* Must be converted to GLSL 1.1/1.2
+* webGL1
+* GLSL 1.1/1.2
 **/
 function generateShaderSrc(numTextures, mixOperand, lightType) {
   return `// Matrix-engine shader for ${numTextures} textures samples.
@@ -9347,7 +9393,6 @@ class MatrixShadowSpot {
   }
 
   makeFlyArround() {
-    // console.log("TETS")
     this.lightPosition = (0, _utility.ORBIT_FROM_ARRAY)(this.centerX, this.centerY, this.o.UPDATE(), this.lightPosition, this.flyArroundByIndexs);
   }
 
@@ -9381,8 +9426,7 @@ class MatrixShadowSpecular {
     this.uLightPosition = new Float32Array([0.0, 0.0, 0.0]);
     this.specularDATA = new Float32Array([0.0, 0.0, 0.0]);
     this.uFogColor = new Float32Array([1.0, 0.0, 0.0, 0.2]);
-    this.uFogDist = new Float32Array([10, 10]);
-    console.log('SPECULAR LIGHT');
+    this.uFogDist = new Float32Array([10, 10]); // console.log('SPECULAR LIGHT')
 
     this.UPDATE = function () {};
 
@@ -9550,7 +9594,6 @@ class MatrixShadowSpotShadowTest {
   }
 
   makeFlyArround() {
-    // console.log("TETS")
     this.lightPosition = (0, _utility.ORBIT_FROM_ARRAY)(this.centerX, this.centerY, this.o.UPDATE(), this.lightPosition, this.flyArroundByIndexs);
   }
 
@@ -9594,7 +9637,7 @@ const standardStyle = `
   border-style: solid;
   text-align: center;
   outline: none;
-`;
+`; // not afirmated for now - but interest
 
 class MatrixInput extends HTMLElement {
   constructor(...args) {
@@ -9681,8 +9724,6 @@ exports.default = exports.makeFBO = exports.cubeMapTextures = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
 var _matrixWorld = require("./matrix-world");
-
-var _utility = require("./utility");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9979,7 +10020,7 @@ exports.makeFBO = makeFBO;
 var _default = _manifest.default.tools;
 exports.default = _default;
 
-},{"../program/manifest":38,"./matrix-world":19,"./utility":29}],19:[function(require,module,exports){
+},{"../program/manifest":38,"./matrix-world":19}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10183,6 +10224,8 @@ function defineworld(canvas, renderType) {
   /* Draw Square                              */
 
   world.drawSquare = _manifest.default.operation.draws.square;
+  /* Buffer obj format                        */
+
   world.bufferObj = _manifest.default.operation.obj_buffer_procedure;
   /* Buffer Cube                              */
 
@@ -10211,15 +10254,12 @@ function defineworld(canvas, renderType) {
   world.bufferSphere = _manifest.default.operation.sphere_buffer_procedure;
   world.FBOS = [];
   /* Repeated draw functionality            */
-  // eslint-disable-next-line no-global-assign
 
   if (typeof renderType === 'undefined') {
     exports.reDraw = reDraw = _manifest.default.operation.reDrawGlobal;
   } else if (renderType == 'simply') {
     exports.reDraw = reDraw = _manifest.default.operation.simplyRender;
-  } // redrawInterval 
-  // console.log("App.redrawInterval", App.redrawInterval)
-
+  }
 
   if (typeof _utility.QueryString.offScreenSpeed !== 'undefined') {
     console.log("URL param offScreenSpeed is active: ", _utility.QueryString.offScreenSpeed);
@@ -10227,7 +10267,7 @@ function defineworld(canvas, renderType) {
   }
   /**
    * @MatrixAnimationLine
-   * @globalAnimCounter Counter  READONLY
+   * @globalAnimCounter Counter - READONLY
    * @globalAnimSequenceSize = 5000
    * After globalAnimCounter reach globalAnimSequenceSize value will
    * reset to the zero.
@@ -11681,26 +11721,25 @@ class Broadcaster {
 
       update(e) {
         if (e.data.netPos) {
-          // console.log('INFO ZA UPDATE', e);
+          // console.log('INFO UPDATE', e);
           if (_manifest.default.scene[e.data.netObjId]) {
             if (e.data.netPos.x) _manifest.default.scene[e.data.netObjId].position.SetX(e.data.netPos.x, 'noemit');
             if (e.data.netPos.y) _manifest.default.scene[e.data.netObjId].position.SetY(e.data.netPos.y, 'noemit');
             if (e.data.netPos.z) _manifest.default.scene[e.data.netObjId].position.SetZ(e.data.netPos.z, 'noemit');
           }
         } else if (e.data.netRot) {
-          // console.log('ROT INFO ZA UPDATE', e);
-          if (e.data.netRot.x) _manifest.default.scene[e.data.netObjId].rotation.rotx = e.data.netRot.x; // , 'noemit');
-
+          // console.log('ROT INFO UPDATE', e);
+          if (e.data.netRot.x) _manifest.default.scene[e.data.netObjId].rotation.rotx = e.data.netRot.x;
           if (e.data.netRot.y) _manifest.default.scene[e.data.netObjId].rotation.roty = e.data.netRot.y;
           if (e.data.netRot.z) _manifest.default.scene[e.data.netObjId].rotation.rotz = e.data.netRot.z;
         } else if (e.data.netScale) {
-          // console.log('netScale INFO ZA UPDATE', e);
+          // console.log('netScale INFO UPDATE', e);
           if (e.data.netScale.x) _manifest.default.scene[e.data.netObjId].geometry.setScaleByX(e.data.netScale.x, 'noemit');
           if (e.data.netScale.y) _manifest.default.scene[e.data.netObjId].geometry.setScaleByY(e.data.netScale.y, 'noemit');
           if (e.data.netScale.z) _manifest.default.scene[e.data.netObjId].geometry.setScaleByZ(e.data.netScale.z, 'noemit');
           if (e.data.netScale.scale) _manifest.default.scene[e.data.netObjId].geometry.setScale(e.data.netScale.scale, 'noemit');
         } else if (e.data.texScaleFactor) {
-          // console.log('texScaleFactor INFO ZA UPDATE', e);
+          // console.log('texScaleFactor INFO UPDATE', e);
           if (e.data.texScaleFactor.newScaleFactror) {
             _manifest.default.scene[e.data.netObjId].geometry.setTexCoordScaleFactor(e.data.texScaleFactor.newScaleFactror, 'noemit');
           }
@@ -11725,7 +11764,8 @@ class Broadcaster {
         }));
       }
 
-    };
+    }; // make it gloabal
+
     window.io = io;
     this.engineConfig = config;
 
@@ -12154,7 +12194,6 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
  */
 class MatrixPhysics {
   constructor(gravityVector = [0, 0, -9.82]) {
-    // console.log("MatrixPhysics [cannon.js] running =>", CANNON);
     console.info(`%cMatrixPhysics [cannon.js] running. %c`, _matrixWorld.CS3, _matrixWorld.CS1);
     this.world = new CANNON.World();
     this.world.gravity.set(gravityVector[0], gravityVector[1], gravityVector[2]);
@@ -12191,9 +12230,9 @@ class MatrixPhysics {
 
   addGround(App, world, tex) {
     // Create a ground
+    // Makes the body static
     var groundBody = new CANNON.Body({
       mass: 0,
-      // mass == 0 makes the body static
       position: new CANNON.Vec3(0, -15, -2)
     });
     var groundShape = new CANNON.Plane();
@@ -20339,8 +20378,7 @@ class MatrixSounds {
 
     if (typeof useClones !== 'undefined') {
       this.createClones(useClones, name, path);
-    } // a.play(); only for autoplay
-
+    }
   }
 
   play(name) {
@@ -20632,12 +20670,10 @@ function LOG() {
 
 var scriptManager = {
   SCRIPT_ID: 0,
-  // SINHRO_LOAD: {},
-  LOAD: function addScript(src, id, type, parent) {
+  LOAD: function addScript(src, id, type, parent, callback) {
     var s = document.createElement('script');
 
-    s.onload = function () {//SCRIPT.SCRIPT_ID++;
-      //console.log('Script id loaded : ' + SCRIPT.SCRIPT_ID + ' with src: ' + this.src);
+    s.onload = function () {// console.log('Script id loaded [src]: ' + this.src);
     };
 
     if (typeof type !== 'undefined') {
@@ -20653,6 +20689,7 @@ var scriptManager = {
 
     if (typeof parent !== 'undefined') {
       document.getElementById(parent).appendChild(s);
+      if (typeof callback != 'undefined') callback();
     } else {
       document.body.appendChild(s);
     }
@@ -20824,12 +20861,9 @@ _manifest.default.audioSystem.Assets = {};
 _manifest.default.audioSystem.createVideoAsset = function (name_, path_) {
   return new Promise((resolve, reject) => {
     var videoAudioAsset = {};
-    videoAudioAsset.video = document.createElement('video'); // videoAudioAsset.video = document.getElementById("ultimateroulette");
-
+    videoAudioAsset.video = document.createElement('video');
     videoAudioAsset.video.controls = true;
-    videoAudioAsset.video.autoplay = true; // videoAudioAsset.video.setAttribute("mute", true);
-    // videoAudioAsset.video.load();
-
+    videoAudioAsset.video.autoplay = true;
     E('HOLDER_STREAMS').appendChild(videoAudioAsset.video);
     videoAudioAsset.video.setAttribute('playsInline', true);
     videoAudioAsset.video.setAttribute('src', 'res/videos/' + path_);
@@ -20839,14 +20873,17 @@ _manifest.default.audioSystem.createVideoAsset = function (name_, path_) {
       videoAudioAsset.context = new AudioContext();
     } catch (e) {
       alert('Web Audio API is not supported in this browser');
+      reject(e);
     }
 
-    videoAudioAsset.gainNode = videoAudioAsset.context.createGain();
-    videoAudioAsset.gainNode.gain.value = 1; // Change Gain Value to test
+    videoAudioAsset.gainNode = videoAudioAsset.context.createGain(); // Change Gain Value to test
 
-    videoAudioAsset.filter = videoAudioAsset.context.createBiquadFilter(); // videoAudioAsset.filter.type = 2; // Change Filter type to test // ENUM from UTILITY
+    videoAudioAsset.gainNode.gain.value = 1;
+    videoAudioAsset.filter = videoAudioAsset.context.createBiquadFilter(); // Change Filter type to test // ENUM from UTILITY
+    // videoAudioAsset.filter.type = 2;
+    // Change frequency to test
 
-    videoAudioAsset.filter.frequency.value = 5040; // Change frequency to test
+    videoAudioAsset.filter.frequency.value = 5040;
 
     if (typeof name_ !== 'undefined' && typeof name_ === 'string') {
       _manifest.default.audioSystem.Assets[name_] = videoAudioAsset;
@@ -20858,11 +20895,11 @@ _manifest.default.audioSystem.createVideoAsset = function (name_, path_) {
 
     if (promise !== undefined) {
       promise.then(_ => {
-        console.info('intromotocooliano autoplay started');
+        console.info('Autoplay started.');
         resolve(true);
       }).catch(error => {
-        console.warn('No autoplay ', error);
-        reject(); // Autoplay was prevented.
+        console.warn('No autoplay:', error);
+        reject();
       });
     }
   });
@@ -20873,9 +20910,7 @@ _manifest.default.audioSystem.createMusicAsset = function (name_, path_) {
     var videoAudioAsset = {};
     videoAudioAsset.video = document.createElement('audio');
     videoAudioAsset.video.controls = true;
-    videoAudioAsset.video.autoplay = true; // videoAudioAsset.video.setAttribute("mute", true);
-    // videoAudioAsset.video.load();
-
+    videoAudioAsset.video.autoplay = true;
     E('HOLDER_STREAMS').appendChild(videoAudioAsset.video);
     videoAudioAsset.video.setAttribute('playsInline', true);
     videoAudioAsset.video.setAttribute('src', 'res/music/' + path_);
@@ -20888,11 +20923,9 @@ _manifest.default.audioSystem.createMusicAsset = function (name_, path_) {
     }
 
     videoAudioAsset.gainNode = videoAudioAsset.context.createGain();
-    videoAudioAsset.gainNode.gain.value = 1; // Change Gain Value to test
-
-    videoAudioAsset.filter = videoAudioAsset.context.createBiquadFilter(); // videoAudioAsset.filter.type = 2; // Change Filter type to test // ENUM from UTILITY
-
-    videoAudioAsset.filter.frequency.value = 5040; // Change frequency to test
+    videoAudioAsset.gainNode.gain.value = 1;
+    videoAudioAsset.filter = videoAudioAsset.context.createBiquadFilter();
+    videoAudioAsset.filter.frequency.value = 5040;
 
     if (typeof name_ !== 'undefined' && typeof name_ === 'string') {
       _manifest.default.audioSystem.Assets[name_] = videoAudioAsset;
@@ -20908,7 +20941,7 @@ _manifest.default.audioSystem.createMusicAsset = function (name_, path_) {
         resolve(true);
       }).catch(error => {
         console.warn('No autoplay ', error);
-        reject(); // Autoplay was prevented.
+        reject();
       });
     }
   });
@@ -21141,7 +21174,7 @@ function showDomFPSController() {
   byId('mobUp').style.display = 'grid';
   byId('mobDown').style.display = 'grid';
   byId('domAngleAxis').style.display = 'grid';
-} // Create DOM elements fort FPS template
+} // Create DOM elements for FPS template.
 
 
 function createDomFPSController() {

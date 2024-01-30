@@ -51,7 +51,8 @@ import { runThis as physics_cube_active_textures } from './apps/physics_cube_act
 import { runThis as fbo_manipulation } from './apps/fbo_manipulation';
 import { runThis as welcome_gui_editor } from './apps/welcome-gui-editor';
 import { runThis as rolling_the_dice } from './apps/rolling_the_dice';
-import { runThis as shader1 } from './apps/shader1';
+import { runThis as shader1_direct } from './apps/shader1_direct';
+import { runThis as shader1_porting } from './apps/shader1_porting';
 /**
  * @description
  * All examples instances.
@@ -61,7 +62,8 @@ import { runThis as shader1 } from './apps/shader1';
  * public/query-build.html?u=spot_light_shadows
  */
 var Examples = {
-  shader1: shader1,
+  shader1_porting: shader1_porting,
+  shader1_direct: shader1_direct,
   rolling_the_dice: rolling_the_dice,
   fbo_manipulation: fbo_manipulation,
   physics_cube_active_textures: physics_cube_active_textures,
