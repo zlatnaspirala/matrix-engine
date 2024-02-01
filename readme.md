@@ -1116,4 +1116,7 @@ App.updateBeforeDraw.push(myFUNC);
 - https://www.fesliyanstudios.com/royalty-free-sound-effects-download/gun-shooting-300
 - https://blendswap.com/blend/29206
 - Great job HackTimer.js by turuslan https://github.com/turuslan/HackTimer
-- Water shader - by David Hoskins. Original water turbulence effect by joltz0r
+- Matrix-engine use shadertoy.com examples. All origin description is leaved in name of fair use.
+  Just leave shader comments. Come's from buildinShaders object and have symbol CC
+  because https://www.shadertoy.com/terms . 
+- Great free stuff https://ambientcg.com/view?id=MetalPlates004

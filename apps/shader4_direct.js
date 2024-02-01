@@ -12,11 +12,12 @@ const scriptManager = matrixEngine.utility.scriptManager;
 
 export var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/blue.png"],
+    source: ["res/images/RustPaint.jpg"],
     mix_operation: "multiply",
   }
-  // sphereLightTex
-  world.Add("cubeLightTex", 1, "ToyShader", textuteImageSamplers);
+  // App.camera.FirstPersonController = true
+  // sphereLightTex  cubeLightTex
+  world.Add("cubeLightTex", 1.3, "ToyShader", textuteImageSamplers);
 
   canvas.addEventListener('mousedown', (ev) => {
     matrixEngine.raycaster.checkingProcedure(ev);
@@ -32,7 +33,7 @@ export var runThis = world => {
     // console.info(e.detail);
   });
   
-  scriptManager.LOAD(buildinShaders.shaderCPU(), "custom-toy2-shader-fs", "x-shader/x-fragment", "shaders", () => {
+  scriptManager.LOAD(buildinShaders.shaderTest(), "custom-toy2-shader-fs", "x-shader/x-fragment", "shaders", () => {
     App.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy2' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
   })
 
