@@ -3,7 +3,7 @@
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _shader4_direct = require("./apps/shader4_direct.js");
+var _shader2_direct = require("./apps/shader2_direct.js");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -27,16 +27,16 @@ window.webGLStart = () => {
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw(); // Make it global for dev - for easy console/debugger access
 
-  window.runThis = _shader4_direct.runThis;
+  window.runThis = _shader2_direct.runThis;
   setTimeout(() => {
-    (0, _shader4_direct.runThis)(world);
+    (0, _shader2_direct.runThis)(world);
   }, 1);
 };
 
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/shader4_direct.js":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/shader2_direct.js":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -66,12 +66,11 @@ const scriptManager = matrixEngine.utility.scriptManager;
 
 var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/RustPaint.jpg"],
+    source: ["res/images/blue.png"],
     mix_operation: "multiply"
-  }; // App.camera.FirstPersonController = true
-  // sphereLightTex  cubeLightTex
+  }; // sphereLightTex
 
-  world.Add("cubeLightTex", 1.3, "ToyShader", textuteImageSamplers);
+  world.Add("squareTex", 1, "ToyShader", textuteImageSamplers);
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
@@ -80,8 +79,8 @@ var runThis = world => {
     e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 2);
     e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2); // console.info(e.detail);
   });
-  scriptManager.LOAD(_buildinShaders.buildinShaders.shaderTest(), "custom-toy2-shader-fs", "x-shader/x-fragment", "shaders", () => {
-    _manifest.default.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy2' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+  scriptManager.LOAD(_buildinShaders.freeShadersToy.shaderSpiral(), "custom-toy1-shader-fs", "x-shader/x-fragment", "shaders", () => {
+    _manifest.default.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
   }); // App.scene.ToyShader.rotation.rotationSpeed.y = 55
 
   _manifest.default.scene.ToyShader.glBlend.blendEnabled = false;
@@ -93,24 +92,25 @@ var runThis = world => {
 
   _manifest.default.scene.ToyShader.addExtraDrawCode = function (world, object) {
     now = Date.now();
-    now *= 0.00001;
-    const elapsedTime = Math.min(now - then1, 0.1);
+    now *= 0.000000001;
+    const elapsedTime = Math.min(now - then1, 0.01);
     time1 += elapsedTime;
     then1 = time1;
     world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
-    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
-    // world.GL.gl.uniform1f(object.shaderProgram.matrixSkyRad, App.scene.ToyShader.MY_RAD);
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
+
+    world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
   };
 
   _manifest.default.scene.ToyShader.drawCustom = function (o) {
-    return (0, _buildinShaders.standardMatrixEngineShader)(o);
+    return matrixEngine.standardMEShaderDrawer(o);
   };
 };
 
 exports.runThis = runThis;
 
-},{"../index.js":4,"../lib/optimizer/buildin-shaders.js":22,"../program/manifest.js":40}],3:[function(require,module,exports){
+},{"../index.js":4,"../lib/optimizer/buildin-shaders.js":23,"../program/manifest.js":41}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -301,16 +301,28 @@ Object.defineProperty(exports, "MEBvhAnimation", {
     return _matrixBvh.default;
   }
 });
-Object.defineProperty(exports, "standardMatrixEngineShader", {
+Object.defineProperty(exports, "standardMEShaderDrawer", {
   enumerable: true,
   get: function () {
-    return _buildinShaders.standardMatrixEngineShader;
+    return _buildinShaders.standardMEShaderDrawer;
   }
 });
-Object.defineProperty(exports, "toyShader", {
+Object.defineProperty(exports, "toyShaderHeader", {
   enumerable: true,
   get: function () {
-    return _buildinShaders.toyShader;
+    return _buildinShaders.toyShaderHeader;
+  }
+});
+Object.defineProperty(exports, "freeShadersToy", {
+  enumerable: true,
+  get: function () {
+    return _buildinShaders.freeShadersToy;
+  }
+});
+Object.defineProperty(exports, "defineShader", {
+  enumerable: true,
+  get: function () {
+    return _buildinMyShaders.defineShader;
   }
 });
 exports.raycaster = exports.utility = exports.objLoader = exports.Events = exports.Engine = exports.matrixRender = exports.matrixGeometry = exports.matrixWorld = void 0;
@@ -357,13 +369,15 @@ var _matrixBvh = _interopRequireDefault(require("./lib/matrix-bvh"));
 
 var _buildinShaders = require("./lib/optimizer/buildin-shaders");
 
+var _buildinMyShaders = require("./lib/optimizer/buildin-my-shaders");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./lib/engine":5,"./lib/events":6,"./lib/loader-obj":7,"./lib/matrix-buffers":8,"./lib/matrix-bvh":9,"./lib/matrix-geometry":11,"./lib/matrix-render":14,"./lib/matrix-textures":19,"./lib/matrix-world":20,"./lib/optimizer/buildin-shaders":22,"./lib/raycast":25,"./lib/utility":31,"./program/manifest":40}],5:[function(require,module,exports){
+},{"./lib/engine":5,"./lib/events":6,"./lib/loader-obj":7,"./lib/matrix-buffers":8,"./lib/matrix-bvh":9,"./lib/matrix-geometry":11,"./lib/matrix-render":14,"./lib/matrix-textures":19,"./lib/matrix-world":20,"./lib/optimizer/buildin-my-shaders":22,"./lib/optimizer/buildin-shaders":23,"./lib/raycast":26,"./lib/utility":32,"./program/manifest":41}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -475,7 +489,7 @@ exports.activateNet = activateNet;
 function initApp(callback) {
   resizeView();
   drawCanvas();
-  window.canvas = document.getElementById('canvas');
+  _manifest.default.canvas = document.getElementById('canvas'); // window.canvas
 
   if (_manifest.default.events == true) {
     _manifest.default.events = new _events.EVENTS((0, _utility.E)('canvas'));
@@ -1390,7 +1404,7 @@ function DOM_VT(video, name, options) {
   };
 }
 
-},{"../client-config":3,"../program/manifest":40,"./events":6,"./matrix-render":14,"./matrix-shaders1":15,"./matrix-shaders3":16,"./matrix-world":20,"./net":21,"./sounds":30,"./utility":31,"./webgl-utils":32}],6:[function(require,module,exports){
+},{"../client-config":3,"../program/manifest":41,"./events":6,"./matrix-render":14,"./matrix-shaders1":15,"./matrix-shaders3":16,"./matrix-world":20,"./net":21,"./sounds":31,"./utility":32,"./webgl-utils":33}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1534,13 +1548,17 @@ function EVENTS(canvas) {
   }
 
   window.addEventListener('resize', function (e) {
+    if (_manifest.default.resize.canvas == "false" || _manifest.default.resize.canvas == false) {
+      return;
+    }
+
     if (_manifest.default.resize.canvas == "full-screen") {
       //canvas.width =  window.innerHeight * App.resize.aspectRatio;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight; // SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ' + world);
+      _manifest.default.canvas.width = window.innerWidth;
+      _manifest.default.canvas.height = window.innerHeight; // SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ' + world);
     } else {
-      canvas.width = window.innerHeight * _manifest.default.resize.aspectRatio;
-      canvas.height = window.innerHeight;
+      _manifest.default.canvas.width = window.innerHeight * _manifest.default.resize.aspectRatio;
+      _manifest.default.canvas.height = window.innerHeight;
       SYS.DEBUG.LOG('SYS: aspect ration resize is active. ' + _matrixWorld.world);
     }
 
@@ -1917,7 +1935,7 @@ if (_manifest.default.pwa.addToHomePage === true) {
   } catch (err) {}
 }
 
-},{"../program/manifest":40,"./matrix-world":20,"./utility":31}],7:[function(require,module,exports){
+},{"../program/manifest":41,"./matrix-world":20,"./utility":32}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2845,7 +2863,7 @@ _manifest.default.operation.cubemap_buffer_procedure = function (object) {
 var _default = _manifest.default.operation;
 exports.default = _default;
 
-},{"../program/manifest":40,"./matrix-world":20}],9:[function(require,module,exports){
+},{"../program/manifest":41,"./matrix-world":20}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3141,7 +3159,7 @@ class MEBvhAnimation {
 
 exports.default = MEBvhAnimation;
 
-},{"./matrix-world":20,"./utility":31,"bvh-loader":35}],10:[function(require,module,exports){
+},{"./matrix-world":20,"./utility":32,"bvh-loader":36}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4557,7 +4575,7 @@ var drawsOperation = _manifest.default.operation.draws;
 var _default = drawsOperation;
 exports.default = _default;
 
-},{"../program/manifest":40,"./events":6,"./matrix-shadows":17,"./matrix-textures":19,"./matrix-world":20,"./raycast":25,"./utility":31}],11:[function(require,module,exports){
+},{"../program/manifest":41,"./events":6,"./matrix-shadows":17,"./matrix-textures":19,"./matrix-world":20,"./raycast":26,"./utility":32}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6581,7 +6599,7 @@ class GeoOfColor {
 
 exports.GeoOfColor = GeoOfColor;
 
-},{"../program/manifest":40,"./engine":5,"./utility":31}],12:[function(require,module,exports){
+},{"../program/manifest":41,"./engine":5,"./utility":32}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7300,7 +7318,7 @@ function getInitVSCubeMap() {
   _utility.scriptManager.LOAD(f, "cubeMap-shader-vs", "x-shader/x-vertex", "shaders");
 }
 
-},{"./utility":31}],13:[function(require,module,exports){
+},{"./utility":32}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8094,7 +8112,7 @@ function getInitVSCubeMap() {
   _utility.scriptManager.LOAD(f, "cubeMap-shader-vs", "x-shader/x-vertex", "shaders");
 }
 
-},{"./utility":31}],14:[function(require,module,exports){
+},{"./utility":32}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8665,7 +8683,7 @@ _manifest.default.operation.simplyRender = function (time) {
   if (_manifest.default.offScreenCanvas == true) exports.reDrawID = reDrawID = setTimeout(() => _manifest.default.operation.simplyRender(), _manifest.default.redrawInterval);
 };
 
-},{"../program/manifest":40,"./engine":5,"./matrix-world":20,"./raycast":25,"./utility":31}],15:[function(require,module,exports){
+},{"../program/manifest":41,"./engine":5,"./matrix-world":20,"./raycast":26,"./utility":32}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9734,7 +9752,7 @@ class MatrixShadowSpotShadowTest {
 
 exports.MatrixShadowSpotShadowTest = MatrixShadowSpotShadowTest;
 
-},{"../program/manifest":40,"./utility":31}],18:[function(require,module,exports){
+},{"../program/manifest":41,"./utility":32}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10133,7 +10151,7 @@ exports.makeFBO = makeFBO;
 var _default = _manifest.default.tools;
 exports.default = _default;
 
-},{"../program/manifest":40,"./matrix-world":20}],20:[function(require,module,exports){
+},{"../program/manifest":41,"./matrix-world":20}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11778,7 +11796,7 @@ function defineworld(canvas, renderType) {
   return world;
 }
 
-},{"../program/manifest":40,"./engine":5,"./loader-obj":7,"./matrix-draws":10,"./matrix-geometry":11,"./matrix-init-shaders1":12,"./matrix-init-shaders3":13,"./matrix-render":14,"./matrix-shadows":17,"./matrix-tags":18,"./matrix-textures":19,"./optimizer/override-matrix-render":23,"./physics":24,"./utility":31}],21:[function(require,module,exports){
+},{"../program/manifest":41,"./engine":5,"./loader-obj":7,"./matrix-draws":10,"./matrix-geometry":11,"./matrix-init-shaders1":12,"./matrix-init-shaders3":13,"./matrix-render":14,"./matrix-shadows":17,"./matrix-tags":18,"./matrix-textures":19,"./optimizer/override-matrix-render":24,"./physics":25,"./utility":32}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12276,14 +12294,14 @@ class Broadcaster {
 
 exports.Broadcaster = Broadcaster;
 
-},{"../program/manifest.js":40,"./rtc-multi-connection/FileBufferReader.js":26,"./rtc-multi-connection/RTCMultiConnection3":27,"./rtc-multi-connection/getHTMLMediaElement":28,"./rtc-multi-connection/socket.io":29,"./utility":31}],22:[function(require,module,exports){
+},{"../program/manifest.js":41,"./rtc-multi-connection/FileBufferReader.js":27,"./rtc-multi-connection/RTCMultiConnection3":28,"./rtc-multi-connection/getHTMLMediaElement":29,"./rtc-multi-connection/socket.io":30,"./utility":32}],22:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.toyShader = toyShader;
-exports.toyShader1 = toyShader1;
+exports.defineShader = defineShader;
+exports.defineShader1 = defineShader1;
 exports.buildinShaders = exports.standardMatrixEngineShader = void 0;
 
 var _ = require("../..");
@@ -12296,15 +12314,399 @@ var _utility = require("../utility");
  * @description
  * Optimisation for custom FShaders parts
  * GLSL 1.3 for now
+
+   Interest links for explore post shader example live: 
+   https://stackoverflow.com/questions/8166384/how-to-get-a-glow-shader-effect-in-opengl-es-2-0
  */
 var now = 0,
     then1 = 0,
     time1 = 0;
 
-function toyShader() {
+function defineShader() {
+  return `#version 300 es
+  // Standard Matrix-engine Shaders attr
+  precision highp float;
+  in vec2 vTextureCoord;
+  in vec3 vLightWeighting;
+  uniform sampler2D uSampler;
+
+  uniform vec2  uniSIZE;
+  uniform float uniTimeDelta;
+  uniform vec2  uniMouse;
+
+  out vec4 outColor;
+  `;
+}
+
+;
+
+function defineShader1() {
+  return `precision highp float;
+  // Standard Matrix-engine Shaders attr
+  varying vec2 vTextureCoord;
+  varying vec3 vLightWeighting;
+  uniform sampler2D uSampler;
+
+  uniform vec2 uniSIZE;
+  uniform float uniTimeDelta;
+  uniform vec2 uniMouse;
+
+  `;
+}
+
+;
+
+var standardMatrixEngineShader = object => {
+  var lighting = true;
+  var localLooper = 0;
+  mat4.identity(object.mvMatrix);
+
+  _matrixWorld.world.mvPushMatrix(object.mvMatrix, _matrixWorld.world.mvMatrixStack);
+
+  if (object.isHUD === true) {
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (_.raycaster.checkingProcedureCalc) _.raycaster.checkingProcedureCalc(object);
+  } else {
+    if (App.camera.FirstPersonController == true) {
+      camera.setCamera(object);
+    } else if (App.camera.SceneController == true) {
+      camera.setSceneCamera(object);
+    }
+
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (_.raycaster.checkingProcedureCalc && typeof ray === 'undefined') _.raycaster.checkingProcedureCalc(object);
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  } // V
+
+
+  if (object.vertexPositionBuffer) {
+    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
+
+    if (object.geometry.dynamicBuffer == true) {
+      _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
+    }
+
+    _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.vertexPositionBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
+
+    _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexPositionAttribute);
+
+    localLooper = localLooper + 1;
+  } // C
+
+
+  if (object.vertexColorBuffer) {
+    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
+
+    _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexColorAttribute, object.vertexColorBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
+
+    _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexColorAttribute);
+
+    localLooper = localLooper + 1;
+  } // L
+
+
+  if (lighting && object.shaderProgram.useLightingUniform) {
+    _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.useLightingUniform, lighting);
+    /* Set the normals */
+
+
+    if (object.vertexNormalBuffer) {
+      _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
+
+      _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexNormalAttribute, object.vertexNormalBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
+
+      _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexNormalAttribute);
+
+      localLooper = localLooper + 1;
+    }
+    /* Set the ambient light */
+
+
+    if (object.shaderProgram.ambientColorUniform) {
+      if ((0, _utility.E)('ambLightR')) {
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat((0, _utility.E)('ambLightR').getAttribute('value')), parseFloat((0, _utility.E)('ambLightG').getAttribute('value')), parseFloat((0, _utility.E)('ambLightB').getAttribute('value'))); // console.log("LIGHTS UNIFORM AMB  B = ", parseFloat(E('ambLightB').value) )
+
+      } else {
+        // object.LightsData.ambientLight
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, object.LightsData.ambientLight.r, object.LightsData.ambientLight.g, object.LightsData.ambientLight.b);
+      }
+    }
+    /* Directional light */
+
+
+    if (object.shaderProgram.directionalColorUniform) {
+      if ((0, _utility.E)('dirLightR')) {
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat((0, _utility.E)('dirLightR').getAttribute('value')), parseFloat((0, _utility.E)('dirLightG').getAttribute('value')), parseFloat((0, _utility.E)('dirLightB').getAttribute('value')));
+      } else {
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
+      }
+    }
+    /* Normalize the direction */
+
+
+    var lightingDirection = null;
+
+    if (object.shaderProgram.lightingDirectionUniform) {
+      if ((0, _utility.E)('dirX') && (0, _utility.E)('dirY') && (0, _utility.E)('dirZ')) {
+        // console.log("LIGHTS UNIFORM AMB  B = ",  E('dirZ').value )
+        lightingDirection = [degToRad(parseFloat((0, _utility.E)('dirX').getAttribute('value'))), degToRad(parseFloat((0, _utility.E)('dirY').getAttribute('value'))), degToRad(parseFloat((0, _utility.E)('dirZ').getAttribute('value')))];
+      } else {
+        lightingDirection = [object.LightsData.lightingDirection.r, object.LightsData.lightingDirection.g, object.LightsData.lightingDirection.b];
+      }
+
+      var adjustedLD = vec3.create();
+      vec3.normalize(adjustedLD, lightingDirection);
+      vec3.scale(adjustedLD, adjustedLD, -1);
+
+      _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightingDirectionUniform, adjustedLD);
+    }
+  } else {
+    if (object.shaderProgram.useLightingUniform) {
+      if (object.shaderProgram.ambientColorUniform) {
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat(0.2), parseFloat(0.2), parseFloat(0.2));
+      }
+
+      if (object.shaderProgram.directionalColorUniform) {
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(1), parseFloat(0), parseFloat(0));
+      }
+    }
+  } // T
+
+
+  if (object.vertexTexCoordBuffer) {
+    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
+
+    if (object.geometry.dynamicBuffer == true) {
+      _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.texCoords, _matrixWorld.world.GL.gl.STATIC_DRAW);
+    }
+
+    _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.textureCoordAttribute, object.vertexTexCoordBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
+
+    _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
+
+    if (object.streamTextures != null) {
+      if (object.streamTextures.video) {
+        App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
+      } else {
+        App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
+      }
+
+      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+    } else if (object.FBO) {
+      // test FBO
+      _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
+
+      _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.FB.texture);
+
+      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+    } else {
+      for (var t = 0; t < object.textures.length; t++) {
+        if (object.custom.gl_texture == null) {
+          _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
+
+          _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
+
+          _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+
+          if (object.texParams.MIPMAP == false) {
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
+
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT); // -- Allocate storage for the texture
+            // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+            // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+
+          } else {
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+
+            _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
+          }
+
+          if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
+            _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+          } //console.log('TEST' , object.texParams)
+
+
+          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+        } else {
+          object.custom.gl_texture(object, t);
+        }
+      }
+    }
+
+    localLooper = localLooper + 1;
+  } else {
+    if (object.shaderProgram.samplerUniform) {
+      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+    } else if (object.shaderProgram.uCubeMapSampler) {
+      // CUBE MAP
+      _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE0']);
+
+      var gl = _matrixWorld.world.GL.gl;
+      if (!object.tex) object.tex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_CUBE_MAP, object.tex);
+
+      if (object.cubeMap.type == 'images') {
+        object.cubeMap.cubeMap2dCanvasSet.forEach((faceInfo, index) => {
+          const level = 0;
+          const internalFormat = gl.RGBA;
+          const format = gl.RGBA;
+          const type = gl.UNSIGNED_BYTE;
+          gl.texImage2D(faceInfo.target, level, internalFormat, format, type, object.cubeMap.images[index]);
+          gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+        });
+      } else {
+        object.cubeMap.cubeMap2dCanvasSet.forEach((faceInfo, index) => {
+          var args = [];
+
+          for (var key in faceInfo) {
+            if (key !== 'target') {
+              args.push(faceInfo[key]);
+            }
+          }
+
+          if (object.cubeMap.drawFunc) {
+            object.cubeMap.drawFunc(args);
+          } else {
+            const {
+              faceColor,
+              textColor,
+              text
+            } = faceInfo;
+            gen2DTextFace(object.cubeMap.cubeMap2dCtx, faceColor, textColor, text);
+          }
+
+          const level = 0;
+          const internalFormat = gl.RGBA;
+          const format = gl.RGBA;
+          const type = gl.UNSIGNED_BYTE;
+          gl.texImage2D(faceInfo.target, level, internalFormat, format, type, object.cubeMap.cubeMap2dCtx.canvas);
+          gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+        });
+      }
+
+      gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
+      gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+
+      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, 0);
+    }
+  }
+
+  _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
+
+  _matrixWorld.world.setMatrixUniforms(object, _matrixWorld.world.pMatrix); // Shadows
+
+
+  if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
+    // set the light position
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
+
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess); // Set the spotlight uniforms
+
+
+    {
+      var target = [0, 0, 0]; // object.position.worldLocation;
+
+      var up = [0, 1, 0];
+      var lmat = m4.lookAt(object.shadows.lightPosition, target, up); // var lmat = m4.lookAt(object.position.worldLocation, target, up);
+
+      lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
+      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat); // get the zAxis from the matrix
+      // negate it because lookAt looks down the -Z axis
+
+      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]]; // object.shadows.lightDirection = [-0, -0, -1];
+    }
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
+
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
+
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
+  } else if (object.shadows && object.shadows.type == 'spec') {
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
+  } else if (object.shadows && object.shadows.type == 'lens') {
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uControl, object.shadows.uControl);
+
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uResolution, object.shadows.uResolution);
+  }
+
+  if (object.vertexNormalBuffer && object.shaderProgram.nMatrixUniform) {
+    var normalMatrix = mat3.create();
+    mat3.normalFromMat4(normalMatrix, object.mvMatrix);
+    mat3.transpose(normalMatrix, normalMatrix);
+
+    _matrixWorld.world.GL.gl.uniformMatrix3fv(object.shaderProgram.nMatrixUniform, false, normalMatrix);
+  }
+
+  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper);
+
+  if (object.glBlend.blendEnabled == true) {
+    if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
+      _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
+    }
+
+    _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
+  } else {
+    _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
+
+    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST); // world.GL.gl.enable(world.GL.gl.CULL_FACE);
+
+  } //
+
+
+  if (typeof object.addExtraDrawCode != 'undefined') object.addExtraDrawCode(_matrixWorld.world, object); //
+
+  _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
+
+  _matrixWorld.world.mvPopMatrix(object.mvMatrix, _matrixWorld.world.mvMatrixStack);
+};
+
+exports.standardMatrixEngineShader = standardMatrixEngineShader;
+var buildinShaders = {};
+exports.buildinShaders = buildinShaders;
+
+buildinShaders.shaderTest = () => {
+  return `${toyShaderHeader()}
+
+  `;
+};
+
+},{"../..":4,"../matrix-world":20,"../utility":32}],23:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.toyShaderHeader = toyShaderHeader;
+exports.toyShader1 = toyShader1;
+exports.freeShadersToy = exports.standardMEShaderDrawer = void 0;
+
+var _ = require("../..");
+
+var _matrixWorld = require("../matrix-world");
+
+var _utility = require("../utility");
+
+/**
+ * @description
+ * Optimisation for custom FShaders parts
+ * Open source shaders
+ * #pragma vscode_glsllint_stage : STAGE
+ */
+// var now = 0, then1 = 0, time1 = 0;
+function toyShaderHeader() {
   return `#version 300 es
   precision highp float;
-  // test mix
+  // Standard matrix-engine params
   in vec2 vTextureCoord;
   in vec3 vLightWeighting;
   uniform sampler2D uSampler;
@@ -12313,23 +12715,15 @@ function toyShader() {
   uniform float iTime;
   uniform float iTimeDelta;
   uniform int iFrame;
-  // uniform float iChannelTime[4];
-  uniform vec2 iMouse;
-  // uniform vec4 iDate;
-  // uniform float iSampleRate;
-  // uniform vec3 iChannelResolution[4];
-  // uniform sampler2D iChanneli;
+  uniform vec3 iMouse;
 
-  // we need to declare an output for the fragment shader
   out vec4 outColor;
   `;
 }
 
-;
-
 function toyShader1() {
   return `precision highp float;
-  // test mix
+  // Standard matrix-engine params
   varying vec2 vTextureCoord;
   varying vec3 vLightWeighting;
   uniform sampler2D uSampler;
@@ -12353,9 +12747,7 @@ function toyShader1() {
   `;
 }
 
-;
-
-var standardMatrixEngineShader = object => {
+var standardMEShaderDrawer = object => {
   // Create a vertex array object (attribute state)
   // var world = matrixWorld.world;
   var lighting = true;
@@ -12670,1273 +13062,238 @@ var standardMatrixEngineShader = object => {
 
   _matrixWorld.world.mvPopMatrix(object.mvMatrix, _matrixWorld.world.mvMatrixStack);
 }; // Shaders from shadertoy web site.
+// ONLY MIT or similar licensed scripts.
 
 
-exports.standardMatrixEngineShader = standardMatrixEngineShader;
-var buildinShaders = {};
-exports.buildinShaders = buildinShaders;
+exports.standardMEShaderDrawer = standardMEShaderDrawer;
+var freeShadersToy = {};
+exports.freeShadersToy = freeShadersToy;
 
-buildinShaders.shaderCloud = () => {
-  return `${toyShader()}
-  // Mikael Lemercier & Fabrice Neyret , June, 2013
-  #define LINEAR_DENSITY 0  // 0: constant
-  #define DENS 2.           // tau.rho
-  #define rad .3            // sphere radius
-  #define H   .05           // skin layer thickness (for linear density)
-  #define ANIM true         // true/false
-  // #define PI 3.14159
-
-  float PI = asin(1.)*2.;
-
-  uniform float matrixSkyRad;
-
-  vec4 skyColor = vec4(.7,.8,1.,1.);
-  vec3 sunColor = 10.*vec3(1.,.7,.1);   // NB: is Energy 
-  vec2 FragCoord;
-
-  // --- noise functions from https://www.shadertoy.com/view/XslGRr
-  // Created by inigo quilez - iq/2013
-  // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
-
-  mat3 m = mat3( 0.00,  0.80,  0.60,
-              -0.80,  0.36, -0.48,
-              -0.60, -0.48,  0.64 );
-
-  float hash( float n )
-  {
-    return fract(sin(n)*43758.5453);
-  }
-
-  float noise( in vec3 x )
-  {
-    vec3 p = floor(x);
-    vec3 f = fract(x);
-
-    f = f*f*(3.0-2.0*f);
-
-    float n = p.x + p.y*57.0 + 113.0*p.z;
-
-    float res = mix(mix(mix( hash(n+  0.0), hash(n+  1.0),f.x),
-                        mix( hash(n+ 57.0), hash(n+ 58.0),f.x),f.y),
-                    mix(mix( hash(n+113.0), hash(n+114.0),f.x),
-                        mix( hash(n+170.0), hash(n+171.0),f.x),f.y),f.z);
-    return res;
-  }
-
-  float fbm( vec3 p )
-  {
-    float f;
-    f  = 0.5000*noise( p ); p = m*p*2.02;
-    f += 0.2500*noise( p ); p = m*p*2.03;
-    f += 0.1250*noise( p ); p = m*p*2.01;
-    f += 0.0625*noise( p );
-    return f;
-  }
-  // --- End of: Created by inigo quilez --------------------
-
-  vec3 noise3( vec3 p )
-  {
-  if (ANIM) p += iTime;
-    float fx = noise(p);
-    float fy = noise(p+vec3(1345.67,0,45.67));
-    float fz = noise(p+vec3(0,4567.8,-123.4));
-    return vec3(fx,fy,fz);
-  }
-  vec3 fbm3( vec3 p )
-  {
-  if (ANIM) p += iTime;
-    float fx = fbm(p);
-    float fy = fbm(p+vec3(1345.67,0,45.67));
-    float fz = fbm(p+vec3(0,4567.8,-123.4));
-  return vec3(fx,fy,fz);
-  }
-  vec3 perturb3(vec3 p, float scaleX, float scaleI)
-  {
-    scaleX *= 2.;
-  return scaleI*scaleX*fbm3(p/scaleX); // usually, to be added to p
-  }
-
-  float constantDensityTransmittance(float NDotL,float NDotO)
-  {
-    return NDotL/(DENS*(NDotL+NDotO));
-  }
-
-  float linearDensityTransmittance(float NDotL,float NDotO,float LDotO)
-  {
-    if (FragCoord.y/iResolution.y>.42)
-    return sqrt(PI/2.) / sqrt(DENS/H* NDotO/NDotL*(NDotL+NDotO) ) ; // test1
-  else
-    // return .15*DENS*NDotL/(NDotL+NDotO)*sqrt(1.-LDotO*LDotO);       // test2
-    return .15*DENS*NDotL/(NDotL+NDotO);                            // test3
-  }
-
-  float Rz=0.;  // 1/2 ray length inside object
-  vec4 intersectSphere(vec3 rpos, vec3 rdir)
-  {
-    vec3 op = vec3(0.0, 0.0, 0.0) - rpos;
-    //float rad = 0.3;
-
-    float eps = 1e-5;
-    float b = dot(op, rdir);
-    float det = b*b - dot(op, op) + matrixSkyRad*matrixSkyRad;
-      
-    if (det > 0.0)
-    {
-        det = sqrt(det);
-        float t = b - det;
-        if (t > eps)
-        {
-            vec4 P = vec4(normalize(rpos+rdir*t), t);
-            Rz = matrixSkyRad*P.z;   // 1/2 ray length inside object
-  #if LINEAR_DENSITY    
-            // skin layer counts less
-            float dH = 1.+H*(H-2.*matrixSkyRad)/(Rz*Rz);
-            if (dH>0.) // core region
-                Rz *= .5*(1.+sqrt(dH));
-            else
-                Rz *= .5*matrixSkyRad*(1.-sqrt(1.-Rz*Rz/(matrixSkyRad*matrixSkyRad)))/H;
-  #endif
-            return P;
-        }
-    }
-
-    return vec4(0.0);
-  }
-
-  bool computeNormal(in vec3 cameraPos, in vec3 cameraDir, out vec3 normal)
-  {
-    cameraPos = cameraPos+perturb3(cameraDir,.06,1.5);
-    vec4 intersect = intersectSphere(cameraPos,cameraDir);
-    if ( intersect.w > 0.)
-    {
-        normal = intersect.xyz;
-        //normal = normalize(normal+perturb3(normal,.3,30.));
-        return true;
-    }
-    return false;
-  }
-  float computeTransmittance( in vec3 cameraPos, in vec3 cameraDir, in vec3 lightDir )
-  {
-    vec3 normal;
-    if ( computeNormal(cameraPos,cameraDir,normal))
-    {
-        float NDotL = clamp(dot(normal,lightDir),0.,1.);
-        float NDotO = clamp(dot(normal,cameraPos),0.,1.);
-        float LDotO = clamp(dot(lightDir,cameraPos),0.,1.);
-      
-  #if LINEAR_DENSITY
-        float transmittance = linearDensityTransmittance(NDotL,NDotO,LDotO)*.5;
-  #else
-        float transmittance = constantDensityTransmittance(NDotL,NDotO);
-  #endif
-        return transmittance;
-    }
-
-    return -1.;
-  }
-
-  void mainImage( out vec4 outColor, in vec2 fragCoord )
-  {
-    FragCoord=fragCoord;
+freeShadersToy.shaderFractalAdvanced = () => {
+  return `${toyShaderHeader()}
+    // The MIT License
+    // Copyright © 2020 Inigo Quilez
+    // https://www.youtube.com/c/InigoQuilez
+    // https://iquilezles.org/
+    // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     
-    //camera
-    vec3 cameraPos = vec3(0.0,0.0,1.0);      
-    vec3 cameraTarget = vec3(0.0, 0.0, 0.0);
-    vec3 ww = normalize( cameraPos - cameraTarget );
-    vec3 uu = normalize(cross( vec3(0.0,1.0,0.0), ww ));
-    vec3 vv = normalize(cross(ww,uu));
-    vec2 q = fragCoord.xy / iResolution.xy;
-    vec2 p = -1.0 + 2.0*q;
-    p.x *= iResolution.x/ iResolution.y;
-    vec3 cameraDir = normalize( p.x*uu + p.y*vv - 1.5*ww );
-
-    //light
-    float theta = (iMouse.x / iResolution.x *2. - 1.)*PI;
-    float phi = (iMouse.y / iResolution.y - .5)*PI;
-    vec3 lightDir =vec3(sin(theta)*cos(phi),sin(phi),cos(theta)*cos(phi));
-
-  // shade object
-    float transmittance = computeTransmittance( cameraPos, cameraDir, lightDir );
-
-  // display: special cases
-  if (abs(q.y-.42)*iResolution.y<.5)  outColor = vec4(.75);
-    else if (transmittance<0.) 		    outColor = skyColor;
-  else if (transmittance>1.) 		    outColor = vec4(1.,0.,0.,1.); 		
-  else
-  { // display: object
-    Rz = 1.-exp(-8.*DENS*Rz);
-      float alpha = Rz;
-      //fragColor = vec4(alpha); return; // for tests
-      vec3 frag = vec3(transmittance,transmittance,transmittance);
-      outColor = vec4(frag*sunColor,alpha) + (1.-alpha)*skyColor;
-  }
-
-    //display: light
-    float d = length(vec2(lightDir)-p)*iResolution.x;
-    float Z; if (lightDir.z>0.) Z=1.; else Z=0.;
-    if (d<10.) outColor = vec4(1.,Z,.5,1.);
-
-    //vec3 normal;
-    //computeNormal(cameraPos,cameraDir, normal);
-    //fragColor = vec4(normal,1.);
-  }
-
-  void main() {
-  vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(0,0,0,0);
-  // mainImage(outColor, vTextureCoord);
-  // outColor.rgb += vec3(textureColor.rgb * vLightWeighting);
-  //  outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
-  mainImage(outColor, gl_FragCoord.xy);
-  
-  }
-  `;
-};
-
-buildinShaders.shaderLightAndClouds = () => {
-  return `${toyShader()}
-  // origin https://www.shadertoy.com/view/MdyGzR
-  vec3 mod289(vec3 x) {
-    return x - floor(x * (1.0 / 289.0)) * 289.0;
-  }
-  
-  vec4 mod289(vec4 x) {
-    return x - floor(x * (1.0 / 289.0)) * 289.0;
-  }
-  
-  vec4 permute(vec4 x) {
-       return mod289(((x*34.0)+1.0)*x);
-  }
-  
-  vec4 taylorInvSqrt(vec4 r)
-  {
-    return 1.79284291400159 - 0.85373472095314 * r;
-  }
-  
-  float snoise(vec3 v)
-    { 
-    const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
-    const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
-  
-  // First corner
-    vec3 i  = floor(v + dot(v, C.yyy) );
-    vec3 x0 =   v - i + dot(i, C.xxx) ;
-  
-  // Other corners
-    vec3 g = step(x0.yzx, x0.xyz);
-    vec3 l = 1.0 - g;
-    vec3 i1 = min( g.xyz, l.zxy );
-    vec3 i2 = max( g.xyz, l.zxy );
-  
-    //   x0 = x0 - 0.0 + 0.0 * C.xxx;
-    //   x1 = x0 - i1  + 1.0 * C.xxx;
-    //   x2 = x0 - i2  + 2.0 * C.xxx;
-    //   x3 = x0 - 1.0 + 3.0 * C.xxx;
-    vec3 x1 = x0 - i1 + C.xxx;
-    vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y
-    vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y
-  
-  // Permutations
-    i = mod289(i); 
-    vec4 p = permute( permute( permute( 
-               i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
-             + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
-             + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
-  
-  // Gradients: 7x7 points over a square, mapped onto an octahedron.
-  // The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
-    float n_ = 0.142857142857; // 1.0/7.0
-    vec3  ns = n_ * D.wyz - D.xzx;
-  
-    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)
-  
-    vec4 x_ = floor(j * ns.z);
-    vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
-  
-    vec4 x = x_ *ns.x + ns.yyyy;
-    vec4 y = y_ *ns.x + ns.yyyy;
-    vec4 h = 1.0 - abs(x) - abs(y);
-  
-    vec4 b0 = vec4( x.xy, y.xy );
-    vec4 b1 = vec4( x.zw, y.zw );
-  
-    //vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;
-    //vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;
-    vec4 s0 = floor(b0)*2.0 + 1.0;
-    vec4 s1 = floor(b1)*2.0 + 1.0;
-    vec4 sh = -step(h, vec4(0.0));
-  
-    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
-    vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
-  
-    vec3 p0 = vec3(a0.xy,h.x);
-    vec3 p1 = vec3(a0.zw,h.y);
-    vec3 p2 = vec3(a1.xy,h.z);
-    vec3 p3 = vec3(a1.zw,h.w);
-  
-  //Normalise gradients
-    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
-    p0 *= norm.x;
-    p1 *= norm.y;
-    p2 *= norm.z;
-    p3 *= norm.w;
-  
-  // Mix final noise value
-    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
-    m = m * m;
-    return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), 
-                                  dot(p2,x2), dot(p3,x3) ) );
-    }
-  
-  float normnoise(float noise) {
-    return 0.5*(noise+1.0);
-  }
-  
-  float clouds(vec2 uv) {
-      uv += vec2(iTime*0.05, + iTime*0.01);
-      
-      vec2 off1 = vec2(50.0,33.0);
-      vec2 off2 = vec2(0.0, 0.0);
-      vec2 off3 = vec2(-300.0, 50.0);
-      vec2 off4 = vec2(-100.0, 200.0);
-      vec2 off5 = vec2(400.0, -200.0);
-      vec2 off6 = vec2(100.0, -1000.0);
-    float scale1 = 3.0;
-      float scale2 = 6.0;
-      float scale3 = 12.0;
-      float scale4 = 24.0;
-      float scale5 = 48.0;
-      float scale6 = 96.0;
-      return normnoise(snoise(vec3((uv+off1)*scale1,iTime*0.5))*0.8 + 
-                       snoise(vec3((uv+off2)*scale2,iTime*0.4))*0.4 +
-                       snoise(vec3((uv+off3)*scale3,iTime*0.1))*0.2 +
-                       snoise(vec3((uv+off4)*scale4,iTime*0.7))*0.1 +
-                       snoise(vec3((uv+off5)*scale5,iTime*0.2))*0.05 +
-                       snoise(vec3((uv+off6)*scale6,iTime*0.3))*0.025);
-  }
-  
-  
-  void mainImage( out vec4 outColor, in vec2 fragCoord )
-  {
+    // A simple way to prevent aliasing of cosine functions (the color
+    // palette in this case is made of 8 layers) by attenuating them
+    // when their oscillations become smaller than a pixel. Left is
+    // direct use of cos(x), right is band-limited cos(x).
+    //
+    // Box-filtering of cos(x):
+    //
+    // (1/w)∫cos(t)dt with t ∈ (x-½w, x+½w)
+    // = [sin(x+½w) - sin(x-½w)]/w
+    // = cos(x)·sin(½w)/(½w)
+    //
+    // Can approximate smoothstep(2π,0,w) ≈ sin(w/2)/(w/2),
+    // which you can also see as attenuating cos(x) when it 
+    // oscilates more than once per pixel. More info:
+    //
+    // https://iquilezles.org/articles/bandlimiting
+    //
+    // Related Shader:
+    //   https://www.shadertoy.com/view/WtScDt
+    //   https://www.shadertoy.com/view/wtXfRH
+    //   https://www.shadertoy.com/view/3tScWd
     
-    vec2 uv =  fragCoord.xy/iResolution.x;
-      
-      vec2 center = vec2(0.5,0.5*(iResolution.y/iResolution.x));
-      
-      vec2 light1 = vec2(sin(iTime*1.2+50.0)*1.0 + cos(iTime*0.4+10.0)*0.6,sin(iTime*1.2+100.0)*0.8 + cos(iTime*0.2+20.0)*-0.2)*0.2+center;
-      vec3 lightColor1 = vec3(1.0, 0.3, 0.3);
-      
-      vec2 light2 = vec2(sin(iTime+3.0)*-2.0,cos(iTime+7.0)*1.0)*0.2+center;
-      vec3 lightColor2 = vec3(0.3, 1.0, 0.3);
-      
-      vec2 light3 = vec2(sin(iTime+3.0)*2.0,cos(iTime+14.0)*-1.0)*0.2+center;
-      vec3 lightColor3 = vec3(0.3, 0.3, 1.0);
-  
-      
-      float cloudIntensity1 = 0.7*(1.0-(2.5*distance(uv, light1)));
-      float lighIntensity1 = 1.0/(100.0*distance(uv,light1));
-  
-      float cloudIntensity2 = 0.7*(1.0-(2.5*distance(uv, light2)));
-      float lighIntensity2 = 1.0/(100.0*distance(uv,light2));
-      
-      float cloudIntensity3 = 0.7*(1.0-(2.5*distance(uv, light3)));
-      float lighIntensity3 = 1.0/(100.0*distance(uv,light3));
-      
-      
-      outColor = vec4(vec3(cloudIntensity1*clouds(uv))*lightColor1 + lighIntensity1*lightColor1 +
-                       vec3(cloudIntensity2*clouds(uv))*lightColor2 + lighIntensity2*lightColor2 +
-                       vec3(cloudIntensity3*clouds(uv))*lightColor3 + lighIntensity3*lightColor3 
-                       ,1.0);
-  }
-  void main() {
-    mainImage(outColor, gl_FragCoord.xy);
-  }
-  `;
-}; // NOT WORKING shader4
-
-
-buildinShaders.shaderNebula = () => {
-  return `${toyShader()}
-  float polygonDistance(vec2 p, float radius, float angleOffset, int sideCount) {
-    float a = atan(p.x, p.y)+ angleOffset;
-    float b = 6.28319 / float(sideCount);
-    return cos(floor(.5 + a / b) * b - a) * length(p) - radius;
-  }
-  
-  // from https://www.shadertoy.com/view/4djSRW
-  #define HASHSCALE1 443.8975
-  float hash11(float p) // assumes p in ~0-1 range
-  {
-    vec3 p3  = fract(vec3(p) * HASHSCALE1);
-      p3 += dot(p3, p3.yzx + 19.19);
-      return fract((p3.x + p3.y) * p3.z);
-  }
-  
-  #define HASHSCALE3 vec3(.1031, .1030, .0973)
-  vec2 hash21(float p) // assumes p in larger integer range
-  {
-    vec3 p3 = fract(vec3(p) * HASHSCALE3);
-    p3 += dot(p3, p3.yzx + 19.19);
-    return fract(vec2((p3.x + p3.y)*p3.z, (p3.x+p3.z)*p3.y));
-  }
-  
-  void mainImage( out vec4 outColor, in vec2 fragCoord )
-  {
-    vec2 uv = vec2(0.5) - (fragCoord.xy / iResolution.xy);
-      uv.x *= iResolution.x / iResolution.y;
-      
-      float accum = 0.;
-      for(int i = 0; i < 83; i++) {
-          float fi = float(i);
-          float thisYOffset = mod(hash11(fi * 0.017) * (iTime + 19.) * 0.2, 4.0) - 2.0;
-          vec2 center = (hash21(fi) * 2. - 1.) * vec2(1.1, 1.0) - vec2(0.0, thisYOffset);
-          float radius = 0.5;
-          vec2 offset = uv - center;
-          float twistFactor = (hash11(fi * 0.0347) * 2. - 1.) * 1.9;
-          float rotation = 0.1 + iTime * 0.2 + sin(iTime * 0.1) * 0.9 + (length(offset) / radius) * twistFactor;
-          accum += pow(smoothstep(radius, 0.0, polygonDistance(uv - center, 0.1 + hash11(fi * 2.3) * 0.2, rotation, 5) + 0.1), 3.0);
-      }
-      
-      vec3 subColor = vec3(0.4, 0.8, 0.2); //vec3(0.4, 0.2, 0.8);
-      vec3 addColor = vec3(0.3, 0.2, 0.1);//vec3(0.3, 0.1, 0.2);
-      
-    outColor = vec4(vec3(1.0) - accum * subColor + addColor, 1.0);
-  }
-
-/////////
- 
-void main() {
-    mainImage(outColor, gl_FragCoord.xy);
-  }
-
-  `;
-};
-
-buildinShaders.shaderWater = () => {
-  return `${toyShader()}
-    // Found this on GLSL sandbox. I really liked it, changed a few things and made it tileable.// :)// by David Hoskins.
-    // Original water turbulence effect by joltz0r
-    // Redefine below to see the tiling...
-    //#define SHOW_TILING
-    #define TAU 6.28318530718
-    #define MAX_ITER 5
-    void mainImage( out vec4 outColor, in vec2 fragCoord ) 
+    
+    // box-filted cos(x)
+    vec3 fcos( in vec3 x )
     {
-      float time = iTime * .5+23.0;
-      // uv should be the 0-1 uv of texture...
-      vec2 uv = fragCoord.xy / iResolution.xy;
-      #ifdef SHOW_TILING
-        vec2 p = mod(uv*TAU*2.0, TAU)-250.0;
+        vec3 w = fwidth(x);
+      #if 1
+        return cos(x) * sin(0.5*w)/(0.5*w);       // exact
       #else
-          vec2 p = mod(uv*TAU, TAU)-250.0;
-      #endif
-        vec2 i = vec2(p);
-        float c = 1.0;
-        float inten = .005;
+        return cos(x) * smoothstep(6.2832,0.0,w); // approx
+      #endif    
+    }
+    
+    // pick raw cosine, or band-limited cosine
+    bool  mode = false;
+    vec3  mcos( vec3 x){return mode?cos(x):fcos(x);}
+    
+    // color palette, made of 8 cos functions
+    // (see https://iquilezles.org/articles/palettes)
+    vec3 getColor( in float t )
+    {
+        vec3 col = vec3(0.6,0.5,0.4);
+        col += 0.14*mcos(6.2832*t*  1.0+vec3(0.0,0.5,0.6));
+        col += 0.13*mcos(6.2832*t*  3.1+vec3(0.5,0.6,1.0));
+        col += 0.12*mcos(6.2832*t*  5.1+vec3(0.1,0.7,1.1));
+        col += 0.11*mcos(6.2832*t*  9.1+vec3(0.1,0.5,1.2));
+        col += 0.10*mcos(6.2832*t* 17.1+vec3(0.0,0.3,0.9));
+        col += 0.09*mcos(6.2832*t* 31.1+vec3(0.1,0.5,1.3));
+        col += 0.08*mcos(6.2832*t* 65.1+vec3(0.1,0.5,1.3));
+        col += 0.07*mcos(6.2832*t*131.1+vec3(0.3,0.2,0.8));
+        return col;
+    }
+    
+    void mainImage(out vec4 outColor, in vec2 fragCoord )
+    {
+        // coordiantes
+      vec2 q = (2.0*fragCoord-iResolution.xy)/iResolution.y;
+    
+        // separation
+        // float th = (iMouse.z>0.001) ? (2.0*iMouse.x-iResolution.x)/iResolution.y : 1.8*sin(iTime);
+        float th = 1.8*sin(iTime);
+        mode = (q.x<th);
+        
+        // deformation
+        vec2 p = 2.0*q/dot(q,q);
+    
+        // animation
+        p.xy += 0.05*iTime;
+    
+        // texture
+        vec3 col = min(getColor(p.x),getColor(p.y));
+    
+        // vignetting
+        col *= 1.5 - 0.2*length(q);
+        
+        // separation
+        col *= smoothstep(0.005,0.010,abs(q.x-th));
 
-        for (int n = 0; n < MAX_ITER; n++) 
-        {
-          float t = time * (1.0 - (3.5 / float(n+1)));
-          i = p + vec2(cos(t - i.x) + sin(t + i.y), sin(t - i.y) + cos(t + i.x));
-          c += 1.0/length(vec2(p.x / (sin(i.x+t)/inten),p.y / (cos(i.y+t)/inten)));
-        }
-        c /= float(MAX_ITER);
-        c = 1.17-pow(c, 1.4);
-        vec3 colour = vec3(pow(abs(c), 8.0));
-        colour = clamp(colour + vec3(0.0, 0.35, 0.5), 0.0, 1.0);
-
-        #ifdef SHOW_TILING
-        // Flash tile borders...
-        vec2 pixel = 2.0 / iResolution.xy;
-        uv *= 2.0;
-        float f = floor(mod(iTime*.5, 2.0));	// Flash value.
-        vec2 first = step(pixel, uv) * f;	// Rule out first screen pixels and flash.
-        uv  = step(fract(uv), pixel);	// Add one line of pixels per tile.
-        colour = mix(colour, vec3(1.0, 1.0, 0.0), (uv.x + uv.y) * first.x * first.y); // Yellow line
-        #endif
-        outColor = vec4(colour, 1.0);
-      }
-      void main() {
-        vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
-        // mainImage(outColor, vTextureCoord);
-        mainImage(outColor, gl_FragCoord.xy);
-        outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
-      }
+        // palette
+        if( q.y<-0.9 ) col = getColor( fragCoord.x/iResolution.x );
+        outColor = vec4( col, 1.0 );
+    }
+    void main() {
+      vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
+      // mainImage(outColor, vTextureCoord);
+      mainImage(outColor, gl_FragCoord.xy);
+      outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
+    }
   `;
 };
 
-buildinShaders.shaderFireBall = () => {
-  return `${toyShader()}
-  // https://www.shadertoy.com/view/4dXGR4
-  // based on https://www.shadertoy.com/view/lsf3RH by
-  // trisomie21 (THANKS!)
-  // My apologies for the ugly code.
-  float snoise(vec3 uv, float res) // by trisomie21
+freeShadersToy.shaderCircle = () => {
+  return `${toyShaderHeader()}
+  // The MIT License
+  // Copyright © 2020 Inigo Quilez
+  // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+  //  documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+  //  the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, 
+  //  and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  //  The above copyright notice and this permission notice shall be included in all copies or substantial portions
+  //  of the Software. 
+  // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+  // INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+  // IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+  // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+  // OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  // Signed distance to a disk
+  // List of some other 2D distances: 
+  // https://www.shadertoy.com/playlist/MXdSRf
+  // and iquilezles.org/articles/distfunctions2d
+  
+  float sdCircle( in vec2 p, in float r ) 
   {
-    const vec3 s = vec3(1e0, 1e2, 1e4);
-    uv *= res;
-    vec3 uv0 = floor(mod(uv, res))*s;
-    vec3 uv1 = floor(mod(uv+vec3(1.), res))*s;
-    vec3 f = fract(uv); f = f*f*(3.0-2.0*f);
-    vec4 v = vec4(uv0.x+uv0.y+uv0.z, uv1.x+uv0.y+uv0.z,
-                uv0.x+uv1.y+uv0.z, uv1.x+uv1.y+uv0.z);
-    
-    vec4 r = fract(sin(v*1e-3)*1e5);
-    float r0 = mix(mix(r.x, r.y, f.x), mix(r.z, r.w, f.x), f.y);
-    
-    r = fract(sin((v + uv1.z - uv0.z)*1e-3)*1e5);
-    float r1 = mix(mix(r.x, r.y, f.x), mix(r.z, r.w, f.x), f.y);
-    
-    return mix(r0, r1, f.z)*2.-1.;
+      return length(p)-r;
   }
-
-  float freqs[4];
 
   void mainImage( out vec4 outColor, in vec2 fragCoord )
   {
-    freqs[0] = texture( uSampler, vec2( 0.01, 0.15 ) ).x;
-    freqs[1] = texture( uSampler, vec2( 0.07, 0.15 ) ).x;
-    freqs[2] = texture( uSampler, vec2( 0.15, 0.15 ) ).x;
-    freqs[3] = texture( uSampler, vec2( 0.30, 0.15 ) ).x;
-
-    float brightness	= freqs[1] * 0.25 + freqs[2] * 0.25;
-    float radius		= 0.24 + brightness * 0.2;
-    float invRadius 	= 1.0/radius;
-    
-    vec3 orange			= vec3( 0.8, 0.65, 0.3 );
-    vec3 orangeRed		= vec3( 0.8, 0.35, 0.1 );
-    float time		= iTime * 0.1;
-    float aspect	= iResolution.x/iResolution.y;
-    vec2 uv			= fragCoord.xy / iResolution.xy;
-    vec2 p 			= -1. + uv;
-    p.x *= aspect;
-
-    float fade		= pow( length( 2.0 * p ), 0.5 );
-    float fVal1		= 1.0 - fade;
-    float fVal2		= 1.0 - fade;
-    
-    float angle		= atan( p.x, p.y )/6.2832;
-    float dist		= length(p);
-    vec3 coord		= vec3( angle, dist, time * 0.1 );
-    
-    float newTime1	= abs( snoise( coord + vec3( 0.0, -time * ( 0.35 + brightness * 0.001 ), time * 0.015 ), 15.0 ) );
-    float newTime2	= abs( snoise( coord + vec3( 0.0, -time * ( 0.15 + brightness * 0.001 ), time * 0.015 ), 45.0 ) );	
-    for( int i=1; i<=7; i++ ){
-      float power = pow( 2.0, float(i + 1) );
-      fVal1 += ( 0.5 / power ) * snoise( coord + vec3( 0.0, -time, time * 0.2 ), ( power * ( 10.0 ) * ( newTime1 + 1.0 ) ) );
-      fVal2 += ( 0.5 / power ) * snoise( coord + vec3( 0.0, -time, time * 0.2 ), ( power * ( 25.0 ) * ( newTime2 + 1.0 ) ) );
-    }
-    
-    float corona		= pow( fVal1 * max( 1.1 - fade, 0.0 ), 2.0 ) * 50.0;
-    corona				+= pow( fVal2 * max( 1.1 - fade, 0.0 ), 2.0 ) * 50.0;
-    corona				*= 1.2 - newTime1;
-    vec3 sphereNormal 	= vec3( 0.0, 0.0, 1.0 );
-    vec3 dir 			= vec3( 0.0 );
-    vec3 center			= vec3( 0.5, 0.5, 1.0 );
-    vec3 starSphere		= vec3( 0.0 );
-    
-    vec2 sp = -2.0 + 2.0 * uv;
-    sp.x *= aspect;
-    sp *= ( 2.0 - brightness );
-      float r = dot(sp,sp);
-    float f = (1.0-sqrt(abs(1.0-r)))/(r) + brightness * 0.5;
-    if( dist < radius ){
-      corona *= pow( dist * invRadius, 24.0 );
-        vec2 newUv;
-        newUv.x = sp.x*f;
-        newUv.y = sp.y*f;
-      newUv += vec2( time, 0.0 );
+    vec2 p = (2.0*fragCoord-iResolution.xy)/iResolution.y;
+    vec2 m = (2.0*iMouse.xy-iResolution.xy)/iResolution.y;
+  
+    float d = sdCircle(p,0.5);
       
-      vec3 texSample 	= texture( uSampler, newUv ).rgb;
-      float uOff		= ( texSample.g * brightness * 4.5 + time );
-      vec2 starUV		= newUv + vec2( uOff, 0.0 );
-      starSphere		= texture( uSampler, starUV ).rgb;
+    // coloring
+    vec3 col = (d>0.0) ? vec3(0.9,0.6,0.3) : vec3(0.65,0.85,1.0);
+    col *= 1.0 - exp(-6.0*abs(d));
+    col *= 0.8 + 0.2*cos(150.0*d);
+    col = mix( col, vec3(1.0), 1.0-smoothstep(0.0,0.01,abs(d)) );
+    if(iMouse.z>0.001) {
+      d = sdCircle(m,0.5);
+      col = mix(col, vec3(1.0,1.0,0.0), 1.0-smoothstep(0.0, 0.005, abs(length(p-m)-abs(d))-0.0025));
+      col = mix(col, vec3(1.0,1.0,0.0), 1.0-smoothstep(0.0, 0.005, length(p-m)-0.015));
     }
-    
-    float starGlow	= min( max( 1.0 - dist * ( 1.0 - brightness ), 0.0 ), 1.0 );
-    //outColor.rgb	= vec3( r );
-    outColor.rgb	= vec3( f * ( 0.75 + brightness * 0.3 ) * orange ) + starSphere + corona * orange + starGlow * orangeRed;
-    outColor.a		= 1.0;
+    outColor = vec4(col,1.0);
   }
 
   void main() {
     vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
     // mainImage(outColor, vTextureCoord);
-    // outColor.rgb += vec3(textureColor.rgb * vLightWeighting);
     mainImage(outColor, gl_FragCoord.xy);
     outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
   }
   `;
 };
 
-buildinShaders.shaderFireBallCC = () => {
-  return `${toyShader()}
-  // https://www.shadertoy.com/terms
-  // https://www.shadertoy.com/view/lsf3RH
-  float snoise(vec3 uv, float res)
+freeShadersToy.shaderSpiral = () => {
+  return `${toyShaderHeader()}
+  // The MIT License
+  // Copyright © 2022 Inigo Quilez
+  // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  // Distance to a logarithmic spiral. It's inexact, mostly
+  // noticeable when the number of rotations is small.
+
+  // List of some other 2D distances: https://www.shadertoy.com/playlist/MXdSRf
+  //
+  // and iquilezles.org/articles/distfunctions2d
+  // w is the width / distance from center to tip
+  // k is the number of rotations
+  float sdSpiral( in vec2 p, float w, in float k )
   {
-    const vec3 s = vec3(1e0, 1e2, 1e3);
-    
-    uv *= res;
-    
-    vec3 uv0 = floor(mod(uv, res))*s;
-    vec3 uv1 = floor(mod(uv+vec3(1.), res))*s;
-    
-    vec3 f = fract(uv); f = f*f*(3.0-2.0*f);
-  
-    vec4 v = vec4(uv0.x+uv0.y+uv0.z, uv1.x+uv0.y+uv0.z,
-                uv0.x+uv1.y+uv0.z, uv1.x+uv1.y+uv0.z);
-  
-    vec4 r = fract(sin(v*1e-1)*1e3);
-    float r0 = mix(mix(r.x, r.y, f.x), mix(r.z, r.w, f.x), f.y);
-    
-    r = fract(sin((v + uv1.z - uv0.z)*1e-1)*1e3);
-    float r1 = mix(mix(r.x, r.y, f.x), mix(r.z, r.w, f.x), f.y);
-    
-    return mix(r0, r1, f.z)*2.-1.;
+      // body
+      const float kTau = 6.283185307;
+      float r = length(p);
+      float a = atan(p.y,p.x);
+      float n = floor( 0.5/w + (log2(r/w)*k-a)/kTau );
+      float ra = w*exp2((a+kTau*(min(n+0.0,0.0)-0.5))/k);
+      float rb = w*exp2((a+kTau*(min(n+1.0,0.0)-0.5))/k);
+      float d = min( abs(r-ra), abs(r-rb) );
+
+      // tip
+      return min( d, length(p+vec2(w,0.0)) );
   }
-  
-  void mainImage( out vec4 outColor, in vec2 fragCoord ) 
+
+  void mainImage( out vec4 outColor, in vec2 fragCoord )
   {
-    vec2 p = -.5 + fragCoord.xy / iResolution.xy;
-    p.x *= iResolution.x/iResolution.y;
-    
-    float color = 3.0 - (3.*length(2.*p));
-    
-    vec3 coord = vec3(atan(p.x,p.y)/6.2832+.5, length(p)*.4, .5);
-    
-    for(int i = 1; i <= 7; i++)
-    {
-      float power = pow(2.0, float(i));
-      color += (1.5 / power) * snoise(coord + vec3(0.,-iTime*.05, iTime*.01), power*16.);
-    }
-    outColor = vec4( color, pow(max(color,0.),2.)*0.4, pow(max(color,0.),3.)*0.15 , 1.0);
+      // normalized pixel coordinates
+      vec2 p = (2.0*fragCoord-iResolution.xy)/iResolution.y;
+      vec2 m = (2.0*iMouse.xy-iResolution.xy)/iResolution.y;
+      float px = 2.0/iResolution.y;
+      
+      // recenter
+      p -= vec2(0.2,-0.09);
+      m -= vec2(0.2,-0.09);
+      
+      // animation
+      float sw = 1.0;
+      float sk = 1.0 + 10.0*(0.5-0.5*cos(iTime+1.5));
+      
+      // distance
+      float d = sdSpiral(p, sw, sk);
+      
+      // coloring
+      vec3 col = (d>0.0) ? vec3(0.9,0.6,0.3) : vec3(0.65,0.85,1.0);
+      col *= 1.0 - exp(-7.0*abs(d));
+      col *= 0.8 + 0.2*cos(160.0*abs(d));
+      col = mix( col, vec3(1.0), 1.0-smoothstep(-px,px,abs(d)-0.005) );
+
+      if( iMouse.z>0.001 )
+      {
+      d = sdSpiral(m, sw, sk);
+      col = mix(col, vec3(1.0,1.0,0.0), 1.0-smoothstep(-px, px, abs(length(p-m)-abs(d))-0.005));
+      col = mix(col, vec3(1.0,1.0,0.0), 1.0-smoothstep(-px, px, length(p-m)-0.015));
+      }
+
+      outColor = vec4(col, 1.0);
   }
   void main() {
     vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
     // mainImage(outColor, vTextureCoord);
-    // outColor.rgb += vec3(textureColor.rgb * vLightWeighting);
     mainImage(outColor, gl_FragCoord.xy);
     outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
   }
   `;
 };
 
-buildinShaders.shaderChain = () => {
-  return `${toyShader()}
-// ***********************************************************
-// Alcatraz / Rhodium 4k Intro liquid carbon
-// by Jochen "Virgill" Feldkötter
-// 4kb executable: http://www.pouet.net/prod.php?which=68239
-// Youtube: https://www.youtube.com/watch?v=YK7fbtQw3ZU
-// ***********************************************************
-#define time iTime
-#define res iResolution
-
-float bounce;
-
-// signed box
-float sdBox(vec3 p,vec3 b)
-{
-  vec3 d=abs(p)-b;
-  return min(max(d.x,max(d.y,d.z)),0.)+length(max(d,0.));
-}
-
-// rotation
-void pR(inout vec2 p,float a) 
-{
-	p=cos(a)*p+sin(a)*vec2(p.y,-p.x);
-}
-
-// 3D noise function (IQ)
-float noise(vec3 p)
-{
-	vec3 ip=floor(p);
-    p-=ip; 
-    vec3 s=vec3(7,157,113);
-    vec4 h=vec4(0.,s.yz,s.y+s.z)+dot(ip,s);
-    p=p*p*(3.-2.*p); 
-    h=mix(fract(sin(h)*43758.5),fract(sin(h+s.x)*43758.5),p.x);
-    h.xy=mix(h.xz,h.yw,p.y);
-    return mix(h.x,h.y,p.z); 
-}
-
-float map(vec3 p)
-{	
-	p.z-=1.0;
-    p*=0.9;
-    pR(p.yz,bounce*1.+0.4*p.x);
-    return sdBox(p+vec3(0,sin(1.6*time),0),vec3(20.0, 0.05, 1.2))-.4*noise(8.*p+3.*bounce);
-}
-
-//	normal calculation
-vec3 calcNormal(vec3 pos)
-{
-    float eps=0.0001;
-	float d=map(pos);
-	return normalize(vec3(map(pos+vec3(eps,0,0))-d,map(pos+vec3(0,eps,0))-d,map(pos+vec3(0,0,eps))-d));
-}
-
-
-// 	standard sphere tracing inside and outside
-float castRayx(vec3 ro,vec3 rd) 
-{
-    float function_sign=(map(ro)<0.)?-1.:1.;
-    float precis=.0001;
-    float h=precis*2.;
-    float t=0.;
-	for(int i=0;i<120;i++) 
-	{
-        if(abs(h)<precis||t>12.)break;
-		h=function_sign*map(ro+rd*t);
-        t+=h;
-	}
-    return t;
-}
-
-// 	refraction
-float refr(vec3 pos,vec3 lig,vec3 dir,vec3 nor,float angle,out float t2, out vec3 nor2)
-{
-    float h=0.;
-    t2=2.;
-	vec3 dir2=refract(dir,nor,angle);  
- 	for(int i=0;i<50;i++) 
-	{
-		if(abs(h)>3.) break;
-		h=map(pos+dir2*t2);
-		t2-=h;
-	}
-    nor2=calcNormal(pos+dir2*t2);
-    return(.5*clamp(dot(-lig,nor2),0.,1.)+pow(max(dot(reflect(dir2,nor2),lig),0.),8.));
-}
-
-//	softshadow 
-float softshadow(vec3 ro,vec3 rd) 
-{
-    float sh=1.;
-    float t=.02;
-    float h=.0;
-    for(int i=0;i<22;i++)  
-	{
-        if(t>20.)continue;
-        h=map(ro+rd*t);
-        sh=min(sh,4.*h/t);
-        t+=h;
-    }
-    return sh;
-}
-
-//	main function
-void mainImage(out vec4 outColor,in vec2 fragCoord)
-{    
-    bounce=abs(fract(0.05*time)-.5)*20.; // triangle function
-    
-	vec2 uv=gl_FragCoord.xy/res.xy; 
-    vec2 p=uv*2.-1.;
-   
-// 	bouncy cam every 10 seconds
-    float wobble=(fract(.1*(time-1.))>=0.9)?fract(-time)*0.1*sin(30.*time):0.;
-    
-//  camera    
-    vec3 dir = normalize(vec3(2.*gl_FragCoord.xy -res.xy, res.y));
-    vec3 org = vec3(0,2.*wobble,-3.);  
-    
-
-// 	standard sphere tracing:
-    vec3 color = vec3(0.);
-    vec3 color2 =vec3(0.);
-    float t=castRayx(org,dir);
-	vec3 pos=org+dir*t;
-	vec3 nor=calcNormal(pos);
-
-// 	lighting:
-    vec3 lig=normalize(vec3(.2,6.,.5));
-//	scene depth    
-    float depth=clamp((1.-0.09*t),0.,1.);
-    
-    vec3 pos2 = vec3(0.);
-    vec3 nor2 = vec3(0.);
-    if(t<12.0)
-    {
-    	color2 = vec3(max(dot(lig,nor),0.)  +  pow(max(dot(reflect(dir,nor),lig),0.),16.));
-    	color2 *=clamp(softshadow(pos,lig),0.,1.);  // shadow            	
-       	float t2;
-		color2.rgb +=refr(pos,lig,dir,nor,0.9, t2, nor2)*depth;
-        color2-=clamp(.1*t2,0.,1.);				// inner intensity loss
-
-	}      
-  
-
-    float tmp = 0.;
-    float T = 1.;
-
-//	animation of glow intensity    
-    float intensity = 0.1*-sin(.209*time+1.)+0.05; 
-	for(int i=0; i<128; i++)
-	{
-        float density = 0.; float nebula = noise(org+bounce);
-        density=intensity-map(org+.5*nor2)*nebula;
-		if(density>0.)
-		{
-			tmp = density / 128.;
-            T *= 1. -tmp * 100.;
-			if( T <= 0.) break;
-		}
-		org += dir*0.078;
-    }    
-	vec3 basecol=vec3(1./1. ,  1./4. , 1./16.);
-    T=clamp(T,0.,1.5); 
-    color += basecol* exp(4.*(0.5-T) - 0.8);
-    color2*=depth;
-    color2+= (1.-depth)*noise(6.*dir+0.3*time)*.1;	// subtle mist
-
-    
-//	scene depth included in alpha channel
-outColor = vec4(vec3(1.*color+0.8*color2)*1.3,abs(0.67-depth)*2.+4.*wobble);
-}
-
-
-
-
-
-//
-
-void main() {
-  vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
-  // mainImage(outColor, vTextureCoord);
-  // outColor.rgb += vec3(textureColor.rgb * vLightWeighting);
-  mainImage(outColor, gl_FragCoord.xy);
-  outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
-}
-
-
-  `;
-};
-
-buildinShaders.shaderFractalCC = () => {
-  return `${toyShader()}
-  /*
-    Steel Lattice
-    -------------
-    Shadertoy user FabriceNeyret2's "Crowded Pillars 3" inspired me to dig up some old
-    "lattice with holes" code. Here's the link to his particular example: 
-    https://www.shadertoy.com/view/4lfSDn
-    
-    The lattice structure in this example is really simple to construct, and represents 
-    just one of infinitely many combinations. I was going for that oldschool, 3D-tube 
-	screensaver look and had originally hoped to set the thing ablaze.
-
-	Unfortunately, I couldn't achieve even mild realism whilst maintaining a decent 
-	framerate, so have copped out and settled for a very subtle reflective firey afterglow. 
-	I haven't given up on the original idea, though.
-    
-	There's a whole bunch of notes in there. Probably too many, but hopefully, someone
-	will find some of it useful. I spent far too long reading up on blackbody radiation, 
-	then barely used it. Typical. :)
-	If anyone spots any errors, feel free to let me know.
-*/
-
-#define FIRE_REFLECTION // Comment this out, to get rid of the reflective afterglow.
-
-#define sEPS 0.005 // Minimum surface distance threshold.
-#define FAR 20. // Maximum ray distance threshold.
-
-// Grey scale.
-float getGrey(vec3 p){ return p.x*0.299 + p.y*0.587 + p.z*0.114; }
-
-// Smooth minimum function. There are countless articles, but IQ explains it best here:
-// https://iquilezles.org/articles/smin
-float sminP( float a, float b, float smoothing ){
-    float h = clamp( 0.5+0.5*(b-a)/smoothing, 0.0, 1.0 );
-    return mix( b, a, h ) - smoothing*h*(1.0-h);
-}
-
-// 2D rotation. Always handy.
-mat2 rot(float th){ float cs = cos(th), si = sin(th); return mat2(cs, -si, si, cs); }
-
-// Tri-Planar blending function. Based on an old Nvidia writeup:
-// GPU Gems 3 - Ryan Geiss: http://http.developer.nvidia.com/GPUGems3/gpugems3_ch01.html
-vec3 tex3D( sampler2D tex, in vec3 p, in vec3 n ){
-    //n = abs(n)/1.732051;
-    n = max((abs(n) - 0.2)*7., 0.001); // n = max(abs(n), 0.001), etc.
-    n /= (n.x + n.y + n.z );
-	return (texture(tex, p.yz)*n.x + texture(tex, p.zx)*n.y + texture(tex, p.xy)*n.z).xyz;
-}
-
-// I just wanted a simple function to produce some firey blackbody colors with a simple explanation 
-// to go with it, but computer nerds who write academic papers never make it easy. :) Anyway, to save 
-// someone else the trouble, here's some quick, but messy, notes.
-//
-// The paper located here was pretty helpful. Mind numbingly boring, but helpful:
-// http://www.spectralcalc.com/blackbody/CalculatingBlackbodyRadianceV2.pdf
-// So was this:
-// http://www.scratchapixel.com/old/lessons/3d-advanced-lessons/blackbody/spectrum-of-blackbodies/
-//
-// If wasting time reading though countless webpages full of physics and mathematics that never get to 
-// the point isn't your thing, then this Shadertoy example should be far more accommodating:
-// User - Bejit: https://www.shadertoy.com/view/MslSDl
-vec3 blackbodyPalette(float t){
-    // t = tLow + (tHigh - tLow)*t;
-    t *= 4000.; // Temperature range. Hardcoded from 0K to 4000K, in this case. 
-    
-    // Planckian locus or black body locus approximated in CIE color space... Color theory is not my thing,
-    // but I think below is a conversion of the physical temperture (t) above (which has no meaning to a 
-    // computer) to chromacity coordinates. 
-    float cx = (0.860117757 + 1.54118254e-4*t + 1.28641212e-7*t*t)/(1.0 + 8.42420235e-4*t + 7.08145163e-7*t*t);
-    float cy = (0.317398726 + 4.22806245e-5*t + 4.20481691e-8*t*t)/(1.0 - 2.89741816e-5*t + 1.61456053e-7*t*t);
-    
-    // Converting the chromacity coordinates to XYZ tristimulus color space.
-    float d = (2.*cx - 8.*cy + 4.);
-    vec3 XYZ = vec3(3.*cx/d, 2.*cy/d, 1. - (3.*cx + 2.*cy)/d);
-    
-    // Converting XYZ color space to RGB. Note: Below are the transpose of the matrices you'll find all over the 
-    // web, because I'm placing XYZ after the conversion matrix, and not before it. If you're getting the wrong
-    // colors, that's probably the reason. I found that out the hard way. :) 
-    // http://www.cs.rit.edu/~ncs/color/t_spectr.html
-    vec3 RGB = mat3(3.240479, -0.969256, 0.055648, 
-                    -1.537150, 1.875992, -0.204043, 
-                    -0.498535, 0.041556, 1.057311) * vec3(1./XYZ.y*XYZ.x, 1., 1./XYZ.y*XYZ.z);
-                    
-    // Alternative conversion matrix: http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html
-    // mat3(3.2404542, -0.9692660, 0.0556434, -1.5371385, 1.8760108, -0.2040259, -0.4985314, 0.0415560, 1.0572252);
-
-    // Apply Stefanâ€“Boltzmann's law to the RGB color, and we're done. 
-    // 
-    // Appendix A: Algorithms for Computing In-band Radiance.
-    // http://www.spectralcalc.com/blackbody/CalculatingBlackbodyRadianceV2.pdf
-    // Planck*Light/Boltzman = 0.01438767312;
-    // Planck*Light*Light*2. = 1.1910428e-16;
-    //
-    // Whoever went through the trouble to use the real algorithm to come up with the estimate of 0.0004, "Thank you!" :)
-    // The last term relates to the power radiating through the surface... or something to that effect.
-    // Some RGB values fall a little below zero, so I've had to rectify that.
-    return max(RGB, 0.)*pow(t*0.0004, 4.); 
-}
-
-// Surface bump function. Cheap, but with decent visual impact.
-float bumpSurf3D( in vec3 p, in vec3 n ){
-    
-    // Placing raised box-like bumps all over the structure.
-    p = abs(mod(p, 0.0625)-0.03125);
-    float x = min(p.x,min(p.y,p.z))/0.03125;
-    // More even alternative, but not the look I was after.
-    //float x = (0.03125-max(p.x,max(p.y,p.z)))/0.03125*1.25;
-    
-    // More intricate detail.
-    //x = sin(x*1.57+sin(x*1.57)*1.57)*0.5 + 0.5; 
-
-    // Very, very lame, but cheap, smooth noise for a bit of roughness. The frequency is 
-    // high and the amplitude is very low, so the details won't be discernible enough to 
-    // necessitate a real noise algorithm.
-    p = sin(p*380.+sin(p.yzx*192.+64.));
-    float surfaceNoise = (p.x*p.y*p.z);
-
-    return clamp(x + surfaceNoise*0.05, 0., 1.);//x*32. + //To accentuate x*2./0.03125, etc
-
-}
-
-// Standard function-based bump mapping function.
-vec3 doBumpMap(in vec3 p, in vec3 nor, float bumpfactor){
-    
-    const float eps = 0.001;
-    float ref = bumpSurf3D(p, nor);                 
-    vec3 grad = vec3( bumpSurf3D(vec3(p.x-eps, p.y, p.z), nor)-ref,
-                      bumpSurf3D(vec3(p.x, p.y-eps, p.z), nor)-ref,
-                      bumpSurf3D(vec3(p.x, p.y, p.z-eps), nor)-ref )/eps;                     
-          
-    grad -= nor*dot(nor, grad);          
-                      
-    return normalize( nor + bumpfactor*grad );
-	
-}
-
-// Shadertoy user FabriceNeyret2's "Crowded Pillars 3" inspired me to dig up some old
-// "lattice with holes" code. Here's the link: https://www.shadertoy.com/view/4lfSDn
-//
-// The technique used here is pretty common: Produce two, or more, repeat field objects, 
-// lattices - or whatever you'd like - at different repeat frequencies, then combine them 
-// with either a standard operation (min(x1, x2), max(x1, -x2), etc) or something less 
-// standard, like the one I've used below (sqrt(x1*x1+x2*x2)-.05). The possibilities are
-// endless. Menger cubes, and the like, are constructed using a similar method.
-//
-// For anyone who wants to experiment, use one line from each of the three sections.
-// There are 24 different combinations all up, and I've probably chosen the least
-// interesting one. :)
-float map(vec3 p){
- 
-    // SECTION 1
-    //
-    // Repeat field entity one, which is just some tubes repeated in all directions every 
-    // two units, then combined with a smooth minimum function. Otherwise known as a lattice.
-    p = mod(p, 2.)-1.;
-    float x1 = sminP(length(p.xy),sminP(length(p.yz),length(p.xz), 0.25), 0.25)-0.5; // EQN 1
-    //float x1 = sqrt(min(dot(p.xy, p.xy),min(dot(p.yz, p.yz),dot(p.xz, p.xz))))-0.5; // EQN 2
-    //p = abs(p); float x1 = min(max(p.x, p.y),min(max(p.y, p.z),max(p.x, p.z)))-0.5; // EQN 3
-
-    // SECTION 2
-    //
-    // Repeat field entity two, which is just an abstract object repeated every half unit. 
-    p = abs(mod(p, 0.5)-0.25);
-    float x2 = min(p.x,min(p.y,p.z)); // EQN 1
-    //float x2 = min(max(p.x, p.y),min(max(p.y, p.z),max(p.x, p.z)))-0.125; //-0.175, etc. // EQN 2
-    
-    // SECTION 3
-    //
-    // Combining the two entities above.
-    return sqrt(x1*x1+x2*x2)-.05; // EQN 1
-    //return max(x1, x2)-.05; // EQN 2
-    
-}
-
-// Standard ray marching function: I included some basic optimization notes. I know
-// most of it is probably obvious to many, but I thought some might find it useful.
-float raymarch(vec3 ro, vec3 rd) {
-	
-	// Surface distance and total ray distance.
-	float d, t = 0.0;
-    
-    // More iterations means a chance to gain more accuracy, but should be the lowest
-    // possible number that will render as many scene details as possible.
-    for (int i = 0; i < 128; i++){
-        // Surface distance.
-        d = map(ro + rd *t);
-        
-        // If the distance is less than the surface distance threshold (sEPS), or 
-        // further than the maximum ray distance threshold (FAR), exit.
-        //
-        // An early exit can mean the difference between, say, 20 map calls and the 
-        // maximum iteration count (128, in this case). In general, you want the 
-        // largest sEPS and smallest FAR value that will facilitate an accurate scene. 
-        // Tweaking these two figures is an artform. sEPS values ranging from 0.001 
-        // to 0.05 tend to work. However, smaller numbers can kill framerate, in some 
-        // cases. I tend to favor 0.005 and 0.01. For the FAR value, it depends on 
-        // the scene.
-        if (d<sEPS || t>FAR) break;  
-        
-        // Add a portion of the surface distance (d) to the total ray distance (t).
-        //
-        // Sometimes, the ray can overshoot, so decreasing the jump distance "d" can 
-        // help give more accuracy. Of course, the downside is more iterations,
-        // which in turn, reduces framerate. Tweaking these numbers is also an artform.
-        // Anywhere between 0.5 (if accuracy is really necessary) and 1.0 works for
-        // me. 0.75 is a good compromise.
-        t += d*0.75;
-    }
-    
-    return t;
-}
-
-// Based on original by IQ.
-float calculateAO(vec3 p, vec3 n){
-
-    const float AO_SAMPLES = 5.0;
-    float r = 0.0, w = 1.0, d;
-    
-    for (float i=1.0; i<AO_SAMPLES+1.1; i++){
-        d = i/AO_SAMPLES;
-        r += w*(d - map(p + n*d));
-        w *= 0.5;
-    }
-    
-    return 1.0-clamp(r,0.0,1.0);
-}
-
-// The iterations should be higher for proper accuracy, but in this case, the shadows are a subtle background feature.
-float softShadow(vec3 ro, vec3 rd, float start, float end, float k){
-
-    float shade = 1.0;
-    const int maxIterationsShad = 16; // 24 or 32 would be better.
-
-    // The "start" value, or minimum, should be set to something more than the stop-threshold, so as to avoid a collision with 
-    // the surface the ray is setting out from. It doesn't matter how many times I write shadow code, I always seem to forget this.
-    // If adding shadows seems to make everything look dark, that tends to be the problem.
-    float dist = start;
-    float stepDist = end/float(maxIterationsShad);
-
-    // Max shadow iterations - More iterations make nicer shadows, but slow things down. Obviously, the lowest 
-    // number to give a decent shadow is the best one to choose. 
-    for (int i=0; i<maxIterationsShad; i++){
-        // End, or maximum, should be set to the distance from the light to surface point. If you go beyond that
-        // you may hit a surface not between the surface and the light.
-        float h = map(ro + rd*dist);
-        shade = min(shade, k*h/dist);
-        
-        // What h combination you add to the distance depends on speed, accuracy, etc. To be honest, I find it impossible to find 
-        // the perfect balance. Faster GPUs give you more options, because more shadow iterations always produce better results.
-        // Anyway, here's some posibilities. Which one you use, depends on the situation:
-        // +=max(h, 0.001), +=clamp( h, 0.01, 0.25 ), +=min( h, 0.1 ), +=stepDist, +=min(h, stepDist*2.), etc.
-        
-        
-        // I'm always torn between local shadowing (clamp(h, 0.0005, 0.2), etc) and accounting for shaowing from
-        // distant objects all the way to the light source. If in doubt, local shadowing is probably best, but
-        // here, I'm trying to do the latter.
-        dist += clamp(h, 0.0005, stepDist*2.); // The best of both worlds... I think. 
-        
-        // There's some accuracy loss involved, but early exits from accumulative distance function can help.
-        if (h<0.001 || dist > end) break; 
-    }
-
-    // I usually add a bit to the final shade value, which lightens the shadow slightly. It's a preference thing. Really dark
-    // shadows look too brutal to me.
-    return min(max(shade, 0.) + 0.4, 1.0); 
-}
-
-// Standard normal function.
-vec3 getNormal(in vec3 p) {
-	const float eps = 0.001;
-	return normalize(vec3(
-		map(vec3(p.x+eps,p.y,p.z))-map(vec3(p.x-eps,p.y,p.z)),
-		map(vec3(p.x,p.y+eps,p.z))-map(vec3(p.x,p.y-eps,p.z)),
-		map(vec3(p.x,p.y,p.z+eps))-map(vec3(p.x,p.y,p.z-eps))
-	));
-
-}
-
-// Curvature function, which Shadertoy user Nimitz wrote. I've hard-coded this one to
-// get just the range I want. Not very scientific at all.
-//
-// From an intuitive sense, the function returns a weighted difference between a surface 
-// value and some surrounding values. Almost common sense... almost. :) If anyone 
-// could provide links to some useful articles on the function, I'd be greatful.
-//
-// Original usage (I think?) - Cheap curvature: https://www.shadertoy.com/view/Xts3WM
-// Other usage: Xyptonjtroz: https://www.shadertoy.com/view/4ts3z2
-float curve(in vec3 p){
-
-    vec2 e = vec2(-1., 1.)*0.05; //0.05->7. - 0.04->11. - 0.03->20.->0.1->2.
-    
-    float t1 = map(p + e.yxx), t2 = map(p + e.xxy);
-    float t3 = map(p + e.xyx), t4 = map(p + e.yyy);
-    
-    return 7. * (t1 + t2 + t3 + t4 - 4.*map(p));
-}
-
-void mainImage( out vec4 outColor, in vec2 fragCoord )
-{
-
-    // Screen coordinates.
-	vec2 uv = (fragCoord - iResolution.xy*0.5) / iResolution.y;
-    
-    // No camera setup. Just lazily heading straight to the unit direction vector.
-    vec3 rd = normalize(vec3(uv, 0.5));
-    //vec3 rd = normalize(vec3(uv, sqrt(1.-dot(uv, uv))*0.5)); // Mild fish lens, if you'd prefer.
-    
-    // Rotating the unit direction vector about the XY and XZ places for a bit of a look around.
-    rd.xy *= rot(iTime*0.5);
-    rd.xz *= rot(iTime*0.25); // Extra variance.
-    
-    // Ray origin. Set off linearly in the Z-direction. A bit of a lattice cliche, but effective.
-    vec3 ro = vec3(0.0, 0.0, iTime*1.0);
-    //vec3 ro = vec3(0.5 + iTime*0.7, 0.0, iTime*0.7); // Another lattice traversal cliche.
-    
-    // Light position. Rotated a bit, then placed a little above the viewing position.
-    vec3 lp = vec3(0.0, 0.125, -0.125);
-    lp.xy *= rot(iTime*0.5);
-    lp.xz *= rot(iTime*0.25);
-    lp += ro + vec3(0.0, 1.0, 0.0);
-    
-    // Initiate the scene color to black.
-    vec3 sceneCol = vec3(0.);
-    
-    // Distance to the surface in the scene.
-    float dist = raymarch(ro, rd);
-    
-    // If the surface has been hit, light it up.
-    if (dist < FAR){
-
-        // Surface point.
-        vec3 sp = ro + rd*dist;
-        
-        // Surface normal.
-        vec3 sn = getNormal(sp);
-        
-    	
-	    // Standard function-based bump map - as opposed to texture bump mapping. It's possible to 
-	    // taper the bumpiness (last term) with distance, using something like: 0.0125/(1.+dist*0.125).
-	    sn = doBumpMap(sp, sn, 0.01);
-    	
-    	
-	    // Light direction vector.
-	    vec3 ld = lp-sp;
-
-        // Object color at the surface point.
-	    vec3 objCol = tex3D( uSampler, sp, sn );
-	    // Using the bump function to shade the surface a bit more to enhance the bump mapping a little.
-	    // Not mandatory, but I prefer it sometimes.
-	    objCol *= bumpSurf3D(sp, sn)*0.5 + 0.5;
-    	
-
-	    float lDist = max(length(ld), 0.001); // Distance from the light to the surface point.
-	    ld /= lDist; // Normalizing the light-to-surface, aka light-direction, vector.
-	    float atten = min( 1.0 /( lDist*0.5 + lDist*lDist*0.1 ), 1.0 ); // Light falloff, or attenuation.
-    	
-	    float ambient = .25; //The object's ambient property. You can also have a global and light ambient property.
-	    float diffuse = max( 0.0, dot(sn, ld) ); //The object's diffuse value.
-	    float specular = max( 0.0, dot( reflect(-ld, sn), -rd) ); // Specular component.
-	    specular = pow(specular, 8.0); // Ramping up the specular value to the specular power for a bit of shininess.
-	    
-	    // Soft shadows. I really cheaped out on the iterations, so the shadows are not accurate. Thankfully, 
-	    // they're not a dominant feature, and everything's moving enough so that it's not really noticeable.
-	    float shadow = softShadow(sp, ld, sEPS*2., lDist, 32.);
-	    // Ambient occlusion.
-        float ao = calculateAO(sp, sn)*0.5 + 0.5;
-    	    
-	    // Fresnel term. Good for giving a surface a bit of a reflective glow.
-        //float fre = pow( clamp(dot(sn, rd) + 1., .0, 1.), 1.);
-        
-
-        #ifdef FIRE_REFLECTION
-        // The firey reflection: Not very sophisticated. Use the relected vector to index into a
-        // moving noisey texture, etc, to obtain a reflective shade value (refShade). Combine it
-        // with the surface curvature (crv - higher curvature, more reflective heat... probably), 
-        // then feed the result into a blackbody palette function to obtain the reflective color. 
-        // It's mostly made up, with a tiny bit of science thrown in, so is not meant to be taken 
-        // seriously.
-        
-        // Surface reflection vector.
-        vec3 sf = reflect(rd, sn);
-        
-        // Curvature. This function belongs to Shadertoy user Nimitz.
-	    float crv = clamp(curve(sp), 0., 1.);
-        
-        float refShade = getGrey(tex3D( uSampler, sp/4. + iTime/64., sf ));
-        refShade = refShade*0.4 + max(dot(sf, vec3(0.166)), .0);
-        vec3 refCol = blackbodyPalette(refShade*(crv*0.5+0.5));
-        #endif
-
-    	// Combining the terms from above in a pretty standard way to produce the final color.
-	    sceneCol = objCol*(vec3(1., 0.97, 0.92)*diffuse + ambient)  + vec3(1.,0.9,0.92)*specular*0.75;
-	    #ifdef FIRE_REFLECTION
-	    // Add the subtle relected firey afterglow.
-	    sceneCol += refCol; //*(diffuse + ambient + specular*0.75);
-	    #endif
-	    
-	    // Shading the color.
-	    sceneCol *= atten*ao*shadow;
-	
-	}
-
-  	// Done! No gamma correction - I wouldn't recommend it. :)
-	outColor = vec4(clamp(sceneCol, 0., 1.), 1);
-}
-
-void main() {
-  vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
-  // mainImage(outColor, vTextureCoord);
-  // outColor.rgb += vec3(textureColor.rgb * vLightWeighting);
-  mainImage(outColor, gl_FragCoord.xy);
-  outColor.rgb *= vec3(textureColor.rgb * vLightWeighting);
-}
-
-`;
-};
-
-buildinShaders.shaderTest = () => {
-  return `${toyShader()}
- 
-  `;
-};
-
-},{"../..":4,"../matrix-world":20,"../utility":31}],23:[function(require,module,exports){
+},{"../..":4,"../matrix-world":20,"../utility":32}],24:[function(require,module,exports){
 
 /**
  * @description
@@ -13944,7 +13301,7 @@ buildinShaders.shaderTest = () => {
  * @simplyRender
  * No FBO draw flow
  */
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14026,7 +13383,7 @@ class MatrixPhysics {
 
 exports.default = MatrixPhysics;
 
-},{"./matrix-world":20,"cannon":37}],25:[function(require,module,exports){
+},{"./matrix-world":20,"cannon":38}],26:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14442,7 +13799,7 @@ function checkingProcedureCalcObj(object) {
   }
 }
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 (function (Buffer){(function (){
 // Last time updated: 2017-08-27 5:48:35 AM UTC
 
@@ -15682,7 +15039,7 @@ function checkingProcedureCalcObj(object) {
 })();
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":34}],27:[function(require,module,exports){
+},{"buffer":35}],28:[function(require,module,exports){
 (function (process,global){(function (){
 'use strict';
 
@@ -21600,7 +20957,7 @@ if (typeof define === 'function' && define.amd) {
 }
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":39}],28:[function(require,module,exports){
+},{"_process":40}],29:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22110,7 +21467,7 @@ function getAudioElement(mediaElement, config) {
   return mediaElementContainer;
 }
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 (function (Buffer){(function (){
 /*!
  * Socket.IO v3.1.3
@@ -22120,7 +21477,7 @@ function getAudioElement(mediaElement, config) {
 !function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports.io=e():t.io=e()}(self,(function(){return function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)n.d(r,o,function(e){return t[e]}.bind(null,o));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=17)}([function(t,e,n){function r(t){if(t)return function(t){for(var e in r.prototype)t[e]=r.prototype[e];return t}(t)}t.exports=r,r.prototype.on=r.prototype.addEventListener=function(t,e){return this._callbacks=this._callbacks||{},(this._callbacks["$"+t]=this._callbacks["$"+t]||[]).push(e),this},r.prototype.once=function(t,e){function n(){this.off(t,n),e.apply(this,arguments)}return n.fn=e,this.on(t,n),this},r.prototype.off=r.prototype.removeListener=r.prototype.removeAllListeners=r.prototype.removeEventListener=function(t,e){if(this._callbacks=this._callbacks||{},0==arguments.length)return this._callbacks={},this;var n,r=this._callbacks["$"+t];if(!r)return this;if(1==arguments.length)return delete this._callbacks["$"+t],this;for(var o=0;o<r.length;o++)if((n=r[o])===e||n.fn===e){r.splice(o,1);break}return 0===r.length&&delete this._callbacks["$"+t],this},r.prototype.emit=function(t){this._callbacks=this._callbacks||{};for(var e=new Array(arguments.length-1),n=this._callbacks["$"+t],r=1;r<arguments.length;r++)e[r-1]=arguments[r];if(n){r=0;for(var o=(n=n.slice(0)).length;r<o;++r)n[r].apply(this,e)}return this},r.prototype.listeners=function(t){return this._callbacks=this._callbacks||{},this._callbacks["$"+t]||[]},r.prototype.hasListeners=function(t){return!!this.listeners(t).length}},function(t,e,n){var r=n(23),o=n(24),i=String.fromCharCode(30);t.exports={protocol:4,encodePacket:r,encodePayload:function(t,e){var n=t.length,o=new Array(n),s=0;t.forEach((function(t,c){r(t,!1,(function(t){o[c]=t,++s===n&&e(o.join(i))}))}))},decodePacket:o,decodePayload:function(t,e){for(var n=t.split(i),r=[],s=0;s<n.length;s++){var c=o(n[s],e);if(r.push(c),"error"===c.type)break}return r}}},function(t,e){t.exports="undefined"!=typeof self?self:"undefined"!=typeof window?window:Function("return this")()},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e){return(i=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function s(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=a(t);if(e){var o=a(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return c(this,n)}}function c(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function a(t){return(a=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var u=n(1),f=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&i(t,e)}(a,t);var e,n,r,c=s(a);function a(t){var e;return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,a),(e=c.call(this)).opts=t,e.query=t.query,e.readyState="",e.socket=t.socket,e}return e=a,(n=[{key:"onError",value:function(t,e){var n=new Error(t);return n.type="TransportError",n.description=e,this.emit("error",n),this}},{key:"open",value:function(){return"closed"!==this.readyState&&""!==this.readyState||(this.readyState="opening",this.doOpen()),this}},{key:"close",value:function(){return"opening"!==this.readyState&&"open"!==this.readyState||(this.doClose(),this.onClose()),this}},{key:"send",value:function(t){if("open"!==this.readyState)throw new Error("Transport not open");this.write(t)}},{key:"onOpen",value:function(){this.readyState="open",this.writable=!0,this.emit("open")}},{key:"onData",value:function(t){var e=u.decodePacket(t,this.socket.binaryType);this.onPacket(e)}},{key:"onPacket",value:function(t){this.emit("packet",t)}},{key:"onClose",value:function(){this.readyState="closed",this.emit("close")}}])&&o(e.prototype,n),r&&o(e,r),a}(n(0));t.exports=f},function(t,e){e.encode=function(t){var e="";for(var n in t)t.hasOwnProperty(n)&&(e.length&&(e+="&"),e+=encodeURIComponent(n)+"="+encodeURIComponent(t[n]));return e},e.decode=function(t){for(var e={},n=t.split("&"),r=0,o=n.length;r<o;r++){var i=n[r].split("=");e[decodeURIComponent(i[0])]=decodeURIComponent(i[1])}return e}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e,n){return(o="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=a(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(n):o.value}})(t,e,n||t)}function i(t,e){return(i=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function s(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=a(t);if(e){var o=a(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return c(this,n)}}function c(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function a(t){return(a=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}function u(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function f(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function p(t,e,n){return e&&f(t.prototype,e),n&&f(t,n),t}Object.defineProperty(e,"__esModule",{value:!0}),e.Decoder=e.Encoder=e.PacketType=e.protocol=void 0;var l,h=n(0),y=n(29),d=n(15);e.protocol=5,function(t){t[t.CONNECT=0]="CONNECT",t[t.DISCONNECT=1]="DISCONNECT",t[t.EVENT=2]="EVENT",t[t.ACK=3]="ACK",t[t.CONNECT_ERROR=4]="CONNECT_ERROR",t[t.BINARY_EVENT=5]="BINARY_EVENT",t[t.BINARY_ACK=6]="BINARY_ACK"}(l=e.PacketType||(e.PacketType={}));var v=function(){function t(){u(this,t)}return p(t,[{key:"encode",value:function(t){return t.type!==l.EVENT&&t.type!==l.ACK||!d.hasBinary(t)?[this.encodeAsString(t)]:(t.type=t.type===l.EVENT?l.BINARY_EVENT:l.BINARY_ACK,this.encodeAsBinary(t))}},{key:"encodeAsString",value:function(t){var e=""+t.type;return t.type!==l.BINARY_EVENT&&t.type!==l.BINARY_ACK||(e+=t.attachments+"-"),t.nsp&&"/"!==t.nsp&&(e+=t.nsp+","),null!=t.id&&(e+=t.id),null!=t.data&&(e+=JSON.stringify(t.data)),e}},{key:"encodeAsBinary",value:function(t){var e=y.deconstructPacket(t),n=this.encodeAsString(e.packet),r=e.buffers;return r.unshift(n),r}}]),t}();e.Encoder=v;var b=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&i(t,e)}(n,t);var e=s(n);function n(){return u(this,n),e.call(this)}return p(n,[{key:"add",value:function(t){var e;if("string"==typeof t)(e=this.decodeString(t)).type===l.BINARY_EVENT||e.type===l.BINARY_ACK?(this.reconstructor=new m(e),0===e.attachments&&o(a(n.prototype),"emit",this).call(this,"decoded",e)):o(a(n.prototype),"emit",this).call(this,"decoded",e);else{if(!d.isBinary(t)&&!t.base64)throw new Error("Unknown type: "+t);if(!this.reconstructor)throw new Error("got binary data when not reconstructing a packet");(e=this.reconstructor.takeBinaryData(t))&&(this.reconstructor=null,o(a(n.prototype),"emit",this).call(this,"decoded",e))}}},{key:"decodeString",value:function(t){var e=0,r={type:Number(t.charAt(0))};if(void 0===l[r.type])throw new Error("unknown packet type "+r.type);if(r.type===l.BINARY_EVENT||r.type===l.BINARY_ACK){for(var o=e+1;"-"!==t.charAt(++e)&&e!=t.length;);var i=t.substring(o,e);if(i!=Number(i)||"-"!==t.charAt(e))throw new Error("Illegal attachments");r.attachments=Number(i)}if("/"===t.charAt(e+1)){for(var s=e+1;++e;){if(","===t.charAt(e))break;if(e===t.length)break}r.nsp=t.substring(s,e)}else r.nsp="/";var c=t.charAt(e+1);if(""!==c&&Number(c)==c){for(var a=e+1;++e;){var u=t.charAt(e);if(null==u||Number(u)!=u){--e;break}if(e===t.length)break}r.id=Number(t.substring(a,e+1))}if(t.charAt(++e)){var f=function(t){try{return JSON.parse(t)}catch(t){return!1}}(t.substr(e));if(!n.isPayloadValid(r.type,f))throw new Error("invalid payload");r.data=f}return r}},{key:"destroy",value:function(){this.reconstructor&&this.reconstructor.finishedReconstruction()}}],[{key:"isPayloadValid",value:function(t,e){switch(t){case l.CONNECT:return"object"===r(e);case l.DISCONNECT:return void 0===e;case l.CONNECT_ERROR:return"string"==typeof e||"object"===r(e);case l.EVENT:case l.BINARY_EVENT:return Array.isArray(e)&&e.length>0;case l.ACK:case l.BINARY_ACK:return Array.isArray(e)}}}]),n}(h);e.Decoder=b;var m=function(){function t(e){u(this,t),this.packet=e,this.buffers=[],this.reconPack=e}return p(t,[{key:"takeBinaryData",value:function(t){if(this.buffers.push(t),this.buffers.length===this.reconPack.attachments){var e=y.reconstructPacket(this.reconPack,this.buffers);return this.finishedReconstruction(),e}return null}},{key:"finishedReconstruction",value:function(){this.reconPack=null,this.buffers=[]}}]),t}()},function(t,e){var n=/^(?:(?![^:@]+:[^:@\/]*@)(http|https|ws|wss):\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?((?:[a-f0-9]{0,4}:){2,7}[a-f0-9]{0,4}|[^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/,r=["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"];t.exports=function(t){var e=t,o=t.indexOf("["),i=t.indexOf("]");-1!=o&&-1!=i&&(t=t.substring(0,o)+t.substring(o,i).replace(/:/g,";")+t.substring(i,t.length));for(var s,c,a=n.exec(t||""),u={},f=14;f--;)u[r[f]]=a[f]||"";return-1!=o&&-1!=i&&(u.source=e,u.host=u.host.substring(1,u.host.length-1).replace(/;/g,":"),u.authority=u.authority.replace("[","").replace("]","").replace(/;/g,":"),u.ipv6uri=!0),u.pathNames=function(t,e){var n=e.replace(/\/{2,9}/g,"/").split("/");"/"!=e.substr(0,1)&&0!==e.length||n.splice(0,1);"/"==e.substr(e.length-1,1)&&n.splice(n.length-1,1);return n}(0,u.path),u.queryKey=(s=u.query,c={},s.replace(/(?:^|&)([^&=]*)=?([^&]*)/g,(function(t,e,n){e&&(c[e]=n)})),c),u}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e,n){return(i="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=u(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(n):o.value}})(t,e,n||t)}function s(t,e){return(s=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function c(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=u(t);if(e){var o=u(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return a(this,n)}}function a(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function u(t){return(u=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.Manager=void 0;var f=n(19),p=n(14),l=n(0),h=n(5),y=n(16),d=n(30),v=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&s(t,e)}(v,t);var e,n,a,l=c(v);function v(t,e){var n;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,v),(n=l.call(this)).nsps={},n.subs=[],t&&"object"===r(t)&&(e=t,t=void 0),(e=e||{}).path=e.path||"/socket.io",n.opts=e,n.reconnection(!1!==e.reconnection),n.reconnectionAttempts(e.reconnectionAttempts||1/0),n.reconnectionDelay(e.reconnectionDelay||1e3),n.reconnectionDelayMax(e.reconnectionDelayMax||5e3),n.randomizationFactor(e.randomizationFactor||.5),n.backoff=new d({min:n.reconnectionDelay(),max:n.reconnectionDelayMax(),jitter:n.randomizationFactor()}),n.timeout(null==e.timeout?2e4:e.timeout),n._readyState="closed",n.uri=t;var o=e.parser||h;return n.encoder=new o.Encoder,n.decoder=new o.Decoder,n._autoConnect=!1!==e.autoConnect,n._autoConnect&&n.open(),n}return e=v,(n=[{key:"reconnection",value:function(t){return arguments.length?(this._reconnection=!!t,this):this._reconnection}},{key:"reconnectionAttempts",value:function(t){return void 0===t?this._reconnectionAttempts:(this._reconnectionAttempts=t,this)}},{key:"reconnectionDelay",value:function(t){var e;return void 0===t?this._reconnectionDelay:(this._reconnectionDelay=t,null===(e=this.backoff)||void 0===e||e.setMin(t),this)}},{key:"randomizationFactor",value:function(t){var e;return void 0===t?this._randomizationFactor:(this._randomizationFactor=t,null===(e=this.backoff)||void 0===e||e.setJitter(t),this)}},{key:"reconnectionDelayMax",value:function(t){var e;return void 0===t?this._reconnectionDelayMax:(this._reconnectionDelayMax=t,null===(e=this.backoff)||void 0===e||e.setMax(t),this)}},{key:"timeout",value:function(t){return arguments.length?(this._timeout=t,this):this._timeout}},{key:"maybeReconnectOnOpen",value:function(){!this._reconnecting&&this._reconnection&&0===this.backoff.attempts&&this.reconnect()}},{key:"open",value:function(t){var e=this;if(~this._readyState.indexOf("open"))return this;this.engine=f(this.uri,this.opts);var n=this.engine,r=this;this._readyState="opening",this.skipReconnect=!1;var o=y.on(n,"open",(function(){r.onopen(),t&&t()})),s=y.on(n,"error",(function(n){r.cleanup(),r._readyState="closed",i(u(v.prototype),"emit",e).call(e,"error",n),t?t(n):r.maybeReconnectOnOpen()}));if(!1!==this._timeout){var c=this._timeout;0===c&&o();var a=setTimeout((function(){o(),n.close(),n.emit("error",new Error("timeout"))}),c);this.subs.push((function(){clearTimeout(a)}))}return this.subs.push(o),this.subs.push(s),this}},{key:"connect",value:function(t){return this.open(t)}},{key:"onopen",value:function(){this.cleanup(),this._readyState="open",i(u(v.prototype),"emit",this).call(this,"open");var t=this.engine;this.subs.push(y.on(t,"ping",this.onping.bind(this)),y.on(t,"data",this.ondata.bind(this)),y.on(t,"error",this.onerror.bind(this)),y.on(t,"close",this.onclose.bind(this)),y.on(this.decoder,"decoded",this.ondecoded.bind(this)))}},{key:"onping",value:function(){i(u(v.prototype),"emit",this).call(this,"ping")}},{key:"ondata",value:function(t){this.decoder.add(t)}},{key:"ondecoded",value:function(t){i(u(v.prototype),"emit",this).call(this,"packet",t)}},{key:"onerror",value:function(t){i(u(v.prototype),"emit",this).call(this,"error",t)}},{key:"socket",value:function(t,e){var n=this.nsps[t];return n||(n=new p.Socket(this,t,e),this.nsps[t]=n),n}},{key:"_destroy",value:function(t){for(var e=0,n=Object.keys(this.nsps);e<n.length;e++){var r=n[e];if(this.nsps[r].active)return}this._close()}},{key:"_packet",value:function(t){for(var e=this.encoder.encode(t),n=0;n<e.length;n++)this.engine.write(e[n],t.options)}},{key:"cleanup",value:function(){this.subs.forEach((function(t){return t()})),this.subs.length=0,this.decoder.destroy()}},{key:"_close",value:function(){this.skipReconnect=!0,this._reconnecting=!1,"opening"===this._readyState&&this.cleanup(),this.backoff.reset(),this._readyState="closed",this.engine&&this.engine.close()}},{key:"disconnect",value:function(){return this._close()}},{key:"onclose",value:function(t){this.cleanup(),this.backoff.reset(),this._readyState="closed",i(u(v.prototype),"emit",this).call(this,"close",t),this._reconnection&&!this.skipReconnect&&this.reconnect()}},{key:"reconnect",value:function(){var t=this;if(this._reconnecting||this.skipReconnect)return this;var e=this;if(this.backoff.attempts>=this._reconnectionAttempts)this.backoff.reset(),i(u(v.prototype),"emit",this).call(this,"reconnect_failed"),this._reconnecting=!1;else{var n=this.backoff.duration();this._reconnecting=!0;var r=setTimeout((function(){e.skipReconnect||(i(u(v.prototype),"emit",t).call(t,"reconnect_attempt",e.backoff.attempts),e.skipReconnect||e.open((function(n){n?(e._reconnecting=!1,e.reconnect(),i(u(v.prototype),"emit",t).call(t,"reconnect_error",n)):e.onreconnect()})))}),n);this.subs.push((function(){clearTimeout(r)}))}}},{key:"onreconnect",value:function(){var t=this.backoff.attempts;this._reconnecting=!1,this.backoff.reset(),i(u(v.prototype),"emit",this).call(this,"reconnect",t)}}])&&o(e.prototype,n),a&&o(e,a),v}(l);e.Manager=v},function(t,e,n){var r=n(9),o=n(22),i=n(26),s=n(27);e.polling=function(t){var e=!1,n=!1,s=!1!==t.jsonp;if("undefined"!=typeof location){var c="https:"===location.protocol,a=location.port;a||(a=c?443:80),e=t.hostname!==location.hostname||a!==t.port,n=t.secure!==c}if(t.xdomain=e,t.xscheme=n,"open"in new r(t)&&!t.forceJSONP)return new o(t);if(!s)throw new Error("JSONP disabled");return new i(t)},e.websocket=s},function(t,e,n){var r=n(21),o=n(2);t.exports=function(t){var e=t.xdomain,n=t.xscheme,i=t.enablesXDR;try{if("undefined"!=typeof XMLHttpRequest&&(!e||r))return new XMLHttpRequest}catch(t){}try{if("undefined"!=typeof XDomainRequest&&!n&&i)return new XDomainRequest}catch(t){}if(!e)try{return new(o[["Active"].concat("Object").join("X")])("Microsoft.XMLHTTP")}catch(t){}}},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function i(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function s(t,e){return(s=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function c(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=u(t);if(e){var o=u(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return a(this,n)}}function a(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function u(t){return(u=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var f=n(3),p=n(4),l=n(1),h=n(12),y=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&s(t,e)}(u,t);var e,n,r,a=c(u);function u(){return o(this,u),a.apply(this,arguments)}return e=u,(n=[{key:"doOpen",value:function(){this.poll()}},{key:"pause",value:function(t){var e=this;function n(){e.readyState="paused",t()}if(this.readyState="pausing",this.polling||!this.writable){var r=0;this.polling&&(r++,this.once("pollComplete",(function(){--r||n()}))),this.writable||(r++,this.once("drain",(function(){--r||n()})))}else n()}},{key:"poll",value:function(){this.polling=!0,this.doPoll(),this.emit("poll")}},{key:"onData",value:function(t){var e=this;l.decodePayload(t,this.socket.binaryType).forEach((function(t,n,r){if("opening"===e.readyState&&"open"===t.type&&e.onOpen(),"close"===t.type)return e.onClose(),!1;e.onPacket(t)})),"closed"!==this.readyState&&(this.polling=!1,this.emit("pollComplete"),"open"===this.readyState&&this.poll())}},{key:"doClose",value:function(){var t=this;function e(){t.write([{type:"close"}])}"open"===this.readyState?e():this.once("open",e)}},{key:"write",value:function(t){var e=this;this.writable=!1,l.encodePayload(t,(function(t){e.doWrite(t,(function(){e.writable=!0,e.emit("drain")}))}))}},{key:"uri",value:function(){var t=this.query||{},e=this.opts.secure?"https":"http",n="";return!1!==this.opts.timestampRequests&&(t[this.opts.timestampParam]=h()),this.supportsBinary||t.sid||(t.b64=1),t=p.encode(t),this.opts.port&&("https"===e&&443!==Number(this.opts.port)||"http"===e&&80!==Number(this.opts.port))&&(n=":"+this.opts.port),t.length&&(t="?"+t),e+"://"+(-1!==this.opts.hostname.indexOf(":")?"["+this.opts.hostname+"]":this.opts.hostname)+n+this.opts.path+t}},{key:"name",get:function(){return"polling"}}])&&i(e.prototype,n),r&&i(e,r),u}(f);t.exports=y},function(t,e){var n=Object.create(null);n.open="0",n.close="1",n.ping="2",n.pong="3",n.message="4",n.upgrade="5",n.noop="6";var r=Object.create(null);Object.keys(n).forEach((function(t){r[n[t]]=t}));t.exports={PACKET_TYPES:n,PACKET_TYPES_REVERSE:r,ERROR_PACKET:{type:"error",data:"parser error"}}},function(t,e,n){"use strict";var r,o="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_".split(""),i={},s=0,c=0;function a(t){var e="";do{e=o[t%64]+e,t=Math.floor(t/64)}while(t>0);return e}function u(){var t=a(+new Date);return t!==r?(s=0,r=t):t+"."+a(s++)}for(;c<64;c++)i[o[c]]=c;u.encode=a,u.decode=function(t){var e=0;for(c=0;c<t.length;c++)e=64*e+i[t.charAt(c)];return e},t.exports=u},function(t,e){t.exports.pick=function(t){for(var e=arguments.length,n=new Array(e>1?e-1:0),r=1;r<e;r++)n[r-1]=arguments[r];return n.reduce((function(e,n){return t.hasOwnProperty(n)&&(e[n]=t[n]),e}),{})}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){var n;if("undefined"==typeof Symbol||null==t[Symbol.iterator]){if(Array.isArray(t)||(n=function(t,e){if(!t)return;if("string"==typeof t)return i(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Array.from(t);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return i(t,e)}(t))||e&&t&&"number"==typeof t.length){n&&(t=n);var r=0,o=function(){};return{s:o,n:function(){return r>=t.length?{done:!0}:{done:!1,value:t[r++]}},e:function(t){throw t},f:o}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var s,c=!0,a=!1;return{s:function(){n=t[Symbol.iterator]()},n:function(){var t=n.next();return c=t.done,t},e:function(t){a=!0,s=t},f:function(){try{c||null==n.return||n.return()}finally{if(a)throw s}}}}function i(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,r=new Array(e);n<e;n++)r[n]=t[n];return r}function s(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function c(t,e,n){return(c="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=p(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(n):o.value}})(t,e,n||t)}function a(t,e){return(a=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function u(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=p(t);if(e){var o=p(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return f(this,n)}}function f(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function p(t){return(p=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.Socket=void 0;var l=n(5),h=n(0),y=n(16),d=Object.freeze({connect:1,connect_error:1,disconnect:1,disconnecting:1,newListener:1,removeListener:1}),v=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&a(t,e)}(f,t);var e,n,r,i=u(f);function f(t,e,n){var r;return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,f),(r=i.call(this)).receiveBuffer=[],r.sendBuffer=[],r.ids=0,r.acks={},r.flags={},r.io=t,r.nsp=e,r.ids=0,r.acks={},r.receiveBuffer=[],r.sendBuffer=[],r.connected=!1,r.disconnected=!0,r.flags={},n&&n.auth&&(r.auth=n.auth),r.io._autoConnect&&r.open(),r}return e=f,(n=[{key:"subEvents",value:function(){if(!this.subs){var t=this.io;this.subs=[y.on(t,"open",this.onopen.bind(this)),y.on(t,"packet",this.onpacket.bind(this)),y.on(t,"error",this.onerror.bind(this)),y.on(t,"close",this.onclose.bind(this))]}}},{key:"connect",value:function(){return this.connected||(this.subEvents(),this.io._reconnecting||this.io.open(),"open"===this.io._readyState&&this.onopen()),this}},{key:"open",value:function(){return this.connect()}},{key:"send",value:function(){for(var t=arguments.length,e=new Array(t),n=0;n<t;n++)e[n]=arguments[n];return e.unshift("message"),this.emit.apply(this,e),this}},{key:"emit",value:function(t){if(d.hasOwnProperty(t))throw new Error('"'+t+'" is a reserved event name');for(var e=arguments.length,n=new Array(e>1?e-1:0),r=1;r<e;r++)n[r-1]=arguments[r];n.unshift(t);var o={type:l.PacketType.EVENT,data:n,options:{}};o.options.compress=!1!==this.flags.compress,"function"==typeof n[n.length-1]&&(this.acks[this.ids]=n.pop(),o.id=this.ids++);var i=this.io.engine&&this.io.engine.transport&&this.io.engine.transport.writable,s=this.flags.volatile&&(!i||!this.connected);return s||(this.connected?this.packet(o):this.sendBuffer.push(o)),this.flags={},this}},{key:"packet",value:function(t){t.nsp=this.nsp,this.io._packet(t)}},{key:"onopen",value:function(){var t=this;"function"==typeof this.auth?this.auth((function(e){t.packet({type:l.PacketType.CONNECT,data:e})})):this.packet({type:l.PacketType.CONNECT,data:this.auth})}},{key:"onerror",value:function(t){this.connected||c(p(f.prototype),"emit",this).call(this,"connect_error",t)}},{key:"onclose",value:function(t){this.connected=!1,this.disconnected=!0,delete this.id,c(p(f.prototype),"emit",this).call(this,"disconnect",t)}},{key:"onpacket",value:function(t){if(t.nsp===this.nsp)switch(t.type){case l.PacketType.CONNECT:if(t.data&&t.data.sid){var e=t.data.sid;this.onconnect(e)}else c(p(f.prototype),"emit",this).call(this,"connect_error",new Error("It seems you are trying to reach a Socket.IO server in v2.x with a v3.x client, but they are not compatible (more information here: https://socket.io/docs/v3/migrating-from-2-x-to-3-0/)"));break;case l.PacketType.EVENT:case l.PacketType.BINARY_EVENT:this.onevent(t);break;case l.PacketType.ACK:case l.PacketType.BINARY_ACK:this.onack(t);break;case l.PacketType.DISCONNECT:this.ondisconnect();break;case l.PacketType.CONNECT_ERROR:var n=new Error(t.data.message);n.data=t.data.data,c(p(f.prototype),"emit",this).call(this,"connect_error",n)}}},{key:"onevent",value:function(t){var e=t.data||[];null!=t.id&&e.push(this.ack(t.id)),this.connected?this.emitEvent(e):this.receiveBuffer.push(Object.freeze(e))}},{key:"emitEvent",value:function(t){if(this._anyListeners&&this._anyListeners.length){var e,n=o(this._anyListeners.slice());try{for(n.s();!(e=n.n()).done;)e.value.apply(this,t)}catch(t){n.e(t)}finally{n.f()}}c(p(f.prototype),"emit",this).apply(this,t)}},{key:"ack",value:function(t){var e=this,n=!1;return function(){if(!n){n=!0;for(var r=arguments.length,o=new Array(r),i=0;i<r;i++)o[i]=arguments[i];e.packet({type:l.PacketType.ACK,id:t,data:o})}}}},{key:"onack",value:function(t){var e=this.acks[t.id];"function"==typeof e&&(e.apply(this,t.data),delete this.acks[t.id])}},{key:"onconnect",value:function(t){this.id=t,this.connected=!0,this.disconnected=!1,c(p(f.prototype),"emit",this).call(this,"connect"),this.emitBuffered()}},{key:"emitBuffered",value:function(){var t=this;this.receiveBuffer.forEach((function(e){return t.emitEvent(e)})),this.receiveBuffer=[],this.sendBuffer.forEach((function(e){return t.packet(e)})),this.sendBuffer=[]}},{key:"ondisconnect",value:function(){this.destroy(),this.onclose("io server disconnect")}},{key:"destroy",value:function(){this.subs&&(this.subs.forEach((function(t){return t()})),this.subs=void 0),this.io._destroy(this)}},{key:"disconnect",value:function(){return this.connected&&this.packet({type:l.PacketType.DISCONNECT}),this.destroy(),this.connected&&this.onclose("io client disconnect"),this}},{key:"close",value:function(){return this.disconnect()}},{key:"compress",value:function(t){return this.flags.compress=t,this}},{key:"onAny",value:function(t){return this._anyListeners=this._anyListeners||[],this._anyListeners.push(t),this}},{key:"prependAny",value:function(t){return this._anyListeners=this._anyListeners||[],this._anyListeners.unshift(t),this}},{key:"offAny",value:function(t){if(!this._anyListeners)return this;if(t){for(var e=this._anyListeners,n=0;n<e.length;n++)if(t===e[n])return e.splice(n,1),this}else this._anyListeners=[];return this}},{key:"listenersAny",value:function(){return this._anyListeners||[]}},{key:"active",get:function(){return!!this.subs}},{key:"volatile",get:function(){return this.flags.volatile=!0,this}}])&&s(e.prototype,n),r&&s(e,r),f}(h);e.Socket=v},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.hasBinary=e.isBinary=void 0;var o="function"==typeof ArrayBuffer,i=Object.prototype.toString,s="function"==typeof Blob||"undefined"!=typeof Blob&&"[object BlobConstructor]"===i.call(Blob),c="function"==typeof File||"undefined"!=typeof File&&"[object FileConstructor]"===i.call(File);function a(t){return o&&(t instanceof ArrayBuffer||function(t){return"function"==typeof ArrayBuffer.isView?ArrayBuffer.isView(t):t.buffer instanceof ArrayBuffer}(t))||s&&t instanceof Blob||c&&t instanceof File}e.isBinary=a,e.hasBinary=function t(e,n){if(!e||"object"!==r(e))return!1;if(Array.isArray(e)){for(var o=0,i=e.length;o<i;o++)if(t(e[o]))return!0;return!1}if(a(e))return!0;if(e.toJSON&&"function"==typeof e.toJSON&&1===arguments.length)return t(e.toJSON(),!0);for(var s in e)if(Object.prototype.hasOwnProperty.call(e,s)&&t(e[s]))return!0;return!1}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.on=void 0,e.on=function(t,e,n){return t.on(e,n),function(){t.off(e,n)}}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.Socket=e.io=e.Manager=e.protocol=void 0;var o=n(18),i=n(7),s=n(14);Object.defineProperty(e,"Socket",{enumerable:!0,get:function(){return s.Socket}}),t.exports=e=a;var c=e.managers={};function a(t,e){"object"===r(t)&&(e=t,t=void 0),e=e||{};var n,s=o.url(t,e.path),a=s.source,u=s.id,f=s.path,p=c[u]&&f in c[u].nsps;return e.forceNew||e["force new connection"]||!1===e.multiplex||p?n=new i.Manager(a,e):(c[u]||(c[u]=new i.Manager(a,e)),n=c[u]),s.query&&!e.query&&(e.query=s.queryKey),n.socket(s.path,e)}e.io=a;var u=n(5);Object.defineProperty(e,"protocol",{enumerable:!0,get:function(){return u.protocol}}),e.connect=a;var f=n(7);Object.defineProperty(e,"Manager",{enumerable:!0,get:function(){return f.Manager}})},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.url=void 0;var r=n(6);e.url=function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"",n=arguments.length>2?arguments[2]:void 0,o=t;n=n||"undefined"!=typeof location&&location,null==t&&(t=n.protocol+"//"+n.host),"string"==typeof t&&("/"===t.charAt(0)&&(t="/"===t.charAt(1)?n.protocol+t:n.host+t),/^(https?|wss?):\/\//.test(t)||(t=void 0!==n?n.protocol+"//"+t:"https://"+t),o=r(t)),o.port||(/^(http|ws)$/.test(o.protocol)?o.port="80":/^(http|ws)s$/.test(o.protocol)&&(o.port="443")),o.path=o.path||"/";var i=-1!==o.host.indexOf(":"),s=i?"["+o.host+"]":o.host;return o.id=o.protocol+"://"+s+":"+o.port+e,o.href=o.protocol+"://"+s+(n&&n.port===o.port?"":":"+o.port),o}},function(t,e,n){var r=n(20);t.exports=function(t,e){return new r(t,e)},t.exports.Socket=r,t.exports.protocol=r.protocol,t.exports.Transport=n(3),t.exports.transports=n(8),t.exports.parser=n(1)},function(t,e,n){function r(){return(r=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(t[r]=n[r])}return t}).apply(this,arguments)}function o(t){return(o="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function i(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function s(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function c(t,e){return(c=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function a(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=f(t);if(e){var o=f(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return u(this,n)}}function u(t,e){return!e||"object"!==o(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function f(t){return(f=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var p=n(8),l=n(0),h=n(1),y=n(6),d=n(4),v=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&c(t,e)}(l,t);var e,n,u,f=a(l);function l(t){var e,n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return i(this,l),e=f.call(this),t&&"object"===o(t)&&(n=t,t=null),t?(t=y(t),n.hostname=t.host,n.secure="https"===t.protocol||"wss"===t.protocol,n.port=t.port,t.query&&(n.query=t.query)):n.host&&(n.hostname=y(n.host).host),e.secure=null!=n.secure?n.secure:"undefined"!=typeof location&&"https:"===location.protocol,n.hostname&&!n.port&&(n.port=e.secure?"443":"80"),e.hostname=n.hostname||("undefined"!=typeof location?location.hostname:"localhost"),e.port=n.port||("undefined"!=typeof location&&location.port?location.port:e.secure?443:80),e.transports=n.transports||["polling","websocket"],e.readyState="",e.writeBuffer=[],e.prevBufferLen=0,e.opts=r({path:"/engine.io",agent:!1,withCredentials:!1,upgrade:!0,jsonp:!0,timestampParam:"t",rememberUpgrade:!1,rejectUnauthorized:!0,perMessageDeflate:{threshold:1024},transportOptions:{}},n),e.opts.path=e.opts.path.replace(/\/$/,"")+"/","string"==typeof e.opts.query&&(e.opts.query=d.decode(e.opts.query)),e.id=null,e.upgrades=null,e.pingInterval=null,e.pingTimeout=null,e.pingTimeoutTimer=null,"function"==typeof addEventListener&&addEventListener("beforeunload",(function(){e.transport&&(e.transport.removeAllListeners(),e.transport.close())}),!1),e.open(),e}return e=l,(n=[{key:"createTransport",value:function(t){var e=function(t){var e={};for(var n in t)t.hasOwnProperty(n)&&(e[n]=t[n]);return e}(this.opts.query);e.EIO=h.protocol,e.transport=t,this.id&&(e.sid=this.id);var n=r({},this.opts.transportOptions[t],this.opts,{query:e,socket:this,hostname:this.hostname,secure:this.secure,port:this.port});return new p[t](n)}},{key:"open",value:function(){var t;if(this.opts.rememberUpgrade&&l.priorWebsocketSuccess&&-1!==this.transports.indexOf("websocket"))t="websocket";else{if(0===this.transports.length){var e=this;return void setTimeout((function(){e.emit("error","No transports available")}),0)}t=this.transports[0]}this.readyState="opening";try{t=this.createTransport(t)}catch(t){return this.transports.shift(),void this.open()}t.open(),this.setTransport(t)}},{key:"setTransport",value:function(t){var e=this;this.transport&&this.transport.removeAllListeners(),this.transport=t,t.on("drain",(function(){e.onDrain()})).on("packet",(function(t){e.onPacket(t)})).on("error",(function(t){e.onError(t)})).on("close",(function(){e.onClose("transport close")}))}},{key:"probe",value:function(t){var e=this.createTransport(t,{probe:1}),n=!1,r=this;function o(){if(r.onlyBinaryUpgrades){var t=!this.supportsBinary&&r.transport.supportsBinary;n=n||t}n||(e.send([{type:"ping",data:"probe"}]),e.once("packet",(function(t){if(!n)if("pong"===t.type&&"probe"===t.data){if(r.upgrading=!0,r.emit("upgrading",e),!e)return;l.priorWebsocketSuccess="websocket"===e.name,r.transport.pause((function(){n||"closed"!==r.readyState&&(f(),r.setTransport(e),e.send([{type:"upgrade"}]),r.emit("upgrade",e),e=null,r.upgrading=!1,r.flush())}))}else{var o=new Error("probe error");o.transport=e.name,r.emit("upgradeError",o)}})))}function i(){n||(n=!0,f(),e.close(),e=null)}function s(t){var n=new Error("probe error: "+t);n.transport=e.name,i(),r.emit("upgradeError",n)}function c(){s("transport closed")}function a(){s("socket closed")}function u(t){e&&t.name!==e.name&&i()}function f(){e.removeListener("open",o),e.removeListener("error",s),e.removeListener("close",c),r.removeListener("close",a),r.removeListener("upgrading",u)}l.priorWebsocketSuccess=!1,e.once("open",o),e.once("error",s),e.once("close",c),this.once("close",a),this.once("upgrading",u),e.open()}},{key:"onOpen",value:function(){if(this.readyState="open",l.priorWebsocketSuccess="websocket"===this.transport.name,this.emit("open"),this.flush(),"open"===this.readyState&&this.opts.upgrade&&this.transport.pause)for(var t=0,e=this.upgrades.length;t<e;t++)this.probe(this.upgrades[t])}},{key:"onPacket",value:function(t){if("opening"===this.readyState||"open"===this.readyState||"closing"===this.readyState)switch(this.emit("packet",t),this.emit("heartbeat"),t.type){case"open":this.onHandshake(JSON.parse(t.data));break;case"ping":this.resetPingTimeout(),this.sendPacket("pong"),this.emit("pong");break;case"error":var e=new Error("server error");e.code=t.data,this.onError(e);break;case"message":this.emit("data",t.data),this.emit("message",t.data)}}},{key:"onHandshake",value:function(t){this.emit("handshake",t),this.id=t.sid,this.transport.query.sid=t.sid,this.upgrades=this.filterUpgrades(t.upgrades),this.pingInterval=t.pingInterval,this.pingTimeout=t.pingTimeout,this.onOpen(),"closed"!==this.readyState&&this.resetPingTimeout()}},{key:"resetPingTimeout",value:function(){var t=this;clearTimeout(this.pingTimeoutTimer),this.pingTimeoutTimer=setTimeout((function(){t.onClose("ping timeout")}),this.pingInterval+this.pingTimeout)}},{key:"onDrain",value:function(){this.writeBuffer.splice(0,this.prevBufferLen),this.prevBufferLen=0,0===this.writeBuffer.length?this.emit("drain"):this.flush()}},{key:"flush",value:function(){"closed"!==this.readyState&&this.transport.writable&&!this.upgrading&&this.writeBuffer.length&&(this.transport.send(this.writeBuffer),this.prevBufferLen=this.writeBuffer.length,this.emit("flush"))}},{key:"write",value:function(t,e,n){return this.sendPacket("message",t,e,n),this}},{key:"send",value:function(t,e,n){return this.sendPacket("message",t,e,n),this}},{key:"sendPacket",value:function(t,e,n,r){if("function"==typeof e&&(r=e,e=void 0),"function"==typeof n&&(r=n,n=null),"closing"!==this.readyState&&"closed"!==this.readyState){(n=n||{}).compress=!1!==n.compress;var o={type:t,data:e,options:n};this.emit("packetCreate",o),this.writeBuffer.push(o),r&&this.once("flush",r),this.flush()}}},{key:"close",value:function(){var t=this;function e(){t.onClose("forced close"),t.transport.close()}function n(){t.removeListener("upgrade",n),t.removeListener("upgradeError",n),e()}function r(){t.once("upgrade",n),t.once("upgradeError",n)}return"opening"!==this.readyState&&"open"!==this.readyState||(this.readyState="closing",this.writeBuffer.length?this.once("drain",(function(){this.upgrading?r():e()})):this.upgrading?r():e()),this}},{key:"onError",value:function(t){l.priorWebsocketSuccess=!1,this.emit("error",t),this.onClose("transport error",t)}},{key:"onClose",value:function(t,e){"opening"!==this.readyState&&"open"!==this.readyState&&"closing"!==this.readyState||(clearTimeout(this.pingIntervalTimer),clearTimeout(this.pingTimeoutTimer),this.transport.removeAllListeners("close"),this.transport.close(),this.transport.removeAllListeners(),this.readyState="closed",this.id=null,this.emit("close",t,e),this.writeBuffer=[],this.prevBufferLen=0)}},{key:"filterUpgrades",value:function(t){for(var e=[],n=0,r=t.length;n<r;n++)~this.transports.indexOf(t[n])&&e.push(t[n]);return e}}])&&s(e.prototype,n),u&&s(e,u),l}(l);v.priorWebsocketSuccess=!1,v.protocol=h.protocol,t.exports=v},function(t,e){try{t.exports="undefined"!=typeof XMLHttpRequest&&"withCredentials"in new XMLHttpRequest}catch(e){t.exports=!1}},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(){return(o=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(t[r]=n[r])}return t}).apply(this,arguments)}function i(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function s(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function c(t,e,n){return e&&s(t.prototype,e),n&&s(t,n),t}function a(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&u(t,e)}function u(t,e){return(u=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function f(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=l(t);if(e){var o=l(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return p(this,n)}}function p(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function l(t){return(l=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var h=n(9),y=n(10),d=n(0),v=n(13).pick,b=n(2);function m(){}var g=null!=new h({xdomain:!1}).responseType,k=function(t){a(n,t);var e=f(n);function n(t){var r;if(i(this,n),r=e.call(this,t),"undefined"!=typeof location){var o="https:"===location.protocol,s=location.port;s||(s=o?443:80),r.xd="undefined"!=typeof location&&t.hostname!==location.hostname||s!==t.port,r.xs=t.secure!==o}var c=t&&t.forceBase64;return r.supportsBinary=g&&!c,r}return c(n,[{key:"request",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return o(t,{xd:this.xd,xs:this.xs},this.opts),new w(this.uri(),t)}},{key:"doWrite",value:function(t,e){var n=this.request({method:"POST",data:t}),r=this;n.on("success",e),n.on("error",(function(t){r.onError("xhr post error",t)}))}},{key:"doPoll",value:function(){var t=this.request(),e=this;t.on("data",(function(t){e.onData(t)})),t.on("error",(function(t){e.onError("xhr poll error",t)})),this.pollXhr=t}}]),n}(y),w=function(t){a(n,t);var e=f(n);function n(t,r){var o;return i(this,n),(o=e.call(this)).opts=r,o.method=r.method||"GET",o.uri=t,o.async=!1!==r.async,o.data=void 0!==r.data?r.data:null,o.create(),o}return c(n,[{key:"create",value:function(){var t=v(this.opts,"agent","enablesXDR","pfx","key","passphrase","cert","ca","ciphers","rejectUnauthorized");t.xdomain=!!this.opts.xd,t.xscheme=!!this.opts.xs;var e=this.xhr=new h(t),r=this;try{e.open(this.method,this.uri,this.async);try{if(this.opts.extraHeaders)for(var o in e.setDisableHeaderCheck&&e.setDisableHeaderCheck(!0),this.opts.extraHeaders)this.opts.extraHeaders.hasOwnProperty(o)&&e.setRequestHeader(o,this.opts.extraHeaders[o])}catch(t){}if("POST"===this.method)try{e.setRequestHeader("Content-type","text/plain;charset=UTF-8")}catch(t){}try{e.setRequestHeader("Accept","*/*")}catch(t){}"withCredentials"in e&&(e.withCredentials=this.opts.withCredentials),this.opts.requestTimeout&&(e.timeout=this.opts.requestTimeout),this.hasXDR()?(e.onload=function(){r.onLoad()},e.onerror=function(){r.onError(e.responseText)}):e.onreadystatechange=function(){4===e.readyState&&(200===e.status||1223===e.status?r.onLoad():setTimeout((function(){r.onError("number"==typeof e.status?e.status:0)}),0))},e.send(this.data)}catch(t){return void setTimeout((function(){r.onError(t)}),0)}"undefined"!=typeof document&&(this.index=n.requestsCount++,n.requests[this.index]=this)}},{key:"onSuccess",value:function(){this.emit("success"),this.cleanup()}},{key:"onData",value:function(t){this.emit("data",t),this.onSuccess()}},{key:"onError",value:function(t){this.emit("error",t),this.cleanup(!0)}},{key:"cleanup",value:function(t){if(void 0!==this.xhr&&null!==this.xhr){if(this.hasXDR()?this.xhr.onload=this.xhr.onerror=m:this.xhr.onreadystatechange=m,t)try{this.xhr.abort()}catch(t){}"undefined"!=typeof document&&delete n.requests[this.index],this.xhr=null}}},{key:"onLoad",value:function(){var t=this.xhr.responseText;null!==t&&this.onData(t)}},{key:"hasXDR",value:function(){return"undefined"!=typeof XDomainRequest&&!this.xs&&this.enablesXDR}},{key:"abort",value:function(){this.cleanup()}}]),n}(d);if(w.requestsCount=0,w.requests={},"undefined"!=typeof document)if("function"==typeof attachEvent)attachEvent("onunload",_);else if("function"==typeof addEventListener){addEventListener("onpagehide"in b?"pagehide":"unload",_,!1)}function _(){for(var t in w.requests)w.requests.hasOwnProperty(t)&&w.requests[t].abort()}t.exports=k,t.exports.Request=w},function(t,e,n){var r=n(11).PACKET_TYPES,o="function"==typeof Blob||"undefined"!=typeof Blob&&"[object BlobConstructor]"===Object.prototype.toString.call(Blob),i="function"==typeof ArrayBuffer,s=function(t,e){var n=new FileReader;return n.onload=function(){var t=n.result.split(",")[1];e("b"+t)},n.readAsDataURL(t)};t.exports=function(t,e,n){var c,a=t.type,u=t.data;return o&&u instanceof Blob?e?n(u):s(u,n):i&&(u instanceof ArrayBuffer||(c=u,"function"==typeof ArrayBuffer.isView?ArrayBuffer.isView(c):c&&c.buffer instanceof ArrayBuffer))?e?n(u instanceof ArrayBuffer?u:u.buffer):s(new Blob([u]),n):n(r[a]+(u||""))}},function(t,e,n){var r,o=n(11),i=o.PACKET_TYPES_REVERSE,s=o.ERROR_PACKET;"function"==typeof ArrayBuffer&&(r=n(25));var c=function(t,e){if(r){var n=r.decode(t);return a(n,e)}return{base64:!0,data:t}},a=function(t,e){switch(e){case"blob":return t instanceof ArrayBuffer?new Blob([t]):t;case"arraybuffer":default:return t}};t.exports=function(t,e){if("string"!=typeof t)return{type:"message",data:a(t,e)};var n=t.charAt(0);return"b"===n?{type:"message",data:c(t.substring(1),e)}:i[n]?t.length>1?{type:i[n],data:t.substring(1)}:{type:i[n]}:s}},function(t,e){!function(t){"use strict";e.encode=function(e){var n,r=new Uint8Array(e),o=r.length,i="";for(n=0;n<o;n+=3)i+=t[r[n]>>2],i+=t[(3&r[n])<<4|r[n+1]>>4],i+=t[(15&r[n+1])<<2|r[n+2]>>6],i+=t[63&r[n+2]];return o%3==2?i=i.substring(0,i.length-1)+"=":o%3==1&&(i=i.substring(0,i.length-2)+"=="),i},e.decode=function(e){var n,r,o,i,s,c=.75*e.length,a=e.length,u=0;"="===e[e.length-1]&&(c--,"="===e[e.length-2]&&c--);var f=new ArrayBuffer(c),p=new Uint8Array(f);for(n=0;n<a;n+=4)r=t.indexOf(e[n]),o=t.indexOf(e[n+1]),i=t.indexOf(e[n+2]),s=t.indexOf(e[n+3]),p[u++]=r<<2|o>>4,p[u++]=(15&o)<<4|i>>2,p[u++]=(3&i)<<6|63&s;return f}}("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/")},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e,n){return(i="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=f(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(n):o.value}})(t,e,n||t)}function s(t,e){return(s=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function c(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=f(t);if(e){var o=f(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return a(this,n)}}function a(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?u(t):e}function u(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}function f(t){return(f=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var p,l=n(10),h=n(2),y=/\n/g,d=/\\n/g,v=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&s(t,e)}(l,t);var e,n,r,a=c(l);function l(t){var e;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,l),(e=a.call(this,t)).query=e.query||{},p||(p=h.___eio=h.___eio||[]),e.index=p.length;var n=u(e);return p.push((function(t){n.onData(t)})),e.query.j=e.index,e}return e=l,(n=[{key:"doClose",value:function(){this.script&&(this.script.onerror=function(){},this.script.parentNode.removeChild(this.script),this.script=null),this.form&&(this.form.parentNode.removeChild(this.form),this.form=null,this.iframe=null),i(f(l.prototype),"doClose",this).call(this)}},{key:"doPoll",value:function(){var t=this,e=document.createElement("script");this.script&&(this.script.parentNode.removeChild(this.script),this.script=null),e.async=!0,e.src=this.uri(),e.onerror=function(e){t.onError("jsonp poll error",e)};var n=document.getElementsByTagName("script")[0];n?n.parentNode.insertBefore(e,n):(document.head||document.body).appendChild(e),this.script=e,"undefined"!=typeof navigator&&/gecko/i.test(navigator.userAgent)&&setTimeout((function(){var t=document.createElement("iframe");document.body.appendChild(t),document.body.removeChild(t)}),100)}},{key:"doWrite",value:function(t,e){var n,r=this;if(!this.form){var o=document.createElement("form"),i=document.createElement("textarea"),s=this.iframeId="eio_iframe_"+this.index;o.className="socketio",o.style.position="absolute",o.style.top="-1000px",o.style.left="-1000px",o.target=s,o.method="POST",o.setAttribute("accept-charset","utf-8"),i.name="d",o.appendChild(i),document.body.appendChild(o),this.form=o,this.area=i}function c(){a(),e()}function a(){if(r.iframe)try{r.form.removeChild(r.iframe)}catch(t){r.onError("jsonp polling iframe removal error",t)}try{var t='<iframe src="javascript:0" name="'+r.iframeId+'">';n=document.createElement(t)}catch(t){(n=document.createElement("iframe")).name=r.iframeId,n.src="javascript:0"}n.id=r.iframeId,r.form.appendChild(n),r.iframe=n}this.form.action=this.uri(),a(),t=t.replace(d,"\\\n"),this.area.value=t.replace(y,"\\n");try{this.form.submit()}catch(t){}this.iframe.attachEvent?this.iframe.onreadystatechange=function(){"complete"===r.iframe.readyState&&c()}:this.iframe.onload=c}},{key:"supportsBinary",get:function(){return!1}}])&&o(e.prototype,n),r&&o(e,r),l}(l);t.exports=v},function(t,e,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e){return(i=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function s(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=a(t);if(e){var o=a(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return c(this,n)}}function c(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function a(t){return(a=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}var u=n(3),f=n(1),p=n(4),l=n(12),h=n(13).pick,y=n(28),d=y.WebSocket,v=y.usingBrowserWebSocket,b=y.defaultBinaryType,m="undefined"!=typeof navigator&&"string"==typeof navigator.product&&"reactnative"===navigator.product.toLowerCase(),g=function(t){!function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&i(t,e)}(a,t);var e,n,r,c=s(a);function a(t){var e;return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,a),(e=c.call(this,t)).supportsBinary=!t.forceBase64,e}return e=a,(n=[{key:"doOpen",value:function(){if(this.check()){var t=this.uri(),e=this.opts.protocols,n=m?{}:h(this.opts,"agent","perMessageDeflate","pfx","key","passphrase","cert","ca","ciphers","rejectUnauthorized","localAddress","protocolVersion","origin","maxPayload","family","checkServerIdentity");this.opts.extraHeaders&&(n.headers=this.opts.extraHeaders);try{this.ws=v&&!m?e?new d(t,e):new d(t):new d(t,e,n)}catch(t){return this.emit("error",t)}this.ws.binaryType=this.socket.binaryType||b,this.addEventListeners()}}},{key:"addEventListeners",value:function(){var t=this;this.ws.onopen=function(){t.onOpen()},this.ws.onclose=function(){t.onClose()},this.ws.onmessage=function(e){t.onData(e.data)},this.ws.onerror=function(e){t.onError("websocket error",e)}}},{key:"write",value:function(t){var e=this;this.writable=!1;for(var n=t.length,r=0,o=n;r<o;r++)!function(t){f.encodePacket(t,e.supportsBinary,(function(r){var o={};v||(t.options&&(o.compress=t.options.compress),e.opts.perMessageDeflate&&("string"==typeof r?Buffer.byteLength(r):r.length)<e.opts.perMessageDeflate.threshold&&(o.compress=!1));try{v?e.ws.send(r):e.ws.send(r,o)}catch(t){}--n||(e.emit("flush"),setTimeout((function(){e.writable=!0,e.emit("drain")}),0))}))}(t[r])}},{key:"onClose",value:function(){u.prototype.onClose.call(this)}},{key:"doClose",value:function(){void 0!==this.ws&&(this.ws.close(),this.ws=null)}},{key:"uri",value:function(){var t=this.query||{},e=this.opts.secure?"wss":"ws",n="";return this.opts.port&&("wss"===e&&443!==Number(this.opts.port)||"ws"===e&&80!==Number(this.opts.port))&&(n=":"+this.opts.port),this.opts.timestampRequests&&(t[this.opts.timestampParam]=l()),this.supportsBinary||(t.b64=1),(t=p.encode(t)).length&&(t="?"+t),e+"://"+(-1!==this.opts.hostname.indexOf(":")?"["+this.opts.hostname+"]":this.opts.hostname)+n+this.opts.path+t}},{key:"check",value:function(){return!(!d||"__initialize"in d&&this.name===a.prototype.name)}},{key:"name",get:function(){return"websocket"}}])&&o(e.prototype,n),r&&o(e,r),a}(u);t.exports=g},function(t,e,n){var r=n(2);t.exports={WebSocket:r.WebSocket||r.MozWebSocket,usingBrowserWebSocket:!0,defaultBinaryType:"arraybuffer"}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.reconstructPacket=e.deconstructPacket=void 0;var o=n(15);e.deconstructPacket=function(t){var e=[],n=t.data,i=t;return i.data=function t(e,n){if(!e)return e;if(o.isBinary(e)){var i={_placeholder:!0,num:n.length};return n.push(e),i}if(Array.isArray(e)){for(var s=new Array(e.length),c=0;c<e.length;c++)s[c]=t(e[c],n);return s}if("object"===r(e)&&!(e instanceof Date)){var a={};for(var u in e)e.hasOwnProperty(u)&&(a[u]=t(e[u],n));return a}return e}(n,e),i.attachments=e.length,{packet:i,buffers:e}},e.reconstructPacket=function(t,e){return t.data=function t(e,n){if(!e)return e;if(e&&e._placeholder)return n[e.num];if(Array.isArray(e))for(var o=0;o<e.length;o++)e[o]=t(e[o],n);else if("object"===r(e))for(var i in e)e.hasOwnProperty(i)&&(e[i]=t(e[i],n));return e}(t.data,e),t.attachments=void 0,t}},function(t,e){function n(t){t=t||{},this.ms=t.min||100,this.max=t.max||1e4,this.factor=t.factor||2,this.jitter=t.jitter>0&&t.jitter<=1?t.jitter:0,this.attempts=0}t.exports=n,n.prototype.duration=function(){var t=this.ms*Math.pow(this.factor,this.attempts++);if(this.jitter){var e=Math.random(),n=Math.floor(e*this.jitter*t);t=0==(1&Math.floor(10*e))?t-n:t+n}return 0|Math.min(t,this.max)},n.prototype.reset=function(){this.attempts=0},n.prototype.setMin=function(t){this.ms=t},n.prototype.setMax=function(t){this.max=t},n.prototype.setJitter=function(t){this.jitter=t}}])}));
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":34}],30:[function(require,module,exports){
+},{"buffer":35}],31:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22178,7 +21535,7 @@ class MatrixSounds {
 
 exports.MatrixSounds = MatrixSounds;
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /* eslint-disable no-unused-vars */
 
 /* eslint-disable no-undef */
@@ -23082,7 +22439,7 @@ function createDomFPSController() {
   showDomFPSController();
 }
 
-},{"../program/manifest":40,"./events":6}],32:[function(require,module,exports){
+},{"../program/manifest":41,"./events":6}],33:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -23250,7 +22607,7 @@ if (!window.requestAnimationFrame) {
   }();
 }
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -23402,7 +22759,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 (function (Buffer){(function (){
 /*!
  * The buffer module from node.js, for the browser.
@@ -25183,7 +24540,7 @@ function numberIsNaN (obj) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"base64-js":33,"buffer":34,"ieee754":38}],35:[function(require,module,exports){
+},{"base64-js":34,"buffer":35,"ieee754":39}],36:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -25196,7 +24553,7 @@ var _bvhLoader = require("./module/bvh-loader");
 var _default = _bvhLoader.MEBvh;
 exports.default = _default;
 
-},{"./module/bvh-loader":36}],36:[function(require,module,exports){
+},{"./module/bvh-loader":37}],37:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -25909,7 +25266,7 @@ class MEBvh {
 
 exports.MEBvh = MEBvh;
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (global){(function (){
 /*
  * Copyright (c) 2015 cannon.js Authors
@@ -39599,7 +38956,7 @@ World.prototype.clearForces = function(){
 (2)
 });
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
@@ -39686,7 +39043,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -39872,7 +39229,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

@@ -1116,7 +1116,10 @@ App.updateBeforeDraw.push(myFUNC);
 - https://www.fesliyanstudios.com/royalty-free-sound-effects-download/gun-shooting-300
 - https://blendswap.com/blend/29206
 - Great job HackTimer.js by turuslan https://github.com/turuslan/HackTimer
-- Matrix-engine use shadertoy.com examples. All origin description is leaved in name of fair use.
-  Just leave shader comments. Come's from buildinShaders object and have symbol CC
-  because https://www.shadertoy.com/terms . 
+- Matrix-engine use only MIT Licenced or similar shadertoy.com examples. 
+  All origin description is leaved in name of fair use. Just leave shader comments. 
+  Come's from freeShadersToy object and i will use only MIT licensed or similar
+  because https://www.shadertoy.com/terms. I dont wanna "non-commercial" code in
+  Matrix-engine project.
+- This is best way for learning : https://iquilezles.org/
 - Great free stuff https://ambientcg.com/view?id=MetalPlates004

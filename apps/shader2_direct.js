@@ -6,16 +6,17 @@
  */
 import App from "../program/manifest.js";
 import * as matrixEngine from "../index.js";
-import {toyShader, standardMatrixEngineShader, buildinShaders} from "../lib/optimizer/buildin-shaders.js";
+import { standardMEShaderDrawer, freeShadersToy} from "../lib/optimizer/buildin-shaders.js";
 
 const scriptManager = matrixEngine.utility.scriptManager;
 
 export var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/blue.png"],
     mix_operation: "multiply",
   }
-  world.Add("cubeLightTex", 1, "ToyShader", textuteImageSamplers);
+  // sphereLightTex
+  world.Add("squareTex", 1, "ToyShader", textuteImageSamplers);
 
   canvas.addEventListener('mousedown', (ev) => {
     matrixEngine.raycaster.checkingProcedure(ev);
@@ -30,26 +31,34 @@ export var runThis = world => {
       matrixEngine.utility.randomFloatFromTo(0, 2);
     // console.info(e.detail);
   });
-
-  scriptManager.LOAD(buildinShaders.shaderWater(), "custom-shader-fs", "x-shader/x-fragment", "shaders", () => {
-    App.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+  
+  scriptManager.LOAD(freeShadersToy.shaderSpiral(), "custom-toy1-shader-fs", "x-shader/x-fragment", "shaders", () => {
+    App.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
   })
 
-  App.scene.ToyShader.rotation.rotationSpeed.y = 55;
-  App.scene.ToyShader.glBlend.blendEnabled = false;
+ 
+  // App.scene.ToyShader.rotation.rotationSpeed.y = 55
+  App.scene.ToyShader.glBlend.blendEnabled = false
 
   App.scene.ToyShader.type = "custom-";
   var now = 1, time1 = 0, then1 = 0;
+
+  App.scene.ToyShader.MY_RAD = 0.5;
+
   App.scene.ToyShader.addExtraDrawCode = function (world, object) {
     now = Date.now();
-    now *= 0.001;
-    const elapsedTime = Math.min(now - then1, 0.1);
+    now *= 0.000000001;
+    const elapsedTime = Math.min(now - then1, 0.01);
     time1 += elapsedTime;
+    then1 = time1;
     world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
     world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
+    // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
+    world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, (App.sys.MOUSE.PRESS != false ? 1 : 0));
+    
   }
   App.scene.ToyShader.drawCustom = function (o) {
-    return standardMatrixEngineShader(o);
+    return matrixEngine.standardMEShaderDrawer(o);
   }
 }

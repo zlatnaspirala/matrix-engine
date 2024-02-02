@@ -4443,7 +4443,7 @@ var runThis = world => {
   var myShader = {};
 
   myShader.initDefaultFSShader = () => {
-    return `${(0, _buildinShaders.toyShader)()}
+    return `${(0, _buildinShaders.toyShaderHeader)()}
 
     #define SS(a,b,c) smoothstep(a-b,a+b,c)
     #define gyr(p) dot(sin(p.xyz),cos(p.zxy))
@@ -5444,10 +5444,10 @@ Object.defineProperty(exports, "standardMatrixEngineShader", {
     return _buildinShaders.standardMatrixEngineShader;
   }
 });
-Object.defineProperty(exports, "toyShader", {
+Object.defineProperty(exports, "toyShaderHeader", {
   enumerable: true,
   get: function () {
-    return _buildinShaders.toyShader;
+    return _buildinShaders.toyShaderHeader;
   }
 });
 Object.defineProperty(exports, "buildinShaders", {
@@ -17429,7 +17429,7 @@ exports.Broadcaster = Broadcaster;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.toyShader = toyShader;
+exports.toyShaderHeader = toyShaderHeader;
 exports.toyShader1 = toyShader1;
 exports.buildinShaders = exports.standardMatrixEngineShader = void 0;
 
@@ -17448,7 +17448,7 @@ var now = 0,
     then1 = 0,
     time1 = 0;
 
-function toyShader() {
+function toyShaderHeader() {
   return `#version 300 es
   precision highp float;
   // test mix
@@ -17824,7 +17824,7 @@ var buildinShaders = {};
 exports.buildinShaders = buildinShaders;
 
 buildinShaders.shaderCloudCC = () => {
-  return `${toyShader()}
+  return `${toyShaderHeader()}
   // Mikael Lemercier & Fabrice Neyret , June, 2013
   #define LINEAR_DENSITY 0  // 0: constant
   #define DENS 2.           // tau.rho
@@ -18040,7 +18040,7 @@ buildinShaders.shaderCloudCC = () => {
 };
 
 buildinShaders.shaderLightAndCloudsCC = () => {
-  return `${toyShader()}
+  return `${toyShaderHeader()}
   // origin https://www.shadertoy.com/view/MdyGzR
   vec3 mod289(vec3 x) {
     return x - floor(x * (1.0 / 289.0)) * 289.0;
@@ -18201,7 +18201,7 @@ buildinShaders.shaderLightAndCloudsCC = () => {
 };
 
 buildinShaders.shaderNebulaCC = () => {
-  return `${toyShader()}
+  return `${toyShaderHeader()}
   float polygonDistance(vec2 p, float radius, float angleOffset, int sideCount) {
     float a = atan(p.x, p.y)+ angleOffset;
     float b = 6.28319 / float(sideCount);
@@ -18258,7 +18258,7 @@ void main() {
 };
 
 buildinShaders.shaderWaterCC = () => {
-  return `${toyShader()}
+  return `${toyShaderHeader()}
     // Found this on GLSL sandbox. I really liked it, changed a few things and made it tileable.// :)// by David Hoskins.
     // Original water turbulence effect by joltz0r
     // Redefine below to see the tiling...
@@ -18311,7 +18311,7 @@ buildinShaders.shaderWaterCC = () => {
 };
 
 buildinShaders.shaderFireBallCC = () => {
-  return `${toyShader()}
+  return `${toyShaderHeader()}
   // https://www.shadertoy.com/view/4dXGR4
   // based on https://www.shadertoy.com/view/lsf3RH by
   // trisomie21 (THANKS!)
@@ -18415,7 +18415,7 @@ buildinShaders.shaderFireBallCC = () => {
 };
 
 buildinShaders.shaderFireBallCC = () => {
-  return `${toyShader()}
+  return `${toyShaderHeader()}
   // https://www.shadertoy.com/terms
   // https://www.shadertoy.com/view/lsf3RH
   float snoise(vec3 uv, float res)
@@ -18468,7 +18468,7 @@ buildinShaders.shaderFireBallCC = () => {
 };
 
 buildinShaders.shaderChainCC = () => {
-  return `${toyShader()}
+  return `${toyShaderHeader()}
 // ***********************************************************
 // Alcatraz / Rhodium 4k Intro liquid carbon
 // by Jochen "Virgill" Feldkötter
@@ -18659,7 +18659,7 @@ void main() {
 };
 
 buildinShaders.shaderFractalCC = () => {
-  return `${toyShader()}
+  return `${toyShaderHeader()}
   /*
     Steel Lattice
     -------------
@@ -19077,7 +19077,7 @@ void main() {
 };
 
 buildinShaders.shaderTest = () => {
-  return `${toyShader()}
+  return `${toyShaderHeader()}
  
   `;
 };

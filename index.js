@@ -20,7 +20,8 @@ import texTools from "./lib/matrix-textures";
 import * as utility from "./lib/utility";
 import * as raycaster from './lib/raycast';
 import MEBvhAnimation from './lib/matrix-bvh';
-import {standardMatrixEngineShader, toyShader, buildinShaders} from "./lib/optimizer/buildin-shaders";
+import {standardMEShaderDrawer, toyShaderHeader, freeShadersToy} from "./lib/optimizer/buildin-shaders";
+import {defineShader} from "./lib/optimizer/buildin-my-shaders";
 
 export {
   App,
@@ -35,7 +36,8 @@ export {
   objLoader,
   raycaster,
   MEBvhAnimation,
-  toyShader,
-  standardMatrixEngineShader,
-  buildinShaders
-};
+  toyShaderHeader,
+  defineShader,
+  standardMEShaderDrawer,
+  freeShadersToy
+}
