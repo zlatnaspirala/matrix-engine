@@ -6,7 +6,7 @@
  */
 import App from "../program/manifest.js";
 import * as matrixEngine from "../index.js";
-import { standardMEShaderDrawer, freeShadersToy} from "../lib/optimizer/buildin-shaders.js";
+import {standardMEShaderDrawer, freeShadersToy} from "../lib/optimizer/buildin-shaders.js";
 
 const scriptManager = matrixEngine.utility.scriptManager;
 
@@ -21,7 +21,7 @@ export var runThis = world => {
   canvas.addEventListener('mousedown', (ev) => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
-  
+
   addEventListener("ray.hit.event", function(e) {
     e.detail.hitObject.LightsData.ambientLight.r =
       matrixEngine.utility.randomFloatFromTo(0, 2);
@@ -31,13 +31,16 @@ export var runThis = world => {
       matrixEngine.utility.randomFloatFromTo(0, 2);
     // console.info(e.detail);
   });
-  
-  scriptManager.LOAD(freeShadersToy.shaderPalettes(), "custom-toy1-shader-fs", "x-shader/x-fragment", "shaders", () => {
-    App.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+
+  // Load shader content direct from glsl file.
+  var promiseMyShader = scriptManager.loadGLSL('../lib/optimizer/custom-shaders/circle.glsl')
+  promiseMyShader.then((d) => {
+    scriptManager.LOAD(d, "custom-toy1-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      App.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+    })
   })
 
- 
-  // App.scene.ToyShader.rotation.rotationSpeed.y = 55
+  App.scene.ToyShader.rotation.rotationSpeed.y = 55
   App.scene.ToyShader.glBlend.blendEnabled = false
 
   App.scene.ToyShader.type = "custom-";
@@ -45,7 +48,7 @@ export var runThis = world => {
 
   App.scene.ToyShader.MY_RAD = 0.5;
 
-  App.scene.ToyShader.addExtraDrawCode = function (world, object) {
+  App.scene.ToyShader.addExtraDrawCode = function(world, object) {
     now = Date.now();
     now *= 0.000000001;
     const elapsedTime = Math.min(now - then1, 0.01);
@@ -56,9 +59,9 @@ export var runThis = world => {
     world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
     // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, (App.sys.MOUSE.PRESS != false ? 1 : 0));
-    
+
   }
-  App.scene.ToyShader.drawCustom = function (o) {
+  App.scene.ToyShader.drawCustom = function(o) {
     return matrixEngine.standardMEShaderDrawer(o);
   }
 }

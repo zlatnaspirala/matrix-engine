@@ -78,11 +78,15 @@ var runThis = world => {
     e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 2);
     e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 2);
     e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2); // console.info(e.detail);
-  });
-  scriptManager.LOAD(_buildinShaders.freeShadersToy.shaderPalettes(), "custom-toy1-shader-fs", "x-shader/x-fragment", "shaders", () => {
-    _manifest.default.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
-  }); // App.scene.ToyShader.rotation.rotationSpeed.y = 55
+  }); // Load shader content direct from glsl file.
 
+  var promiseMyShader = scriptManager.loadGLSL('../lib/optimizer/custom-shaders/circle.glsl');
+  promiseMyShader.then(d => {
+    scriptManager.LOAD(d, "custom-toy1-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      _manifest.default.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+    });
+  });
+  _manifest.default.scene.ToyShader.rotation.rotationSpeed.y = 55;
   _manifest.default.scene.ToyShader.glBlend.blendEnabled = false;
   _manifest.default.scene.ToyShader.type = "custom-";
   var now = 1,
@@ -12318,10 +12322,6 @@ var _utility = require("../utility");
    Interest links for explore post shader example live: 
    https://stackoverflow.com/questions/8166384/how-to-get-a-glow-shader-effect-in-opengl-es-2-0
  */
-var now = 0,
-    then1 = 0,
-    time1 = 0;
-
 function defineShader() {
   return `#version 300 es
   // Standard Matrix-engine Shaders attr
@@ -12330,9 +12330,9 @@ function defineShader() {
   in vec3 vLightWeighting;
   uniform sampler2D uSampler;
 
-  uniform vec2  uniSIZE;
-  uniform float uniTimeDelta;
-  uniform vec2  uniMouse;
+  uniform vec2  uSIZE;
+  uniform float uDelta;
+  uniform vec2  uMouse;
 
   out vec4 outColor;
   `;
@@ -12347,9 +12347,9 @@ function defineShader1() {
   varying vec3 vLightWeighting;
   uniform sampler2D uSampler;
 
-  uniform vec2 uniSIZE;
-  uniform float uniTimeDelta;
-  uniform vec2 uniMouse;
+  uniform vec2 uSIZE;
+  uniform float uDelta;
+  uniform vec2 uMouse;
 
   `;
 }
@@ -21908,6 +21908,13 @@ var scriptManager = {
     } else {
       document.body.appendChild(s);
     }
+  },
+  loadGLSL: function (src) {
+    return new Promise(resolve => {
+      fetch(src).then(data => {
+        resolve(data.text());
+      });
+    });
   }
 }; // GET PULSE VALUES IN REAL TIME
 

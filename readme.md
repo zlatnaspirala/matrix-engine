@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.9.43` THUNDER
+### Name: `MATRIX-ENGINE` `1.9.53` THUNDER
 
 #### Logo
 
@@ -40,17 +40,16 @@
 
 This is small but inspiring project.
 The benefits of this project is offering an overview of the entire opengles program logic,
-easy native implementations (hybrid app/ CEF), object structural. Thanks to Mr.Keestu i use
+easy native implementations (hybrid app/ CEF), object structural. Not closed too mush inself. Thanks to Mr.Keestu i use
 (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in
 opengles 1.1. Also can be downgraded to openGLES 1.1. webGL Lightweight library based on glmatrix engine.
 For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js. I use free software Blender 2.90.1 for 3d Object mesh works. MatrixEngine is Blender frendly orientend lib. Another frendly tools comes from mixamo.com. Mixamo is great service used for creating my 3d assets. GIMP and MsPaint
-also used for editing images. Networking is part of matrix engine, deeply integrated. Used webRTC reala time protocol. Powered by webGL vs webRTC!
+also used for editing images. Networking is part of matrix engine, deeply integrated. Used webRTC reala time protocol. Powered by webGL vs webRTC tech!
 
 ### Limitation ⚠
 
-- Basic implementation for physics (Cube, Sphere).
+- Basic implementation for physics (Cube, Sphere). [not perfect]
 - Only static object cast spot light in right way for now.
-- Need general more improvement on GLSL part.
 
 ### Next Features 🔜
 
@@ -58,6 +57,7 @@ also used for editing images. Networking is part of matrix engine, deeply integr
   Shaders must be improved based on work.
   More examples code.
   Links -> https://webglfundamentals.org/webgl/lessons/
+        -> https://iquilezles.org/
 
 ### For npm users recommended
 
@@ -234,6 +234,8 @@ To avoid iframe from examples.html you can use `query-build.html?u=<NAME_OF_EXAM
 - Basic FBO + timeline test [WIP]
 - Matrix Video Chat - webGL vs webRTC
 - FBO manipulation - Multi FBO objects
+- Loading custom shaders from shadertoy site.
+- Loading from buildInShaders.
 
 ## Features description
 
@@ -1121,5 +1123,5 @@ App.updateBeforeDraw.push(myFUNC);
   Come's from freeShadersToy object and i will use only MIT licensed or similar
   because https://www.shadertoy.com/terms. I dont wanna "non-commercial" code in
   Matrix-engine project.
-- This is best way for learning : https://iquilezles.org/
+- This is best way for learning GLSL: https://iquilezles.org/
 - Great free stuff https://ambientcg.com/view?id=MetalPlates004

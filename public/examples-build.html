@@ -1,7 +1,7 @@
 <script>
   if(location.href.indexOf('localhost') == -1) {
     if(location.protocol != 'https:') {
-      location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+      // location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
     }
   }
   function g(i) {
@@ -48,7 +48,7 @@
 <head>
   <link rel="manifest" href="manifest.web" />
   <title>Matrix-Engine-Workspace</title>
-  <meta name="description" content="webGL2 , Scene objects, FBO, transformations, Bvh animation, easy Native implementations (cef), object structural. " />
+  <meta name="description" content="webGL2, Scene objects, FBO, transformations, Bvh animation, easy Native implementations (cef), object structural." />
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <link async rel="stylesheet" href="css/style.css" />
   <link rel="apple-touch-icon" href="res/icons/512.png" />
@@ -107,7 +107,7 @@
       height: 90vh;
       overflow: scroll;
       overflow-x: hidden;
-      color: rgba(225, 18, 228, 0.385);
+      color:rgb(255 228 0);
       padding: 1px;
       text-align: center
     }
@@ -120,7 +120,7 @@
   <div id="menu" style="">
     <div id='title' class="btnShadow" style="width: 100%; height: auto;font-size: larger;">
       Matrix Engine Demos <br />
-      version 1.9.49 - jun 2024
+      version 1.9.53 - feb 2024
     </div>
     <div style="width: 100%; height: auto" class="btnShadow" onclick="loadDemo('adding_color_cube')" onmousemove="">adding color cube</div>
     <div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_color_triangle')">adding color triangle</div>
@@ -170,6 +170,7 @@
     <div style="width: 100%" class="btnShadow" onclick="loadDemo('physics_cube_active_textures')">100 Physics Cube with fanny-slot [canvas2d]</div>
     <div style="width: 100%" class="btnShadow" onclick="loadDemo('shader1_porting')">Porting shader1- toyshader</div>
     <div style="width: 100%" class="btnShadow" onclick="loadDemo('shader1_direct')">Direct shader1- toyshader</div>
+    <div style="width: 100%" class="btnShadow" onclick="loadDemo('shader2_direct')">Loading direct from glsl file.</div>
   </div>
 
   <iframe id="iframe1" allowfullscreen allow="autoplay" style="position: absolute; left: 15%; top: 0; width: 85%; height: 99%" class="btnShadow" src="query-build.html" title="live"></iframe>

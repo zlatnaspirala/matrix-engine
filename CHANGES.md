@@ -2,11 +2,26 @@
 
 # Matrix Engine [CHANGES]
 
-[2.0.0 beta version Vampir] Objective
+[2.0.0 beta version Vampir] 
+Objective
  - Mobile device ready 
- - GUI basic version ready
+ - GUI Editor (win) basic version ready
 
 ## ---------------------------------
+
+[1.9.53]
+ - Added shaders from https://iquilezles.org/ MIT LICENCE only.
+
+ - `scriptManager.loadGLSL('./path/myshader.glsl')`  returns literal string (shader).
+ ```js
+   var promiseMyShader = scriptManager.loadGLSL('../lib/optimizer/custom-shaders/circle.glsl')
+  promiseMyShader.then((d) => {
+    scriptManager.LOAD(d, "custom-toy1-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      App.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+    })
+  })
+ ```
+
 
 [1.9.45+]
  All examples now works on android devices[android 13 tested]!
