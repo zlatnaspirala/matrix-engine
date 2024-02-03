@@ -32,7 +32,7 @@ export var runThis = world => {
     // console.info(e.detail);
   });
   
-  scriptManager.LOAD(freeShadersToy.shaderSpiral(), "custom-toy1-shader-fs", "x-shader/x-fragment", "shaders", () => {
+  scriptManager.LOAD(freeShadersToy.shaderPalettes(), "custom-toy1-shader-fs", "x-shader/x-fragment", "shaders", () => {
     App.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
   })
 
