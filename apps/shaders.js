@@ -44,12 +44,23 @@ export var runThis = world => {
   });
 
   // Load shader content direct from glsl file.
-  var promiseMyShader = scriptManager.loadGLSL('../public/res/shaders/lights/lights.glsl')
-  var promiseMyShader2 = scriptManager.loadGLSL('../public/res/shaders/lights/lights2.glsl')
-  var promiseMyShader3 = scriptManager.loadGLSL('../public/res/shaders/fractals/cube.glsl')
-  var promiseMyShader4 = scriptManager.loadGLSL('../public/res/shaders/symbols/single-symbol.glsl')
-  var promiseMyShader5 = scriptManager.loadGLSL('../public/res/shaders/tutorial-lines/colored-lines.glsl')
-  var promiseMyShader6 = scriptManager.loadGLSL('../public/res/shaders/noise/volonoise.glsl')
+  if(location.hostname == "localhost") {
+    console.log('DEV Paths')
+    var promiseMyShader = scriptManager.loadGLSL('../public/res/shaders/lights/lights.glsl')
+    var promiseMyShader2 = scriptManager.loadGLSL('../public/res/shaders/lights/lights2.glsl')
+    var promiseMyShader3 = scriptManager.loadGLSL('../public/res/shaders/fractals/cube.glsl')
+    var promiseMyShader4 = scriptManager.loadGLSL('../public/res/shaders/symbols/single-symbol.glsl')
+    var promiseMyShader5 = scriptManager.loadGLSL('../public/res/shaders/tutorial-lines/colored-lines.glsl')
+    var promiseMyShader6 = scriptManager.loadGLSL('../public/res/shaders/noise/volonoise.glsl')
+  } else {
+    console.log('PROD Paths')
+    var promiseMyShader = scriptManager.loadGLSL('./res/shaders/lights/lights.glsl')
+    var promiseMyShader2 = scriptManager.loadGLSL('./res/shaders/lights/lights2.glsl')
+    var promiseMyShader3 = scriptManager.loadGLSL('./res/shaders/fractals/cube.glsl')
+    var promiseMyShader4 = scriptManager.loadGLSL('./res/shaders/symbols/single-symbol.glsl')
+    var promiseMyShader5 = scriptManager.loadGLSL('./res/shaders/tutorial-lines/colored-lines.glsl')
+    var promiseMyShader6 = scriptManager.loadGLSL('./res/shaders/noise/volonoise.glsl')
+  }
 
   geometryLines.charM.forEach((element, index, array) => {
     if(array[index] >= 0) array[index] += 0.4;

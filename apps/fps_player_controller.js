@@ -29,7 +29,7 @@ export var runThis = (world) => {
   matrixEngine.Events.camera.yPos = 2;
 
   addEventListener('hit.keyDown' , (e) => {
-    if (e.detail.key == "Escape" || e.detail.keyCode == 27) {
+    if (e.detail.origin.key == "Escape" || e.detail.keyCode == 27) {
       console.log('PAUSE GAME_PLAY')
     }
   })
@@ -576,7 +576,7 @@ export var runThis = (world) => {
     // var now = 1, time1 = 0, then1 = 0;
     // App.scene.WALL_BLOCK2.SHADER_APP_STATUS = 0;
     // var osc_r = new OSCILLATOR(0, 2, 0.001);
-    // var osc_g = new OSCILLATOR(0, 1, 0.001);
+    // var osc_g = new OSCILLATOR(0, .9.541, 0.001);
     // var osc_b = new OSCILLATOR(0, 0.1, 0.01);
     // var osc_variable = new OSCILLATOR(0, 150, 1);
 
