@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Matrix-Engine-Workplace</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="The benefits of this project is offering `not too much closed in self` and access of low level of opengles, easy native implementations (hybrid app), object structural, webrtc deeply integrated.">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="apple-touch-icon" href="res/icons/512.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimal-ui" />
+    <link rel="icon" type="image/png" sizes="96x96" href="res/icons/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="res/icons/android-icon.png" />
+    <link rel="icon" href="res/icons/favicon.ico" type="image/x-icon" />
+    <meta name="msapplication-TileImage" content="res/icons/ms-icon.png" />
+    <script defer src="./lib/gl-matrix-min.js"></script>
+    <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
+  </head>
+  <body>
+    <div id="shaders"></div>
+    <div id="debugBox" class="debugBox" style="display: none"></div>
+    <div id="fps" class="btnShadow debugBox" style="display: none">
+      <button id="stopRender" type="button">stopRender</button>
+      <div color="white"><b id="fps"></b></div>
+    </div>
+    <button class="add-button button1" style="display: none">
+      <h1>Add to home screen</h1>
+      <h2>Run like PWA Application for better performance</h2>
+    </button>
+    <button class="add-button button2" style="display: none">
+      <h2>I don't wanna full PWA just play it in regular HTML5 page.</h2>
+    </button>
+    <div id="HOLDER_STREAMS" class="debugBox textureCanvas2d" style="display: block">
+      <video id="webcam_beta" autoplay width="320" height="320" style="display: block; position: absolute; left: 0; top: 110px"></video>
+      <audio id="audio_beta" src="#"></audio>
+    </div>
+    <div id="matrix-net"></div>
+    <div style="display:none;position: absolute;left:55%;top:45%">
+      <h2> Lights options </h2>
+      <matrix-light type="number" id="dirLightR" value="1"></matrix-light>
+      <matrix-light type="number" id="dirLightG" value="1"></matrix-light>
+      <matrix-light type="number" id="dirLightB" value="1"></matrix-light>
+      <!-- <matrix-light type="number" id="ambLightR" value="1"></matrix-light>
+      <matrix-light type="number" id="ambLightG" value="1"></matrix-light>
+      <matrix-light type="number" id="ambLightB" value="1"></matrix-light> -->
+      <!-- <matrix-light type="number" id="dirX" value="1"></matrix-light>
+      <matrix-light type="number" id="dirY" value="1"></matrix-light>
+      <matrix-light type="number" id="dirZ" value="1"></matrix-light> -->
+    </div>
+    <div id="matrixTimeLine" class="timeLine" style="display:none;">
+      <div class="timeLineSlider">
+        <p>Matrix Engine Scene Timeline - Size of sequence: <span id="globalAnimSize"></span> </p>
+        <p>Frame id: <span id="globalAnimCounter"></span></p>
+        <p>Sequence: <span id="globalAnimCurSequence"></span></p>
+      </div>
+      <div> 
+        <input type="range" min="1" max="5000" value="0" class="slider" id="timeline">
+      </div>
+    </div>
+    <script defer src="me.lib.js"></script>
+  </body>
+</html>

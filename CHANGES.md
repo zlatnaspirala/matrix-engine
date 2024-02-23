@@ -9,6 +9,11 @@ Objective
 
 ## ---------------------------------
 
+[1.9.54]
+ Added custom shaders also glsl files from zlatnaspirala/GLSLShaders
+ Add new example `apps/shaders.js`.
+ 
+
 [1.9.53]
  - Added shaders from https://iquilezles.org/ MIT LICENCE only.
 

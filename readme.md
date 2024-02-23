@@ -1123,5 +1123,11 @@ App.updateBeforeDraw.push(myFUNC);
   Come's from freeShadersToy object and i will use only MIT licensed or similar
   because https://www.shadertoy.com/terms. I dont wanna "non-commercial" code in
   Matrix-engine project.
-- This is best way for learning GLSL: https://iquilezles.org/
+- This is best way for learning GLSL: https://iquilezles.org/ - MIT LICENCE
+  Used iquilezles shaders for learning and explore. Under (public\res\shaders) 
+  Also used glslsandbox lights balls example [https://glslsandbox.com/e#109700.0].
+  FBM shader License: Copyright (C) 2011 Ashima Arts. All rights reserved.
+	Distributed under the MIT License. https://github.com/ashima/webgl-noise
+  CustomShaders comes with readme.md file with LICENCE text. If readme.md not exist 
+  the it is also MIT Licence but under Nikola Lukic zlatnaspirala@gmail.com.
 - Great free stuff https://ambientcg.com/view?id=MetalPlates004

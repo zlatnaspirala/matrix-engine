@@ -15,9 +15,11 @@
 
 import App from '../program/manifest';
 import * as CANNON from 'cannon';
-import {ENUMERATORS, ORBIT_FROM_ARRAY, OSCILLATOR, isMobile, randomFloatFromTo} from '../lib/utility';
+import {ENUMERATORS, ORBIT_FROM_ARRAY, OSCILLATOR, isMobile, randomFloatFromTo, scriptManager} from '../lib/utility';
 
 export var runThis = (world) => {
+
+  setTimeout(() => document.querySelector('.button2').click(), 3000)
 
   // Camera
   canvas.style.cursor = 'none';
@@ -25,6 +27,12 @@ export var runThis = (world) => {
   matrixEngine.Events.camera.fly = false;
   App.camera.speedAmp = 0.01;
   matrixEngine.Events.camera.yPos = 2;
+
+  addEventListener('hit.keyDown' , (e) => {
+    if (e.detail.key == "Escape" || e.detail.keyCode == 27) {
+      console.log('PAUSE GAME_PLAY')
+    }
+  })
 
   // Audio effects
   App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
@@ -36,7 +44,7 @@ export var runThis = (world) => {
 
   // Override mouse up
   App.events.CALCULATE_TOUCH_UP_OR_MOUSE_UP = () => {
-    console.log('TEST APP CLICK')
+    // console.log('TEST APP CLICK')
     App.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     App.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     App.scene.FPSTarget.geometry.setScale(0.1);
@@ -553,6 +561,63 @@ export var runThis = (world) => {
   App.scene['WALL_BLOCK'].physics.currentBody = b5;
   App.scene['WALL_BLOCK'].physics.enabled = true;
 
+    // Big wall CUSTOM SHADERS
+    world.Add("sphereLightTex", 1, "WALL_BLOCK2", texNoMipmap);
+    var b6 = new CANNON.Body({
+      mass: 0,
+      linearDamping: 0.01,
+      position: new CANNON.Vec3(30, -10, 0),
+      shape: new CANNON.Sphere(1) // new CANNON.Box(new CANNON.Vec3(5, 5, 5))
+    });
+    physics.world.addBody(b6);
+    App.scene['WALL_BLOCK2'].position.setPosition(30, -10, 19)
+    App.scene['WALL_BLOCK2'].physics.currentBody = b6;
+    App.scene['WALL_BLOCK2'].physics.enabled = true;
+    // var now = 1, time1 = 0, then1 = 0;
+    // App.scene.WALL_BLOCK2.SHADER_APP_STATUS = 0;
+    // var osc_r = new OSCILLATOR(0, 2, 0.001);
+    // var osc_g = new OSCILLATOR(0, 1, 0.001);
+    // var osc_b = new OSCILLATOR(0, 0.1, 0.01);
+    // var osc_variable = new OSCILLATOR(0, 150, 1);
+
+    // var promiseMyShader = scriptManager.loadGLSL('../public/res/shaders/lights/lights3.glsl')
+    // promiseMyShader.then((d) => {
+    //   scriptManager.LOAD(d, "custom-effect1-shader-fs", "x-shader/x-fragment", "shaders", () => {
+    //     App.scene.WALL_BLOCK2.shaderProgram = world.initShaders(world.GL.gl, 'custom-effect1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+    //     // Now add extra custom shader uniforms.
+    //     App.scene.WALL_BLOCK2.shaderProgram.XXX = world.GL.gl.getUniformLocation(App.scene.WALL_BLOCK2.shaderProgram, "iXXX");
+    //     App.scene.WALL_BLOCK2.shaderProgram.R = world.GL.gl.getUniformLocation(App.scene.WALL_BLOCK2.shaderProgram, "iR");
+    //     App.scene.WALL_BLOCK2.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.WALL_BLOCK2.shaderProgram, "iG");
+    //     App.scene.WALL_BLOCK2.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.WALL_BLOCK2.shaderProgram, "iB");
+    //     App.scene.WALL_BLOCK2.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(App.scene.WALL_BLOCK2.shaderProgram, "iAppStatus");
+    //   })
+    // })
+
+    // App.scene.WALL_BLOCK2.type = "custom-";
+    // App.scene.WALL_BLOCK2.MY_RAD = 0.5;
+    // App.scene.WALL_BLOCK2.addExtraDrawCode = function(world, object) {
+    //   now = Date.now();
+    //   now *= 0.000000001;
+    //   const elapsedTime = Math.min(now - then1, 0.01);
+    //   time1 += elapsedTime;
+    //   then1 = time1;
+    //   world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
+    //   world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
+    //   world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
+    //   // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
+    //   world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, (App.sys.MOUSE.PRESS != false ? 1 : 0));
+  
+    //   world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable.UPDATE())
+  
+    //   world.GL.gl.uniform1f(object.shaderProgram.R, osc_r.UPDATE())
+    //   world.GL.gl.uniform1f(object.shaderProgram.G, osc_g.UPDATE())
+    //   world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE())
+  
+    //   world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, App.scene.WALL_BLOCK2.SHADER_APP_STATUS)
+    // }
+  
+    // App.scene.WALL_BLOCK2.drawCustom = matrixEngine.standardMEShaderDrawer;
+  
 
   // Damage object test
   world.Add("cubeLightTex", 1, "LAVA", tex);

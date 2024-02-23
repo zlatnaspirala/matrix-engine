@@ -110,7 +110,7 @@ var _rolling_the_dice = require("./apps/rolling_the_dice");
 
 var _shader1_direct = require("./apps/shader1_direct");
 
-var _shader1_porting = require("./apps/shader1_porting");
+var _shaders = require("./apps/shaders");
 
 var _shader2_direct = require("./apps/shader2_direct");
 
@@ -127,7 +127,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
  * public/query-build.html?u=spot_light_shadows
  */
 var Examples = {
-  shader1_porting: _shader1_porting.runThis,
+  shaders: _shaders.runThis,
   shader1_direct: _shader1_direct.runThis,
   shader2_direct: _shader2_direct.runThis,
   rolling_the_dice: _rolling_the_dice.runThis,
@@ -236,7 +236,7 @@ var App = matrixEngine.App;
 var _default = App;
 exports.default = _default;
 
-},{"./apps/active_editor":2,"./apps/adding_color_cube":3,"./apps/adding_color_piramyde":4,"./apps/adding_color_square":5,"./apps/adding_color_triangle":6,"./apps/adding_more_texture_samplers":7,"./apps/adding_square_texture":8,"./apps/adding_tex_square_raycast":9,"./apps/all_variant_of_blending":10,"./apps/audio_manipulation":11,"./apps/audio_manipulation2":12,"./apps/basic_fbo":13,"./apps/bvh-animation-class":14,"./apps/bvh-loader":15,"./apps/camera_texture":16,"./apps/cube_experimental":17,"./apps/cube_geometry":18,"./apps/cube_light_and_texture":19,"./apps/cube_light_dinamic":20,"./apps/cube_tex_arrays":21,"./apps/custom_texture":22,"./apps/fbo_manipulation":23,"./apps/first_person_controller":24,"./apps/fps_player_controller":25,"./apps/lens_effect":26,"./apps/load_obj_file":27,"./apps/load_obj_sequence":28,"./apps/matrix_chat_room":29,"./apps/my_world":30,"./apps/networking_basic":31,"./apps/obj_animation":32,"./apps/obj_animation_build_mesh_effect":33,"./apps/one-kilo":34,"./apps/opengles_native_cubemap":35,"./apps/opengles_native_cubemap_images":36,"./apps/physics_cube":37,"./apps/physics_cube_active_textures":38,"./apps/physics_sphere":39,"./apps/porting2d":40,"./apps/porting2d_micro_draw":41,"./apps/porting2d_particle":42,"./apps/porting2d_text":43,"./apps/rolling_the_dice":44,"./apps/shader1_direct":45,"./apps/shader1_porting":46,"./apps/shader2_direct":47,"./apps/sphere_geometry":48,"./apps/spot_light_basic":49,"./apps/texture_dinamic_manipulation":50,"./apps/torus_geometry":51,"./apps/video_texture":52,"./apps/video_texture_lava":53,"./apps/welcome-gui-editor":54,"./index":56}],2:[function(require,module,exports){
+},{"./apps/active_editor":2,"./apps/adding_color_cube":3,"./apps/adding_color_piramyde":4,"./apps/adding_color_square":5,"./apps/adding_color_triangle":6,"./apps/adding_more_texture_samplers":7,"./apps/adding_square_texture":8,"./apps/adding_tex_square_raycast":9,"./apps/all_variant_of_blending":10,"./apps/audio_manipulation":11,"./apps/audio_manipulation2":12,"./apps/basic_fbo":13,"./apps/bvh-animation-class":14,"./apps/bvh-loader":15,"./apps/camera_texture":16,"./apps/cube_experimental":17,"./apps/cube_geometry":18,"./apps/cube_light_and_texture":19,"./apps/cube_light_dinamic":20,"./apps/cube_tex_arrays":21,"./apps/custom_texture":22,"./apps/fbo_manipulation":23,"./apps/first_person_controller":24,"./apps/fps_player_controller":25,"./apps/lens_effect":26,"./apps/load_obj_file":27,"./apps/load_obj_sequence":28,"./apps/matrix_chat_room":29,"./apps/my_world":30,"./apps/networking_basic":31,"./apps/obj_animation":32,"./apps/obj_animation_build_mesh_effect":33,"./apps/one-kilo":34,"./apps/opengles_native_cubemap":35,"./apps/opengles_native_cubemap_images":36,"./apps/physics_cube":37,"./apps/physics_cube_active_textures":38,"./apps/physics_sphere":39,"./apps/porting2d":40,"./apps/porting2d_micro_draw":41,"./apps/porting2d_particle":42,"./apps/porting2d_text":43,"./apps/rolling_the_dice":44,"./apps/shader1_direct":45,"./apps/shader2_direct":46,"./apps/shaders":47,"./apps/sphere_geometry":48,"./apps/spot_light_basic":49,"./apps/texture_dinamic_manipulation":50,"./apps/torus_geometry":51,"./apps/video_texture":52,"./apps/video_texture_lava":53,"./apps/welcome-gui-editor":54,"./index":56}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2080,12 +2080,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @class First Person Shooter example
  */
 var runThis = world => {
-  // Camera
+  setTimeout(() => document.querySelector('.button2').click(), 3000); // Camera
+
   canvas.style.cursor = 'none';
   _manifest.default.camera.FirstPersonController = true;
   matrixEngine.Events.camera.fly = false;
   _manifest.default.camera.speedAmp = 0.01;
-  matrixEngine.Events.camera.yPos = 2; // Audio effects
+  matrixEngine.Events.camera.yPos = 2;
+  addEventListener('hit.keyDown', e => {
+    if (e.detail.key == "Escape" || e.detail.keyCode == 27) {
+      console.log('PAUSE GAME_PLAY');
+    }
+  }); // Audio effects
 
   _manifest.default.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5); // Prevent right click context menu
 
@@ -2608,7 +2614,21 @@ var runThis = world => {
   _manifest.default.scene['WALL_BLOCK'].position.setPosition(10, 0, -19);
 
   _manifest.default.scene['WALL_BLOCK'].physics.currentBody = b5;
-  _manifest.default.scene['WALL_BLOCK'].physics.enabled = true; // Damage object test
+  _manifest.default.scene['WALL_BLOCK'].physics.enabled = true; // Big wall
+
+  world.Add("cubeLightTex", 5, "WALL_BLOCK2", texNoMipmap);
+  var b6 = new CANNON.Body({
+    mass: 0,
+    linearDamping: 0.01,
+    position: new CANNON.Vec3(30, -10, 0),
+    shape: new CANNON.Box(new CANNON.Vec3(5, 5, 5))
+  });
+  physics.world.addBody(b6);
+
+  _manifest.default.scene['WALL_BLOCK2'].position.setPosition(30, -10, 19);
+
+  _manifest.default.scene['WALL_BLOCK2'].physics.currentBody = b6;
+  _manifest.default.scene['WALL_BLOCK2'].physics.enabled = true; // Damage object test
 
   world.Add("cubeLightTex", 1, "LAVA", tex);
   var b4 = new CANNON.Body({
@@ -4137,7 +4157,8 @@ var runThis = world => {
 
   E("HOLDER_STREAMS").style.display = "block";
   setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas("../2DTextureEditor/templates/slot/", "HELLO_WORLD");
+    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas( // ../ for localhost
+    "./2DTextureEditor/templates/slot/", "HELLO_WORLD");
 
     _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
   }, 500);
@@ -4559,70 +4580,6 @@ var _manifest = _interopRequireDefault(require("../program/manifest.js"));
 
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
 
-var _engine = require("../lib/engine.js");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- */
-
-/* globals world App world */
-let Vjs3 = matrixEngine.Engine.Vjs3;
-
-var runThis = world => {
-  /* globals ENUMERATORS world App Vjs3 E */
-  let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-  let E = matrixEngine.utility.E; // eslint-disable-next-line no-unused-vars
-
-  var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply" // ENUM : multiply , divide ,
-
-  };
-  world.Add("cubeLightTex", 12, "outsideBox", tex);
-  _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55;
-  _manifest.default.scene.outsideBox.rotation.rotationSpeed.x = 20;
-  _manifest.default.scene.outsideBox.rotation.rotationSpeed.y = 5; // App.scene.outsideBox.rotValue = 90;
-
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
-
-  _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
-  _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
-  _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
-
-  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
-
-  _manifest.default.scene.outsideBox.rotation.rotz = -90; // CANVAS2D_SURFACE
-
-  E("HOLDER_STREAMS").style.display = "block";
-  E("HOLDER_STREAMS").style.top = "-10000px";
-  setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas("https://maximumroulette.com/apps/canvas2d/shader1/", // "SOURCE -> matrix-engine-plugins/nidza-shaders/",
-    "myShader"); //App.scene.outsideBox.streamTextures.showTextureEditor();
-  }, 500);
-};
-
-exports.runThis = runThis;
-
-},{"../index.js":56,"../lib/engine.js":57,"../program/manifest.js":93}],47:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runThis = void 0;
-
-var _manifest = _interopRequireDefault(require("../program/manifest.js"));
-
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
 var _buildinShaders = require("../lib/optimizer/buildin-shaders.js");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -4689,7 +4646,302 @@ var runThis = world => {
 
 exports.runThis = runThis;
 
-},{"../index.js":56,"../lib/optimizer/buildin-shaders.js":75,"../program/manifest.js":93}],48:[function(require,module,exports){
+},{"../index.js":56,"../lib/optimizer/buildin-shaders.js":75,"../program/manifest.js":93}],47:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.runThis = void 0;
+
+var _manifest = _interopRequireDefault(require("../program/manifest.js"));
+
+var matrixEngine = _interopRequireWildcard(require("../index.js"));
+
+var _buildinShaders = require("../lib/optimizer/buildin-shaders.js");
+
+var _geometryLines = require("../public/res/matrix-shaders-params/geometry-lines.js");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @Author Nikola Lukic
+ * @Description Matrix Engine Api Example.
+ * First time adding direct different FShader.
+ * Also mix divine two shader variants...
+ */
+let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
+const scriptManager = matrixEngine.utility.scriptManager;
+
+var runThis = world => {
+  _manifest.default.camera.SceneController = true;
+  setTimeout(() => document.querySelector('.button2').click(), 3000);
+  var texImgs = {
+    source: ["res/images/blue.png"],
+    mix_operation: "multiply"
+  }; // sphereLightTex  squareTex
+
+  world.Add("cubeLightTex", 1.5, "CubeShader", texImgs);
+  world.Add("cubeLightTex", 1.5, "CubeShader2", texImgs);
+  world.Add("cubeLightTex", 1.5, "CubeShader3", texImgs);
+  world.Add("cubeLightTex", 1.5, "CubeShader4", texImgs);
+  world.Add("cubeLightTex", 1.5, "CubeShader5", texImgs);
+  world.Add("cubeLightTex", 1.5, "CubeShader6", texImgs);
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+  addEventListener("ray.hit.event", function (e) {
+    e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 2);
+    e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 2);
+    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2); // console.info(e.detail);
+  }); // Load shader content direct from glsl file.
+
+  var promiseMyShader = scriptManager.loadGLSL('../public/res/shaders/lights/lights.glsl');
+  var promiseMyShader2 = scriptManager.loadGLSL('../public/res/shaders/lights/lights2.glsl');
+  var promiseMyShader3 = scriptManager.loadGLSL('../public/res/shaders/fractals/cube.glsl');
+  var promiseMyShader4 = scriptManager.loadGLSL('../public/res/shaders/symbols/single-symbol.glsl');
+  var promiseMyShader5 = scriptManager.loadGLSL('../public/res/shaders/tutorial-lines/colored-lines.glsl');
+  var promiseMyShader6 = scriptManager.loadGLSL('../public/res/shaders/noise/volonoise.glsl');
+
+  _geometryLines.geometryLines.charM.forEach((element, index, array) => {
+    if (array[index] >= 0) array[index] += 0.4;
+    if (array[index] < 0) array[index] -= 0.4;
+  });
+
+  var myshaderDrawData = _geometryLines.geometryLines.charM;
+  promiseMyShader.then(d => {
+    scriptManager.LOAD(d, "custom-light-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      _manifest.default.scene.CubeShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-light' + '-shader-fs', 'cubeLightTex' + '-shader-vs'); // Now add extra custom shader uniforms.
+
+      _manifest.default.scene.CubeShader.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader.shaderProgram, "iXXX");
+      _manifest.default.scene.CubeShader.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader.shaderProgram, "iR");
+      _manifest.default.scene.CubeShader.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader.shaderProgram, "iG");
+      _manifest.default.scene.CubeShader.shaderProgram.B = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader.shaderProgram, "iB");
+      _manifest.default.scene.CubeShader.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader.shaderProgram, "iAppStatus");
+    });
+  });
+  promiseMyShader2.then(d => {
+    scriptManager.LOAD(d, "custom-light2-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      _manifest.default.scene.CubeShader2.shaderProgram = world.initShaders(world.GL.gl, 'custom-light2' + '-shader-fs', 'cubeLightTex' + '-shader-vs'); // Now add extra custom shader uniforms.
+
+      _manifest.default.scene.CubeShader2.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader2.shaderProgram, "iXXX");
+      _manifest.default.scene.CubeShader2.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader2.shaderProgram, "iR");
+      _manifest.default.scene.CubeShader2.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader2.shaderProgram, "iG");
+      _manifest.default.scene.CubeShader2.shaderProgram.B = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader2.shaderProgram, "iB");
+      _manifest.default.scene.CubeShader2.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader2.shaderProgram, "iAppStatus");
+    });
+  });
+  promiseMyShader3.then(d => {
+    scriptManager.LOAD(d, "custom-circle1-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      _manifest.default.scene.CubeShader3.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle1' + '-shader-fs', 'cubeLightTex' + '-shader-vs'); // Now add extra custom shader uniforms.
+
+      _manifest.default.scene.CubeShader3.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader3.shaderProgram, "iXXX");
+      _manifest.default.scene.CubeShader3.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader3.shaderProgram, "iR");
+      _manifest.default.scene.CubeShader3.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader3.shaderProgram, "iG");
+      _manifest.default.scene.CubeShader3.shaderProgram.B = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader3.shaderProgram, "iB");
+      _manifest.default.scene.CubeShader3.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader3.shaderProgram, "iAppStatus");
+    });
+  });
+  promiseMyShader4.then(d => {
+    scriptManager.LOAD(d, "custom-circle2-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      _manifest.default.scene.CubeShader4.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle2' + '-shader-fs', 'cubeLightTex' + '-shader-vs'); // Now add extra custom shader uniforms.
+
+      _manifest.default.scene.CubeShader4.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader4.shaderProgram, "iXXX");
+      _manifest.default.scene.CubeShader4.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader4.shaderProgram, "iR");
+      _manifest.default.scene.CubeShader4.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader4.shaderProgram, "iG");
+      _manifest.default.scene.CubeShader4.shaderProgram.B = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader4.shaderProgram, "iB");
+      _manifest.default.scene.CubeShader4.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader4.shaderProgram, "iAppStatus");
+      _manifest.default.scene.CubeShader4.shaderProgram.myshaderDrawData = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader4.shaderProgram, "myshaderDrawData");
+    });
+  });
+  promiseMyShader5.then(d => {
+    scriptManager.LOAD(d, "custom-circle-two-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      _manifest.default.scene.CubeShader5.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle-two' + '-shader-fs', 'cubeLightTex' + '-shader-vs'); // Now add extra custom shader uniforms.
+
+      _manifest.default.scene.CubeShader5.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader5.shaderProgram, "iXXX");
+      _manifest.default.scene.CubeShader5.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader5.shaderProgram, "iR");
+      _manifest.default.scene.CubeShader5.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader5.shaderProgram, "iG");
+      _manifest.default.scene.CubeShader5.shaderProgram.B = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader5.shaderProgram, "iB");
+      _manifest.default.scene.CubeShader5.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader5.shaderProgram, "iAppStatus");
+    });
+  });
+  promiseMyShader6.then(d => {
+    scriptManager.LOAD(d, "custom-vol-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      _manifest.default.scene.CubeShader6.shaderProgram = world.initShaders(world.GL.gl, 'custom-vol' + '-shader-fs', 'cubeLightTex' + '-shader-vs'); // Now add extra custom shader uniforms.
+
+      _manifest.default.scene.CubeShader6.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader6.shaderProgram, "iXXX");
+      _manifest.default.scene.CubeShader6.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader6.shaderProgram, "iR");
+      _manifest.default.scene.CubeShader6.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader6.shaderProgram, "iG");
+      _manifest.default.scene.CubeShader6.shaderProgram.B = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader6.shaderProgram, "iB");
+      _manifest.default.scene.CubeShader6.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader6.shaderProgram, "iAppStatus");
+    });
+  });
+
+  _manifest.default.scene.CubeShader.position.setPosition(-4, 2, -11);
+
+  _manifest.default.scene.CubeShader2.position.setPosition(0, 2, -11);
+
+  _manifest.default.scene.CubeShader3.position.setPosition(4, 2, -11);
+
+  _manifest.default.scene.CubeShader4.position.setPosition(-4, -2, -11);
+
+  _manifest.default.scene.CubeShader5.position.setPosition(0, -2, -11);
+
+  _manifest.default.scene.CubeShader6.position.setPosition(4, -2, -11);
+
+  _manifest.default.scene.CubeShader.rotation.rotationSpeed.y = 20;
+  _manifest.default.scene.CubeShader.glBlend.blendEnabled = true;
+  _manifest.default.scene.CubeShader.type = "custom-";
+  _manifest.default.scene.CubeShader2.type = "custom-";
+  _manifest.default.scene.CubeShader3.type = "custom-";
+  _manifest.default.scene.CubeShader4.type = "custom-";
+  _manifest.default.scene.CubeShader5.type = "custom-";
+  _manifest.default.scene.CubeShader6.type = "custom-";
+  var now = 1,
+      time1 = 0,
+      then1 = 0;
+  _manifest.default.scene.CubeShader.SHADER_APP_STATUS = 0;
+  var osc_r = new OSCILLATOR(0, 2, 0.001);
+  var osc_g = new OSCILLATOR(0, 1, 0.001);
+  var osc_b = new OSCILLATOR(0, 0.1, 0.01);
+  var osc_variable = new OSCILLATOR(0, 150, 1);
+  var osc_r2 = new OSCILLATOR(0, 2, 0.001);
+  var osc_g2 = new OSCILLATOR(0, 1, 0.001);
+  var osc_b2 = new OSCILLATOR(0, 0.1, 0.01);
+  var osc_variable2 = new OSCILLATOR(0, 150, 1);
+  var osc_variable3 = new OSCILLATOR(0, 50, 0.05);
+  var osc_variable4 = new OSCILLATOR(0, 10, 0.02);
+  _manifest.default.scene.CubeShader.MY_RAD = 0.5;
+
+  _manifest.default.scene.CubeShader.addExtraDrawCode = function (world, object) {
+    now = Date.now();
+    now *= 0.000000001;
+    const elapsedTime = Math.min(now - then1, 0.01);
+    time1 += elapsedTime;
+    then1 = time1;
+    world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
+    world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
+
+    world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
+    world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.R, osc_r.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.G, osc_g.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE());
+    world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, _manifest.default.scene.CubeShader.SHADER_APP_STATUS);
+  };
+
+  _manifest.default.scene.CubeShader.drawCustom = matrixEngine.standardMEShaderDrawer;
+
+  _manifest.default.scene.CubeShader2.addExtraDrawCode = function (world, object) {
+    now = Date.now();
+    now *= 0.000000001;
+    const elapsedTime = Math.min(now - then1, 0.01);
+    time1 += elapsedTime;
+    then1 = time1;
+    world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
+    world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
+
+    world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
+    world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable2.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.R, osc_r2.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.G, osc_g2.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.B, osc_b2.UPDATE());
+    world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, _manifest.default.scene.CubeShader.SHADER_APP_STATUS);
+  };
+
+  _manifest.default.scene.CubeShader2.drawCustom = matrixEngine.standardMEShaderDrawer;
+
+  _manifest.default.scene.CubeShader3.addExtraDrawCode = function (world, object) {
+    now = Date.now();
+    now *= 0.000000001;
+    const elapsedTime = Math.min(now - then1, 0.01);
+    time1 += elapsedTime;
+    then1 = time1;
+    world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
+    world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
+
+    world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
+    world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable2.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.R, osc_r2.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.G, osc_g2.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.B, osc_b2.UPDATE());
+    world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, _manifest.default.scene.CubeShader.SHADER_APP_STATUS);
+  };
+
+  _manifest.default.scene.CubeShader3.drawCustom = matrixEngine.standardMEShaderDrawer;
+
+  _manifest.default.scene.CubeShader4.addExtraDrawCode = function (world, object) {
+    now = Date.now();
+    now *= 0.000000001;
+    const elapsedTime = Math.min(now - then1, 0.01);
+    time1 += elapsedTime;
+    then1 = time1;
+    world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
+    world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
+
+    world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
+    world.GL.gl.uniform1f(object.shaderProgram.XXX, 1.0);
+    world.GL.gl.uniform1f(object.shaderProgram.R, osc_variable3.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.G, osc_variable3.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.B, osc_variable3.UPDATE());
+    world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, _manifest.default.scene.CubeShader4.SHADER_APP_STATUS);
+    world.GL.gl.uniform1fv(object.shaderProgram.myshaderDrawData, myshaderDrawData, 0, 16);
+  };
+
+  _manifest.default.scene.CubeShader4.drawCustom = matrixEngine.standardMEShaderDrawer;
+
+  _manifest.default.scene.CubeShader5.addExtraDrawCode = function (world, object) {
+    now = Date.now();
+    now *= 0.000000001;
+    const elapsedTime = Math.min(now - then1, 0.01);
+    time1 += elapsedTime;
+    then1 = time1;
+    world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
+    world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
+
+    world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
+    world.GL.gl.uniform1f(object.shaderProgram.XXX, 1.0);
+    world.GL.gl.uniform1f(object.shaderProgram.R, osc_variable3.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.G, osc_variable3.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.B, osc_variable3.UPDATE());
+    world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, _manifest.default.scene.CubeShader5.SHADER_APP_STATUS);
+  };
+
+  _manifest.default.scene.CubeShader5.drawCustom = matrixEngine.standardMEShaderDrawer;
+
+  _manifest.default.scene.CubeShader6.addExtraDrawCode = function (world, object) {
+    now = Date.now();
+    now *= 0.000000001;
+    const elapsedTime = Math.min(now - then1, 0.01);
+    time1 += elapsedTime;
+    then1 = time1;
+    world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
+    world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
+
+    world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
+    world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable4.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.R, osc_variable4.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.G, osc_variable4.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.B, osc_variable4.UPDATE());
+    world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, _manifest.default.scene.CubeShader6.SHADER_APP_STATUS);
+  };
+
+  _manifest.default.scene.CubeShader6.drawCustom = matrixEngine.standardMEShaderDrawer;
+};
+
+exports.runThis = runThis;
+
+},{"../index.js":56,"../lib/optimizer/buildin-shaders.js":75,"../program/manifest.js":93,"../public/res/matrix-shaders-params/geometry-lines.js":94}],48:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6846,6 +7098,7 @@ function defineKeyBoardObject() {
   globKeyPressObj.keyArr = new Array();
 
   document.onkeydown = function (e) {
+    console.log('......');
     globKeyPressObj.handleKeyDown(e);
   };
 
@@ -6883,7 +7136,8 @@ function defineKeyBoardObject() {
 
     let emitKeyDown = new CustomEvent('hit.keyDown', {
       detail: {
-        keyCode: evt.keyCode
+        keyCode: evt.keyCode,
+        origin: evt
       }
     });
     dispatchEvent(emitKeyDown);
@@ -6894,7 +7148,8 @@ function defineKeyBoardObject() {
     evt = evt ? evt : window.event ? window.event : '';
     let emitKeyUp = new CustomEvent('hit.keyUp', {
       detail: {
-        keyCode: evt.keyCode
+        keyCode: evt.keyCode,
+        origin: evt
       }
     });
     dispatchEvent(emitKeyUp);
@@ -12570,8 +12825,10 @@ function getInitVSTriangle() {
   in vec4 aVertexColor;
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
+  out vec3 meVertexPosition;
   out vec4 vColor;
   void main(void) {
+    meVertexPosition = aVertexPosition;
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vColor      = aVertexColor;
   }
@@ -12662,6 +12919,7 @@ function getInitVSCubeTexLight() {
   uniform bool uUseLighting;
   out vec2 vTextureCoord;
   out vec3 vLightWeighting;
+  out vec3 meVertexPosition;
 
   // Spot
   uniform vec3 u_lightWorldPosition;
@@ -12682,6 +12940,8 @@ function getInitVSCubeTexLight() {
   out float vDist;
 
   void main(void) {
+
+    meVertexPosition = aVertexPosition;
     uMVMatrixINTER = uMVMatrix;
     uNMatrixINTER = uNMatrix;
     uPMatrixINNTER = uPMatrix;
@@ -12747,9 +13007,11 @@ function getInitVSSquare() {
   in vec4 aVertexColor;
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
+  out vec3 meVertexPosition;
   out vec4 vColor;
 
   void main(void) {
+    meVertexPosition = aVertexPosition;
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vColor      = aVertexColor;
   }`;
@@ -12775,8 +13037,10 @@ function getInitVSCube() {
   in vec4 aVertexColor;
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
+  out vec3 meVertexPosition;
   out vec4 vColor;
   void main(void) {
+    meVertexPosition = aVertexPosition;
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vColor      = aVertexColor;
   }`;
@@ -12804,8 +13068,10 @@ function getInitVSCubeTex() {
   in vec2 aTextureCoord;
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
+  out vec3 meVertexPosition;
   out vec2 vTextureCoord;
   void main(void) {
+    meVertexPosition = aVertexPosition;
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vTextureCoord = aTextureCoord;
   }`;
@@ -12889,6 +13155,7 @@ function getInitVSObj() {
   uniform bool uUseLighting;
   out vec2 vTextureCoord;
   out vec3 vLightWeighting;
+  out vec3 meVertexPosition;
 
   // Spot
   uniform vec3 u_lightWorldPosition;
@@ -12909,6 +13176,8 @@ function getInitVSObj() {
   out float vDist;
 
   void main(void) {
+    meVertexPosition = aVertexPosition;
+
     uMVMatrixINTER = uMVMatrix;
     uNMatrixINTER = uNMatrix;
     uPMatrixINNTER = uPMatrix;
@@ -12975,8 +13244,10 @@ function getInitVSPyramid() {
   in vec4 aVertexColor;
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
+  out vec3 meVertexPosition;
   out vec4 vColor;
   void main(void) {
+    meVertexPosition = aVertexPosition;
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vColor      = aVertexColor;
   }
@@ -13049,6 +13320,7 @@ function getInitVSSquareTex() {
   uniform bool uUseLighting;
   out vec2 vTextureCoord;
   out vec3 vLightWeighting;
+  out vec3 meVertexPosition;
 
   // Spot
   uniform vec3 u_lightWorldPosition;
@@ -13069,6 +13341,7 @@ function getInitVSSquareTex() {
   // out float vDist;
 
   void main(void) {
+    meVertexPosition = aVertexPosition;
     // GLOBAL POS SPECULAR
     // vColor = specularColor;
     // vNormal = normalize(uNMatrix * vec3(aVertexNormal));
@@ -13145,8 +13418,10 @@ function getInitVSSphereLightTex() {
 
   out vec2 vTextureCoord;
   out vec3 vLightWeighting;
+  out vec3 meVertexPosition;
 
   void main(void) {
+    meVertexPosition = aVertexPosition;
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vTextureCoord = aTextureCoord;
 
@@ -13227,8 +13502,8 @@ function getInitVSCubeMap() {
   uniform vec3 uLightingDirection;
   uniform vec3 uDirectionalColor;
   uniform bool uUseLighting;
-  // varying vec2 vTextureCoord;
   out vec3 vLightWeighting;
+  out vec3 meVertexPosition;
 
   // test 
   // Spot
@@ -13250,26 +13525,26 @@ function getInitVSCubeMap() {
   // end test
 
   void main(void) {
+    meVertexPosition = aVertexPosition;
     v_normal = mat3(uNMatrix) * aVertexNormal;
     // v_normal_cubemap = normalize(aVertexPosition.xyz);
 
-    // test
-    // SPOT
+    // test SPOT
     // orient the normals and pass to the fragment shader
     v_normal = mat3(uNMatrix) * aVertexNormal;
 
-    // // normalize
-     v_normal_cubemap = normalize(aVertexPosition.xyz);
+    // normalize
+    v_normal_cubemap = normalize(aVertexPosition.xyz);
 
-    // // compute the world position of the surfoace
+    // compute the world position of the surfoace
     vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
 
-    // // compute the vector of the surface to the light
-    // // and pass it to the fragment shader
+    // compute the vector of the surface to the light
+    // and pass it to the fragment shader
     v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
 
-    // // compute the vector of the surface to the view/camera
-    // // and pass it to the fragment shader
+    // compute the vector of the surface to the view/camera
+    // and pass it to the fragment shader
     v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
     // end test
 
@@ -13282,7 +13557,6 @@ function getInitVSCubeMap() {
       float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
       vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
     }
-
   } `;
 
   _utility.scriptManager.LOAD(f, "cubeMap-shader-vs", "x-shader/x-vertex", "shaders");
@@ -15375,11 +15649,11 @@ var CS3 = "font-family: stormfaze;color: #f1f033; font-size:14px;text-shadow: 2p
 exports.CS3 = CS3;
 var CS4 = "font-family: verdana;color: #lime; font-size:16px;text-shadow: 2px 2px 4px orangered;background: black;";
 exports.CS4 = CS4;
-console.info(`%cMatrix-Engine %c 1.9.43 🛸`, CS1, CS1);
+console.info(`%cMatrix-Engine %c 1.9.55 🛸`, CS1, CS1);
 var lastChanges = `
 [1.9.40] First version with both support opengles11/2 and opengles300
  - Default : 1.3/opengles300
- - Switch with URL param 'GLSL=1.3' for opengle300 and 'GLSL=1.1' for opengles1.1/2
+ - Switch with URL param 'app.html?GLSL=1.3' for opengle300 and '?GLSL=1.1' for opengles1.1/2
  - Implemented URL param for examples-build.html?GLSL=1.1 [Affect after first demo choose.]
 `;
 console.info(`%c ${lastChanges} `, CS4);
@@ -17866,6 +18140,8 @@ exports.freeShadersToy = exports.standardMEShaderDrawer = void 0;
 
 var _ = require("../..");
 
+var _events = require("../events");
+
 var _matrixWorld = require("../matrix-world");
 
 var _utility = require("../utility");
@@ -17921,7 +18197,7 @@ function toyShader1() {
   `;
 }
 
-var standardMEShaderDrawer = object => {
+const standardMEShaderDrawer = function (object) {
   // Create a vertex array object (attribute state)
   // var world = matrixWorld.world;
   var lighting = true;
@@ -17935,9 +18211,9 @@ var standardMEShaderDrawer = object => {
     if (_.raycaster.checkingProcedureCalc) _.raycaster.checkingProcedureCalc(object);
   } else {
     if (App.camera.FirstPersonController == true) {
-      camera.setCamera(object);
+      _events.camera.setCamera(object);
     } else if (App.camera.SceneController == true) {
-      camera.setSceneCamera(object);
+      _events.camera.setSceneCamera(object);
     }
 
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
@@ -18520,7 +18796,7 @@ void main() {
   `;
 };
 
-},{"../..":56,"../matrix-world":72,"../utility":84}],76:[function(require,module,exports){
+},{"../..":56,"../events":58,"../matrix-world":72,"../utility":84}],76:[function(require,module,exports){
 
 /**
  * @description
@@ -44538,5 +44814,36 @@ var App = {
 };
 var _default = App;
 exports.default = _default;
+
+},{}],94:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.geometryLines = void 0;
+
+/**
+ * @description
+ * Predefinited literal objects with necessary draws data
+ * - First type of matrix-shaders-params
+ * @name geometryLines
+ * @type javascript float[array]
+ * @returns float[] geometryLines js array
+ */
+let geometryLines = {
+  charA: [0.5, 0.7, 0.62, 0.3, 0.5, 0.7, 0.38, 0.3, 0.43, 0.46, 0.57, 0.46],
+  charM: [0.62, 0.7, 0.62, 0.3, 0.38, 0.7, 0.38, 0.3, 0.36, 0.65, 0.52, 0.46, 0.64, 0.65, 0.48, 0.46],
+  charY: [0.5, 0.5, 0.5, 0.3, 0.36, 0.65, 0.52, 0.46, 0.64, 0.65, 0.48, 0.46],
+  charT: [0.5, 0.7, 0.5, 0.3, 0.3, 0.66, 0.7, 0.66],
+  charX: [0.4, 0.7, 0.6, 0.3, 0.4, 0.3, 0.6, 0.7],
+  charP: [0.35, 0.67, 0.6, 0.51, 0.4, 0.25, 0.4, 0.7, 0.35, 0.44, 0.6, 0.54],
+  charR: [0.35, 0.67, 0.6, 0.51, 0.4, 0.25, 0.4, 0.7, 0.35, 0.44, 0.6, 0.54, 0.35, 0.47, 0.6, 0.29],
+  charB: [0.35, 0.67, 0.6, 0.51, 0.4, 0.25, 0.4, 0.7, 0.35, 0.44, 0.6, 0.54, 0.35, 0.5, 0.6, 0.37, 0.35, 0.28, 0.6, 0.4],
+  charE: [0.35, 0.64, 0.6, 0.64, 0.4, 0.28, 0.4, 0.69, 0.35, 0.49, 0.55, 0.49, 0.35, 0.33, 0.6, 0.33],
+  charN: [0.6, 0.28, 0.6, 0.69, 0.4, 0.28, 0.4, 0.69, 0.6, 0.28, 0.4, 0.69],
+  charI: [0.5, 0.28, 0.5, 0.69]
+};
+exports.geometryLines = geometryLines;
 
 },{}]},{},[1]);
