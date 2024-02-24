@@ -7,6 +7,7 @@
 import App from "../program/manifest.js";
 import * as matrixEngine from "../index.js";
 import {standardMEShaderDrawer, freeShadersToy} from "../lib/optimizer/buildin-shaders.js";
+import {OSCILLATOR} from "../lib/utility.js";
 
 const scriptManager = matrixEngine.utility.scriptManager;
 
@@ -16,7 +17,7 @@ export var runThis = world => {
     mix_operation: "multiply",
   }
   // sphereLightTex
-  world.Add("squareTex", 1, "ToyShader", textuteImageSamplers);
+  world.Add("squareTex", 1, "CubeShader", textuteImageSamplers);
 
   canvas.addEventListener('mousedown', (ev) => {
     matrixEngine.raycaster.checkingProcedure(ev);
@@ -33,22 +34,34 @@ export var runThis = world => {
   });
 
   // Load shader content direct from glsl file.
-  var promiseMyShader = scriptManager.loadGLSL('../lib/optimizer/custom-shaders/circle.glsl')
+  var promiseMyShader = scriptManager.loadGLSL('./res/shaders/lights/lights2.glsl')
   promiseMyShader.then((d) => {
-    scriptManager.LOAD(d, "custom-toy1-shader-fs", "x-shader/x-fragment", "shaders", () => {
-      App.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+    scriptManager.LOAD(d, "custom-s-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      App.scene.CubeShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-s' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+
+      App.scene.CubeShader.shaderProgram.XXX = world.GL.gl.getUniformLocation(App.scene.CubeShader.shaderProgram, "iXXX");
+      App.scene.CubeShader.shaderProgram.R = world.GL.gl.getUniformLocation(App.scene.CubeShader.shaderProgram, "iR");
+      App.scene.CubeShader.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.CubeShader.shaderProgram, "iG");
+      App.scene.CubeShader.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.CubeShader.shaderProgram, "iB");
+
+      
     })
   })
 
-  App.scene.ToyShader.rotation.rotationSpeed.y = 55
-  App.scene.ToyShader.glBlend.blendEnabled = false
+  var osc_r = new OSCILLATOR(0, 2, 0.001);
+  var osc_g = new OSCILLATOR(0, 1, 0.001);
+  var osc_b = new OSCILLATOR(0, 0.1, 0.01);
+  var osc_variable = new OSCILLATOR(0, 150, 1);
 
-  App.scene.ToyShader.type = "custom-";
+  App.scene.CubeShader.rotation.rotationSpeed.y = 55
+  App.scene.CubeShader.glBlend.blendEnabled = false
+
+  App.scene.CubeShader.type = "custom-";
   var now = 1, time1 = 0, then1 = 0;
 
-  App.scene.ToyShader.MY_RAD = 0.5;
+  App.scene.CubeShader.MY_RAD = 0.5;
 
-  App.scene.ToyShader.addExtraDrawCode = function(world, object) {
+  App.scene.CubeShader.addExtraDrawCode = function(world, object) {
     now = Date.now();
     now *= 0.000000001;
     const elapsedTime = Math.min(now - then1, 0.01);
@@ -60,8 +73,15 @@ export var runThis = world => {
     // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, (App.sys.MOUSE.PRESS != false ? 1 : 0));
 
+    
+    world.GL.gl.uniform1f(object.shaderProgram.XXX, 1.0)
+
+    world.GL.gl.uniform1f(object.shaderProgram.R, osc_variable.UPDATE())
+    world.GL.gl.uniform1f(object.shaderProgram.G, osc_variable.UPDATE())
+    world.GL.gl.uniform1f(object.shaderProgram.B, osc_variable.UPDATE())
+
   }
-  App.scene.ToyShader.drawCustom = function(o) {
+  App.scene.CubeShader.drawCustom = function(o) {
     return matrixEngine.standardMEShaderDrawer(o);
   }
 }

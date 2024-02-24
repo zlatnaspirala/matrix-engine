@@ -2088,7 +2088,7 @@ var runThis = world => {
   _manifest.default.camera.speedAmp = 0.01;
   matrixEngine.Events.camera.yPos = 2;
   addEventListener('hit.keyDown', e => {
-    if (e.detail.key == "Escape" || e.detail.keyCode == 27) {
+    if (e.detail.origin.key == "Escape" || e.detail.keyCode == 27) {
       console.log('PAUSE GAME_PLAY');
     }
   }); // Audio effects
@@ -2102,7 +2102,7 @@ var runThis = world => {
   matrixEngine.utility.createDomFPSController(); // Override mouse up
 
   _manifest.default.events.CALCULATE_TOUCH_UP_OR_MOUSE_UP = () => {
-    console.log('TEST APP CLICK');
+    // console.log('TEST APP CLICK')
     _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
 
@@ -2614,21 +2614,60 @@ var runThis = world => {
   _manifest.default.scene['WALL_BLOCK'].position.setPosition(10, 0, -19);
 
   _manifest.default.scene['WALL_BLOCK'].physics.currentBody = b5;
-  _manifest.default.scene['WALL_BLOCK'].physics.enabled = true; // Big wall
+  _manifest.default.scene['WALL_BLOCK'].physics.enabled = true; // Big wall CUSTOM SHADERS
 
-  world.Add("cubeLightTex", 5, "WALL_BLOCK2", texNoMipmap);
+  world.Add("sphereLightTex", 1, "WALL_BLOCK2", texNoMipmap);
   var b6 = new CANNON.Body({
     mass: 0,
     linearDamping: 0.01,
     position: new CANNON.Vec3(30, -10, 0),
-    shape: new CANNON.Box(new CANNON.Vec3(5, 5, 5))
+    shape: new CANNON.Sphere(1) // new CANNON.Box(new CANNON.Vec3(5, 5, 5))
+
   });
   physics.world.addBody(b6);
 
   _manifest.default.scene['WALL_BLOCK2'].position.setPosition(30, -10, 19);
 
   _manifest.default.scene['WALL_BLOCK2'].physics.currentBody = b6;
-  _manifest.default.scene['WALL_BLOCK2'].physics.enabled = true; // Damage object test
+  _manifest.default.scene['WALL_BLOCK2'].physics.enabled = true; // var now = 1, time1 = 0, then1 = 0;
+  // App.scene.WALL_BLOCK2.SHADER_APP_STATUS = 0;
+  // var osc_r = new OSCILLATOR(0, 2, 0.001);
+  // var osc_g = new OSCILLATOR(0, .9.541, 0.001);
+  // var osc_b = new OSCILLATOR(0, 0.1, 0.01);
+  // var osc_variable = new OSCILLATOR(0, 150, 1);
+  // var promiseMyShader = scriptManager.loadGLSL('../public/res/shaders/lights/lights3.glsl')
+  // promiseMyShader.then((d) => {
+  //   scriptManager.LOAD(d, "custom-effect1-shader-fs", "x-shader/x-fragment", "shaders", () => {
+  //     App.scene.WALL_BLOCK2.shaderProgram = world.initShaders(world.GL.gl, 'custom-effect1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+  //     // Now add extra custom shader uniforms.
+  //     App.scene.WALL_BLOCK2.shaderProgram.XXX = world.GL.gl.getUniformLocation(App.scene.WALL_BLOCK2.shaderProgram, "iXXX");
+  //     App.scene.WALL_BLOCK2.shaderProgram.R = world.GL.gl.getUniformLocation(App.scene.WALL_BLOCK2.shaderProgram, "iR");
+  //     App.scene.WALL_BLOCK2.shaderProgram.G = world.GL.gl.getUniformLocation(App.scene.WALL_BLOCK2.shaderProgram, "iG");
+  //     App.scene.WALL_BLOCK2.shaderProgram.B = world.GL.gl.getUniformLocation(App.scene.WALL_BLOCK2.shaderProgram, "iB");
+  //     App.scene.WALL_BLOCK2.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(App.scene.WALL_BLOCK2.shaderProgram, "iAppStatus");
+  //   })
+  // })
+  // App.scene.WALL_BLOCK2.type = "custom-";
+  // App.scene.WALL_BLOCK2.MY_RAD = 0.5;
+  // App.scene.WALL_BLOCK2.addExtraDrawCode = function(world, object) {
+  //   now = Date.now();
+  //   now *= 0.000000001;
+  //   const elapsedTime = Math.min(now - then1, 0.01);
+  //   time1 += elapsedTime;
+  //   then1 = time1;
+  //   world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
+  //   world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
+  //   world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
+  //   // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
+  //   world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, (App.sys.MOUSE.PRESS != false ? 1 : 0));
+  //   world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable.UPDATE())
+  //   world.GL.gl.uniform1f(object.shaderProgram.R, osc_r.UPDATE())
+  //   world.GL.gl.uniform1f(object.shaderProgram.G, osc_g.UPDATE())
+  //   world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE())
+  //   world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, App.scene.WALL_BLOCK2.SHADER_APP_STATUS)
+  // }
+  // App.scene.WALL_BLOCK2.drawCustom = matrixEngine.standardMEShaderDrawer;
+  // Damage object test
 
   world.Add("cubeLightTex", 1, "LAVA", tex);
   var b4 = new CANNON.Body({
@@ -4582,6 +4621,8 @@ var matrixEngine = _interopRequireWildcard(require("../index.js"));
 
 var _buildinShaders = require("../lib/optimizer/buildin-shaders.js");
 
+var _utility = require("../lib/utility.js");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -4602,7 +4643,7 @@ var runThis = world => {
     mix_operation: "multiply"
   }; // sphereLightTex
 
-  world.Add("squareTex", 1, "ToyShader", textuteImageSamplers);
+  world.Add("squareTex", 1, "CubeShader", textuteImageSamplers);
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
@@ -4612,21 +4653,29 @@ var runThis = world => {
     e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2); // console.info(e.detail);
   }); // Load shader content direct from glsl file.
 
-  var promiseMyShader = scriptManager.loadGLSL('../lib/optimizer/custom-shaders/circle.glsl');
+  var promiseMyShader = scriptManager.loadGLSL('./res/shaders/lights/lights2.glsl');
   promiseMyShader.then(d => {
-    scriptManager.LOAD(d, "custom-toy1-shader-fs", "x-shader/x-fragment", "shaders", () => {
-      _manifest.default.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+    scriptManager.LOAD(d, "custom-s-shader-fs", "x-shader/x-fragment", "shaders", () => {
+      _manifest.default.scene.CubeShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-s' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+      _manifest.default.scene.CubeShader.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader.shaderProgram, "iXXX");
+      _manifest.default.scene.CubeShader.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader.shaderProgram, "iR");
+      _manifest.default.scene.CubeShader.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader.shaderProgram, "iG");
+      _manifest.default.scene.CubeShader.shaderProgram.B = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader.shaderProgram, "iB");
     });
   });
-  _manifest.default.scene.ToyShader.rotation.rotationSpeed.y = 55;
-  _manifest.default.scene.ToyShader.glBlend.blendEnabled = false;
-  _manifest.default.scene.ToyShader.type = "custom-";
+  var osc_r = new _utility.OSCILLATOR(0, 2, 0.001);
+  var osc_g = new _utility.OSCILLATOR(0, 1, 0.001);
+  var osc_b = new _utility.OSCILLATOR(0, 0.1, 0.01);
+  var osc_variable = new _utility.OSCILLATOR(0, 150, 1);
+  _manifest.default.scene.CubeShader.rotation.rotationSpeed.y = 55;
+  _manifest.default.scene.CubeShader.glBlend.blendEnabled = false;
+  _manifest.default.scene.CubeShader.type = "custom-";
   var now = 1,
       time1 = 0,
       then1 = 0;
-  _manifest.default.scene.ToyShader.MY_RAD = 0.5;
+  _manifest.default.scene.CubeShader.MY_RAD = 0.5;
 
-  _manifest.default.scene.ToyShader.addExtraDrawCode = function (world, object) {
+  _manifest.default.scene.CubeShader.addExtraDrawCode = function (world, object) {
     now = Date.now();
     now *= 0.000000001;
     const elapsedTime = Math.min(now - then1, 0.01);
@@ -4637,16 +4686,20 @@ var runThis = world => {
     world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
 
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
+    world.GL.gl.uniform1f(object.shaderProgram.XXX, 1.0);
+    world.GL.gl.uniform1f(object.shaderProgram.R, osc_variable.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.G, osc_variable.UPDATE());
+    world.GL.gl.uniform1f(object.shaderProgram.B, osc_variable.UPDATE());
   };
 
-  _manifest.default.scene.ToyShader.drawCustom = function (o) {
+  _manifest.default.scene.CubeShader.drawCustom = function (o) {
     return matrixEngine.standardMEShaderDrawer(o);
   };
 };
 
 exports.runThis = runThis;
 
-},{"../index.js":56,"../lib/optimizer/buildin-shaders.js":75,"../program/manifest.js":93}],47:[function(require,module,exports){
+},{"../index.js":56,"../lib/optimizer/buildin-shaders.js":75,"../lib/utility.js":84,"../program/manifest.js":93}],47:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4700,12 +4753,23 @@ var runThis = world => {
     e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2); // console.info(e.detail);
   }); // Load shader content direct from glsl file.
 
-  var promiseMyShader = scriptManager.loadGLSL('../public/res/shaders/lights/lights.glsl');
-  var promiseMyShader2 = scriptManager.loadGLSL('../public/res/shaders/lights/lights2.glsl');
-  var promiseMyShader3 = scriptManager.loadGLSL('../public/res/shaders/fractals/cube.glsl');
-  var promiseMyShader4 = scriptManager.loadGLSL('../public/res/shaders/symbols/single-symbol.glsl');
-  var promiseMyShader5 = scriptManager.loadGLSL('../public/res/shaders/tutorial-lines/colored-lines.glsl');
-  var promiseMyShader6 = scriptManager.loadGLSL('../public/res/shaders/noise/volonoise.glsl');
+  if (location.hostname == "localhost") {
+    console.log('DEV Paths');
+    var promiseMyShader = scriptManager.loadGLSL('../public/res/shaders/lights/lights.glsl');
+    var promiseMyShader2 = scriptManager.loadGLSL('../public/res/shaders/lights/lights2.glsl');
+    var promiseMyShader3 = scriptManager.loadGLSL('../public/res/shaders/fractals/cube.glsl');
+    var promiseMyShader4 = scriptManager.loadGLSL('../public/res/shaders/symbols/single-symbol.glsl');
+    var promiseMyShader5 = scriptManager.loadGLSL('../public/res/shaders/tutorial-lines/colored-lines.glsl');
+    var promiseMyShader6 = scriptManager.loadGLSL('../public/res/shaders/noise/volonoise.glsl');
+  } else {
+    console.log('PROD Paths');
+    var promiseMyShader = scriptManager.loadGLSL('./res/shaders/lights/lights.glsl');
+    var promiseMyShader2 = scriptManager.loadGLSL('./res/shaders/lights/lights2.glsl');
+    var promiseMyShader3 = scriptManager.loadGLSL('./res/shaders/fractals/cube.glsl');
+    var promiseMyShader4 = scriptManager.loadGLSL('./res/shaders/symbols/single-symbol.glsl');
+    var promiseMyShader5 = scriptManager.loadGLSL('./res/shaders/tutorial-lines/colored-lines.glsl');
+    var promiseMyShader6 = scriptManager.loadGLSL('./res/shaders/noise/volonoise.glsl');
+  }
 
   _geometryLines.geometryLines.charM.forEach((element, index, array) => {
     if (array[index] >= 0) array[index] += 0.4;
@@ -27024,14 +27088,13 @@ class MatrixSounds {
     }
   }
 
-  tryClone(name) {
-    var cc = 1;
-
-    while (this.audios[name + cc].paused == false) {
-      cc++;
-    }
-
-    this.audios[name + cc].play();
+  tryClone(name) {//   var cc = 1;
+    //   try {
+    //     while(this.audios[name + cc].paused == false) {
+    //       cc++;
+    //     }
+    //     this.audios[name + cc].play();
+    //   } catch(err) {}
   }
 
 }
