@@ -77,7 +77,7 @@ also used for editing images. Networking is part of matrix engine, deeply integr
     https://maximumroulette.com/apps/matrix-engine-starter/projects/matrix-slot/index.html
 
   - Matrix roulette [WIP]
-    https://maximumroulette.com/apps/matrix-engine-starter/projects/matrix-roulette/
+    https://maximumroulette.com/apps/matrix-engine-starter/projects/matrix-roulette/?server=manual
 
   - Web Anatomy [WIP]
     https://maximumroulette.com/apps/matrix-engine-starter/projects/web-anatomy/
