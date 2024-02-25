@@ -328,7 +328,7 @@ var options = {
 App.scene.myCube9.textures.push(App.scene.myCube9.createPixelsTex(options));
 ```
 
-![](https://github.com/zlatnaspirala/matrix-engine/blob/dev/non-project-files/1.7.6.png)
+![](https://github.com/zlatnaspirala/matrix-engine/blob/master/non-project-files/1.7.6.png)
 
 ### Physics
 
