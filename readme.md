@@ -801,7 +801,7 @@ How to update character animation?
 Maximo -> download dea or fbx -> import intro blender
 Import multi or one animation. -> blender export -> obj (animation)
 
-<img src="https://github.com/zlatnaspirala/matrix-engine/blob/develop/non-project-files/character1.png" width="528" height="528" />
+<img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/non-project-files/character1.png" width="528" height="528" />
 
 This is new feature from [1.8.2].
 Take a look at : load_obj_sequence.js
