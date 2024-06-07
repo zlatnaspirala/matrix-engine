@@ -1,7 +1,7 @@
 {
   "name": "matrix-engine",
-  "version": "1.9.54",
-  "description": "[1.9.47] All examples works on android mobile browser chrome, [1.9.x Thunder] Matrix-engine is super fast webgl library based on glmatrix 2.xx engine. Features comes with matrix-engine : Blending, CameraScene, FBO, FPS, ARRAY-instanced draws, scene object transformation, obj loader, obj seq loader, Networking ,full standalone 3d video chat, active 2d textures etc...",
+  "version": "1.9.56",
+  "description": "[1.9.54] Loading shadertoy or any other custom shader - mix or not with standard matrixengine shader. Loading glsl files. [1.9.47] All examples works on android mobile browser chrome, [1.9.x Thunder] Matrix-engine is super fast webgl library based on glmatrix 2.xx engine. Features comes with matrix-engine : Blending, CameraScene, FBO, FPS, ARRAY-instanced draws, scene object transformation, obj loader, obj seq loader, Networking ,full standalone 3d video chat, active 2d textures etc...",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -43,7 +43,8 @@
     "http-server": "^14.1.1",
     "socket.io-client": "^4.5.1",
     "visual-js": "^3.0.28",
-    "visual-js-server": "3.0.13"
+    "visual-js-server": "3.0.13",
+    "wgpu-matrix": "^2.5.1"
   },
   "devDependencies": {
     "browser-resolve": "^2.0.0",

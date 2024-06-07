@@ -1,0 +1,457 @@
+/**
+ * @Author Nikola Lukic
+ * @Description Matrix Engine Api Example.
+ * How to load map.
+ * After basci ver this will be buildin library / call.
+ */
+import {ENUMERATORS, byId, isMobile, randomFloatFromTo} from "../lib/utility.js";
+import App from "../program/manifest";
+import {MAP} from "./maps/main-area.js";
+import * as CANNON from 'cannon';
+
+export var runThis = world => {
+  let gravityVector = [0, 0, -29.82]
+  let physics = world.loadPhysics(gravityVector)
+
+  checkGlobals(MAP)
+
+  MAP.elements.forEach((item, index) => {
+    if(item.type == 'obj') loadObj(item)
+    if(item.type == 'cube') loadCube(item)
+  })
+
+  function checkGlobals(m) {
+    // FPS STUFF
+    if(m.controls.FPS == true) {
+      canvas.style.cursor = 'none';
+      App.camera.FirstPersonController = true;
+      matrixEngine.Events.camera.fly = false;
+      App.camera.speedAmp = 0.01;
+      matrixEngine.Events.camera.yPos = 2;
+
+      // Audio effects
+      App.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
+
+      // Prevent right click context menu
+      window.addEventListener("contextmenu", (e) => {e.preventDefault()});
+
+      matrixEngine.utility.createDomFPSController();
+
+      App.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
+        if(isMobile() == false) {
+          // `checkingProcedure` gets secound optimal argument
+          // for custom ray origin target.
+          if(mouse.BUTTON_PRESSED == 'RIGHT') {
+            // Zoom
+          } else {
+            // This call represent `SHOOT` Action. And it is center of screen!
+            matrixEngine.raycaster.checkingProcedure(ev, {
+              clientX: ev.target.width / 2,
+              clientY: ev.target.height / 2
+            });
+            App.sounds.play('shoot');
+          }
+        }
+      };
+
+      window.addEventListener('ray.hit.event', (ev) => {
+        console.log("You shoot the object! Nice!", ev);
+        // Physics force apply also change ambienty light.
+        if(ev.detail.hitObject.physics.enabled == true) {
+          // Shoot the object - apply force
+          ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+          // Apply random diff color
+          if(ev.detail.hitObject.LightsData) ev.detail.hitObject.LightsData.ambientLight.set(
+            randomFloatFromTo(0, 2), randomFloatFromTo(0, 2), randomFloatFromTo(0, 2));
+        }
+      });
+
+      // Load obj seq animation
+      const createObjSequence = (objName) => {
+
+        function onLoadObj(meshes) {
+          for(let key in meshes) {
+            matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
+          }
+
+          var textuteImageSamplers2 = {
+            source: [
+              "res/bvh-skeletal-base/swat-guy/gun2.png"
+            ],
+            mix_operation: "multiply"
+          };
+
+          var animArg = {
+            id: objName,
+            meshList: meshes,
+            currentAni: 0,
+            animations: {
+              active: 'walk',
+              walk: {
+                from: 0,
+                to: 20,
+                speed: 3
+              }
+            }
+          };
+
+          // Hands - in future will be weapon
+          // world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg);
+          world.Add("obj", 1, objName, textuteImageSamplers2, meshes['player']);
+          App.scene.player.position.setPosition(0.5, -0.7, -3);
+          App.scene.player.isHUD = true;
+
+          // Fix object orientation - this can be fixed also in blender.
+          matrixEngine.Events.camera.yaw = 0;
+
+          // Not in use but can be used
+          function bodiesAreInContact(bodyA, bodyB) {
+            for(var i = 0;i < world.contacts.length;i++) {
+              var c = world.contacts[i];
+              if((c.bi === bodyA && c.bj === bodyB) || (c.bi === bodyB && c.bj === bodyA)) {
+                return true;
+              }
+            }
+            return false;
+          }
+
+          // Add collision cube to the local player.
+          world.Add("cube", 0.2, "playerCollisonBox");
+          var collisionBox = new CANNON.Body({
+            mass: 10,
+            linearDamping: 0.01,
+            position: new CANNON.Vec3(0, 0, 0),
+            shape: new CANNON.Box(new CANNON.Vec3(1.8, 1.8, 1.8))// new CANNON.Sphere(2)
+          });
+
+          // This is custom param added.
+          collisionBox._name = 'collisionBox';
+          physics.world.addBody(collisionBox);
+          App.scene.playerCollisonBox.physics.currentBody = collisionBox;
+          App.scene.playerCollisonBox.physics.enabled = true;
+          App.scene.playerCollisonBox.physics.currentBody.fixedRotation = true;
+          App.scene.playerCollisonBox.geometry.setScale(0.02);
+          App.scene.playerCollisonBox.glBlend.blendEnabled = true;
+          App.scene.playerCollisonBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[0];
+          App.scene.playerCollisonBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[0];
+          App.scene.playerCollisonBox.visible = false;
+
+          // Test custom flag for collide moment
+          App.scene.playerCollisonBox.iamInCollideRegime = false;
+
+          // simple logic but also not perfect
+          App.scene.playerCollisonBox.pingpong = true;
+
+          collisionBox.addEventListener("collide", function(e) {
+            // const contactNormal = new CANNON.Vec3();
+            // var relativeVelocity = e.contact.getImpactVelocityAlongNormal();
+            // console.log("playerCollisonBox collide with", e);
+            if(e.contact.bj._name != 'floor' && e.contact.bi._name != 'floor') {
+              // setTimeout(() => {App.scene.playerCollisonBox.iamInCollideRegime = true}, 100)
+              // setTimeout(() => {App.scene.playerCollisonBox.iamInCollideRegime = false}, 1300);
+            }
+            // ?maybe
+            preventDoubleJump = null;
+            App.scene.playerCollisonBox.physics.currentBody.mass = 10;
+
+            if(e.contact.bi._name == 'damage') {
+              console.log("Trigger damage !!!");
+              //. 4x fix 
+              App.scene.player.energy.value -= 0.25;
+              App.scene.player.updateEnergy(App.scene.player.energy.value);
+            }
+
+          });
+
+          let preventDoubleJump = null;
+          // Matrix-engine key event
+          addEventListener('hit.keyDown', (e) => {
+            // Jump
+            if(e.detail.keyCode == 32) {
+              if(preventDoubleJump == null) {
+                preventDoubleJump = setTimeout(() => {
+                  console.log('JUMP >>>>>>>> ', e.detail.keyCode);
+                  App.scene.playerCollisonBox.physics.currentBody.mass = 1;
+                  // App.scene.playerCollisonBox.physics.currentBody.force.set(0, 0, 1500)
+                  App.scene.playerCollisonBox.physics.currentBody.velocity.set(0, 0, 20);
+                }, 250);
+              }
+            }
+
+          });
+
+          var handlerTimeout = null, handlerTimeout2 = null;
+
+          var playerUpdater = {
+            UPDATE: () => {
+              var detPitch;
+              var limit = 2;
+              if(matrixEngine.Events.camera.pitch < limit &&
+                matrixEngine.Events.camera.pitch > -limit) {
+                detPitch = matrixEngine.Events.camera.pitch * 2;
+              } else if(matrixEngine.Events.camera.pitch > limit) {
+                detPitch = limit * 2;
+              } else if(matrixEngine.Events.camera.pitch < -(limit + 2)) {
+                detPitch = -(limit + 2) * 2;
+              }
+
+              if(matrixEngine.Events.camera.virtualJumpActive == "DEPLACED_MAYBE") {
+                // invert logic
+                // Scene object set
+                var detPitchPos = matrixEngine.Events.camera.pitch;
+                if(detPitchPos > 4) detPitchPos = 4;
+                App.scene.playerCollisonBox.physics.currentBody.mass = 0.1;
+                App.scene[objName].position.setPosition(
+                  App.scene.playerCollisonBox.physics.currentBody.position.x,
+                  App.scene.playerCollisonBox.physics.currentBody.position.z,
+                  App.scene.playerCollisonBox.physics.currentBody.position.y + 1);
+                // Cannonjs object set / Switched  Z - Y
+                matrixEngine.Events.camera.xPos = App.scene.playerCollisonBox.physics.currentBody.position.x;
+                matrixEngine.Events.camera.zPos = App.scene.playerCollisonBox.physics.currentBody.position.y;
+                matrixEngine.Events.camera.yPos = App.scene.playerCollisonBox.physics.currentBody.position.z + 1;
+                // App.scene.playerCollisonBox.physics.currentBody.angularVelocity.set(0, 0, 0);
+                if(handlerTimeout == null) {
+                  handlerTimeout = setTimeout(() => {
+                    matrixEngine.Events.camera.virtualJumpActive = false;
+                    App.scene.playerCollisonBox.physics.currentBody.mass = 10;
+                  }, 1350);
+                }
+
+              } else {
+
+                handlerTimeout = null;
+                // Make more stable situation
+                App.scene.playerCollisonBox.physics.currentBody.mass = 10;
+                App.scene.playerCollisonBox.physics.currentBody.quaternion.setFromEuler(0, 0, 0);
+                // Tamo tu iznad duge nebo zri...
+                // Cannonjs object set
+                // Switched  Z - Y
+                // matrixEngine.Events.camera.yPos = App.scene.playerCollisonBox.physics.currentBody.position.z;
+                // if(App.scene.playerCollisonBox.iamInCollideRegime === true) {
+                if(App.scene.playerCollisonBox.pingpong == true) {
+                  // // Cannonjs object set / Switched  Z - Y
+                  matrixEngine.Events.camera.xPos = App.scene.playerCollisonBox.physics.currentBody.position.x;
+                  matrixEngine.Events.camera.zPos = App.scene.playerCollisonBox.physics.currentBody.position.y;
+                  matrixEngine.Events.camera.yPos = App.scene.playerCollisonBox.physics.currentBody.position.z;
+                  App.scene.playerCollisonBox.pingpong = false;
+                } else {
+                  handlerTimeout2 = 0;
+                  // Cannonjs object set - Switched  Z - Y
+                  App.scene.playerCollisonBox.
+                    physics.currentBody.position.set(
+                      matrixEngine.Events.camera.xPos,
+                      matrixEngine.Events.camera.zPos,
+                      matrixEngine.Events.camera.yPos);
+                  App.scene.playerCollisonBox.pingpong = true;
+                }
+              }
+            }
+          };
+          App.updateBeforeDraw.push(playerUpdater);
+
+          // Player Energy status
+          App.scene.player.energy = {};
+
+          for(let key in App.scene.player.meshList) {
+            App.scene.player.meshList[key].setScale(1.85);
+          }
+
+        }
+        matrixEngine.objLoader.downloadMeshes({player: "res/bvh-skeletal-base/swat-guy/gun2.obj"},
+          onLoadObj
+        );
+        // matrixEngine.objLoader.downloadMeshes(
+        //   matrixEngine.objLoader.makeObjSeqArg(
+        //     {
+        //       id: objName,
+        //       path: "res/bvh-skeletal-base/swat-guy/FPShooter-hands/FPShooter-hands",
+        //       from: 1,
+        //       to: 20
+        //     }),
+        //   onLoadObj
+        // );
+      };
+
+      createObjSequence('player');
+    }
+
+    // Add ground - mass == 0 makes the body static
+    var tex = {
+      source: ["res/images/complex_texture_1/diffuse.png"],
+      mix_operation: "multiply",
+      params: {
+        TEXTURE_MAG_FILTER: world.GL.gl.NEAREST,
+        TEXTURE_MIN_FILTER: world.GL.gl.LINEAR_MIPMAP_NEAREST
+      }
+    };
+    var groundBody = new CANNON.Body({
+      mass: 0,
+      position: new CANNON.Vec3(0, -15, -2)
+    });
+    var groundShape = new CANNON.Plane();
+    groundBody.addShape(groundShape);
+    groundBody._name = 'floor';
+    physics.world.addBody(groundBody);
+    // Matrix engine visual scene object
+    world.Add("squareTex", 1, "FLOOR_STATIC", tex);
+    App.scene.FLOOR_STATIC.geometry.setScaleByX(200);
+    App.scene.FLOOR_STATIC.geometry.setScaleByY(200);
+    App.scene.FLOOR_STATIC.position.SetY(-2);
+    App.scene.FLOOR_STATIC.position.SetZ(-15);
+    App.scene.FLOOR_STATIC.rotation.rotx = 90;
+    App.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(20);
+  }
+
+  setTimeout(() => {byId('pwaBtns').style.display = 'none';}, 2000)
+
+  function loadCube(n) {
+    var tex = {source: n.textures, mix_operation: "multiply"}
+    world.Add("cubeLightTex", 1, n.name, tex);
+    App.scene[n.name].position.x = n.position[0];
+    App.scene[n.name].position.y = n.position[1];
+    App.scene[n.name].position.z = n.position[2];
+    App.scene[n.name].rotation.rotationSpeed.x = n.activeRotation[0];
+    App.scene[n.name].rotation.rotationSpeed.y = n.activeRotation[1];
+    App.scene[n.name].rotation.rotationSpeed.z = n.activeRotation[2];
+    App.scene[n.name].rotation.rotx = n.rotation[0];
+    App.scene[n.name].rotation.roty = n.rotation[1];
+    App.scene[n.name].rotation.rotz = n.rotation[2];
+
+    if(n.physics.enabled == true) {
+      var b2 = new CANNON.Body({
+        mass: n.physics.mass,
+        linearDamping: 0.01,
+        position: new CANNON.Vec3(n.position[0], n.position[2], n.position[1]),
+        shape: new CANNON.Box(new CANNON.Vec3(n.scale, n.scale, n.scale))
+      });
+      physics.world.addBody(b2);
+      App.scene[n.name].physics.currentBody = b2;
+      App.scene[n.name].physics.enabled = true;
+    }
+    App.scene[n.name].LightsData.ambientLight.set(n.ambientLight[0], n.ambientLight[1], n.ambientLight[2]);
+    App.scene[n.name].geometry.setScale(n.scale)
+
+    if(n.shadows == true) setTimeout(() => {
+      // App.scene[n.name].activateShadows('spot')
+      // App.scene[n.name].shadows.activeUpdate();
+      // App.scene[n.name].shadows.animatePositionY();
+    }, 100)
+
+    if(n.clone) {
+      if(n.clone.byX) {
+        for(var x = 1;x < n.clone.byX.size;x++) {
+          function callme(x, n) {
+            setTimeout(() => {
+              world.Add("cubeLightTex", n.scale, (n.name + 'byX' + x), tex);
+              App.scene[n.name + 'byX' + x].LightsData.ambientLight.set(n.ambientLight[0], n.ambientLight[1], n.ambientLight[2]);
+              App.scene[n.name + 'byX' + x].position.y = n.position[1];
+              App.scene[n.name + 'byX' + x].position.z = n.position[2];
+              App.scene[n.name + 'byX' + x].position.x = n.position[0] + n.clone.byX.inc * x;
+              if(n.physics.enabled == true) {
+                var b2 = new CANNON.Body({
+                  mass: n.physics.mass,
+                  linearDamping: 0.01,
+                  position: new CANNON.Vec3(n.position[0] + n.clone.byX.inc * x, n.position[2], n.position[1]),
+                  shape: new CANNON.Box(new CANNON.Vec3(n.scale, n.scale, n.scale))
+                })
+                physics.world.addBody(b2);
+                App.scene[n.name + 'byX' + x].physics.currentBody = b2;
+                App.scene[n.name + 'byX' + x].physics.enabled = true;
+
+                if (n.physics.zeroMassAfter && n.physics.zeroMassAfter != false) {
+                  setTimeout(() => { 
+                    App.scene[n.name + 'byX' + x].physics.currentBody.mass = 0;
+                  },n.physics.zeroMassAfter )
+                }
+              }
+            }, n.clone.byX.interval * x)
+          }
+          callme(x, n)
+        }
+      }
+
+      if(n.clone.byY) for(var x = 0;x < n.clone.byY.size;x++) {
+
+        function callme(x, n) {
+          setTimeout(() => {
+            world.Add("cubeLightTex", n.scale, (n.name + 'byY' + x), tex);
+            App.scene[n.name + 'byY' + x].LightsData.ambientLight.set(n.ambientLight[0], n.ambientLight[1], n.ambientLight[2]);
+            App.scene[n.name + 'byY' + x].position.x = n.position[0];
+            App.scene[n.name + 'byY' + x].position.z = n.position[2];
+            App.scene[n.name + 'byY' + x].position.y = n.position[1] + n.clone.byY.inc * x;
+            if(n.physics.enabled == true) {
+              var b2 = new CANNON.Body({
+                mass: n.physics.mass,
+                linearDamping: 0.01,
+                position: new CANNON.Vec3(n.position[0], n.position[2], n.position[1] + n.clone.byY.inc * x),
+                shape: new CANNON.Box(new CANNON.Vec3(n.scale, n.scale, n.scale))
+              });
+              physics.world.addBody(b2);
+              App.scene[n.name + 'byY' + x].physics.currentBody = b2;
+              App.scene[n.name + 'byY' + x].physics.enabled = true;
+            }
+          }, n.clone.byY.interval * x)
+
+        }
+        callme(x, n)
+
+      }
+      if(n.clone.byZ) for(var x = 0;x < n.clone.byZ.size;x++) {
+
+        function callme(x, n) {
+          setTimeout(() => {
+            world.Add("cubeLightTex", n.scale, (n.name + 'byZ' + x), tex);
+            App.scene[n.name + 'byZ' + x].LightsData.ambientLight.set(n.ambientLight[0], n.ambientLight[1], n.ambientLight[2]);
+            App.scene[n.name + 'byZ' + x].position.x = n.position[0];
+            App.scene[n.name + 'byZ' + x].position.y = n.position[1];
+            App.scene[n.name + 'byZ' + x].position.z = n.position[2] + n.clone.byZ.inc * x;
+            if(n.physics.enabled == true) {
+              var b2 = new CANNON.Body({
+                mass: n.physics.mass,
+                linearDamping: 0.01,
+                position: new CANNON.Vec3(n.position[0], n.position[2]+ n.clone.byZ.inc * x, n.position[1]),
+                shape: new CANNON.Box(new CANNON.Vec3(n.scale, n.scale, n.scale))
+              });
+              physics.world.addBody(b2);
+              App.scene[n.name + 'byZ' + x].physics.currentBody = b2;
+              App.scene[n.name + 'byZ' + x].physics.enabled = true;
+            }
+          }, n.clone.byZ.interval * x)
+        }
+        callme(x, n)
+      }
+    }
+  }
+
+  // Handler for obj
+  function loadObj(n) {
+    function onLoadObj(meshes) {
+      var tex = {source: n.textures, mix_operation: "multiply"}
+      for(let key in meshes) {
+        matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key])
+        world.Add("obj", n.scale, n.name, tex, meshes[key]);
+      }
+      App.scene[n.name].position.x = n.position[0];
+      App.scene[n.name].position.y = n.position[1];
+      App.scene[n.name].position.z = n.position[2];
+      App.scene[n.name].rotation.rotationSpeed.x = n.activeRotation[0];
+      App.scene[n.name].rotation.rotationSpeed.y = n.activeRotation[1];
+      App.scene[n.name].rotation.rotationSpeed.z = n.activeRotation[2];
+      App.scene[n.name].rotation.rotx = n.rotation[0];
+      App.scene[n.name].rotation.roty = n.rotation[1];
+      App.scene[n.name].rotation.rotz = n.rotation[2];
+      // App.scene[n.name].LightsData.ambientLight.set(1, 1, 1);
+      App.scene[n.name].mesh.setScale(n.scale)
+      if(n.shadows == true) setTimeout(() => {
+        App.scene[n.name].activateShadows('spot')
+        // App.scene.armor.shadows.activeUpdate();
+        // App.scene.armor.shadows.animatePositionY();
+      }, 100)
+      // world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers2);
+      // App.scene.MyCubeTex.activateShadows()
+    }
+    var arg = {};
+    arg[n.name] = n.path;
+    matrixEngine.objLoader.downloadMeshes(arg, onLoadObj)
+  }
+}

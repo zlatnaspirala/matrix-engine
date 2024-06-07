@@ -11,9 +11,7 @@ export var runThis = world => {
 
   // if you dont use obj or complex mesh you no need for this func
   function onLoadObj(meshes) {
-    App.meshes = meshes;
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.armor);
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, App.meshes.mac);
+    for(let key in meshes) { matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]) }
 
     var textuteImageSamplers2 = {
       source: ["res/images/armor.png", "res/images/armor.png"],
@@ -39,12 +37,8 @@ export var runThis = world => {
       // App.scene.armor.shadows.animatePositionY();
     }, 2000)
     
-
     // world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers2);
     // App.scene.MyCubeTex.activateShadows()
-    // App.scene.MyCubeTex.position.y = -1;
-    // App.scene.MyCubeTex.position.z = -16;
-
     world.Add("obj", 1, "mac", textuteImageSamplers, App.meshes.mac);
     App.scene.mac.position.y = 1;
     App.scene.mac.position.x = -2;

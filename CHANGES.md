@@ -9,6 +9,12 @@ Objective
 
 ## ---------------------------------
 
+[1.9.56]
+  Improved FPS example - added item ARMOR first item feature
+  Improved selfDestroy function [in case of simultaneous calls]
+  isHUD added rotateion also in draw func.
+
+
 [1.9.54]
  Added custom shaders also glsl files from zlatnaspirala/GLSLShaders
  Add new example `apps/shaders.js`.
