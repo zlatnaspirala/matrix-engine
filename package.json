@@ -41,7 +41,7 @@
     "bvh-loader": "0.0.9",
     "cannon": "^0.6.2",
     "http-server": "^14.1.1",
-    "socket.io-client": "^4.5.1",
+    "socket.io-client": "^4.7.5",
     "visual-js": "^3.0.28",
     "visual-js-server": "3.0.13",
     "wgpu-matrix": "^2.5.1"
