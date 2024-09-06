@@ -9300,6 +9300,19 @@ _manifest.default.operation.reDrawGlobal = function (time) {
 
     if (_matrixWorld.world.globalAnimCounter >= _matrixWorld.world.globalAnimSequenceSize) {
       _matrixWorld.world.globalAnimCounter = 0;
+
+      if (_matrixWorld.world.timeline.commands[_matrixWorld.world.globalAnimCurSequence]) {
+        // auto call
+        _matrixWorld.world.timeline.commands[_matrixWorld.world.globalAnimCurSequence](); // console.log("TIMELINE SEQ EXE");
+
+      } // VALIDACIJA
+
+
+      if (_matrixWorld.world.globalAnimCurSequence >= _matrixWorld.world.globalAnimTotalSequence) {
+        // for now simple reset - we can add option for reverse playing ...
+        _matrixWorld.world.globalAnimCurSequence = 0;
+      }
+
       _matrixWorld.world.globalAnimCurSequence++;
       document.getElementById('globalAnimCurSequence').innerText = _matrixWorld.world.globalAnimCurSequence;
     }
@@ -10978,12 +10991,13 @@ window.vec2 = glMatrix.vec2;
 window.vec3 = glMatrix.vec3;
 window.vec4 = glMatrix.vec4;
 console.info(`%c GL_MATRIX 3.4  - EXPERIMENTAL ${glMatrix}`, CS3);
-console.info(`%cMatrix-Engine %c 1.9.55 🛸`, CS1, CS1);
+console.info(`%cMatrix-Engine %c 1.9.58 🛸`, CS1, CS1);
 var lastChanges = `
 [1.9.40] First version with both support opengles11/2 and opengles300
  - Default : 1.3/opengles300
  - Switch with URL param 'app.html?GLSL=1.3' for opengle300 and '?GLSL=1.1' for opengles1.1/2
- - Implemented URL param for examples-build.html?GLSL=1.1 [Affect after first demo choose.]
+ - Implemented URL param for examples-build.html?GLSL=1.1 [Affect after first demo choose.
+ - [1.9.58] Improved timeline/globalAnimation feature]
 `;
 console.info(`%c ${lastChanges} `, CS4);
 console.info(`%c Render switch from 'requestAnimationFrame' to 'offScreen' with URLParams '?offScreen=true&offScreenSpeed=10'.
@@ -11184,17 +11198,30 @@ function defineworld(canvas, renderType) {
    */
 
 
+  world.timeline = {};
+
   world.useAnimationLine = function (args) {
     world.animLine = true;
     world.globalAnimCounter = 0;
     world.globalAnimSequenceSize = args.sequenceSize;
+    if (typeof args.totalSequence === 'undefined') args.totalSequence = 1;
+    world.globalAnimTotalSequence = args.totalSequence;
     world.globalAnimCurSequence = 1;
+    world.timeline.commands = [];
     document.getElementById('globalAnimCurSequence').innerText = world.globalAnimCurSequence;
     document.getElementById('globalAnimCounter').innerText = world.globalAnimCounter;
     document.getElementById('timeline').value = world.globalAnimCounter;
     document.getElementById('timeline').setAttribute('max', world.globalAnimSequenceSize);
     document.getElementById('globalAnimSize').innerText = world.globalAnimSequenceSize;
     document.getElementById('matrixTimeLine').style.display = 'flex';
+  };
+
+  world.addCommandAtSeqIndex = function (COMMAND, INDEX) {
+    world.timeline.commands[INDEX] = COMMAND;
+  };
+
+  world.addSubCommand = function (COMMAND, INDEX) {// WIP
+    // world.timeline.subCommands[INDEX] = COMMAND
   };
   /**
    * @MatrixPhysics
@@ -11221,21 +11248,21 @@ function defineworld(canvas, renderType) {
 
   world.Add = function (filler, size, nameUniq, texturesPaths, mesh_, animationConstruct_) {
     /*
-      Common conventions to be followed across
-      Contents can contain any type of objects. Each object can be a triangle, cube etc.
-      object.visible        =  Avoid draw procedure
-      object.type           =  Contains the type of object namely triangle, cube
-      object.size           =  Contains the size of the object. 1 unit will be the same as how WEBGL assumes 1 as in an array
-      object.sides          =  Contains the number of sides. This needs to be first declared.  (To be built and used)
-      object.shaderProgram  =  Contains the fragment and vertex shader
-      object.rotation       =  Rotator
-      object.color          =  Will contain colors based on the sides clockwise. One vertice -> [R,G,B,alpha]
-      object.texture        =  If texture is present then this will be used.           (To be built and used)
-      object.mesh           =  For objs and custom geometry - geometry buffers container
-      object.vertexPositionBuffer =  allocated during buffering
-      object.vertexColorBuffer    =  allocated during buffering
-      object.vertexTexCoordBuffer =  allocated during buffering
-      object.vertexIndexBuffer    =  allocated during buffering
+    	Common conventions to be followed across
+    	Contents can contain any type of objects. Each object can be a triangle, cube etc.
+    	object.visible        =  Avoid draw procedure
+    	object.type           =  Contains the type of object namely triangle, cube
+    	object.size           =  Contains the size of the object. 1 unit will be the same as how WEBGL assumes 1 as in an array
+    	object.sides          =  Contains the number of sides. This needs to be first declared.  (To be built and used)
+    	object.shaderProgram  =  Contains the fragment and vertex shader
+    	object.rotation       =  Rotator
+    	object.color          =  Will contain colors based on the sides clockwise. One vertice -> [R,G,B,alpha]
+    	object.texture        =  If texture is present then this will be used.           (To be built and used)
+    	object.mesh           =  For objs and custom geometry - geometry buffers container
+    	object.vertexPositionBuffer =  allocated during buffering
+    	object.vertexColorBuffer    =  allocated during buffering
+    	object.vertexTexCoordBuffer =  allocated during buffering
+    	object.vertexIndexBuffer    =  allocated during buffering
     */
     // console.info("Fill world with:" + filler + " of size:" + size);
     if ('triangle' == filler) {

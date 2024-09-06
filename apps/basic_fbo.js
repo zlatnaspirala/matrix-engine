@@ -121,7 +121,7 @@ export var runThis = (world) => {
   App.scene.myMirrorBottom.activateShadows();
 
   // TEST ALSO ANIMATIONLINE
-  matrixEngine.matrixWorld.world.useAnimationLine({ sequenceSize: 500 });
+  matrixEngine.matrixWorld.world.useAnimationLine({ sequenceSize: 500 , totalSequence: 2});
 
   // Click event
   canvas.addEventListener('mousedown', (ev) => {

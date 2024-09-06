@@ -9,6 +9,21 @@ Objective
 
 ## ---------------------------------
 
+[1.9.58] 
+   New args for timeline feature:
+	`matrixEngine.matrixWorld.world.useAnimationLine({sequenceSize: 200, totalSequence: 10});`
+	 New example script for this feature `basic_timeline.js`
+
+   Add command for execute every time on sequence (for this example at index 1) reached : 
+	 ```js
+	 	matrixEngine.matrixWorld.world.addCommandAtSeqIndex(
+		function() {
+			console.log("WHAT EVER HERE")
+		} , 1
+	)
+	 ```
+	 Commands index begin from 1.
+
 [1.9.56]
   Improved FPS example - added item ARMOR first item feature
   Improved selfDestroy function [in case of simultaneous calls]

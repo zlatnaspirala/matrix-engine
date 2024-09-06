@@ -1480,9 +1480,8 @@ function EVENTS(canvas) {
     passive: true
   }); // Calculate touch or click event
 
-  this.CALCULATE_TOUCH_OR_CLICK = function () {
-    console.log('TEST EVENTS CALCULATE_TOUCH_OR_CLICK');
-    SYS.DEBUG.LOG('EVENT: MOUSE/TOUCH CLICK');
+  this.CALCULATE_TOUCH_OR_CLICK = function () {// console.log('TEST EVENTS CALCULATE_TOUCH_OR_CLICK')
+    // SYS.DEBUG.LOG('EVENT: MOUSE/TOUCH CLICK');
   }; // Calculate touch or click event
 
 
@@ -1581,7 +1580,7 @@ function defineKeyBoardObject() {
   globKeyPressObj.keyArr = new Array();
 
   document.onkeydown = function (e) {
-    console.log('......');
+    // console.log('......')
     globKeyPressObj.handleKeyDown(e);
   };
 
@@ -3095,11 +3094,46 @@ var _matrixShadows = require("./matrix-shadows");
 
 var _matrixTextures = require("./matrix-textures");
 
+var _engine = require("./engine");
+
+var CANNON = _interopRequireWildcard(require("cannon"));
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import {vec2} from 'wgpu-matrix';
+// test override 
+CANNON.Quaternion.prototype.toAxisAngle = function (targetAxis) {
+  targetAxis = targetAxis || new CANNON.Vec3();
+  if (this.w > 1) this.normalize(); // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalised
+
+  var angle = 2 * Math.acos(this.w);
+  var s = Math.sqrt(1 - this.w * this.w); // assuming quaternion normalised then w is less than 1, so term always positive.
+
+  if (s < 0.00000001) {
+    // test to avoid divide by zero, s is always positive due to sqrt
+    // if s close to zero then direction of axis not important
+    // if it is important that axis is normalised then replace with x=1; y=z=0;
+    // console.log('override works: x: ', this.x + " y: ", this.y, " z: ", this.z)
+    // nikola lukic
+    var max1 = [this.x, this.y, this.z];
+    var getMaxValue = Math.max(...max1);
+    var index = max1.indexOf(getMaxValue);
+    targetAxis.x = 1;
+    targetAxis.y = 0;
+    targetAxis.z = 0;
+  } else {
+    targetAxis.x = this.x / s; // normalise axis
+
+    targetAxis.y = this.y / s;
+    targetAxis.z = this.z / s;
+  }
+
+  return [targetAxis, angle];
+};
 
 _manifest.default.operation.draws = new Object();
 
@@ -3109,8 +3143,32 @@ _manifest.default.operation.draws.cube = function (object, ray) {
   mat4.identity(object.mvMatrix);
   this.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
 
-  if (object.isHUD === true) {
+  if (object.physics.enabled == true) {
+    if (_manifest.default.camera.FirstPersonController == true) {
+      _events.camera.setCamera(object);
+    } else if (_manifest.default.camera.SceneController == true) {
+      _events.camera.setSceneCamera(object);
+    }
+
+    var QP = object.physics.currentBody.quaternion;
+    QP.normalize(); // mat4.translate(object.mvMatrix, object.mvMatrix, [0.0, 0.0, 0.0]);
+
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
+    var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.z, object.rotation.axis.y);
+    object.rotation.axisSystem[0].normalize();
+    var AXIS = vec3.fromValues(object.rotation.axisSystem[0].x.toFixed(2), object.rotation.axisSystem[0].z.toFixed(2), object.rotation.axisSystem[0].y.toFixed(2));
+    var MY_ANGLE = 2 * Math.acos(QP.w); // if(radToDeg(object.rotation.angle) > 90) console.log("aNGLE:" + radToDeg(object.rotation.angle) + " VS MY_ANGLE " + radToDeg(MY_ANGLE) + "  axis ++++ " + AXIS)
+    // mat4.rotateX(object.mvMatrix, object.mvMatrix, (object.rotation.angle));
+    // mat4.rotateY(object.mvMatrix, object.mvMatrix, (object.rotation.angle));
+    // mat4.rotateZ(object.mvMatrix, object.mvMatrix, (-object.rotation.angle));
+
+    mat4.rotate(object.mvMatrix, object.mvMatrix, MY_ANGLE, AXIS);
+  } else if (object.isHUD === true) {
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
     if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
   } else {
     if (_manifest.default.camera.FirstPersonController == true) {
@@ -3121,9 +3179,9 @@ _manifest.default.operation.draws.cube = function (object, ray) {
 
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
-    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
   } // V
 
 
@@ -3198,7 +3256,7 @@ _manifest.default.operation.draws.cube = function (object, ray) {
     if (object.shaderProgram.lightingDirectionUniform) {
       if ((0, _utility.E)('dirX') && (0, _utility.E)('dirY') && (0, _utility.E)('dirZ')) {
         // console.log("LIGHTS UNIFORM AMB  B = ",  E('dirZ').value )
-        lightingDirection = [degToRad(parseFloat((0, _utility.E)('dirX').getAttribute('value'))), degToRad(parseFloat((0, _utility.E)('dirY').getAttribute('value'))), degToRad(parseFloat((0, _utility.E)('dirZ').getAttribute('value')))];
+        lightingDirection = [(0, _engine.degToRad)(parseFloat((0, _utility.E)('dirX').getAttribute('value'))), (0, _engine.degToRad)(parseFloat((0, _utility.E)('dirY').getAttribute('value'))), (0, _engine.degToRad)(parseFloat((0, _utility.E)('dirZ').getAttribute('value')))];
       } else {
         lightingDirection = [object.LightsData.lightingDirection.r, object.LightsData.lightingDirection.g, object.LightsData.lightingDirection.b];
       }
@@ -3474,9 +3532,9 @@ _manifest.default.operation.draws.piramide = function (object, ray) {
 
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
   if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
 
   if (object.geometry.dynamicBuffer == true) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -3530,9 +3588,9 @@ _manifest.default.operation.draws.square = function (object, ray) {
 
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
   if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
 
   if (object.geometry.dynamicBuffer == true) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -3584,9 +3642,9 @@ _manifest.default.operation.draws.triangle = function (object, ray) {
 
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
   if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
 
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
 
@@ -3632,6 +3690,9 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
 
   if (object.isHUD === true) {
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
     if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalcObj(object);
   } else {
     if (_manifest.default.camera.FirstPersonController == true) {
@@ -3642,9 +3703,9 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
 
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalcObj(object);
-    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
   }
 
   if (typeof object.mesh.vertexBuffer != 'undefined') {
@@ -3975,6 +4036,9 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
 
   if (object.isHUD === true) {
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
     if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
   } else {
     if (_manifest.default.camera.FirstPersonController == true) {
@@ -3985,9 +4049,9 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
 
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
-    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
-    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-    mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
+    mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
   } // V
 
 
@@ -4308,9 +4372,9 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
 
 
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ()); // V
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ()); // V
 
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
@@ -4489,7 +4553,7 @@ var drawsOperation = _manifest.default.operation.draws;
 var _default = drawsOperation;
 exports.default = _default;
 
-},{"../program/manifest":40,"./events":5,"./matrix-shadows":16,"./matrix-textures":18,"./matrix-world":19,"./raycast":25,"./utility":31}],10:[function(require,module,exports){
+},{"../program/manifest":40,"./engine":4,"./events":5,"./matrix-shadows":16,"./matrix-textures":18,"./matrix-world":19,"./raycast":25,"./utility":31,"cannon":37}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4597,19 +4661,22 @@ class RotationVector {
       z: 0
     }; // test
 
-    this.adapt_quaternion = () => {
-      this.getRotDirX = () => {
-        return this.RotationVector;
-      };
-
-      this.getRotDirY = () => {
-        return this.RotationVector;
-      };
-
-      this.getRotDirZ = () => {
-        return this.RotationVector;
-      };
-    };
+    this.angle = 0;
+    this.axis = {
+      x: 0,
+      y: 0,
+      z: 0
+    }; // this.adapt_quaternion = () => {
+    //   this.getRotDirX = () => {
+    //     return this.RotationVector;
+    //   }
+    //   this.getRotDirY = () => {
+    //     return this.RotationVector;
+    //   }
+    //   this.getRotDirZ = () => {
+    //     return this.RotationVector;
+    //   }
+    // }
 
     return this;
   }
@@ -8128,9 +8195,14 @@ _manifest.default.operation.reDrawGlobal = function (time) {
             _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
             _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
           } else {
-            if (local.physics.currentBody.quaternion.x != 0) _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-            if (local.physics.currentBody.quaternion.y != 0) _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-            if (local.physics.currentBody.quaternion.z != 0) _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+            var axisAngle = local.physics.currentBody.quaternion.toAxisAngle()[1];
+            _matrixWorld.world.contentList[physicsLooper].rotation.angle = axisAngle;
+            _matrixWorld.world.contentList[physicsLooper].rotation.axisSystem = local.physics.currentBody.quaternion.toAxisAngle();
+            _matrixWorld.world.contentList[physicsLooper].rotation.axis.x = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].x.toFixed(2));
+            _matrixWorld.world.contentList[physicsLooper].rotation.axis.y = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].y.toFixed(2));
+            _matrixWorld.world.contentList[physicsLooper].rotation.axis.z = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].z.toFixed(2)); // if(local.physics.currentBody.quaternion.x != 0) world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+            // if(local.physics.currentBody.quaternion.y != 0) world.contentList[physicsLooper].rotation.roty = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+            // if(local.physics.currentBody.quaternion.z != 0) world.contentList[physicsLooper].rotation.rotz = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
           }
         } else if (local.physics.currentBody.shapeOrientations.length > 1) {
           // subObjs
@@ -8465,6 +8537,19 @@ _manifest.default.operation.reDrawGlobal = function (time) {
 
     if (_matrixWorld.world.globalAnimCounter >= _matrixWorld.world.globalAnimSequenceSize) {
       _matrixWorld.world.globalAnimCounter = 0;
+
+      if (_matrixWorld.world.timeline.commands[_matrixWorld.world.globalAnimCurSequence]) {
+        // auto call
+        _matrixWorld.world.timeline.commands[_matrixWorld.world.globalAnimCurSequence](); // console.log("TIMELINE SEQ EXE");
+
+      } // VALIDACIJA
+
+
+      if (_matrixWorld.world.globalAnimCurSequence >= _matrixWorld.world.globalAnimTotalSequence) {
+        // for now simple reset - we can add option for reverse playing ...
+        _matrixWorld.world.globalAnimCurSequence = 0;
+      }
+
       _matrixWorld.world.globalAnimCurSequence++;
       document.getElementById('globalAnimCurSequence').innerText = _matrixWorld.world.globalAnimCurSequence;
     }
@@ -10132,12 +10217,24 @@ var CS3 = "font-family: stormfaze;color: #f1f033; font-size:14px;text-shadow: 2p
 exports.CS3 = CS3;
 var CS4 = "font-family: verdana;color: #lime; font-size:16px;text-shadow: 2px 2px 4px orangered;background: black;";
 exports.CS4 = CS4;
-console.info(`%cMatrix-Engine %c 1.9.55 🛸`, CS1, CS1);
+window.mat4 = glMatrix.mat4;
+window.mat2 = glMatrix.mat2;
+window.mat2d = glMatrix.mat2d;
+window.mat3 = glMatrix.mat3;
+window.mat4 = glMatrix.mat4;
+window.quat = glMatrix.quat;
+window.quat2 = glMatrix.quat2;
+window.vec2 = glMatrix.vec2;
+window.vec3 = glMatrix.vec3;
+window.vec4 = glMatrix.vec4;
+console.info(`%c GL_MATRIX 3.4  - EXPERIMENTAL ${glMatrix}`, CS3);
+console.info(`%cMatrix-Engine %c 1.9.58 🛸`, CS1, CS1);
 var lastChanges = `
 [1.9.40] First version with both support opengles11/2 and opengles300
  - Default : 1.3/opengles300
  - Switch with URL param 'app.html?GLSL=1.3' for opengle300 and '?GLSL=1.1' for opengles1.1/2
- - Implemented URL param for examples-build.html?GLSL=1.1 [Affect after first demo choose.]
+ - Implemented URL param for examples-build.html?GLSL=1.1 [Affect after first demo choose.
+ - [1.9.58] Improved timeline/globalAnimation feature]
 `;
 console.info(`%c ${lastChanges} `, CS4);
 console.info(`%c Render switch from 'requestAnimationFrame' to 'offScreen' with URLParams '?offScreen=true&offScreenSpeed=10'.
@@ -10338,17 +10435,30 @@ function defineworld(canvas, renderType) {
    */
 
 
+  world.timeline = {};
+
   world.useAnimationLine = function (args) {
     world.animLine = true;
     world.globalAnimCounter = 0;
     world.globalAnimSequenceSize = args.sequenceSize;
+    if (typeof args.totalSequence === 'undefined') args.totalSequence = 1;
+    world.globalAnimTotalSequence = args.totalSequence;
     world.globalAnimCurSequence = 1;
+    world.timeline.commands = [];
     document.getElementById('globalAnimCurSequence').innerText = world.globalAnimCurSequence;
     document.getElementById('globalAnimCounter').innerText = world.globalAnimCounter;
     document.getElementById('timeline').value = world.globalAnimCounter;
     document.getElementById('timeline').setAttribute('max', world.globalAnimSequenceSize);
     document.getElementById('globalAnimSize').innerText = world.globalAnimSequenceSize;
     document.getElementById('matrixTimeLine').style.display = 'flex';
+  };
+
+  world.addCommandAtSeqIndex = function (COMMAND, INDEX) {
+    world.timeline.commands[INDEX] = COMMAND;
+  };
+
+  world.addSubCommand = function (COMMAND, INDEX) {// WIP
+    // world.timeline.subCommands[INDEX] = COMMAND
   };
   /**
    * @MatrixPhysics
@@ -10375,21 +10485,21 @@ function defineworld(canvas, renderType) {
 
   world.Add = function (filler, size, nameUniq, texturesPaths, mesh_, animationConstruct_) {
     /*
-      Common conventions to be followed across
-      Contents can contain any type of objects. Each object can be a triangle, cube etc.
-      object.visible        =  Avoid draw procedure
-      object.type           =  Contains the type of object namely triangle, cube
-      object.size           =  Contains the size of the object. 1 unit will be the same as how WEBGL assumes 1 as in an array
-      object.sides          =  Contains the number of sides. This needs to be first declared.  (To be built and used)
-      object.shaderProgram  =  Contains the fragment and vertex shader
-      object.rotation       =  Rotator
-      object.color          =  Will contain colors based on the sides clockwise. One vertice -> [R,G,B,alpha]
-      object.texture        =  If texture is present then this will be used.           (To be built and used)
-      object.mesh           =  For objs and custom geometry - geometry buffers container
-      object.vertexPositionBuffer =  allocated during buffering
-      object.vertexColorBuffer    =  allocated during buffering
-      object.vertexTexCoordBuffer =  allocated during buffering
-      object.vertexIndexBuffer    =  allocated during buffering
+    	Common conventions to be followed across
+    	Contents can contain any type of objects. Each object can be a triangle, cube etc.
+    	object.visible        =  Avoid draw procedure
+    	object.type           =  Contains the type of object namely triangle, cube
+    	object.size           =  Contains the size of the object. 1 unit will be the same as how WEBGL assumes 1 as in an array
+    	object.sides          =  Contains the number of sides. This needs to be first declared.  (To be built and used)
+    	object.shaderProgram  =  Contains the fragment and vertex shader
+    	object.rotation       =  Rotator
+    	object.color          =  Will contain colors based on the sides clockwise. One vertice -> [R,G,B,alpha]
+    	object.texture        =  If texture is present then this will be used.           (To be built and used)
+    	object.mesh           =  For objs and custom geometry - geometry buffers container
+    	object.vertexPositionBuffer =  allocated during buffering
+    	object.vertexColorBuffer    =  allocated during buffering
+    	object.vertexTexCoordBuffer =  allocated during buffering
+    	object.vertexIndexBuffer    =  allocated during buffering
     */
     // console.info("Fill world with:" + filler + " of size:" + size);
     if ('triangle' == filler) {
@@ -10422,8 +10532,12 @@ function defineworld(canvas, renderType) {
         if (after) {
           setTimeout(() => {
             // destroy me
-            let objForDelete = world.contentList.splice(world.contentList.indexOf(triangleObject), 1)[0];
-            _manifest.default.scene[objForDelete.name] = null;
+            var TEST = world.contentList[world.contentList.indexOf(triangleObject)];
+
+            if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
+              let objForDelete = world.contentList.splice(world.contentList.indexOf(triangleObject), 1)[0];
+              _manifest.default.scene[objForDelete.name] = null;
+            }
           }, after);
         } else {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(triangleObject), 1)[0];
@@ -10489,8 +10603,12 @@ function defineworld(canvas, renderType) {
         if (after) {
           setTimeout(() => {
             // destroy me
-            let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
-            _manifest.default.scene[objForDelete.name] = null;
+            var TEST = world.contentList[world.contentList.indexOf(squareObject)];
+
+            if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
+              let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
+              _manifest.default.scene[objForDelete.name] = null;
+            }
           }, after);
         } else {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
@@ -10578,8 +10696,13 @@ function defineworld(canvas, renderType) {
         if (after) {
           setTimeout(() => {
             // destroy me
-            let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
-            _manifest.default.scene[objForDelete.name] = null;
+            // destroy me
+            var TEST = world.contentList[world.contentList.indexOf(squareObject)];
+
+            if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
+              let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
+              _manifest.default.scene[objForDelete.name] = null;
+            }
           }, after);
         } else {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
@@ -10727,8 +10850,13 @@ function defineworld(canvas, renderType) {
       cubeObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
-            let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
-            _manifest.default.scene[objForDelete.name] = null;
+            // destroy me
+            var TEST = world.contentList[world.contentList.indexOf(cubeObject)];
+
+            if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
+              let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
+              _manifest.default.scene[objForDelete.name] = null;
+            }
           }, after);
         } else {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
@@ -10790,8 +10918,12 @@ function defineworld(canvas, renderType) {
         if (after) {
           setTimeout(() => {
             // destroy me
-            let objForDelete = world.contentList.splice(world.contentList.indexOf(sphereObject), 1)[0];
-            _manifest.default.scene[objForDelete.name] = null;
+            var TEST = world.contentList[world.contentList.indexOf(sphereObject)];
+
+            if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
+              let objForDelete = world.contentList.splice(world.contentList.indexOf(sphereObject), 1)[0];
+              _manifest.default.scene[objForDelete.name] = null;
+            }
           }, after);
         } else {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(sphereObject), 1)[0];
@@ -10934,8 +11066,12 @@ function defineworld(canvas, renderType) {
         if (after) {
           setTimeout(() => {
             // destroy me
-            let objForDelete = world.contentList.splice(world.contentList.indexOf(pyramidObject), 1)[0];
-            _manifest.default.scene[objForDelete.name] = null;
+            var TEST = world.contentList[world.contentList.indexOf(pyramidObject)];
+
+            if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
+              let objForDelete = world.contentList.splice(world.contentList.indexOf(pyramidObject), 1)[0];
+              _manifest.default.scene[objForDelete.name] = null;
+            }
           }, after);
         } else {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(pyramidObject), 1)[0];
@@ -11012,8 +11148,12 @@ function defineworld(canvas, renderType) {
         if (after) {
           setTimeout(() => {
             // destroy me
-            let objForDelete = world.contentList.splice(world.contentList.indexOf(objObject), 1)[0];
-            _manifest.default.scene[objForDelete.name] = null;
+            var TEST = world.contentList[world.contentList.indexOf(objObject)];
+
+            if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
+              let objForDelete = world.contentList.splice(world.contentList.indexOf(objObject), 1)[0];
+              _manifest.default.scene[objForDelete.name] = null;
+            }
           }, after);
         } else {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(objObject), 1)[0];
@@ -11223,8 +11363,12 @@ function defineworld(canvas, renderType) {
         if (after) {
           setTimeout(() => {
             // destroy me
-            let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
-            _manifest.default.scene[objForDelete.name] = null;
+            var TEST = world.contentList[world.contentList.indexOf(cubeObject)];
+
+            if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
+              let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
+              _manifest.default.scene[objForDelete.name] = null;
+            }
           }, after);
         } else {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
@@ -11390,8 +11534,12 @@ function defineworld(canvas, renderType) {
         if (after) {
           setTimeout(() => {
             // destroy me
-            let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
-            _manifest.default.scene[objForDelete.name] = null;
+            var TEST = world.contentList[world.contentList.indexOf(cubeObject)];
+
+            if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
+              let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
+              _manifest.default.scene[objForDelete.name] = null;
+            }
           }, after);
         } else {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
@@ -11620,8 +11768,12 @@ function defineworld(canvas, renderType) {
         if (after) {
           setTimeout(() => {
             // destroy me
-            let objForDelete = world.contentList.splice(world.contentList.indexOf(customObject), 1)[0];
-            _manifest.default.scene[objForDelete.name] = null;
+            var TEST = world.contentList[world.contentList.indexOf(customObject)];
+
+            if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
+              let objForDelete = world.contentList.splice(world.contentList.indexOf(customObject), 1)[0];
+              _manifest.default.scene[objForDelete.name] = null;
+            }
           }, after);
         } else {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(customObject), 1)[0];
@@ -21510,11 +21662,13 @@ class MatrixSounds {
   tryClone(name) {
     var cc = 1;
 
-    while (this.audios[name + cc].paused == false) {
-      cc++;
-    }
+    try {
+      while (this.audios[name + cc].paused == false) {
+        cc++;
+      }
 
-    this.audios[name + cc].play();
+      if (this.audios[name + cc]) this.audios[name + cc].play();
+    } catch (err) {}
   }
 
 }
