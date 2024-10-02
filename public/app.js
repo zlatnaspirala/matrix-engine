@@ -70,7 +70,7 @@ var runThis = world => {
 
   matrixEngine.Engine.activateNet2(undefined, {
     sessionName: 'matrix-engine-shared-object',
-    resolution: ''
+    resolution: '320x480'
   });
   _manifest.default.scene.MyColoredSquare1.net.enable = true; // App.scene.MyColoredSquare1.net.activate();
 };
@@ -501,8 +501,8 @@ let activateNet2 = (CustomConfig, sessionOption) => {
       sessionName: sessionOption.sessionName
     }); // remove at the end
 
-    window.matrixStream = net;
-    _manifest.default.network = net;
+    window.matrixStream = net; // App.network = net;
+
     console.info('Networking2 is active.', t.networking2);
   }
 };
@@ -5065,6 +5065,7 @@ class Position {
     this.x = newx;
     this.targetX = newx;
     this.inMove = false;
+    console.log('test setX net.connection ', _engine.net);
 
     if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) {
       _engine.net.connection.send({
@@ -22885,9 +22886,10 @@ var _matrixStream = require("./matrix-stream");
  * version 1.0.0 beta
  */
 class MatrixStream {
-  constructor(arg) {
-    console.log(`LOADED 1`);
+  connection = null;
+  session = null;
 
+  constructor(arg) {
     if (typeof arg === 'undefined') {
       throw console.error('MatrixStream constructor must have argument : { domain: <DOMAIN_NAME> , port: <NUMBER> }');
     }
@@ -22898,7 +22900,6 @@ class MatrixStream {
 
     _utility.scriptManager.LOAD('openvidu-browser-2.20.0.js', undefined, undefined, undefined, () => {
       this.loadNetHTML();
-      console.log(`%c MatrixStream constructed.`, _matrixStream.BIGLOG);
     });
   }
 
@@ -22918,10 +22919,36 @@ class MatrixStream {
       this.sessionName = (0, _matrixStream.byId)("sessionName");
       console.log('[CHANNEL]' + this.sessionName.value);
       this.attachEvents();
+      console.log(`%c MatrixStream constructed.`, _matrixStream.BIGLOG);
     });
   }
 
   attachEvents() {
+    addEventListener(`LOCAL-STREAM-READY`, e => {
+      console.log('LOCAL-STREAM-READY ', e.detail.connection);
+      this.connection = e.detail.connection;
+      var CHANNEL = _matrixStream.netConfig.sessionName; // console.log("ONLY ONES CHANNEL =>", CHANNEL);
+
+      this.connection.send = netArg => {
+        // to Array of Connection objects (optional. Broadcast to everyone if empty)
+        this.session.signal({
+          data: JSON.stringify(netArg),
+          to: [],
+          type: CHANNEL
+        }).then(() => {// console.log('emit all successfully');
+        }).catch(error => {
+          console.error("Erro signal => ", error);
+        });
+      };
+    });
+    addEventListener('setupSessionObject', e => {
+      // this.connection.session = session;
+      console.log("setupSessionObject=>", e.detail);
+      this.session = e.detail;
+      this.session.on(`signal:${_matrixStream.netConfig.sessionName}`, event => {
+        App.net.injector.update(event);
+      });
+    });
     this.joinSessionUI.addEventListener('click', () => {
       console.log(`%c JOIN SESSION`, _matrixStream.REDLOG);
       (0, _matrixStream.joinSession)({
@@ -22997,7 +23024,7 @@ var session;
 exports.session = session;
 
 function joinSession(options) {
-  console.log('wwwwwwwwwwwww');
+  console.log('joinSession');
 
   if (typeof options === 'undefined') {
     options = {
@@ -23066,8 +23093,8 @@ function joinSession(options) {
       pushEvent(event);
     });
     session.on('sessionDisconnected', event => {
-      alert("Session Disconected");
-      byId("pwa-container-2").style.display = "none";
+      console.log("Session Disconected", event); // byId("pwa-container-2").style.display = "none";
+
       pushEvent(event);
 
       if (event.reason !== 'disconnect') {
@@ -23093,9 +23120,7 @@ function joinSession(options) {
       console.warn(exception);
     });
     dispatchEvent(new CustomEvent(`setupSessionObject`, {
-      detail: {
-        session
-      }
+      detail: session
     }));
     session.connect(token).then(() => {
       byId('session-title').innerText = sessionName;
@@ -23139,6 +23164,9 @@ function joinSession(options) {
       }); // When the publisher stream has started playing media...
 
       publisher.on('streamCreated', event => {
+        dispatchEvent(new CustomEvent(`LOCAL-STREAM-READY`, {
+          detail: event.stream
+        }));
         console.log(`%c LOCAL STREAM READY ${event.stream.connection.connectionId}`, BIGLOG);
 
         if (document.getElementById("pwa-container-1").style.display != 'none') {
@@ -23149,6 +23177,9 @@ function joinSession(options) {
       }); // When our HTML video has been added to DOM...
 
       publisher.on('videoElementCreated', event => {
+        dispatchEvent(new CustomEvent(`videoElementCreated`, {
+          detail: event
+        }));
         pushEvent(event);
         updateNumVideos(1);
         console.log('NOT FIXED MUTE event.element, ', event.element);
@@ -23156,6 +23187,9 @@ function joinSession(options) {
       }); // When the HTML video has been appended to DOM...
 
       publisher.on('videoElementDestroyed', event => {
+        dispatchEvent(new CustomEvent(`videoElementDestroyed`, {
+          detail: event
+        }));
         pushEvent(event);
         updateNumVideos(-1);
       }); // When the publisher stream has started playing media...

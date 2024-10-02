@@ -17,7 +17,7 @@ var OV; var numVideos = 0; var sessionName; var token;
 export var session;
 export function joinSession(options) {
 
-	console.log('wwwwwwwwwwwww')
+	console.log('joinSession')
 	if(typeof options === 'undefined') {
 		options = {
 			resolution: '320x240'
@@ -48,11 +48,11 @@ export function joinSession(options) {
 		// On every new Stream received...
 		session.on('streamCreated', event => {
 			pushEvent(event);
-				console.log(`%c [onStreamCreated] ${event.stream.streamId}`)
-				setTimeout(() => {
-					console.log(`%c REMOTE STREAM READY [] ${byId("remote-video-" + event.stream.streamId)}`, BIGLOG)
-				}, 2000)
-			dispatchEvent(new CustomEvent('onStreamCreated', {detail: { event: event, msg: `[connectionId][${event.stream.connection.connectionId}]`}}))
+			console.log(`%c [onStreamCreated] ${event.stream.streamId}`)
+			setTimeout(() => {
+				console.log(`%c REMOTE STREAM READY [] ${byId("remote-video-" + event.stream.streamId)}`, BIGLOG)
+			}, 2000)
+			dispatchEvent(new CustomEvent('onStreamCreated', {detail: {event: event, msg: `[connectionId][${event.stream.connection.connectionId}]`}}))
 			// Subscribe to the Stream to receive it
 			// HTML video will be appended to element with 'video-container' id
 			var subscriber = session.subscribe(event.stream, 'video-container');
@@ -82,8 +82,8 @@ export function joinSession(options) {
 		});
 
 		session.on('sessionDisconnected', event => {
-			alert("Session Disconected");
-			byId("pwa-container-2").style.display = "none";
+			console.log("Session Disconected", event);
+			// byId("pwa-container-2").style.display = "none";
 			pushEvent(event);
 			if(event.reason !== 'disconnect') {
 				removeUser();
@@ -110,7 +110,7 @@ export function joinSession(options) {
 			console.warn(exception);
 		});
 
-		dispatchEvent(new CustomEvent(`setupSessionObject`, {detail: {session}}))
+		dispatchEvent(new CustomEvent(`setupSessionObject`, {detail: session}))
 
 		session.connect(token)
 			.then(() => {
@@ -151,6 +151,7 @@ export function joinSession(options) {
 
 				// When the publisher stream has started playing media...
 				publisher.on('streamCreated', event => {
+					dispatchEvent(new CustomEvent(`LOCAL-STREAM-READY`, {detail: event.stream}))
 					console.log(`%c LOCAL STREAM READY ${event.stream.connection.connectionId}`, BIGLOG)
 					if(document.getElementById("pwa-container-1").style.display != 'none') {
 						document.getElementById("pwa-container-1").style.display = 'none';
@@ -160,6 +161,7 @@ export function joinSession(options) {
 
 				// When our HTML video has been added to DOM...
 				publisher.on('videoElementCreated', event => {
+					dispatchEvent(new CustomEvent(`videoElementCreated`, {detail: event}))
 					pushEvent(event);
 					updateNumVideos(1);
 					console.log('NOT FIXED MUTE event.element, ', event.element)
@@ -169,6 +171,7 @@ export function joinSession(options) {
 
 				// When the HTML video has been appended to DOM...
 				publisher.on('videoElementDestroyed', event => {
+					dispatchEvent(new CustomEvent(`videoElementDestroyed`, {detail: event}))
 					pushEvent(event);
 					updateNumVideos(-1);
 				});
@@ -195,7 +198,6 @@ export function joinSession(options) {
 export function leaveSession() {
 	session.disconnect();
 	enableBtn();
-
 }
 
 /* OPENVIDU METHODS */
@@ -210,7 +212,7 @@ export function enableBtn() {
 export function getToken(callback) {
 	sessionName = byId("sessionName").value;
 	httpRequest('POST',
-		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT+ '/api/get-token', {
+		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/get-token', {
 		sessionName: sessionName
 	},
 		'Request of TOKEN gone WRONG:',
@@ -225,7 +227,7 @@ export function getToken(callback) {
 export function removeUser() {
 	httpRequest(
 		'POST',
-		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT+ '/api/remove-user', {
+		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/remove-user', {
 		sessionName: sessionName,
 		token: token
 	},
@@ -239,7 +241,7 @@ export function removeUser() {
 export function closeSession() {
 	httpRequest(
 		'DELETE',
-		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT+ '/api/close-session', {
+		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/close-session', {
 		sessionName: sessionName
 	},
 		'Session couldn\'t be closed',
@@ -251,7 +253,7 @@ export function closeSession() {
 
 export function fetchInfo() {
 	httpRequest('POST',
-		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT+ '/api/fetch-info', {
+		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/fetch-info', {
 		sessionName: sessionName
 	},
 		'Session couldn\'t be fetched',
@@ -265,7 +267,7 @@ export function fetchInfo() {
 export function fetchAll() {
 	httpRequest(
 		'GET',
-		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT+ '/api/fetch-all', {},
+		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/fetch-all', {},
 		'All session info couldn\'t be fetched',
 		res => {
 			console.warn("All session fetched");
@@ -277,7 +279,7 @@ export function fetchAll() {
 export function forceDisconnect() {
 	httpRequest(
 		'DELETE',
-		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT+ '/api/force-disconnect', {
+		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/force-disconnect', {
 		sessionName: sessionName,
 		connectionId: document.getElementById('forceValue').value
 	},
@@ -291,7 +293,7 @@ export function forceDisconnect() {
 export function forceUnpublish() {
 	httpRequest(
 		'DELETE',
-		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT+ '/api/force-unpublish', {
+		'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/force-unpublish', {
 		sessionName: sessionName,
 		streamId: document.getElementById('forceValue').value
 	},

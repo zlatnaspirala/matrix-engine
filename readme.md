@@ -405,6 +405,8 @@ const objGenerator = (n) => {
 objGenerator(100);
 ```
 
+## -<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< OLD
+
 ### Networking [1.8.0]
 
 @Note Folder `networking/` containe Backend stuff based on Node.js. This folder have own package.json (matrix-network).In basic it is a signaling server who give as features like videoChat, multiplayer data flow etc.
@@ -490,6 +492,26 @@ Also matrix-network support inject method intro yor own custom server logic part
 Example for this case:
 https://github.com/zlatnaspirala/matrix-engine-starter/blob/8fccc3ba5d4aa21b7c24794251a2fceed97cbb30/projects/matrix-roulette/scripts/roulette.js#L208
 
+## -<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+## Networking2
+New way of networking is kurento/OpenVidu service.
+Only web client part is present here. I have running kurento/Ov server on my VPS[maximumroulette.com:2020].
+
+List of events
+ - `onConnectionCreated`
+ - `connectionDestroyed`
+ - `onStreamCreated`         on remote stream
+ - `videoElementDestroyed`
+ - `streamPlaying`
+ - `streamDestroyed`
+ - `sessionDisconnected`
+ - `streamCreated`
+ - `videoElementCreated`
+ - `videoElementDestroyed`
+ - `setupSessionObject`       return session object
+
+
 ### Custom textures
 
 We just override function for texture executing code.
@@ -518,7 +540,7 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 
 ### Opengles native `cubeMap` [1.8.5]
 
-- If you wanna custom canvasd2d draws for aech cube side
+- If you wanna custom canvasd2d draws for each cube side
   New tag `cubeMap` takes texture.source empty array.
 
 Canvas2d Example:

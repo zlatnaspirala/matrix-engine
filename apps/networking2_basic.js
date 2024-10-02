@@ -12,15 +12,15 @@ import * as matrixEngine from "../index.js";
 
 export var runThis = world => {
 
-  world.Add("square", 1, "MyColoredSquare1");
+	world.Add("square", 1, "MyColoredSquare1");
 
-  // Must be activate - Use client default config file
-  matrixEngine.Engine.activateNet2(undefined,
+	// Must be activate - Use client default config file
+	matrixEngine.Engine.activateNet2(undefined,
 		{
 			sessionName: 'matrix-engine-shared-object',
-			resolution: ''
+			resolution: '320x480'
 		});
 
-  App.scene.MyColoredSquare1.net.enable = true;
-  // App.scene.MyColoredSquare1.net.activate();
+	App.scene.MyColoredSquare1.net.enable = true;
+	// App.scene.MyColoredSquare1.net.activate();
 };

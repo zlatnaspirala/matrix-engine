@@ -7,10 +7,11 @@ import {BIGLOG, byId, closeSession, joinSession, leaveSession, netConfig, REDLOG
  */
 
 export class MatrixStream {
+
+	connection = null;
+	session = null;
+
 	constructor(arg) {
-
-		console.log(`LOADED 1`)
-
 		if(typeof arg === 'undefined') {
 			throw console.error('MatrixStream constructor must have argument : { domain: <DOMAIN_NAME> , port: <NUMBER> }');
 		}
@@ -19,7 +20,6 @@ export class MatrixStream {
 		netConfig.sessionName = arg.sessionName;
 		scriptManager.LOAD('openvidu-browser-2.20.0.js', undefined, undefined, undefined, () => {
 			this.loadNetHTML()
-			console.log(`%c MatrixStream constructed.`, BIGLOG)
 		});
 	}
 
@@ -29,19 +29,51 @@ export class MatrixStream {
 				var popupUI = byId("matrix-net");
 				popupUI.style = 'display: block;';
 				popupUI.innerHTML = html;
-
 				this.joinSessionUI = byId("join-btn");
 				this.buttonCloseSession = byId('buttonCloseSession');
 				this.buttonLeaveSession = byId('buttonLeaveSession');
 				byId("sessionName").value = netConfig.sessionName;
 				this.sessionName = byId("sessionName");
 				console.log('[CHANNEL]' + this.sessionName.value)
-
 				this.attachEvents()
+				console.log(`%c MatrixStream constructed.`, BIGLOG)
 			});
 	}
 
 	attachEvents() {
+
+		addEventListener(`LOCAL-STREAM-READY`, (e) => {
+			console.log('LOCAL-STREAM-READY ', e.detail.connection)
+			this.connection = e.detail.connection;
+
+			var CHANNEL = netConfig.sessionName
+			// console.log("ONLY ONES CHANNEL =>", CHANNEL);
+			this.connection.send = (netArg) => {
+				// to Array of Connection objects (optional. Broadcast to everyone if empty)
+				this.session.signal({
+					data: JSON.stringify(netArg),
+					to: [],
+					type: CHANNEL
+				}).then(() => {
+					// console.log('emit all successfully');
+				}).catch(error => {
+					console.error("Erro signal => ", error);
+				});
+			}
+
+		})
+
+		addEventListener('setupSessionObject', (e) => {
+			// this.connection.session = session;
+      console.log("setupSessionObject=>", e.detail);
+			this.session = e.detail;
+			this.session.on(`signal:${netConfig.sessionName}`, (event) => {
+				App.net.injector.update(event);
+			});
+			
+		})
+
+
 		this.joinSessionUI.addEventListener('click', () => {
 			console.log(`%c JOIN SESSION`, REDLOG)
 			joinSession({resolution: '320x480'})
