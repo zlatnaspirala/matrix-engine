@@ -1,5 +1,5 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/fps_player_controller.js';
+import {runThis} from './apps/networking2_basic.js';
 // import {runThis} from './apps/shaders.js';
 // import {runThis} from './apps/load-maps.js';
 
@@ -9,6 +9,7 @@ var App = matrixEngine.App;
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function (e) {
     // navigator.serviceWorker.register('worker.js'); 
+		console.warn('Matrix Engine: Before load.');
     App.ready = true;
     matrixEngine.Engine.initApp(webGLStart);
   });
