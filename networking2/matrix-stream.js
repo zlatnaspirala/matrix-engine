@@ -16,13 +16,12 @@ export var ANYLOG = "color: yellow;font-size:15px;text-shadow: 1px 1px 4px red, 
 var OV; var numVideos = 0; var sessionName; var token;
 export var session;
 export function joinSession(options) {
-
-	console.log('joinSession')
 	if(typeof options === 'undefined') {
 		options = {
 			resolution: '320x240'
 		};
 	}
+	console.log('resolution:', options.resolution)
 
 	document.getElementById("join-btn").disabled = true;
 	document.getElementById("join-btn").innerHTML = "Joining...";

@@ -220,9 +220,10 @@ span {
 #matrix-net {
   position: absolute;
   display: none;
+	overflow: hidden;
   right: 0;
   height: 100%;
-  width: 40vh;
+  width: 60vw;
   font-family: stormfaze;
   background-color: crimson;
 }
@@ -243,7 +244,7 @@ span {
 }
 .timeLineSlider, p {
   background: rgba(12, 122, 22, 0.5);
-  width:100%;
+  /* width:100%; */
   margin: 5px 5px 5px 5px;
 }
 

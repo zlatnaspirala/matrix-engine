@@ -18,7 +18,7 @@ export var runThis = world => {
 	matrixEngine.Engine.activateNet2(undefined,
 		{
 			sessionName: 'matrix-engine-shared-object',
-			resolution: '320x480'
+			resolution: '240x160'
 		});
 
 	App.scene.MyColoredSquare1.net.enable = true;

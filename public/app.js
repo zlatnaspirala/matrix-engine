@@ -3,21 +3,19 @@
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
 
-var _networking2_basic = require("./apps/networking2_basic.js");
+var _public_3d_video_chat = require("./apps/public_3d_video_chat.js");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-// import {runThis} from './apps/shaders.js';
-// import {runThis} from './apps/load-maps.js';
+// CHANGE HERE IF YOU WANNA USE app-build.hmtl
 var world;
 var App = matrixEngine.App;
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function (e) {
     // navigator.serviceWorker.register('worker.js'); 
-    console.warn('Matrix Engine: Before load.');
     App.ready = true;
     matrixEngine.Engine.initApp(webGLStart);
   });
@@ -30,15 +28,15 @@ window.webGLStart = () => {
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw(); // Make it global for dev - for easy console/debugger access
 
-  window.runThis = _networking2_basic.runThis; // setTimeout(() => { runThis(world); }, 1);
+  window.runThis = _public_3d_video_chat.runThis; // setTimeout(() => { runThis(world); }, 1);
 
-  (0, _networking2_basic.runThis)(world);
+  (0, _public_3d_video_chat.runThis)(world);
 };
 
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/networking2_basic.js":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/public_3d_video_chat.js":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50,6 +48,10 @@ var _manifest = _interopRequireDefault(require("../program/manifest.js"));
 
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
 
+var _matrixStream = require("../networking2/matrix-stream.js");
+
+var CANNON = _interopRequireWildcard(require("cannon"));
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -58,26 +60,153 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /**
  * @Author Nikola Lukic
- * @Description New version networking2 - Matrix Engine Api Example.
- * @note This example use you and better solution for webRTC signaling.
- * In new version i use kurento/openVidu service and library.
- * Kurento will handle much better session leaved by host/initator
+ * @Description Matrix Engine Api Example.
+ * [NEW NETWORKING]
+ * public-3d-video-chat
  */
+let VT = matrixEngine.Engine.VT;
 
-/* globals world App world */
 var runThis = world => {
-  world.Add("square", 1, "MyColoredSquare1"); // Must be activate - Use client default config file
+  _manifest.default.camera.SceneController = true;
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+  window.addEventListener('ray.hit.event', ev => {
+    console.log("You shoot the object! Nice!", ev);
+
+    if (ev.detail.hitObject.physics.enabled == true) {
+      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+    }
+  });
+  var tex = {
+    source: ["res/images/complex_texture_1/diffuse.png"],
+    mix_operation: "multiply" // ENUM : multiply , divide ,
+
+  };
+  let gravityVector = [0, 0, -9.82];
+  let physics = world.loadPhysics(gravityVector); // Add ground
+
+  physics.addGround(_manifest.default, world, tex);
+
+  const objGenerator = meObj => {
+    var b2 = new CANNON.Body({
+      mass: 1,
+      linearDamping: 0.01,
+      position: new CANNON.Vec3(0, -14.5, 15),
+      shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
+    });
+    physics.world.addBody(b2);
+    meObj.physics.currentBody = b2;
+    meObj.physics.enabled = true;
+  }; // objGenerator(1)
+
 
   matrixEngine.Engine.activateNet2(undefined, {
-    sessionName: 'matrix-engine-shared-object',
-    resolution: '320x480'
+    sessionName: 'public-chat-me',
+    resolution: '240x160'
   });
-  _manifest.default.scene.MyColoredSquare1.net.enable = true; // App.scene.MyColoredSquare1.net.activate();
+  addEventListener(`LOCAL-STREAM-READY`, e => {
+    console.log('LOCAL-STREAM-READY [app level] ', e.detail.streamManager.id);
+    console.log('LOCAL-STREAM-READY [app level] ', e.detail.connection.connectionId); // test first
+
+    var name = e.detail.connection.connectionId;
+    world.Add("cubeLightTex", 3, name, tex);
+    _manifest.default.scene[name].position.x = 0;
+    _manifest.default.scene[name].position.z = -20; // App.scene[name].rotx = 45
+    // App.scene[name].rotation.rotz = -90
+
+    _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
+
+    _manifest.default.scene[name].net.enable = true;
+    _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT((0, _matrixStream.byId)(e.detail.streamManager.id));
+    objGenerator(_manifest.default.scene[name]); //
+  }); // let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+
+  addEventListener('stream-loaded', e => {
+    console.log('TEST STREAM', e); // TEST 
+
+    var _ = document.querySelectorAll('.media-box');
+
+    var name = "videochat-" + e.detail.data.userId;
+
+    _.forEach(i => {
+      // App.network.connection.userid  REPRESENT LOCAL STREAM 
+      if (e.detail.data.userId != _manifest.default.network.connection.userid) {
+        // This is video element!
+        world.Add("cubeLightTex", 3, name, tex);
+        _manifest.default.scene[name].position.x = 0;
+        _manifest.default.scene[name].position.z = -20; // App.scene[name].rotx = 45
+        // App.scene[name].rotation.rotz = -90
+
+        _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
+
+        _manifest.default.scene[name].net.enable = true;
+
+        _manifest.default.scene[name].net.activate();
+
+        _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT(i.children[1]);
+        objGenerator(_manifest.default.scene[name]); // App.CUSTOM_TIMER = setInterval(() => {
+        // 	try {
+        // 		if(typeof App.scene[name] !== 'undefined' && typeof App.scene[name].geometry !== 'undefined') {
+        // 			App.scene[name].geometry.texCoordsPoints.front.right_top.x += 0.001;
+        // 			App.scene[name].geometry.texCoordsPoints.front.left_bottom.x += 0.001;
+        // 			App.scene[name].geometry.texCoordsPoints.front.left_top.x += 0.001;
+        // 			App.scene[name].geometry.texCoordsPoints.front.right_bottom.x += 0.001;
+        // 		} else {
+        // 			clearInterval(App.CUSTOM_TIMER)
+        // 			App.CUSTOM_TIMER = null;
+        // 		}
+        // 	} catch(err) {
+        // 		clearInterval(App.CUSTOM_TIMER)
+        // 		App.CUSTOM_TIMER = null;
+        // 	}
+        // }, 1);
+        // addEventListener('net.remove-user', (event) => {
+        // 	var n = "videochat-" + event.detail.data.userid;
+        // 	if(typeof App.scene[n] !== 'undefinde' &&
+        // 		typeof App.scene[n].CUSTOM_FLAG_PREVENT_DBCALL === 'undefined') {
+        // 		App.scene[n].CUSTOM_FLAG_PREVENT_DBCALL = true;
+        // 		App.scene[n].selfDestroy(1)
+        // 	}
+        // })
+      } else {
+        // own stream 
+        function onLoadObj(meshes) {
+          _manifest.default.meshes = meshes;
+          matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.TV);
+          setTimeout(function () {
+            world.Add("obj", 1, "TV", tex, _manifest.default.meshes.TV);
+
+            _manifest.default.scene.TV.position.setPosition(-9, 4, -15);
+
+            _manifest.default.scene.TV.rotation.rotateY(90);
+
+            _manifest.default.scene.TV.LightsData.ambientLight.set(1, 1, 1);
+
+            _manifest.default.scene.TV.streamTextures = new matrixEngine.Engine.DOM_VT(i.children[1]);
+          }, 1000);
+        }
+
+        matrixEngine.objLoader.downloadMeshes({
+          TV: "res/3d-objects/balltest2.obj"
+        }, onLoadObj);
+      }
+    });
+  });
+  world.Add("cubeLightTex", 3, "outsideBox2", tex);
+  _manifest.default.scene.outsideBox2.position.x = 0;
+  _manifest.default.scene.outsideBox2.position.y = 2;
+  _manifest.default.scene.outsideBox2.position.z = -24;
+  _manifest.default.scene.outsideBox2.rotation.rotationSpeed.y = 20;
+  _manifest.default.scene.outsideBox2.rotation.rotx = 45;
+  _manifest.default.scene.outsideBox2.streamTextures = new VT("res/video-texture/me.mkv"); // App.scene.outsideBox2.glBlend.blendEnabled = true;
+  // App.scene.outsideBox2.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
+  // App.scene.outsideBox2.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
 };
 
 exports.runThis = runThis;
 
-},{"../index.js":4,"../program/manifest.js":43}],3:[function(require,module,exports){
+},{"../index.js":4,"../networking2/matrix-stream.js":35,"../program/manifest.js":43,"cannon":40}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -422,6 +551,8 @@ var _sounds = require("./sounds");
 
 var _app = require("../networking2/app");
 
+var _matrixStream = require("../networking2/matrix-stream");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 if (_manifest.default.offScreenCanvas == true || _utility.QueryString.offScreen == 'true') {
@@ -493,17 +624,18 @@ let activateNet2 = (CustomConfig, sessionOption) => {
 
     if (typeof sessionOption === 'undefined') {
       sessionOption.sessionName = 'matrix-engine-random';
+      sessionOption.resolution = '160x240';
     }
 
     exports.net = net = new _app.MatrixStream({
       domain: t.networking2.domain,
       port: t.networking2.port,
-      sessionName: sessionOption.sessionName
+      sessionName: sessionOption.sessionName,
+      resolution: sessionOption.resolution
     }); // remove at the end
 
-    window.matrixStream = net; // App.network = net;
-
-    console.info('Networking2 is active.', t.networking2);
+    window.matrixStream = net;
+    console.info(`%c Networking2 params: ${t.networking2}`, _matrixWorld.CS3);
   }
 };
 
@@ -512,7 +644,7 @@ exports.activateNet2 = activateNet2;
 function initApp(callback) {
   resizeView();
   drawCanvas();
-  _manifest.default.canvas = document.getElementById('canvas'); // window.canvas
+  _manifest.default.canvas = document.getElementById('canvas');
 
   if (_manifest.default.events == true) {
     _manifest.default.events = new _events.EVENTS((0, _utility.E)('canvas'));
@@ -1138,7 +1270,7 @@ function SET_STREAM(video) {
 
 function ACCESS_CAMERA(htmlElement) {
   var ROOT = this;
-  console.log('?????????????????????????');
+  console.log('ACCESS_CAMERA');
   ROOT.video = document.getElementById(htmlElement);
   SET_STREAM(ROOT.video);
   var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
@@ -1427,7 +1559,7 @@ function DOM_VT(video, name, options) {
   };
 }
 
-},{"../client-config":3,"../networking2/app":34,"../program/manifest":43,"./events":6,"./matrix-render":14,"./matrix-shaders1":15,"./matrix-shaders3":16,"./matrix-world":20,"./net":21,"./sounds":31,"./utility":32,"./webgl-utils":33}],6:[function(require,module,exports){
+},{"../client-config":3,"../networking2/app":34,"../networking2/matrix-stream":35,"../program/manifest":43,"./events":6,"./matrix-render":14,"./matrix-shaders1":15,"./matrix-shaders3":16,"./matrix-world":20,"./net":21,"./sounds":31,"./utility":32,"./webgl-utils":33}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4771,8 +4903,7 @@ class RotationVector {
       x: 0,
       y: 0,
       z: 0
-    }; // test
-
+    };
     this.angle = 0;
     this.axis = {
       x: 0,
@@ -4894,7 +5025,7 @@ class RotationVector {
 
   rotateX(x, em) {
     this.rotx = x;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (_manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netRot: {
         x: this.rotx
       },
@@ -4904,7 +5035,7 @@ class RotationVector {
 
   rotateY(y, em) {
     this.roty = y;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (_manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netRot: {
         y: this.roty
       },
@@ -4914,7 +5045,7 @@ class RotationVector {
 
   rotateZ(z, em) {
     this.rotz = z;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (_manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netRot: {
         z: this.rotz
       },
@@ -5031,7 +5162,7 @@ class Position {
         this.x += this.velX;
         this.y += this.velY;
         this.z += this.velZ;
-        if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+        if (_manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
           netPos: {
             x: this.x,
             y: this.y,
@@ -5045,7 +5176,7 @@ class Position {
         this.z = this.targetZ;
         this.inMove = false;
         this.onTargetPositionReach();
-        if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+        if (_manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
           netPos: {
             x: this.x,
             y: this.y,
@@ -5067,7 +5198,7 @@ class Position {
     this.inMove = false;
     console.log('test setX net.connection ', _engine.net);
 
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) {
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) {
       _engine.net.connection.send({
         netPos: {
           x: this.x,
@@ -5083,7 +5214,7 @@ class Position {
     this.y = newy;
     this.targetY = newy;
     this.inMove = false;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
         x: this.x,
         y: this.y,
@@ -5097,7 +5228,7 @@ class Position {
     this.z = newz;
     this.targetZ = newz;
     this.inMove = false;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
         x: this.x,
         y: this.y,
@@ -5115,7 +5246,7 @@ class Position {
     this.targetY = newy;
     this.targetZ = newz;
     this.inMove = false;
-    if (_manifest.default.scene[this.nameUniq] && _engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
         x: this.x,
         y: this.y,
@@ -5149,7 +5280,7 @@ class TriangleVertex {
 
   setScale(scale) {
     this.size = scale;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em === 'undefined') _engine.net.connection.send({
       netScale: {
         scale: scale
       },
@@ -5213,7 +5344,7 @@ class SquareVertex {
     this.texCoordsPoints.left_top.y = 1 + newScaleFactror;
     this.texCoordsPoints.right_bottom.x = 1 + newScaleFactror;
     this.texCoordsPoints.right_bottom.y = 0 - newScaleFactror;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em === 'undefined') _engine.net.connection.send({
       texScaleFactor: {
         newScaleFactror: newScaleFactror
       },
@@ -5225,7 +5356,7 @@ class SquareVertex {
     this.texCoordsPoints.right_top.y = 1 + newScaleFactror;
     this.texCoordsPoints.left_bottom.y = 0 - newScaleFactror;
     this.texCoordsPoints.left_top.y = 1 + newScaleFactror;
-    this.texCoordsPoints.right_bottom.y = 0 - newScaleFactror; // if(net && net.connection && typeof em === 'undefined') net.connection.send({
+    this.texCoordsPoints.right_bottom.y = 0 - newScaleFactror; // if( typeof em === 'undefined') net.connection.send({
     //   texScaleFactor: {newScaleFactror: newScaleFactror},
     //   netObjId: this.nameUniq,
     // });
@@ -5235,7 +5366,7 @@ class SquareVertex {
     this.texCoordsPoints.right_top.x = 1 + newScaleFactror;
     this.texCoordsPoints.left_bottom.x = 0 - newScaleFactror;
     this.texCoordsPoints.left_top.x = 0 - newScaleFactror;
-    this.texCoordsPoints.right_bottom.x = 1 + newScaleFactror; // if(net && net.connection && typeof em === 'undefined') net.connection.send({
+    this.texCoordsPoints.right_bottom.x = 1 + newScaleFactror; // if( typeof em === 'undefined') net.connection.send({
     //   texScaleFactor: {newScaleFactror: newScaleFactror},
     //   netObjId: this.nameUniq,
     // });
@@ -5246,7 +5377,7 @@ class SquareVertex {
     this.pointB.x = -scale;
     this.pointC.x = scale;
     this.pointD.x = -scale;
-    if (_manifest.default.scene[this.nameUniq] && _engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (_manifest.default.scene[this.nameUniq] && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         x: scale
       },
@@ -5264,7 +5395,7 @@ class SquareVertex {
     this.pointB.y = scale;
     this.pointC.y = -scale;
     this.pointD.y = -scale;
-    if (_manifest.default.scene[this.nameUniq] && _engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (_manifest.default.scene[this.nameUniq] && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         y: scale
       },
@@ -5279,7 +5410,7 @@ class SquareVertex {
 
   setScale(scale, em) {
     this.size = scale;
-    if (_manifest.default.scene[this.nameUniq] && _engine.net && _engine.net.connection && typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         scale: scale
       },
@@ -5742,7 +5873,7 @@ class CubeVertex {
     this.Back.pointB.x = -scale;
     this.Back.pointC.x = scale;
     this.Back.pointD.x = scale;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em === 'undefined') _engine.net.connection.send({
       netScale: {
         x: scale
       },
@@ -5781,7 +5912,7 @@ class CubeVertex {
     this.Back.pointB.y = scale;
     this.Back.pointC.y = scale;
     this.Back.pointD.y = -scale;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em === 'undefined') _engine.net.connection.send({
       netScale: {
         y: scale
       },
@@ -5819,7 +5950,7 @@ class CubeVertex {
     this.Back.pointB.z = -scale;
     this.Back.pointC.z = -scale;
     this.Back.pointD.z = -scale;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em === 'undefined') _engine.net.connection.send({
       netScale: {
         z: scale
       },
@@ -5836,7 +5967,7 @@ class CubeVertex {
     this.size = scale;
     this.basePoint = 1.0 * this.size;
     this.basePointNeg = -1.0 * this.size;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em === 'undefined') _engine.net.connection.send({
       netScale: {
         scale: scale
       },
@@ -5869,7 +6000,7 @@ class CubeVertex {
       this.texCoordsPoints[key].right_bottom.y = this.texCoordsPoints[key].right_bottom.y + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.y);
     }
 
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em === 'undefined') _engine.net.connection.send({
       texScaleFactor: {
         newScaleFactror: newScaleFactror
       },
@@ -5902,7 +6033,7 @@ class CubeVertex {
       this.texCoordsPoints[key].right_bottom.x = this.texCoordsPoints[key].right_bottom.x + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.x); // this.texCoordsPoints[key].right_bottom.y =
       //   this.texCoordsPoints[key].right_bottom.y +
       //   newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.y);
-    } // if(net && net.connection && typeof em === 'undefined') net.connection.send({
+    } // if( typeof em === 'undefined') net.connection.send({
     //   texScaleFactor: {newScaleFactror: newScaleFactror},
     //   netObjId: this.nameUniq,
     // });
@@ -5923,7 +6054,7 @@ class CubeVertex {
       this.texCoordsPoints[key].left_bottom.y = this.texCoordsPoints[key].left_bottom.y + newScaleFactror * calculate(this.texCoordsPoints[key].left_bottom.y);
       this.texCoordsPoints[key].left_top.y = this.texCoordsPoints[key].left_top.y + newScaleFactror * calculate(this.texCoordsPoints[key].left_top.y);
       this.texCoordsPoints[key].right_bottom.y = this.texCoordsPoints[key].right_bottom.y + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.y);
-    } // if(net && net.connection && typeof em === 'undefined') net.connection.send({
+    } // if( typeof em === 'undefined') net.connection.send({
     //   texScaleFactor: {newScaleFactror: newScaleFactror},
     //   netObjId: this.nameUniq,
     // });
@@ -6107,7 +6238,7 @@ class PiramideVertex {
     this.size = scale;
     this.basePoint = 1.0 * this.size;
     this.basePointNeg = -1.0 * this.size;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em === 'undefined') _engine.net.connection.send({
       netScale: {
         scale: scale
       },
@@ -6122,7 +6253,7 @@ class PiramideVertex {
 
   setSpitz(newValueFloat, em) {
     this.spitz = newValueFloat;
-    if (_engine.net && _engine.net.connection && typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em === 'undefined') _engine.net.connection.send({
       spitz: {
         newValueFloat: newValueFloat
       },
@@ -8299,6 +8430,10 @@ _manifest.default.operation.reDrawGlobal = function (time) {
         var local = _matrixWorld.world.contentList[physicsLooper];
 
         if (local.physics.currentBody.shapeOrientations.length == 1) {
+          console.log(' TEST RENDER local.position.x', local.position.x.toFixed(2), " VS ", local.physics.currentBody.position.x.toFixed(2));
+
+          if (local.position.x.toFixed(2) == local.physics.currentBody.position.x.toFixed(2)) {}
+
           local.position.SetX(local.physics.currentBody.position.x);
           local.position.SetZ(local.physics.currentBody.position.y);
           local.position.SetY(local.physics.currentBody.position.z);
@@ -10668,6 +10803,7 @@ function defineworld(canvas, renderType) {
       };
       triangleObject.net = {
         enabled: false,
+        // Old net
         activate: () => {
           _engine.net.activateDataStream();
         }
@@ -22897,6 +23033,7 @@ class MatrixStream {
     _matrixStream.netConfig.NETWORKING_DOMAIN = arg.domain;
     _matrixStream.netConfig.NETWORKING_PORT = arg.port;
     _matrixStream.netConfig.sessionName = arg.sessionName;
+    _matrixStream.netConfig.resolution = arg.resolution;
 
     _utility.scriptManager.LOAD('openvidu-browser-2.20.0.js', undefined, undefined, undefined, () => {
       this.loadNetHTML();
@@ -22945,14 +23082,21 @@ class MatrixStream {
       // this.connection.session = session;
       console.log("setupSessionObject=>", e.detail);
       this.session = e.detail;
-      this.session.on(`signal:${_matrixStream.netConfig.sessionName}`, event => {
-        App.net.injector.update(event);
+      this.session.on(`signal:${_matrixStream.netConfig.sessionName}`, e => {
+        console.log(" call update from  =>", e.from); // dpont call update for self 
+
+        console.log(`test conn id `, this.connection.connectionId);
+
+        if (this.connection.connectionId == e.from.connectionId) {//
+        } else {
+          this.multiPlayer.update(e);
+        }
       });
     });
     this.joinSessionUI.addEventListener('click', () => {
-      console.log(`%c JOIN SESSION`, _matrixStream.REDLOG);
+      console.log(`%c JOIN SESSION [${_matrixStream.netConfig.resolution}] `, _matrixStream.REDLOG);
       (0, _matrixStream.joinSession)({
-        resolution: '320x480'
+        resolution: _matrixStream.netConfig.resolution
       });
     });
     this.buttonCloseSession.addEventListener('click', _matrixStream.closeSession);
@@ -22961,8 +23105,80 @@ class MatrixStream {
       (0, _matrixStream.removeUser)();
       (0, _matrixStream.leaveSession)();
     });
+    (0, _matrixStream.byId)('netHeaderTitle').addEventListener('click', this.domManipulation.hideNetPanel);
   }
 
+  multiPlayer = {
+    root: this,
+
+    init(rtcEvent) {
+      console.log("rtcEvent add new net object -> ", rtcEvent.userid);
+      dispatchEvent(new CustomEvent('net-new-user', {
+        detail: {
+          data: rtcEvent
+        }
+      }));
+    },
+
+    update(e) {
+      e.data = JSON.parse(e.data);
+      console.log('INFO UPDATE', e);
+
+      if (e.data.netPos) {
+        if (App.scene[e.data.netObjId]) {
+          if (e.data.netPos.x) App.scene[e.data.netObjId].position.SetX(e.data.netPos.x, 'noemit');
+          if (e.data.netPos.y) App.scene[e.data.netObjId].position.SetY(e.data.netPos.y, 'noemit');
+          if (e.data.netPos.z) App.scene[e.data.netObjId].position.SetZ(e.data.netPos.z, 'noemit');
+        }
+      } else if (e.data.netRot) {
+        console.log('ROT INFO UPDATE', e);
+        if (e.data.netRot.x) App.scene[e.data.netObjId].rotation.rotx = e.data.netRot.x;
+        if (e.data.netRot.y) App.scene[e.data.netObjId].rotation.roty = e.data.netRot.y;
+        if (e.data.netRot.z) App.scene[e.data.netObjId].rotation.rotz = e.data.netRot.z;
+      } else if (e.data.netScale) {
+        // console.log('netScale INFO UPDATE', e);
+        if (e.data.netScale.x) App.scene[e.data.netObjId].geometry.setScaleByX(e.data.netScale.x, 'noemit');
+        if (e.data.netScale.y) App.scene[e.data.netObjId].geometry.setScaleByY(e.data.netScale.y, 'noemit');
+        if (e.data.netScale.z) App.scene[e.data.netObjId].geometry.setScaleByZ(e.data.netScale.z, 'noemit');
+        if (e.data.netScale.scale) App.scene[e.data.netObjId].geometry.setScale(e.data.netScale.scale, 'noemit');
+      } else if (e.data.texScaleFactor) {
+        // console.log('texScaleFactor INFO UPDATE', e);
+        if (e.data.texScaleFactor.newScaleFactror) {
+          App.scene[e.data.netObjId].geometry.setTexCoordScaleFactor(e.data.texScaleFactor.newScaleFactror, 'noemit');
+        }
+      } else if (e.data.spitz) {
+        if (e.data.spitz.newValueFloat) {
+          App.scene[e.data.netObjId].geometry.setSpitz(e.data.spitz.newValueFloat, 'noemit');
+        }
+      }
+    },
+
+    /**
+     * If someone leaves all client actions is here
+     * - remove from scene
+     * - clear object from netObject_x
+     */
+    leaveGamePlay(rtcEvent) {
+      console.info("rtcEvent LEAVE GAME: ", rtcEvent.userid);
+      dispatchEvent(new CustomEvent('net.remove-user', {
+        detail: {
+          data: rtcEvent
+        }
+      }));
+    }
+
+  };
+  domManipulation = {
+    hideNetPanel: () => {
+      if ((0, _matrixStream.byId)('matrix-net').classList.contains('hide-by-vertical')) {
+        (0, _matrixStream.byId)('matrix-net').classList.remove('hide-by-vertical');
+        (0, _matrixStream.byId)('matrix-net').classList.add('show-by-vertical');
+      } else {
+        (0, _matrixStream.byId)('matrix-net').classList.remove('show-by-vertical');
+        (0, _matrixStream.byId)('matrix-net').classList.add('hide-by-vertical');
+      }
+    }
+  };
 }
 
 exports.MatrixStream = MatrixStream;
@@ -23024,14 +23240,13 @@ var session;
 exports.session = session;
 
 function joinSession(options) {
-  console.log('joinSession');
-
   if (typeof options === 'undefined') {
     options = {
       resolution: '320x240'
     };
   }
 
+  console.log('resolution:', options.resolution);
   document.getElementById("join-btn").disabled = true;
   document.getElementById("join-btn").innerHTML = "Joining...";
   getToken(function () {

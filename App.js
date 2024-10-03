@@ -1,7 +1,6 @@
 import * as matrixEngine from './index.js';
-import {runThis} from './apps/networking2_basic.js';
-// import {runThis} from './apps/shaders.js';
-// import {runThis} from './apps/load-maps.js';
+// CHANGE HERE IF YOU WANNA USE app-build.hmtl
+import {runThis} from './apps/public_3d_video_chat.js';
 
 var world;
 var App = matrixEngine.App;
@@ -9,7 +8,6 @@ var App = matrixEngine.App;
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function (e) {
     // navigator.serviceWorker.register('worker.js'); 
-		console.warn('Matrix Engine: Before load.');
     App.ready = true;
     matrixEngine.Engine.initApp(webGLStart);
   });
