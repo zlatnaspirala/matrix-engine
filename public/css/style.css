@@ -21,7 +21,6 @@ body {
   text-align: center;
 }
 
-
 .noselection {
 	-webkit-touch-callout: none; /* Safari */
 	user-select: none; /* standard syntax */
@@ -237,15 +236,18 @@ span {
   flex-direction: column;
 }
 
+#join-dialog {
+	padding: 1px 10px 1px 10px;
+}
 
 .timeLineSlider {
   display:flex;
   flex-direction: row;
 }
 .timeLineSlider, p {
-  background: rgba(12, 122, 22, 0.5);
+  background: rgb(187 69 32 / 50%);
   /* width:100%; */
-  margin: 5px 5px 5px 5px;
+  padding: 5px 5px 5px 5px;
 }
 
 /* For animation Line */

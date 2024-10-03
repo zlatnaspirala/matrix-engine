@@ -109,6 +109,10 @@ var runThis = world => {
     console.log('LOCAL-STREAM-READY [app level] ', e.detail.streamManager.id);
     console.log('LOCAL-STREAM-READY [app level] ', e.detail.connection.connectionId); // test first
 
+    dispatchEvent(new CustomEvent(`onTitle`, {
+      detail: `🕸️${e.detail.connection.connectionId}🕸️`
+    })); // onTitle
+
     var name = e.detail.connection.connectionId;
     world.Add("cubeLightTex", 3, name, tex);
     _manifest.default.scene[name].position.x = 0;
@@ -632,6 +636,9 @@ let activateNet2 = (CustomConfig, sessionOption) => {
       port: t.networking2.port,
       sessionName: sessionOption.sessionName,
       resolution: sessionOption.resolution
+    });
+    addEventListener(`onTitle`, e => {
+      document.title = e.detail;
     }); // remove at the end
 
     window.matrixStream = net;
@@ -8430,13 +8437,12 @@ _manifest.default.operation.reDrawGlobal = function (time) {
         var local = _matrixWorld.world.contentList[physicsLooper];
 
         if (local.physics.currentBody.shapeOrientations.length == 1) {
-          console.log(' TEST RENDER local.position.x', local.position.x.toFixed(2), " VS ", local.physics.currentBody.position.x.toFixed(2));
-
-          if (local.position.x.toFixed(2) == local.physics.currentBody.position.x.toFixed(2)) {}
-
-          local.position.SetX(local.physics.currentBody.position.x);
-          local.position.SetZ(local.physics.currentBody.position.y);
-          local.position.SetY(local.physics.currentBody.position.z);
+          if (local.position.x.toFixed(2) == local.physics.currentBody.position.x.toFixed(2)) {// console.log(' TEST SLEEP RENDER local.position.x', local.position.x.toFixed(2), " VS ", local.physics.currentBody.position.x.toFixed(2))
+          } else {
+            local.position.SetX(local.physics.currentBody.position.x);
+            local.position.SetZ(local.physics.currentBody.position.y);
+            local.position.SetY(local.physics.currentBody.position.z);
+          }
 
           if (_matrixWorld.world.contentList[physicsLooper].custom_type && _matrixWorld.world.contentList[physicsLooper].custom_type == 'torus') {
             _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]) + 90;
@@ -23173,9 +23179,11 @@ class MatrixStream {
       if ((0, _matrixStream.byId)('matrix-net').classList.contains('hide-by-vertical')) {
         (0, _matrixStream.byId)('matrix-net').classList.remove('hide-by-vertical');
         (0, _matrixStream.byId)('matrix-net').classList.add('show-by-vertical');
+        (0, _matrixStream.byId)('netHeaderTitle').innerText = 'SHOW';
       } else {
         (0, _matrixStream.byId)('matrix-net').classList.remove('show-by-vertical');
         (0, _matrixStream.byId)('matrix-net').classList.add('hide-by-vertical');
+        (0, _matrixStream.byId)('netHeaderTitle').innerText = 'HIDE';
       }
     }
   };

@@ -149,9 +149,11 @@ export class MatrixStream {
 			if (byId('matrix-net').classList.contains('hide-by-vertical')) {
 				byId('matrix-net').classList.remove('hide-by-vertical')
 				byId('matrix-net').classList.add('show-by-vertical')
+				byId('netHeaderTitle').innerText = 'SHOW';
 			} else {
 				byId('matrix-net').classList.remove('show-by-vertical')
 				byId('matrix-net').classList.add('hide-by-vertical')
+				byId('netHeaderTitle').innerText = 'HIDE';
 			}
 		}
 	}

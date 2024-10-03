@@ -59,6 +59,9 @@ export var runThis = world => {
 		console.log('LOCAL-STREAM-READY [app level] ', e.detail.connection.connectionId)
 		// test first
 
+		dispatchEvent(new CustomEvent(`onTitle`, { detail: `🕸️${e.detail.connection.connectionId}🕸️`}))
+		// onTitle
+
 		var name = e.detail.connection.connectionId;
 		world.Add("cubeLightTex", 3, name, tex);
 		App.scene[name].position.x = 0;
