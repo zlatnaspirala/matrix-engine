@@ -40,7 +40,7 @@ export function joinSession(options) {
 		session.on('connectionDestroyed', e => {
 			console.log(`Connection destroyed ${e.connection.connectionId}`)
 			dispatchEvent(new CustomEvent('connectionDestroyed', {detail: {msg: `[disconnected][${e.connection.connectionId}]`}}))
-			byId("pwa-container-2").style.display = "none";
+			// byId("pwa-container-2").style.display = "none";
 			pushEvent(e);
 		});
 
@@ -152,9 +152,9 @@ export function joinSession(options) {
 				publisher.on('streamCreated', event => {
 					dispatchEvent(new CustomEvent(`LOCAL-STREAM-READY`, {detail: event.stream}))
 					console.log(`%c LOCAL STREAM READY ${event.stream.connection.connectionId}`, BIGLOG)
-					if(document.getElementById("pwa-container-1").style.display != 'none') {
-						document.getElementById("pwa-container-1").style.display = 'none';
-					}
+					// if(document.getElementById("pwa-container-1").style.display != 'none') {
+					// 	document.getElementById("pwa-container-1").style.display = 'none';
+					// }
 					pushEvent(event);
 				});
 

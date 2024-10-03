@@ -45,7 +45,6 @@ export var runThis = world => {
 		meObj.physics.currentBody = b2;
 		meObj.physics.enabled = true;
 	}
-	// objGenerator(1)
 
 	matrixEngine.Engine.activateNet2(undefined,
 		{
@@ -53,30 +52,23 @@ export var runThis = world => {
 			resolution: '240x160'
 		});
 
- 
 	addEventListener(`LOCAL-STREAM-READY`, (e) => {
 		console.log('LOCAL-STREAM-READY [app level] ', e.detail.streamManager.id)
 		console.log('LOCAL-STREAM-READY [app level] ', e.detail.connection.connectionId)
 		// test first
-
 		dispatchEvent(new CustomEvent(`onTitle`, { detail: `🕸️${e.detail.connection.connectionId}🕸️`}))
-		// onTitle
 
 		var name = e.detail.connection.connectionId;
-		world.Add("cubeLightTex", 3, name, tex);
+		world.Add("cubeLightTex", 1, name, tex);
 		App.scene[name].position.x = 0;
 		App.scene[name].position.z = -20;
-		// App.scene[name].rotx = 45
 		// App.scene[name].rotation.rotz = -90
 		App.scene[name].LightsData.ambientLight.set(1, 1, 1);
 		App.scene[name].net.enable = true;
 		App.scene[name].streamTextures = matrixEngine.Engine.DOM_VT(byId(e.detail.streamManager.id))
 		objGenerator(App.scene[name])
-
-		//
 	})
 
-	// let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 	addEventListener('stream-loaded', (e) => {
 		console.log('TEST STREAM', e)
 		// TEST 

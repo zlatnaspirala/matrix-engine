@@ -422,11 +422,13 @@ nav {
 	50% {
 		background-color: rgba(238, 65, 13, 0.95);
 		height: 50vh;
+		opacity: 0.5;
 	}
 
 	100% {
 		background-color: rgb(200, 54, 9);
 		height: 100vh;
+		opacity: 1;
 	}
 }
 
@@ -440,11 +442,13 @@ nav {
 	50% {
 		background-color: rgba(224, 64, 43, 0.95);
 		height: 50vh;
+		opacity: 0.5;
 	}
 
 	100% {
 		background-color: rgb(200, 54, 9);
 		height: 100vh;
+		opacity: 1;
 	}
 }
 
@@ -458,11 +462,13 @@ nav {
 	50% {
 		background-color: rgba(255, 166, 11, 0.95);
 		height: 50vh;
+		opacity: 0.5;
 	}
 
 	100% {
 		background-color: rgba(0, 0, 0, 0.95);
-		height: 40px;
+		height: 35px;
+		opacity: 0.2;
 	}
 }
 
@@ -476,11 +482,13 @@ nav {
 	50% {
 		background-color: rgba(255, 166, 11, 0.95);
 		height: 50vh;
+		opacity: 0.5;
 	}
 
 	100% {
 		background-color: rgba(0, 0, 0, 0.95);
 		height: 40px;
+		opacity: 0.2;
 	}
 }
 
@@ -823,10 +831,6 @@ nav i.fa:hover {
 
 .horizontal-center {
 	margin: 0 auto;
-}
-
-.form-control {
-	font-weight: bold;
 }
 
 .form-control:focus {

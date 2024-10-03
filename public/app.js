@@ -98,8 +98,7 @@ var runThis = world => {
     physics.world.addBody(b2);
     meObj.physics.currentBody = b2;
     meObj.physics.enabled = true;
-  }; // objGenerator(1)
-
+  };
 
   matrixEngine.Engine.activateNet2(undefined, {
     sessionName: 'public-chat-me',
@@ -111,21 +110,18 @@ var runThis = world => {
 
     dispatchEvent(new CustomEvent(`onTitle`, {
       detail: `🕸️${e.detail.connection.connectionId}🕸️`
-    })); // onTitle
-
+    }));
     var name = e.detail.connection.connectionId;
-    world.Add("cubeLightTex", 3, name, tex);
+    world.Add("cubeLightTex", 1, name, tex);
     _manifest.default.scene[name].position.x = 0;
-    _manifest.default.scene[name].position.z = -20; // App.scene[name].rotx = 45
-    // App.scene[name].rotation.rotz = -90
+    _manifest.default.scene[name].position.z = -20; // App.scene[name].rotation.rotz = -90
 
     _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
 
     _manifest.default.scene[name].net.enable = true;
     _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT((0, _matrixStream.byId)(e.detail.streamManager.id));
-    objGenerator(_manifest.default.scene[name]); //
-  }); // let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-
+    objGenerator(_manifest.default.scene[name]);
+  });
   addEventListener('stream-loaded', e => {
     console.log('TEST STREAM', e); // TEST 
 
@@ -10481,7 +10477,9 @@ window.quat2 = glMatrix.quat2;
 window.vec2 = glMatrix.vec2;
 window.vec3 = glMatrix.vec3;
 window.vec4 = glMatrix.vec4;
-console.info(`%c Used GL_MATRIX 3.4 ${glMatrix}`, CS3);
+console.info(`%c -----------------------------`, CS3);
+console.info(`%c   -----------------------    `, CS3);
+console.info(`%c     -------------------      `, CS3);
 console.info(`%cMatrix-Engine %c 2.0.0 BETA 🛸`, CS1, CS1);
 var lastChanges = `
 [2.0.0] New networking based on kurento service and OpenVide web client
@@ -10494,7 +10492,8 @@ var lastChanges = `
 console.info(`%c ${lastChanges} `, CS4);
 console.info(`%c Render switch from 'requestAnimationFrame' to 'offScreen' with URLParams '?offScreen=true&offScreenSpeed=10'.
  For now physics stuff not affected. `, CS3);
-console.info(`%c You can switch webGL ver 1/2 with ?GLSL=1.1 or ?GLSL=1.3 - EXPERIMENTAL`, CS3); // fbo
+console.info(`%c You can switch webGL ver 1/2 with ?GLSL=1.1 or ?GLSL=1.3 - EXPERIMENTAL`, CS3);
+console.info(`%c Used GL_MATRIX 3.4 ${glMatrix}`, CS3); // fbo
 
 _manifest.default.makeFBO = _matrixTextures.makeFBO; // define shaders from code
 
@@ -23274,8 +23273,8 @@ function joinSession(options) {
         detail: {
           msg: `[disconnected][${e.connection.connectionId}]`
         }
-      }));
-      byId("pwa-container-2").style.display = "none";
+      })); // byId("pwa-container-2").style.display = "none";
+
       pushEvent(e);
     }); // On every new Stream received...
 
@@ -23390,11 +23389,9 @@ function joinSession(options) {
         dispatchEvent(new CustomEvent(`LOCAL-STREAM-READY`, {
           detail: event.stream
         }));
-        console.log(`%c LOCAL STREAM READY ${event.stream.connection.connectionId}`, BIGLOG);
-
-        if (document.getElementById("pwa-container-1").style.display != 'none') {
-          document.getElementById("pwa-container-1").style.display = 'none';
-        }
+        console.log(`%c LOCAL STREAM READY ${event.stream.connection.connectionId}`, BIGLOG); // if(document.getElementById("pwa-container-1").style.display != 'none') {
+        // 	document.getElementById("pwa-container-1").style.display = 'none';
+        // }
 
         pushEvent(event);
       }); // When our HTML video has been added to DOM...

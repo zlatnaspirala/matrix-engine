@@ -105,7 +105,6 @@ export class MatrixStream {
 			e.data = JSON.parse(e.data);
 			console.log('INFO UPDATE', e);
 			if(e.data.netPos) {
-				
 				if(App.scene[e.data.netObjId]) {
 					if(e.data.netPos.x) App.scene[e.data.netObjId].position.SetX(e.data.netPos.x, 'noemit');
 					if(e.data.netPos.y) App.scene[e.data.netObjId].position.SetY(e.data.netPos.y, 'noemit');
