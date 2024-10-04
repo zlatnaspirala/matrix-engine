@@ -1014,7 +1014,7 @@ a:hover .demo-logo {
 }
 
 #video-container video.two {
-	max-width: 50%;
+	/* max-width: 50%; */
 }
 
 #video-container video.three {

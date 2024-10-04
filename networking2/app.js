@@ -69,7 +69,7 @@ export class MatrixStream {
 			this.session = e.detail;
 			this.session.on(`signal:${netConfig.sessionName}`, (e) => {
 
-				console.log(" call update from  =>", e.from);
+				// console.log(" call update from  =>", e.from);
 				// dpont call update for self 
 				console.log(`test conn id `, this.connection.connectionId)
 				if (this.connection.connectionId == e.from.connectionId) {
@@ -103,7 +103,7 @@ export class MatrixStream {
 		},
 		update(e) {
 			e.data = JSON.parse(e.data);
-			console.log('INFO UPDATE', e);
+			// console.log('INFO UPDATE', e);
 			if(e.data.netPos) {
 				if(App.scene[e.data.netObjId]) {
 					if(e.data.netPos.x) App.scene[e.data.netObjId].position.SetX(e.data.netPos.x, 'noemit');

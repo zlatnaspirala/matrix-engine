@@ -57,7 +57,7 @@ export function joinSession(options) {
 			var subscriber = session.subscribe(event.stream, 'video-container');
 			// When the HTML video has been appended to DOM...
 			subscriber.on('videoElementCreated', event => {
-				pushEvent(event);
+				dispatchEvent(new CustomEvent(`videoElementCreatedSubscriber`, {detail: event}))
 				// Add a new HTML element for the user's name and nickname over its video
 				updateNumVideos(1);
 			});
@@ -71,7 +71,7 @@ export function joinSession(options) {
 
 			// When the subscriber stream has started playing media...
 			subscriber.on('streamPlaying', event => {
-				pushEvent(event);
+				dispatchEvent(new CustomEvent('streamPlaying', {detail: event}))
 			});
 		});
 
@@ -161,7 +161,6 @@ export function joinSession(options) {
 				// When our HTML video has been added to DOM...
 				publisher.on('videoElementCreated', event => {
 					dispatchEvent(new CustomEvent(`videoElementCreated`, {detail: event}))
-					pushEvent(event);
 					updateNumVideos(1);
 					console.log('NOT FIXED MUTE event.element, ', event.element)
 					event.element.mute = true;
@@ -177,11 +176,11 @@ export function joinSession(options) {
 
 				// When the publisher stream has started playing media...
 				publisher.on('streamPlaying', event => {
-					// console.log("publisher.on streamPlaying");
-					if(document.getElementById("pwa-container-1").style.display != 'none') {
-						document.getElementById("pwa-container-1").style.display = 'none';
-					}
-					pushEvent(event);
+					console.log("publisher.on streamPlaying");
+					// if(document.getElementById("pwa-container-1").style.display != 'none') {
+					// 	document.getElementById("pwa-container-1").style.display = 'none';
+					// }
+					// pushEvent(event);
 				});
 				session.publish(publisher);
 				// console.log('SESSION CREATE NOW ', session)

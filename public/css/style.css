@@ -280,3 +280,41 @@ span {
   background: #04AA6D;
   cursor: pointer;
 }
+
+
+#msgBox {
+  text-shadow: 0px 4px 4px #282828;
+  -webkit-user-select: none;
+  /* Safari */
+  -ms-user-select: none;
+  /* IE 10 and IE 11 */
+  user-select: none;
+  /* Standard syntax */
+  background: rgb(2, 0, 36);
+  background: radial-gradient(circle, rgba(2, 0, 36, 1) 0%, rgba(9, 81, 121, 0.8463760504201681) 34%, rgba(0, 212, 255, 1) 100%);
+}
+
+.msg-box {
+  display: none;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  translate: -50%;
+  border-radius: 6px !important;
+  font-size: 15px !important;
+  width: 300px;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+	z-index: 1000;
+  &.error {
+    /* background-color: rgb(93, 4, 5); */
+    color: rgb(255, 0, 30);
+  }
+
+  &.success {
+    /* background-color: rgb(220, 14, 14); */
+    color: rgb(32, 255, 84);
+    text-align: center;
+    margin-left: -150px;
+  }
+}

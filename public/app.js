@@ -52,6 +52,8 @@ var _matrixStream = require("../networking2/matrix-stream.js");
 
 var CANNON = _interopRequireWildcard(require("cannon"));
 
+var _utility = require("../lib/utility.js");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -67,6 +69,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 let VT = matrixEngine.Engine.VT;
 
 var runThis = world => {
+  // SHIFT + MOUSE RD OR MOUSE MOVE + SHIFT SCROLL ZOOM
   _manifest.default.camera.SceneController = true;
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
@@ -74,14 +77,13 @@ var runThis = world => {
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev);
 
-    if (ev.detail.hitObject.physics.enabled == true) {
-      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+    if (ev.detail.hitObject.physics.enabled == true) {// not yet supported in net2
+      // ev.detail.hitObject.physics.currentBody.force.set(0, 0, 200)
     }
   });
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
-    mix_operation: "multiply" // ENUM : multiply , divide ,
-
+    source: ["res/images/complex_texture_1/diffuse.png", "res/images/logo-test.png"],
+    mix_operation: "multiply"
   };
   let gravityVector = [0, 0, -9.82];
   let physics = world.loadPhysics(gravityVector); // Add ground
@@ -93,7 +95,7 @@ var runThis = world => {
       mass: 1,
       linearDamping: 0.01,
       position: new CANNON.Vec3(0, -14.5, 15),
-      shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
+      shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
     });
     physics.world.addBody(b2);
     meObj.physics.currentBody = b2;
@@ -102,7 +104,7 @@ var runThis = world => {
 
   matrixEngine.Engine.activateNet2(undefined, {
     sessionName: 'public-chat-me',
-    resolution: '240x160'
+    resolution: '256x256'
   });
   addEventListener(`LOCAL-STREAM-READY`, e => {
     console.log('LOCAL-STREAM-READY [app level] ', e.detail.streamManager.id);
@@ -111,10 +113,13 @@ var runThis = world => {
     dispatchEvent(new CustomEvent(`onTitle`, {
       detail: `🕸️${e.detail.connection.connectionId}🕸️`
     }));
+
+    _utility.notify.show(`Connected 🕸️${e.detail.connection.connectionId}🕸️`, "ok");
+
     var name = e.detail.connection.connectionId;
     world.Add("cubeLightTex", 1, name, tex);
     _manifest.default.scene[name].position.x = 0;
-    _manifest.default.scene[name].position.z = -20; // App.scene[name].rotation.rotz = -90
+    _manifest.default.scene[name].position.z = -20;
 
     _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
 
@@ -122,91 +127,84 @@ var runThis = world => {
     _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT((0, _matrixStream.byId)(e.detail.streamManager.id));
     objGenerator(_manifest.default.scene[name]);
   });
-  addEventListener('stream-loaded', e => {
-    console.log('TEST STREAM', e); // TEST 
-
-    var _ = document.querySelectorAll('.media-box');
-
-    var name = "videochat-" + e.detail.data.userId;
-
-    _.forEach(i => {
-      // App.network.connection.userid  REPRESENT LOCAL STREAM 
-      if (e.detail.data.userId != _manifest.default.network.connection.userid) {
-        // This is video element!
-        world.Add("cubeLightTex", 3, name, tex);
-        _manifest.default.scene[name].position.x = 0;
-        _manifest.default.scene[name].position.z = -20; // App.scene[name].rotx = 45
-        // App.scene[name].rotation.rotz = -90
-
-        _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
-
-        _manifest.default.scene[name].net.enable = true;
-
-        _manifest.default.scene[name].net.activate();
-
-        _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT(i.children[1]);
-        objGenerator(_manifest.default.scene[name]); // App.CUSTOM_TIMER = setInterval(() => {
-        // 	try {
-        // 		if(typeof App.scene[name] !== 'undefined' && typeof App.scene[name].geometry !== 'undefined') {
-        // 			App.scene[name].geometry.texCoordsPoints.front.right_top.x += 0.001;
-        // 			App.scene[name].geometry.texCoordsPoints.front.left_bottom.x += 0.001;
-        // 			App.scene[name].geometry.texCoordsPoints.front.left_top.x += 0.001;
-        // 			App.scene[name].geometry.texCoordsPoints.front.right_bottom.x += 0.001;
-        // 		} else {
-        // 			clearInterval(App.CUSTOM_TIMER)
-        // 			App.CUSTOM_TIMER = null;
-        // 		}
-        // 	} catch(err) {
-        // 		clearInterval(App.CUSTOM_TIMER)
-        // 		App.CUSTOM_TIMER = null;
-        // 	}
-        // }, 1);
-        // addEventListener('net.remove-user', (event) => {
-        // 	var n = "videochat-" + event.detail.data.userid;
-        // 	if(typeof App.scene[n] !== 'undefinde' &&
-        // 		typeof App.scene[n].CUSTOM_FLAG_PREVENT_DBCALL === 'undefined') {
-        // 		App.scene[n].CUSTOM_FLAG_PREVENT_DBCALL = true;
-        // 		App.scene[n].selfDestroy(1)
-        // 	}
-        // })
-      } else {
-        // own stream 
-        function onLoadObj(meshes) {
-          _manifest.default.meshes = meshes;
-          matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.TV);
-          setTimeout(function () {
-            world.Add("obj", 1, "TV", tex, _manifest.default.meshes.TV);
-
-            _manifest.default.scene.TV.position.setPosition(-9, 4, -15);
-
-            _manifest.default.scene.TV.rotation.rotateY(90);
-
-            _manifest.default.scene.TV.LightsData.ambientLight.set(1, 1, 1);
-
-            _manifest.default.scene.TV.streamTextures = new matrixEngine.Engine.DOM_VT(i.children[1]);
-          }, 1000);
-        }
-
-        matrixEngine.objLoader.downloadMeshes({
-          TV: "res/3d-objects/balltest2.obj"
-        }, onLoadObj);
-      }
-    });
+  addEventListener('videoElementCreated', e => {
+    console.log('videoElementCreated [app level] ', e.detail);
   });
-  world.Add("cubeLightTex", 3, "outsideBox2", tex);
-  _manifest.default.scene.outsideBox2.position.x = 0;
-  _manifest.default.scene.outsideBox2.position.y = 2;
-  _manifest.default.scene.outsideBox2.position.z = -24;
-  _manifest.default.scene.outsideBox2.rotation.rotationSpeed.y = 20;
-  _manifest.default.scene.outsideBox2.rotation.rotx = 45;
-  _manifest.default.scene.outsideBox2.streamTextures = new VT("res/video-texture/me.mkv"); // App.scene.outsideBox2.glBlend.blendEnabled = true;
+  addEventListener('videoElementCreatedSubscriber', e => {
+    console.log('videoElementCreatedSubscriber [app level] ', e.detail);
+  });
+  var ONE_TIME = 0;
+  addEventListener('streamPlaying', e => {
+    if (ONE_TIME == 0) {
+      ONE_TIME = 1;
+      console.log('REMOTE-STREAM- streamPlaying [app level] ', e.detail.target.videos[0]); // DIRECT REMOTE
+
+      var name = e.detail.target.stream.connection.connectionId;
+      _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT(e.detail.target.videos[0].video);
+    }
+  });
+  addEventListener('onStreamCreated', e => {
+    console.log('REMOTE-STREAM-READY [app level] ', e.detail.event.stream.connection.connectionId);
+    var name = e.detail.event.stream.connection.connectionId;
+    world.Add("cubeLightTex", 1, name, tex);
+    _manifest.default.scene[name].position.x = 0;
+    _manifest.default.scene[name].position.z = -20;
+
+    _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
+
+    _manifest.default.scene[name].net.enable = true;
+    objGenerator(_manifest.default.scene[name]);
+  });
+  world.Add("cubeLightTex", 0.8, "outsideBox2", tex);
+  _manifest.default.scene.outsideBox2.position.x = -7;
+  _manifest.default.scene.outsideBox2.position.y = 5;
+  _manifest.default.scene.outsideBox2.position.z = -20;
+  _manifest.default.scene.outsideBox2.rotation.rotationSpeed.y = 25;
+  _manifest.default.scene.outsideBox2.rotation.rotx = 90;
+  _manifest.default.scene.outsideBox2.streamTextures = new VT("res/video-texture/me.mkv"); // App.scene.outsideBox2.instancedDraws.numberOfInstance = 3;
+  // App.scene.outsideBox2.instancedDraws.overrideDrawArraysInstance = function (object) {
+  //   for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
+  //     object.instancedDraws.array_of_local_offset = [0, 0, 2];
+  //     mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
+  //     world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
+  //     object.instancedDraws.array_of_local_offset = [2 * S1.GET(), 0, 0];
+  //     for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
+  //       mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
+  //       world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
+  //       world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
+  //     }
+  //   }
+  // };
+
+  world.Add("cubeLightTex", 0.8, "outsideBox3", tex);
+  _manifest.default.scene.outsideBox3.position.x = 7;
+  _manifest.default.scene.outsideBox3.position.y = 5;
+  _manifest.default.scene.outsideBox3.position.z = -20;
+  _manifest.default.scene.outsideBox3.rotation.rotationSpeed.y = 35;
+  _manifest.default.scene.outsideBox3.rotation.rotx = 0; // effect
+  // var S1 = new SWITCHER();
+  // App.scene.outsideBox3.instancedDraws.numberOfInstance = 3;
+  // App.scene.outsideBox3.instancedDraws.overrideDrawArraysInstance = function (object) {
+  //   for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
+  //     object.instancedDraws.array_of_local_offset = [0, 0, 2];
+  //     mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
+  //     world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
+  //     object.instancedDraws.array_of_local_offset = [2 * S1.GET(), 0, 0];
+  //     for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
+  //       mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
+  //       world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
+  //       world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
+  //     }
+  //   }
+  // };
+  // App.scene.outsideBox2.glBlend.blendEnabled = true;
   // App.scene.outsideBox2.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
   // App.scene.outsideBox2.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
 };
 
 exports.runThis = runThis;
 
-},{"../index.js":4,"../networking2/matrix-stream.js":35,"../program/manifest.js":43,"cannon":40}],3:[function(require,module,exports){
+},{"../index.js":4,"../lib/utility.js":32,"../networking2/matrix-stream.js":35,"../program/manifest.js":43,"cannon":40}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1506,6 +1504,7 @@ function DOM_VT(video, name, options) {
   }
 
   var ROOT = this;
+  console.log("input ", video);
   ROOT.video = video;
 
   let READY = function (e) {
@@ -1515,7 +1514,9 @@ function DOM_VT(video, name, options) {
     ROOT.videoImage.setAttribute('height', '512px');
     ROOT.video.mute = true;
     ROOT.video.autoplay = true;
-    ROOT.video.loop = true;
+    ROOT.video.loop = true; // test maybe
+
+    ROOT.video.crossOrigin = "anonymous";
     var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
     DIV_CONTENT_STREAMS.appendChild(ROOT.videoImage);
     ROOT.options = options;
@@ -1524,9 +1525,17 @@ function DOM_VT(video, name, options) {
       ROOT.videoImageContext = ROOT.videoImage.getContext('2d');
       ROOT.videoImageContext.fillStyle = '#00003F';
       ROOT.videoImageContext.fillRect(0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
+      console.log('CCCCCCCC   1');
       ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.videoImage);
     } else {
-      ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.video);
+      console.log('CCCCCCCC   2'); // must be fixed
+
+      if (typeof ROOT.video.video !== 'undefined') {
+        // new net2
+        ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.video.video);
+      } else {
+        ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.video);
+      }
     }
 
     try {
@@ -1542,8 +1551,14 @@ function DOM_VT(video, name, options) {
   };
 
   READY();
-  ROOT.video.addEventListener('loadeddata', ROOT.video.READY, false);
-  ROOT.video.load();
+
+  if (ROOT.video.addEventListener) {
+    ROOT.video.addEventListener('loadeddata', ROOT.video.READY, false);
+    ROOT.video.load();
+  } else {
+    ROOT.video.video.addEventListener('loadeddata', ROOT.video.READY, false);
+    ROOT.video.video.load();
+  }
 
   ROOT.UPDATE = function () {
     if (ROOT.options.mixWithCanvas2d == false) return;
@@ -5198,8 +5213,7 @@ class Position {
   SetX(newx, em) {
     this.x = newx;
     this.targetX = newx;
-    this.inMove = false;
-    console.log('test setX net.connection ', _engine.net);
+    this.inMove = false; // console.log('test setX net.connection ', net)
 
     if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) {
       _engine.net.connection.send({
@@ -8450,9 +8464,14 @@ _manifest.default.operation.reDrawGlobal = function (time) {
             _matrixWorld.world.contentList[physicsLooper].rotation.axisSystem = local.physics.currentBody.quaternion.toAxisAngle();
             _matrixWorld.world.contentList[physicsLooper].rotation.axis.x = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].x.toFixed(2));
             _matrixWorld.world.contentList[physicsLooper].rotation.axis.y = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].y.toFixed(2));
-            _matrixWorld.world.contentList[physicsLooper].rotation.axis.z = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].z.toFixed(2)); // if(local.physics.currentBody.quaternion.x != 0) world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+            _matrixWorld.world.contentList[physicsLooper].rotation.axis.z = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].z.toFixed(2));
+
+            if (_matrixWorld.world.contentList[physicsLooper].rotation.x > 0) {
+              console.log('TEST ', _matrixWorld.world.contentList[physicsLooper].rotation.x);
+            } // if(local.physics.currentBody.quaternion.x != 0) world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
             // if(local.physics.currentBody.quaternion.y != 0) world.contentList[physicsLooper].rotation.roty = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
             // if(local.physics.currentBody.quaternion.z != 0) world.contentList[physicsLooper].rotation.rotz = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+
           }
         } else if (local.physics.currentBody.shapeOrientations.length > 1) {
           // subObjs
@@ -21955,7 +21974,7 @@ exports._glTexParameteri = _glTexParameteri;
 exports.gen2DTextFace = gen2DTextFace;
 exports.showDomFPSController = showDomFPSController;
 exports.createDomFPSController = createDomFPSController;
-exports.BiquadFilterType = exports.ENUMERATORS = exports.QueryString = exports.byId = exports.E = exports.scriptManager = exports.loadImage = exports.supportsTouch = exports.htmlHeader = exports.jsonHeaders = exports.HeaderTypes = void 0;
+exports.notify = exports.BiquadFilterType = exports.ENUMERATORS = exports.QueryString = exports.byId = exports.E = exports.scriptManager = exports.loadImage = exports.supportsTouch = exports.htmlHeader = exports.jsonHeaders = exports.HeaderTypes = void 0;
 
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 
@@ -22058,7 +22077,7 @@ window.DETECTBROWSER = function () {
     }
   } else {
     // eslint-disable-next-line no-undef
-    NOMOBILE = 1;
+    mobile = 1;
   } // FIREFOX za android
 
 
@@ -22123,7 +22142,7 @@ window.DETECTBROWSER = function () {
     HREFTXT = 'chrome_browser';
   }
 
-  if (navMozilla && NOMOBILE == 1 && gecko && navFirefox) {
+  if (navMozilla && mobile == 1 && gecko && navFirefox) {
     HREFF = '#';
     HREFTXT = 'firefox_desktop';
   }
@@ -22134,7 +22153,7 @@ window.DETECTBROWSER = function () {
   }
 
   this.NAME = HREFTXT;
-  this.NOMOBILE = NOMOBILE;
+  this.NOMOBILE = mobile;
 };
 
 var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
@@ -22404,7 +22423,7 @@ _manifest.default.audioSystem.createVideoAsset = function (name_, path_) {
     videoAudioAsset.video.setAttribute('src', 'res/videos/' + path_);
 
     try {
-      window.AudioContext = window.AudioContext || window.webkitAudioContext;
+      window.AudioContext = window.AudioContext || window.AudioContext;
       videoAudioAsset.context = new AudioContext();
     } catch (e) {
       alert('Web Audio API is not supported in this browser');
@@ -22451,7 +22470,7 @@ _manifest.default.audioSystem.createMusicAsset = function (name_, path_) {
     videoAudioAsset.video.setAttribute('src', 'res/music/' + path_);
 
     try {
-      window.AudioContext = window.AudioContext || window.webkitAudioContext;
+      window.AudioContext = window.AudioContext || window.AudioContext;
       videoAudioAsset.context = new AudioContext();
     } catch (e) {
       alert('Web Audio API is not supported in this browser');
@@ -22840,7 +22859,68 @@ function createDomFPSController() {
   domAngleAxis.addEventListener('touchstart', e => {});
   document.body.append(domAngleAxis);
   showDomFPSController();
-}
+} // DOM Notifi msg
+
+
+let notify = {
+  root: () => byId('msgBox'),
+  pContent: () => byId('not-content'),
+  copy: function () {
+    navigator.clipboard.writeText(notify.root().children[0].innerText);
+  },
+  c: 0,
+  ic: 0,
+  t: {},
+  setContent: function (content, t) {
+    var iMsg = document.createElement('div');
+    iMsg.innerHTML = content;
+    iMsg.id = `msgbox-loc-${notify.c}`;
+    notify.root().appendChild(iMsg);
+    iMsg.classList.add('animate1');
+
+    if (t == 'ok') {
+      iMsg.style = 'font-family: stormfaze;color:white;padding:7px;margin:2px';
+    } else {
+      iMsg.style = 'font-family: stormfaze;color:white;padding:7px;margin:2px';
+    }
+  },
+  kill: function () {
+    notify.root().remove();
+  },
+  show: function (content, t) {
+    notify.setContent(content, t);
+    notify.root().style.display = "block";
+    var loc2 = notify.c;
+    setTimeout(function () {
+      byId(`msgbox-loc-${loc2}`).classList.remove("fadeInDown");
+      byId(`msgbox-loc-${loc2}`).classList.add("fadeOut");
+      setTimeout(function () {
+        byId(`msgbox-loc-${loc2}`).style.display = "none";
+        byId(`msgbox-loc-${loc2}`).classList.remove("fadeOut");
+        byId(`msgbox-loc-${loc2}`).remove();
+        notify.ic++;
+
+        if (notify.c == notify.ic) {
+          notify.root().style.display = 'none';
+        }
+      }, 1000);
+    }, 3000);
+    notify.c++;
+  },
+  error: function (content) {
+    notify.root().classList.remove("success");
+    notify.root().classList.add("error");
+    notify.root().classList.add("fadeInDown");
+    notify.show(content, 'err');
+  },
+  success: function (content) {
+    notify.root().classList.remove("error");
+    notify.root().classList.add("success");
+    notify.root().classList.add("fadeInDown");
+    notify.show(content, 'ok');
+  }
+};
+exports.notify = notify;
 
 },{"../program/manifest":43,"./events":6}],33:[function(require,module,exports){
 "use strict";
@@ -23088,8 +23168,8 @@ class MatrixStream {
       console.log("setupSessionObject=>", e.detail);
       this.session = e.detail;
       this.session.on(`signal:${_matrixStream.netConfig.sessionName}`, e => {
-        console.log(" call update from  =>", e.from); // dpont call update for self 
-
+        // console.log(" call update from  =>", e.from);
+        // dpont call update for self 
         console.log(`test conn id `, this.connection.connectionId);
 
         if (this.connection.connectionId == e.from.connectionId) {//
@@ -23126,8 +23206,7 @@ class MatrixStream {
     },
 
     update(e) {
-      e.data = JSON.parse(e.data);
-      console.log('INFO UPDATE', e);
+      e.data = JSON.parse(e.data); // console.log('INFO UPDATE', e);
 
       if (e.data.netPos) {
         if (App.scene[e.data.netObjId]) {
@@ -23295,7 +23374,9 @@ function joinSession(options) {
       var subscriber = session.subscribe(event.stream, 'video-container'); // When the HTML video has been appended to DOM...
 
       subscriber.on('videoElementCreated', event => {
-        pushEvent(event); // Add a new HTML element for the user's name and nickname over its video
+        dispatchEvent(new CustomEvent(`videoElementCreatedSubscriber`, {
+          detail: event
+        })); // Add a new HTML element for the user's name and nickname over its video
 
         updateNumVideos(1);
       }); // When the HTML video has been appended to DOM...
@@ -23307,7 +23388,9 @@ function joinSession(options) {
       }); // When the subscriber stream has started playing media...
 
       subscriber.on('streamPlaying', event => {
-        pushEvent(event);
+        dispatchEvent(new CustomEvent('streamPlaying', {
+          detail: event
+        }));
       });
     });
     session.on('streamDestroyed', event => {
@@ -23400,7 +23483,6 @@ function joinSession(options) {
         dispatchEvent(new CustomEvent(`videoElementCreated`, {
           detail: event
         }));
-        pushEvent(event);
         updateNumVideos(1);
         console.log('NOT FIXED MUTE event.element, ', event.element);
         event.element.mute = true; // $(event.element).prop('muted', true); // Mute local video
@@ -23415,12 +23497,10 @@ function joinSession(options) {
       }); // When the publisher stream has started playing media...
 
       publisher.on('streamPlaying', event => {
-        // console.log("publisher.on streamPlaying");
-        if (document.getElementById("pwa-container-1").style.display != 'none') {
-          document.getElementById("pwa-container-1").style.display = 'none';
-        }
-
-        pushEvent(event);
+        console.log("publisher.on streamPlaying"); // if(document.getElementById("pwa-container-1").style.display != 'none') {
+        // 	document.getElementById("pwa-container-1").style.display = 'none';
+        // }
+        // pushEvent(event);
       });
       session.publish(publisher); // console.log('SESSION CREATE NOW ', session)
     }).catch(error => {
