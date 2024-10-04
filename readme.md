@@ -405,11 +405,23 @@ const objGenerator = (n) => {
 objGenerator(100);
 ```
 
+### Networking
+ - OLD [your own server part under ./networking folder]
+ - New Recommneded - Based on kurento/OpenVidu service [i run personal on maximumroulette.com:2020]
+ 
 
 #### [NEW] Networking Support Methods list: ✅😇
 
 Networking is deeply integrated no need for extra interventions.
 Except activation.
+
+```js
+	matrixEngine.Engine.activateNet2(undefined,
+		{
+			sessionName: 'public-chat-me',
+			resolution: '256x256'
+		});
+```
 
 ```js
 App.scene.MyColoredSquare1.net.enable = true;
