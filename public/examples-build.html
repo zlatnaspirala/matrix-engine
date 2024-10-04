@@ -1,197 +1,198 @@
 <script>
-  if(location.href.indexOf('localhost') == -1) {
-    if(location.protocol != 'https:') {
-      // location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-    }
-  }
-  function g(i) {
-    return document.getElementById(i)
-  }
-  // example load iframes
+	if(location.href.indexOf('localhost') == -1) {
+		if(location.protocol != 'https:') {
+			// location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+		}
+	}
+	function g(i) {
+		return document.getElementById(i)
+	}
+	// Example page load iframes
 
-  var QueryString = (function() {
-    // This function is anonymous, is executed immediately and
-    // the return value is assigned to QueryString!
-    var query_string = {};
-    var query = window.location.search.substring(1);
-    var vars = query.split('&');
-    for(var i = 0;i < vars.length;i++) {
-      var pair = vars[i].split('=');
-      // If first entry with this name
-      if(typeof query_string[pair[0]] === 'undefined') {
-        query_string[pair[0]] = decodeURIComponent(pair[1]);
-        // If second entry with this name
-      } else if(typeof query_string[pair[0]] === 'string') {
-        var arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
-        query_string[pair[0]] = arr;
-        // If third or later entry with this name
-      } else {
-        query_string[pair[0]].push(decodeURIComponent(pair[1]));
-      }
-    }
-    return query_string;
-  })();
+	var QueryString = (function() {
+		// This function is anonymous, is executed immediately and
+		// the return value is assigned to QueryString!
+		var query_string = {};
+		var query = window.location.search.substring(1);
+		var vars = query.split('&');
+		for(var i = 0;i < vars.length;i++) {
+			var pair = vars[i].split('=');
+			// If first entry with this name
+			if(typeof query_string[pair[0]] === 'undefined') {
+				query_string[pair[0]] = decodeURIComponent(pair[1]);
+				// If second entry with this name
+			} else if(typeof query_string[pair[0]] === 'string') {
+				var arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
+				query_string[pair[0]] = arr;
+				// If third or later entry with this name
+			} else {
+				query_string[pair[0]].push(decodeURIComponent(pair[1]));
+			}
+		}
+		return query_string;
+	})();
 
-  function loadDemo(currentDemo) {
-    if(typeof QueryString.GLSL === "undefined") {
-      GLSLver = 1.3;
-    } else {
-      GLSLver = QueryString.GLSL;
-    }
-    g('iframe1').src = 'query-build.html?u=' + currentDemo + '&GLSL=' + GLSLver;
-  }
+	function loadDemo(currentDemo) {
+		if(typeof QueryString.GLSL === "undefined") {
+			GLSLver = 1.3;
+		} else {
+			GLSLver = QueryString.GLSL;
+		}
+		g('iframe1').src = 'query-build.html?u=' + currentDemo + '&GLSL=' + GLSLver;
+	}
 </script>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <link rel="manifest" href="manifest.web" />
-  <title>Matrix-Engine-Workspace</title>
-  <meta name="description" content="webGL2, Scene objects, FBO, transformations, Bvh animation, easy Native implementations (cef), object structural." />
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <link async rel="stylesheet" href="css/style.css" />
-  <link rel="apple-touch-icon" href="res/icons/512.png" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimal-ui" />
-  <link rel="icon" type="image/png" sizes="96x96" href="res/icons/favicon-96x96.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="res/icons/android-icon.png" />
-  <link rel="icon" href="res/icons/favicon.ico" type="image/x-icon" />
-  <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
+	<link rel="manifest" href="manifest.web" />
+	<title>Matrix-Engine-Workspace</title>
+	<meta name="description" content="webGL2, Scene objects, FBO, transformations, Bvh animation, easy Native implementations (cef), object structural." />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link async rel="stylesheet" href="css/style.css" />
+	<link rel="apple-touch-icon" href="res/icons/512.png" />
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="theme-color" content="#000000" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimal-ui" />
+	<link rel="icon" type="image/png" sizes="96x96" href="res/icons/favicon-96x96.png" />
+	<link rel="icon" type="image/png" sizes="192x192" href="res/icons/android-icon.png" />
+	<link rel="icon" href="res/icons/favicon.ico" type="image/x-icon" />
+	<script defer src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
 
-  <style>
-    *::-webkit-media-controls-panel {
-      display: none !important;
-      -webkit-appearance: none;
-    }
+	<style>
+		*::-webkit-media-controls-panel {
+			display: none !important;
+			-webkit-appearance: none;
+		}
 
-    /* Old shadow dom for play button */
-    *::-webkit-media-controls-play-button {
-      display: none !important;
-      -webkit-appearance: none;
-    }
+		/* Old shadow dom for play button */
+		*::-webkit-media-controls-play-button {
+			display: none !important;
+			-webkit-appearance: none;
+		}
 
-    /* This one works! */
-    *::-webkit-media-controls-start-playback-button {
-      display: none !important;
-      -webkit-appearance: none;
-    }
+		/* This one works! */
+		*::-webkit-media-controls-start-playback-button {
+			display: none !important;
+			-webkit-appearance: none;
+		}
 
-    ::-webkit-scrollbar {
-      width: 7px;
-    }
+		::-webkit-scrollbar {
+			width: 7px;
+		}
 
-    ::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 5px rgb(255, 0, 195);
-      border-radius: 8px;
-    }
+		::-webkit-scrollbar-track {
+			box-shadow: inset 0 0 5px rgb(255, 0, 195);
+			border-radius: 8px;
+		}
 
-    body::-webkit-scrollbar-thumb {
-      background: rgb(138, 32, 32);
-      border-radius: 9px;
-    }
+		body::-webkit-scrollbar-thumb {
+			background: rgb(138, 32, 32);
+			border-radius: 9px;
+		}
 
-    body::-webkit-scrollbar-thumb:hover {
-      background: rgb(134, 74, 0);
-    }
+		body::-webkit-scrollbar-thumb:hover {
+			background: rgb(134, 74, 0);
+		}
 
-    #menu {
-      opacity: 0.9;
-      z-index: 1;
-      position: absolute;
-      left: 0;
-      top: 5%;
-      width: 300px;
-      height: 90vh;
-      overflow: scroll;
-      overflow-x: hidden;
-      color:rgb(255 228 0);
-      padding: 1px;
-      text-align: center
-    }
-  </style>
+		#menu {
+			opacity: 0.9;
+			z-index: 1;
+			position: absolute;
+			left: 0;
+			top: 5%;
+			width: 300px;
+			height: 90vh;
+			overflow: scroll;
+			overflow-x: hidden;
+			color: rgb(255 228 0);
+			padding: 1px;
+			text-align: center
+		}
+	</style>
 
 </head>
 
 <body>
-  <div id="matrix-net"></div>
-  <div id="menu" style="">
-    <div id='title' class="btnShadow" style="width: 100%; height: auto;font-size: larger;">
-      Matrix Engine Demos <br />
-      version 1.9.53 - feb 2024
-    </div>
-    <div style="width: 100%; height: auto" class="btnShadow" onclick="loadDemo('adding_color_cube')" onmousemove="">adding color cube</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_color_triangle')">adding color triangle</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_color_square')">adding color square</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_color_piramyde')">adding color piramyde</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_square_texture')">adding square with texture</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_tex_square_raycast')">adding square with raycast</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('cube_geometry')">adding cube with texture + scale</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('cube_light_dinamic')">adding cube light dinamic</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('opengles_native_cubemap')">CubeMap with canvas2D</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('opengles_native_cubemap_images')">CubeMap with Images</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('sphere_geometry')">sphere geometry</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('cube_light_and_texture')">cube_light_and_texture</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('load_obj_file')">load obj file (UV map-Blender)</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_more_texture_samplers')">adding more texture samplers</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('custom_texture')">custom_texture</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('texture_dinamic_manipulation')">texture_dinamic_manipulation</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('first_person_controller')">First person controller</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('obj_animation')">Animation - obj sequence</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('obj_animation_build_mesh_effect')">obj animation build mesh effect</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('all_variant_of_blending')">some variant of blending.js</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('video_texture')">video texture (webcam)</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('camera_texture')">camera texture (webcam)</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('audio_manipulation')">audio_manipulation</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('audio_manipulation2')">audio_manipulation2</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('my_world')">Draw instanced Forest - primitive</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('porting2d')">visual-js-2d-porting</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('porting2d_text')">visual-js-2d-porting Text</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('porting2d_particle')">visual-js-2d-porting Particle</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('cube_tex_arrays')">draw scene object arrays</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('my_world')">My world</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('bvh_loader')">Bvh raw load</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('bvh_animation_class')">Bvh animation class</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('physics_cube')">Physics class - Cube</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('physics_sphere')">Physics class - Sphere</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('networking_basic')">Networking Basic</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('load_obj_sequence')">mixamo.com->dea/fbx->blender->obj seq morph</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('spot_light_basic')">Basic spot lights</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('lens_effect')">Basic lens effect</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('fps_player_controller')">FPShooter example</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('active_editor')">active_editor [only localhost/dev]</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('basic_fbo')">Basic FBO</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('fbo_manipulation')">FBO [Multi FBO objects - same camera target] </div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('video_texture_lava')">Lava textures - VT</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('matrix_chat_room')">Matrix video chat - webRTC 🎥</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('torus_geometry')">Torus geomtry [custom geometry] </div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('physics_cube_active_textures')">100 Physics Cube with fanny-slot [canvas2d]</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('shaders')">Shaders</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('shader1_direct')">Direct shader1- toyshader</div>
-    <div style="width: 100%" class="btnShadow" onclick="loadDemo('shader2_direct')">Loading direct from glsl file</div>
-		<div style="width: 100%" class="btnShadow" onclick="loadDemo('basic_timeline')">Timeline manupulation</div>		
-  </div>
+	<div id="matrix-net"></div>
+	<div id="menu" style="">
+		<div id='title' class="btnShadow" style="width: 100%; height: auto;font-size: larger;">
+			Matrix Engine Demos <br />
+			version 1.9.53 - feb 2024
+		</div>
+		<div style="width: 100%; height: auto" class="btnShadow" onclick="loadDemo('adding_color_cube')" onmousemove="">adding color cube</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_color_triangle')">adding color triangle</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_color_square')">adding color square</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_color_piramyde')">adding color piramyde</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_square_texture')">adding square with texture</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_tex_square_raycast')">adding square with raycast</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('cube_geometry')">adding cube with texture + scale</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('cube_light_dinamic')">adding cube light dinamic</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('opengles_native_cubemap')">CubeMap with canvas2D</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('opengles_native_cubemap_images')">CubeMap with Images</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('sphere_geometry')">sphere geometry</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('cube_light_and_texture')">cube_light_and_texture</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('load_obj_file')">load obj file (UV map-Blender)</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_more_texture_samplers')">adding more texture samplers</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('custom_texture')">custom_texture</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('texture_dinamic_manipulation')">texture_dinamic_manipulation</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('first_person_controller')">First person controller</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('obj_animation')">Animation - obj sequence</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('obj_animation_build_mesh_effect')">obj animation build mesh effect</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('all_variant_of_blending')">some variant of blending.js</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('video_texture')">video texture (webcam)</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('camera_texture')">camera texture (webcam)</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('audio_manipulation')">audio_manipulation</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('audio_manipulation2')">audio_manipulation2</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('my_world')">Draw instanced Forest - primitive</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('porting2d')">visual-js-2d-porting</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('porting2d_text')">visual-js-2d-porting Text</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('porting2d_particle')">visual-js-2d-porting Particle</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('cube_tex_arrays')">draw scene object arrays</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('my_world')">My world</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('bvh_loader')">Bvh raw load</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('bvh_animation_class')">Bvh animation class</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('physics_cube')">Physics class - Cube</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('physics_sphere')">Physics class - Sphere</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('networking_basic')">[based on multiRTC3] Networking Basic</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('load_obj_sequence')">mixamo.com->dea/fbx->blender->obj seq morph</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('spot_light_basic')">Basic spot lights</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('lens_effect')">Basic lens effect</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('fps_player_controller')">FPShooter example</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('active_editor')">active_editor [only localhost/dev]</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('basic_fbo')">Basic FBO</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('fbo_manipulation')">FBO [Multi FBO objects - same camera target] </div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('video_texture_lava')">Lava textures - VT</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('matrix_chat_room')">[based on multiRTC3] Matrix video chat - webRTC 🎥</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('torus_geometry')">Torus geomtry [custom geometry] </div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('physics_cube_active_textures')">100 Physics Cube with fanny-slot [canvas2d]</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('shaders')">Shaders</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('shader1_direct')">Direct shader1- toyshader</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('shader2_direct')">Loading direct from glsl file</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('basic_timeline')">Timeline manupulation</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('networking2_basic')">[kurento/OV]New networking example</div>
+	</div>
 
-  <iframe id="iframe1" allowfullscreen allow="autoplay" style="position: absolute; left: 15%; top: 0; width: 85%; height: 99%" class="btnShadow" src="query-build.html" title="live"></iframe>
+	<iframe id="iframe1" allowfullscreen allow="autoplay" style="position: absolute; left: 15%; top: 0; width: 85%; height: 99%" class="btnShadow" src="query-build.html" title="live"></iframe>
 </body>
 <script>
-  function isMobile() {
-    const toMatch = [/Android/i, /webOS/i, /iPhone/i, /iPad/i, /iPod/i, /BlackBerry/i, /Windows Phone/i];
-    return toMatch.some(toMatchItem => {
-      return navigator.userAgent.match(toMatchItem);
-    });
-  }
-  if(isMobile() == true) {
-    document.body.style.fontSize = '10px';
-    var menu = document.getElementById('menu').style;
-    menu.overflow = 'auto';
-    menu.width = '100%';
-    menu.height = '16%';
-    menu.top = '0%';
-    document.getElementById('title').innerHTML += "Scroll example list.";
-  }
+	function isMobile() {
+		const toMatch = [/Android/i, /webOS/i, /iPhone/i, /iPad/i, /iPod/i, /BlackBerry/i, /Windows Phone/i];
+		return toMatch.some(toMatchItem => {
+			return navigator.userAgent.match(toMatchItem);
+		});
+	}
+	if(isMobile() == true) {
+		document.body.style.fontSize = '10px';
+		var menu = document.getElementById('menu').style;
+		menu.overflow = 'auto';
+		menu.width = '100%';
+		menu.height = '16%';
+		menu.top = '0%';
+		document.getElementById('title').innerHTML += "Scroll example list.";
+	}
 </script>
 
 </html>

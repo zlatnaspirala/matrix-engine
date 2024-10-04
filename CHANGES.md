@@ -2,14 +2,15 @@
 
 # Matrix Engine [CHANGES]
 
-[2.0.0 beta version Vampir] 
+[2.0.0 beta version Vampir]
 Objective
+ - Deplace old networking and put kurento/OV web client code.
  - Mobile device ready 
  - GUI Editor (win) basic version ready
 
 ## ---------------------------------
 
-[1.9.58] 
+[1.9.58]
    New args for timeline feature:
 	`matrixEngine.matrixWorld.world.useAnimationLine({sequenceSize: 200, totalSequence: 10});`
 	 New example script for this feature `basic_timeline.js`

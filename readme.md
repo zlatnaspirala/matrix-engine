@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `1.9.53` THUNDER
+### Name: `MATRIX-ENGINE` `2.0.0` Vampire -> BETA
 
 #### Logo
 
@@ -44,7 +44,11 @@ easy native implementations (hybrid app/ CEF), object structural. Not closed too
 (gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in
 opengles 1.1. Also can be downgraded to openGLES 1.1. webGL Lightweight library based on glmatrix engine.
 For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js. I use free software Blender 2.90.1 for 3d Object mesh works. MatrixEngine is Blender frendly orientend lib. Another frendly tools comes from mixamo.com. Mixamo is great service used for creating my 3d assets. GIMP and MsPaint
-also used for editing images. Networking is part of matrix engine, deeply integrated. Used webRTC reala time protocol. Powered by webGL vs webRTC tech!
+also used for editing images.
+Networking is part of matrix engine, integrated whole MultyRTC lib but this is old and deplaced in ver 2 (this old part have a server part signaling server and it is under `./networking/` folder).
+New networking is under `./networking2/` folder. There is no server code for server part becouse i use kurento/openvidu service and code. I have running service under `https://maximuroullete.com:4443/` for my dev/prodc VPS server.
+In both cases i use webRTC protocol for stream and data flow.
+Used webRTC realtime protocol TCP/UDP. Powered by webGL vs webRTC tech enjoy!
 
 ### Limitation ⚠
 
@@ -401,6 +405,8 @@ const objGenerator = (n) => {
 objGenerator(100);
 ```
 
+## -<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< OLD
+
 ### Networking [1.8.0]
 
 @Note Folder `networking/` containe Backend stuff based on Node.js. This folder have own package.json (matrix-network).In basic it is a signaling server who give as features like videoChat, multiplayer data flow etc.
@@ -486,6 +492,26 @@ Also matrix-network support inject method intro yor own custom server logic part
 Example for this case:
 https://github.com/zlatnaspirala/matrix-engine-starter/blob/8fccc3ba5d4aa21b7c24794251a2fceed97cbb30/projects/matrix-roulette/scripts/roulette.js#L208
 
+## -<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+## Networking2
+New way of networking is kurento/OpenVidu service.
+Only web client part is present here. I have running kurento/Ov server on my VPS[maximumroulette.com:2020].
+
+List of events
+ - `onConnectionCreated`
+ - `connectionDestroyed`
+ - `onStreamCreated`         on remote stream
+ - `videoElementDestroyed`
+ - `streamPlaying`
+ - `streamDestroyed`
+ - `sessionDisconnected`
+ - `streamCreated`
+ - `videoElementCreated`
+ - `videoElementDestroyed`
+ - `setupSessionObject`       return session object
+
+
 ### Custom textures
 
 We just override function for texture executing code.
@@ -514,7 +540,7 @@ App.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
 
 ### Opengles native `cubeMap` [1.8.5]
 
-- If you wanna custom canvasd2d draws for aech cube side
+- If you wanna custom canvasd2d draws for each cube side
   New tag `cubeMap` takes texture.source empty array.
 
 Canvas2d Example:

@@ -2,62 +2,65 @@
 <html lang="en">
 
 <head>
-  <link rel="manifest" href="manifest.web" />
-  <title>Matrix Engine is WebGL App/Game engine based on glmatrix2 lib (Math vector engine).PWA 100% initially integrated.</title>
-  <meta name="description" content="The benefits of this project is offering `not too much closed in self` and access of low level of opengles, easy native implementations (hybrid app), object structural, webrtc deeply integrated.">
-  <meta name="author" content="Created by Nikola Lukic zlatnaspirala@gmail.com">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <link defer rel="stylesheet" href="css/style.css" />
-  <link defer rel="stylesheet" href="css/animations.css" />
-  <link rel="apple-touch-icon" href="res/icons/512.png" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#000000" />
-  <script src="./lib/gl-matrix-min.js"></script>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimal-ui" />
-  <link rel="icon" type="image/png" sizes="96x96" href="res/icons/favicon-96x96.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="res/icons/android-icon.png" />
-  <link rel="icon" href="res/icons/favicon.ico" type="image/x-icon" />
-  <meta name="msapplication-TileImage" content="res/icons/ms-icon.png" />
-  <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
+	<link rel="manifest" href="manifest.web" />
+	<title>Matrix Engine is WebGL App/Game engine based on glmatrix2 lib (Math vector engine).PWA 100% initially integrated.</title>
+	<meta name="description" content="The benefits of this project is offering `not too much closed in self` and access of low level of opengles, easy native implementations (hybrid app), object structural, webrtc deeply integrated.">
+	<meta name="author" content="Created by Nikola Lukic zlatnaspirala@gmail.com">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link defer rel="stylesheet" href="css/style.css" />
+	<link defer rel="stylesheet" href="css/animations.css" />
+	<link rel="apple-touch-icon" href="res/icons/512.png" />
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="theme-color" content="#000000" />
+	<script src="./lib/gl-matrix-min.js"></script>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimal-ui" />
+	<link rel="icon" type="image/png" sizes="96x96" href="res/icons/favicon-96x96.png" />
+	<link rel="icon" type="image/png" sizes="192x192" href="res/icons/android-icon.png" />
+	<link rel="icon" href="res/icons/favicon.ico" type="image/x-icon" />
+	<meta name="msapplication-TileImage" content="res/icons/ms-icon.png" />
+	<script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
+	<!-- Remove this if you still wanna use old networking -->
+	<link rel="stylesheet" href="./css/broadcaster2.css" as="style">
 </head>
 
-<body allow="autoplay">
-  <div id="shaders"></div>
-  <div id="debugBox" class="debugBox" style="display: none"></div>
-  <div id="fps" class="btnShadow debugBox" style="display: none">
-    <button id="stopRender" type="button">stopRender</button>
-    <div color="white"><b id="fps"></b></div>
-  </div>
-  <div id="pwaBtns" class="bounceIn">
-    <button class="add-button button1" style="display: none">
-      <span>Install application</span>
-    </button>
-    <button class="add-button button2" style="display: none">
-      <span>Just play it in regular page.</span>
-    </button>
-  </div>
-  <div id="matrix-net"></div>
-  <div id="matrix-editor">
-    <div id="matrix-scene">
-    </div>
-  </div>
-  <div id="HOLDER_STREAMS" class="debugBox" style="display: none; position: absolute; left: 0px; top: 0px; width: 512px; height: 512px">
-    <video id="webcam_beta" mute autoplay loop width="512" height="512" style="position: absolute; left: 0px; top: 0px"></video>
-    <audio id="audio_beta" src="#"></audio>
-    <div id="media-holder"></div>
-  </div>
-  <div id="matrixTimeLine" class="timeLine" style="display:none;">
-    <div class="timeLineSlider">
-      <p>Matrix Engine Scene Timeline - Size of sequence: <span id="globalAnimSize"></span> </p>
-      <p>Frame id: <span id="globalAnimCounter"></span></p>
-      <p>Sequence: <span id="globalAnimCurSequence"></span></p>
-    </div>
-    <div>
-      <input type="range" min="1" max="5000" value="0" class="slider" id="timeline">
-    </div>
-  </div>
-  <script src="./app.js"></script>
+<body allow="autoplay" class="noselection">
+	<div id="msgBox" class="msg-box animate1" onclick="mb.copy()"></div>
+	<div id="shaders"></div>
+	<div id="debugBox" class="debugBox" style="display: none"></div>
+	<div id="fps" class="btnShadow debugBox" style="display: none">
+		<button id="stopRender" type="button">stopRender</button>
+		<div color="white"><b id="fps"></b></div>
+	</div>
+	<div id="pwaBtns" class="bounceIn">
+		<button class="add-button button1" style="display: none">
+			<span>Install application</span>
+		</button>
+		<button class="add-button button2" style="display: none">
+			<span>Just play it in regular page.</span>
+		</button>
+	</div>
+	<div id="matrix-net"></div>
+	<div id="matrix-editor">
+		<div id="matrix-scene">
+		</div>
+	</div>
+	<div id="HOLDER_STREAMS" class="debugBox" style="display: none; position: absolute; left: 0px; top: 0px; width: 512px; height: 512px">
+		<video id="webcam_beta" mute autoplay loop width="512" height="512" style="position: absolute; left: 0px; top: 0px"></video>
+		<audio id="audio_beta" src="#"></audio>
+		<div id="media-holder"></div>
+	</div>
+	<div id="matrixTimeLine" class="timeLine" style="display:none;">
+		<div class="timeLineSlider">
+			<p>Matrix Engine Scene Timeline - Size of sequence: <span id="globalAnimSize"></span> </p>
+			<p>Frame id: <span id="globalAnimCounter"></span></p>
+			<p>Sequence: <span id="globalAnimCurSequence"></span></p>
+		</div>
+		<div>
+			<input type="range" min="1" max="5000" value="0" class="slider" id="timeline">
+		</div>
+	</div>
+	<script src="./app.js"></script>
 </body>
 
 </html>

@@ -21,7 +21,6 @@ body {
   text-align: center;
 }
 
-
 .noselection {
 	-webkit-touch-callout: none; /* Safari */
 	user-select: none; /* standard syntax */
@@ -220,9 +219,10 @@ span {
 #matrix-net {
   position: absolute;
   display: none;
+	overflow: hidden;
   right: 0;
   height: 100%;
-  width: 40vh;
+  width: 60vw;
   font-family: stormfaze;
   background-color: crimson;
 }
@@ -236,15 +236,18 @@ span {
   flex-direction: column;
 }
 
+#join-dialog {
+	padding: 1px 10px 1px 10px;
+}
 
 .timeLineSlider {
   display:flex;
   flex-direction: row;
 }
 .timeLineSlider, p {
-  background: rgba(12, 122, 22, 0.5);
-  width:100%;
-  margin: 5px 5px 5px 5px;
+  background: rgb(187 69 32 / 50%);
+  /* width:100%; */
+  padding: 5px 5px 5px 5px;
 }
 
 /* For animation Line */
@@ -276,4 +279,42 @@ span {
   border-radius: 50%;
   background: #04AA6D;
   cursor: pointer;
+}
+
+
+#msgBox {
+  text-shadow: 0px 4px 4px #282828;
+  -webkit-user-select: none;
+  /* Safari */
+  -ms-user-select: none;
+  /* IE 10 and IE 11 */
+  user-select: none;
+  /* Standard syntax */
+  background: rgb(2, 0, 36);
+  background: radial-gradient(circle, rgba(2, 0, 36, 1) 0%, rgba(9, 81, 121, 0.8463760504201681) 34%, rgba(0, 212, 255, 1) 100%);
+}
+
+.msg-box {
+  display: none;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  translate: -50%;
+  border-radius: 6px !important;
+  font-size: 15px !important;
+  width: 300px;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+	z-index: 1000;
+  &.error {
+    /* background-color: rgb(93, 4, 5); */
+    color: rgb(255, 0, 30);
+  }
+
+  &.success {
+    /* background-color: rgb(220, 14, 14); */
+    color: rgb(32, 255, 84);
+    text-align: center;
+    margin-left: -150px;
+  }
 }
