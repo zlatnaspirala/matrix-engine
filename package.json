@@ -22,6 +22,7 @@
     "build.tex-particle": "browserify ./2DTextureEditor/particle.js -p esmify > ./2DTextureEditor/builds/particle.tex.js",
     "build.texFromCode": "browserify ./2DTextureEditor/tex-from-code.js -p esmify > ./2DTextureEditor/builds/tex-from-code.tex.js",
     "build.lib": "browserify entry-lib-build.js -p esmify > public/me.lib.js",
+		"build.lib.codepen": "browserify entry-lib-build.js -p esmify > public/me.lib.codepen.js",
     "build.app.ugly": "browserify App.js -p esmify | uglifyjs -cm > public/app.ugly.js",
     "build.all": "npm run build.tex.editor | npm run build.examples | npm run build.app | npm run build.lib | npm run build.app.ugly",
     "te": "node ./2DTextureEditor/editor.js",
