@@ -61,7 +61,7 @@ Used webRTC realtime protocol TCP/UDP. Powered by webGL vs webRTC tech enjoy!
   Shaders must be improved based on work.
   More examples code.
   Links -> https://webglfundamentals.org/webgl/lessons/
-        -> https://iquilezles.org/
+  -> https://iquilezles.org/
 
 ### For npm users recommended
 
@@ -198,7 +198,7 @@ const QueryString = matrixEngine.utility.QueryString;
 ```
 
 To avoid iframe from examples.html you can use `query-build.html?u=<NAME_OF_EXAMPLE>`
- ->  `query-build.html?u=fbo_manipulation`
+-> `query-build.html?u=fbo_manipulation`
 
 ### List of examples:
 
@@ -406,9 +406,9 @@ objGenerator(100);
 ```
 
 ### Networking
- - OLD [your own server part under ./networking folder]
- - New Recommneded - Based on kurento/OpenVidu service [i run personal on maximumroulette.com:2020]
- 
+
+- OLD [your own server part under ./networking folder]
+- New Recommneded - Based on kurento/OpenVidu service [i run personal on maximumroulette.com:2020]
 
 #### [NEW] Networking Support Methods list: ✅😇
 
@@ -416,11 +416,10 @@ Networking is deeply integrated no need for extra interventions.
 Except activation.
 
 ```js
-	matrixEngine.Engine.activateNet2(undefined,
-		{
-			sessionName: 'public-chat-me',
-			resolution: '256x256'
-		});
+matrixEngine.Engine.activateNet2(undefined, {
+  sessionName: 'public-chat-me',
+  resolution: '256x256'
+});
 ```
 
 ```js
@@ -455,24 +454,24 @@ App.scene.MyColoredSquare1.position.SetZ(-8);
 
 ➡ geometry.setSpitz()
 
-
 ## Networking2
+
 New way of networking is kurento/OpenVidu service.
 Only web client part is present here. I have running kurento/Ov server on my VPS[maximumroulette.com:2020].
 
 List of events
- - `onConnectionCreated`
- - `connectionDestroyed`
- - `onStreamCreated`         on remote stream
- - `videoElementDestroyed`
- - `streamPlaying`
- - `streamDestroyed`
- - `sessionDisconnected`
- - `streamCreated`
- - `videoElementCreated`
- - `videoElementDestroyed`
- - `setupSessionObject`       return session object
 
+- `onConnectionCreated`
+- `connectionDestroyed`
+- `onStreamCreated` on remote stream
+- `videoElementDestroyed`
+- `streamPlaying`
+- `streamDestroyed`
+- `sessionDisconnected`
+- `streamCreated`
+- `videoElementCreated`
+- `videoElementDestroyed`
+- `setupSessionObject` return session object
 
 ### Custom textures
 
@@ -997,33 +996,35 @@ physicsObject.addEventListener("collide",function(e) {
 ### OffScreenCanvas [Turbo super power speed]
 
 - Control from manifest `App.offScreenCanvas` | Boolean
-Default `true`. This feature means that your render will work event in inactive mode / hidden tab mode.
+  Default `true`. This feature means that your render will work event in inactive mode / hidden tab mode.
 
 - Other easy way for activating:
-Put in url param next data `query-build.html?u=fbo_manipulation&offScreen=true&offScreenSpeed=10`
-Max render speed is [1]: `query-build.html?u=fbo_manipulation&offScreen=true&offScreenSpeed=1`
-Optimal is ~ 15.
+  Put in url param next data `query-build.html?u=fbo_manipulation&offScreen=true&offScreenSpeed=10`
+  Max render speed is [1]: `query-build.html?u=fbo_manipulation&offScreen=true&offScreenSpeed=1`
+  Optimal is ~ 15.
 
 ### Scene Timeline
-  - Basic implementation
 
-  Init : 
-  `	matrixEngine.matrixWorld.world.useAnimationLine({sequenceSize: 200, totalSequence: 10});`
+- Basic implementation
 
-	[1.9.58] 
-   New args for timeline feature:
-	`matrixEngine.matrixWorld.world.useAnimationLine({sequenceSize: 200, totalSequence: 10});`
-	 New example script for this feature `basic_timeline.js`
+Init :
+`	matrixEngine.matrixWorld.world.useAnimationLine({sequenceSize: 200, totalSequence: 10});`
 
-   Add command for execute every time on sequence (for this example at index 1) reached : 
-	 ```js
+    [1.9.58]
+
+New args for timeline feature:
+`matrixEngine.matrixWorld.world.useAnimationLine({sequenceSize: 200, totalSequence: 10});`
+New example script for this feature `basic_timeline.js`
+
+Add command for execute every time on sequence (for this example at index 1) reached :
+`js
 	 	matrixEngine.matrixWorld.world.addCommandAtSeqIndex(
 		function() {
 			console.log("WHAT EVER HERE")
 		} , 1
 	)
-	 ```
-	 Commands index begin from 1.
+	 `
+Commands index begin from 1.
 
 ### FBO camera
 
@@ -1074,6 +1075,7 @@ setInterval(function () {
 ```c#
  GOOD CODE:
 ```
+
 ```js
 var myFUNC = {
   UPDATE: function () {
@@ -1085,7 +1087,6 @@ var myFUNC = {
 };
 App.updateBeforeDraw.push(myFUNC);
 ```
-
 
 ## Credits && Licence:
 
@@ -1123,16 +1124,16 @@ App.updateBeforeDraw.push(myFUNC);
 - https://www.fesliyanstudios.com/royalty-free-sound-effects-download/gun-shooting-300
 - https://blendswap.com/blend/29206
 - Great job HackTimer.js by turuslan https://github.com/turuslan/HackTimer
-- Matrix-engine use only MIT Licenced or similar shadertoy.com examples. 
-  All origin description is leaved in name of fair use. Just leave shader comments. 
+- Matrix-engine use only MIT Licenced or similar shadertoy.com examples.
+  All origin description is leaved in name of fair use. Just leave shader comments.
   Come's from freeShadersToy object and i will use only MIT licensed or similar
   because https://www.shadertoy.com/terms. I dont wanna "non-commercial" code in
   Matrix-engine project.
 - This is best way for learning GLSL: https://iquilezles.org/ - MIT LICENCE
-  Used iquilezles shaders for learning and explore. Under (public\res\shaders) 
+  Used iquilezles shaders for learning and explore. Under (public\res\shaders)
   Also used glslsandbox lights balls example [https://glslsandbox.com/e#109700.0].
   FBM shader License: Copyright (C) 2011 Ashima Arts. All rights reserved.
-	Distributed under the MIT License. https://github.com/ashima/webgl-noise
-  CustomShaders comes with readme.md file with LICENCE text. If readme.md not exist 
+  Distributed under the MIT License. https://github.com/ashima/webgl-noise
+  CustomShaders comes with readme.md file with LICENCE text. If readme.md not exist
   the it is also MIT Licence but under Nikola Lukic zlatnaspirala@gmail.com.
 - Great free stuff https://ambientcg.com/view?id=MetalPlates004
