@@ -459,8 +459,7 @@ App.scene.MyColoredSquare1.position.SetZ(-8);
 New way of networking is kurento/OpenVidu service.
 Only web client part is present here. I have running kurento/Ov server on my VPS[maximumroulette.com:2020].
 
-List of events
-
+List of events:
 - `onConnectionCreated`
 - `connectionDestroyed`
 - `onStreamCreated` on remote stream
@@ -472,6 +471,7 @@ List of events
 - `videoElementCreated`
 - `videoElementDestroyed`
 - `setupSessionObject` return session object
+
 
 ### Custom textures
 

@@ -39,7 +39,7 @@ self.addEventListener('fetch', function (event) {
     return;
   }
   event.respondWith(
-    caches.open('dynamic-content-v1').then(function (cache) {
+    caches.open(cacheName).then(function (cache) {
       return cache.match(event.request).then(function (response) {
         return (
           response ||
@@ -58,26 +58,26 @@ self.addEventListener('fetch', function (event) {
   );
 });
 
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((resp) => {
-      return (
-        resp ||
-        fetch(event.request).then((response) => {
-          return caches.open(cacheName).then((cache) => {
-            if (response.status == 206) {
-              // statusText: "Partial Content"
-              return response;
-            } else {
-              cache.put(event.request, response.clone());
-            }
-            return response;
-          });
-        })
-      );
-    })
-  );
-});
+// self.addEventListener('fetch', (event) => {
+//   event.respondWith(
+//     caches.match(event.request).then((resp) => {
+//       return (
+//         resp ||
+//         fetch(event.request).then((response) => {
+//           return caches.open(cacheName).then((cache) => {
+//             if (response.status == 206) {
+//               // statusText: "Partial Content"
+//               return response;
+//             } else {
+//               cache.put(event.request, response.clone());
+//             }
+//             return response;
+//           });
+//         })
+//       );
+//     })
+//   );
+// });
 
 const fireAddToHomeScreenImpression = (event) => {
   fireTracking('Add to homescreen shown');

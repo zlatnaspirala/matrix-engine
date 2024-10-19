@@ -1,7 +1,7 @@
 
 ## Mobile browsers support list:
 
-- Android chrome `ALL EXAMPLES WORKS`
+- Android chrome `NOT ALL EXAMPLES WORKS`
   camera_texture demo works with optimisation code
   Cant use video texture on objects on cube works.
   Probally exist some limitation for vetrex size...

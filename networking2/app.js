@@ -56,7 +56,7 @@ export class MatrixStream {
 					to: [],
 					type: CHANNEL
 				}).then(() => {
-					// console.log('emit all successfully');
+					console.log('emit all successfully');
 				}).catch(error => {
 					console.error("Erro signal => ", error);
 				});
@@ -98,7 +98,7 @@ export class MatrixStream {
 	multiPlayer = {
 		root: this,
 		init(rtcEvent) {
-			console.log("rtcEvent add new net object -> ", rtcEvent.userid);
+			console.log("rtcEvent add new net object -> ", rtcEvent);
 			dispatchEvent(new CustomEvent('net-new-user', {detail: {data: rtcEvent}}))
 		},
 		update(e) {
