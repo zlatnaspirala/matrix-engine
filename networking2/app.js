@@ -38,6 +38,7 @@ export class MatrixStream {
 				console.log('[CHANNEL]' + this.sessionName.value)
 				this.attachEvents()
 				console.log(`%c MatrixStream constructed.`, BIGLOG)
+				dispatchEvent(new CustomEvent('net-ready', {}))
 			});
 	}
 
