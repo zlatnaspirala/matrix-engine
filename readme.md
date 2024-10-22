@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `2.0.0` Vampire -> BETA
+### Name: `MATRIX-ENGINE` `2.0.9` Vampire -> BETA
 
 #### Logo
 
@@ -462,7 +462,7 @@ Only web client part is present here. I have running kurento/Ov server on my VPS
 List of events:
 - `onConnectionCreated`
 - `connectionDestroyed`
-- `onStreamCreated` on remote stream
+- `onStreamCreated`
 - `videoElementDestroyed`
 - `streamPlaying`
 - `streamDestroyed`
@@ -470,7 +470,7 @@ List of events:
 - `streamCreated`
 - `videoElementCreated`
 - `videoElementDestroyed`
-- `setupSessionObject` return session object
+- `setupSessionObject`
 
 
 ### Custom textures

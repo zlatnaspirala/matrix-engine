@@ -47,17 +47,15 @@ export class MatrixStream {
 		addEventListener(`LOCAL-STREAM-READY`, (e) => {
 			console.log('LOCAL-STREAM-READY ', e.detail.connection)
 			this.connection = e.detail.connection;
-
 			var CHANNEL = netConfig.sessionName
 			// console.log("ONLY ONES CHANNEL =>", CHANNEL);
 			this.connection.send = (netArg) => {
-				// to Array of Connection objects (optional. Broadcast to everyone if empty)
 				this.session.signal({
 					data: JSON.stringify(netArg),
 					to: [],
 					type: CHANNEL
 				}).then(() => {
-					console.log('emit all successfully');
+					// console.log('emit all successfully');
 				}).catch(error => {
 					console.error("Erro signal => ", error);
 				});
@@ -65,22 +63,16 @@ export class MatrixStream {
 		})
 
 		addEventListener('setupSessionObject', (e) => {
-			// this.connection.session = session;
-      console.log("setupSessionObject=>", e.detail);
+			console.log("setupSessionObject=>", e.detail);
 			this.session = e.detail;
 			this.session.on(`signal:${netConfig.sessionName}`, (e) => {
-
-				// console.log(" call update from  =>", e.from);
-				// dpont call update for self 
-				console.log(`test conn id `, this.connection.connectionId)
-				if (this.connection.connectionId == e.from.connectionId) {
+				if(this.connection.connectionId == e.from.connectionId) {
 					//
 				} else {
 					this.multiPlayer.update(e);
 				}
 			});
 		})
-
 
 		this.joinSessionUI.addEventListener('click', () => {
 			console.log(`%c JOIN SESSION [${netConfig.resolution}] `, REDLOG)
@@ -146,7 +138,7 @@ export class MatrixStream {
 
 	domManipulation = {
 		hideNetPanel: () => {
-			if (byId('matrix-net').classList.contains('hide-by-vertical')) {
+			if(byId('matrix-net').classList.contains('hide-by-vertical')) {
 				byId('matrix-net').classList.remove('hide-by-vertical')
 				byId('matrix-net').classList.add('show-by-vertical')
 				byId('netHeaderTitle').innerText = 'SHOW';
