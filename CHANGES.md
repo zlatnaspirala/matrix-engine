@@ -7,7 +7,7 @@ Objective
  - Deplace old networking and put kurento/OV web client code.
  - Mobile device ready 
  - GUI Editor (win) basic version ready
- [2.0.11] 	For obj sequency animation  `objObject.scaleAll`
+ [2.0.14] 	For obj sequency animation  `objObject.scaleAll`
 
 
 ## ---------------------------------

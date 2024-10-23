@@ -104,7 +104,7 @@ export class MatrixStream {
 					if(e.data.netPos.z) App.scene[e.data.netObjId].position.SetZ(e.data.netPos.z, 'noemit');
 				}
 			} else if(e.data.netRot) {
-				console.log('ROT INFO UPDATE', e);
+				// console.log('ROT INFO UPDATE', e);
 				if(e.data.netRot.x) App.scene[e.data.netObjId].rotation.rotx = e.data.netRot.x;
 				if(e.data.netRot.y) App.scene[e.data.netObjId].rotation.roty = e.data.netRot.y;
 				if(e.data.netRot.z) App.scene[e.data.netObjId].rotation.rotz = e.data.netRot.z;
