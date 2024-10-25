@@ -48,6 +48,7 @@
     "wgpu-matrix": "^2.5.1"
   },
   "devDependencies": {
+    "@babel/traverse": "^7.25.9",
     "browser-resolve": "^2.0.0",
     "browserify": "^17.0.1",
     "esmify": "^2.1.1",
