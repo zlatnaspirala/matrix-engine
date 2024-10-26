@@ -7,6 +7,10 @@ Objective
  - Deplace old networking and put kurento/OV web client code.
  - Mobile device ready 
  - GUI Editor (win) basic version ready
+
+
+ [2.0.16] 	Added to the Base Class Position `xNetOffset yNetOffset zNetOffset`
+            Nice for calibration.
  [2.0.14] 	For obj sequency animation  `objObject.scaleAll`
 
 
