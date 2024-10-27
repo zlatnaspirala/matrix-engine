@@ -2,12 +2,28 @@
 
 # Matrix Engine [CHANGES]
 
-[2.0.0 beta version Vampir]
+[2.0.17 version Vampir]
 Objective
  - Deplace old networking and put kurento/OV web client code.
  - Mobile device ready 
  - GUI Editor (win) basic version ready
 
+ [2.0.17] New event from core net updater.
+  `dispatchEvent('network-data', {detail: e.data})`
+	 For better customisation.
+ ```js
+ update(e) {
+			e.data = JSON.parse(e.data);
+			dispatchEvent('network-data', {detail: e.data})
+			// console.log('INFO UPDATE', e);
+			if(e.data.netPos) {
+				if(App.scene[e.data.netObjId]) {
+					if(e.data.netPos.x) App.scene[e.data.netObjId].position.SetX(e.data.netPos.x, 'noemit');
+					if(e.data.netPos.y) App.scene[e.data.netObjId].position.SetY(e.data.netPos.y, 'noemit');
+					if(e.data.netPos.z) App.scene[e.data.netObjId].position.SetZ(e.data.netPos.z, 'noemit');
+				}
+			} else if(e.data.netRot) {
+ ```
 
  [2.0.16] 	Added to the Base Class Position `xNetOffset yNetOffset zNetOffset`
             Nice for calibration.

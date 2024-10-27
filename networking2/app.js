@@ -96,6 +96,7 @@ export class MatrixStream {
 		},
 		update(e) {
 			e.data = JSON.parse(e.data);
+			dispatchEvent('network-data', {detail: e.data})
 			// console.log('INFO UPDATE', e);
 			if(e.data.netPos) {
 				if(App.scene[e.data.netObjId]) {

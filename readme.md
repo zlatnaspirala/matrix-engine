@@ -430,6 +430,13 @@ App.scene.MyColoredSquare1.net.activate();
 App.scene.MyColoredSquare1.position.SetZ(-8);
 ```
 
+To receive networking data:
+`dispatchEvent('network-data', {detail: e.data})`
+
+```js
+addEventListener('network-data' (e) => {})
+```
+
 - Any scene object:
 
 ➡ position SetX() SetY() SetZ()
