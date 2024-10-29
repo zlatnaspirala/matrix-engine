@@ -7,6 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
+		"build": "browserify entry-lib-build.js -p esmify > public/me.lib.js",
     "install.paths": "node 2DTextureEditor/install-paths.js",
     "install.dep": "npm i | npm install -g uglify-js browserify watchify | npm run install.paths",
     "examples": "watchify App-Examples.js -p [esmify --noImplicitAny] -o public/examples.me.js",
