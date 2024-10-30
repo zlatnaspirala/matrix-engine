@@ -2,17 +2,35 @@
 
 # Matrix Engine [CHANGES]
 
+[2.0.23] New line in EVENTS About WASD FPController
+Reason - adaptation for mobile FPController
+`	if (camera.preventSpeedZero == false) camera.speed = 0;`
+
+```js
+/* Up Key or W */
+if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
+  camera.speed = App.camera.speedAmp;
+} else if (keyboardPress.getKeyStatus(40) || keyboardPress.getKeyStatus(83)) {
+  /* Down Key or S */
+  camera.speed = -App.camera.speedAmp;
+} else {
+  if (camera.preventSpeedZero == false) camera.speed = 0;
+}
+```
+
 [2.0.17 version Vampir]
 Objective
- - Deplace old networking and put kurento/OV web client code.
- - Mobile device ready 
- - GUI Editor (win) basic version ready
 
- [2.0.17] New event from core net updater.
-  `dispatchEvent('network-data', {detail: e.data})`
-	 For better customisation.
- ```js
- update(e) {
+- Deplace old networking and put kurento/OV web client code.
+- Mobile device ready
+- GUI Editor (win) basic version ready
+
+[2.0.17] New event from core net updater.
+`dispatchEvent('network-data', {detail: e.data})`
+For better customisation.
+
+```js
+update(e) {
 			e.data = JSON.parse(e.data);
 			dispatchEvent('network-data', {detail: e.data})
 			// console.log('INFO UPDATE', e);
@@ -23,87 +41,89 @@ Objective
 					if(e.data.netPos.z) App.scene[e.data.netObjId].position.SetZ(e.data.netPos.z, 'noemit');
 				}
 			} else if(e.data.netRot) {
- ```
+```
 
- [2.0.16] 	Added to the Base Class Position `xNetOffset yNetOffset zNetOffset`
-            Nice for calibration.
- [2.0.14] 	For obj sequency animation  `objObject.scaleAll`
-
+[2.0.16] Added to the Base Class Position `xNetOffset yNetOffset zNetOffset`
+Nice for calibration.
+[2.0.14] For obj sequency animation `objObject.scaleAll`
 
 ## ---------------------------------
 
 [1.9.58]
-   New args for timeline feature:
-	`matrixEngine.matrixWorld.world.useAnimationLine({sequenceSize: 200, totalSequence: 10});`
-	 New example script for this feature `basic_timeline.js`
+New args for timeline feature:
+`matrixEngine.matrixWorld.world.useAnimationLine({sequenceSize: 200, totalSequence: 10});`
+New example script for this feature `basic_timeline.js`
 
-   Add command for execute every time on sequence (for this example at index 1) reached : 
-	 ```js
+Add command for execute every time on sequence (for this example at index 1) reached :
+`js
 	 	matrixEngine.matrixWorld.world.addCommandAtSeqIndex(
 		function() {
 			console.log("WHAT EVER HERE")
 		} , 1
 	)
-	 ```
-	 Commands index begin from 1.
+	 `
+Commands index begin from 1.
 
 [1.9.56]
-  Improved FPS example - added item ARMOR first item feature
-  Improved selfDestroy function [in case of simultaneous calls]
-  isHUD added rotateion also in draw func.
-
+Improved FPS example - added item ARMOR first item feature
+Improved selfDestroy function [in case of simultaneous calls]
+isHUD added rotateion also in draw func.
 
 [1.9.54]
- Added custom shaders also glsl files from zlatnaspirala/GLSLShaders
- Add new example `apps/shaders.js`.
- 
+Added custom shaders also glsl files from zlatnaspirala/GLSLShaders
+Add new example `apps/shaders.js`.
 
 [1.9.53]
- - Added shaders from https://iquilezles.org/ MIT LICENCE only.
 
- - `scriptManager.loadGLSL('./path/myshader.glsl')`  returns literal string (shader).
- ```js
-   var promiseMyShader = scriptManager.loadGLSL('../lib/optimizer/custom-shaders/circle.glsl')
-  promiseMyShader.then((d) => {
-    scriptManager.LOAD(d, "custom-toy1-shader-fs", "x-shader/x-fragment", "shaders", () => {
-      App.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
-    })
-  })
- ```
+- Added shaders from https://iquilezles.org/ MIT LICENCE only.
 
+- `scriptManager.loadGLSL('./path/myshader.glsl')` returns literal string (shader).
+
+```js
+var promiseMyShader = scriptManager.loadGLSL('../lib/optimizer/custom-shaders/circle.glsl');
+promiseMyShader.then((d) => {
+  scriptManager.LOAD(d, 'custom-toy1-shader-fs', 'x-shader/x-fragment', 'shaders', () => {
+    App.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-toy1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+  });
+});
+```
 
 [1.9.45+]
- All examples now works on android devices[android 13 tested]!
- - Improved ACCESS_CAMERA for android devices!
- - Improved SET_STREAM function [adapting for mobile devices - android]
- - http on emulator android from LAN - no workers [browser related/ security reason]!
- - Change main file for GUI instance.
+All examples now works on android devices[android 13 tested]!
 
- [mobile optimisation ios fix web_cam visibility](lib/engine.js)
+- Improved ACCESS_CAMERA for android devices!
+- Improved SET_STREAM function [adapting for mobile devices - android]
+- http on emulator android from LAN - no workers [browser related/ security reason]!
+- Change main file for GUI instance.
 
- supportsTouch added for better detecting isMobile()
+[mobile optimisation ios fix web_cam visibility](lib/engine.js)
+
+supportsTouch added for better detecting isMobile()
 
 [1.9.44] Correction for cube physics
- Internal note: rotx + 90
+Internal note: rotx + 90
 
 [1.9.40 - 1.9.43]
- First version with both support opengles11/2 and opengles300
- - Default : 1.3/opengles300
- - Switch with URL param `GLSL=1.3` for opengle300 and `GLSL=1.1` for opengles1.1/2
- - Implemented URL param for examples-build.html?GLSL=1.1 [Affect after first demo choose.]
+First version with both support opengles11/2 and opengles300
+
+- Default : 1.3/opengles300
+- Switch with URL param `GLSL=1.3` for opengle300 and `GLSL=1.1` for opengles1.1/2
+- Implemented URL param for examples-build.html?GLSL=1.1 [Affect after first demo choose.]
 
 [1.9.39]
-  OffScreenCanvas [Turbo super power speed]
+OffScreenCanvas [Turbo super power speed]
+
 - Control from manifest `App.offScreenCanvas` | Boolean
-Default `true`. This feature means that your render will work event in inactive mode / hidden tab mode.
+  Default `true`. This feature means that your render will work event in inactive mode / hidden tab mode.
 
 - Other easy way for activating:
-Put in url param next data `query-build.html?u=fbo_manipulation&offScreen=true&offScreenSpeed=10`
-Max render speed is [1]: `query-build.html?u=fbo_manipulation&offScreen=true&offScreenSpeed=1`
-Optimal is ~ 15.
+  Put in url param next data `query-build.html?u=fbo_manipulation&offScreen=true&offScreenSpeed=10`
+  Max render speed is [1]: `query-build.html?u=fbo_manipulation&offScreen=true&offScreenSpeed=1`
+  Optimal is ~ 15.
 
 [1.9.38] Implemented multi FBO objects with own camera targets!
 See example -> `public/query-build.html?u=fbo_manipulation`
+
 ```
   App.scene.myMirrorUP.setFBO({
     cameraX: 0,
@@ -115,13 +135,12 @@ See example -> `public/query-build.html?u=fbo_manipulation`
 ```
 
 [1.9.37] Add dev tool for configs paths.
-         Node.js tool `install-paths.js`
-         For `./2DTextureEditor` folder. Setup absolute paths intro config.js and editor.js .
-
+Node.js tool `install-paths.js`
+For `./2DTextureEditor` folder. Setup absolute paths intro config.js and editor.js .
 
 [1.9.35] Add simple http server for GUI new part.
-        `npm run host-for-gui`
-        It is host of `./2DTextureEditor` folder.
+`npm run host-for-gui`
+It is host of `./2DTextureEditor` folder.
 
 [1.9.30] App.offScreenCanvas new feature,
 implementing hacker-timer.js worker library.
@@ -130,11 +149,10 @@ QueryString is urlParam.
 
 ```js
 if (App.offScreenCanvas == true && (QueryString.offScreen == null || Boolean(QueryString.offScreen) == true)) {
-
-console.log('App.offScreenCanvas =>', App.offScreenCanvas)
-scriptManager.LOAD('./hacker-timer/hack-timer.js')
+  console.log('App.offScreenCanvas =>', App.offScreenCanvas);
+  scriptManager.LOAD('./hacker-timer/hack-timer.js');
 } else {
-App.offScreenCanvas = false;
+  App.offScreenCanvas = false;
 }
 ```
 
