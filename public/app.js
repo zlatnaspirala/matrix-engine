@@ -1704,12 +1704,12 @@ var keyboardPress = exports.keyboardPress = defineKeyBoardObject();
 
 // For FirstPersonController
 camera.setCamera = function (object) {
-  /* Left Key  or A */
   if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
+    /* Left Key  or A */
     camera.yawRate = _manifest.default.camera.yawRate;
     if (_manifest.default.camera.leftEdge == true) camera.yawRate = _manifest.default.camera.yawRate;
-  } else if (/* Right Key or D */
-  keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
+  } else if (keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
+    /* Right Key or D */
     camera.yawRate = -_manifest.default.camera.yawRate;
     if (_manifest.default.camera.rightEdge == true) camera.yawRate = -_manifest.default.camera.yawRate;
   } else if (keyboardPress.getKeyStatus(32)) {
@@ -1718,7 +1718,6 @@ camera.setCamera = function (object) {
       this.virtualJumpActive = true;
     }
   }
-
   /* Up Key or W */
   if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
     camera.speed = _manifest.default.camera.speedAmp;
@@ -1758,8 +1757,7 @@ camera.setSceneCamera = function (object) {
   if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
     camera.yawRate = _manifest.default.camera.sceneControllerWASDKeysAmp;
     if (_manifest.default.camera.leftEdge == true) camera.yawRate = _manifest.default.camera.sceneControllerEdgeCameraYawRate;
-  } else if (/* Right Key or D */
-  keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
+  } else if (keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
     camera.yawRate = -_manifest.default.camera.sceneControllerWASDKeysAmp;
     if (_manifest.default.camera.rightEdge == true) camera.yawRate = -_manifest.default.camera.sceneControllerEdgeCameraYawRate;
   } else {
@@ -21002,6 +21000,8 @@ function gen2DTextFace(ctx, faceColor, textColor, text) {
   ctx.fillStyle = textColor;
   ctx.fillText(text, width / 2, height / 2);
 }
+
+// Create DOM elements for FPS template.
 function showDomFPSController() {
   byId('mobSpace').style.display = 'grid';
   byId('mobRight').style.display = 'grid';
@@ -21009,6 +21009,7 @@ function showDomFPSController() {
   byId('mobUp').style.display = 'grid';
   byId('mobDown').style.display = 'grid';
   byId('domAngleAxis').style.display = 'grid';
+  byId('mobFire').style.display = 'grid';
 }
 
 // Create DOM elements for FPS template.
@@ -21030,7 +21031,7 @@ function createDomFPSController() {
       cursor: default;
     `);
   domSpace.innerText = `JUMP`;
-  domSpace.addEventListener('touchstart', e => {});
+  // domSpace.addEventListener('touchstart', (e) => {})
   document.body.append(domSpace);
   var domRight = document.createElement('div');
   domRight.id = 'mobRight';
@@ -21049,10 +21050,8 @@ function createDomFPSController() {
       cursor: default;
     `);
   domRight.innerText = `RIGHT`;
-  domRight.addEventListener('touchstart', e => {
-    console.log('TEST RIGHT');
-  });
-  domRight.addEventListener('touchend', e => {});
+  // domRight.addEventListener('touchstart', (e) => {console.log('TEST RIGHT')})
+  // domRight.addEventListener('touchend', (e) => {	})
   document.body.append(domRight);
   var domLeft = document.createElement('div');
   domLeft.id = 'mobLeft';
@@ -21071,10 +21070,8 @@ function createDomFPSController() {
       cursor: default;
     `);
   domLeft.innerText = `LEFT`;
-  domLeft.addEventListener('touchstart', e => {
-    console.log('TEST domLeft');
-  });
-  domLeft.addEventListener('touchend', e => {});
+  // domLeft.addEventListener('touchstart', (e) => {})
+  // domLeft.addEventListener('touchend', (e) => {})
   document.body.append(domLeft);
   var domUp = document.createElement('div');
   domUp.id = 'mobUp';
@@ -21093,13 +21090,29 @@ function createDomFPSController() {
       cursor: default;
     `);
   domUp.innerText = `UP`;
-  domUp.addEventListener('touchstart', e => {
-    console.log('TEST domUp');
-  });
-  domUp.addEventListener('touchend', e => {
-    this.moveForward = false;
-  });
+  // domUp.addEventListener('touchstart', (e) => {})
+  // domUp.addEventListener('touchend', (e) => {})
   document.body.append(domUp);
+  var domFire = document.createElement('div');
+  domFire.id = 'mobFire';
+  domFire.classList.add('noselect');
+  domFire.setAttribute('style', `
+      text-align: center;
+      display: grid;
+      position:absolute;
+      left: 64%;
+      top: 80%;
+      width: 14%;
+      height: 4%;
+      background: rgba(255,255,255,0.2);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domFire.innerText = `FIRE`;
+  // domFire.addEventListener('touchstart', (e) => {})
+  // domFire.addEventListener('touchend', (e) => {})
+  document.body.append(domFire);
   var domDown = document.createElement('div');
   domDown.id = 'mobDown';
   domDown.classList.add('noselect');
@@ -21117,8 +21130,8 @@ function createDomFPSController() {
       cursor: default;
     `);
   domDown.innerText = `DOWN`;
-  domDown.addEventListener('touchstart', e => {});
-  domDown.addEventListener('touchend', e => {});
+  // domDown.addEventListener('touchstart', (e) => {})
+  // domDown.addEventListener('touchend', (e) => {})
   document.body.append(domDown);
   var domAngleAxis = document.createElement('div');
   domAngleAxis.id = 'domAngleAxis';
@@ -21127,17 +21140,17 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 9%;
-      top: 82%;
-      width: 28%;
+      left: 5%;
+      top: 69%;
+      width: 45%;
       height: 28%;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.2);
       margin: auto;
       align-items: center;
       cursor: default;
     `);
   domAngleAxis.innerHTML = `    `;
-  domAngleAxis.addEventListener('touchstart', e => {});
+  // domAngleAxis.addEventListener('touchstart', (e) => {})
   document.body.append(domAngleAxis);
   showDomFPSController();
 }
@@ -21511,11 +21524,11 @@ class MatrixStream {
       if ((0, _matrixStream.byId)('matrix-net').classList.contains('hide-by-vertical')) {
         (0, _matrixStream.byId)('matrix-net').classList.remove('hide-by-vertical');
         (0, _matrixStream.byId)('matrix-net').classList.add('show-by-vertical');
-        (0, _matrixStream.byId)('netHeaderTitle').innerText = 'SHOW';
+        (0, _matrixStream.byId)('netHeaderTitle').innerText = 'HIDE';
       } else {
         (0, _matrixStream.byId)('matrix-net').classList.remove('show-by-vertical');
         (0, _matrixStream.byId)('matrix-net').classList.add('hide-by-vertical');
-        (0, _matrixStream.byId)('netHeaderTitle').innerText = 'HIDE';
+        (0, _matrixStream.byId)('netHeaderTitle').innerText = 'SHOW';
       }
     }
   };

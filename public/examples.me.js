@@ -5,125 +5,65 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
 var matrixEngine = _interopRequireWildcard(require("./index"));
-
 var _cube_tex_arrays = require("./apps/cube_tex_arrays");
-
 var _adding_color_cube = require("./apps/adding_color_cube");
-
 var _adding_color_piramyde = require("./apps/adding_color_piramyde");
-
 var _adding_color_triangle = require("./apps/adding_color_triangle");
-
 var _adding_tex_square_raycast = require("./apps/adding_tex_square_raycast");
-
 var _adding_more_texture_samplers = require("./apps/adding_more_texture_samplers");
-
 var _adding_square_texture = require("./apps/adding_square_texture");
-
 var _all_variant_of_blending = require("./apps/all_variant_of_blending");
-
 var _audio_manipulation = require("./apps/audio_manipulation");
-
 var _audio_manipulation2 = require("./apps/audio_manipulation2");
-
 var _camera_texture = require("./apps/camera_texture");
-
 var _cube_experimental = require("./apps/cube_experimental");
-
 var _cube_geometry = require("./apps/cube_geometry");
-
 var _cube_light_and_texture = require("./apps/cube_light_and_texture");
-
 var _cube_light_dinamic = require("./apps/cube_light_dinamic");
-
 var _custom_texture = require("./apps/custom_texture");
-
 var _first_person_controller = require("./apps/first_person_controller");
-
 var _load_obj_file = require("./apps/load_obj_file");
-
 var _my_world = require("./apps/my_world");
-
 var _obj_animation = require("./apps/obj_animation");
-
 var _obj_animation_build_mesh_effect = require("./apps/obj_animation_build_mesh_effect");
-
 var _oneKilo = require("./apps/one-kilo");
-
 var _porting2d = require("./apps/porting2d");
-
 var _porting2d_particle = require("./apps/porting2d_particle");
-
 var _porting2d_text = require("./apps/porting2d_text");
-
 var _sphere_geometry = require("./apps/sphere_geometry");
-
 var _texture_dinamic_manipulation = require("./apps/texture_dinamic_manipulation");
-
 var _video_texture = require("./apps/video_texture");
-
 var _adding_color_square = require("./apps/adding_color_square");
-
 var _bvhLoader = require("./apps/bvh-loader");
-
 var _bvhAnimationClass = require("./apps/bvh-animation-class");
-
 var _active_editor = require("./apps/active_editor");
-
 var _porting2d_micro_draw = require("./apps/porting2d_micro_draw");
-
 var _physics_cube = require("./apps/physics_cube");
-
 var _physics_sphere = require("./apps/physics_sphere");
-
 var _spot_light_basic = require("./apps/spot_light_basic");
-
 var _networking_basic = require("./apps/networking_basic");
-
 var _load_obj_sequence = require("./apps/load_obj_sequence");
-
 var _opengles_native_cubemap = require("./apps/opengles_native_cubemap");
-
 var _opengles_native_cubemap_images = require("./apps/opengles_native_cubemap_images");
-
 var _lens_effect = require("./apps/lens_effect");
-
 var _fps_player_controller = require("./apps/fps_player_controller");
-
 var _basic_fbo = require("./apps/basic_fbo");
-
 var _video_texture_lava = require("./apps/video_texture_lava");
-
 var _matrix_chat_room = require("./apps/matrix_chat_room");
-
 var _torus_geometry = require("./apps/torus_geometry");
-
 var _physics_cube_active_textures = require("./apps/physics_cube_active_textures");
-
 var _fbo_manipulation = require("./apps/fbo_manipulation");
-
 var _welcomeGuiEditor = require("./apps/welcome-gui-editor");
-
 var _rolling_the_dice = require("./apps/rolling_the_dice");
-
 var _shader1_direct = require("./apps/shader1_direct");
-
 var _shaders = require("./apps/shaders");
-
 var _shader2_direct = require("./apps/shader2_direct");
-
 var _basic_timeline = require("./apps/basic_timeline");
-
 var _networking2_basic = require("./apps/networking2_basic");
-
 var _public_3d_video_chat = require("./apps/public_3d_video_chat");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 /**
  * @description
  * All examples instances.
@@ -190,39 +130,38 @@ var Examples = {
   video_texture: _video_texture.runThis,
   welcome_gui_editor: _welcomeGuiEditor.runThis
 };
+
 /**
  * @description
  * Little help func.
  */
-
 const QueryString = matrixEngine.utility.QueryString;
-const scriptManager = matrixEngine.utility.scriptManager; //https://webglfundamentals.org/webgl/resources/m4.js
+const scriptManager = matrixEngine.utility.scriptManager;
+
+//https://webglfundamentals.org/webgl/resources/m4.js
 
 var world;
 var App = matrixEngine.App;
-
-if ('serviceWorker' in navigator) {// navigator.serviceWorker.register('worker.js');
+if ('serviceWorker' in navigator) {
+  // navigator.serviceWorker.register('worker.js');
 } else {
   console.warn('Matrix Engine: No support for web workers in this browser.');
 }
-
 window.addEventListener('load', function () {
   setTimeout(() => {
     matrixEngine.Engine.initApp(webGLStart);
   }, 1000);
 });
-
 function webGLStart() {
   world = matrixEngine.matrixWorld.defineworld(canvas);
-
   if (world) {
     world.callReDraw();
-
     if (typeof QueryString.u != 'undefined' && typeof Examples[QueryString.u] != 'undefined') {
       setTimeout(() => {
         try {
           Examples[QueryString.u](world);
-        } catch (err) {// Examples['adding_color_cube'](world);
+        } catch (err) {
+          // Examples['adding_color_cube'](world);
         }
       }, 100);
     } else {
@@ -232,19 +171,18 @@ function webGLStart() {
     }
   } else {
     console.error(' Canvas has not been initialized, contact your programmer... ');
-  } // Make it global for console easy access.
+  }
+
+  // Make it global for console easy access.
   // Remove this line for final prodc.
-
-
   window.App = App;
-} // Make it global for console easy access.
+}
+
+// Make it global for console easy access.
 // Remove this line for final prodc.
-
-
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
-var _default = App;
-exports.default = _default;
+var _default = exports.default = App;
 
 },{"./apps/active_editor":2,"./apps/adding_color_cube":3,"./apps/adding_color_piramyde":4,"./apps/adding_color_square":5,"./apps/adding_color_triangle":6,"./apps/adding_more_texture_samplers":7,"./apps/adding_square_texture":8,"./apps/adding_tex_square_raycast":9,"./apps/all_variant_of_blending":10,"./apps/audio_manipulation":12,"./apps/audio_manipulation2":13,"./apps/basic_fbo":14,"./apps/basic_timeline":15,"./apps/bvh-animation-class":16,"./apps/bvh-loader":17,"./apps/camera_texture":18,"./apps/cube_experimental":19,"./apps/cube_geometry":20,"./apps/cube_light_and_texture":21,"./apps/cube_light_dinamic":22,"./apps/cube_tex_arrays":23,"./apps/custom_texture":24,"./apps/fbo_manipulation":25,"./apps/first_person_controller":26,"./apps/fps_player_controller":27,"./apps/lens_effect":28,"./apps/load_obj_file":29,"./apps/load_obj_sequence":30,"./apps/matrix_chat_room":31,"./apps/my_world":32,"./apps/networking2_basic":33,"./apps/networking_basic":34,"./apps/obj_animation":35,"./apps/obj_animation_build_mesh_effect":36,"./apps/one-kilo":37,"./apps/opengles_native_cubemap":38,"./apps/opengles_native_cubemap_images":39,"./apps/physics_cube":40,"./apps/physics_cube_active_textures":41,"./apps/physics_sphere":42,"./apps/porting2d":43,"./apps/porting2d_micro_draw":44,"./apps/porting2d_particle":45,"./apps/porting2d_text":46,"./apps/public_3d_video_chat":47,"./apps/rolling_the_dice":48,"./apps/shader1_direct":49,"./apps/shader2_direct":50,"./apps/shaders":51,"./apps/sphere_geometry":52,"./apps/spot_light_basic":53,"./apps/texture_dinamic_manipulation":54,"./apps/torus_geometry":55,"./apps/video_texture":56,"./apps/video_texture_lava":57,"./apps/welcome-gui-editor":58,"./index":60}],2:[function(require,module,exports){
 "use strict";
@@ -253,31 +191,24 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
 var CANNON = _interopRequireWildcard(require("cannon"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  * How to use texture editor
  */
+
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 let Vjs3 = matrixEngine.Engine.Vjs3;
 let E = matrixEngine.utility.E;
-
 var runThis = world => {
-  _manifest.default.camera.SceneController = true; // eslint-disable-next-line no-unused-vars
-
+  _manifest.default.camera.SceneController = true;
+  // eslint-disable-next-line no-unused-vars
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png", "res/images/semi_pack/gradiend_half2.png"],
     mix_operation: "multiply"
@@ -290,114 +221,90 @@ var runThis = world => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
   window.addEventListener('ray.hit.event', ev => {
-    console.log("You shoot the object! Nice!", ev); // Physics force apply
-
+    console.log("You shoot the object! Nice!", ev);
+    // Physics force apply
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
       _manifest.default.scene.outsideBox.playerHits++;
       var actualTexFrame = document.getElementById('actualTexture');
-      actualTexFrame.contentWindow.title.TEXTBOX.TEXT = 'HITS:' + _manifest.default.scene.outsideBox.playerHits; // double - this is deep from raycaster
+      actualTexFrame.contentWindow.title.TEXTBOX.TEXT = 'HITS:' + _manifest.default.scene.outsideBox.playerHits;
 
+      // double - this is deep from raycaster
       _manifest.default.scene.outsideBox2.playerHits++;
       var tex1 = document.getElementById('tex1');
       tex1.contentWindow.hits.TEXTBOX.TEXT = 'HITS:' + _manifest.default.scene.outsideBox2.playerHits;
     }
-  }); // Matrix Engine use visual-js game engine like texture editor.
+  });
 
+  // Matrix Engine use visual-js game engine like texture editor.
   world.Add("cubeLightTex", 1, "outsideBox", tex);
   _manifest.default.scene.outsideBox.playerHits = 0;
   _manifest.default.scene.outsideBox.rotation.rotz = -90;
   _manifest.default.scene.outsideBox.position.y = 0;
   _manifest.default.scene.outsideBox.position.z = -55;
-
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
-
   _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
   _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
   _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[5];
   E("webcam_beta").style.display = "none";
   _manifest.default.scene.outsideBox.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/actual.html", "actualTexture");
-
   _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
-
   setTimeout(() => {
     E("HOLDER_STREAMS").style.display = 'none';
-  }, 450); // Matrix Engine use visual-js game engine like texture editor in multiply times.
+  }, 450);
 
+  // Matrix Engine use visual-js game engine like texture editor in multiply times.
   world.Add("cubeLightTex", 1, "outsideBox2", tex);
   _manifest.default.scene.outsideBox2.playerHits = 0;
   _manifest.default.scene.outsideBox2.rotation.rotz = -90;
   _manifest.default.scene.outsideBox2.position.y = 0;
   _manifest.default.scene.outsideBox2.position.z = -55;
-
   _manifest.default.scene.outsideBox2.LightsData.ambientLight.set(1, 1, 1);
-
   _manifest.default.scene.outsideBox2.glBlend.blendEnabled = true;
   _manifest.default.scene.outsideBox2.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[5];
   _manifest.default.scene.outsideBox2.glBlend.blendParamDest = ENUMERATORS.glBlend.param[6];
-  _manifest.default.scene.outsideBox2.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/tex1.html", "tex1"); // App.scene.outsideBox2.streamTextures.showTextureEditor();
+  _manifest.default.scene.outsideBox2.streamTextures = new Vjs3("http://localhost/PRIVATE_SERVER/me/me/2DTextureEditor/tex1.html", "tex1");
+
+  // App.scene.outsideBox2.streamTextures.showTextureEditor();
+
   // Walls
-
   world.Add("cubeLightTex", 1, "WALLRIGHT", texStone);
-
   _manifest.default.scene.WALLRIGHT.geometry.setScaleByX(0.5);
-
   _manifest.default.scene.WALLRIGHT.geometry.setScaleByY(4);
-
   _manifest.default.scene.WALLRIGHT.geometry.setScaleByZ(14);
-
   _manifest.default.scene.WALLRIGHT.position.SetX(14);
-
   _manifest.default.scene.WALLRIGHT.position.SetY(3);
-
   _manifest.default.scene.WALLRIGHT.position.SetZ(-15);
-
   _manifest.default.scene.WALLRIGHT.geometry.setTexCoordScaleXFactor(1);
-
   world.Add("cubeLightTex", 1, "WALLLEFT", texStone);
-
   _manifest.default.scene.WALLLEFT.geometry.setScaleByX(0.5);
-
   _manifest.default.scene.WALLLEFT.geometry.setScaleByY(4);
-
   _manifest.default.scene.WALLLEFT.geometry.setScaleByZ(14);
-
   _manifest.default.scene.WALLLEFT.position.SetX(-14);
-
   _manifest.default.scene.WALLLEFT.position.SetY(3);
-
   _manifest.default.scene.WALLLEFT.position.SetZ(-15);
-
   _manifest.default.scene.WALLLEFT.geometry.setTexCoordScaleYFactor(1);
-
   world.Add("cubeLightTex", 1, "WALLFRONT", texStone);
-
   _manifest.default.scene.WALLFRONT.geometry.setScaleByX(14);
-
   _manifest.default.scene.WALLFRONT.geometry.setScaleByY(4);
-
   _manifest.default.scene.WALLFRONT.geometry.setScaleByZ(0.5);
-
   _manifest.default.scene.WALLFRONT.position.SetX(0);
-
   _manifest.default.scene.WALLFRONT.position.SetY(3);
-
   _manifest.default.scene.WALLFRONT.position.SetZ(-27);
+  _manifest.default.scene.WALLFRONT.geometry.setTexCoordScaleXFactor(1);
 
-  _manifest.default.scene.WALLFRONT.geometry.setTexCoordScaleXFactor(1); // Load Physics world
-
-
+  // Load Physics world
   let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground (this func create scene object FLOOR_STATIC)
-
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground (this func create scene object FLOOR_STATIC)
   physics.addGround(_manifest.default, world, tex);
   var b = new CANNON.Body({
     mass: 5,
     position: new CANNON.Vec3(0, -5, 1),
     shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
   });
-  physics.world.addBody(b); // Physics
-
+  physics.world.addBody(b);
+  // Physics
   _manifest.default.scene.outsideBox.physics.currentBody = b;
   _manifest.default.scene.outsideBox.physics.enabled = true;
   var b2 = new CANNON.Body({
@@ -405,14 +312,12 @@ var runThis = world => {
     position: new CANNON.Vec3(0, -5, 1),
     shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
   });
-  physics.world.addBody(b2); // Physics
-
+  physics.world.addBody(b2);
+  // Physics
   _manifest.default.scene.outsideBox2.physics.currentBody = b2;
   _manifest.default.scene.outsideBox2.physics.enabled = true;
-
   _manifest.default.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(1);
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99,"cannon":96}],3:[function(require,module,exports){
@@ -422,11 +327,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
@@ -434,6 +336,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App */
+
 var runThis = world => {
   world.Add("cube", 1, "MyColoredCube1");
   world.Add("cube", 1, "MyColoredCube2");
@@ -444,18 +347,13 @@ var runThis = world => {
   addEventListener("ray.hit.event", function (e) {
     console.info(e.detail);
   });
-
   _manifest.default.scene.MyColoredCube1.position.SetX(0);
-
   _manifest.default.scene.MyColoredCube2.position.SetX(-2.5);
-
   _manifest.default.scene.MyColoredCube3.position.SetX(2.5);
-
   _manifest.default.scene.MyColoredCube1.rotation.rotationSpeed.x = 15;
   _manifest.default.scene.MyColoredCube2.rotation.rotationSpeed.y = 15;
   _manifest.default.scene.MyColoredCube3.rotation.rotationSpeed.z = 15;
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],4:[function(require,module,exports){
@@ -465,28 +363,22 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
  */
 
 /* globals world App world */
+
 var runThis = world => {
   world.Add("pyramid", 1, "MyPyramid1");
   world.Add("pyramid", 1, "MyPyramid2");
   world.Add("pyramid", 1, "MyPyramid3");
-
   _manifest.default.scene.MyPyramid1.position.SetX(2.5);
-
   _manifest.default.scene.MyPyramid2.position.SetX(0);
-
   _manifest.default.scene.MyPyramid3.position.SetX(-2.5);
-
   _manifest.default.scene.MyPyramid1.rotation.rotationSpeed.y = 20;
   _manifest.default.scene.MyPyramid2.rotation.rotationSpeed.y = 20;
   _manifest.default.scene.MyPyramid3.rotation.rotationSpeed.y = 20;
@@ -497,7 +389,6 @@ var runThis = world => {
     console.info(e.detail);
   });
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],5:[function(require,module,exports){
@@ -507,33 +398,26 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
  */
 
 /* globals world App world */
+
 var runThis = world => {
   world.Add("square", 1, "MyColoredSquare1");
   world.Add("square", 1.1, "MyColoredSquare2");
   world.Add("square", 1.2, "MyColoredSquare3");
-
   _manifest.default.scene.MyColoredSquare1.position.SetX(2.5);
-
   _manifest.default.scene.MyColoredSquare2.position.SetX(0);
-
   _manifest.default.scene.MyColoredSquare3.position.SetX(-2.5);
-
   _manifest.default.scene.MyColoredSquare1.rotation.rotationSpeed.x = 15;
   _manifest.default.scene.MyColoredSquare2.rotation.rotationSpeed.x = 15;
   _manifest.default.scene.MyColoredSquare3.rotation.rotationSpeed.x = 15;
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],6:[function(require,module,exports){
@@ -543,17 +427,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
  */
 
 /* globals world App world */
+
 var runThis = world => {
   world.Add("triangle", 1, "MyColoredTriangle1");
   world.Add("triangle", 1, "MyColoredTriangle2");
@@ -561,24 +443,16 @@ var runThis = world => {
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
-
   _manifest.default.scene.MyColoredTriangle1.position.SetZ(-4);
-
   _manifest.default.scene.MyColoredTriangle1.position.SetX(0);
-
   _manifest.default.scene.MyColoredTriangle1.position.SetY(0);
-
   _manifest.default.scene.MyColoredTriangle1.position.SetX(2.5);
-
   _manifest.default.scene.MyColoredTriangle2.position.SetX(0);
-
   _manifest.default.scene.MyColoredTriangle3.position.SetX(-2.5);
-
   _manifest.default.scene.MyColoredTriangle1.rotation.rotationSpeed.z = -10;
   _manifest.default.scene.MyColoredTriangle2.rotation.rotationSpeed.z = -10;
   _manifest.default.scene.MyColoredTriangle3.rotation.rotationSpeed.z = -10;
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],7:[function(require,module,exports){
@@ -588,17 +462,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
  */
 
 /* globals world App world */
+
 var runThis = world => {
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png", "res/images/texture_spiral1.png"],
@@ -610,11 +482,9 @@ var runThis = world => {
       source: ["res/images/complex_texture_1/diffuse.png", "res/images/texture_spiral1.png", "res/images/icon2.png"],
       mix_operation: "divide"
     };
-
     _manifest.default.scene.MyCubeTex.changeMaterial(textuteImageSamplers);
   }, 5000);
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],8:[function(require,module,exports){
@@ -624,17 +494,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
  */
 
 /* globals world App world */
+
 var runThis = world => {
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
@@ -643,7 +511,6 @@ var runThis = world => {
   world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers);
   _manifest.default.scene.MySquareTexure1.rotation.rotationSpeed.x = 10;
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],9:[function(require,module,exports){
@@ -653,25 +520,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
  */
+
 var runThis = world => {
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
   world.Add("squareTex", 1, "MyColoredSquareRayObject", textuteImageSamplers);
-
   _manifest.default.scene.MyColoredSquareRayObject.position.SetX(0);
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],10:[function(require,module,exports){
@@ -681,17 +544,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
+
 var runThis = world => {
   var App = matrixEngine.App;
   var textuteImageSamplers2 = {
@@ -707,7 +567,6 @@ var runThis = world => {
   App.scene.cube.rotation.rotationSpeed.x = 10;
   App.scene.cube.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
   App.scene.cube.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-
   for (var f = 0; f < matrixEngine.utility.ENUMERATORS.glBlend.param.length; f++) {
     world.Add('cubeLightTex', 0.65, 'test' + f, textuteImageSamplers);
     App.scene['test' + f].glBlend.blendEnabled = true;
@@ -719,7 +578,6 @@ var runThis = world => {
     App.scene['test' + f].glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
   }
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60}],11:[function(require,module,exports){
@@ -729,10 +587,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.bvhAnimations = void 0;
-
 /** Auto generated file */
-var bvhAnimations = ['./res/bvh/Female1_A01_Stand.bvh', './res/bvh/Female1_A02_Sway.bvh', './res/bvh/Female1_A02_SwayT2.bvh', './res/bvh/Female1_A03_Swing.bvh', './res/bvh/Female1_A03_SwingT2.bvh', './res/bvh/Female1_A04_Look.bvh', './res/bvh/Female1_A05_PickUpBox.bvh', './res/bvh/Female1_A06_LiftBox.bvh', './res/bvh/Female1_A06_LiftBoxT2.bvh', './res/bvh/Female1_A07_Crouch.bvh', './res/bvh/Female1_A08_CrouchToLie.bvh', './res/bvh/Female1_A09_LieT2.bvh', './res/bvh/Female1_A10_LieToCrouch.bvh', './res/bvh/Female1_A11_CrawlForward.bvh', './res/bvh/Female1_A12_CrawlBackwards.bvh', './res/bvh/Female1_A13_Skipping.bvh', './res/bvh/Female1_A14_StandToSkip.bvh', './res/bvh/Female1_A15_SkipToStand.bvh', './res/bvh/Female1_B01_StandToWalk.bvh', './res/bvh/Female1_B02_WalkToStand.bvh', './res/bvh/Female1_B02_WalkToStandT2.bvh', './res/bvh/Female1_B03_Walk1.bvh', './res/bvh/Female1_B04_StandToWalkBack.bvh', './res/bvh/Female1_B05_WalkBackwards.bvh', './res/bvh/Female1_B06_WalkBackwardsToStand.bvh', './res/bvh/Female1_B07_WalkBackwardsTurnForwards.bvh', './res/bvh/Female1_B08_WalkBackwardsStopForwards.bvh', './res/bvh/Female1_B09_WalkTurnLeft90.bvh', './res/bvh/Female1_B10_WalkTurnLeft45.bvh', './res/bvh/Female1_B11_WalkTurnLeft135.bvh', './res/bvh/Female1_B12_WalkTurnRight90.bvh', './res/bvh/Female1_B13_WalkTurnRight45.bvh', './res/bvh/Female1_B14_WalkTurnRight135.bvh', './res/bvh/Female1_B15_WalkTurnAround180.bvh', './res/bvh/Female1_B16_WalkTurnChangeDirection.bvh', './res/bvh/Female1_B17_WalkToHopToWalk1.bvh', './res/bvh/Female1_B18_WalkToLeapToWalk.bvh', './res/bvh/Female1_B19_WalkToPickUpBox.bvh', './res/bvh/Female1_B20_WalkWithBox.bvh', './res/bvh/Female1_B21_PutDownBoxToWalk.bvh', './res/bvh/Female1_B21_S2_PutDownBoxToWalk.bvh', './res/bvh/Female1_B21_S3_PutDownBoxToWalk.bvh', './res/bvh/Female1_B22_SideStepLeft.bvh', './res/bvh/Female1_B23_SideStepRight.bvh', './res/bvh/Female1_B24_WalkToCrouch.bvh', './res/bvh/Female1_B25_CrouchToWalk.bvh', './res/bvh/Female1_B26_WalkToSkip.bvh', './res/bvh/Female1_B27_SkipToWalk1.bvh', './res/bvh/Female1_C02_RunToStand.bvh', './res/bvh/Female1_C03_Run.bvh', './res/bvh/Female1_C04_RunToWalk1.bvh', './res/bvh/Female1_C05_WalkToRun.bvh', './res/bvh/Female1_C06_StandToRunBackwards.bvh', './res/bvh/Female1_C07_RunBackwards.bvh', './res/bvh/Female1_C08_RunBackwardsToStand.bvh', './res/bvh/Female1_C09_RunBackwardsTurnRunForward.bvh', './res/bvh/Female1_C10_RunBackwardsStopRunForward.bvh', './res/bvh/Female1_C11_RunTurnLeft90.bvh', './res/bvh/Female1_C12_RunTurnLeft45.bvh', './res/bvh/Female1_C13_RunTurnLeft135.bvh', './res/bvh/Female1_C14_RunTurnRight90.bvh', './res/bvh/Female1_C15_RunTurnRight45.bvh', './res/bvh/Female1_C16_RunTurnRight135.bvh', './res/bvh/Female1_C17_RunTurnAround.bvh', './res/bvh/Female1_C18_RunChangeDirection.bvh', './res/bvh/Female1_C19_RunToHopToWalk.bvh', './res/bvh/Female1_C20_RunToJumpToWalk.bvh', './res/bvh/Female1_C21_RunToPickUpBox.bvh', './res/bvh/Female1_C21_S2_RunToPickUpBox.bvh', './res/bvh/Female1_C22_RunWithBox.bvh', './res/bvh/Female1_C23_PutDownBoxToRun.bvh', './res/bvh/Female1_C24_SideStepLeft.bvh', './res/bvh/Female1_C25_SideStepRight.bvh', './res/bvh/Female1_C26_RunToCrouch.bvh', './res/bvh/Female1_C27_CrouchToRun1.bvh', './res/bvh/Female1_D1_Urban.bvh', './res/bvh/Female1_D2_Wait.bvh', './res/bvh/Female1_D3_ConversationGestures.bvh', './res/bvh/Female1_D4_RandomStuff.bvh', './res/bvh/Female1_D5_RandomStuff2.bvh', './res/bvh/Female1_D6_CartWheel.bvh', './res/bvh/readme.txt'];
-exports.bvhAnimations = bvhAnimations;
+var bvhAnimations = exports.bvhAnimations = ['./res/bvh/Female1_A01_Stand.bvh', './res/bvh/Female1_A02_Sway.bvh', './res/bvh/Female1_A02_SwayT2.bvh', './res/bvh/Female1_A03_Swing.bvh', './res/bvh/Female1_A03_SwingT2.bvh', './res/bvh/Female1_A04_Look.bvh', './res/bvh/Female1_A05_PickUpBox.bvh', './res/bvh/Female1_A06_LiftBox.bvh', './res/bvh/Female1_A06_LiftBoxT2.bvh', './res/bvh/Female1_A07_Crouch.bvh', './res/bvh/Female1_A08_CrouchToLie.bvh', './res/bvh/Female1_A09_LieT2.bvh', './res/bvh/Female1_A10_LieToCrouch.bvh', './res/bvh/Female1_A11_CrawlForward.bvh', './res/bvh/Female1_A12_CrawlBackwards.bvh', './res/bvh/Female1_A13_Skipping.bvh', './res/bvh/Female1_A14_StandToSkip.bvh', './res/bvh/Female1_A15_SkipToStand.bvh', './res/bvh/Female1_B01_StandToWalk.bvh', './res/bvh/Female1_B02_WalkToStand.bvh', './res/bvh/Female1_B02_WalkToStandT2.bvh', './res/bvh/Female1_B03_Walk1.bvh', './res/bvh/Female1_B04_StandToWalkBack.bvh', './res/bvh/Female1_B05_WalkBackwards.bvh', './res/bvh/Female1_B06_WalkBackwardsToStand.bvh', './res/bvh/Female1_B07_WalkBackwardsTurnForwards.bvh', './res/bvh/Female1_B08_WalkBackwardsStopForwards.bvh', './res/bvh/Female1_B09_WalkTurnLeft90.bvh', './res/bvh/Female1_B10_WalkTurnLeft45.bvh', './res/bvh/Female1_B11_WalkTurnLeft135.bvh', './res/bvh/Female1_B12_WalkTurnRight90.bvh', './res/bvh/Female1_B13_WalkTurnRight45.bvh', './res/bvh/Female1_B14_WalkTurnRight135.bvh', './res/bvh/Female1_B15_WalkTurnAround180.bvh', './res/bvh/Female1_B16_WalkTurnChangeDirection.bvh', './res/bvh/Female1_B17_WalkToHopToWalk1.bvh', './res/bvh/Female1_B18_WalkToLeapToWalk.bvh', './res/bvh/Female1_B19_WalkToPickUpBox.bvh', './res/bvh/Female1_B20_WalkWithBox.bvh', './res/bvh/Female1_B21_PutDownBoxToWalk.bvh', './res/bvh/Female1_B21_S2_PutDownBoxToWalk.bvh', './res/bvh/Female1_B21_S3_PutDownBoxToWalk.bvh', './res/bvh/Female1_B22_SideStepLeft.bvh', './res/bvh/Female1_B23_SideStepRight.bvh', './res/bvh/Female1_B24_WalkToCrouch.bvh', './res/bvh/Female1_B25_CrouchToWalk.bvh', './res/bvh/Female1_B26_WalkToSkip.bvh', './res/bvh/Female1_B27_SkipToWalk1.bvh', './res/bvh/Female1_C02_RunToStand.bvh', './res/bvh/Female1_C03_Run.bvh', './res/bvh/Female1_C04_RunToWalk1.bvh', './res/bvh/Female1_C05_WalkToRun.bvh', './res/bvh/Female1_C06_StandToRunBackwards.bvh', './res/bvh/Female1_C07_RunBackwards.bvh', './res/bvh/Female1_C08_RunBackwardsToStand.bvh', './res/bvh/Female1_C09_RunBackwardsTurnRunForward.bvh', './res/bvh/Female1_C10_RunBackwardsStopRunForward.bvh', './res/bvh/Female1_C11_RunTurnLeft90.bvh', './res/bvh/Female1_C12_RunTurnLeft45.bvh', './res/bvh/Female1_C13_RunTurnLeft135.bvh', './res/bvh/Female1_C14_RunTurnRight90.bvh', './res/bvh/Female1_C15_RunTurnRight45.bvh', './res/bvh/Female1_C16_RunTurnRight135.bvh', './res/bvh/Female1_C17_RunTurnAround.bvh', './res/bvh/Female1_C18_RunChangeDirection.bvh', './res/bvh/Female1_C19_RunToHopToWalk.bvh', './res/bvh/Female1_C20_RunToJumpToWalk.bvh', './res/bvh/Female1_C21_RunToPickUpBox.bvh', './res/bvh/Female1_C21_S2_RunToPickUpBox.bvh', './res/bvh/Female1_C22_RunWithBox.bvh', './res/bvh/Female1_C23_PutDownBoxToRun.bvh', './res/bvh/Female1_C24_SideStepLeft.bvh', './res/bvh/Female1_C25_SideStepRight.bvh', './res/bvh/Female1_C26_RunToCrouch.bvh', './res/bvh/Female1_C27_CrouchToRun1.bvh', './res/bvh/Female1_D1_Urban.bvh', './res/bvh/Female1_D2_Wait.bvh', './res/bvh/Female1_D3_ConversationGestures.bvh', './res/bvh/Female1_D4_RandomStuff.bvh', './res/bvh/Female1_D5_RandomStuff2.bvh', './res/bvh/Female1_D6_CartWheel.bvh', './res/bvh/readme.txt'];
 
 },{}],12:[function(require,module,exports){
 "use strict";
@@ -741,13 +597,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 /* eslint-disable no-unused-vars */
 
 /**
@@ -756,19 +608,17 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
  */
 
 /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA Galactic*/
+
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 let E = matrixEngine.utility.E;
-
 var runThis = world => {
   var App = matrixEngine.App;
   console.log("world", world);
-
   for (var i = 1; i < 1024; i = i + 70) {
-    world.Add("pyramid", 0.1 + i / 1000, "MyPyramid" + i); // eval( "App.scene.MyPyramid"+i+".position.x = 5.5-i/100");
-
+    world.Add("pyramid", 0.1 + i / 1000, "MyPyramid" + i);
+    // eval( "App.scene.MyPyramid"+i+".position.x = 5.5-i/100");
     console.log("App.scene", App.scene);
   }
-
   for (var i = 1; i < 1024; i = i + 70) {
     // world.Add("pyramid", 0.1 + i / 1000, "MyPyramid" + i);
     // eval( "App.scene.MyPyramid"+i+".position.x = 5.5-i/100");
@@ -779,7 +629,6 @@ var runThis = world => {
     App.scene["MyPyramid" + i].glBlend.blendParamSrc = ENUMERATORS.glBlend.param[7];
     App.scene["MyPyramid" + i].glBlend.blendParamDest = ENUMERATORS.glBlend.param[2];
   }
-
   App.onload = function (e) {
     console.log(e);
     var test = App.audioSystem.createVideoAsset("Galactic", "Epiclogue.mp3");
@@ -796,23 +645,18 @@ var runThis = world => {
     Galactic.analyser = Galactic.context.createAnalyser();
     source.connect(Galactic.analyser);
     Galactic.frequencyData = new Uint8Array(Galactic.analyser.frequencyBinCount);
-
     Galactic.UPDATE = function () {
       Galactic.analyser.getByteFrequencyData(Galactic.frequencyData);
       var PARAMETER1 = 0.1;
-
       for (var i = 1, j = 1; i < 1024; i = i + 70, j = j + 35) {
         App.scene["MyPyramid" + i].rotation.rotationSpeed.z = Galactic.frequencyData[i] / PARAMETER1;
-      } // console.log(frequencyData)
-
+      }
+      // console.log(frequencyData)
     };
-
     App.updateBeforeDraw.push(Galactic);
   };
-
   App.onload();
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60}],13:[function(require,module,exports){
@@ -822,24 +666,20 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
-let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 
+let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 var runThis = world => {
   // need to be removed from bvh-loader npm package!
   var logHTML = document.createElement('div');
-  logHTML.id = 'log'; // logHTML.style.position = 'absolute';
-
+  logHTML.id = 'log';
+  // logHTML.style.position = 'absolute';
   document.body.appendChild(logHTML);
   var App = matrixEngine.App;
   var effectOsci = new matrixEngine.utility.OSCILLATOR(3, 10, 1);
@@ -870,11 +710,11 @@ var runThis = world => {
       mix_operation: 'multiply'
     },
     drawTypeBone: 'sphereLightTex' // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
-
   };
   const filePath = 'https://raw.githubusercontent.com/zlatnaspirala/Matrix-Engine-BVH-test/main/javascript-bvh/example.bvh';
-  var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options); // 2
+  var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options);
 
+  // 2
   const options2 = {
     world: world,
     autoPlay: true,
@@ -898,12 +738,12 @@ var runThis = world => {
       mix_operation: 'multiply'
     },
     drawTypeBone: 'squareTex' // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex'
-
   };
   window.myFirstBvhAnimation = myFirstBvhAnimation;
   const filePath2 = 'res/bvh/Female1_B04_StandToWalkBack.bvh';
-  var myBvhAnimation = new matrixEngine.MEBvhAnimation(filePath2, options2); // 3
+  var myBvhAnimation = new matrixEngine.MEBvhAnimation(filePath2, options2);
 
+  // 3
   const options3 = {
     world: world,
     autoPlay: true,
@@ -927,12 +767,12 @@ var runThis = world => {
       mix_operation: 'multiply'
     },
     drawTypeBone: 'cubeLightTex' // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex'
-
   };
   const filePath3 = 'res/bvh/Female1_A01_Stand.bvh';
   var myBvhAnimation3 = new matrixEngine.MEBvhAnimation(filePath3, options3);
-  window.myBvhAnimation3 = myBvhAnimation3; // 3
+  window.myBvhAnimation3 = myBvhAnimation3;
 
+  // 3
   const options4 = {
     world: world,
     autoPlay: true,
@@ -956,7 +796,6 @@ var runThis = world => {
       mix_operation: 'multiply'
     },
     drawTypeBone: 'cubeLightTex' // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex'
-
   };
   const filePath4 = 'res/bvh/Female1_D1_Urban.bvh';
   var myBvhAnimation4 = new matrixEngine.MEBvhAnimation(filePath4, options4);
@@ -968,16 +807,13 @@ var runThis = world => {
     source: ['res/images/semi_pack/gradiend_half1.png'],
     mix_operation: 'multiply'
   };
-
   for (var i = 1; i < 1024; i = i + 80) {
     world.Add('pyramid', 0.1 + i / 500, 'MyPyramid' + i);
     world.Add('cubeLightTex', 0.1 + i / 100, 'MyCube' + i, matrixIcon);
     world.Add('cubeLightTex', 0.1 + i / 100, 'MyCube2__' + i, matrixIcon2);
   }
-
   var myMarginY = -5;
   var mymarginYCube = -10;
-
   for (var i = 1; i < 1024; i = i + 80) {
     App.scene['MyPyramid' + i].position.SetY(myMarginY);
     App.scene['MyPyramid' + i].position.SetZ(-16);
@@ -995,12 +831,11 @@ var runThis = world => {
     App.scene['MyCube2__' + i].glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
     App.scene['MyCube2__' + i].glBlend.blendParamDest = ENUMERATORS.glBlend.param[6];
     App.scene['MyCube2__' + i].position.SetZ(-70);
-    App.scene['MyCube2__' + i].position.SetX(27); // App.scene['MyCube2__' + i].position.SetY(mymarginYCube);
-
+    App.scene['MyCube2__' + i].position.SetX(27);
+    // App.scene['MyCube2__' + i].position.SetY(mymarginYCube);
     App.scene['MyCube2__' + i].rotation.rotateY(-45);
     App.scene['MyCube2__' + i].rotation.rotationSpeed.y = 10;
   }
-
   matrixEngine.utility.byId('debugBox').style.display = 'block';
   matrixEngine.utility.byId('debugBox').style.width = '100%';
   matrixEngine.utility.byId('debugBox').style.height = '37px';
@@ -1011,22 +846,20 @@ var runThis = world => {
   https://creativecommons.org/licenses/by-sa/3.0/deed.en_US
   <p> Mix of audio vs bvh operation. @zlatnaspirala </p>
   `;
-
   App.onload = function (e) {
     var test = App.audioSystem.createMusicAsset('blackfly', 'audionautix-black-fly.mp3');
     test.then(() => {
       console.log('Audio context access successed!');
     }).catch(() => {
       console.log('Ok there is no auto play for audio context. User need to click any where .');
-
       function userRequest() {
         App.onload();
         removeEventListener('click', userRequest);
       }
-
       addEventListener('click', userRequest, false);
-    }); // Just for dev
+    });
 
+    // Just for dev
     window.blackfly = App.audioSystem.Assets.blackfly;
     var source = blackfly.context.createMediaElementSource(blackfly.video);
     source.connect(blackfly.gainNode);
@@ -1038,10 +871,8 @@ var runThis = world => {
     var PARAMETER1 = 20;
     var PARAMETER2 = 6;
     var mymarginYCubeLeft = 35;
-
     blackfly.UPDATE = function () {
       blackfly.analyser.getByteFrequencyData(blackfly.frequencyData);
-
       for (var i = 1, j = 1; i < 1024; i = i + 80, j = j + 40) {
         App.scene['MyPyramid' + i].position.SetY(blackfly.frequencyData[i] / PARAMETER1 + myMarginY);
         App.scene['MyCube' + i].position.SetY(blackfly.frequencyData[i] / PARAMETER2 + mymarginYCube);
@@ -1054,17 +885,14 @@ var runThis = world => {
         App.scene['MyCube2__' + i].glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[effectOsci2.value_];
       }
     };
-
     setInterval(() => {
       effectOsci.UPDATE();
       effectOsci2.UPDATE();
     }, 1000);
     App.updateBeforeDraw.push(blackfly);
   };
-
   App.onload();
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60}],14:[function(require,module,exports){
@@ -1074,20 +902,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
   @name basic_FBO
  */
+
 var runThis = world => {
   // Camera
-  _manifest.default.camera.SceneController = true; // Image texs
+  _manifest.default.camera.SceneController = true;
 
+  // Image texs
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply",
@@ -1097,27 +924,22 @@ var runThis = world => {
     }
   };
   world.Add("cubeLightTex", 0.2, "myCube", tex);
-
   _manifest.default.scene.myCube.position.SetZ(-11);
-
   _manifest.default.scene.myCube.position.SetX(1);
-
-  _manifest.default.scene.myCube.position.SetY(0.6); // App.scene.myCube.activateShadows('spot');
-
+  _manifest.default.scene.myCube.position.SetY(0.6);
+  // App.scene.myCube.activateShadows('spot');
 
   var textuteImageSamplers2 = {
     source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png", "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
     mix_operation: "multiply"
-  }; // Load obj seq animation
-
+  };
+  // Load obj seq animation
   const createObjSequence = objName => {
     function onLoadObj(meshes) {
       _manifest.default.meshes = meshes;
-
       for (let key in meshes) {
         matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
       }
-
       var textuteImageSamplers2 = {
         source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
         mix_operation: "multiply",
@@ -1155,7 +977,6 @@ var runThis = world => {
         _manifest.default.scene[objName].rotation.rotationSpeed.y = 50;
       }, 1);
     }
-
     matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
       id: objName,
       path: "res/bvh-skeletal-base/swat-guy/anims/swat-multi",
@@ -1163,48 +984,41 @@ var runThis = world => {
       to: 61
     }), onLoadObj);
   };
+  createObjSequence('player');
 
-  createObjSequence('player'); // FBO BASIC
-
+  // FBO BASIC
   world.Add("squareTex", 3, "myMirror", tex);
-
   _manifest.default.scene.myMirror.position.SetZ(-12);
-
   _manifest.default.scene.myMirror.position.SetX(0);
-
   _manifest.default.scene.myMirror.position.SetY(0);
-
   _manifest.default.scene.myMirror.setFBO();
-
   world.Add("cubeLightTex", 0.5, "myMirrorBottom", tex);
-
   _manifest.default.scene.myMirrorBottom.position.SetZ(-5);
-
   _manifest.default.scene.myMirrorBottom.position.SetX(2);
-
   _manifest.default.scene.myMirrorBottom.position.SetY(2);
+  _manifest.default.scene.myMirrorBottom.rotation.rotx = 20;
+  // App.scene.myMirrorBottom.setFBO();
 
-  _manifest.default.scene.myMirrorBottom.rotation.rotx = 20; // App.scene.myMirrorBottom.setFBO();
   // App.scene.myMirror.rotation.rotationSpeed.z = 10;
+  _manifest.default.scene.myMirrorBottom.activateShadows();
 
-  _manifest.default.scene.myMirrorBottom.activateShadows(); // TEST ALSO ANIMATIONLINE
-
-
+  // TEST ALSO ANIMATIONLINE
   matrixEngine.matrixWorld.world.useAnimationLine({
     sequenceSize: 500,
     totalSequence: 2
-  }); // Click event
+  });
 
+  // Click event
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
   addEventListener("ray.hit.event", function (e) {
     e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 2);
     e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 2);
-    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2); // console.info(e.detail);
+    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2);
+    // console.info(e.detail);
   });
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],15:[function(require,module,exports){
@@ -1214,30 +1028,28 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var _animationsList = require("./animations-list");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @description Usage of world global timeline/animationline.
  */
+
 var runThis = world => {
   // Camera
-  _manifest.default.camera.SceneController = true; // TEST ANIMATIONLINE
+  _manifest.default.camera.SceneController = true;
 
+  // TEST ANIMATIONLINE
   matrixEngine.matrixWorld.world.useAnimationLine({
     sequenceSize: 200,
     totalSequence: 10
-  }); // need to be removed from bvh-loader npm package!
+  });
 
+  // need to be removed from bvh-loader npm package!
   var logHTML = document.createElement('div');
-  logHTML.id = 'log'; // logHTML.style.position = 'absolute';
-
+  logHTML.id = 'log';
+  // logHTML.style.position = 'absolute';
   document.body.appendChild(logHTML);
-
   const createAnimation = index => {
     const options = {
       boneNameBasePrefix: 'firstAnim' + index,
@@ -1255,7 +1067,6 @@ var runThis = world => {
       // [Optimal]
       skeletalBoneScale: 3,
       // [Optimal]
-
       /*skeletalBlend: {             // [Optimal] remove arg for no blend
       	paramDest: 4,
       	paramSrc: 4
@@ -1266,13 +1077,11 @@ var runThis = world => {
         mix_operation: "multiply"
       },
       drawTypeBone: "triangle" // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
-
-    }; // window.bvhAnimations = bvhAnimations;
+    };
+    // window.bvhAnimations = bvhAnimations;
     // console.log(" @!!!!bvhAnimations[0] 2>>> ",  bvhAnimations);
-
     return new matrixEngine.MEBvhAnimation(_animationsList.bvhAnimations[index], options);
   };
-
   window.createAnimation = createAnimation;
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
@@ -1295,7 +1104,6 @@ var runThis = world => {
     console.log("WHAT EVER HERE 10 ");
   }, 10);
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99,"./animations-list":11}],16:[function(require,module,exports){
@@ -1305,7 +1113,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 /**
  * @description Usage of MEBvhAnimation
  * @class MEBvhAnimation
@@ -1315,8 +1122,8 @@ exports.runThis = void 0;
 var runThis = world => {
   // need to be removed from bvh-loader npm package!
   var logHTML = document.createElement('div');
-  logHTML.id = 'log'; // logHTML.style.position = 'absolute';
-
+  logHTML.id = 'log';
+  // logHTML.style.position = 'absolute';
   document.body.appendChild(logHTML);
   const options = {
     world: world,
@@ -1333,7 +1140,6 @@ var runThis = world => {
     // [Optimal]
     skeletalBoneScale: 1,
     // [Optimal]
-
     /*skeletalBlend: {                // [Optimal] remove arg for no blend
       paramDest: 4,
       paramSrc: 4
@@ -1343,7 +1149,6 @@ var runThis = world => {
       mix_operation: "multiply"
     },
     drawTypeBone: "cubeLightTex" // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
-
   };
   const filePath = "https://raw.githubusercontent.com/zlatnaspirala/Matrix-Engine-BVH-test/main/javascript-bvh/example.bvh";
   var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options);
@@ -1371,7 +1176,6 @@ var runThis = world => {
       mix_operation: "multiply"
     },
     drawTypeBone: 'squareTex' // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex'
-
   };
   window.myFirstBvhAnimation = myFirstBvhAnimation;
   const filePath2 = "res/bvh/Female1_B04_StandToWalkBack.bvh";
@@ -1379,7 +1183,9 @@ var runThis = world => {
   var funnySwitch = new matrixEngine.utility.OSCILLATOR(0, 0.1, 0.0001);
   setTimeout(() => {
     // make funny staff with matrix-engine
-    myBvhAnimation.accessBonesObject().forEach(bone => {// bone is MEObject [matrix-engine game object],
+    myBvhAnimation.accessBonesObject().forEach(bone => {
+
+      // bone is MEObject [matrix-engine game object],
       // instancedDraws.overrideDrawArraysInstance is part of webgl2
       // bone.instancedDraws.numberOfInstance = 2;
       // bone.instancedDraws.overrideDrawArraysInstance = function (object) {
@@ -1388,6 +1194,7 @@ var runThis = world => {
       //     object.instancedDraws.array_of_local_offset = [funnySwitch.UPDATE(), funnySwitch.UPDATE(), 0];
       //     mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
       //     world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
+
       //     for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
       //       mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
       //       world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
@@ -1408,7 +1215,6 @@ var runThis = world => {
     e.detail.hitObject.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[7];
   });
 };
-
 exports.runThis = runThis;
 
 },{}],17:[function(require,module,exports){
@@ -1418,19 +1224,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
 var _index2 = _interopRequireDefault(require("../node_modules/bvh-loader/index"));
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // prodc
 // import MEBvh from 'bvh-loader';
 
@@ -1449,23 +1248,17 @@ var runThis = world => {
     anim.plot_hierarchy();
     var r = anim.frame_pose(0);
     var KEYS = anim.joint_names();
-
     for (var x = 0; x < r[0].length; x++) {
       console.log('->' + KEYS[x] + '-> position: ' + r[0][x] + ' rotation: ' + r[1][x]);
       var boneName = 'MatrixSkeletalBone' + KEYS[x];
       world.Add('cube', 1, boneName);
     }
-
     for (var x = 0; x < r[0].length; x++) {
       var boneName = 'MatrixSkeletalBone' + KEYS[x];
-
       _manifest.default.scene[boneName].position.SetX(r[0][x][0] - 30);
-
       _manifest.default.scene[boneName].position.SetY(r[0][x][1] - 10);
-
       _manifest.default.scene[boneName].position.SetZ(r[0][x][2] - 80);
     }
-
     var all = anim.all_frame_poses();
     console.log("Final animation -> ", all);
     var countAnim = 0;
@@ -1473,14 +1266,10 @@ var runThis = world => {
       // for (var ANIM_ = countAnim; ANIM_ < 75; ANIM_++) {
       for (var x = 0; x < all[0][0].length; x++) {
         var boneName = 'MatrixSkeletalBone' + KEYS[x];
-
         _manifest.default.scene[boneName].position.SetX(all[0][countAnim][x][0] - 30);
-
         _manifest.default.scene[boneName].position.SetY(all[0][countAnim][x][1] - 10);
-
         _manifest.default.scene[boneName].position.SetZ(all[0][countAnim][x][2] - 80);
       }
-
       countAnim++;
       if (countAnim >= all[0].length - 1) countAnim = 0;
     }, 100);
@@ -1492,7 +1281,6 @@ var runThis = world => {
     console.info(e.detail);
   });
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../node_modules/bvh-loader/index":94,"../program/manifest":99}],18:[function(require,module,exports){
@@ -1502,35 +1290,29 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
 var _utility = require("../lib/utility.js");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-unused-vars */
-
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
 /* globals world App world */
-let ACCESS_CAMERA = matrixEngine.Engine.ACCESS_CAMERA;
 
+let ACCESS_CAMERA = matrixEngine.Engine.ACCESS_CAMERA;
 var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA */
+
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
+
   /**
    * @description
    * @note ONLY ANDROID DEVICES
@@ -1539,13 +1321,12 @@ var runThis = world => {
    * Must be inspected - possible reasons:
    * - Theres some limitation about vertex buffer data!
    */
-
   if ((0, _utility.isMobile)() == true) {
     world.Add("cubeLightTex", 1, "TV", textuteImageSamplers);
     _manifest.default.scene.TV.streamTextures = new ACCESS_CAMERA("webcam_beta");
     (0, _utility.byId)('webcam_beta').style.display = 'block';
-    _manifest.default.scene.TV.rotation.rotationSpeed.y = 20; // Example who to switch between simple camera tex and cameraMixCanvas2d (videoImage)
-
+    _manifest.default.scene.TV.rotation.rotationSpeed.y = 20;
+    // Example who to switch between simple camera tex and cameraMixCanvas2d (videoImage)
     _manifest.default.scene.TV.streamTextures.video = _manifest.default.scene.TV.streamTextures.videoImage;
   } else {
     function onLoadObj(meshes) {
@@ -1555,24 +1336,18 @@ var runThis = world => {
       setTimeout(function () {
         _manifest.default.scene.TV.position.y = 0;
         _manifest.default.scene.TV.position.z = -4;
-
         _manifest.default.scene.TV.rotation.rotateY(90);
-
         _manifest.default.scene.TV.LightsData.ambientLight.set(1, 1, 1);
-
         (0, _utility.byId)('webcam_beta').style.display = 'block';
         _manifest.default.scene.TV.streamTextures = new ACCESS_CAMERA("webcam_beta");
       }, 1000);
     }
-
     matrixEngine.objLoader.downloadMeshes({
       TV: "res/3d-objects/balltest2.obj"
     }, onLoadObj);
   }
-
   ;
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../lib/utility.js":88,"../program/manifest":99}],19:[function(require,module,exports){
@@ -1582,26 +1357,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-unused-vars */
-
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
 /* globals world App world */
+
 var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
+
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
-
   for (var d = -2; d < 3; d++) {
     for (var t = -1; t < 2; t++) {
       world.Add("cubeLightTex", 0.3, "MyCubeTex" + Math.abs(d), textuteImageSamplers);
@@ -1610,18 +1382,13 @@ var runThis = world => {
       eval("App.scene.MyCubeTex" + Math.abs(d) + ".rotation.rotationSpeed.x = 0;");
     }
   }
-
   world.Add("triangle", 1, "MyColoredTriangle1");
   world.Add("triangle", 1, "MyColoredTriangle2");
   world.Add("triangle", 1, "MyColoredTriangle3");
-
   _manifest.default.scene.MyColoredTriangle1.position.SetX(2.5);
-
   _manifest.default.scene.MyColoredTriangle2.position.SetX(0);
-
   _manifest.default.scene.MyColoredTriangle3.position.SetX(-2.5);
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],20:[function(require,module,exports){
@@ -1631,17 +1398,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-unused-vars */
 
 /**
@@ -1650,27 +1411,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App world */
+
 var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
+
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
   _manifest.default.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
-  var oscilltor_variable = new matrixEngine.utility.OSCILLATOR(0.05, 2, 0.01); // GOOD
+  var oscilltor_variable = new matrixEngine.utility.OSCILLATOR(0.05, 2, 0.01);
 
+  // GOOD
   _manifest.default.updateBeforeDraw.push({
     UPDATE: () => {
       _manifest.default.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
     }
-  }); // BAD
+  });
+
+  // BAD
   // setInterval(function () {
   // App.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
   // }, 10);
-
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],21:[function(require,module,exports){
@@ -1680,11 +1444,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-unused-vars */
 
 /**
@@ -1693,23 +1454,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App world */
+
 var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
+
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
-  _manifest.default.camera.SceneController = true; // Floor
-
+  _manifest.default.camera.SceneController = true;
+  // Floor
   world.Add("squareTex", 1, "floor", textuteImageSamplers);
-
   _manifest.default.scene.floor.position.SetY(0);
-
   _manifest.default.scene.floor.geometry.setScale(20);
-
   _manifest.default.scene.floor.rotation.rotx = 90;
   _manifest.default.scene.floor.position.y = -1;
-  _manifest.default.scene.floor.position.z = -20; // App.scene.floor.geometry.texCoordsPoints.right_top.y = 1.4;
+  _manifest.default.scene.floor.position.z = -20;
+
+  // App.scene.floor.geometry.texCoordsPoints.right_top.y = 1.4;
   // App.scene.floor.geometry.texCoordsPoints.right_top.x = 1.4;
   // App.scene.floor.geometry.texCoordsPoints.left_bottom.x = -0.4;
   // App.scene.floor.geometry.texCoordsPoints.left_bottom.y = -0.4;
@@ -1726,13 +1488,15 @@ var runThis = world => {
     world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.REPEAT);
     world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
     world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-  }; // Cube
+  };
 
-
+  // Cube
   world.Add("cubeLightTex", 1, "MyCubeTex1", textuteImageSamplers);
   world.Add("cubeLightTex", 1, "MyCubeTex2", textuteImageSamplers);
   world.Add("cubeLightTex", 1, "MyCubeTex3", textuteImageSamplers);
-  world.Add("cubeLightTex", 1, "MyCubeTex4", textuteImageSamplers); // App.scene.MyCubeTex.LightsData.ambientLight.r = 0.1;
+  world.Add("cubeLightTex", 1, "MyCubeTex4", textuteImageSamplers);
+
+  // App.scene.MyCubeTex.LightsData.ambientLight.r = 0.1;
   // App.scene.MyCubeTex.LightsData.ambientLight.g = 0.2;
   // App.scene.MyCubeTex.LightsData.ambientLight.b = 1;
   // App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 0.2, 1);
@@ -1746,12 +1510,14 @@ var runThis = world => {
   _manifest.default.scene.MyCubeTex3.position.z = -10;
   _manifest.default.scene.MyCubeTex4.position.z = -10;
   _manifest.default.scene.MyCubeTex3.position.z = -12;
-  _manifest.default.scene.MyCubeTex4.position.z = -12; // App.scene.MyCubeTex.LightsData.directionLight.r = 1;
+  _manifest.default.scene.MyCubeTex4.position.z = -12;
+
+  // App.scene.MyCubeTex.LightsData.directionLight.r = 1;
   // App.scene.MyCubeTex.LightsData.directionLight.g = 1;
   // App.scene.MyCubeTex.LightsData.directionLight.b = 1;
+
   // App.scene.MyCubeTex.LightsData.directionLight.set(1, 1, 1);
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],22:[function(require,module,exports){
@@ -1761,23 +1527,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
-let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 
+let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 var runThis = world => {
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
@@ -1786,23 +1546,22 @@ var runThis = world => {
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
   var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
   _manifest.default.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
+  _manifest.default.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
 
-  _manifest.default.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1); // GOOD
-
-
+  // GOOD
   _manifest.default.updateBeforeDraw.push({
     UPDATE: () => {
       _manifest.default.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
       _manifest.default.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
     }
-  }); // BAD
+  });
+
+  // BAD
   // setInterval(function () {
   // App.scene.MyCubeTex.LightsData.ambientLight.r = oscilltor_variable.UPDATE();
   // App.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
   // }, 10);
-
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],23:[function(require,module,exports){
@@ -1812,11 +1571,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic
  *@Description
@@ -1825,31 +1581,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App */
+
 var runThis = world => {
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
-
   for (var j = -4; j < 4; j++) {
     for (var x = -4; x < 4; x++) {
       for (var z = 2; z < 5; z++) {
         world.Add("square", 1, "cube_" + j);
-
         _manifest.default.scene['cube_' + j].position.SetX(x * 1);
-
         _manifest.default.scene['cube_' + j].position.SetY(-j * 1);
-
         _manifest.default.scene['cube_' + j].position.SetZ(-z * 1);
-
         _manifest.default.scene['cube_' + j].rotation.rotationSpeed.x = 10;
-
         _manifest.default.scene['cube_' + j].geometry.setScale(0.4);
       }
     }
   }
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],24:[function(require,module,exports){
@@ -1859,17 +1609,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-unused-vars */
 
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
+
 var runThis = world => {
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
@@ -1878,18 +1626,17 @@ var runThis = world => {
   world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers);
   _manifest.default.scene.MySquareTexure1.rotValue = 0;
   _manifest.default.scene.MySquareTexure1.rotation.rotationSpeed.z = 0;
-
   _manifest.default.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
     world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
     world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.LINEAR);
     world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.LINEAR);
     world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.CLAMP_TO_EDGE);
     world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.CLAMP_TO_EDGE);
-    world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, // Level of details
+    world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0,
+    // Level of details
     world.GL.gl.RGBA, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
     world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
   };
-
   _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_top.y = 1.1;
   _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_top.x = 1.1;
   _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.left_bottom.x = -0.1;
@@ -1899,7 +1646,6 @@ var runThis = world => {
   _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_bottom.x = 1.1;
   _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_bottom.y = -0.1;
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],25:[function(require,module,exports){
@@ -1909,20 +1655,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
   @name basic_FBO
  */
+
 var runThis = world => {
   // Camera
-  _manifest.default.camera.SceneController = true; // Image texs
-
+  _manifest.default.camera.SceneController = true;
+  // Image texs
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply",
@@ -1930,7 +1674,9 @@ var runThis = world => {
       TEXTURE_MAG_FILTER: world.GL.gl.NEAREST,
       TEXTURE_MIN_FILTER: world.GL.gl.NEAREST
     }
-  }; // world.Add("cubeLightTex", 0.2, "myCube", tex);
+  };
+
+  // world.Add("cubeLightTex", 0.2, "myCube", tex);
   // App.scene.myCube.position.SetZ(-9);
   // App.scene.myCube.position.SetX(1);
   // App.scene.myCube.position.SetY(0.6);
@@ -1939,16 +1685,14 @@ var runThis = world => {
   var textuteImageSamplers2 = {
     source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png", "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
     mix_operation: "multiply"
-  }; // Load obj seq animation
-
+  };
+  // Load obj seq animation
   const createObjSequence = objName => {
     function onLoadObj(meshes) {
       _manifest.default.meshes = meshes;
-
       for (let key in meshes) {
         matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
       }
-
       var textuteImageSamplers2 = {
         source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
         mix_operation: "multiply",
@@ -1986,7 +1730,6 @@ var runThis = world => {
         _manifest.default.scene[objName].rotation.rotationSpeed.y = 50;
       }, 1);
     }
-
     matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
       id: objName,
       path: "res/bvh-skeletal-base/swat-guy/anims/swat-multi",
@@ -1994,46 +1737,39 @@ var runThis = world => {
       to: 61
     }), onLoadObj);
   };
+  createObjSequence('player');
 
-  createObjSequence('player'); // FBO BASIC
-
+  // FBO BASIC
   world.Add("cubeLightTex", 2.5, "myMirror", tex);
-
   _manifest.default.scene.myMirror.position.SetZ(-15);
-
   _manifest.default.scene.myMirror.position.SetX(-3);
-
   _manifest.default.scene.myMirror.position.SetY(2.5);
-
   _manifest.default.scene.myMirror.rotation.rotz = 90;
-
   _manifest.default.scene.myMirror.setFBO({
     cameraX: 0,
     cameraY: 0,
     cameraZ: 5,
     pitch: 12,
     yaw: 0
-  }); // Easy manipilation
+  });
+
+  // Easy manipilation
   // App.scene.myMirror.FBO.settings.cameraX = 0
 
-
   world.Add("cubeLightTex", 2.5, "myMirrorUP", tex);
-
   _manifest.default.scene.myMirrorUP.position.SetZ(-15);
-
   _manifest.default.scene.myMirrorUP.position.SetX(3);
-
   _manifest.default.scene.myMirrorUP.position.SetY(2.5);
-
   _manifest.default.scene.myMirrorUP.rotation.rotz = 90;
-
   _manifest.default.scene.myMirrorUP.setFBO({
     cameraX: 0,
     cameraY: 0,
     cameraZ: 2,
     pitch: 0,
     yaw: 1
-  }); // world.Add("cubeLightTex", 2.5, "myMirrorBottom", tex);
+  });
+
+  // world.Add("cubeLightTex", 2.5, "myMirrorBottom", tex);
   // App.scene.myMirrorBottom.position.SetZ(-15);
   // App.scene.myMirrorBottom.position.SetX(3);
   // App.scene.myMirrorBottom.position.SetY(-2.5);
@@ -2045,23 +1781,24 @@ var runThis = world => {
   //   pitch: 0,
   //   yaw: 1
   // });
+
   // App.scene.myMirror.rotation.rotationSpeed.z = 10;
   // App.scene.myMirrorBottom.activateShadows();
+
   // TEST ALSO ANIMATIONLINE
   // matrixEngine.matrixWorld.world.useAnimationLine({sequenceSize: 500});
+
   // Click event
-
-
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
   addEventListener("ray.hit.event", function (e) {
     e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 2);
     e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 2);
-    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2); // console.info(e.detail);
+    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2);
+    // console.info(e.detail);
   });
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],26:[function(require,module,exports){
@@ -2071,11 +1808,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-unused-vars */
 
 /**
@@ -2084,16 +1818,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App world */
-var runThis = world => {
-  _manifest.default.camera.FirstPersonController = true; // FLOOR
 
+var runThis = world => {
+  _manifest.default.camera.FirstPersonController = true;
+
+  // FLOOR
   var textuteImageSamplers = {
     source: ['./res/images/beli_andjeo.jpg'],
     mix_operation: 'multiply'
   };
   world.Add('squareTex', 4, 'floor', textuteImageSamplers);
-  _manifest.default.scene.floor.position.z = -10; // Only for texture
+  _manifest.default.scene.floor.position.z = -10;
 
+  // Only for texture
   var coeficientSizeOfTex = 1.9;
   _manifest.default.scene.floor.geometry.texCoordsPoints.right_top.y = 1 + coeficientSizeOfTex;
   _manifest.default.scene.floor.geometry.texCoordsPoints.right_top.x = 1 + coeficientSizeOfTex;
@@ -2104,18 +1841,22 @@ var runThis = world => {
   _manifest.default.scene.floor.geometry.texCoordsPoints.right_bottom.x = 1 + coeficientSizeOfTex;
   _manifest.default.scene.floor.geometry.texCoordsPoints.right_bottom.y = 0 - coeficientSizeOfTex;
   _manifest.default.scene.floor.rotation.rotx = 180;
-
   _manifest.default.scene.floor.custom.gl_texture = function (object, t) {
     world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
     world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.LINEAR);
     world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.LINEAR);
     world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.REPEAT);
     world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.REPEAT);
-    world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, // Level of details
-    world.GL.gl.RGBA, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, // Size of each channel
-    object.textures[t].image); // world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-  }; // App.scene.floor.position.y = -2;
+    world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0,
+    // Level of details
+    world.GL.gl.RGBA, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE,
+    // Size of each channel
+    object.textures[t].image);
 
+    // world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
+  };
+
+  // App.scene.floor.position.y = -2;
 
   world.Add('cubeLightTex', 1, 'BeliAndjeo', textuteImageSamplers);
   _manifest.default.scene.BeliAndjeo.rotation.roty = -90;
@@ -2124,40 +1865,27 @@ var runThis = world => {
   world.Add('pyramid', 1, 'MyPyramid1');
   world.Add('pyramid', 1, 'MyPyramid2');
   world.Add('pyramid', 1, 'MyPyramid3');
-  world.Add('pyramid', 1, 'MyPyramid4'); // SET POSITION
+  world.Add('pyramid', 1, 'MyPyramid4');
 
+  // SET POSITION
   _manifest.default.scene.MyPyramid1.geometry.spitz = 10;
   _manifest.default.scene.MyPyramid2.geometry.spitz = 10;
   _manifest.default.scene.MyPyramid3.geometry.spitz = 10;
   _manifest.default.scene.MyPyramid4.geometry.spitz = 10;
-
   _manifest.default.scene.MyPyramid1.position.SetX(-10);
-
   _manifest.default.scene.MyPyramid1.position.SetZ(-10);
-
   _manifest.default.scene.MyPyramid2.position.SetX(10);
-
   _manifest.default.scene.MyPyramid2.position.SetZ(10);
-
   _manifest.default.scene.MyPyramid3.position.SetX(10);
-
   _manifest.default.scene.MyPyramid3.position.SetZ(-10);
-
   _manifest.default.scene.MyPyramid4.position.SetX(-10);
-
   _manifest.default.scene.MyPyramid4.position.SetZ(10);
-
   _manifest.default.scene.MyPyramid1.position.SetY(-1);
-
   _manifest.default.scene.MyPyramid2.position.SetY(-1);
-
   _manifest.default.scene.MyPyramid3.position.SetY(-1);
-
   _manifest.default.scene.MyPyramid4.position.SetY(-1);
-
   _manifest.default.scene.MyPyramid2.rotation.rotationSpeed.z = 0;
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],27:[function(require,module,exports){
@@ -2167,19 +1895,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var CANNON = _interopRequireWildcard(require("cannon"));
-
 var _utility = require("../lib/utility");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @description Usage of raycaster, ObjectLoader,
  * FirstPersonController.
@@ -2193,9 +1914,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  * @class First Person Shooter example
  */
-var runThis = world => {
-  setTimeout(() => document.querySelector('.button2').click(), 2000); // Camera
 
+var runThis = world => {
+  setTimeout(() => document.querySelector('.button2').click(), 2000);
+
+  // Camera
   canvas.style.cursor = 'none';
   _manifest.default.camera.FirstPersonController = true;
   matrixEngine.Events.camera.fly = false;
@@ -2205,36 +1928,33 @@ var runThis = world => {
     if (e.detail.origin.key == "Escape" || e.detail.keyCode == 27) {
       console.log('PAUSE GAME_PLAY - wip');
     }
-  }); // Audio effects
+  });
 
-  _manifest.default.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5); // Prevent right click context menu
+  // Audio effects
+  _manifest.default.sounds.createAudio('shoot', 'res/music/single-gunshot.mp3', 5);
 
-
+  // Prevent right click context menu
   window.addEventListener("contextmenu", e => {
     e.preventDefault();
   });
   matrixEngine.utility.createDomFPSController(); // wip for mobile controls
-  // Override mouse up - example how to use
 
+  // Override mouse up - example how to use
   _manifest.default.events.CALCULATE_TOUCH_UP_OR_MOUSE_UP = () => {
     // console.log('TEST APP CLICK')
     _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-
     _manifest.default.scene.FPSTarget.geometry.setScale(0.1);
-
     _manifest.default.scene.xrayTarget.visible = false;
-  }; // Override right mouse down
+  };
 
-
+  // Override right mouse down
   matrixEngine.Events.SYS.MOUSE.ON_RIGHT_BTN_PRESSED = e => {
     _manifest.default.scene.FPSTarget.geometry.setScale(0.6);
-
     _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
     _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
     _manifest.default.scene.xrayTarget.visible = true;
   };
-
   _manifest.default.events.multiTouch = function (ev, e) {
     if (e.length > 1) {
       // second touch detected wip mobile
@@ -2243,48 +1963,45 @@ var runThis = world => {
         clientX: ev.target.width / 2,
         clientY: ev.target.height / 2
       });
-
       _manifest.default.sounds.play('shoot');
     }
-  }; // Override mouse down
+  };
 
-
+  // Override mouse down
   _manifest.default.events.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = (ev, mouse) => {
     if ((0, _utility.isMobile)() == false) {
       // `checkingProcedure` gets secound optimal argument
       // for custom ray origin target.
-      if (mouse.BUTTON_PRESSED == 'RIGHT') {// Zoom
+      if (mouse.BUTTON_PRESSED == 'RIGHT') {
+        // Zoom
       } else {
         // This call represent `SHOOT` Action. And it is center of screen!
         matrixEngine.raycaster.checkingProcedure(ev, {
           clientX: ev.target.width / 2,
           clientY: ev.target.height / 2
         });
-
         _manifest.default.sounds.play('shoot');
       }
     } else {}
   };
-
   window.addEventListener('ray.hit.event', ev => {
-    console.log("You shoot the object! Nice!", ev); // Physics force apply also change ambienty light.
-
+    console.log("You shoot the object! Nice!", ev);
+    // Physics force apply also change ambienty light.
     if (ev.detail.hitObject.physics.enabled == true) {
       // Shoot the object - apply force
-      ev.detail.hitObject.physics.currentBody.force.set(2, 2, 50); // Apply random diff color
-
+      ev.detail.hitObject.physics.currentBody.force.set(2, 2, 50);
+      // Apply random diff color
       if (ev.detail.hitObject.LightsData) ev.detail.hitObject.LightsData.ambientLight.set((0, _utility.randomFloatFromTo)(0, 2), (0, _utility.randomFloatFromTo)(0, 2), (0, _utility.randomFloatFromTo)(0, 2));
     }
-  }); // Load obj seq animation
+  });
 
+  // Load obj seq animation
   const createObjSequence = objName => {
     let preventDoubleJump = null;
-
     function onLoadObj(meshes) {
       for (let key in meshes) {
         matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
       }
-
       var textuteImageSamplers2 = {
         source: ["res/bvh-skeletal-base/swat-guy/gun2.png"],
         mix_operation: "multiply"
@@ -2301,105 +2018,97 @@ var runThis = world => {
             speed: 3
           }
         }
-      }; // Hands - in future will be weapon
+      };
+
+      // Hands - in future will be weapon
       // world.Add("obj", 1, objName, textuteImageSamplers2, meshes[objName], animArg);
-
       world.Add("obj", 1, objName, textuteImageSamplers2, meshes['player']);
-
       _manifest.default.scene.player.position.setPosition(0.5, -0.7, -3);
+      _manifest.default.scene.player.isHUD = true;
 
-      _manifest.default.scene.player.isHUD = true; // Fix object orientation - this can be fixed also in blender.
+      // Fix object orientation - this can be fixed also in blender.
+      matrixEngine.Events.camera.yaw = 0;
 
-      matrixEngine.Events.camera.yaw = 0; // Not in use but can be used
-
+      // Not in use but can be used
       function bodiesAreInContact(bodyA, bodyB) {
         for (var i = 0; i < world.contacts.length; i++) {
           var c = world.contacts[i];
-
           if (c.bi === bodyA && c.bj === bodyB || c.bi === bodyB && c.bj === bodyA) {
             return true;
           }
         }
-
         return false;
-      } // Add collision cube to the local player.
+      }
 
-
+      // Add collision cube to the local player.
       world.Add("cube", 0.2, "playerCollisonBox");
       var collisionBox = new CANNON.Body({
         mass: 7,
         linearDamping: 0.01,
         position: new CANNON.Vec3(0, 0, 0),
         shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1)) // new CANNON.Sphere(2)
+      });
 
-      }); // This is custom param added.
-
+      // This is custom param added.
       collisionBox._name = 'collisionBox';
       physics.world.addBody(collisionBox);
       _manifest.default.scene.playerCollisonBox.physics.currentBody = collisionBox;
       _manifest.default.scene.playerCollisonBox.physics.enabled = true;
       _manifest.default.scene.playerCollisonBox.physics.currentBody.fixedRotation = true;
-
       _manifest.default.scene.playerCollisonBox.geometry.setScale(0.02);
-
       _manifest.default.scene.playerCollisonBox.glBlend.blendEnabled = true;
       _manifest.default.scene.playerCollisonBox.glBlend.blendParamSrc = _utility.ENUMERATORS.glBlend.param[0];
       _manifest.default.scene.playerCollisonBox.glBlend.blendParamDest = _utility.ENUMERATORS.glBlend.param[0];
-      _manifest.default.scene.playerCollisonBox.visible = false; // Test custom flag for collide moment
+      _manifest.default.scene.playerCollisonBox.visible = false;
 
-      _manifest.default.scene.playerCollisonBox.iamInCollideRegime = false; // simple logic but also not perfect
+      // Test custom flag for collide moment
+      _manifest.default.scene.playerCollisonBox.iamInCollideRegime = false;
 
+      // simple logic but also not perfect
       _manifest.default.scene.playerCollisonBox.pingpong = true;
       collisionBox.addEventListener("collide", function (e) {
         // const contactNormal = new CANNON.Vec3();
         // var relativeVelocity = e.contact.getImpactVelocityAlongNormal();
         // console.log("playerCollisonBox collide with", e);
         preventDoubleJump = null;
-
         if (e.contact.bj._name == 'floor' || e.contact.bi._name == 'floor') {
           preventDoubleJump = null;
           return;
-        } // ?maybe
-        // App.scene.playerCollisonBox.physics.currentBody.mass = 10;
-
-
-        if (e.contact.bi._name == 'damage') {
-          console.log("Trigger damage!"); //. 4x fix
-
-          _manifest.default.scene.player.energy.value -= 0.25 - (_manifest.default.scene.player.items.armor ? _manifest.default.scene.player.items.armor.preventDamage : 0);
-
-          _manifest.default.scene.player.updateEnergy(_manifest.default.scene.player.energy.value);
         }
 
-        if (e.contact.bj._name == 'item-armor' || e.contact.bi._name == 'item-armor') {
-          console.log("Trigger armor:", e.contact); // Make some enery restore
+        // ?maybe
+        // App.scene.playerCollisonBox.physics.currentBody.mass = 10;
 
-          _manifest.default.scene.player.energy.value += 0.25;
-
+        if (e.contact.bi._name == 'damage') {
+          console.log("Trigger damage!");
+          //. 4x fix
+          _manifest.default.scene.player.energy.value -= 0.25 - (_manifest.default.scene.player.items.armor ? _manifest.default.scene.player.items.armor.preventDamage : 0);
           _manifest.default.scene.player.updateEnergy(_manifest.default.scene.player.energy.value);
-
+        }
+        if (e.contact.bj._name == 'item-armor' || e.contact.bi._name == 'item-armor') {
+          console.log("Trigger armor:", e.contact);
+          // Make some enery restore
+          _manifest.default.scene.player.energy.value += 0.25;
+          _manifest.default.scene.player.updateEnergy(_manifest.default.scene.player.energy.value);
           _manifest.default.scene.player.items.armor = {
             preventDamage: 0.15
           };
-
           if (_manifest.default.scene['armor']) {
             _manifest.default.scene['armor'].physics.enabled = false;
             _manifest.default.scene['armor'].isHUD = true;
-
             _manifest.default.scene.armor.position.setPosition(1.2, 1.1, -3);
-
-            _manifest.default.scene.armor.mesh.setScale(0.1); // Can be destroyed also 
+            _manifest.default.scene.armor.mesh.setScale(0.1);
+            // Can be destroyed also 
             // App.scene['armor'].selfDestroy(1)
-
           }
-
           if (e.body._name == 'item-armor') {
             console.log("Trigger armor collect!");
             physics.world.removeBody(e.body);
           }
         }
-      }); // Matrix-engine key event
+      });
 
+      // Matrix-engine key event
       addEventListener('hit.keyDown', e => {
         // Jump
         if (e.detail.keyCode == 32) {
@@ -2407,20 +2116,18 @@ var runThis = world => {
             preventDoubleJump = setTimeout(() => {
               console.log('JUMP: ', e.detail.keyCode);
               _manifest.default.scene.playerCollisonBox.physics.currentBody.mass = 1;
-
-              _manifest.default.scene.playerCollisonBox.physics.currentBody.velocity.set(0, 0, 40); // preventDoubleJump = null; for ever
-
+              _manifest.default.scene.playerCollisonBox.physics.currentBody.velocity.set(0, 0, 40);
+              // preventDoubleJump = null; for ever
             }, 250);
           }
         }
       });
       var handlerTimeout = null,
-          handlerTimeout2 = null;
+        handlerTimeout2 = null;
       var playerUpdater = {
         UPDATE: () => {
           var detPitch;
           var limit = 2;
-
           if (matrixEngine.Events.camera.pitch < limit && matrixEngine.Events.camera.pitch > -limit) {
             detPitch = matrixEngine.Events.camera.pitch * 2;
           } else if (matrixEngine.Events.camera.pitch > limit) {
@@ -2428,20 +2135,17 @@ var runThis = world => {
           } else if (matrixEngine.Events.camera.pitch < -(limit + 2)) {
             detPitch = -(limit + 2) * 2;
           }
-
           if (matrixEngine.Events.camera.virtualJumpActive == "DEPLACED_MAYBE") {
             // invert logic // Scene object set
             var detPitchPos = matrixEngine.Events.camera.pitch;
             if (detPitchPos > 4) detPitchPos = 4;
             _manifest.default.scene.playerCollisonBox.physics.currentBody.mass = 0.1;
-
-            _manifest.default.scene[objName].position.setPosition(_manifest.default.scene.playerCollisonBox.physics.currentBody.position.x, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y + 1); // Cannonjs object set / Switched  Z - Y
-
-
+            _manifest.default.scene[objName].position.setPosition(_manifest.default.scene.playerCollisonBox.physics.currentBody.position.x, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z, _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y + 1);
+            // Cannonjs object set / Switched  Z - Y
             matrixEngine.Events.camera.xPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.x;
             matrixEngine.Events.camera.zPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.y;
-            matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z + 1; // App.scene.playerCollisonBox.physics.currentBody.angularVelocity.set(0, 0, 0);
-
+            matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z + 1;
+            // App.scene.playerCollisonBox.physics.currentBody.angularVelocity.set(0, 0, 0);
             if (handlerTimeout == null) {
               handlerTimeout = setTimeout(() => {
                 matrixEngine.Events.camera.virtualJumpActive = false;
@@ -2449,17 +2153,15 @@ var runThis = world => {
               }, 1350);
             }
           } else {
-            handlerTimeout = null; // Make more stable situation
-
+            handlerTimeout = null;
+            // Make more stable situation
             _manifest.default.scene.playerCollisonBox.physics.currentBody.mass = 10;
-
-            _manifest.default.scene.playerCollisonBox.physics.currentBody.quaternion.setFromEuler(0, 0, 0); // Tamo tu iznad duge nebo zri...
+            _manifest.default.scene.playerCollisonBox.physics.currentBody.quaternion.setFromEuler(0, 0, 0);
+            // Tamo tu iznad duge nebo zri...
             // Cannonjs object set
             // Switched  Z - Y
             // matrixEngine.Events.camera.yPos = App.scene.playerCollisonBox.physics.currentBody.position.z;
             // if(App.scene.playerCollisonBox.iamInCollideRegime === true) {
-
-
             if (_manifest.default.scene.playerCollisonBox.pingpong == true) {
               // // Cannonjs object set / Switched  Z - Y
               matrixEngine.Events.camera.xPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.x;
@@ -2467,78 +2169,65 @@ var runThis = world => {
               matrixEngine.Events.camera.yPos = _manifest.default.scene.playerCollisonBox.physics.currentBody.position.z;
               _manifest.default.scene.playerCollisonBox.pingpong = false;
             } else {
-              handlerTimeout2 = 0; // Cannonjs object set - Switched  Z - Y
-
+              handlerTimeout2 = 0;
+              // Cannonjs object set - Switched  Z - Y
               _manifest.default.scene.playerCollisonBox.physics.currentBody.position.set(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.zPos, matrixEngine.Events.camera.yPos);
-
               _manifest.default.scene.playerCollisonBox.pingpong = true;
             }
           }
         }
       };
+      _manifest.default.updateBeforeDraw.push(playerUpdater);
 
-      _manifest.default.updateBeforeDraw.push(playerUpdater); // Player Energy status
+      // Player Energy status
+      _manifest.default.scene.player.energy = {};
 
-
-      _manifest.default.scene.player.energy = {}; // Collector for items
-
+      // Collector for items
       _manifest.default.scene.player.items = {};
-
       for (let key in _manifest.default.scene.player.meshList) {
         _manifest.default.scene.player.meshList[key].setScale(1.85);
-      } // Target scene object
+      }
 
-
+      // Target scene object
       var texTarget = {
         source: ["res/bvh-skeletal-base/swat-guy/target.png", "res/bvh-skeletal-base/swat-guy/target.png"],
         mix_operation: "multiply"
       };
       world.Add("squareTex", 0.25, 'FPSTarget', texTarget);
-
       _manifest.default.scene.FPSTarget.position.setPosition(0, 0, -4);
-
       _manifest.default.scene.FPSTarget.glBlend.blendEnabled = true;
       _manifest.default.scene.FPSTarget.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
       _manifest.default.scene.FPSTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
       _manifest.default.scene.FPSTarget.isHUD = true;
+      _manifest.default.scene.FPSTarget.geometry.setScale(0.1);
 
-      _manifest.default.scene.FPSTarget.geometry.setScale(0.1); // Energy active bar
+      // Energy active bar
       // Custom generic textures. Micro Drawing.
       // Example for arg shema square for now only.
-
-
       var options = {
         squareShema: [8, 8],
         pixels: new Uint8Array(8 * 8 * 4)
-      }; // options.pixels.fill(0);
-
+      };
+      // options.pixels.fill(0);
       _manifest.default.scene.player.energy.value = 8;
-
       _manifest.default.scene.player.updateEnergy = function (v) {
         this.energy.value = v;
-
         var t = _manifest.default.scene.energyBar.preparePixelsTex(_manifest.default.scene.energyBar.specialValue);
-
         _manifest.default.scene.energyBar.textures.pop();
-
         _manifest.default.scene.energyBar.textures.push(_manifest.default.scene.energyBar.createPixelsTex(t));
       };
-
       function preparePixelsTex(options) {
         var I = 0,
-            R = 0,
-            G = 0,
-            B = 0,
-            localCounter = 0;
-
+          R = 0,
+          G = 0,
+          B = 0,
+          localCounter = 0;
         for (var funny = 0; funny < 8 * 8 * 4; funny += 4) {
           if (localCounter > 7) {
             localCounter = 0;
           }
-
           if (localCounter < _manifest.default.scene.player.energy.value) {
             I = 128;
-
             if (_manifest.default.scene.player.energy.value < 3) {
               R = 255;
               G = 0;
@@ -2559,17 +2248,14 @@ var runThis = world => {
             G = 0;
             B = 0;
           }
-
           options.pixels[funny] = R;
           options.pixels[funny + 1] = G;
           options.pixels[funny + 2] = B;
           options.pixels[funny + 3] = 0;
           localCounter++;
         }
-
         return options;
       }
-
       var tex2 = {
         source: ["res/images/hud/energy-bar.png", "res/images/hud/energy-bar.png"],
         mix_operation: "multiply"
@@ -2578,25 +2264,21 @@ var runThis = world => {
       _manifest.default.scene.energyBar.glBlend.blendEnabled = true;
       _manifest.default.scene.energyBar.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
       _manifest.default.scene.energyBar.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
-      _manifest.default.scene.energyBar.isHUD = true; // App.scene.energy.visible = false;
-
+      _manifest.default.scene.energyBar.isHUD = true;
+      // App.scene.energy.visible = false;
       _manifest.default.scene.energyBar.position.setPosition(0, 1.1, -3);
-
       _manifest.default.scene.energyBar.geometry.setScaleByX(1);
-
       _manifest.default.scene.energyBar.geometry.setScaleByY(0.05);
-
       _manifest.default.scene.energyBar.preparePixelsTex = preparePixelsTex;
       options = preparePixelsTex(options);
-
       _manifest.default.scene.energyBar.textures.push(_manifest.default.scene.energyBar.createPixelsTex(options));
-
       _manifest.default.scene.energyBar.specialValue = options;
     }
-
     matrixEngine.objLoader.downloadMeshes({
       player: "res/bvh-skeletal-base/swat-guy/gun2.obj"
-    }, onLoadObj); // matrixEngine.objLoader.downloadMeshes(
+    }, onLoadObj);
+
+    // matrixEngine.objLoader.downloadMeshes(
     //   matrixEngine.objLoader.makeObjSeqArg(
     //     {
     //       id: objName,
@@ -2607,15 +2289,12 @@ var runThis = world => {
     //   onLoadObj
     // );
   };
-
   let promiseAllGenerated = [];
-
   const objGenerator = n => {
     var texStone = {
       source: ["res/images/n-stone.png"],
       mix_operation: "multiply"
     };
-
     for (var j = 0; j < n; j++) {
       promiseAllGenerated.push(new Promise(resolve => {
         setTimeout(() => {
@@ -2634,15 +2313,16 @@ var runThis = world => {
       }));
     }
   };
-
   objGenerator(2);
   createObjSequence('player');
-  Promise.all(promiseAllGenerated).then(what => {// console.info(`Waiting for runtime generation of scene objects,
+  Promise.all(promiseAllGenerated).then(what => {
+    // console.info(`Waiting for runtime generation of scene objects,
     //               then swap scene array index for scene draw-index -> 
     //               must be manual setup for now!`, what);
     // swap(5, 19, matrixEngine.matrixWorld.world.contentList);
-  }); // Add ground for physics bodies.
+  });
 
+  // Add ground for physics bodies.
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply",
@@ -2658,12 +2338,14 @@ var runThis = world => {
       TEXTURE_MAG_FILTER: world.GL.gl.NEAREST,
       TEXTURE_MIN_FILTER: world.GL.gl.NEAREST
     }
-  }; // Load Physics world.
+  };
+
+  // Load Physics world.
   // let gravityVector = [0, 0, -9.82];
-
   let gravityVector = [0, 0, -29.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground - mass == 0 makes the body static
+  let physics = world.loadPhysics(gravityVector);
 
+  // Add ground - mass == 0 makes the body static
   var groundBody = new CANNON.Body({
     mass: 0,
     position: new CANNON.Vec3(0, -15, -2)
@@ -2671,25 +2353,18 @@ var runThis = world => {
   var groundShape = new CANNON.Plane();
   groundBody.addShape(groundShape);
   groundBody._name = 'floor';
-  physics.world.addBody(groundBody); // Matrix engine visual scene object
-
+  physics.world.addBody(groundBody);
+  // Matrix engine visual scene object
   world.Add("squareTex", 1, "FLOOR_STATIC", tex);
-
   _manifest.default.scene.FLOOR_STATIC.geometry.setScaleByX(200);
-
   _manifest.default.scene.FLOOR_STATIC.geometry.setScaleByY(200);
-
   _manifest.default.scene.FLOOR_STATIC.position.SetY(-2);
-
   _manifest.default.scene.FLOOR_STATIC.position.SetZ(-15);
-
   _manifest.default.scene.FLOOR_STATIC.rotation.rotx = 90;
-
-  _manifest.default.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(20); // Target x-ray AIM
+  _manifest.default.scene.FLOOR_STATIC.geometry.setTexCoordScaleFactor(20);
+  // Target x-ray AIM
   // See through the objects.
   // In webGL context it is object how was drawn before others.
-
-
   var texTarget = {
     source: ["res/bvh-skeletal-base/swat-guy/target-night.png"],
     mix_operation: "multiply"
@@ -2700,10 +2375,9 @@ var runThis = world => {
   _manifest.default.scene.xrayTarget.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
   _manifest.default.scene.xrayTarget.isHUD = true;
   _manifest.default.scene.xrayTarget.visible = false;
+  _manifest.default.scene.xrayTarget.position.setPosition(-0.3, 0.27, -4);
 
-  _manifest.default.scene.xrayTarget.position.setPosition(-0.3, 0.27, -4); // Energy
-
-
+  // Energy
   var tex1 = {
     source: ["res/images/hud/energy.png"],
     mix_operation: "multiply"
@@ -2712,15 +2386,13 @@ var runThis = world => {
   _manifest.default.scene.energy.glBlend.blendEnabled = true;
   _manifest.default.scene.energy.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
   _manifest.default.scene.energy.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
-  _manifest.default.scene.energy.isHUD = true; // App.scene.energy.visible = false;
-
+  _manifest.default.scene.energy.isHUD = true;
+  // App.scene.energy.visible = false;
   _manifest.default.scene.energy.position.setPosition(-1, 1.15, -3);
-
   _manifest.default.scene.energy.geometry.setScaleByX(0.35);
+  _manifest.default.scene.energy.geometry.setScaleByY(0.1);
 
-  _manifest.default.scene.energy.geometry.setScaleByY(0.1); // good for fix rotation in future
-
-
+  // good for fix rotation in future
   world.Add("cubeLightTex", 2, "FLOOR2", texNoMipmap);
   var b2 = new CANNON.Body({
     mass: 0,
@@ -2729,10 +2401,8 @@ var runThis = world => {
     shape: new CANNON.Box(new CANNON.Vec3(2, 2, 2))
   });
   physics.world.addBody(b2);
-
-  _manifest.default.scene['FLOOR2'].position.setPosition(0, -2, -14.5); // App.scene['FLOOR2'].geometry.setScaleByX(3);
-
-
+  _manifest.default.scene['FLOOR2'].position.setPosition(0, -2, -14.5);
+  // App.scene['FLOOR2'].geometry.setScaleByX(3);
   _manifest.default.scene['FLOOR2'].physics.currentBody = b2;
   _manifest.default.scene['FLOOR2'].physics.enabled = true;
   world.Add("cubeLightTex", 2, "FLOOR3", texNoMipmap);
@@ -2743,12 +2413,11 @@ var runThis = world => {
     shape: new CANNON.Box(new CANNON.Vec3(3, 3, 3))
   });
   physics.world.addBody(b3);
-
   _manifest.default.scene['FLOOR3'].position.setPosition(0, 0, -19);
-
   _manifest.default.scene['FLOOR3'].physics.currentBody = b3;
-  _manifest.default.scene['FLOOR3'].physics.enabled = true; // Big wall
+  _manifest.default.scene['FLOOR3'].physics.enabled = true;
 
+  // Big wall
   world.Add("cubeLightTex", 5, "WALL_BLOCK", texNoMipmap);
   var b5 = new CANNON.Body({
     mass: 0,
@@ -2757,31 +2426,30 @@ var runThis = world => {
     shape: new CANNON.Box(new CANNON.Vec3(5, 5, 5))
   });
   physics.world.addBody(b5);
-
   _manifest.default.scene['WALL_BLOCK'].position.setPosition(10, 0, -19);
-
   _manifest.default.scene['WALL_BLOCK'].physics.currentBody = b5;
-  _manifest.default.scene['WALL_BLOCK'].physics.enabled = true; // Big wall CUSTOM SHADERS
+  _manifest.default.scene['WALL_BLOCK'].physics.enabled = true;
 
+  // Big wall CUSTOM SHADERS
   world.Add("sphereLightTex", 1, "WALL_BLOCK2", texNoMipmap);
   var b6 = new CANNON.Body({
     mass: 0,
     linearDamping: 0.01,
     position: new CANNON.Vec3(30, -10, 0),
     shape: new CANNON.Sphere(1) // new CANNON.Box(new CANNON.Vec3(5, 5, 5))
-
   });
   physics.world.addBody(b6);
-
   _manifest.default.scene['WALL_BLOCK2'].position.setPosition(30, -10, 19);
-
   _manifest.default.scene['WALL_BLOCK2'].physics.currentBody = b6;
-  _manifest.default.scene['WALL_BLOCK2'].physics.enabled = true; // var now = 1, time1 = 0, then1 = 0;
+  _manifest.default.scene['WALL_BLOCK2'].physics.enabled = true;
+
+  // var now = 1, time1 = 0, then1 = 0;
   // App.scene.WALL_BLOCK2.SHADER_APP_STATUS = 0;
   // var osc_r = new OSCILLATOR(0, 2, 0.001);
   // var osc_g = new OSCILLATOR(0, .9.541, 0.001);
   // var osc_b = new OSCILLATOR(0, 0.1, 0.01);
   // var osc_variable = new OSCILLATOR(0, 150, 1);
+
   // var promiseMyShader = scriptManager.loadGLSL('../public/res/shaders/lights/lights3.glsl')
   // promiseMyShader.then((d) => {
   //   scriptManager.LOAD(d, "custom-effect1-shader-fs", "x-shader/x-fragment", "shaders", () => {
@@ -2794,6 +2462,7 @@ var runThis = world => {
   //     App.scene.WALL_BLOCK2.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(App.scene.WALL_BLOCK2.shaderProgram, "iAppStatus");
   //   })
   // })
+
   // App.scene.WALL_BLOCK2.type = "custom-";
   // App.scene.WALL_BLOCK2.MY_RAD = 0.5;
   // App.scene.WALL_BLOCK2.addExtraDrawCode = function(world, object) {
@@ -2807,15 +2476,19 @@ var runThis = world => {
   //   world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
   //   // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
   //   world.GL.gl.uniform3f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, (App.sys.MOUSE.PRESS != false ? 1 : 0));
+
   //   world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable.UPDATE())
+
   //   world.GL.gl.uniform1f(object.shaderProgram.R, osc_r.UPDATE())
   //   world.GL.gl.uniform1f(object.shaderProgram.G, osc_g.UPDATE())
   //   world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE())
+
   //   world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, App.scene.WALL_BLOCK2.SHADER_APP_STATUS)
   // }
-  // App.scene.WALL_BLOCK2.drawCustom = matrixEngine.standardMEShaderDrawer;
-  // Damage object test
 
+  // App.scene.WALL_BLOCK2.drawCustom = matrixEngine.standardMEShaderDrawer;
+
+  // Damage object test
   world.Add("cubeLightTex", 1, "LAVA", tex);
   var b4 = new CANNON.Body({
     mass: 0,
@@ -2825,17 +2498,14 @@ var runThis = world => {
   });
   b4._name = 'damage';
   physics.world.addBody(b4);
-
-  _manifest.default.scene.LAVA.position.setPosition(-6, -1, -16.5); // App.scene.LAVA.geometry.setScaleByX(1);
-
-
+  _manifest.default.scene.LAVA.position.setPosition(-6, -1, -16.5);
+  // App.scene.LAVA.geometry.setScaleByX(1);
   _manifest.default.scene.LAVA.physics.currentBody = b4;
   _manifest.default.scene.LAVA.physics.enabled = true;
-
   _manifest.default.scene.LAVA.LightsData.ambientLight.set(0, 0, 0);
+  _manifest.default.scene.LAVA.streamTextures = new matrixEngine.Engine.VT("res/video-texture/lava1.mkv");
 
-  _manifest.default.scene.LAVA.streamTextures = new matrixEngine.Engine.VT("res/video-texture/lava1.mkv"); // How to load obj and give him gameplay item props
-
+  // How to load obj and give him gameplay item props
   loadObj({
     name: "armor",
     path: "res/3d-objects/armor.obj",
@@ -2857,20 +2527,19 @@ var runThis = world => {
     textures: ["res/images/complex_texture_1/normalmap.png"],
     shadows: false,
     gamePlayItem: 'item-munition'
-  }); // Handler for obj
+  });
 
+  // Handler for obj
   function loadObj(n) {
     function onLoadObj(meshes) {
       var tex = {
         source: n.textures,
         mix_operation: "multiply"
       };
-
       for (let key in meshes) {
         matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
         world.Add("obj", n.scale, n.name, tex, meshes[key]);
       }
-
       _manifest.default.scene[n.name].position.x = n.position[0];
       _manifest.default.scene[n.name].position.y = n.position[1];
       _manifest.default.scene[n.name].position.z = n.position[2];
@@ -2879,10 +2548,9 @@ var runThis = world => {
       _manifest.default.scene[n.name].rotation.rotationSpeed.z = n.activeRotation[2];
       _manifest.default.scene[n.name].rotation.rotx = n.rotation[0];
       _manifest.default.scene[n.name].rotation.roty = n.rotation[1];
-      _manifest.default.scene[n.name].rotation.rotz = n.rotation[2]; // App.scene[n.name].LightsData.ambientLight.set(1, 1, 1);
-
+      _manifest.default.scene[n.name].rotation.rotz = n.rotation[2];
+      // App.scene[n.name].LightsData.ambientLight.set(1, 1, 1);
       _manifest.default.scene[n.name].mesh.setScale(n.scale);
-
       var b44 = new CANNON.Body({
         mass: 0.1,
         linearDamping: 0.01,
@@ -2890,21 +2558,19 @@ var runThis = world => {
         shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
       });
       b44._name = n.gamePlayItem;
-      physics.world.addBody(b44); // App.scene.LAVA.geometry.setScaleByX(1);
-
+      physics.world.addBody(b44);
+      // App.scene.LAVA.geometry.setScaleByX(1);
       _manifest.default.scene[n.name].physics.currentBody = b44;
       _manifest.default.scene[n.name].physics.enabled = true;
       if (n.shadows == true) setTimeout(() => {
         _manifest.default.scene[n.name].activateShadows('spot');
       }, 100);
     }
-
     var arg = {};
     arg[n.name] = n.path;
     matrixEngine.objLoader.downloadMeshes(arg, onLoadObj);
   }
 };
-
 exports.runThis = runThis;
 
 },{"../lib/utility":88,"../program/manifest":99,"cannon":96}],28:[function(require,module,exports){
@@ -2914,11 +2580,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
@@ -2928,39 +2591,34 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App */
+
 var runThis = world => {
   // Image texs
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
-  }; // Camera
+  };
 
+  // Camera
   _manifest.default.camera.SceneController = true;
   world.Add("cubeLightTex", 1, "myCube1", tex);
-
   _manifest.default.scene.myCube1.activateShadows('lens');
-
   _manifest.default.scene.myCube1.position.setPosition(0, 0, -7);
-
   _manifest.default.scene.myCube1.rotation.rotationSpeed.x = 0;
-
   _manifest.default.scene.myCube1.shadows.activeUpdate();
-
   _manifest.default.scene.myCube1.shadows.animateCenterX({
     from: 0,
     to: 1125,
     step: 10
   });
-
   _manifest.default.scene.myCube1.shadows.animateCenterY({
     from: 0,
     to: 1125,
     step: 10
   });
+  _manifest.default.scene.myCube1.LightsData.directionLight.set(0.5, 0.5, 0.5);
 
-  _manifest.default.scene.myCube1.LightsData.directionLight.set(0.5, 0.5, 0.5); // Click event
-
-
+  // Click event
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
@@ -2971,7 +2629,6 @@ var runThis = world => {
     console.info(e.detail);
   });
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],29:[function(require,module,exports){
@@ -2981,24 +2638,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-unused-vars */
 
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
+
 var runThis = world => {
   // if you dont use obj or complex mesh you no need for this func
   function onLoadObj(meshes) {
     for (let key in meshes) {
       matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
     }
-
     var textuteImageSamplers2 = {
       source: ["res/images/armor.png", "res/images/armor.png"],
       mix_operation: "multiply"
@@ -3010,27 +2664,26 @@ var runThis = world => {
     world.Add("obj", 1, "armor", textuteImageSamplers2, _manifest.default.meshes.armor);
     _manifest.default.scene.armor.position.y = 1;
     _manifest.default.scene.armor.rotation.rotationSpeed.y = 20;
-
     _manifest.default.scene.armor.LightsData.ambientLight.set(1, 1, 1);
-
-    _manifest.default.scene.armor.position.z = -6; // App.scene.armor.mesh.setScale(3)
+    _manifest.default.scene.armor.position.z = -6;
+    // App.scene.armor.mesh.setScale(3)
 
     setTimeout(() => {
       _manifest.default.scene.armor.activateShadows('spot');
-
-      _manifest.default.scene.mac.activateShadows('spot'); // App.scene.armor.shadows.activeUpdate();
+      _manifest.default.scene.mac.activateShadows('spot');
+      // App.scene.armor.shadows.activeUpdate();
       // App.scene.armor.shadows.animatePositionY();
+    }, 2000);
 
-    }, 2000); // world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers2);
+    // world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers2);
     // App.scene.MyCubeTex.activateShadows()
-
     world.Add("obj", 1, "mac", textuteImageSamplers, _manifest.default.meshes.mac);
     _manifest.default.scene.mac.position.y = 1;
     _manifest.default.scene.mac.position.x = -2;
     _manifest.default.scene.mac.rotation.rotationSpeed.y = 20;
-
     _manifest.default.scene.mac.LightsData.ambientLight.set(1, 1, 1);
   }
+
   /**
    * @description
    * For swap (initial orientation for object) use combination of
@@ -3039,16 +2692,15 @@ var runThis = world => {
    * swap[1,3]
    * to switch x,y,z verts.
    */
-
-
   matrixEngine.objLoader.downloadMeshes({
     armor: "res/3d-objects/armor.obj",
     mac: "res/3d-objects/mac.obj"
   }, onLoadObj, {
     swap: [0, 2]
-  }); //delete images_local_var;
-};
+  });
 
+  //delete images_local_var;
+};
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],30:[function(require,module,exports){
@@ -3058,11 +2710,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @description Usage of MEBvhAnimation with switch system.
  * Adding improved deleting procedure for scene object.
@@ -3070,22 +2719,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @arg filePath
  * @arg options
  */
+
 var runThis = world => {
   // Camera
   _manifest.default.camera.SceneController = true;
-
   const createObjSequence = objName => {
     function onLoadObj(meshes) {
       _manifest.default.meshes = meshes;
-
       for (let key in meshes) {
         matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
       }
-
       var textuteImageSamplers2 = {
         source: ["res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png", "res/bvh-skeletal-base/swat-guy/textures/Ch15_1001_Diffuse.png"],
         mix_operation: "multiply" // ENUM : multiply , divide
-
       };
       setTimeout(function () {
         var animArg = {
@@ -3115,7 +2761,6 @@ var runThis = world => {
         _manifest.default.scene[objName].rotation.rotationSpeed.y = 50;
       }, 1);
     }
-
     matrixEngine.objLoader.downloadMeshes(matrixEngine.objLoader.makeObjSeqArg({
       id: objName,
       path: "res/bvh-skeletal-base/swat-guy/anims/swat-multi",
@@ -3123,10 +2768,12 @@ var runThis = world => {
       to: 61
     }), onLoadObj);
   };
+  window.createObjSequence = createObjSequence;
 
-  window.createObjSequence = createObjSequence; // canvas.addEventListener('mousedown', (ev) => {
+  // canvas.addEventListener('mousedown', (ev) => {
   //   matrixEngine.raycaster.checkingProcedure(ev);
   // });
+
   // addEventListener('ray.hit.event', function(e) {
   //   // Still not work for obj...
   //   console.info(e.detail.hitObject);
@@ -3136,7 +2783,6 @@ var runThis = world => {
 
   createObjSequence('player');
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],31:[function(require,module,exports){
@@ -3146,24 +2792,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  * [OLD NETWORKING]
  */
-let VT = matrixEngine.Engine.VT;
 
+let VT = matrixEngine.Engine.VT;
 var runThis = world => {
   _manifest.default.camera.SceneController = true;
   canvas.addEventListener('mousedown', ev => {
@@ -3171,7 +2811,6 @@ var runThis = world => {
   });
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev);
-
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
     }
@@ -3179,13 +2818,11 @@ var runThis = world => {
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
-
   };
   let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground
-
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
   physics.addGround(_manifest.default, world, tex);
-
   const objGenerator = meObj => {
     var b2 = new CANNON.Body({
       mass: 1,
@@ -3196,31 +2833,26 @@ var runThis = world => {
     physics.world.addBody(b2);
     meObj.physics.currentBody = b2;
     meObj.physics.enabled = true;
-  }; // objGenerator(1)
+  };
+  // objGenerator(1)
 
-
-  matrixEngine.Engine.activateNet(); // let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-
+  matrixEngine.Engine.activateNet();
+  // let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
   addEventListener('stream-loaded', e => {
     var _ = document.querySelectorAll('.media-box');
-
     var name = "videochat-" + e.detail.data.userId;
-
     _.forEach(i => {
       // App.network.connection.userid  REPRESENT LOCAL STREAM 
       if (e.detail.data.userId != _manifest.default.network.connection.userid) {
         // This is video element!
         world.Add("cubeLightTex", 3, name, tex);
         _manifest.default.scene[name].position.x = 0;
-        _manifest.default.scene[name].position.z = -20; // App.scene[name].rotx = 45
+        _manifest.default.scene[name].position.z = -20;
+        // App.scene[name].rotx = 45
         // App.scene[name].rotation.rotz = -90
-
         _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
-
         _manifest.default.scene[name].net.enable = true;
-
         _manifest.default.scene[name].net.activate();
-
         _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT(i.children[1]);
         objGenerator(_manifest.default.scene[name]);
         _manifest.default.CUSTOM_TIMER = setInterval(() => {
@@ -3241,10 +2873,8 @@ var runThis = world => {
         }, 1);
         addEventListener('net.remove-user', event => {
           var n = "videochat-" + event.detail.data.userid;
-
           if (typeof _manifest.default.scene[n] !== 'undefinde' && typeof _manifest.default.scene[n].CUSTOM_FLAG_PREVENT_DBCALL === 'undefined') {
             _manifest.default.scene[n].CUSTOM_FLAG_PREVENT_DBCALL = true;
-
             _manifest.default.scene[n].selfDestroy(1);
           }
         });
@@ -3255,17 +2885,12 @@ var runThis = world => {
           matrixEngine.objLoader.initMeshBuffers(world.GL.gl, _manifest.default.meshes.TV);
           setTimeout(function () {
             world.Add("obj", 1, "TV", tex, _manifest.default.meshes.TV);
-
             _manifest.default.scene.TV.position.setPosition(-9, 4, -15);
-
             _manifest.default.scene.TV.rotation.rotateY(90);
-
             _manifest.default.scene.TV.LightsData.ambientLight.set(1, 1, 1);
-
             _manifest.default.scene.TV.streamTextures = new matrixEngine.Engine.DOM_VT(i.children[1]);
           }, 1000);
         }
-
         matrixEngine.objLoader.downloadMeshes({
           TV: "res/3d-objects/balltest2.obj"
         }, onLoadObj);
@@ -3283,7 +2908,6 @@ var runThis = world => {
   _manifest.default.scene.outsideBox2.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
   _manifest.default.scene.outsideBox2.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],32:[function(require,module,exports){
@@ -3293,17 +2917,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-unused-vars */
 
 /**
@@ -3312,18 +2930,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App world */
+
 //let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 //let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 let SWITCHER = matrixEngine.utility.SWITCHER;
-
 var runThis = world => {
   var S1 = new SWITCHER();
   _manifest.default.camera.FirstPersonController = true;
   var textuteImageSamplers1 = {
     source: ['res/images/bark.jpg'],
     mix_operation: 'multiply'
-  }; // Floor
+  };
 
+  // Floor
   var textuteImageSamplers2 = {
     source: ['res/images/grass1.jpg'],
     mix_operation: 'multiply'
@@ -3332,9 +2951,7 @@ var runThis = world => {
   _manifest.default.scene.floor.rotation.rotationSpeed.z = 0;
   _manifest.default.scene.floor.position.y = -12;
   _manifest.default.scene.floor.rotation.rotx = 90;
-
   _manifest.default.scene.floor.geometry.setScale(213);
-
   _manifest.default.scene.floor.custom.gl_texture = function (object, t) {
     var world = matrixEngine.matrixWorld.world;
     world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
@@ -3346,28 +2963,20 @@ var runThis = world => {
     world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
     world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
   };
-
   world.Add('cubeLightTex', 3, 'tree2_', textuteImageSamplers1);
-
   _manifest.default.scene.tree2_.geometry.setScale(0.5);
-
   _manifest.default.scene.tree2_.geometry.setScaleByZ(0.5);
-
   _manifest.default.scene.tree2_.geometry.setScaleByX(0.5);
-
   _manifest.default.scene.tree2_.geometry.setScaleByY(5);
-
   _manifest.default.scene.tree2_.geometry.texCoordsPoints.front = _manifest.default.scene.tree2_.geometry.texCoordsPoints.top;
   _manifest.default.scene.tree2_.geometry.texCoordsPoints.left = _manifest.default.scene.tree2_.geometry.texCoordsPoints.top;
   _manifest.default.scene.tree2_.position.y = -4;
-
   _manifest.default.scene.tree2_.instancedDraws.overrideDrawArraysInstance = function (object) {
     for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
       object.instancedDraws.array_of_local_offset = [0, 0, 18];
       mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
       world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
       object.instancedDraws.array_of_local_offset = [18 * S1.GET(), 0, 0];
-
       for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
         mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
         world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
@@ -3375,25 +2984,18 @@ var runThis = world => {
       }
     }
   };
-
   world.Add('pyramid', 3, 'tree1_', textuteImageSamplers2);
-
   _manifest.default.scene.tree1_.geometry.colorData.SetRedForAll(0.2);
-
   _manifest.default.scene.tree1_.geometry.colorData.SetGreenForAll(0.5);
-
   _manifest.default.scene.tree1_.geometry.setSpitz(5);
-
   _manifest.default.scene.tree1_.position.y = 3.5;
   _manifest.default.scene.tree1_.instancedDraws.array_of_local_offset = [0, 0, 0];
-
   _manifest.default.scene.tree1_.instancedDraws.overrideDrawArraysInstance = function (object) {
     for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
       object.instancedDraws.array_of_local_offset = [0, 0, 18];
       mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
       world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
       object.instancedDraws.array_of_local_offset = [18 * S1.GET(), 0, 0];
-
       for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
         mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
         world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
@@ -3401,17 +3003,14 @@ var runThis = world => {
       }
     }
   };
-
   world.Add('pyramid', 3, 'tree1');
   _manifest.default.scene.tree1.instancedDraws.array_of_local_offset = [0, 0, 0];
-
   _manifest.default.scene.tree1.instancedDraws.overrideDrawArraysInstance = function (object) {
     for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
       object.instancedDraws.array_of_local_offset = [0, 0, 18];
       mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
       world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
       object.instancedDraws.array_of_local_offset = [18 * S1.GET(), 0, 0];
-
       for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
         mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
         world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
@@ -3419,13 +3018,9 @@ var runThis = world => {
       }
     }
   };
-
   _manifest.default.scene.tree1.geometry.colorData.SetRedForAll(0.1);
-
   _manifest.default.scene.tree1.geometry.colorData.SetGreenForAll(0.6);
-
   _manifest.default.scene.tree1.geometry.setSpitz(5);
-
   _manifest.default.scene.tree1.position.y = 8.5;
   _manifest.default.scene.tree1.instancedDraws.numberOfInstance = 20;
   _manifest.default.scene.tree1_.instancedDraws.numberOfInstance = 20;
@@ -3437,7 +3032,6 @@ var runThis = world => {
   _manifest.default.scene.tree1_.position.x = 200;
   _manifest.default.scene.tree1_.position.z = -200;
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],33:[function(require,module,exports){
@@ -3447,17 +3041,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest.js"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description New version networking2 - Matrix Engine Api Example.
@@ -3467,16 +3055,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App world */
-var runThis = world => {
-  world.Add("square", 1, "MyColoredSquare1"); // Must be activate - Use client default config file
 
+var runThis = world => {
+  world.Add("square", 1, "MyColoredSquare1");
+
+  // Must be activate - Use client default config file
   matrixEngine.Engine.activateNet2(undefined, {
     sessionName: 'matrix-engine-shared-object',
     resolution: '240x160'
   });
-  _manifest.default.scene.MyColoredSquare1.net.enable = true; // App.scene.MyColoredSquare1.net.activate();
+  _manifest.default.scene.MyColoredSquare1.net.enable = true;
+  // App.scene.MyColoredSquare1.net.activate();
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest.js":99}],34:[function(require,module,exports){
@@ -3486,17 +3076,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-unused-vars */
 
 /**
@@ -3505,17 +3089,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App world */
+
 var runThis = world => {
-  world.Add("square", 1, "MyColoredSquare1"); // Must be activate
+  world.Add("square", 1, "MyColoredSquare1");
 
-  matrixEngine.Engine.activateNet(); // Must be activate for scene objects also.
+  // Must be activate
+  matrixEngine.Engine.activateNet();
+
+  // Must be activate for scene objects also.
   // This is only to force avoid unnecessary networking emit!
-
   _manifest.default.scene.MyColoredSquare1.net.enable = true;
-
   _manifest.default.scene.MyColoredSquare1.net.activate();
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],35:[function(require,module,exports){
@@ -3525,30 +3110,27 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example for
  * Load custom list of obj sequence.
  */
+
 var runThis = world => {
   // LOAD MESH FROM OBJ FILES...
   // if you dont use obj or complex mesh you no need for this func
+
   function onLoadObj(meshes) {
     // No need from [1.8.2]
     // App.meshes = meshes;
     for (let key in meshes) {
       matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
     }
-
     var textuteImageSamplers2 = {
       source: ["res/images/RustPaint.jpg"],
       mix_operation: "multiply" // ENUM : multiply , divide
-
     };
     setTimeout(function () {
       var animation_construct = {
@@ -3564,7 +3146,6 @@ var runThis = world => {
       _manifest.default.scene.female.position.z = -13;
     }, 100);
   }
-
   matrixEngine.objLoader.downloadMeshes({
     female: "res/3d-objects/female/female_000001.obj",
     female1: "res/3d-objects/female/female_000003.obj",
@@ -3585,9 +3166,10 @@ var runThis = world => {
     female16: "res/3d-objects/female/female_000033.obj",
     female17: "res/3d-objects/female/female_000035.obj",
     female18: "res/3d-objects/female/female_000037.obj"
-  }, onLoadObj); //delete images_local_var;
-};
+  }, onLoadObj);
 
+  //delete images_local_var;
+};
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],36:[function(require,module,exports){
@@ -3597,37 +3179,31 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
 /* globals world App world */
+
 var runThis = world => {
   /* globals world App ENUMERATORS OSCILLATOR OBJ */
-  let OSCILLATOR = matrixEngine.utility.OSCILLATOR; // LOAD MESH FROM OBJ FILES...
+  let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
+  // LOAD MESH FROM OBJ FILES...
   // if you dont use obj or complex mesh you no need for this func
-
   function onLoadObj(meshes) {
     // No need from [1.8.2]
     // App.meshes = meshes;
-    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes.halfCircle);
 
+    matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes.halfCircle);
     for (const key in meshes) {
       matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
     }
-
     var textuteImageSamplers = {
       source: ["res/images/semi_pack/gradiend_half3.png"],
       mix_operation: "multiply"
@@ -3637,8 +3213,9 @@ var runThis = world => {
     _manifest.default.scene.halfCircle.position.z = -12;
     _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = 100;
     _manifest.default.scene.halfCircle.glBlend.blendEnabled = true;
-    var oscillator1 = new OSCILLATOR(-12, 8, 0.2); // FEMALE
+    var oscillator1 = new OSCILLATOR(-12, 8, 0.2);
 
+    // FEMALE
     var textuteImageSamplers2 = {
       source: ["res/images/RustPaint.jpg"],
       mix_operation: "multiply"
@@ -3656,9 +3233,9 @@ var runThis = world => {
     _manifest.default.scene.female.rotation.rotationSpeed.y = 150;
     _manifest.default.scene.female.position.z = -13;
     _manifest.default.scene.halfCircle.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-    _manifest.default.scene.halfCircle.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4]; //App.scene.halfCircle2.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    _manifest.default.scene.halfCircle.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
+    //App.scene.halfCircle2.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     //App.scene.halfCircle2.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
-
     _manifest.default.scene.female.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     _manifest.default.scene.female.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
     _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = 1;
@@ -3668,24 +3245,26 @@ var runThis = world => {
         _manifest.default.scene.halfCircle.position.y = -9;
         _manifest.default.scene.halfCircle.position.z = -14;
         _manifest.default.scene.female.rotation.rotationSpeed.y = 10;
-        _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = 10; // App.scene.halfCircle2.rotation.rotationSpeed.y = -10;
+        _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = 10;
+        // App.scene.halfCircle2.rotation.rotationSpeed.y = -10;
 
-        _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = _manifest.default.scene.female.mesh.indexBuffer.numItems; // eslint-disable-next-line no-undef
+        _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = _manifest.default.scene.female.mesh.indexBuffer.numItems;
 
+        // eslint-disable-next-line no-undef
         clearInterval(TIMER);
         return;
       } else {
         // App.scene.halfCircle2.position.y = oscillator2.UPDATE();
-        _manifest.default.scene.halfCircle.position.y = oscillator1.UPDATE(); // App.scene.halfCircle.rotation.rotationSpeed.z =  App.scene.halfCircle.rotation.rotationSpeed.z + 1;
-
+        _manifest.default.scene.halfCircle.position.y = oscillator1.UPDATE();
+        // App.scene.halfCircle.rotation.rotationSpeed.z =  App.scene.halfCircle.rotation.rotationSpeed.z + 1;
         _manifest.default.scene.halfCircle.rotation.rotationSpeed.y = _manifest.default.scene.halfCircle.rotation.rotationSpeed.y - 1;
         _manifest.default.scene.female.rotation.rotationSpeed.y = _manifest.default.scene.female.rotation.rotationSpeed.y - 1;
         _manifest.default.scene.female.glDrawElements.numberOfIndicesRender = _manifest.default.scene.female.glDrawElements.numberOfIndicesRender + 15;
       }
     }, 1);
-  } // Implement recursive load system for next update.
+  }
 
-
+  // Implement recursive load system for next update.
   matrixEngine.objLoader.downloadMeshes({
     female: "res/3d-objects/female/female_000001.obj",
     female1: "res/3d-objects/female/female_000003.obj",
@@ -3709,7 +3288,6 @@ var runThis = world => {
     halfCircle: "res/3d-objects/balltest1.obj"
   }, onLoadObj);
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],37:[function(require,module,exports){
@@ -3719,29 +3297,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
 /* globals world App world */
-let Vjs3 = matrixEngine.Engine.Vjs3;
 
+let Vjs3 = matrixEngine.Engine.Vjs3;
 var runThis = world => {
   /* globals world App ENUMERATORS E Vjs3 */
-
   /* eslint-disable no-unused-vars */
+
   var tex = new Vjs3("app/2d1kilo/example1.html", "starter/text.js");
   _manifest.default.camera.FirstPersonController = true;
   var textuteImageSamplers = {
@@ -3761,7 +3333,6 @@ var runThis = world => {
   _manifest.default.scene.floor.geometry.texCoordsPoints.right_bottom.x = 1 + coeficientSizeOfTex;
   _manifest.default.scene.floor.geometry.texCoordsPoints.right_bottom.y = 0 - coeficientSizeOfTex;
   _manifest.default.scene.floor.geometry.size = 50;
-
   _manifest.default.scene.floor.custom.gl_texture = function (object, t) {
     try {
       world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
@@ -3771,16 +3342,16 @@ var runThis = world => {
       world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.REPEAT);
       world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
       world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-    } catch (e) {//
+    } catch (e) {
+      //
     }
   };
-
   _manifest.default.scene.floor.rotation.rotateX(90);
+
   /**
    * Test for scale texCoords for CubeVertex;
    *
    */
-
 
   world.Add("cubeLightTex", 1, "test", {
     source: ["res/images/complex_texture_1/diffuse.png"],
@@ -3788,7 +3359,8 @@ var runThis = world => {
   });
   _manifest.default.scene.test.position.y = 1;
   _manifest.default.scene.test.position.x = 0;
-  _manifest.default.scene.test.position.z = 0; // App.scene.zid.geometry.setScaleByX(60);
+  _manifest.default.scene.test.position.z = 0;
+  // App.scene.zid.geometry.setScaleByX(60);
   // App.scene.zid.geometry.setScaleByY(10);
 
   _manifest.default.scene.test.custom.gl_texture = function (object, t) {
@@ -3800,10 +3372,10 @@ var runThis = world => {
       world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.REPEAT);
       world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
       world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-    } catch (e) {//
+    } catch (e) {
+      //
     }
   };
-
   world.Add("cubeLightTex", 1, "zid", {
     source: ["res/images/texture_metalic1.jpg"],
     mix_operation: "multiply"
@@ -3811,11 +3383,8 @@ var runThis = world => {
   _manifest.default.scene.zid.position.y = 7;
   _manifest.default.scene.zid.position.x = 0;
   _manifest.default.scene.zid.position.z = 50;
-
   _manifest.default.scene.zid.geometry.setScaleByX(60);
-
   _manifest.default.scene.zid.geometry.setScaleByY(10);
-
   _manifest.default.scene.zid.custom.gl_texture = _manifest.default.scene.test.custom.gl_texture;
   world.Add("cubeLightTex", 1, "zid2", {
     source: ["res/images/texture_metalic1.jpg"],
@@ -3824,11 +3393,8 @@ var runThis = world => {
   _manifest.default.scene.zid2.position.y = 8;
   _manifest.default.scene.zid2.position.x = 0;
   _manifest.default.scene.zid2.position.z = -50;
-
   _manifest.default.scene.zid2.geometry.setScaleByX(60);
-
   _manifest.default.scene.zid2.geometry.setScaleByY(10);
-
   world.Add("cubeLightTex", 1, "zid3", {
     source: ["res/images/texture_metalic1.jpg"],
     mix_operation: "multiply"
@@ -3836,11 +3402,8 @@ var runThis = world => {
   _manifest.default.scene.zid3.position.y = 7;
   _manifest.default.scene.zid3.position.x = 50;
   _manifest.default.scene.zid3.position.z = 0;
-
   _manifest.default.scene.zid3.geometry.setScaleByZ(60);
-
   _manifest.default.scene.zid3.geometry.setScaleByY(10);
-
   world.Add("cubeLightTex", 1, "zid4", {
     source: ["res/images/texture_metalic1.jpg"],
     mix_operation: "multiply"
@@ -3848,11 +3411,8 @@ var runThis = world => {
   _manifest.default.scene.zid4.position.y = 8;
   _manifest.default.scene.zid4.position.x = -50;
   _manifest.default.scene.zid4.position.z = 0;
-
   _manifest.default.scene.zid4.geometry.setScaleByZ(60);
-
   _manifest.default.scene.zid4.geometry.setScaleByY(10);
-
   for (var hor = -40; hor < 50; hor = hor + 10) {
     var name = "zid_" + hor;
     world.Add("cubeLightTex", 1, name, {
@@ -3861,12 +3421,11 @@ var runThis = world => {
     });
     _manifest.default.scene[name].position.y = 8;
     _manifest.default.scene[name].position.x = hor;
-    _manifest.default.scene[name].position.z = 48; // App.scene[name].glBlend.blendEnabled = true;
+    _manifest.default.scene[name].position.z = 48;
+    // App.scene[name].glBlend.blendEnabled = true;
     // App.scene[name].glBlend.blendParamSrc =  ENUMERATORS.glBlend.param[4];
     // App.scene[name].glBlend.blendParamDest =  ENUMERATORS.glBlend.param[4];
-
     _manifest.default.scene[name].geometry.setScaleByY(10);
-
     name = "zid_2_" + hor;
     world.Add("cubeLightTex", 1, name, {
       source: ["res/images/texture_metalic1.jpg"],
@@ -3874,69 +3433,54 @@ var runThis = world => {
     });
     _manifest.default.scene[name].position.y = 8;
     _manifest.default.scene[name].position.x = hor;
-    _manifest.default.scene[name].position.z = -48; // App.scene[name].glBlend.blendEnabled = true;
+    _manifest.default.scene[name].position.z = -48;
+    // App.scene[name].glBlend.blendEnabled = true;
     // App.scene[name].glBlend.blendParamSrc =  ENUMERATORS.glBlend.param[4];
     // App.scene[name].glBlend.blendParamDest =  ENUMERATORS.glBlend.param[4];
-
     _manifest.default.scene[name].geometry.setScaleByY(10);
   }
-
   world.Add("pyramid", 1, "MyPyramid1");
   world.Add("pyramid", 1, "MyPyramid2");
   world.Add("pyramid", 1, "MyPyramid3");
-  world.Add("pyramid", 1, "MyPyramid4"); // SET POSITION
+  world.Add("pyramid", 1, "MyPyramid4");
 
+  // SET POSITION
   _manifest.default.scene.MyPyramid1.geometry.spitz = 10;
   _manifest.default.scene.MyPyramid2.geometry.spitz = 10;
   _manifest.default.scene.MyPyramid3.geometry.spitz = 10;
   _manifest.default.scene.MyPyramid4.geometry.spitz = 10;
-
   _manifest.default.scene.MyPyramid1.position.SetX(-10);
-
   _manifest.default.scene.MyPyramid1.position.SetZ(-10);
-
   _manifest.default.scene.MyPyramid2.position.SetX(10);
-
   _manifest.default.scene.MyPyramid2.position.SetZ(10);
-
   _manifest.default.scene.MyPyramid3.position.SetX(10);
-
   _manifest.default.scene.MyPyramid3.position.SetZ(-10);
-
   _manifest.default.scene.MyPyramid4.position.SetX(-10);
-
   _manifest.default.scene.MyPyramid4.position.SetZ(10);
-
   _manifest.default.scene.MyPyramid1.position.SetY(-1);
-
   _manifest.default.scene.MyPyramid2.position.SetY(-1);
-
   _manifest.default.scene.MyPyramid3.position.SetY(-1);
-
   _manifest.default.scene.MyPyramid4.position.SetY(-1);
-
   _manifest.default.scene.MyPyramid2.rotation.rotationSpeed.z = 0;
   world.Add("squareTex", 5, "outsideBox", textuteImageSamplers);
   _manifest.default.scene.outsideBox.position.y = 4;
   _manifest.default.scene.outsideBox.position.x = 0;
-  _manifest.default.scene.outsideBox.position.z = -45; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
+  _manifest.default.scene.outsideBox.position.z = -45;
+  // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
   // App.scene.outsideBox.rotValue = 90;
-
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
-
   _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
   _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
   _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
+  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0);
 
-  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-
-
+  // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   E("HOLDER_STREAMS").style.display = "block";
   _manifest.default.scene.outsideBox.streamTextures = tex;
-  setTimeout(function () {// App.scene.outsideBox.streamTextures.showTextureEditor();
+  setTimeout(function () {
+    // App.scene.outsideBox.streamTextures.showTextureEditor();
   }, 1000);
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],38:[function(require,module,exports){
@@ -3946,17 +3490,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var CANNON = _interopRequireWildcard(require("cannon"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic zlatnaspirala@
  *@Description Matrix Engine Api Example
@@ -3964,8 +3502,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Current theme : SceneController and 
  * physics (cannon.js) implementation.
  */
-window.CANNON = CANNON;
 
+window.CANNON = CANNON;
 var runThis = world => {
   /**
    * @description
@@ -3973,8 +3511,7 @@ var runThis = world => {
    * It is 2dCanvas context draw func.
    */
   function myFace(args
-  /*ctx, faceColor, textColor, txtSizeCoeficient, text*/
-  ) {
+  /*ctx, faceColor, textColor, txtSizeCoeficient, text*/) {
     const {
       width,
       height
@@ -3987,17 +3524,16 @@ var runThis = world => {
     this.cubeMap2dCtx.fillStyle = args[1];
     this.cubeMap2dCtx.fillText(args[3], width / 2, height / 2);
   }
-
   _manifest.default.camera.SceneController = true;
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev.detail.hitObject.name);
+
     /**
      * Physics force apply
      */
-
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(-330, 0, 1000);
     }
@@ -4012,7 +3548,8 @@ var runThis = world => {
     cubeMap: {
       type: '2dcanvas',
       drawFunc: myFace,
-      sides: [// This is custom access you can edit but only must have
+      sides: [
+      // This is custom access you can edit but only must have
       // nice relation with your draw function !
       // This is example for render 2d text in middle-center manir.
       // Nice for 3d button object!
@@ -4048,13 +3585,15 @@ var runThis = world => {
         text: 'x'
       }]
     }
-  }; // Load Physics world !
+  };
 
+  // Load Physics world !
   let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground
-
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
   var groundMaterial = new CANNON.Material();
-  physics.addGround(_manifest.default, world, groundTex, groundMaterial); // physics.world.solver.iterations = 17;
+  physics.addGround(_manifest.default, world, groundTex, groundMaterial);
+  // physics.world.solver.iterations = 17;
 
   world.Add("cubeMap", 1, "myCubeMapObj", tex);
   var b = new CANNON.Body({
@@ -4062,12 +3601,11 @@ var runThis = world => {
     position: new CANNON.Vec3(0, -14, 3),
     shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
   });
-  physics.world.addBody(b); // Physics
-
+  physics.world.addBody(b);
+  // Physics
   _manifest.default.scene.myCubeMapObj.physics.currentBody = b;
   _manifest.default.scene.myCubeMapObj.physics.enabled = true;
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99,"cannon":96}],39:[function(require,module,exports){
@@ -4077,17 +3615,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var CANNON = _interopRequireWildcard(require("cannon"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic zlatnaspirala@
  *@Description Matrix Engine Api Example
@@ -4095,8 +3627,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Current theme : SceneController and 
  * physics (cannon.js) implementation.
  */
-window.CANNON = CANNON;
 
+window.CANNON = CANNON;
 var runThis = world => {
   _manifest.default.camera.SceneController = true;
   canvas.addEventListener('mousedown', ev => {
@@ -4107,7 +3639,6 @@ var runThis = world => {
     /**
      * Physics force apply
      */
-
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(-330, 0, 1000);
     }
@@ -4119,17 +3650,20 @@ var runThis = world => {
       cubeMap: {
         type: 'images'
       }
-    }; // Load Physics world !
+    };
 
+    // Load Physics world !
     let gravityVector = [0, 0, -9.82];
-    let physics = world.loadPhysics(gravityVector); // Add ground
+    let physics = world.loadPhysics(gravityVector);
 
+    // Add ground
     var groundTex = {
       source: ["res/images/complex_texture_1/diffuse.png"],
       mix_operation: "multiply"
     };
     var groundMaterial = new CANNON.Material();
-    physics.addGround(_manifest.default, world, groundTex, groundMaterial); // physics.world.solver.iterations = 17;
+    physics.addGround(_manifest.default, world, groundTex, groundMaterial);
+    // physics.world.solver.iterations = 17;
 
     world.Add("cubeMap", 1, "myCubeMapObj", tex);
     var b = new CANNON.Body({
@@ -4137,13 +3671,12 @@ var runThis = world => {
       position: new CANNON.Vec3(0, -14, 3),
       shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
     });
-    physics.world.addBody(b); // Physics
-
+    physics.world.addBody(b);
+    // Physics
     _manifest.default.scene.myCubeMapObj.physics.currentBody = b;
     _manifest.default.scene.myCubeMapObj.physics.enabled = true;
   });
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99,"cannon":96}],40:[function(require,module,exports){
@@ -4153,17 +3686,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var CANNON = _interopRequireWildcard(require("cannon"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic zlatnaspirala@
  *@Description Matrix Engine Api Example
@@ -4171,6 +3698,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Current theme : SceneController and 
  * physics (cannon.js) implementation.
  */
+
 var runThis = world => {
   _manifest.default.camera.SceneController = true;
   canvas.addEventListener('mousedown', ev => {
@@ -4178,10 +3706,10 @@ var runThis = world => {
   });
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev);
+
     /**
      * Physics force apply
      */
-
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
     }
@@ -4189,11 +3717,12 @@ var runThis = world => {
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
-  }; // Load Physics world!
+  };
 
+  // Load Physics world!
   let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground
-
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
   physics.addGround(_manifest.default, world, tex);
   world.Add("cubeLightTex", 1, "CUBE", tex);
   var b = new CANNON.Body({
@@ -4201,11 +3730,10 @@ var runThis = world => {
     position: new CANNON.Vec3(0, -15, 2),
     shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
   });
-  physics.world.addBody(b); // Physics
-
+  physics.world.addBody(b);
+  // Physics
   _manifest.default.scene.CUBE.physics.currentBody = b;
   _manifest.default.scene.CUBE.physics.enabled = true;
-
   const objGenerator = n => {
     for (var j = 0; j < n; j++) {
       setTimeout(() => {
@@ -4222,10 +3750,8 @@ var runThis = world => {
       }, 1000 * j);
     }
   };
-
   objGenerator(100);
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99,"cannon":96}],41:[function(require,module,exports){
@@ -4235,23 +3761,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var CANNON = _interopRequireWildcard(require("cannon"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic zlatnaspirala@gmail.com
  *@Description Matrix Engine Api Example
  * Current theme : SceneController , visualJS and 
  * physics (cannon.js) implementation
  */
+
 var runThis = world => {
   _manifest.default.camera.SceneController = true;
   canvas.addEventListener('mousedown', ev => {
@@ -4259,10 +3780,10 @@ var runThis = world => {
   });
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev);
+
     /**
      * Physics force apply
      */
-
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
     }
@@ -4270,11 +3791,12 @@ var runThis = world => {
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
-  }; // Load Physics world!
+  };
 
+  // Load Physics world!
   let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground
-
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
   physics.addGround(_manifest.default, world, tex);
   world.Add("cubeLightTex", 1, "CUBE", tex);
   var b = new CANNON.Body({
@@ -4282,14 +3804,16 @@ var runThis = world => {
     position: new CANNON.Vec3(0, -15, 2),
     shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
   });
-  physics.world.addBody(b); // Physics
-
+  physics.world.addBody(b);
+  // Physics
   _manifest.default.scene.CUBE.physics.currentBody = b;
-  _manifest.default.scene.CUBE.physics.enabled = true; // test 
+  _manifest.default.scene.CUBE.physics.enabled = true;
 
-  let anyCanvas = matrixEngine.Engine.anyCanvas; // THIS IS BAD EVERY anCanvas make own canvas2d element
+  // test 
+  let anyCanvas = matrixEngine.Engine.anyCanvas;
+
+  // THIS IS BAD EVERY anCanvas make own canvas2d element
   // Async timers vs for loop
-
   const objGenerator = n => {
     for (var j = 0; j < n; j++) {
       new Promise((resolve, reject) => {
@@ -4305,30 +3829,24 @@ var runThis = world => {
             physics.world.addBody(b2);
             _manifest.default.scene['CUBE' + j].physics.currentBody = b2;
             _manifest.default.scene['CUBE' + j].physics.enabled = true;
-
             if (j == 0) {
               console.log('i = ', j);
               _manifest.default.scene['CUBE' + j].streamTextures = new anyCanvas("../2DTextureEditor/templates/slot/index.html", "HELLO_WORLD");
-
               _manifest.default.scene['CUBE' + j].streamTextures.showTextureEditor();
             } else {
               // nice
               _manifest.default.scene['CUBE' + j].streamTextures = _manifest.default.scene['CUBE0'].streamTextures;
             }
-
             resolve();
           }, 1000 * j);
         }
-
         callme(j);
       });
     }
-  }; // 100 gamepaly render views TEST STRES
-
-
+  };
+  // 100 gamepaly render views TEST STRES
   objGenerator(100);
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99,"cannon":96}],42:[function(require,module,exports){
@@ -4338,17 +3856,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var CANNON = _interopRequireWildcard(require("cannon"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic zlatnaspirala
  *@Description Matrix Engine Api Example
@@ -4356,18 +3868,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Current theme : SceneController and 
  * physics (cannon.js) implementation.
  */
+
 var runThis = world => {
   _manifest.default.camera.SceneController = true;
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
-  }; // Load Physics world!
+  };
 
+  // Load Physics world!
   let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground
-
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
   physics.addGround(_manifest.default, world, tex);
-
   const objGenerator = n => {
     for (var j = 0; j < n; j++) {
       setTimeout(() => {
@@ -4386,10 +3899,8 @@ var runThis = world => {
       }, 1000 * j);
     }
   };
-
   objGenerator(10);
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99,"cannon":96}],43:[function(require,module,exports){
@@ -4399,64 +3910,56 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
 var _engine = require("../lib/engine");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
 /* globals world App world */
-let Vjs3 = matrixEngine.Engine.Vjs3;
 
+let Vjs3 = matrixEngine.Engine.Vjs3;
 var runThis = world => {
   /* globals ENUMERATORS world App Vjs3 E */
-  let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
-  let E = matrixEngine.utility.E; // eslint-disable-next-line no-unused-vars
 
+  let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
+  let E = matrixEngine.utility.E;
+
+  // eslint-disable-next-line no-unused-vars
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
-
   };
   world.Add("cubeLightTex", 12, "outsideBox", tex);
   _manifest.default.scene.outsideBox.position.y = 0;
   _manifest.default.scene.outsideBox.position.z = -55;
   _manifest.default.scene.outsideBox.rotation.rotationSpeed.x = 20;
-  _manifest.default.scene.outsideBox.rotation.rotationSpeed.y = 5; // App.scene.outsideBox.rotValue = 90;
+  _manifest.default.scene.outsideBox.rotation.rotationSpeed.y = 5;
 
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1); // App.scene.outsideBox.glBlend.blendEnabled = true;
-
-
+  // App.scene.outsideBox.rotValue = 90;
+  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
+  // App.scene.outsideBox.glBlend.blendEnabled = true;
   _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
   _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
-
   _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
+  _manifest.default.scene.outsideBox.rotation.rotz = -90;
 
-  _manifest.default.scene.outsideBox.rotation.rotz = -90; /////////////////////////////////////////
+  /////////////////////////////////////////
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   /////////////////////////////////////////
-
   E("HOLDER_STREAMS").style.display = "block";
   setTimeout(function () {
-    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas( // ../ for localhost
+    _manifest.default.scene.outsideBox.streamTextures = new _engine.anyCanvas(
+    // ../ for localhost
     "./2DTextureEditor/templates/slot/", "HELLO_WORLD");
-
     _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
   }, 500);
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../lib/engine":61,"../program/manifest":99}],44:[function(require,module,exports){
@@ -4466,29 +3969,24 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
 /* globals world App world */
+
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 let Vjs3 = matrixEngine.Engine.Vjs3;
 let E = matrixEngine.utility.E;
-
 var runThis = world => {
   /* globals world App ENUMERATORS E Vjs3 */
+
   // eslint-disable-next-line no-unused-vars
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
@@ -4497,25 +3995,22 @@ var runThis = world => {
   world.Add("cubeLightTex", 12, "outsideBox");
   _manifest.default.scene.outsideBox.rotation.rotz = -90;
   _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
+  _manifest.default.scene.outsideBox.position.z = -55;
+  // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
   // App.scene.outsideBox.rotValue = 90;
-
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
-
   _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
   _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
   _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
+  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
 
-  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-
-
+  // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   E("HOLDER_STREAMS").style.display = "block";
   _manifest.default.scene.outsideBox.streamTextures = new Vjs3("./2DTextureEditor/micro-drawing.html", "actualTexture");
   setTimeout(function () {
     _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
   }, 100);
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],45:[function(require,module,exports){
@@ -4525,58 +4020,50 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
 /* globals world App world */
+
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 let Vjs3 = matrixEngine.Engine.Vjs3;
 let E = matrixEngine.utility.E;
-
 var runThis = world => {
   console.log("TEST LOAD ");
   /* globals world App ENUMERATORS E Vjs3 */
-  // eslint-disable-next-line no-unused-vars
 
+  // eslint-disable-next-line no-unused-vars
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 12, "outsideBox", textuteImageSamplers);
   _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
+  _manifest.default.scene.outsideBox.position.z = -55;
+  // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
   // App.scene.outsideBox.rotValue = 90;
-
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(0, 0, 0); // App.scene.outsideBox.glBlend.blendEnabled = true;
+  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(0, 0, 0);
+  // App.scene.outsideBox.glBlend.blendEnabled = true;
   // App.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
   // App.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
+  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
 
-
-  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-
-
+  // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   E("webcam_beta").style.display = "none";
   E("HOLDER_STREAMS").style.display = "block";
   _manifest.default.scene.outsideBox.rotation.rotz = -90;
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3( // "../2DTextureEditor/particle.html",
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3(
+  // "../2DTextureEditor/particle.html",
   "./2DTextureEditor/particle.html", "particle");
-
   _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],46:[function(require,module,exports){
@@ -4586,29 +4073,24 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
 /* globals world App world */
+
 let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
 let Vjs3 = matrixEngine.Engine.Vjs3;
 let E = matrixEngine.utility.E;
-
 var runThis = world => {
   /* globals world App ENUMERATORS E Vjs3 */
+
   // eslint-disable-next-line no-unused-vars
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
@@ -4617,25 +4099,22 @@ var runThis = world => {
   world.Add("cubeLightTex", 12, "outsideBox", tex);
   _manifest.default.scene.outsideBox.rotation.rotz = -90;
   _manifest.default.scene.outsideBox.position.y = 0;
-  _manifest.default.scene.outsideBox.position.z = -55; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
+  _manifest.default.scene.outsideBox.position.z = -55;
+  // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
   // App.scene.outsideBox.rotValue = 90;
-
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
-
   _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
   _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
   _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
+  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
 
-  _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5); // CANVAS2D_SURFACE - IS TEXTURE EDITOR
-
-
+  // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   E("HOLDER_STREAMS").style.display = "block";
-  _manifest.default.scene.outsideBox.streamTextures = new Vjs3( // "../2DTextureEditor/tex1.html", FOR PRODC NO GIT CLONE JUST PUBLIC FOLDER
+  _manifest.default.scene.outsideBox.streamTextures = new Vjs3(
+  // "../2DTextureEditor/tex1.html", FOR PRODC NO GIT CLONE JUST PUBLIC FOLDER
   "./2DTextureEditor/tex1.html", "tex1");
-
   _manifest.default.scene.outsideBox.streamTextures.showTextureEditor();
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],47:[function(require,module,exports){
@@ -4645,31 +4124,22 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest.js"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
 var _matrixStream = require("../networking2/matrix-stream.js");
-
 var CANNON = _interopRequireWildcard(require("cannon"));
-
 var _utility = require("../lib/utility.js");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  * [NEW NETWORKING]
  * public-3d-video-chat
  */
-let VT = matrixEngine.Engine.VT;
 
+let VT = matrixEngine.Engine.VT;
 var runThis = world => {
   // SHIFT + MOUSE RD OR MOUSE MOVE + SHIFT SCROLL ZOOM
   _manifest.default.camera.SceneController = true;
@@ -4678,8 +4148,8 @@ var runThis = world => {
   });
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev);
-
-    if (ev.detail.hitObject.physics.enabled == true) {// not yet supported in net2
+    if (ev.detail.hitObject.physics.enabled == true) {
+      // not yet supported in net2
       // ev.detail.hitObject.physics.currentBody.force.set(0, 0, 200)
     }
   });
@@ -4688,10 +4158,9 @@ var runThis = world => {
     mix_operation: "multiply"
   };
   let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground
-
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
   physics.addGround(_manifest.default, world, tex);
-
   const objGenerator = meObj => {
     var b2 = new CANNON.Body({
       mass: 1,
@@ -4703,28 +4172,23 @@ var runThis = world => {
     meObj.physics.currentBody = b2;
     meObj.physics.enabled = true;
   };
-
   matrixEngine.Engine.activateNet2(undefined, {
     sessionName: 'public-chat-me',
     resolution: '256x256'
   });
   addEventListener(`LOCAL-STREAM-READY`, e => {
     console.log('LOCAL-STREAM-READY [app level] ', e.detail.streamManager.id);
-    console.log('LOCAL-STREAM-READY [app level] ', e.detail.connection.connectionId); // test first
-
+    console.log('LOCAL-STREAM-READY [app level] ', e.detail.connection.connectionId);
+    // test first
     dispatchEvent(new CustomEvent(`onTitle`, {
       detail: `🕸️${e.detail.connection.connectionId}🕸️`
     }));
-
     _utility.notify.show(`Connected 🕸️${e.detail.connection.connectionId}🕸️`, "ok");
-
     var name = e.detail.connection.connectionId;
     world.Add("cubeLightTex", 1, name, tex);
     _manifest.default.scene[name].position.x = 0;
     _manifest.default.scene[name].position.z = -20;
-
     _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
-
     _manifest.default.scene[name].net.enable = true;
     _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT((0, _matrixStream.byId)(e.detail.streamManager.id));
     objGenerator(_manifest.default.scene[name]);
@@ -4739,8 +4203,8 @@ var runThis = world => {
   addEventListener('streamPlaying', e => {
     if (ONE_TIME == 0) {
       ONE_TIME = 1;
-      console.log('REMOTE-STREAM- streamPlaying [app level] ', e.detail.target.videos[0]); // DIRECT REMOTE
-
+      console.log('REMOTE-STREAM- streamPlaying [app level] ', e.detail.target.videos[0]);
+      // DIRECT REMOTE
       var name = e.detail.target.stream.connection.connectionId;
       _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT(e.detail.target.videos[0].video);
     }
@@ -4751,9 +4215,7 @@ var runThis = world => {
     world.Add("cubeLightTex", 1, name, tex);
     _manifest.default.scene[name].position.x = 0;
     _manifest.default.scene[name].position.z = -20;
-
     _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
-
     _manifest.default.scene[name].net.enable = true;
     objGenerator(_manifest.default.scene[name]);
   });
@@ -4763,7 +4225,8 @@ var runThis = world => {
   _manifest.default.scene.outsideBox2.position.z = -20;
   _manifest.default.scene.outsideBox2.rotation.rotationSpeed.y = 25;
   _manifest.default.scene.outsideBox2.rotation.rotx = 90;
-  _manifest.default.scene.outsideBox2.streamTextures = new VT("res/video-texture/me.mkv"); // App.scene.outsideBox2.instancedDraws.numberOfInstance = 3;
+  _manifest.default.scene.outsideBox2.streamTextures = new VT("res/video-texture/me.mkv");
+  // App.scene.outsideBox2.instancedDraws.numberOfInstance = 3;
   // App.scene.outsideBox2.instancedDraws.overrideDrawArraysInstance = function (object) {
   //   for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
   //     object.instancedDraws.array_of_local_offset = [0, 0, 2];
@@ -4783,7 +4246,8 @@ var runThis = world => {
   _manifest.default.scene.outsideBox3.position.y = 5;
   _manifest.default.scene.outsideBox3.position.z = -20;
   _manifest.default.scene.outsideBox3.rotation.rotationSpeed.y = 35;
-  _manifest.default.scene.outsideBox3.rotation.rotx = 0; // effect
+  _manifest.default.scene.outsideBox3.rotation.rotx = 0;
+  // effect
   // var S1 = new SWITCHER();
   // App.scene.outsideBox3.instancedDraws.numberOfInstance = 3;
   // App.scene.outsideBox3.instancedDraws.overrideDrawArraysInstance = function (object) {
@@ -4799,11 +4263,11 @@ var runThis = world => {
   //     }
   //   }
   // };
+
   // App.scene.outsideBox2.glBlend.blendEnabled = true;
   // App.scene.outsideBox2.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
   // App.scene.outsideBox2.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../lib/utility.js":88,"../networking2/matrix-stream.js":91,"../program/manifest.js":99,"cannon":96}],48:[function(require,module,exports){
@@ -4813,23 +4277,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var CANNON = _interopRequireWildcard(require("cannon"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic zlatnaspirala@
  *@Description Matrix Engine Api Example
  * WORKSHOP SCRIPT
  * New example
  */
+
 var runThis = world => {
   _manifest.default.camera.SceneController = true;
   canvas.addEventListener('mousedown', ev => {
@@ -4840,7 +4299,6 @@ var runThis = world => {
     /**
      * Physics force apply
      */
-
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(510, -1000, 1000);
     }
@@ -4848,11 +4306,12 @@ var runThis = world => {
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
-  }; // Load Physics world!
+  };
 
+  // Load Physics world!
   let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground
-
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
   physics.addGround(_manifest.default, world, tex);
   world.cubeMapTextures(['res/images/cube/1.png', 'res/images/cube/2.png', 'res/images/cube/3.png', 'res/images/cube/4.png', 'res/images/cube/5.png', 'res/images/cube/6.png'], imgs => {
     var tex = {
@@ -4869,13 +4328,13 @@ var runThis = world => {
       position: new CANNON.Vec3(0, -15, 2),
       shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
     });
-    physics.world.addBody(b); // Physics
+    physics.world.addBody(b);
 
+    // Physics
     _manifest.default.scene.CUBE.physics.currentBody = b;
     _manifest.default.scene.CUBE.physics.enabled = true;
   });
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99,"cannon":96}],49:[function(require,module,exports){
@@ -4885,19 +4344,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest.js"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
 var _buildinShaders = require("../lib/optimizer/buildin-shaders.js");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
@@ -4906,8 +4358,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * It is not in engine manir - too much inline for now...
  * but works fine!
  */
-const scriptManager = matrixEngine.utility.scriptManager;
 
+const scriptManager = matrixEngine.utility.scriptManager;
 var runThis = world => {
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
@@ -4920,10 +4372,10 @@ var runThis = world => {
   addEventListener("ray.hit.event", function (e) {
     e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 2);
     e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 2);
-    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2); // console.info(e.detail);
+    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2);
+    // console.info(e.detail);
   });
   var myShader = {};
-
   myShader.initDefaultFSShader = () => {
     return `${(0, _buildinShaders.toyShaderHeader)()}
     // The MIT License
@@ -5001,7 +4453,6 @@ var runThis = world => {
     }
   `;
   };
-
   scriptManager.LOAD(myShader.initDefaultFSShader(), "custom-shader-fs", "x-shader/x-fragment", "shaders", () => {
     _manifest.default.scene.ToyShader.shaderProgram = world.initShaders(world.GL.gl, 'custom' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
   });
@@ -5009,9 +4460,8 @@ var runThis = world => {
   _manifest.default.scene.ToyShader.glBlend.blendEnabled = false;
   _manifest.default.scene.ToyShader.type = "custom-";
   var now = 1,
-      time1 = 0,
-      then1 = 0;
-
+    time1 = 0,
+    then1 = 0;
   _manifest.default.scene.ToyShader.addExtraDrawCode = function (world, object) {
     now = Date.now();
     now *= 0.001;
@@ -5021,12 +4471,10 @@ var runThis = world => {
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
     world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
   };
-
   _manifest.default.scene.ToyShader.drawCustom = function (o) {
     return (0, _buildinShaders.standardMEShaderDrawer)(o);
   };
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../lib/optimizer/buildin-shaders.js":79,"../program/manifest.js":99}],50:[function(require,module,exports){
@@ -5036,35 +4484,27 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest.js"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
 var _buildinShaders = require("../lib/optimizer/buildin-shaders.js");
-
 var _utility = require("../lib/utility.js");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  * First time adding direct different FShader.
  * Also mix divine two shader variants...
  */
-const scriptManager = matrixEngine.utility.scriptManager;
 
+const scriptManager = matrixEngine.utility.scriptManager;
 var runThis = world => {
   var textuteImageSamplers = {
     source: ["res/images/blue.png"],
     mix_operation: "multiply"
-  }; // sphereLightTex
-
+  };
+  // sphereLightTex
   world.Add("squareTex", 1, "CubeShader", textuteImageSamplers);
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
@@ -5072,9 +4512,11 @@ var runThis = world => {
   addEventListener("ray.hit.event", function (e) {
     e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 2);
     e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 2);
-    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2); // console.info(e.detail);
-  }); // Load shader content direct from glsl file.
+    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2);
+    // console.info(e.detail);
+  });
 
+  // Load shader content direct from glsl file.
   var promiseMyShader = scriptManager.loadGLSL('./res/shaders/lights/lights2.glsl');
   promiseMyShader.then(d => {
     scriptManager.LOAD(d, "custom-s-shader-fs", "x-shader/x-fragment", "shaders", () => {
@@ -5093,10 +4535,9 @@ var runThis = world => {
   _manifest.default.scene.CubeShader.glBlend.blendEnabled = false;
   _manifest.default.scene.CubeShader.type = "custom-";
   var now = 1,
-      time1 = 0,
-      then1 = 0;
+    time1 = 0,
+    then1 = 0;
   _manifest.default.scene.CubeShader.MY_RAD = 0.5;
-
   _manifest.default.scene.CubeShader.addExtraDrawCode = function (world, object) {
     now = Date.now();
     now *= 0.000000001;
@@ -5105,20 +4546,18 @@ var runThis = world => {
     then1 = time1;
     world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
-    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
-
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
+    // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
     world.GL.gl.uniform1f(object.shaderProgram.XXX, 1.0);
     world.GL.gl.uniform1f(object.shaderProgram.R, osc_variable.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.G, osc_variable.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_variable.UPDATE());
   };
-
   _manifest.default.scene.CubeShader.drawCustom = function (o) {
     return matrixEngine.standardMEShaderDrawer(o);
   };
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../lib/optimizer/buildin-shaders.js":79,"../lib/utility.js":88,"../program/manifest.js":99}],51:[function(require,module,exports){
@@ -5128,38 +4567,30 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest.js"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
 var _buildinShaders = require("../lib/optimizer/buildin-shaders.js");
-
 var _geometryLines = require("../public/res/matrix-shaders-params/geometry-lines.js");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  * First time adding direct different FShader.
  * Also mix divine two shader variants...
  */
+
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 const scriptManager = matrixEngine.utility.scriptManager;
-
 var runThis = world => {
   _manifest.default.camera.SceneController = true;
   setTimeout(() => document.querySelector('.button2').click(), 3000);
   var texImgs = {
     source: ["res/images/blue.png"],
     mix_operation: "multiply"
-  }; // sphereLightTex  squareTex
-
+  };
+  // sphereLightTex  squareTex
   world.Add("cubeLightTex", 1.5, "CubeShader", texImgs);
   world.Add("cubeLightTex", 1.5, "CubeShader2", texImgs);
   world.Add("cubeLightTex", 1.5, "CubeShader3", texImgs);
@@ -5172,9 +4603,11 @@ var runThis = world => {
   addEventListener("ray.hit.event", function (e) {
     e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 2);
     e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 2);
-    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2); // console.info(e.detail);
-  }); // Load shader content direct from glsl file.
+    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 2);
+    // console.info(e.detail);
+  });
 
+  // Load shader content direct from glsl file.
   if (location.hostname == "localhost") {
     console.log('DEV Paths');
     var promiseMyShader = scriptManager.loadGLSL('../public/res/shaders/lights/lights.glsl');
@@ -5192,17 +4625,15 @@ var runThis = world => {
     var promiseMyShader5 = scriptManager.loadGLSL('./res/shaders/tutorial-lines/colored-lines.glsl');
     var promiseMyShader6 = scriptManager.loadGLSL('./res/shaders/noise/volonoise.glsl');
   }
-
   _geometryLines.geometryLines.charM.forEach((element, index, array) => {
     if (array[index] >= 0) array[index] += 0.4;
     if (array[index] < 0) array[index] -= 0.4;
   });
-
   var myshaderDrawData = _geometryLines.geometryLines.charM;
   promiseMyShader.then(d => {
     scriptManager.LOAD(d, "custom-light-shader-fs", "x-shader/x-fragment", "shaders", () => {
-      _manifest.default.scene.CubeShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-light' + '-shader-fs', 'cubeLightTex' + '-shader-vs'); // Now add extra custom shader uniforms.
-
+      _manifest.default.scene.CubeShader.shaderProgram = world.initShaders(world.GL.gl, 'custom-light' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+      // Now add extra custom shader uniforms.
       _manifest.default.scene.CubeShader.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader.shaderProgram, "iXXX");
       _manifest.default.scene.CubeShader.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader.shaderProgram, "iR");
       _manifest.default.scene.CubeShader.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader.shaderProgram, "iG");
@@ -5212,8 +4643,8 @@ var runThis = world => {
   });
   promiseMyShader2.then(d => {
     scriptManager.LOAD(d, "custom-light2-shader-fs", "x-shader/x-fragment", "shaders", () => {
-      _manifest.default.scene.CubeShader2.shaderProgram = world.initShaders(world.GL.gl, 'custom-light2' + '-shader-fs', 'cubeLightTex' + '-shader-vs'); // Now add extra custom shader uniforms.
-
+      _manifest.default.scene.CubeShader2.shaderProgram = world.initShaders(world.GL.gl, 'custom-light2' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+      // Now add extra custom shader uniforms.
       _manifest.default.scene.CubeShader2.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader2.shaderProgram, "iXXX");
       _manifest.default.scene.CubeShader2.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader2.shaderProgram, "iR");
       _manifest.default.scene.CubeShader2.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader2.shaderProgram, "iG");
@@ -5223,8 +4654,8 @@ var runThis = world => {
   });
   promiseMyShader3.then(d => {
     scriptManager.LOAD(d, "custom-circle1-shader-fs", "x-shader/x-fragment", "shaders", () => {
-      _manifest.default.scene.CubeShader3.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle1' + '-shader-fs', 'cubeLightTex' + '-shader-vs'); // Now add extra custom shader uniforms.
-
+      _manifest.default.scene.CubeShader3.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle1' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+      // Now add extra custom shader uniforms.
       _manifest.default.scene.CubeShader3.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader3.shaderProgram, "iXXX");
       _manifest.default.scene.CubeShader3.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader3.shaderProgram, "iR");
       _manifest.default.scene.CubeShader3.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader3.shaderProgram, "iG");
@@ -5234,8 +4665,8 @@ var runThis = world => {
   });
   promiseMyShader4.then(d => {
     scriptManager.LOAD(d, "custom-circle2-shader-fs", "x-shader/x-fragment", "shaders", () => {
-      _manifest.default.scene.CubeShader4.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle2' + '-shader-fs', 'cubeLightTex' + '-shader-vs'); // Now add extra custom shader uniforms.
-
+      _manifest.default.scene.CubeShader4.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle2' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+      // Now add extra custom shader uniforms.
       _manifest.default.scene.CubeShader4.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader4.shaderProgram, "iXXX");
       _manifest.default.scene.CubeShader4.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader4.shaderProgram, "iR");
       _manifest.default.scene.CubeShader4.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader4.shaderProgram, "iG");
@@ -5246,8 +4677,8 @@ var runThis = world => {
   });
   promiseMyShader5.then(d => {
     scriptManager.LOAD(d, "custom-circle-two-shader-fs", "x-shader/x-fragment", "shaders", () => {
-      _manifest.default.scene.CubeShader5.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle-two' + '-shader-fs', 'cubeLightTex' + '-shader-vs'); // Now add extra custom shader uniforms.
-
+      _manifest.default.scene.CubeShader5.shaderProgram = world.initShaders(world.GL.gl, 'custom-circle-two' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+      // Now add extra custom shader uniforms.
       _manifest.default.scene.CubeShader5.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader5.shaderProgram, "iXXX");
       _manifest.default.scene.CubeShader5.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader5.shaderProgram, "iR");
       _manifest.default.scene.CubeShader5.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader5.shaderProgram, "iG");
@@ -5257,8 +4688,8 @@ var runThis = world => {
   });
   promiseMyShader6.then(d => {
     scriptManager.LOAD(d, "custom-vol-shader-fs", "x-shader/x-fragment", "shaders", () => {
-      _manifest.default.scene.CubeShader6.shaderProgram = world.initShaders(world.GL.gl, 'custom-vol' + '-shader-fs', 'cubeLightTex' + '-shader-vs'); // Now add extra custom shader uniforms.
-
+      _manifest.default.scene.CubeShader6.shaderProgram = world.initShaders(world.GL.gl, 'custom-vol' + '-shader-fs', 'cubeLightTex' + '-shader-vs');
+      // Now add extra custom shader uniforms.
       _manifest.default.scene.CubeShader6.shaderProgram.XXX = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader6.shaderProgram, "iXXX");
       _manifest.default.scene.CubeShader6.shaderProgram.R = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader6.shaderProgram, "iR");
       _manifest.default.scene.CubeShader6.shaderProgram.G = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader6.shaderProgram, "iG");
@@ -5266,19 +4697,12 @@ var runThis = world => {
       _manifest.default.scene.CubeShader6.shaderProgram.iAppStatus = world.GL.gl.getUniformLocation(_manifest.default.scene.CubeShader6.shaderProgram, "iAppStatus");
     });
   });
-
   _manifest.default.scene.CubeShader.position.setPosition(-4, 2, -11);
-
   _manifest.default.scene.CubeShader2.position.setPosition(0, 2, -11);
-
   _manifest.default.scene.CubeShader3.position.setPosition(4, 2, -11);
-
   _manifest.default.scene.CubeShader4.position.setPosition(-4, -2, -11);
-
   _manifest.default.scene.CubeShader5.position.setPosition(0, -2, -11);
-
   _manifest.default.scene.CubeShader6.position.setPosition(4, -2, -11);
-
   _manifest.default.scene.CubeShader.rotation.rotationSpeed.y = 20;
   _manifest.default.scene.CubeShader.glBlend.blendEnabled = true;
   _manifest.default.scene.CubeShader.type = "custom-";
@@ -5288,8 +4712,8 @@ var runThis = world => {
   _manifest.default.scene.CubeShader5.type = "custom-";
   _manifest.default.scene.CubeShader6.type = "custom-";
   var now = 1,
-      time1 = 0,
-      then1 = 0;
+    time1 = 0,
+    then1 = 0;
   _manifest.default.scene.CubeShader.SHADER_APP_STATUS = 0;
   var osc_r = new OSCILLATOR(0, 2, 0.001);
   var osc_g = new OSCILLATOR(0, 1, 0.001);
@@ -5302,7 +4726,6 @@ var runThis = world => {
   var osc_variable3 = new OSCILLATOR(0, 50, 0.05);
   var osc_variable4 = new OSCILLATOR(0, 10, 0.02);
   _manifest.default.scene.CubeShader.MY_RAD = 0.5;
-
   _manifest.default.scene.CubeShader.addExtraDrawCode = function (world, object) {
     now = Date.now();
     now *= 0.000000001;
@@ -5311,8 +4734,8 @@ var runThis = world => {
     then1 = time1;
     world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
-    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
-
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
+    // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
     world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.R, osc_r.UPDATE());
@@ -5320,9 +4743,7 @@ var runThis = world => {
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_b.UPDATE());
     world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, _manifest.default.scene.CubeShader.SHADER_APP_STATUS);
   };
-
   _manifest.default.scene.CubeShader.drawCustom = matrixEngine.standardMEShaderDrawer;
-
   _manifest.default.scene.CubeShader2.addExtraDrawCode = function (world, object) {
     now = Date.now();
     now *= 0.000000001;
@@ -5331,8 +4752,8 @@ var runThis = world => {
     then1 = time1;
     world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
-    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
-
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
+    // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
     world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable2.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.R, osc_r2.UPDATE());
@@ -5340,9 +4761,7 @@ var runThis = world => {
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_b2.UPDATE());
     world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, _manifest.default.scene.CubeShader.SHADER_APP_STATUS);
   };
-
   _manifest.default.scene.CubeShader2.drawCustom = matrixEngine.standardMEShaderDrawer;
-
   _manifest.default.scene.CubeShader3.addExtraDrawCode = function (world, object) {
     now = Date.now();
     now *= 0.000000001;
@@ -5351,8 +4770,8 @@ var runThis = world => {
     then1 = time1;
     world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
-    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
-
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
+    // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
     world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable2.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.R, osc_r2.UPDATE());
@@ -5360,9 +4779,7 @@ var runThis = world => {
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_b2.UPDATE());
     world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, _manifest.default.scene.CubeShader.SHADER_APP_STATUS);
   };
-
   _manifest.default.scene.CubeShader3.drawCustom = matrixEngine.standardMEShaderDrawer;
-
   _manifest.default.scene.CubeShader4.addExtraDrawCode = function (world, object) {
     now = Date.now();
     now *= 0.000000001;
@@ -5371,8 +4788,8 @@ var runThis = world => {
     then1 = time1;
     world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
-    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
-
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
+    // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
     world.GL.gl.uniform1f(object.shaderProgram.XXX, 1.0);
     world.GL.gl.uniform1f(object.shaderProgram.R, osc_variable3.UPDATE());
@@ -5381,9 +4798,7 @@ var runThis = world => {
     world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, _manifest.default.scene.CubeShader4.SHADER_APP_STATUS);
     world.GL.gl.uniform1fv(object.shaderProgram.myshaderDrawData, myshaderDrawData, 0, 16);
   };
-
   _manifest.default.scene.CubeShader4.drawCustom = matrixEngine.standardMEShaderDrawer;
-
   _manifest.default.scene.CubeShader5.addExtraDrawCode = function (world, object) {
     now = Date.now();
     now *= 0.000000001;
@@ -5392,8 +4807,8 @@ var runThis = world => {
     then1 = time1;
     world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
-    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
-
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
+    // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
     world.GL.gl.uniform1f(object.shaderProgram.XXX, 1.0);
     world.GL.gl.uniform1f(object.shaderProgram.R, osc_variable3.UPDATE());
@@ -5401,9 +4816,7 @@ var runThis = world => {
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_variable3.UPDATE());
     world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, _manifest.default.scene.CubeShader5.SHADER_APP_STATUS);
   };
-
   _manifest.default.scene.CubeShader5.drawCustom = matrixEngine.standardMEShaderDrawer;
-
   _manifest.default.scene.CubeShader6.addExtraDrawCode = function (world, object) {
     now = Date.now();
     now *= 0.000000001;
@@ -5412,8 +4825,8 @@ var runThis = world => {
     then1 = time1;
     world.GL.gl.uniform2f(object.shaderProgram.resolutionLocation, world.GL.gl.canvas.width, world.GL.gl.canvas.height);
     world.GL.gl.uniform1f(object.shaderProgram.TimeDelta, time1);
-    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1); // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
-
+    world.GL.gl.uniform1f(object.shaderProgram.timeLocation, time1);
+    // world.GL.gl.uniform1f(object.shaderProgram.iMouse, App.sys.MOUSE.x, App.sys.MOUSE.y, );
     world.GL.gl.uniform3f(object.shaderProgram.iMouse, _manifest.default.sys.MOUSE.x, _manifest.default.sys.MOUSE.y, _manifest.default.sys.MOUSE.PRESS != false ? 1 : 0);
     world.GL.gl.uniform1f(object.shaderProgram.XXX, osc_variable4.UPDATE());
     world.GL.gl.uniform1f(object.shaderProgram.R, osc_variable4.UPDATE());
@@ -5421,10 +4834,8 @@ var runThis = world => {
     world.GL.gl.uniform1f(object.shaderProgram.B, osc_variable4.UPDATE());
     world.GL.gl.uniform1i(object.shaderProgram.iAppStatus, _manifest.default.scene.CubeShader6.SHADER_APP_STATUS);
   };
-
   _manifest.default.scene.CubeShader6.drawCustom = matrixEngine.standardMEShaderDrawer;
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../lib/optimizer/buildin-shaders.js":79,"../program/manifest.js":99,"../public/res/matrix-shaders-params/geometry-lines.js":100}],52:[function(require,module,exports){
@@ -5434,28 +4845,24 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
 /* globals world App world */
+
 var runThis = world => {
   /* globals App world */
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply" // ENUM : multiply , divide
-
   };
   world.Add("sphereLightTex", 2, "MySphere", textuteImageSamplers);
   _manifest.default.scene.MySphere.position.z = -10;
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],53:[function(require,module,exports){
@@ -5465,11 +4872,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
@@ -5480,10 +4884,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App */
+
 var runThis = world => {
   // Camera
-  _manifest.default.camera.SceneController = true; // Image texs
+  _manifest.default.camera.SceneController = true;
 
+  // Image texs
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
@@ -5497,49 +4903,31 @@ var runThis = world => {
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "myCube1", textuteImageSamplers);
-
   _manifest.default.scene.myCube1.activateShadows();
-
-  _manifest.default.scene.myCube1.position.setPosition(-3, 3, -11); // Local Shadows cast must be activated!
-
-
+  _manifest.default.scene.myCube1.position.setPosition(-3, 3, -11);
+  // Local Shadows cast must be activated!
   _manifest.default.scene.myCube1.shadows.activeUpdate();
-
   _manifest.default.scene.myCube1.shadows.animatePositionX();
-
   world.Add("cubeLightTex", 1, "myCube2", textuteImageSamplers);
-
   _manifest.default.scene.myCube2.activateShadows();
-
   _manifest.default.scene.myCube2.shadows.lightPosition = [0, 0, 3];
   _manifest.default.scene.myCube2.shadows.innerLimit = 0;
-
   _manifest.default.scene.myCube2.position.SetX(-3);
-
   _manifest.default.scene.myCube2.position.SetZ(-11);
-
   _manifest.default.scene.myCube2.shadows.activeUpdate();
-
   _manifest.default.scene.myCube2.shadows.animateRadius({
     from: 0,
     to: 25,
     step: 0.5
   });
-
   world.Add("cubeLightTex", 1, "myCube3", textuteImageSamplers);
-
   _manifest.default.scene.myCube3.activateShadows();
-
   _manifest.default.scene.myCube3.shadows.innerLimit = 0;
-
   _manifest.default.scene.myCube3.position.SetY(-3);
-
   _manifest.default.scene.myCube3.position.SetZ(-11);
-
   _manifest.default.scene.myCube3.position.SetX(-3);
-
-  _manifest.default.scene.myCube3.shadows.lightPosition = [0, 3, 3]; // Animate local spot
-
+  _manifest.default.scene.myCube3.shadows.lightPosition = [0, 3, 3];
+  // Animate local spot
   var option = {
     from: 0.01,
     to: 0.02,
@@ -5547,56 +4935,38 @@ var runThis = world => {
     centerX: 0,
     centerY: 0,
     flyArroundByIndexs: [1, 2] // Means that Y,Z coords are orbiting
-
   };
-
   _manifest.default.scene.myCube3.shadows.activeUpdate();
+  _manifest.default.scene.myCube3.shadows.flyArround(option);
 
-  _manifest.default.scene.myCube3.shadows.flyArround(option); // Animate by Y pos
-
-
+  // Animate by Y pos
   world.Add("cubeLightTex", 1, "myCube4", textuteImageSamplers);
-
   _manifest.default.scene.myCube4.activateShadows();
-
   _manifest.default.scene.myCube4.position.SetY(3);
-
   _manifest.default.scene.myCube4.position.SetZ(-11);
-
   _manifest.default.scene.myCube4.shadows.activeUpdate();
-
   _manifest.default.scene.myCube4.shadows.animatePositionY();
+  _manifest.default.scene.myCube4.position.SetX(0);
 
-  _manifest.default.scene.myCube4.position.SetX(0); // Created with blanko texture or red, blue or green solid.
+  // Created with blanko texture or red, blue or green solid.
   // then add new tex sampler created generic square 2x2 by default.
-
-
   world.Add("cubeLightTex", 1, "myCube5", textuteBlanko);
-
   _manifest.default.scene.myCube5.position.SetZ(-11);
-
   _manifest.default.scene.myCube5.activateShadows();
-
   _manifest.default.scene.myCube5.shadows.activeUpdate();
-
   _manifest.default.scene.myCube5.shadows.animateRadius({
     from: 15,
     to: 45,
     step: 0.05
   });
+  _manifest.default.scene.myCube5.textures.push(_manifest.default.scene.myCube5.createPixelsTex());
 
-  _manifest.default.scene.myCube5.textures.push(_manifest.default.scene.myCube5.createPixelsTex()); // Created with blanko texture or red, blue or green solid.
-
-
+  // Created with blanko texture or red, blue or green solid.
   world.Add("cubeLightTex", 1, "myCube6", textuteImageSamplersTest);
-
   _manifest.default.scene.myCube6.position.SetZ(-11);
-
   _manifest.default.scene.myCube6.position.SetY(-3);
-
-  _manifest.default.scene.myCube6.activateShadows(); // Animate local spot
-
-
+  _manifest.default.scene.myCube6.activateShadows();
+  // Animate local spot
   var option = {
     from: 0.01,
     to: 0.02,
@@ -5604,43 +4974,32 @@ var runThis = world => {
     centerX: 0,
     centerY: 0,
     flyArroundByIndexs: [0, 2] // Means that X,Z coords are orbiting
-
   };
-  _manifest.default.scene.myCube6.shadows.outerLimit = 2; // Local Shadows cast must be activated!
-
+  _manifest.default.scene.myCube6.shadows.outerLimit = 2;
+  // Local Shadows cast must be activated!
   _manifest.default.scene.myCube6.shadows.activeUpdate();
-
   _manifest.default.scene.myCube6.shadows.flyArround(option);
+  _manifest.default.scene.myCube6.textures.push(_manifest.default.scene.myCube6.createPixelsTex());
 
-  _manifest.default.scene.myCube6.textures.push(_manifest.default.scene.myCube6.createPixelsTex()); // Simple direction light
-
-
+  // Simple direction light
   world.Add("cubeLightTex", 1, "myCube7", textuteImageSamplersTest);
-
   _manifest.default.scene.myCube7.position.setPosition(3, 3, -11);
-
   _manifest.default.scene.myCube7.geometry.colorData.SetGreenForAll(0.5);
-
   _manifest.default.scene.myCube7.geometry.colorData.SetRedForAll(0.5);
-
   _manifest.default.scene.myCube7.geometry.colorData.SetBlueForAll(0.5);
-
   _manifest.default.scene.myCube7.deactivateTex();
-
   world.Add("cubeLightTex", 1, "myCube8", textuteImageSamplersTest);
+  _manifest.default.scene.myCube8.position.setPosition(3, 0, -11);
 
-  _manifest.default.scene.myCube8.position.setPosition(3, 0, -11); // Custom generic textures. Micro Drawing.
+  // Custom generic textures. Micro Drawing.
   // Example for arg shema square for now only.
-
-
   var options = {
     squareShema: [8, 8],
     pixels: new Uint8Array(8 * 8 * 4)
-  }; // options.pixels.fill(0);
-
+  };
+  // options.pixels.fill(0);
   var I = 0,
-      localCounter = 0;
-
+    localCounter = 0;
   for (var funny = 0; funny < 8 * 8 * 4; funny += 4) {
     localCounter++;
     options.pixels[funny] = I + localCounter;
@@ -5648,20 +5007,17 @@ var runThis = world => {
     options.pixels[funny + 2] = I + 1.2 * localCounter;
     options.pixels[funny + 3] = 1;
   }
-
   options.pixels[4 * 7] = 255;
   options.pixels[4 * 7 + 1] = 1;
   options.pixels[4 * 7 + 2] = 1;
+  _manifest.default.scene.myCube8.textures.push(_manifest.default.scene.myCube8.createPixelsTex(options));
 
-  _manifest.default.scene.myCube8.textures.push(_manifest.default.scene.myCube8.createPixelsTex(options)); // Custom generic textures
-
-
+  // Custom generic textures
   world.Add("cubeLightTex", 1, "myCube9", textuteImageSamplersTest);
+  _manifest.default.scene.myCube9.position.setPosition(3, -3, -11);
 
-  _manifest.default.scene.myCube9.position.setPosition(3, -3, -11); // Custom generic textures. Micro Drawing.
+  // Custom generic textures. Micro Drawing.
   // Example for arg shema square for now only.
-
-
   var options = {
     squareShema: [4, 4],
     pixels: new Uint8Array(4 * 4 * 4),
@@ -5671,13 +5027,13 @@ var runThis = world => {
       color2: 255
     }
   };
+  _manifest.default.scene.myCube9.textures.push(_manifest.default.scene.myCube9.createPixelsTex(options));
 
-  _manifest.default.scene.myCube9.textures.push(_manifest.default.scene.myCube9.createPixelsTex(options)); // App.scene.myCube9.activateShadows();
+  // App.scene.myCube9.activateShadows();
   // App.scene.myCube9.shadows.activeUpdate();
   // App.scene.myCube9.shadows.animateRadius({from: 15, to: 45, step: 0.05});
+
   // Click event
-
-
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
@@ -5688,7 +5044,6 @@ var runThis = world => {
     console.info(e.detail);
   });
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],54:[function(require,module,exports){
@@ -5698,52 +5053,52 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
 /* globals world App world */
+
 var runThis = world => {
   /* globals world App */
   // LOAD MESH FROM OBJ FILES...
   // if you dont use obj or complex mesh you no need for this func
+
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
-
   };
-  world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers); // ROTATING
-  // Stop
+  world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers);
 
+  // ROTATING
+  // Stop
   _manifest.default.scene.MySquareTexure1.rotValue = 0;
   _manifest.default.scene.MySquareTexure1.rotation.rotationSpeed.z = 0;
-
   _manifest.default.scene.MySquareTexure1.custom.gl_texture = function (object, t) {
     world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
     world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.LINEAR);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.LINEAR); //  world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.MIRRORED_REPEAT);
+    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.LINEAR);
+    //  world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.MIRRORED_REPEAT);
     //  world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.MIRRORED_REPEAT);
-
     world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.REPEAT);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.REPEAT); //   world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_SWIZZLE_R, world.GL.gl.ZERO);
+    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.REPEAT);
+    //   world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_SWIZZLE_R, world.GL.gl.ZERO);
     //   world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_SWIZZLE_G, world.GL.gl.RED);
     //   world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_SWIZZLE_B, world.GL.gl.ZERO);
 
-    world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, // Level of details
-    world.GL.gl.RGBA, // Format
-    world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, // Size of each channel
+    world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0,
+    // Level of details
+    world.GL.gl.RGBA,
+    // Format
+    world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE,
+    // Size of each channel
     object.textures[t].image);
     world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
   };
-
   _manifest.default.scene.MySquareTexure1.geometry.setScale(2.3);
-
   _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_top.y = 1.4;
   _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_top.x = 1.4;
   _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.left_bottom.x = -0.4;
@@ -5759,7 +5114,6 @@ var runThis = world => {
     _manifest.default.scene.MySquareTexure1.geometry.texCoordsPoints.right_bottom.x += 0.001;
   }, 20);
 };
-
 exports.runThis = runThis;
 
 },{"../program/manifest":99}],55:[function(require,module,exports){
@@ -5769,24 +5123,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
+
 let VT = matrixEngine.Engine.VT;
 window.App = _manifest.default;
-
 var runThis = world => {
   _manifest.default.camera.SceneController = true;
   canvas.addEventListener('mousedown', ev => {
@@ -5794,7 +5142,6 @@ var runThis = world => {
   });
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev);
-
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
     }
@@ -5802,11 +5149,10 @@ var runThis = world => {
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
-
   };
   let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector); // Add ground
-
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
   physics.addGround(_manifest.default, world, tex);
   world.Add("generatorLightTex", 1, "outsideBox2", tex, {
     custom_type: 'torus',
@@ -5814,7 +5160,8 @@ var runThis = world => {
     loops: 20,
     inner_rad: 1.5,
     outerRad: 2
-  }); // App.scene.outsideBox2.streamTextures = new VT(
+  });
+  // App.scene.outsideBox2.streamTextures = new VT(
   //   "res/video-texture/me.mkv", 'mytorusStreamTex'
   // );
 
@@ -5826,21 +5173,24 @@ var runThis = world => {
     type: CANNON.Body.DYNAMIC,
     shape: CANNON.Trimesh.createTorus(wheelInput1, wheelInput2, wheelsPoly, wheelsPoly),
     position: new CANNON.Vec3(0, -16.5, 2)
-  }); // var testRot = new CANNON.Quaternion(0,0,0,0);
+  });
+  // var testRot = new CANNON.Quaternion(0,0,0,0);
   // bigWheel.quaternion.setFromEuler(0, -Math.PI / 2, 0)
   // bigWheel.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), Math.PI / 4);
   // dev
+  window.bigWheel = bigWheel;
 
-  window.bigWheel = bigWheel; // console.log('TORUS TEST RENDER PHYS')
+  // console.log('TORUS TEST RENDER PHYS')
   // App.scene.outsideBox2.physics.currentBody.force.set(0, 10000, 0);
 
   physics.world.addBody(bigWheel);
   _manifest.default.scene.outsideBox2.physics.currentBody = bigWheel;
-  _manifest.default.scene.outsideBox2.physics.enabled = true; // App.scene.outsideBox2.glBlend.blendEnabled = true;
+  _manifest.default.scene.outsideBox2.physics.enabled = true;
+
+  // App.scene.outsideBox2.glBlend.blendEnabled = true;
   // App.scene.outsideBox2.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[1];
   // App.scene.outsideBox2.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[1];
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],56:[function(require,module,exports){
@@ -5850,49 +5200,39 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  * @deplaced matrixEngine.Engine.VIDEO_TEXTURE @in matrixEngine.Engine.VT
  */
-let VIDEO_TEXTURE = matrixEngine.Engine.VIDEO_TEXTURE;
 
+let VIDEO_TEXTURE = matrixEngine.Engine.VIDEO_TEXTURE;
 var runThis = world => {
   // eslint-disable-next-line no-unused-vars
+
   let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
-
   };
   world.Add("cubeLightTex", 12, "outsideBox", tex);
   _manifest.default.scene.outsideBox.position.y = 0;
   _manifest.default.scene.outsideBox.position.z = -4;
   _manifest.default.scene.outsideBox.rotation.rotationSpeed.z = 50;
   _manifest.default.scene.outsideBox.rotValue = 90;
-
-  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1); // prefix for path is 'res/videos'
-
-
+  _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 1, 1);
+  // prefix for path is 'res/videos'
   _manifest.default.scene.outsideBox.streamTextures = new VIDEO_TEXTURE("electric_sheep.mp4");
   _manifest.default.scene.outsideBox.glBlend.blendEnabled = true;
   _manifest.default.scene.outsideBox.glBlend.blendParamSrc = ENUMERATORS.glBlend.param[4];
   _manifest.default.scene.outsideBox.glBlend.blendParamDest = ENUMERATORS.glBlend.param[4];
-
   _manifest.default.scene.outsideBox.rotation.SetDirection(1, 1, 0.5);
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],57:[function(require,module,exports){
@@ -5902,22 +5242,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /*
   Nikola Lukic
   webGl2GLmatrix2 api example
 */
-
 /* globals App world VIDEO_TEXTURE ENUMERATORS */
 
 /**
@@ -5926,32 +5259,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App world */
-let VT = matrixEngine.Engine.VT;
 
+let VT = matrixEngine.Engine.VT;
 var runThis = world => {
   // eslint-disable-next-line no-unused-vars
+
   _manifest.default.camera.SceneController = true;
   let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
-
   };
-  world.Add("cubeLightTex", 2, "outsideBox", tex); // App.scene.outsideBox.geometry.setScaleByY(7)
-
+  world.Add("cubeLightTex", 2, "outsideBox", tex);
+  // App.scene.outsideBox.geometry.setScaleByY(7)
   _manifest.default.scene.outsideBox.position.x = -9;
-  _manifest.default.scene.outsideBox.position.z = -24; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
-
+  _manifest.default.scene.outsideBox.position.z = -24;
+  // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(0, 0, 0);
-
   _manifest.default.scene.outsideBox.streamTextures = new VT("res/video-texture/lava1.mkv");
-  world.Add("cubeLightTex", 2, "outsideBox", tex); // App.scene.outsideBox.geometry.setScaleByY(7)
-
+  world.Add("cubeLightTex", 2, "outsideBox", tex);
+  // App.scene.outsideBox.geometry.setScaleByY(7)
   _manifest.default.scene.outsideBox.position.x = 9;
-  _manifest.default.scene.outsideBox.position.z = -24; // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
-
+  _manifest.default.scene.outsideBox.position.z = -24;
+  // App.scene.outsideBox.rotation.rotationSpeed.z = 50;
   _manifest.default.scene.outsideBox.LightsData.ambientLight.set(1, 0, 0);
-
   _manifest.default.scene.outsideBox.streamTextures = new VT("res/video-texture/lava1.mkv");
   world.Add("cubeLightTex", 5, "outsideBox2", tex);
   _manifest.default.scene.outsideBox2.position.x = 0;
@@ -5969,7 +5300,6 @@ var runThis = world => {
     _manifest.default.scene.outsideBox.geometry.texCoordsPoints.front.right_bottom.x += 0.01;
   }, 20);
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest":99}],58:[function(require,module,exports){
@@ -5979,17 +5309,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest.js"));
-
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-unused-vars */
 
 /**
@@ -5998,10 +5322,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 /* globals world App world */
-let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 
+let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
+
   var textuteImageSamplers = {
     source: ["res/images/gui/welcome.png"],
     mix_operation: "multiply"
@@ -6010,9 +5335,7 @@ var runThis = world => {
   var oscilltor_variable = new OSCILLATOR(0.1, 3, 0.004);
   _manifest.default.scene.MyCubeTex.rotation.rotx = 90;
   _manifest.default.scene.MyCubeTex.rotation.rotationSpeed.z = 5;
-
   _manifest.default.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 1, 0.1);
-
   _manifest.default.scene.MyCubeTex.glBlend.blendEnabled = true;
   _manifest.default.scene.MyCubeTex.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[5];
   _manifest.default.scene.MyCubeTex.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[4];
@@ -6021,7 +5344,6 @@ var runThis = world => {
     _manifest.default.scene.MyCubeTex.LightsData.ambientLight.b = oscilltor_variable.UPDATE();
   }, 10);
 };
-
 exports.runThis = runThis;
 
 },{"../index.js":60,"../program/manifest.js":99}],59:[function(require,module,exports){
@@ -6031,7 +5353,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
 /**
  * @description
  * ClientConfig is config file for client part of networking.
@@ -6047,14 +5368,15 @@ class ClientConfig {
     mineType: "video/mp4",
     resolutions: '800x600'
   };
+
   /**
    * @description
    * Default setup is `dev`.
    * recommendent to use for local propose LAN ip
    * like : 192.168.0.XXX if you wanna run ant test app with server.
    */
-
-  domain = "maximumroulette.com"; // domain = "localhost";
+  domain = "maximumroulette.com";
+  // domain = "localhost";
 
   /**
    * @description Important note for this property: if you
@@ -6064,20 +5386,20 @@ class ClientConfig {
    * 
    * @note [OLD]
    */
-
   showBroadcasterOnInt = false;
+
   /**
    * networkDeepLogs control of dev logs for webRTC context only.
    *  @note [OLD]
    */
-
   networkDeepLogs = false;
+
   /**
    * masterServerKey is channel access id used to connect
    * multimedia server channel/multiRTC3
    */
-
   masterServerKey = "maximumroulette.matrix-engine";
+
   /**
    * @description
    * runBroadcasterOnInt load broadcaster
@@ -6085,9 +5407,9 @@ class ClientConfig {
    * 	 * @note [OLD]
    * 
    */
-
   runBroadcasterOnInt = false;
   broadcastAutoConnect = false;
+
   /**
    * @description
    * broadcasterPort Port used to connect multimedia server MultiRTC3.
@@ -6097,8 +5419,8 @@ class ClientConfig {
    * @note [OLD]
    * 
    */
-
   broadcasterPort = 999;
+
   /**
    * @description
    * broadcaster rtc session init values.
@@ -6106,13 +5428,13 @@ class ClientConfig {
    * 
    * @note [OLD]
    */
-
   broadcasterSessionDefaults = {
     sessionAudio: true,
     sessionVideo: false,
     sessionData: true,
     enableFileSharing: true
   };
+
   /**
    * @description
    * Optimal for dev stage.
@@ -6122,93 +5444,75 @@ class ClientConfig {
    * @note [OLD]
    * When you run your OV there is coturn already fixed.
    */
-
   stunList = ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302", "stun:stun.l.google.com:19302?transport=udp"];
+
   /**
    * New networking platform
    * Based on kurento/Ov media server
    */
-
   networking2 = {
     active: true,
     domain: 'maximumroulette.com',
     port: 2020
   };
+
   /**
    * @description
    * constructor will save interest data for game platform
    * For now it is just name of the game. I use it in
    * pre gameplay UI game selector.
    */
-
   constructor() {}
-
   getRecordCanvasOptions() {
     return this.recordCanvasOption;
   }
-
   getRunBroadcasterOnInt() {
     return this.runBroadcasterOnInt;
   }
-
   didAppUseBroadcast() {
     return this.appUseBroadcaster;
   }
-
   getStunList() {
     return this.stunList;
   }
-
   getBroadcastSockRoute() {
     return this.getProtocolFromAddressBar() + this.getDomain() + ":" + this.broadcasterPort + "/";
   }
-
   getDomain() {
     // localhost vs prodc domain not works CORS not equal!
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
       return window.location.hostname;
     }
-
     return this.domain;
   }
-
   getBroadcastAutoConnect() {
     return this.broadcastAutoConnect;
   }
-
   getShowBroadcasterOnInt() {
     return this.showBroadcasterOnInt;
   }
-
   getBroadcasterPort() {
     return this.broadcasterPort;
   }
-
   getBroadcasterSessionDefaults() {
     return this.broadcasterSessionDefaults;
   }
-
   getProtocolFromAddressBar() {
     return location.protocol === "https:" ? "https://" : "http://";
   }
-
   setNetworkDeepLog(newState) {
     this.networkDeepLogs = newState;
   }
-
   getNetworkDeepLog() {
     return this.networkDeepLogs;
-  } // Used for both net variant
+  }
 
-
+  // Used for both net variant
   getMasterServerKey() {
     return this.masterServerKey;
   }
-
 }
-
-var _default = ClientConfig;
-exports.default = _default;
+var _default = exports.default = ClientConfig;
 
 },{}],60:[function(require,module,exports){
 "use strict";
@@ -6222,40 +5526,11 @@ Object.defineProperty(exports, "App", {
     return _manifest.default;
   }
 });
-Object.defineProperty(exports, "operation", {
-  enumerable: true,
-  get: function () {
-    return _matrixBuffers.default;
-  }
-});
-Object.defineProperty(exports, "texTools", {
-  enumerable: true,
-  get: function () {
-    return _matrixTextures.default;
-  }
-});
+exports.Events = exports.Engine = void 0;
 Object.defineProperty(exports, "MEBvhAnimation", {
   enumerable: true,
   get: function () {
     return _matrixBvh.default;
-  }
-});
-Object.defineProperty(exports, "standardMEShaderDrawer", {
-  enumerable: true,
-  get: function () {
-    return _buildinShaders.standardMEShaderDrawer;
-  }
-});
-Object.defineProperty(exports, "toyShaderHeader", {
-  enumerable: true,
-  get: function () {
-    return _buildinShaders.toyShaderHeader;
-  }
-});
-Object.defineProperty(exports, "freeShadersToy", {
-  enumerable: true,
-  get: function () {
-    return _buildinShaders.freeShadersToy;
   }
 });
 Object.defineProperty(exports, "defineShader", {
@@ -6264,57 +5539,64 @@ Object.defineProperty(exports, "defineShader", {
     return _buildinMyShaders.defineShader;
   }
 });
-exports.raycaster = exports.utility = exports.objLoader = exports.Events = exports.Engine = exports.matrixRender = exports.matrixGeometry = exports.matrixWorld = void 0;
-
+Object.defineProperty(exports, "freeShadersToy", {
+  enumerable: true,
+  get: function () {
+    return _buildinShaders.freeShadersToy;
+  }
+});
+exports.objLoader = exports.matrixWorld = exports.matrixRender = exports.matrixGeometry = void 0;
+Object.defineProperty(exports, "operation", {
+  enumerable: true,
+  get: function () {
+    return _matrixBuffers.default;
+  }
+});
+exports.raycaster = void 0;
+Object.defineProperty(exports, "standardMEShaderDrawer", {
+  enumerable: true,
+  get: function () {
+    return _buildinShaders.standardMEShaderDrawer;
+  }
+});
+Object.defineProperty(exports, "texTools", {
+  enumerable: true,
+  get: function () {
+    return _matrixTextures.default;
+  }
+});
+Object.defineProperty(exports, "toyShaderHeader", {
+  enumerable: true,
+  get: function () {
+    return _buildinShaders.toyShaderHeader;
+  }
+});
+exports.utility = void 0;
 var _manifest = _interopRequireDefault(require("./program/manifest"));
-
 var matrixWorld = _interopRequireWildcard(require("./lib/matrix-world"));
-
 exports.matrixWorld = matrixWorld;
-
 var matrixGeometry = _interopRequireWildcard(require("./lib/matrix-geometry"));
-
 exports.matrixGeometry = matrixGeometry;
-
 var matrixRender = _interopRequireWildcard(require("./lib/matrix-render"));
-
 exports.matrixRender = matrixRender;
-
 var Engine = _interopRequireWildcard(require("./lib/engine"));
-
 exports.Engine = Engine;
-
 var Events = _interopRequireWildcard(require("./lib/events"));
-
 exports.Events = Events;
-
 var objLoader = _interopRequireWildcard(require("./lib/loader-obj"));
-
 exports.objLoader = objLoader;
-
 var _matrixBuffers = _interopRequireDefault(require("./lib/matrix-buffers"));
-
 var _matrixTextures = _interopRequireDefault(require("./lib/matrix-textures"));
-
 var utility = _interopRequireWildcard(require("./lib/utility"));
-
 exports.utility = utility;
-
 var raycaster = _interopRequireWildcard(require("./lib/raycast"));
-
 exports.raycaster = raycaster;
-
 var _matrixBvh = _interopRequireDefault(require("./lib/matrix-bvh"));
-
 var _buildinShaders = require("./lib/optimizer/buildin-shaders");
-
 var _buildinMyShaders = require("./lib/optimizer/buildin-my-shaders");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 
 },{"./lib/engine":61,"./lib/events":62,"./lib/loader-obj":63,"./lib/matrix-buffers":64,"./lib/matrix-bvh":65,"./lib/matrix-geometry":67,"./lib/matrix-render":70,"./lib/matrix-textures":75,"./lib/matrix-world":76,"./lib/optimizer/buildin-my-shaders":78,"./lib/optimizer/buildin-shaders":79,"./lib/raycast":82,"./lib/utility":88,"./program/manifest":99}],61:[function(require,module,exports){
 "use strict";
@@ -6322,97 +5604,75 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.modifyLooper = modifyLooper;
-exports.resizeView = resizeView;
-exports.initApp = initApp;
-exports.isReady = isReady;
-exports.load_shaders = load_shaders;
-exports.loadHtmlPowerAsset = loadHtmlPowerAsset;
-exports.defineWebGLWorld = defineWebGLWorld;
-exports.updateFPS = updateFPS;
-exports.drawCanvas = drawCanvas;
-exports.degToRad = degToRad;
-exports.initiateFPS = initiateFPS;
-exports.onExit = onExit;
-exports.loadShaders = loadShaders;
-exports.initShaders = initShaders;
-exports.SET_STREAM = SET_STREAM;
 exports.ACCESS_CAMERA = ACCESS_CAMERA;
+exports.DOM_VT = DOM_VT;
+exports.RegenerateShader = exports.RegenerateCustomShader = exports.RegenerateCubeMapShader = void 0;
+exports.SET_STREAM = SET_STREAM;
 exports.VIDEO_TEXTURE = VIDEO_TEXTURE;
 exports.VT = VT;
 exports.Vjs3 = Vjs3;
+exports.activateNet2 = exports.activateNet = void 0;
 exports.anyCanvas = anyCanvas;
-exports.DOM_VT = DOM_VT;
-exports.webcamError = exports.RegenerateCustomShader = exports.RegenerateCubeMapShader = exports.RegenerateShader = exports.activateNet2 = exports.activateNet = exports.looper = exports.net = exports.updateFrames = exports.updateTime = exports.totalTime = exports.lastTime = exports.ht = exports.wd = void 0;
-
+exports.defineWebGLWorld = defineWebGLWorld;
+exports.degToRad = degToRad;
+exports.drawCanvas = drawCanvas;
+exports.ht = void 0;
+exports.initApp = initApp;
+exports.initShaders = initShaders;
+exports.initiateFPS = initiateFPS;
+exports.isReady = isReady;
+exports.lastTime = void 0;
+exports.loadHtmlPowerAsset = loadHtmlPowerAsset;
+exports.loadShaders = loadShaders;
+exports.load_shaders = load_shaders;
+exports.looper = void 0;
+exports.modifyLooper = modifyLooper;
+exports.net = void 0;
+exports.onExit = onExit;
+exports.resizeView = resizeView;
+exports.totalTime = void 0;
+exports.updateFPS = updateFPS;
+exports.webcamError = exports.wd = exports.updateTime = exports.updateFrames = void 0;
 var _net = require("./net");
-
 var _events = require("./events");
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var _utility = require("./utility");
-
 var _webglUtils = require("./webgl-utils");
-
 var _matrixRender = require("./matrix-render");
-
 var _matrixWorld = require("./matrix-world");
-
 var _matrixShaders = require("./matrix-shaders3");
-
 var _matrixShaders2 = require("./matrix-shaders1");
-
 var _clientConfig = _interopRequireDefault(require("../client-config"));
-
 var _sounds = require("./sounds");
-
 var _app = require("../networking2/app");
-
 var _matrixStream = require("../networking2/matrix-stream");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 if (_manifest.default.offScreenCanvas == true || _utility.QueryString.offScreen == 'true') {
   _manifest.default.offScreenCanvas = true;
   console.log('[matrix-engine] offScreenCanvas activated =>', _manifest.default.offScreenCanvas);
-
   _utility.scriptManager.LOAD('./hacker-timer/hack-timer.js');
 } else {
   _manifest.default.offScreenCanvas = false;
 }
-
-var wd = 0,
-    ht = 0,
-    lastTime = 0,
-    totalTime = 0,
-    updateTime = 0,
-    updateFrames = 0;
-exports.updateFrames = updateFrames;
-exports.updateTime = updateTime;
-exports.totalTime = totalTime;
-exports.lastTime = lastTime;
-exports.ht = ht;
-exports.wd = wd;
-let net = null;
-exports.net = net;
-let looper = 0;
-exports.looper = looper;
-
+var wd = exports.wd = 0,
+  ht = exports.ht = 0,
+  lastTime = exports.lastTime = 0,
+  totalTime = exports.totalTime = 0,
+  updateTime = exports.updateTime = 0,
+  updateFrames = exports.updateFrames = 0;
+let net = exports.net = null;
+let looper = exports.looper = 0;
 function modifyLooper(value) {
   exports.looper = looper = value;
 }
-
 function resizeView() {
   exports.wd = wd = document.body.clientWidth - 4;
-
   if (document.body.clientHeight > document.documentElement.clientHeight) {
     exports.ht = ht = document.body.clientHeight - 10;
   } else {
     exports.ht = ht = document.documentElement.clientHeight - 4;
   }
 }
-
 let activateNet = CustomConfig => {
   if (typeof _manifest.default.net !== 'undefined' && _manifest.default.net === true) {
     if (typeof CustomConfig !== 'undefined') {
@@ -6420,31 +5680,27 @@ let activateNet = CustomConfig => {
     } else {
       var t = new _clientConfig.default();
     }
-
     exports.net = net = new _net.Broadcaster(t);
     _manifest.default.network = net;
     console.info('Networking is active.', net);
   }
 };
-
 exports.activateNet = activateNet;
-
 let activateNet2 = (CustomConfig, sessionOption) => {
   if (typeof _manifest.default.net !== 'undefined' && _manifest.default.net === true) {
     if (typeof CustomConfig !== 'undefined') {
       var t = new CustomConfig();
     } else {
       var t = new _clientConfig.default();
-    } // -----------------------
+    }
+
+    // -----------------------
     // Make run
     // -----------------------
-
-
     if (typeof sessionOption === 'undefined') {
       sessionOption.sessionName = 'matrix-engine-random';
       sessionOption.resolution = '160x240';
     }
-
     exports.net = net = new _app.MatrixStream({
       domain: t.networking2.domain,
       port: t.networking2.port,
@@ -6453,34 +5709,28 @@ let activateNet2 = (CustomConfig, sessionOption) => {
     });
     addEventListener(`onTitle`, e => {
       document.title = e.detail;
-    }); // remove at the end
-
+    });
+    // remove at the end
     window.matrixStream = net;
     console.info(`%c Networking2 params: ${t.networking2}`, _matrixWorld.CS3);
   }
 };
-
 exports.activateNet2 = activateNet2;
-
 function initApp(callback) {
   resizeView();
   drawCanvas();
   _manifest.default.canvas = document.getElementById('canvas');
-
   if (_manifest.default.events == true) {
     _manifest.default.events = new _events.EVENTS((0, _utility.E)('canvas'));
   }
-
   if (_manifest.default.sounds == true) {
     _manifest.default.sounds = new _sounds.MatrixSounds();
   }
-
   if (typeof callback !== 'undefined') {
     window.webGLStartCallBack = callback;
     callback();
   }
 }
-
 function isReady() {
   if (0 == world) {
     return false;
@@ -6488,7 +5738,6 @@ function isReady() {
     return true;
   }
 }
-
 async function load_shaders(href) {
   new Promise((resolve, reject) => {
     function handler() {
@@ -6500,238 +5749,203 @@ async function load_shaders(href) {
         console.warn('Something went wrong on shaders load procces! => ', href);
       }
     }
-
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onload = handler;
     xmlhttp.open('GET', href, true);
     xmlhttp.send();
   });
 }
-
 function loadHtmlPowerAsset(href, callback) {
   function handler() {
     if (this.status == 200 && this.responseText != null) {
       document.getElementById('media-holder').innerHTML = this.responseText;
-
       if (typeof callback !== 'undefined') {
         callback();
       }
-    } else {// console.log("something went wrong on shaders load procces!");
+    } else {
+      // console.log("something went wrong on shaders load procces!");
     }
   }
-
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onload = handler;
   xmlhttp.open('GET', href, true);
   xmlhttp.send();
 }
+
 /**
  * @description
  * WebGL start
  * Base environment property for totality of WEBGL.
  */
-
-
 function defineWebGLWorld(cavnas) {
   var world = new Object();
-
   try {
     var gl = _webglUtils.WebGLUtils.setupWebGL(canvas);
-
     gl.viewportWidth = canvas.width;
     gl.viewportHeight = canvas.height;
     world.gl = gl;
     const available_extensions = gl.getSupportedExtensions();
     const test_depth_texture = gl.getExtension('WEBGL_depth_texture');
-
-    if (!test_depth_texture) {// console.warn('No support for WEBGL_depth_texture [opengles1.1] !', ext);
-    } // console.info("WEBGL base pocket: SUCCESS , Lets see list of ext : ", available_extensions);
-
+    if (!test_depth_texture) {
+      // console.warn('No support for WEBGL_depth_texture [opengles1.1] !', ext);
+    }
+    // console.info("WEBGL base pocket: SUCCESS , Lets see list of ext : ", available_extensions);
 
     const extTFAnisotropic = gl.getExtension('EXT_texture_filter_anisotropic') || gl.getExtension('MOZ_EXT_texture_filter_anisotropic') || gl.getExtension('WEBKIT_EXT_texture_filter_anisotropic');
-
     if (extTFAnisotropic) {
       const max = gl.getParameter(extTFAnisotropic.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-      world.MAX_TEXTURE_MAX_ANISOTROPY_EXT = max; // gl.texParameterf(gl.TEXTURE_2D, extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, world.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-
+      world.MAX_TEXTURE_MAX_ANISOTROPY_EXT = max;
+      // gl.texParameterf(gl.TEXTURE_2D, extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, world.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
       world.extTFAnisotropic = extTFAnisotropic;
     }
   } catch (e) {
     console.error("Exception in WEBGL base pocket: " + e);
   }
   /* Destructor */
-
-
   world.destroy = function () {
     delete this.gl;
     delete this;
   };
-
   return world;
 }
-
 function updateFPS(elements) {
   // console.log(" Update FPS");
   var now = new Date().getTime();
   var delta = now - lastTime;
   exports.lastTime = lastTime = now;
   exports.totalTime = totalTime = totalTime + delta;
-  exports.updateTime = updateTime = updateTime + delta; // eslint-disable-next-line no-global-assign
+  exports.updateTime = updateTime = updateTime + delta;
 
+  // eslint-disable-next-line no-global-assign
   (0, _matrixWorld.modifyFrames)(_matrixWorld.frames + 1);
   exports.updateFrames = updateFrames = updateFrames + 1;
-
   if (1000 < updateTime) {
     document.getElementById('fps').innerHTML = `FPS AVG:` + Math.floor(1000 * _matrixWorld.frames / totalTime / elements) + ` CUR:` + Math.floor(1000 * updateFrames / updateTime / elements);
     exports.updateTime = updateTime = 0;
     exports.updateFrames = updateFrames = 0;
   }
 }
-
 function drawCanvas() {
   // console.log("Init the canvas...");
   var canvas = document.createElement('canvas');
   canvas.id = 'canvas';
-
   if (_manifest.default.resize.canvas == 'full-screen') {
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight; // SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ');
+    canvas.height = window.innerHeight;
+    // SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ');
   } else {
     canvas.width = window.innerHeight * _manifest.default.resize.aspectRatio;
     canvas.height = window.innerHeight;
-
     _events.SYS.DEBUG.LOG('SYS: aspect ration resize is active. ');
   }
-
   document.body.append(canvas);
-} // Degree to Radian converter 
+}
 
-
+// Degree to Radian converter 
 function degToRad(degrees) {
   return degrees * Math.PI / 180;
 }
+;
 
-; // One time initiation of FPS to store initial time 
-
+// One time initiation of FPS to store initial time 
 function initiateFPS() {
   exports.lastTime = lastTime = new Date().getTime();
-} // Help the browser Garbage collect
+}
 
+// Help the browser Garbage collect
+window.onbeforeunload = onExit;
 
-window.onbeforeunload = onExit; // Provides cancelRequestAnimFrame in a cross browser way.
-
+// Provides cancelRequestAnimFrame in a cross browser way.
 window.cancelRequestAnimFrame = function () {
   return window.cancelAnimationFrame || window.webkitCancelRequestAnimationFrame || window.mozCancelRequestAnimationFrame || window.oCancelRequestAnimationFrame || window.msCancelRequestAnimationFrame || function (callback) {
     window.clearTimeout(callback);
   };
-}(); // Dispose off the dangling objects
+}();
 
-
+// Dispose off the dangling objects
 function onExit() {
   exports.looper = looper = 0;
-
   while (looper <= _matrixWorld.objListToDispose.length - 1) {
     _matrixWorld.objListToDispose[looper].destroy();
-
     exports.looper = looper = looper + 1;
   }
-
   _matrixWorld.objListToDispose.length = 0;
 }
-
 _manifest.default.operation.destroyWorld = function () {
   // console.log("Destroy at iteration:" + reDrawID);
   cancelRequestAnimFrame(_matrixRender.reDrawID);
   delete this.pMatrix;
   delete this.mvMatrixStack;
   exports.looper = looper = 0;
-
   while (looper <= this.contentList.length - 1) {
     // console.log("Destroying: " + this.contentList[looper].type);
     delete this.contentList[looper].type;
     delete this.contentList[looper].size;
     delete this.contentList[looper].sides;
     /* Dispose the shaders */
-
     if (this.contentList[looper].shaderProgram.fragmentShader) {
       this.GL.gl.deleteShader(this.contentList[looper].shaderProgram.fragmentShader);
       delete this.contentList[looper].shaderProgram.fragmentShader;
     }
-
     if (this.contentList[looper].shaderProgram.vertexShader) {
       this.GL.gl.deleteShader(this.contentList[looper].shaderProgram.vertexShader);
       delete this.contentList[looper].shaderProgram.vertexShader;
     }
+
     /* Dispose the texture */
-
-
     if (this.contentList[looper].texture) {
       try {
         this.GL.gl.deleteTexture(this.contentList[looper].texture);
       } catch (e) {
         console.warn('Problem in destroying function : This is e log : ' + e);
       }
-
       delete this.contentList[looper].texture;
     }
+
     /* Dispose the program */
-
-
     if (this.contentList[looper].shaderProgram) {
       this.GL.gl.deleteProgram(this.contentList[looper].shaderProgram);
       delete this.contentList[looper].shaderProgram;
     }
     /* Empty the buffers */
-
-
     if (this.contentList[looper].vertexPositionBuffer) {
       this.GL.gl.deleteBuffer(this.contentList[looper].vertexPositionBuffer);
       delete this.contentList[looper].vertexPositionBuffer;
     }
-
     if (this.contentList[looper].vertexTexCoordBuffer) {
       this.GL.gl.deleteBuffer(this.contentList[looper].vertexTexCoordBuffer);
       delete this.contentList[looper].vertexTexCoordBuffer;
     }
-
     if (this.contentList[looper].vertexColorBuffer) {
       this.GL.gl.deleteBuffer(this.contentList[looper].vertexColorBuffer);
       delete this.contentList[looper].vertexColorBuffer;
     }
-
     if (this.contentList[looper].vertexIndexBuffer) {
       this.GL.gl.deleteBuffer(this.contentList[looper].vertexIndexBuffer);
       delete this.contentList[looper].vertexIndexBuffer;
     }
-
     delete this.contentList[looper].rotation;
     delete this.contentList[looper].color;
     delete this.contentList[looper].mvMatrix;
     exports.looper = looper = looper + 1;
   }
-
   this.contentList.length = 0;
   this.GL.destroy();
   delete this;
 };
-
 function loadShaders(gl, id) {
   // console.log("Creating Shader:" + id);
   var shaderScript = document.getElementById(id);
   var shader;
   var str = '';
-
   if (shaderScript) {
     var k = shaderScript.firstChild;
-
     while (k) {
       if (k.nodeType == 3) {
         str += k.textContent;
       }
-
       k = k.nextSibling;
     }
-
     if (shaderScript.type == 'x-shader/x-fragment') {
       // console.log("Creating fragment shader");
       shader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -6741,10 +5955,8 @@ function loadShaders(gl, id) {
     } else {
       return 0;
     }
-
     gl.shaderSource(shader, str);
     gl.compileShader(shader);
-
     if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
       return shader;
     } else {
@@ -6757,187 +5969,153 @@ function loadShaders(gl, id) {
     return 0;
   }
 }
-
 function initShaders(gl, fragment, vertex) {
   // console.log("Initialize Shader");
   var fragmentShader = this.getShader(gl, fragment);
   var vertexShader = this.getShader(gl, vertex);
-
   if (0 == fragmentShader || 0 == vertexShader) {
     console.warn('Failed to Load shader');
     return 0;
   } else {
-    var shaderProgram = gl.createProgram(); // console.log("Creating Shader fragment");
-
+    var shaderProgram = gl.createProgram();
+    // console.log("Creating Shader fragment");
     gl.attachShader(shaderProgram, vertexShader);
     gl.attachShader(shaderProgram, fragmentShader);
     gl.linkProgram(shaderProgram);
-
     if (gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
       gl.useProgram(shaderProgram);
       shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
       gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
-
       if (gl.getAttribLocation(shaderProgram, 'aVertexColor') >= 0) {
         shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, 'aVertexColor');
         gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
       }
-
       if (gl.getAttribLocation(shaderProgram, 'aTextureCoord') >= 0) {
         shaderProgram.textureCoordAttribute = gl.getAttribLocation(shaderProgram, 'aTextureCoord');
         gl.enableVertexAttribArray(shaderProgram.textureCoordAttribute);
         shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
       }
-
       if (gl.getAttribLocation(shaderProgram, 'aVertexNormal') >= 0) {
         shaderProgram.vertexNormalAttribute = gl.getAttribLocation(shaderProgram, 'aVertexNormal');
         gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uNMatrix')) {
         shaderProgram.nMatrixUniform = gl.getUniformLocation(shaderProgram, 'uNMatrix');
-      } // For 2d sprite test - not in use for now!
+      }
 
-
+      // For 2d sprite test - not in use for now!
       if (null !== gl.getUniformLocation(shaderProgram, 'layer')) {
         shaderProgram.layerLocation = gl.getUniformLocation(shaderProgram, 'layer');
-      } // Test
+      }
 
-
+      // Test
       if (null !== gl.getUniformLocation(shaderProgram, 'numberOfsamplers')) {
         shaderProgram.numberOfsamplers = gl.getUniformLocation(shaderProgram, 'numberOfsamplers');
-      } // Test
-
-
+      }
+      // Test
       if (null !== gl.getUniformLocation(shaderProgram, 'TimeFor')) {
         shaderProgram.uniformTime = gl.getUniformLocation(shaderProgram, 'TimeFor');
-      } // Multi samplers for textutes
+      }
 
-
+      // Multi samplers for textutes
       if (null !== gl.getUniformLocation(shaderProgram, 'uSampler')) {
         shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uSampler1')) {
         shaderProgram.samplerUniform1 = gl.getUniformLocation(shaderProgram, 'uSampler1');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uSampler2')) {
         shaderProgram.samplerUniform2 = gl.getUniformLocation(shaderProgram, 'uSampler2');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uSampler3')) {
         shaderProgram.samplerUniform3 = gl.getUniformLocation(shaderProgram, 'uSampler3');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uSampler4')) {
         shaderProgram.samplerUniform4 = gl.getUniformLocation(shaderProgram, 'uSampler4');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uSampler5')) {
         shaderProgram.samplerUniform5 = gl.getUniformLocation(shaderProgram, 'uSampler5');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uSampler6')) {
         shaderProgram.samplerUniform6 = gl.getUniformLocation(shaderProgram, 'uSampler6');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uSampler7')) {
         shaderProgram.samplerUniform7 = gl.getUniformLocation(shaderProgram, 'uSampler7');
       } // maybe to the 16 ?
-
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uUseLighting')) {
         shaderProgram.useLightingUniform = gl.getUniformLocation(shaderProgram, 'uUseLighting');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uAmbientColor')) {
         shaderProgram.ambientColorUniform = gl.getUniformLocation(shaderProgram, 'uAmbientColor');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uLightingDirection')) {
         shaderProgram.lightingDirectionUniform = gl.getUniformLocation(shaderProgram, 'uLightingDirection');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uDirectionalColor')) {
         shaderProgram.directionalColorUniform = gl.getUniformLocation(shaderProgram, 'uDirectionalColor');
-      } // Local SpotLight
-
-
+      }
+      // Local SpotLight
       if (null !== gl.getUniformLocation(shaderProgram, 'u_shininess')) {
         shaderProgram.shininessLocation = gl.getUniformLocation(shaderProgram, 'u_shininess');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'u_lightDirection')) {
         shaderProgram.lightDirectionLocation = gl.getUniformLocation(shaderProgram, 'u_lightDirection');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'u_innerLimit')) {
         shaderProgram.innerLimitLocation = gl.getUniformLocation(shaderProgram, 'u_innerLimit');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'u_outerLimit')) {
         shaderProgram.outerLimitLocation = gl.getUniformLocation(shaderProgram, 'u_outerLimit');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'u_lightWorldPosition')) {
         shaderProgram.lightWorldPositionLocation = gl.getUniformLocation(shaderProgram, 'u_lightWorldPosition');
-      } // test
-
-
+      }
+      // test
       if (null !== gl.getUniformLocation(shaderProgram, 'u_textureMatrix')) {
         shaderProgram.u_textureMatrix = gl.getUniformLocation(shaderProgram, 'u_textureMatrix');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'u_projectedTexture')) {
         shaderProgram.u_projectedTexture = gl.getUniformLocation(shaderProgram, 'u_projectedTexture');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'u_bias')) {
         shaderProgram.u_bias = gl.getUniformLocation(shaderProgram, 'u_bias');
-      } // 1.8.4 cubeMap
-
-
+      }
+      // 1.8.4 cubeMap
       if (null !== gl.getUniformLocation(shaderProgram, 'u_texture')) {
         shaderProgram.uCubeMapSampler = gl.getUniformLocation(shaderProgram, 'u_texture');
-      } // [1.8.8] global positon light test
-
-
+      }
+      // [1.8.8] global positon light test
       if (null !== gl.getUniformLocation(shaderProgram, 'specularColor')) {
         shaderProgram.specularColor = gl.getUniformLocation(shaderProgram, 'specularColor');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uLightPosition')) {
         shaderProgram.uLightPosition = gl.getUniformLocation(shaderProgram, 'uLightPosition');
-      } // [1.8.9] Lens effect
-
-
+      }
+      // [1.8.9] Lens effect
       if (null !== gl.getUniformLocation(shaderProgram, 'uResolution')) {
         shaderProgram.uResolution = gl.getUniformLocation(shaderProgram, 'uResolution');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'uControl')) {
         shaderProgram.uControl = gl.getUniformLocation(shaderProgram, 'uControl');
       }
-
       if (null !== gl.getUniformLocation(shaderProgram, 'iResolution')) {
         // toy adaptatino iResolution indicator
         shaderProgram.positionAttributeLocation = gl.getAttribLocation(shaderProgram, "a_position");
         shaderProgram.resolutionLocation = gl.getUniformLocation(shaderProgram, "iResolution");
         shaderProgram.mouseLocation = gl.getUniformLocation(shaderProgram, "iMouse");
         shaderProgram.timeLocation = gl.getUniformLocation(shaderProgram, "iTime");
-      } else {// console.log('adaptation initshaders for toyshaders. UNDEFINED')
-      } // matrixSkyRad
+      } else {
+        // console.log('adaptation initshaders for toyshaders. UNDEFINED')
+      }
 
-
+      // matrixSkyRad
       if (null !== gl.getUniformLocation(shaderProgram, 'matrixSkyRad')) {
         shaderProgram.matrixSkyRad = gl.getUniformLocation(shaderProgram, "matrixSkyRad");
       }
-
       shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, 'uPMatrix');
       shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, 'uMVMatrix');
-      /* For destroying properly            */
 
+      /* For destroying properly            */
       shaderProgram.fragmentShader = fragmentShader;
       shaderProgram.vertexShader = vertexShader;
       return shaderProgram;
@@ -6946,38 +6124,32 @@ function initShaders(gl, fragment, vertex) {
       return 0;
     }
   }
-} // END OF SHADERS
+}
+// END OF SHADERS
+
 // MATRIX OPETARION
-
-
 _manifest.default.operation.PUSH_MATRIX = function (mvMatrix, mvMatrixStack) {
   var copy = mat4.create();
   mat4.copy(mvMatrix, copy);
   mvMatrixStack.push(copy);
 };
-
 _manifest.default.operation.POP_MATRIX = function (mvMatrix, mvMatrixStack) {
   if (mvMatrixStack.length == 0) {
     throw 'Invalid popMatrix!';
   }
-
   mvMatrix = mvMatrixStack.pop();
 };
-
 _manifest.default.operation.SET_MATRIX_UNIFORMS = function (object, pMatrix) {
   this.GL.gl.uniformMatrix4fv(object.shaderProgram.pMatrixUniform, false, pMatrix);
   this.GL.gl.uniformMatrix4fv(object.shaderProgram.mvMatrixUniform, false, object.mvMatrix);
 };
-
 var RegenerateShader = function (id_elem, numOfSamplerInUse, mixOperand, lightType) {
   var e = document.getElementById(id_elem);
-
   if (mixOperand == 'multiply') {
     mixOperand = 0;
   } else if (mixOperand == 'divide') {
     mixOperand = 1;
   }
-
   if (_manifest.default.openglesShaderVersion == 1.3) {
     // console.log('RegenerateShader 300 => ', lightType)
     e.innerHTML = (0, _matrixShaders.generateShaderSrc3)(numOfSamplerInUse, mixOperand, lightType);
@@ -6986,69 +6158,54 @@ var RegenerateShader = function (id_elem, numOfSamplerInUse, mixOperand, lightTy
     e.innerHTML = (0, _matrixShaders2.generateShaderSrc)(numOfSamplerInUse, mixOperand, lightType);
   }
 };
-
 exports.RegenerateShader = RegenerateShader;
-
 var RegenerateCubeMapShader = function (id_elem, numOfSamplerInUse, mixOperand, lightType) {
   var e = document.getElementById(id_elem);
-
   if (mixOperand == 'multiply') {
     mixOperand = 0;
   } else if (mixOperand == 'divide') {
     mixOperand = 1;
   }
-
   if (_manifest.default.openglesShaderVersion == 1.3) {
     e.innerHTML = (0, _matrixShaders.generateCubeMapShaderSrc3)(numOfSamplerInUse, mixOperand, lightType);
   } else {
     e.innerHTML = (0, _matrixShaders2.generateCubeMapShaderSrc1)(numOfSamplerInUse, mixOperand);
   }
 };
-
 exports.RegenerateCubeMapShader = RegenerateCubeMapShader;
-
 var RegenerateCustomShader = function (id_elem, numOfSamplerInUse, mixOperand, code_) {
   var e = document.getElementById(id_elem);
-
   if (mixOperand == 'multiply') {
     mixOperand = 0;
   } else if (mixOperand == 'divide') {
     mixOperand = 1;
   }
-
   e.innerHTML = (0, _matrixShaders.generateCustomShaderSrc)(numOfSamplerInUse, mixOperand, code_);
-}; // Streams stuff
+};
 
-
+// Streams stuff
 exports.RegenerateCustomShader = RegenerateCustomShader;
-
 var webcamError = function (e) {
   alert('Webcam error!' + e);
 };
-
 exports.webcamError = webcamError;
-
 function SET_STREAM(video) {
   var videoSrc = null;
   navigator.mediaDevices.enumerateDevices().then(getDevices).then(getStream).catch(() => {
     alert('ERR MEDIA');
   });
-
   function getDevices(deviceInfos) {
     for (var i = 0; i !== deviceInfos.length; ++i) {
       var deviceInfo = deviceInfos[i];
-
       if (deviceInfo.kind === 'videoinput') {
         videoSrc = deviceInfo.deviceId;
         break;
       }
     }
   }
-
   function getStream() {
     if (navigator.getUserMedia) {
       var VIDEO__;
-
       if (isMobile() == true) {
         VIDEO__ = {
           deviceId: {
@@ -7059,7 +6216,6 @@ function SET_STREAM(video) {
       } else {
         VIDEO__ = true;
       }
-
       navigator.getUserMedia({
         audio: true,
         video: VIDEO__
@@ -7088,7 +6244,6 @@ function SET_STREAM(video) {
     }
   }
 }
-
 function ACCESS_CAMERA(htmlElement) {
   var ROOT = this;
   console.log('ACCESS_CAMERA');
@@ -7104,7 +6259,6 @@ function ACCESS_CAMERA(htmlElement) {
   ROOT.videoImageContext.fillStyle = '#0000FF';
   ROOT.videoImageContext.fillRect(0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
   ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage);
-
   ROOT.UPDATE = function () {
     if (ROOT.video.readyState === ROOT.video.HAVE_ENOUGH_DATA) {
       ROOT.videoImageContext.drawImage(ROOT.video, 0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
@@ -7113,18 +6267,16 @@ function ACCESS_CAMERA(htmlElement) {
       ROOT.videoImageContext.fillText(' Visual-JS game engine -webGL 2 part', 0, 85);
       ROOT.videoImageContext.fillText('Video texture example ', 20, 50);
     }
-  }; // console.log("Video 3d canvas texture created.");
+  };
 
-
-  _manifest.default.updateBeforeDraw.push(ROOT); // Dispose for this needed!
-
+  // console.log("Video 3d canvas texture created.");
+  _manifest.default.updateBeforeDraw.push(ROOT);
+  // Dispose for this needed!
 }
-
 function VIDEO_TEXTURE(p) {
   var ROOT = this,
-      DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
+    DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
   ROOT.video = document.getElementById('webcam_beta');
-
   ROOT.video.READY = function (e) {
     ROOT.videoImage = document.createElement('canvas');
     ROOT.videoImage.id = 'webcam_beta' + 'IMAGE_';
@@ -7135,14 +6287,11 @@ function VIDEO_TEXTURE(p) {
     ROOT.videoImageContext.fillStyle = '#00003F';
     ROOT.videoImageContext.fillRect(0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
     ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage);
-
-    _manifest.default.updateBeforeDraw.push(ROOT); // console.info("Video 2dcanvas texture created.");
-
+    _manifest.default.updateBeforeDraw.push(ROOT);
+    // console.info("Video 2dcanvas texture created.");
   };
-
   ROOT.video.addEventListener('loadeddata', ROOT.video.READY, false);
   ROOT.video.src = 'res/videos/' + p;
-
   ROOT.UPDATE = function () {
     if (ROOT.video.readyState === ROOT.video.HAVE_ENOUGH_DATA) {
       ROOT.videoImageContext.drawImage(ROOT.video, 0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
@@ -7153,23 +6302,19 @@ function VIDEO_TEXTURE(p) {
     }
   };
 }
-
 function VT(p, name, options) {
   if (typeof name === 'undefined') name = 'vtex' + (0, _utility.randomIntFromTo)(1, 999999);
-
   if (typeof options === 'undefined') {
     options = {
       mixWithCanvas2d: false
     };
   }
-
   function fixAutoPlay() {
     console.log("Autoplay fixing...? ", ROOT.video);
     window.addEventListener('click', FirstClickAutoPlay, {
       passive: false
     });
   }
-
   function FirstClickAutoPlay() {
     var t = ROOT.video.play();
     t.then(() => {
@@ -7179,11 +6324,11 @@ function VT(p, name, options) {
       console.warn("Autoplay error.");
     });
   }
-
   var ROOT = this,
-      DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
+    DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
   ROOT.video = document.createElement('video');
-  DIV_CONTENT_STREAMS.appendChild(ROOT.video); // ROOT.name = 'vtex-' + name;
+  DIV_CONTENT_STREAMS.appendChild(ROOT.video);
+  // ROOT.name = 'vtex-' + name;
 
   ROOT.video.READY = function (e) {
     ROOT.videoImage = document.createElement('canvas');
@@ -7195,7 +6340,6 @@ function VT(p, name, options) {
     ROOT.video.loop = true;
     DIV_CONTENT_STREAMS.appendChild(ROOT.videoImage);
     ROOT.options = options;
-
     if (options.mixWithCanvas2d == true) {
       ROOT.videoImageContext = ROOT.videoImage.getContext('2d');
       ROOT.videoImageContext.fillStyle = '#00003F';
@@ -7204,26 +6348,20 @@ function VT(p, name, options) {
     } else {
       ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.video);
     }
-
     try {
       var testAutoplay = ROOT.video.play();
       testAutoplay.catch(() => {
         fixAutoPlay();
       });
     } catch (err) {}
-
     _manifest.default.updateBeforeDraw.push(ROOT);
-
     console.info("Video 2dcanvas texture created.", ROOT.video);
   };
-
   ROOT.video.addEventListener('loadeddata', ROOT.video.READY, false);
   ROOT.video.src = p;
   ROOT.video.load();
-
   ROOT.UPDATE = function () {
     if (ROOT.options.mixWithCanvas2d == false) return;
-
     if (ROOT.video.readyState === ROOT.video.HAVE_ENOUGH_DATA) {
       ROOT.videoImageContext.drawImage(ROOT.video, 0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
       ROOT.videoImageContext.font = '30px Georgia';
@@ -7233,86 +6371,72 @@ function VT(p, name, options) {
     }
   };
 }
-
 function Vjs3(path_, nameOfCanvas) {
   var ROOT = this;
   ROOT.iframe = document.createElement('iframe');
-  ROOT.iframe.id = nameOfCanvas; // ROOT.iframe.setAttribute('style', 'width:512px;height:512px');
-
+  ROOT.iframe.id = nameOfCanvas;
+  // ROOT.iframe.setAttribute('style', 'width:512px;height:512px');
   ROOT.iframe.setAttribute('width', '512');
   ROOT.iframe.setAttribute('height', '512');
   var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
   ROOT.iframe.data = path_;
   ROOT.iframe.src = path_;
   DIV_CONTENT_STREAMS.appendChild(ROOT.iframe);
-
   document.getElementById(ROOT.iframe.id).onload = function (event) {
     ROOT.videoImage = ROOT.iframe.contentDocument.getElementById(nameOfCanvas);
     ROOT.canvasTexture = ROOT.videoImage.getContext('2d');
-
-    _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas); // E('HOLDER_STREAMS').style.display = 'block';
-
-
+    _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
+    // E('HOLDER_STREAMS').style.display = 'block';
     ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage);
   };
-
   ROOT.showTextureEditor = function () {
     var T = (0, _utility.E)('HOLDER_STREAMS').style;
     T.display = 'block';
     T.left = '0';
   };
 }
-
 function anyCanvas(path_, nameOfCanvas) {
   var ROOT = this;
   ROOT.iframe = document.createElement('object');
-  ROOT.iframe.id = 'canvas2dTextureSurface' + document.getElementsByTagName('object').length; // ROOT.iframe.setAttribute('style', 'width:512px;height:512px');
+  ROOT.iframe.id = 'canvas2dTextureSurface' + document.getElementsByTagName('object').length;
+  // ROOT.iframe.setAttribute('style', 'width:512px;height:512px');
 
   ROOT.iframe.setAttribute('width', '512');
   ROOT.iframe.setAttribute('height', '512');
   var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
   DIV_CONTENT_STREAMS.appendChild(ROOT.iframe);
-
   document.getElementById(ROOT.iframe.id).onload = event => {
     ROOT.videoImage = ROOT.iframe.contentDocument.getElementById(nameOfCanvas);
-
     if (typeof ROOT.iframe.contentWindow.runTextureEditor !== 'undefined') {
       _manifest.default.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
     }
-
-    ROOT.canvasTexture = ROOT.videoImage.getContext('2d'); // App.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
+    ROOT.canvasTexture = ROOT.videoImage.getContext('2d');
+    // App.scene.outsideBox.streamTextures.iframe.contentWindow.runTextureEditor(nameOfCanvas);
     // E('HOLDER_STREAMS').style.display = 'block';
-
     ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture', ROOT.videoImage);
   };
-
   ROOT.showTextureEditor = function () {
-    var T = (0, _utility.E)('HOLDER_STREAMS').style; // fix for ios defoult screen
-
+    var T = (0, _utility.E)('HOLDER_STREAMS').style;
+    // fix for ios defoult screen
     (0, _utility.E)('webcam_beta').style.display = 'none';
     T.display = 'block';
     T.left = '0';
   };
-
   ROOT.iframe.data = path_;
 }
-
 function DOM_VT(video, name, options) {
   if (typeof name === 'undefined') name = 'vtex' + (0, _utility.randomIntFromTo)(1, 999999);
-
   if (typeof options === 'undefined') {
     options = {
       mixWithCanvas2d: false
     };
   }
-
   function fixAutoPlay() {
     console.log("Autoplay fixing...? ", ROOT.video);
     window.addEventListener('click', FirstClickAutoPlay, {
       passive: false
     });
   }
-
   function FirstClickAutoPlay() {
     var t = ROOT.video.play();
     t.then(() => {
@@ -7322,11 +6446,9 @@ function DOM_VT(video, name, options) {
       console.warn("Autoplay error.");
     });
   }
-
   var ROOT = this;
   console.log("input ", video);
   ROOT.video = video;
-
   let READY = function (e) {
     ROOT.videoImage = document.createElement('canvas');
     ROOT.videoImage.id = 'vtex-' + name;
@@ -7334,13 +6456,12 @@ function DOM_VT(video, name, options) {
     ROOT.videoImage.setAttribute('height', '512px');
     ROOT.video.mute = true;
     ROOT.video.autoplay = true;
-    ROOT.video.loop = true; // test maybe
-
+    ROOT.video.loop = true;
+    // test maybe
     ROOT.video.crossOrigin = "anonymous";
     var DIV_CONTENT_STREAMS = document.getElementById('HOLDER_STREAMS');
     DIV_CONTENT_STREAMS.appendChild(ROOT.videoImage);
     ROOT.options = options;
-
     if (options.mixWithCanvas2d == true) {
       ROOT.videoImageContext = ROOT.videoImage.getContext('2d');
       ROOT.videoImageContext.fillStyle = '#00003F';
@@ -7348,8 +6469,8 @@ function DOM_VT(video, name, options) {
       console.log('CCCCCCCC   1');
       ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.videoImage);
     } else {
-      console.log('CCCCCCCC   2'); // must be fixed
-
+      console.log('CCCCCCCC   2');
+      // must be fixed
       if (typeof ROOT.video.video !== 'undefined') {
         // new net2
         ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.video.video);
@@ -7357,21 +6478,16 @@ function DOM_VT(video, name, options) {
         ROOT.texture = _manifest.default.tools.loadVideoTexture('glVideoTexture' + name, ROOT.video);
       }
     }
-
     try {
       var testAutoplay = ROOT.video.play();
       testAutoplay.catch(() => {
         fixAutoPlay();
       });
     } catch (err) {}
-
     _manifest.default.updateBeforeDraw.push(ROOT);
-
     console.info("Video 2dcanvas texture created!!!.", ROOT.video);
   };
-
   READY();
-
   if (ROOT.video.addEventListener) {
     ROOT.video.addEventListener('loadeddata', ROOT.video.READY, false);
     ROOT.video.load();
@@ -7379,10 +6495,8 @@ function DOM_VT(video, name, options) {
     ROOT.video.video.addEventListener('loadeddata', ROOT.video.READY, false);
     ROOT.video.video.load();
   }
-
   ROOT.UPDATE = function () {
     if (ROOT.options.mixWithCanvas2d == false) return;
-
     if (ROOT.video.readyState === ROOT.video.HAVE_ENOUGH_DATA) {
       ROOT.videoImageContext.drawImage(ROOT.video, 0, 0, ROOT.videoImage.width, ROOT.videoImage.height);
       ROOT.videoImageContext.font = '30px Georgia';
@@ -7391,7 +6505,6 @@ function DOM_VT(video, name, options) {
       ROOT.videoImageContext.fillText('Video texture', 20, 50);
     }
   };
-
   return {
     video: video
   };
@@ -7404,19 +6517,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.EVENTS = EVENTS;
+exports.camera = exports.SYS = void 0;
 exports.defineKeyBoardObject = defineKeyBoardObject;
-exports.keyboardPress = exports.camera = exports.SYS = void 0;
-
+exports.keyboardPress = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var _matrixWorld = require("./matrix-world");
-
 var _utility = require("./utility");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SYS = {};
-exports.SYS = SYS;
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+var SYS = exports.SYS = {};
 SYS.MOUSE = {
   x: 0,
   y: 0,
@@ -7431,13 +6539,12 @@ SYS.MOUSE = {
   ON_MID_BTN_PRESSED: function () {},
   MOUSE_MOVING: false
 };
-SYS.DEBUG = new _utility.LOG(); // from 1.9.44
-
+SYS.DEBUG = new _utility.LOG();
+// from 1.9.44
 _manifest.default.sys = SYS;
-
 function EVENTS(canvas) {
-  var ROOT_EVENTS = this; // Mobile device
-
+  var ROOT_EVENTS = this;
+  // Mobile device
   if ((0, _utility.isMobile)() == true) {
     canvas.addEventListener('touchstart', function (e) {
       e.preventDefault();
@@ -7473,9 +6580,9 @@ function EVENTS(canvas) {
     });
     canvas.addEventListener('touchmove', function (e) {
       e.preventDefault();
-      var touchList = e.changedTouches; //SYS.MOUSE.MOUSE_MOVING = true;
+      var touchList = e.changedTouches;
+      //SYS.MOUSE.MOUSE_MOVING = true;
       //SYS.MOUSE.PRESS = true;
-
       SYS.MOUSE.x = touchList[0].pageX;
       SYS.MOUSE.y = touchList[0].pageY;
       ROOT_EVENTS.CALCULATE_TOUCH_MOVE_OR_MOUSE_MOVE({
@@ -7505,7 +6612,6 @@ function EVENTS(canvas) {
     }, {
       passive: true
     });
-
     canvas.onmousemove = function (e) {
       SYS.MOUSE.MOUSE_MOVING = true;
       SYS.MOUSE.x = e.layerX;
@@ -7515,10 +6621,8 @@ function EVENTS(canvas) {
         y: e.layerY
       });
     };
-
     canvas.onmousedown = function (e) {
       SYS.MOUSE.PRESS = true;
-
       if (e.which == 3) {
         SYS.MOUSE.BUTTON_PRESSED = 'RIGHT';
         SYS.MOUSE.ON_RIGHT_BTN_PRESSED();
@@ -7532,72 +6636,70 @@ function EVENTS(canvas) {
         SYS.MOUSE.ON_LEFT_BTN_PRESSED();
         SYS.DEBUG.LOG('Left button clicked');
       }
-
       SYS.MOUSE.x = e.layerX;
       SYS.MOUSE.y = e.layerY;
       ROOT_EVENTS.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN(e, SYS.MOUSE);
-    }; //console.log("This is PC desktop device.");
+    };
 
+    //console.log("This is PC desktop device.");
   }
-
   window.addEventListener('resize', function (e) {
     if (_manifest.default.resize.canvas == "false" || _manifest.default.resize.canvas == false) {
       return;
     }
-
     if (_manifest.default.resize.canvas == "full-screen") {
       //canvas.width =  window.innerHeight * App.resize.aspectRatio;
       _manifest.default.canvas.width = window.innerWidth;
-      _manifest.default.canvas.height = window.innerHeight; // SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ' + world);
+      _manifest.default.canvas.height = window.innerHeight;
+      // SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ' + world);
     } else {
       _manifest.default.canvas.width = window.innerHeight * _manifest.default.resize.aspectRatio;
       _manifest.default.canvas.height = window.innerHeight;
       SYS.DEBUG.LOG('SYS: aspect ration resize is active. ' + _matrixWorld.world);
     }
-
     if (_manifest.default.resize.reloadWorldOnResize == true && window.resizeGlPort !== 'undefined') {
       window.resizeGlPort();
     }
   }, {
     passive: true
-  }); // Calculate touch or click event
+  });
 
-  this.CALCULATE_TOUCH_OR_CLICK = function () {// console.log('TEST EVENTS CALCULATE_TOUCH_OR_CLICK')
+  // Calculate touch or click event
+  this.CALCULATE_TOUCH_OR_CLICK = function () {
+    // console.log('TEST EVENTS CALCULATE_TOUCH_OR_CLICK')
     // SYS.DEBUG.LOG('EVENT: MOUSE/TOUCH CLICK');
-  }; // Calculate touch or click event
+  };
 
-
+  // Calculate touch or click event
   this.multiTouch = function (e) {
     SYS.DEBUG.LOG('EVENT: MOUSE/TOUCH CLICK', e);
   };
-
   this.virtualUpDownScene = 0;
-  this.virtualLeftRightScene = 0; // CALCULATE MOUSE MOVE OR TOUCH MOVE
+  this.virtualLeftRightScene = 0;
 
+  // CALCULATE MOUSE MOVE OR TOUCH MOVE
   this.CALCULATE_TOUCH_MOVE_OR_MOUSE_MOVE = function (e) {
     var center_x = window.innerWidth / 2;
     var center_y = window.innerHeight / 2;
     SYS.MOUSE.x = e.x - center_x;
-    SYS.MOUSE.y = e.y - center_y; //check to make sure there is data to compare against
+    SYS.MOUSE.y = e.y - center_y;
 
+    //check to make sure there is data to compare against
     if (typeof SYS.MOUSE.LAST_POSITION.x != 'undefined') {
       //get the change from last position to this position
       var deltaX = SYS.MOUSE.LAST_POSITION.x - SYS.MOUSE.x,
-          deltaY = SYS.MOUSE.LAST_POSITION.y - SYS.MOUSE.y;
+        deltaY = SYS.MOUSE.LAST_POSITION.y - SYS.MOUSE.y;
     }
-
     if (_manifest.default.camera.SceneController === true && keyboardPress.getKeyStatus(16) || _manifest.default.camera.FirstPersonController === true) {
       // console.log('works for both now')
       camera.pitchRate += deltaY * 10;
       camera.yawRate += deltaX * 1;
-
       if (SYS.MOUSE.x < _manifest.default.camera.edgeMarginValue - center_x) {
         _manifest.default.camera.leftEdge = true;
         SYS.DEBUG.LOG("Mouse on edge!");
       } else {
         _manifest.default.camera.leftEdge = false;
       }
-
       if (SYS.MOUSE.x > center_x - _manifest.default.camera.edgeMarginValue) {
         _manifest.default.camera.rightEdge = true;
         SYS.DEBUG.LOG("Mouse on edge!");
@@ -7605,7 +6707,6 @@ function EVENTS(canvas) {
         _manifest.default.camera.rightEdge = false;
       }
     }
-
     if (_manifest.default.camera.SceneController === true && SYS.MOUSE.BUTTON_PRESSED == 'MID') {
       if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0) {
         // left
@@ -7636,68 +6737,61 @@ function EVENTS(canvas) {
           this.virtualUpDownScene -= _manifest.default.camera.sceneControllerDragAmp;
         }
       }
-
       camera.yPos = this.virtualUpDownScene;
       camera.xPos = this.virtualLeftRightScene;
-    } // Set the new last position to the current for next time.
+    }
 
+    // Set the new last position to the current for next time.
+    SYS.MOUSE.LAST_POSITION.x = SYS.MOUSE.x, SYS.MOUSE.LAST_POSITION.y = SYS.MOUSE.y;
+    //SYS.DEBUG.LOG(" EVENT : MOUSE/TOUCH MOVE ");
+  };
 
-    SYS.MOUSE.LAST_POSITION.x = SYS.MOUSE.x, SYS.MOUSE.LAST_POSITION.y = SYS.MOUSE.y; //SYS.DEBUG.LOG(" EVENT : MOUSE/TOUCH MOVE ");
-  }; // CALCULATE_TOUCH_UP_OR_MOUSE_UP
-
-
+  // CALCULATE_TOUCH_UP_OR_MOUSE_UP
   this.CALCULATE_TOUCH_UP_OR_MOUSE_UP = function () {
     SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH UP ');
   };
-
   this.CALCULATE_TOUCH_DOWN_OR_MOUSE_DOWN = function (ev, m) {
     SYS.DEBUG.LOG(' EVENT : MOUSE/TOUCH DOWN ');
   };
 }
-
 function defineKeyBoardObject() {
   var globKeyPressObj = new Object();
+
   /* Constructor for the global mouse location     */
-
   globKeyPressObj.keyArr = new Array();
-
   document.onkeydown = function (e) {
     // console.log('......')
     globKeyPressObj.handleKeyDown(e);
   };
-
   document.onkeyup = function (e) {
     globKeyPressObj.handleKeyUp(e);
   };
+
   /**
    * @description
    * Getter for a key status.
    **/
-
-
   globKeyPressObj.getKeyStatus = function (keyCode) {
     return this.keyArr[keyCode];
   };
+
   /**
    * @description 
    * Setter for a key status.
    **/
-
-
   globKeyPressObj.setKeyStatus = function (keyCode, status) {
     // console.log("keycode", keyCode)
     this.keyArr[keyCode] = status;
   };
+
   /**
    * @description
    * Key Down and Up handlers.
    * Optimal dispatch event: 'hit.KeyDown'
    **/
-
-
   globKeyPressObj.handleKeyDown = function (evt) {
-    evt = evt ? evt : window.event ? window.event : ''; // console.log("'LOG KEY CODE ", evt.keyCode);
-
+    evt = evt ? evt : window.event ? window.event : '';
+    // console.log("'LOG KEY CODE ", evt.keyCode);
     let emitKeyDown = new CustomEvent('hit.keyDown', {
       detail: {
         keyCode: evt.keyCode,
@@ -7707,7 +6801,6 @@ function defineKeyBoardObject() {
     dispatchEvent(emitKeyDown);
     this.setKeyStatus(evt.keyCode, true);
   };
-
   globKeyPressObj.handleKeyUp = function (evt) {
     evt = evt ? evt : window.event ? window.event : '';
     let emitKeyUp = new CustomEvent('hit.keyUp', {
@@ -7719,9 +6812,8 @@ function defineKeyBoardObject() {
     dispatchEvent(emitKeyUp);
     this.setKeyStatus(evt.keyCode, false);
   };
+
   /* Destructor */
-
-
   globKeyPressObj.destroy = function () {
     printLog('Destroy Key Press object');
     document.onkeydown = null;
@@ -7729,14 +6821,12 @@ function defineKeyBoardObject() {
     delete this.keyArr;
     delete this;
   };
-
   return globKeyPressObj;
 }
-
 let wheelBLock = false;
-
 window.onwheel = evt => {
-  let scale = evt.deltaY * -0.01; // console.log(evt)
+  let scale = evt.deltaY * -0.01;
+  // console.log(evt)
   // console.log(evt.wheelDelta)
   // console.log(evt.wheelDeltaX)
   // console.log(evt.wheelDeltaY)
@@ -7752,11 +6842,9 @@ window.onwheel = evt => {
     }, 50);
   }
 };
+var camera = exports.camera = {};
 
-var camera = {};
 /* Set defaults       */
-
-exports.camera = camera;
 camera.roll = 0;
 camera.rollRate = 0;
 camera.rallAmp = 0.05;
@@ -7772,20 +6860,19 @@ camera.speed = 0;
 camera.yawAmp = 0.077;
 camera.pitchAmp = 0.017;
 camera.virtualJumpY = 2;
-camera.virtualJumpActive = false; // eslint-disable-next-line no-global-assign
+camera.virtualJumpActive = false;
 
-var keyboardPress = defineKeyBoardObject(); // For FirstPersonController
+// eslint-disable-next-line no-global-assign
+var keyboardPress = exports.keyboardPress = defineKeyBoardObject();
 
-exports.keyboardPress = keyboardPress;
-
+// For FirstPersonController
 camera.setCamera = function (object) {
-  /* Left Key  or A */
   if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
+    /* Left Key  or A */
     camera.yawRate = _manifest.default.camera.yawRate;
     if (_manifest.default.camera.leftEdge == true) camera.yawRate = _manifest.default.camera.yawRate;
-  } else if (
-  /* Right Key or D */
-  keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
+  } else if (keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
+    /* Right Key or D */
     camera.yawRate = -_manifest.default.camera.yawRate;
     if (_manifest.default.camera.rightEdge == true) camera.yawRate = -_manifest.default.camera.yawRate;
   } else if (keyboardPress.getKeyStatus(32)) {
@@ -7795,8 +6882,6 @@ camera.setCamera = function (object) {
     }
   }
   /* Up Key or W */
-
-
   if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
     camera.speed = _manifest.default.camera.speedAmp;
   } else if (keyboardPress.getKeyStatus(40) || keyboardPress.getKeyStatus(83)) {
@@ -7805,68 +6890,21 @@ camera.setCamera = function (object) {
   } else {
     camera.speed = 0;
   }
+
   /* Calculate yaw, pitch and roll(x,y,z) */
-
-
   if (camera.speed != 0) {
     camera.xPos -= Math.sin(degToRad(camera.yaw)) * camera.speed;
-
     if (camera.fly == true) {
       // Fly regime
       camera.yPos += Math.sin(degToRad(camera.pitch)) * camera.speed;
-    } else {// usually for fpshooter regime
+    } else {
+      // usually for fpshooter regime
       // camera.yPos = this.virtualJumpY;
       // camera.yPos = 0;
       // leave it zero by default lets dirigent from top
     }
-
     camera.zPos -= Math.cos(degToRad(camera.yaw)) * camera.speed;
   }
-
-  camera.yaw += camera.yawRate * camera.yawAmp;
-  camera.pitch += camera.pitchRate * camera.pitchAmp;
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.pitch), [1, 0, 0]);
-  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.yaw), [0, 1, 0]);
-  mat4.translate(object.mvMatrix, object.mvMatrix, [-camera.xPos, -camera.yPos, -camera.zPos]);
-  camera.yawRate = 0;
-  camera.pitchRate = 0;
-}; // For sceneController
-
-
-camera.setSceneCamera = function (object) {
-  /* Left Key  or A */
-  if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
-    camera.yawRate = _manifest.default.camera.sceneControllerWASDKeysAmp;
-    if (_manifest.default.camera.leftEdge == true) camera.yawRate = _manifest.default.camera.sceneControllerEdgeCameraYawRate;
-  } else if (
-  /* Right Key or D */
-  keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
-    camera.yawRate = -_manifest.default.camera.sceneControllerWASDKeysAmp;
-    if (_manifest.default.camera.rightEdge == true) camera.yawRate = -_manifest.default.camera.sceneControllerEdgeCameraYawRate;
-  } else {// camera.yawRate = 0;
-  }
-  /* Up Key or W */
-
-
-  if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
-    camera.speed = _manifest.default.camera.speedAmp;
-  } else if (keyboardPress.getKeyStatus(40) || keyboardPress.getKeyStatus(83)) {
-    /* Down Key or S */
-    camera.speed = -_manifest.default.camera.speedAmp;
-  } else {
-    // diff
-    if (!keyboardPress.getKeyStatus(16)) camera.speed = 0;
-  }
-  /* Calculate yaw, pitch and roll(x,y,z) */
-
-
-  if (camera.speed != 0) {
-    camera.xPos -= Math.sin(degToRad(camera.yaw)) * camera.speed; // ?
-
-    camera.yPos += Math.sin(degToRad(camera.pitch)) * camera.speed;
-    camera.zPos -= Math.cos(degToRad(camera.yaw)) * camera.speed;
-  }
-
   camera.yaw += camera.yawRate * camera.yawAmp;
   camera.pitch += camera.pitchRate * camera.pitchAmp;
   mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.pitch), [1, 0, 0]);
@@ -7876,6 +6914,45 @@ camera.setSceneCamera = function (object) {
   camera.pitchRate = 0;
 };
 
+// For sceneController
+camera.setSceneCamera = function (object) {
+  /* Left Key  or A */
+  if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
+    camera.yawRate = _manifest.default.camera.sceneControllerWASDKeysAmp;
+    if (_manifest.default.camera.leftEdge == true) camera.yawRate = _manifest.default.camera.sceneControllerEdgeCameraYawRate;
+  } else if (keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
+    camera.yawRate = -_manifest.default.camera.sceneControllerWASDKeysAmp;
+    if (_manifest.default.camera.rightEdge == true) camera.yawRate = -_manifest.default.camera.sceneControllerEdgeCameraYawRate;
+  } else {
+    // camera.yawRate = 0;
+  }
+
+  /* Up Key or W */
+  if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
+    camera.speed = _manifest.default.camera.speedAmp;
+  } else if (keyboardPress.getKeyStatus(40) || keyboardPress.getKeyStatus(83)) {
+    /* Down Key or S */
+    camera.speed = -_manifest.default.camera.speedAmp;
+  } else {
+    // diff
+    if (!keyboardPress.getKeyStatus(16)) camera.speed = 0;
+  }
+
+  /* Calculate yaw, pitch and roll(x,y,z) */
+  if (camera.speed != 0) {
+    camera.xPos -= Math.sin(degToRad(camera.yaw)) * camera.speed;
+    // ?
+    camera.yPos += Math.sin(degToRad(camera.pitch)) * camera.speed;
+    camera.zPos -= Math.cos(degToRad(camera.yaw)) * camera.speed;
+  }
+  camera.yaw += camera.yawRate * camera.yawAmp;
+  camera.pitch += camera.pitchRate * camera.pitchAmp;
+  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.pitch), [1, 0, 0]);
+  mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.yaw), [0, 1, 0]);
+  mat4.translate(object.mvMatrix, object.mvMatrix, [-camera.xPos, -camera.yPos, -camera.zPos]);
+  camera.yawRate = 0;
+  camera.pitchRate = 0;
+};
 let addBtn = document.querySelector('.button1');
 let regularBtn = document.querySelector('.button2');
 regularBtn.addEventListener('click', () => {
@@ -7884,12 +6961,12 @@ regularBtn.addEventListener('click', () => {
     addBtn.style.display = 'none';
     regularBtn.style.display = 'none';
   }, 950);
-}); // Track web app install by user
+});
 
+// Track web app install by user
 document.addEventListener('appinstalled', event => {
   console.log('PWA app installed by user! Hurray...');
 });
-
 if (_manifest.default.pwa.addToHomePage === true) {
   /**
    * @description
@@ -7898,17 +6975,17 @@ if (_manifest.default.pwa.addToHomePage === true) {
   let deferredPrompt;
   window.addEventListener('beforeinstallprompt', e => {
     // Prevent Chrome 67 and earlier from automatically showing the prompt
-    e.preventDefault(); // Stash the event so it can be triggered later.
-
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
     deferredPrompt = e;
     addBtn.style.display = 'block';
     regularBtn.style.display = 'block';
     addBtn.addEventListener('click', () => {
       // hide our user interface that shows our A2HS button
-      addBtn.style.display = 'none'; // Show the prompt
-
-      deferredPrompt.prompt(); // Wait for the user to respond to the prompt
-
+      addBtn.style.display = 'none';
+      // Show the prompt
+      deferredPrompt.prompt();
+      // Wait for the user to respond to the prompt
       deferredPrompt.userChoice.then(choiceResult => {
         if (choiceResult.outcome === 'accepted') {
           console.log('User accepted the A2HS prompt');
@@ -7918,7 +6995,6 @@ if (_manifest.default.pwa.addToHomePage === true) {
           console.log('User dismissed the A2HS prompt');
           addBtn.style.display = 'none';
         }
-
         deferredPrompt = null;
       });
     });
@@ -7936,11 +7012,9 @@ if (_manifest.default.pwa.addToHomePage === true) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.makeObjSeqArg = exports.initMeshBuffers = exports.downloadMeshes = exports.deleteMeshBuffers = exports.constructMesh = void 0;
 exports.play = play;
-exports.makeObjSeqArg = exports.deleteMeshBuffers = exports.initMeshBuffers = exports.downloadMeshes = exports.constructMesh = void 0;
-
 var _matrixWorld = require("./matrix-world");
-
 /**
  * The main Mesh class. The constructor will parse through the OBJ file data
  * and collect the vertex, vertex normal, texture, and face information. This
@@ -7952,23 +7026,21 @@ var _matrixWorld = require("./matrix-world");
  *
  * @param {String} objectData a string representation of an OBJ file with newlines preserved.
  */
+
 class constructMesh {
   constructor(objectData, inputArg) {
     this.inputArg = inputArg;
     this.objectData = objectData;
     this.create(objectData, inputArg);
-
     this.setScale = s => {
       this.inputArg.scale = s;
       initMeshBuffers(_matrixWorld.world.GL.gl, this.create(this.objectData, this.inputArg));
     };
-
     this.updateBuffers = () => {
       this.inputArg.scale = 1;
       initMeshBuffers(_matrixWorld.world.GL.gl, this.create(this.objectData, this.inputArg));
     };
   }
-
   create = (objectData, inputArg, callback) => {
     if (typeof callback === 'undefined') callback = function () {};
     let initOrientation = [0, 1, 2];
@@ -8031,36 +7103,33 @@ class constructMesh {
       exists in the hashindices object, its corresponding value is the index of
       that group and is appended to the unpacked indices array.
       */
-
     var verts = [],
-        vertNormals = [],
-        textures = [],
-        unpacked = {}; // unpacking stuff
-
+      vertNormals = [],
+      textures = [],
+      unpacked = {};
+    // unpacking stuff
     unpacked.verts = [];
     unpacked.norms = [];
     unpacked.textures = [];
     unpacked.hashindices = {};
     unpacked.indices = [];
-    unpacked.index = 0; // array of lines separated by the newline
+    unpacked.index = 0;
+    // array of lines separated by the newline
+    var lines = objectData.split('\n');
 
-    var lines = objectData.split('\n'); // update swap orientation
-
+    // update swap orientation
     if (inputArg.swap[0] !== null) {
       swap(inputArg.swap[0], inputArg.swap[1], initOrientation);
     }
-
     var VERTEX_RE = /^v\s/;
     var NORMAL_RE = /^vn\s/;
     var TEXTURE_RE = /^vt\s/;
     var FACE_RE = /^f\s/;
     var WHITESPACE_RE = /\s+/;
-
     for (var i = 0; i < lines.length; i++) {
       var line = lines[i].trim();
       var elements = line.split(WHITESPACE_RE);
       elements.shift();
-
       if (VERTEX_RE.test(line)) {
         // if this is a vertex
         verts.push.apply(verts, elements);
@@ -8072,7 +7141,6 @@ class constructMesh {
         textures.push.apply(textures, elements);
       } else if (FACE_RE.test(line)) {
         // if this is a face
-
         /*
           split this face into an array of vertex groups
           for example:
@@ -8081,7 +7149,6 @@ class constructMesh {
             ['16/92/11', '14/101/22', '1/69/1'];
           */
         var quad = false;
-
         for (var j = 0, eleLen = elements.length; j < eleLen; j++) {
           // Triangulating quads
           // quad: 'f v0/t0/vn0 v1/t1/vn1 v2/t2/vn2 v3/t3/vn3/'
@@ -8093,7 +7160,6 @@ class constructMesh {
             j = 2;
             quad = true;
           }
-
           if (elements[j] in unpacked.hashindices) {
             unpacked.indices.push(unpacked.hashindices[elements[j]]);
           } else {
@@ -8128,27 +7194,25 @@ class constructMesh {
                   This same process is repeated for verts and textures.
                   */
             // vertex position
-
             unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[0]] * inputArg.scale);
             unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[1]] * inputArg.scale);
-            unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[2]] * inputArg.scale); // vertex textures
+            unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[2]] * inputArg.scale);
 
+            // vertex textures
             if (textures.length) {
               unpacked.textures.push(+textures[(vertex[1] - 1) * 2 + 0]);
               unpacked.textures.push(+textures[(vertex[1] - 1) * 2 + 1]);
-            } // vertex normals
-
-
+            }
+            // vertex normals
             unpacked.norms.push(+vertNormals[(vertex[2] - 1) * 3 + 0]);
             unpacked.norms.push(+vertNormals[(vertex[2] - 1) * 3 + 1]);
-            unpacked.norms.push(+vertNormals[(vertex[2] - 1) * 3 + 2]); // add the newly created vertex to the list of indices
-
+            unpacked.norms.push(+vertNormals[(vertex[2] - 1) * 3 + 2]);
+            // add the newly created vertex to the list of indices
             unpacked.hashindices[elements[j]] = unpacked.index;
-            unpacked.indices.push(unpacked.index); // increment the counter
-
+            unpacked.indices.push(unpacked.index);
+            // increment the counter
             unpacked.index += 1;
           }
-
           if (j === 3 && quad) {
             // add v0/t0/vn0 onto the second triangle
             unpacked.indices.push(unpacked.hashindices[elements[0]]);
@@ -8156,7 +7220,6 @@ class constructMesh {
         }
       }
     }
-
     this.vertices = unpacked.verts;
     this.vertexNormals = unpacked.norms;
     this.textures = unpacked.textures;
@@ -8165,27 +7228,22 @@ class constructMesh {
     return this;
   };
 }
-
 exports.constructMesh = constructMesh;
-
 var Ajax = function () {
   // this is just a helper class to ease ajax calls
   var _this = this;
-
   this.xmlhttp = new XMLHttpRequest();
-
   this.get = function (url, callback) {
     _this.xmlhttp.onreadystatechange = function () {
       if (_this.xmlhttp.readyState === 4) {
         callback(_this.xmlhttp.responseText, _this.xmlhttp.status);
       }
     };
-
     _this.xmlhttp.open('GET', url, true);
-
     _this.xmlhttp.send();
   };
 };
+
 /**
  * Takes in an object of `mesh_name`, `'/url/to/OBJ/file'` pairs and a callback
  * function. Each OBJ file will be ajaxed in and automatically converted to
@@ -8203,27 +7261,25 @@ var Ajax = function () {
  * @param {Object} meshes In case other meshes are loaded separately or if a previously declared variable is desired to be used, pass in a (possibly empty) json object of the pattern: { '<mesh_name>': OBJ.Mesh }
  *
  */
-
-
 var downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
   // the total number of meshes. this is used to implement "blocking"
-  var semaphore = Object.keys(nameAndURLs).length; // if error is true, an alert will given
-
-  var error = false; // this is used to check if all meshes have been downloaded
+  var semaphore = Object.keys(nameAndURLs).length;
+  // if error is true, an alert will given
+  var error = false;
+  // this is used to check if all meshes have been downloaded
   // if meshes is supplied, then it will be populated, otherwise
   // a new object is created. this will be passed into the completionCallback
-
   if (typeof inputArg === 'undefined') {
     var inputArg = {
       scale: 1,
       swap: [null]
     };
   }
-
   if (typeof inputArg.scale === 'undefined') inputArg.scale = 1;
   if (typeof inputArg.swap === 'undefined') inputArg.swap = [null];
-  var meshes = {}; // loop over the mesh_name,url key,value pairs
+  var meshes = {};
 
+  // loop over the mesh_name,url key,value pairs
   for (var mesh_name in nameAndURLs) {
     if (nameAndURLs.hasOwnProperty(mesh_name)) {
       new Ajax().get(nameAndURLs[mesh_name], function (name) {
@@ -8233,21 +7289,18 @@ var downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
           } else {
             error = true;
             console.error('An error has occurred and the mesh "' + name + '" could not be downloaded.');
-          } // the request has finished, decrement the counter
-
-
+          }
+          // the request has finished, decrement the counter
           semaphore--;
-
           if (semaphore === 0) {
             if (error) {
               // if an error has occurred, the user is notified here and the
               // callback is not called
               console.error('An error has occurred and one or meshes has not been ' + 'downloaded. The execution of the script has terminated.');
               throw '';
-            } // there haven't been any errors in retrieving the meshes
+            }
+            // there haven't been any errors in retrieving the meshes
             // call the callback
-
-
             completionCallback(meshes);
           }
         };
@@ -8255,9 +7308,7 @@ var downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
     }
   }
 };
-
 exports.downloadMeshes = downloadMeshes;
-
 var _buildBuffer = function (gl, type, data, itemSize) {
   var buffer = gl.createBuffer();
   var arrayView = type === gl.ARRAY_BUFFER ? Float32Array : Uint16Array;
@@ -8267,6 +7318,7 @@ var _buildBuffer = function (gl, type, data, itemSize) {
   buffer.numItems = data.length / itemSize;
   return buffer;
 };
+
 /**
  * Takes in the WebGL context and a Mesh, then creates and appends the buffers
  * to the mesh object as attributes.
@@ -8341,23 +7393,20 @@ var _buildBuffer = function (gl, type, data, itemSize) {
  *     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, model.mesh.indexBuffer);
  *     gl.drawElements(gl.TRIANGLES, model.mesh.indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
  */
-
-
 var initMeshBuffers = function (gl, mesh) {
   mesh.normalBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.vertexNormals, 3);
   mesh.textureBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.textures, 2);
   mesh.vertexBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.vertices, 3);
   mesh.indexBuffer = _buildBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, mesh.indices, 1);
 };
-
 exports.initMeshBuffers = initMeshBuffers;
-
 var deleteMeshBuffers = function (gl, mesh) {
   gl.deleteBuffer(mesh.normalBuffer);
   gl.deleteBuffer(mesh.textureBuffer);
   gl.deleteBuffer(mesh.vertexBuffer);
   gl.deleteBuffer(mesh.indexBuffer);
 };
+
 /**
  * @description
  * Construct sequence list argument for downloadMeshes.
@@ -8383,19 +7432,14 @@ var deleteMeshBuffers = function (gl, mesh) {
       onLoadObj
     );
  */
-
-
 exports.deleteMeshBuffers = deleteMeshBuffers;
-
 const makeObjSeqArg = arg => {
   // Adaptation for blender (animation) obj exporter.
   var local = {};
-
   function localCalc(arg, noInitial = false) {
     var zeros = '00000';
     var l = {};
     var helper = arg.from;
-
     for (let j = arg.from, z = 1; j <= arg.to; j++) {
       if (z > 9 && z < 99) {
         zeros = '0000';
@@ -8403,20 +7447,16 @@ const makeObjSeqArg = arg => {
         zeros = '000';
       } // no need more then 999
 
-
       if (helper == arg.from && noInitial === false) {
         l[arg.id] = arg.path + '_' + zeros + z + '.obj';
       } else {
         l[arg.id + (helper - 1)] = arg.path + '_' + zeros + z + '.obj';
       }
-
       helper++;
       z++;
     }
-
     return l;
   }
-
   if (typeof arg.path === 'string') {
     local = localCalc(arg);
   } else if (typeof arg.path === 'undefined') {
@@ -8434,21 +7474,21 @@ const makeObjSeqArg = arg => {
       return localFinal;
     }
   }
-
   return local;
 };
+
 /**
  * @description
  * Switching obj seq animations frames range.
  */
-
-
 exports.makeObjSeqArg = makeObjSeqArg;
-
 function play(nameAni) {
   this.animation.anims.active = nameAni;
   this.animation.currentAni = this.animation.anims[this.animation.anims.active].from;
 }
+
+// TEST 
+// add destroy animation meshs procedure
 
 },{"./matrix-world":76}],64:[function(require,module,exports){
 "use strict";
@@ -8457,167 +7497,118 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var _matrixWorld = require("./matrix-world");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 _manifest.default.operation.cube_buffer_procedure = function (object) {
   /* Vertex */
   object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
   object.vertexPositionBuffer.itemSize = 3;
   object.vertexPositionBuffer.numItems = 24;
   /* Color */
-
   if (object.color && null !== object.shaderProgram.vertexColorAttribute) {
     object.vertexColorBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.color, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
     object.vertexColorBuffer.itemSize = 4;
     object.vertexColorBuffer.numItems = 24;
   }
   /* Texture */
-
-
   if (object.texture) {
     object.vertexTexCoordBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
-
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.texCoords, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
     object.vertexTexCoordBuffer.itemSize = 2;
     object.vertexTexCoordBuffer.numItems = 24;
   }
   /* Normals */
-
-
   if (object.shaderProgram.useLightingUniform) {
     object.vertexNormalBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
-
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.LightMap, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
     object.vertexNormalBuffer.itemSize = 3;
     object.vertexNormalBuffer.numItems = 24;
   }
   /* Indices */
-
-
   object.vertexIndexBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
-
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(object.geometry.indices), _matrixWorld.world.GL.gl.STATIC_DRAW);
-
   object.vertexIndexBuffer.itemSize = 1;
   object.vertexIndexBuffer.numItems = 36;
 };
-
 _manifest.default.operation.piramide_buffer_procedure = function (object) {
   // Vertex
   // // console.log("        Buffer the " + object.type + "'s vertex");
   object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
   object.vertexPositionBuffer.itemSize = 3;
   object.vertexPositionBuffer.numItems = 18;
+
   /* Color                                         */
   //// console.log("        Buffer the " + object.type + "'s color");
-
   object.vertexColorBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.color, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
   object.vertexColorBuffer.itemSize = 4;
   object.vertexColorBuffer.numItems = 18;
 };
-
 _manifest.default.operation.square_buffer_procedure = function (object) {
   /* Vertex */
   object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
   object.vertexPositionBuffer.itemSize = 3;
   object.vertexPositionBuffer.numItems = 4;
   /* Color */
-
   object.vertexColorBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, new Float32Array(object.geometry.color), _matrixWorld.world.GL.gl.STATIC_DRAW);
-
   object.vertexColorBuffer.itemSize = 4;
   object.vertexColorBuffer.numItems = object.geometry.colorData.color.length;
+
   /* Normals                                   */
 };
-
 _manifest.default.operation.triangle_buffer_procedure = function (object) {
   /* Vertex                                        */
+
   object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
   object.vertexPositionBuffer.itemSize = 3;
   object.vertexPositionBuffer.numItems = 3;
+
   /* Color                                         */
 
   object.vertexColorBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, new Float32Array(object.color), _matrixWorld.world.GL.gl.STATIC_DRAW);
-
   object.vertexColorBuffer.itemSize = 4;
-  object.vertexColorBuffer.numItems = 3; // console.log("Buffer the " + object.type + "'s color loaded success.");
-};
+  object.vertexColorBuffer.numItems = 3;
 
+  // console.log("Buffer the " + object.type + "'s color loaded success.");
+};
 _manifest.default.operation.obj_buffer_procedure = function (object) {
   /* Vertex */
   if (object.color && null !== object.shaderProgram.vertexColorAttribute) {
     object.vertexColorBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
     var unpackedColors = [];
-
     for (var i in object.color) {
       var color = object.color[i];
       var looperLocal = 0;
-
       while (4 > looperLocal) {
         unpackedColors = unpackedColors.concat(color);
         looperLocal = looperLocal + 1;
       }
     }
-
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, new Float32Array(unpackedColors), _matrixWorld.world.GL.gl.STATIC_DRAW);
-
     object.vertexColorBuffer.itemSize = 4;
     object.vertexColorBuffer.numItems = 4;
   }
+
   /* Texture
     if (object.texture) {
       // console.log("        Buffer the " + object.type + "'s texture");
@@ -8630,16 +7621,15 @@ _manifest.default.operation.obj_buffer_procedure = function (object) {
   */
 
   /* Normals                                   */
-
-
   if (object.shaderProgram.useLightingUniform) {
     // console.log("        Buffer the " + object.type + "'s normals");
     // object.vertexNormalBuffer = world.GL.gl.createBuffer();
     // world.GL.gl.bindBuffer(world.GL.gl.ARRAY_BUFFER, );
-    _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.mesh.normalBuffer, _matrixWorld.world.GL.gl.STATIC_DRAW); // object.mesh.normalBuffer.itemSize = 3;
+    _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.mesh.normalBuffer, _matrixWorld.world.GL.gl.STATIC_DRAW);
+    // object.mesh.normalBuffer.itemSize = 3;
     // object.mesh.normalBuffer.numItems = 24;
-
   }
+
   /* Indices
     // console.log("        Buffer the " + object.type + "'s indices");
     object.vertexIndexBuffer = world.GL.gl.createBuffer();
@@ -8648,179 +7638,129 @@ _manifest.default.operation.obj_buffer_procedure = function (object) {
     object.vertexIndexBuffer.itemSize = 1;
     object.vertexIndexBuffer.numItems = 36;
   */
-
 };
-
 _manifest.default.operation.squareTex_buffer_procedure = function (object) {
   /* Vertex */
   object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
   object.vertexPositionBuffer.itemSize = 3;
   object.vertexPositionBuffer.numItems = 4;
-  /* Color */
 
+  /* Color */
   if (object.color && null !== object.shaderProgram.vertexColorAttribute) {
     object.vertexColorBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
     var unpackedColors = [];
-
     for (var i in object.color) {
       var color = object.color[i];
       var looperLocal = 0;
+      while (4 > looperLocal) {
+        unpackedColors = unpackedColors.concat(color);
+        looperLocal = looperLocal + 1;
+      }
+    }
+    _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, new Float32Array(unpackedColors), _matrixWorld.world.GL.gl.STATIC_DRAW);
+    object.vertexColorBuffer.itemSize = 3;
+    object.vertexColorBuffer.numItems = 4;
+  }
 
+  /* Texture */
+  if (object.texture) {
+    object.vertexTexCoordBuffer = _matrixWorld.world.GL.gl.createBuffer();
+    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
+    _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.texCoords, _matrixWorld.world.GL.gl.STATIC_DRAW);
+    object.vertexTexCoordBuffer.itemSize = 2;
+    object.vertexTexCoordBuffer.numItems = 4;
+  }
+
+  /* Normals */
+  if (object.shaderProgram.useLightingUniform) {
+    object.vertexNormalBuffer = _matrixWorld.world.GL.gl.createBuffer();
+    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
+    _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.LightMap, _matrixWorld.world.GL.gl.STATIC_DRAW);
+    object.vertexNormalBuffer.itemSize = 4;
+    object.vertexNormalBuffer.numItems = 4;
+  }
+
+  /* Indices */
+  object.vertexIndexBuffer = _matrixWorld.world.GL.gl.createBuffer();
+  _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
+  _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(object.geometry.indices), _matrixWorld.world.GL.gl.STATIC_DRAW);
+  object.vertexIndexBuffer.itemSize = 1;
+  object.vertexIndexBuffer.numItems = 6;
+};
+_manifest.default.operation.sphere_buffer_procedure = function (object) {
+  /* Vertex */
+  object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
+  _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
+  _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
+  object.vertexPositionBuffer.itemSize = 3;
+  object.vertexPositionBuffer.numItems = object.geometry.vertexPositionData.length / 3;
+
+  // Color
+  if (object.color && null !== object.shaderProgram.vertexColorAttribute) {
+    //    // console.log("        Buffer the " + object.type + "'s color");
+    object.vertexColorBuffer = _matrixWorld.world.GL.gl.createBuffer();
+    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
+    var unpackedColors = [];
+    for (var i in object.color) {
+      var color = object.color[i];
+      var looperLocal = 0;
       while (4 > looperLocal) {
         unpackedColors = unpackedColors.concat(color);
         looperLocal = looperLocal + 1;
       }
     }
 
+    // ??
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, new Float32Array(unpackedColors), _matrixWorld.world.GL.gl.STATIC_DRAW);
-
-    object.vertexColorBuffer.itemSize = 3;
-    object.vertexColorBuffer.numItems = 4;
-  }
-  /* Texture */
-
-
-  if (object.texture) {
-    object.vertexTexCoordBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
-    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
-
-    _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.texCoords, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
-    object.vertexTexCoordBuffer.itemSize = 2;
-    object.vertexTexCoordBuffer.numItems = 4;
-  }
-  /* Normals */
-
-
-  if (object.shaderProgram.useLightingUniform) {
-    object.vertexNormalBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
-    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
-
-    _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.LightMap, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
-    object.vertexNormalBuffer.itemSize = 4;
-    object.vertexNormalBuffer.numItems = 4;
-  }
-  /* Indices */
-
-
-  object.vertexIndexBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
-  _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
-
-  _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(object.geometry.indices), _matrixWorld.world.GL.gl.STATIC_DRAW);
-
-  object.vertexIndexBuffer.itemSize = 1;
-  object.vertexIndexBuffer.numItems = 6;
-};
-
-_manifest.default.operation.sphere_buffer_procedure = function (object) {
-  /* Vertex */
-  object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
-  _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
-  _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
-  object.vertexPositionBuffer.itemSize = 3;
-  object.vertexPositionBuffer.numItems = object.geometry.vertexPositionData.length / 3; // Color
-
-  if (object.color && null !== object.shaderProgram.vertexColorAttribute) {
-    //    // console.log("        Buffer the " + object.type + "'s color");
-    object.vertexColorBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
-    _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
-    var unpackedColors = [];
-
-    for (var i in object.color) {
-      var color = object.color[i];
-      var looperLocal = 0;
-
-      while (4 > looperLocal) {
-        unpackedColors = unpackedColors.concat(color);
-        looperLocal = looperLocal + 1;
-      }
-    } // ??
-
-
-    _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, new Float32Array(unpackedColors), _matrixWorld.world.GL.gl.STATIC_DRAW); // world.GL.gl.bufferData(world.GL.gl.ARRAY_BUFFER, new Float32Array(object.geometry.normals), world.GL.gl.STATIC_DRAW);
-
-
+    // world.GL.gl.bufferData(world.GL.gl.ARRAY_BUFFER, new Float32Array(object.geometry.normals), world.GL.gl.STATIC_DRAW);
     object.vertexColorBuffer.itemSize = 3;
     object.vertexColorBuffer.numItems = object.geometry.normalData.length / 3;
   }
+
   /* Texture */
-
-
   if (object.texture) {
     object.vertexTexCoordBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
-
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.texCoords, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
     object.vertexTexCoordBuffer.itemSize = 2;
     object.vertexTexCoordBuffer.numItems = object.geometry.textureCoordData.length / 2;
   }
+
   /* Normals */
-
-
   if (object.shaderProgram.useLightingUniform) {
     object.vertexNormalBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
-
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.normals, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
     object.vertexNormalBuffer.itemSize = 3;
     object.vertexNormalBuffer.numItems = object.geometry.normalData.length / 3;
   }
+
   /* Indices*/
-
-
   object.vertexIndexBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
-
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(object.geometry.indices), _matrixWorld.world.GL.gl.STATIC_DRAW);
-
   object.vertexIndexBuffer.itemSize = 1;
   object.vertexIndexBuffer.numItems = object.geometry.indexData.length;
 };
-
 _manifest.default.operation.cubemap_buffer_procedure = function (object) {
   /* Vertex */
   object.vertexPositionBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
   object.vertexPositionBuffer.itemSize = 3;
   object.vertexPositionBuffer.numItems = 24;
   /* Color */
-
   if (object.color && null !== object.shaderProgram.vertexColorAttribute) {
     object.vertexColorBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.color, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
     object.vertexColorBuffer.itemSize = 4;
     object.vertexColorBuffer.numItems = 24;
-  } // /* Texture */
+  }
+  // /* Texture */
   // if (object.texture) {
   //   object.vertexTexCoordBuffer = world.GL.gl.createBuffer();
   //   world.GL.gl.bindBuffer(world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
@@ -8830,33 +7770,21 @@ _manifest.default.operation.cubemap_buffer_procedure = function (object) {
   // }
 
   /* Normals */
-
-
   if (object.shaderProgram.useLightingUniform) {
     object.vertexNormalBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
-
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.LightMap, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
     object.vertexNormalBuffer.itemSize = 3;
     object.vertexNormalBuffer.numItems = 24;
   }
   /* Indices */
-
-
   object.vertexIndexBuffer = _matrixWorld.world.GL.gl.createBuffer();
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
-
   _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(object.geometry.indices), _matrixWorld.world.GL.gl.STATIC_DRAW);
-
   object.vertexIndexBuffer.itemSize = 1;
   object.vertexIndexBuffer.numItems = 36;
 };
-
-var _default = _manifest.default.operation;
-exports.default = _default;
+var _default = exports.default = _manifest.default.operation;
 
 },{"../program/manifest":99,"./matrix-world":76}],65:[function(require,module,exports){
 "use strict";
@@ -8865,19 +7793,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
 var _bvhLoader = _interopRequireDefault(require("bvh-loader"));
-
 var matrixWorld = _interopRequireWildcard(require("./matrix-world"));
-
 var _utility = require("./utility");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @description MatrixEngine BVH animation loader.
  * MEBvh comes from `npm i bvh-loader`. Package
@@ -8889,17 +7810,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Nikola Lukic
  * @async Yes
  */
+
 class MEBvhAnimation {
   constructor(path_, options) {
     if (typeof options === 'undefined' || typeof options.world === 'undefined') {
       console.error('MEBvhAnimation class error: No second argument options || possible world is not passed.');
       return;
     }
-
     if (typeof options.skeletalBoneScale === 'undefined') {
       options.skeletalBoneScale = 0.3;
     }
-
     if (typeof options.loop === 'undefined') options.loop = true;
     if (typeof options.showOnLoad === 'undefined') options.showOnLoad = true;
     if (typeof options.type === 'undefined') options.type = 'ME-SKELETAL_POINT_BASE';
@@ -8910,8 +7830,9 @@ class MEBvhAnimation {
     if (typeof options.myFrameRate === 'undefined') options.myFrameRate = 125;
     if (typeof options.speed === 'undefined') options.speed = 5;
     if (typeof options.matrixSkeletalObjScale === 'undefined') options.matrixSkeletalObjScale = 1;
-    if (typeof options.ifNotExistDrawType === 'undefined') options.ifNotExistDrawType = 'cube'; // passed
+    if (typeof options.ifNotExistDrawType === 'undefined') options.ifNotExistDrawType = 'cube';
 
+    // passed
     this.options = options;
     this.world = options.world;
     this.globalOffset = options.globalOffset;
@@ -8936,18 +7857,15 @@ class MEBvhAnimation {
       console.warn('Bvh-loader error: ', err);
     });
   }
-
   objectsReady(options) {
     if (options.autoPlay == true) {
       switch (options.type) {
         case 'TPOSE':
           this.constructSkeletalTPose();
           break;
-
         case 'ANIMATION':
           this.playAnimation();
           break;
-
         default:
           this.playAnimation();
       }
@@ -8957,18 +7875,15 @@ class MEBvhAnimation {
           case 'TPOSE':
             this.constructSkeletalTPose();
             break;
-
           case 'ANIMATION':
             // console.log("No autoPlay but preview first frame of animation")
             this.constructFirstFrame(this.options);
             break;
-
           default:
             this.constructFirstFrame(this.options);
         }
       }
     }
-
     if (typeof this.options.skeletalBlend != 'undefined') {
       for (var x = 0; x < this.tPosition.length; x++) {
         var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
@@ -8978,11 +7893,10 @@ class MEBvhAnimation {
       }
     }
   }
-
   constructSkeletalTPose() {
     for (var x = 0; x < this.tPosition.length; x++) {
-      var b = this.options.boneNameBasePrefix + this.skeletalKeys[x]; // test check
-
+      var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
+      // test check
       if (App.scene[b]) {
         App.scene[b].position.SetX(this.tPosition[x][0] + this.globalOffset[0]);
         App.scene[b].position.SetY(this.tPosition[x][1] + this.globalOffset[1]);
@@ -8994,9 +7908,9 @@ class MEBvhAnimation {
         console.log('TEST NON EXIST  T POSE', b);
       }
     }
-  } // Must be improved not secure 100%.
+  }
 
-
+  // Must be improved not secure 100%.
   accessBonesObject() {
     let onlyMine = [];
     matrixWorld.objListToDispose[0].contentList.forEach(MEObject => {
@@ -9006,31 +7920,30 @@ class MEBvhAnimation {
       }
     });
     return onlyMine;
-  } // cleanNames = (name) => {
+  }
+
+  // cleanNames = (name) => {
   //   const arrondissements = ['mixamorig'];
   //   return arrondissements.reduce((acc, cur) => acc.replace(cur, ''), name);
   // };
 
-
   async constructSkeletal(options) {
     this.skeletalKeys = this.skeletalKeys.map(item => item.replace('mixamorig:', ''));
     const promises = [];
-
     for (var x = 0; x < this.tPosition.length; x++) {
       promises.push(new Promise(resolve => {
         // Blender adapt
         let filename = this.skeletalKeys[x];
         filename = filename.toLowerCase();
-        var b = this.options.boneNameBasePrefix + this.skeletalKeys[x]; // just handler
-
+        var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
+        // just handler
         var curName = {};
         curName[b] = this.options.matrixSkeletal + filename + '.obj';
-
         if (typeof this.options.boneTex != 'undefined') {
           // mixamorig:Head
           // console.log("filename = ", filename);
-          const detTypeOfMEObject = typeof this.options.drawTypeBone == 'undefined' ? 'cubeLightTex' : this.options.drawTypeBone; // matrixSkeletal feature
-
+          const detTypeOfMEObject = typeof this.options.drawTypeBone == 'undefined' ? 'cubeLightTex' : this.options.drawTypeBone;
+          // matrixSkeletal feature
           if (detTypeOfMEObject == 'matrixSkeletal') {
             if (this.options.objList.indexOf(filename) !== -1) {
               if (typeof this.options.ignoreList !== 'undefined' && this.options.ignoreList[0] == filename) {
@@ -9063,7 +7976,6 @@ class MEBvhAnimation {
         }
       }));
     }
-
     Promise.all(promises).then(what => {
       console.info('Promise all -> ', what);
       console.info('Promise all -> ', promises);
@@ -9071,11 +7983,10 @@ class MEBvhAnimation {
       this.objectsReady(options);
     });
   }
-
   constructFirstFrame() {
     for (var x = 0; x < this.tPosition.length; x++) {
-      var b = this.options.boneNameBasePrefix + this.skeletalKeys[x]; // test - import bvh from make human -> blender
-
+      var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
+      // test - import bvh from make human -> blender
       if (this.animation[0][1]) {
         App.scene[b].position.SetX(this.animation[0][1][x][0] + this.globalOffset[0]);
         App.scene[b].position.SetY(this.animation[0][1][x][1] + this.globalOffset[1]);
@@ -9094,13 +8005,12 @@ class MEBvhAnimation {
       }
     }
   }
-
   playAnimation() {
     if (this.animationTimer == null) {
       this.animationTimer = setInterval(() => {
         for (var x = 0; x < this.tPosition.length; x++) {
-          var b = this.options.boneNameBasePrefix + this.skeletalKeys[x]; // catch if not exist possible!
-
+          var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
+          // catch if not exist possible!
           if (App.scene[b]) {
             // 1.8.1
             if (App.scene[b] && this.animation[0][this.actualFrame]) {
@@ -9121,13 +8031,11 @@ class MEBvhAnimation {
             }
           }
         }
-
         if (this.options.loop == 'playInverse') {
           this.actualFrame = this.loopInverse.UPDATE();
         } else {
           this.actualFrame++;
         }
-
         if (this.actualFrame >= this.animation[0].length - 1) {
           if (this.options.loop == true) {
             this.actualFrame = 1;
@@ -9144,14 +8052,11 @@ class MEBvhAnimation {
       console.warn('MEBvhAnimation: Animation already play.');
     }
   }
-
   stopAnimation() {
     clearInterval(this.animationTimer);
     this.animationTimer = null;
   }
-
 }
-
 exports.default = MEBvhAnimation;
 
 },{"./matrix-world":76,"./utility":88,"bvh-loader":94}],66:[function(require,module,exports){
@@ -9161,40 +8066,28 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var _matrixWorld = require("./matrix-world");
-
 var _events = require("./events");
-
 var _utility = require("./utility");
-
 var raycaster = _interopRequireWildcard(require("./raycast"));
-
 var _matrixShadows = require("./matrix-shadows");
-
 var _matrixTextures = require("./matrix-textures");
-
 var _engine = require("./engine");
-
 var CANNON = _interopRequireWildcard(require("cannon"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // import {vec2} from 'wgpu-matrix';
+
 // test override 
 CANNON.Quaternion.prototype.toAxisAngle = function (targetAxis) {
   targetAxis = targetAxis || new CANNON.Vec3();
-  if (this.w > 1) this.normalize(); // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalised
+  if (this.w > 1) this.normalize();
+  // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalised
 
   var angle = 2 * Math.acos(this.w);
   var s = Math.sqrt(1 - this.w * this.w); // assuming quaternion normalised then w is less than 1, so term always positive.
-
   if (s < 0.00000001) {
     // test to avoid divide by zero, s is always positive due to sqrt
     // if s close to zero then direction of axis not important
@@ -9209,42 +8102,36 @@ CANNON.Quaternion.prototype.toAxisAngle = function (targetAxis) {
     targetAxis.z = 0;
   } else {
     targetAxis.x = this.x / s; // normalise axis
-
     targetAxis.y = this.y / s;
     targetAxis.z = this.z / s;
   }
-
   return [targetAxis, angle];
 };
-
 _manifest.default.operation.draws = new Object();
-
 _manifest.default.operation.draws.cube = function (object, ray) {
   var lighting = true;
   var localLooper = 0;
   mat4.identity(object.mvMatrix);
   this.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
-
   if (object.physics.enabled == true) {
     if (_manifest.default.camera.FirstPersonController == true) {
       _events.camera.setCamera(object);
     } else if (_manifest.default.camera.SceneController == true) {
       _events.camera.setSceneCamera(object);
     }
-
     var QP = object.physics.currentBody.quaternion;
-    QP.normalize(); // mat4.translate(object.mvMatrix, object.mvMatrix, [0.0, 0.0, 0.0]);
-
+    QP.normalize();
+    // mat4.translate(object.mvMatrix, object.mvMatrix, [0.0, 0.0, 0.0]);
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
     var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.z, object.rotation.axis.y);
     object.rotation.axisSystem[0].normalize();
     var AXIS = vec3.fromValues(object.rotation.axisSystem[0].x.toFixed(2), object.rotation.axisSystem[0].z.toFixed(2), object.rotation.axisSystem[0].y.toFixed(2));
-    var MY_ANGLE = 2 * Math.acos(QP.w); // if(radToDeg(object.rotation.angle) > 90) console.log("aNGLE:" + radToDeg(object.rotation.angle) + " VS MY_ANGLE " + radToDeg(MY_ANGLE) + "  axis ++++ " + AXIS)
+    var MY_ANGLE = 2 * Math.acos(QP.w);
+    // if(radToDeg(object.rotation.angle) > 90) console.log("aNGLE:" + radToDeg(object.rotation.angle) + " VS MY_ANGLE " + radToDeg(MY_ANGLE) + "  axis ++++ " + AXIS)
     // mat4.rotateX(object.mvMatrix, object.mvMatrix, (object.rotation.angle));
     // mat4.rotateY(object.mvMatrix, object.mvMatrix, (object.rotation.angle));
     // mat4.rotateZ(object.mvMatrix, object.mvMatrix, (-object.rotation.angle));
-
     mat4.rotate(object.mvMatrix, object.mvMatrix, MY_ANGLE, AXIS);
   } else if (object.isHUD === true) {
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
@@ -9258,70 +8145,54 @@ _manifest.default.operation.draws.cube = function (object, ray) {
     } else if (_manifest.default.camera.SceneController == true) {
       _events.camera.setSceneCamera(object);
     }
-
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
-  } // V
+  }
 
-
+  // V
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
     if (object.geometry.dynamicBuffer == true) {
       _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
     }
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.vertexPositionBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexPositionAttribute);
-
     localLooper = localLooper + 1;
-  } // C
+  }
 
-
+  // C
   if (object.vertexColorBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexColorAttribute, object.vertexColorBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexColorAttribute);
-
     localLooper = localLooper + 1;
-  } // L
+  }
 
-
+  // L
   if (lighting && object.shaderProgram.useLightingUniform) {
     _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.useLightingUniform, lighting);
     /* Set the normals */
-
-
     if (object.vertexNormalBuffer) {
       _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
-
       _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexNormalAttribute, object.vertexNormalBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
       _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexNormalAttribute);
-
       localLooper = localLooper + 1;
     }
     /* Set the ambient light */
-
-
     if (object.shaderProgram.ambientColorUniform) {
       if ((0, _utility.E)('ambLightR')) {
-        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat((0, _utility.E)('ambLightR').getAttribute('value')), parseFloat((0, _utility.E)('ambLightG').getAttribute('value')), parseFloat((0, _utility.E)('ambLightB').getAttribute('value'))); // console.log("LIGHTS UNIFORM AMB  B = ", parseFloat(E('ambLightB').value) )
-
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat((0, _utility.E)('ambLightR').getAttribute('value')), parseFloat((0, _utility.E)('ambLightG').getAttribute('value')), parseFloat((0, _utility.E)('ambLightB').getAttribute('value')));
+        // console.log("LIGHTS UNIFORM AMB  B = ", parseFloat(E('ambLightB').value) )
       } else {
         // object.LightsData.ambientLight
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, object.LightsData.ambientLight.r, object.LightsData.ambientLight.g, object.LightsData.ambientLight.b);
       }
     }
+
     /* Directional light */
-
-
     if (object.shaderProgram.directionalColorUniform) {
       if ((0, _utility.E)('dirLightR')) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat((0, _utility.E)('dirLightR').getAttribute('value')), parseFloat((0, _utility.E)('dirLightG').getAttribute('value')), parseFloat((0, _utility.E)('dirLightB').getAttribute('value')));
@@ -9330,11 +8201,9 @@ _manifest.default.operation.draws.cube = function (object, ray) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
       }
     }
+
     /* Normalize the direction */
-
-
     var lightingDirection = null;
-
     if (object.shaderProgram.lightingDirectionUniform) {
       if ((0, _utility.E)('dirX') && (0, _utility.E)('dirY') && (0, _utility.E)('dirZ')) {
         // console.log("LIGHTS UNIFORM AMB  B = ",  E('dirZ').value )
@@ -9342,11 +8211,9 @@ _manifest.default.operation.draws.cube = function (object, ray) {
       } else {
         lightingDirection = [object.LightsData.lightingDirection.r, object.LightsData.lightingDirection.g, object.LightsData.lightingDirection.b];
       }
-
       var adjustedLD = vec3.create();
       vec3.normalize(adjustedLD, lightingDirection);
       vec3.scale(adjustedLD, adjustedLD, -1);
-
       _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightingDirectionUniform, adjustedLD);
     }
   } else {
@@ -9354,25 +8221,20 @@ _manifest.default.operation.draws.cube = function (object, ray) {
       if (object.shaderProgram.ambientColorUniform) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat(0.2), parseFloat(0.2), parseFloat(0.2));
       }
-
       if (object.shaderProgram.directionalColorUniform) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(1), parseFloat(0), parseFloat(0));
       }
     }
-  } // T
+  }
 
-
+  // T
   if (object.vertexTexCoordBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
-
     if (object.geometry.dynamicBuffer == true) {
       _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.texCoords, _matrixWorld.world.GL.gl.STATIC_DRAW);
     }
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.textureCoordAttribute, object.vertexTexCoordBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
-
     if (object.streamTextures != null) {
       // video/webcam tex
       // App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
@@ -9381,21 +8243,21 @@ _manifest.default.operation.draws.cube = function (object, ray) {
       } else {
         _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
       }
-
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else if (object.FBO) {
       // test FBO
       // spot light test light
       // Fbo staff
       _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
-
       _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.FB.texture);
+      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
 
-      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0); // // shadow staff dev
+      // // shadow staff dev
       // var target = [0, 0, 0];
       // var up = [0, 1, 0];
       // // var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
       // var lmat = m4.lookAt([0, 2, 0], target, up);
+
       // const viewMatrix = m4.inverse(lmat);
       // // first draw from the POV of the light
       // const lightWorldMatrix = m4.lookAt(
@@ -9416,11 +8278,13 @@ _manifest.default.operation.draws.cube = function (object, ray) {
       //     object.FBO.settings.projHeight / 2,  // top
       //     0.5,                      // near
       //     10);                      // far
+
       // // draw to the depth texture
       // world.GL.gl.bindFramebuffer(world.GL.gl.FRAMEBUFFER, object.shadows.depthFramebuffer);
       // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.shadows.checkerboardTexture);
       // world.GL.gl.viewport(0, 0, 512, 512);
       // world.GL.gl.clear(world.GL.gl.COLOR_BUFFER_BIT | world.GL.gl.DEPTH_BUFFER_BIT);
+
       // draw 
       // let textureMatrix = m4.identity();
       // textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
@@ -9429,45 +8293,37 @@ _manifest.default.operation.draws.cube = function (object, ray) {
       // textureMatrix = m4.multiply(
       //   textureMatrix,
       //   m4.inverse(lightWorldMatrix));
+
       // world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
       // world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.FBO.settings.bias);
-
     } else {
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
-
           _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-
           _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-
           if (object.texParams.MIPMAP == false) {
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
-
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT); // -- Allocate storage for the texture
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
+            // -- Allocate storage for the texture
             // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
             // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
-
           } else {
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-
             _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
           }
-
           if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
             _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-          } //console.log('TEST' , object.texParams)
+          }
 
-
+          //console.log('TEST' , object.texParams)
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
         }
       }
     }
-
     localLooper = localLooper + 1;
   } else {
     if (object.shaderProgram.samplerUniform) {
@@ -9475,11 +8331,9 @@ _manifest.default.operation.draws.cube = function (object, ray) {
     } else if (object.shaderProgram.uCubeMapSampler) {
       // CUBE MAP
       _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE0']);
-
       var gl = _matrixWorld.world.GL.gl;
       if (!object.tex) object.tex = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_CUBE_MAP, object.tex);
-
       if (object.cubeMap.type == 'images') {
         object.cubeMap.cubeMap2dCanvasSet.forEach((faceInfo, index) => {
           const level = 0;
@@ -9492,13 +8346,11 @@ _manifest.default.operation.draws.cube = function (object, ray) {
       } else {
         object.cubeMap.cubeMap2dCanvasSet.forEach((faceInfo, index) => {
           var args = [];
-
           for (var key in faceInfo) {
             if (key !== 'target') {
               args.push(faceInfo[key]);
             }
           }
-
           if (object.cubeMap.drawFunc) {
             object.cubeMap.drawFunc(args);
           } else {
@@ -9509,7 +8361,6 @@ _manifest.default.operation.draws.cube = function (object, ray) {
             } = faceInfo;
             (0, _utility.gen2DTextFace)(object.cubeMap.cubeMap2dCtx, faceColor, textColor, text);
           }
-
           const level = 0;
           const internalFormat = gl.RGBA;
           const format = gl.RGBA;
@@ -9518,258 +8369,189 @@ _manifest.default.operation.draws.cube = function (object, ray) {
           gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
         });
       }
-
       gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
       gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, 0);
     }
   }
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
+  _matrixWorld.world.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
 
-  _matrixWorld.world.setMatrixUniforms(object, this.pMatrix, object.mvMatrix); // Shadows
-
-
+  // Shadows
   if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
     // set the light position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
-
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess); // Set the spotlight uniforms
-
-
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
+    // Set the spotlight uniforms
     {
       var target = [0, 0, 0]; // object.position.worldLocation;
-
       var up = [0, 1, 0];
-      var lmat = m4.lookAt(object.shadows.lightPosition, target, up); // var lmat = m4.lookAt(object.position.worldLocation, target, up);
-
+      var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
+      // var lmat = m4.lookAt(object.position.worldLocation, target, up);
       lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
-      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat); // get the zAxis from the matrix
+      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
+      // get the zAxis from the matrix
       // negate it because lookAt looks down the -Z axis
-
-      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]]; // object.shadows.lightDirection = [-0, -0, -1];
+      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]];
+      // object.shadows.lightDirection = [-0, -0, -1];
     }
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
-
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
-
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
   } else if (object.shadows && object.shadows.type == 'spec') {
     // global position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
   } else if (object.shadows && object.shadows.type == 'lens') {
     // Lens
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uControl, object.shadows.uControl);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uResolution, object.shadows.uResolution);
   }
-
   if (object.vertexNormalBuffer && object.shaderProgram.nMatrixUniform) {
     var normalMatrix = mat3.create();
     mat3.normalFromMat4(normalMatrix, object.mvMatrix);
     mat3.transpose(normalMatrix, normalMatrix);
-
     _matrixWorld.world.GL.gl.uniformMatrix3fv(object.shaderProgram.nMatrixUniform, false, normalMatrix);
   }
-
   _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper);
-
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
     }
-
     _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
-
-    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST); // TEST world.GL.gl.enable(world.GL.gl.CULL_FACE);
-
+    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
+    // TEST world.GL.gl.enable(world.GL.gl.CULL_FACE);
   }
-
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
-
   object.instancedDraws.overrideDrawArraysInstance(object);
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
 };
-
 _manifest.default.operation.draws.piramide = function (object, ray) {
   mat4.identity(object.mvMatrix);
-
   _matrixWorld.world.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
-
   if (_manifest.default.camera.FirstPersonController == true) {
     _events.camera.setCamera(object);
   } else if (_manifest.default.camera.SceneController == true) {
     _events.camera.setSceneCamera(object);
   }
-
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
   if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
   mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
   mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
-
   if (object.geometry.dynamicBuffer == true) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
   } else {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
   }
-
   _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.vertexPositionBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
   if (object.vertexColorBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexColorAttribute, object.vertexColorBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
   }
-
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       // world.GL.gl.disable(world.GL.gl.DEPTH_TEST);
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
-    } // world.GL.gl.blendColor ( 1,1,1,0.5)
+    }
+    // world.GL.gl.blendColor ( 1,1,1,0.5)
     // world.GL.gl.blendColor( 1.0 , 1.0, 1.0, 0.3 );
-
-
     _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
-
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
   }
-
   _matrixWorld.world.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
-
   _matrixWorld.world.GL.gl.drawArrays(_matrixWorld.world.GL.gl[object.glDrawElements.mode], 0, object.vertexPositionBuffer.numItems);
-
   object.instancedDraws.overrideDrawArraysInstance(object);
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
 };
-
 _manifest.default.operation.draws.square = function (object, ray) {
   mat4.identity(object.mvMatrix);
-
   _matrixWorld.world.mvPushMatrix(object.mvMatrix, _matrixWorld.world.mvMatrixStack);
-
   if (_manifest.default.camera.FirstPersonController == true) {
     _events.camera.setCamera(object);
   } else if (_manifest.default.camera.SceneController == true) {
     _events.camera.setSceneCamera(object);
   }
-
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
   if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
   mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
   mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
-
   if (object.geometry.dynamicBuffer == true) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
   } else {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
   }
-
   _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.vertexPositionBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
   if (object.vertexColorBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexColorAttribute, object.vertexColorBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
   }
-
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
-    } // world.GL.gl.blendColor( 1.0 , 1.0, 1.0, 0.3 );
-
-
+    }
+    // world.GL.gl.blendColor( 1.0 , 1.0, 1.0, 0.3 );
     _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
-
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
   }
-
   _matrixWorld.world.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
-
   _matrixWorld.world.GL.gl.drawArrays(_matrixWorld.world.GL.gl[object.glDrawElements.mode], 0, object.vertexPositionBuffer.numItems);
-
   object.instancedDraws.overrideDrawArraysInstance(object);
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
 };
-
 _manifest.default.operation.draws.triangle = function (object, ray) {
   mat4.identity(object.mvMatrix);
-
   _matrixWorld.world.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
-
   if (_manifest.default.camera.FirstPersonController == true) {
     _events.camera.setCamera(object);
   } else if (_manifest.default.camera.SceneController == true) {
     _events.camera.setSceneCamera(object);
   }
-
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
   if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
   mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
   mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
   _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.vertexPositionBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
   if (object.geometry.dynamicBuffer == true) {
     _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
   }
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
   _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexColorAttribute, object.vertexColorBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       // world.GL.gl.disable(world.GL.gl.DEPTH_TEST);
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
-    } // world.GL.gl.blendColor( 1.0 , 1.0, 1.0, 0.3 );
-
-
+    }
+    // world.GL.gl.blendColor( 1.0 , 1.0, 1.0, 0.3 );
     _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
-
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
   }
-
   this.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
-
   _matrixWorld.world.GL.gl.drawArrays(_matrixWorld.world.GL.gl[object.glDrawElements.mode], 0, object.vertexPositionBuffer.numItems);
-
   object.instancedDraws.overrideDrawArraysInstance(object);
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
 };
-
 _manifest.default.operation.draws.drawObj = function (object, ray) {
   var lighting = 1;
   var localLooper = 0;
   lighting = true;
   mat4.identity(object.mvMatrix);
-
   _matrixWorld.world.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
-
   if (object.isHUD === true) {
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
@@ -9782,83 +8564,67 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
     } else if (_manifest.default.camera.SceneController == true) {
       _events.camera.setSceneCamera(object);
     }
-
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalcObj(object);
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
   }
-
   if (typeof object.mesh.vertexBuffer != 'undefined') {
     if (object.animation != null) {
       object.animation.currentDraws++;
-
       if (typeof object.animation.anims === 'undefined' && object.animation.currentDraws > object.animation.speed) {
         object.animation.currentAni++;
         object.animation.currentDraws = 0;
-
         if (object.animation.currentAni > object.animation.sumOfAniFrames) {
           object.animation.currentAni = 0;
         }
-      } // Make animation sequences -> sub animation
+      }
 
-
+      // Make animation sequences -> sub animation
       if (typeof object.animation.anims !== 'undefined') {
         if (object.animation.currentDraws > object.animation.anims[object.animation.anims.active].speed) {
           object.animation.currentAni++;
           object.animation.currentDraws = 0;
-
           if (object.animation.currentAni > object.animation.anims[object.animation.anims.active].to - 1) {
             object.animation.currentAni = object.animation.anims[object.animation.anims.active].from;
           }
         }
       }
-
       if (object.animation.currentAni == 0) {
         _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.meshList[object.animation.id].vertexBuffer);
-
         _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.meshList[object.animation.id].vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
       } else {
         _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.meshList[object.animation.id + object.animation.currentAni].vertexBuffer);
-
         _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.meshList[object.animation.id + object.animation.currentAni].vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
       }
     } else {
       // now to render the mesh test
       _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.mesh.vertexBuffer);
-
       _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.mesh.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
-
       _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.mesh.vertexBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
     }
-  } // COLOR BUFFER
+  }
+
+  // COLOR BUFFER
   // if (object.vertexColorBuffer) {
   //     world.GL.gl.bindBuffer( world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
   //     world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexColorAttribute, object.vertexColorBuffer.itemSize,  world.GL.gl.FLOAT, false, 0, 0);
   //     world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexColorAttribute);
   //     localLooper = localLooper + 1;
   //   }
+
   //LIGHT STAFF
-
-
   if (lighting && object.shaderProgram.useLightingUniform) {
     _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.useLightingUniform, lighting);
     /* Set the normals */
-
-
     if (object.mesh.normalBuffer) {
       _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.mesh.normalBuffer);
-
       _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexNormalAttribute, object.mesh.normalBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
       _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexNormalAttribute);
-
       localLooper = localLooper + 1;
     }
     /* Set the ambient light                 */
-
-
     if (object.shaderProgram.ambientColorUniform) {
       if ((0, _utility.E)('ambLight') && (0, _utility.E)('ambLight').color) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat((0, _utility.E)('ambLight').color.rgb[0]), parseFloat((0, _utility.E)('ambLight').color.rgb[1]), parseFloat((0, _utility.E)('ambLight').color.rgb[2]));
@@ -9867,8 +8633,6 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
       }
     }
     /* Directional light */
-
-
     if (object.shaderProgram.directionalColorUniform) {
       if ((0, _utility.E)('dirLight') && (0, _utility.E)('dirLight').color) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat((0, _utility.E)('dirLight').color.rgb[0]), parseFloat((0, _utility.E)('dirLight').color.rgb[1]), parseFloat((0, _utility.E)('dirLight').color.rgb[2]));
@@ -9876,22 +8640,18 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
       }
     }
+
     /* Normalize the direction */
-
-
     var lightingDirection = null;
-
     if (object.shaderProgram.lightingDirectionUniform) {
       if ((0, _utility.E)('dirX') && (0, _utility.E)('dirY') && (0, _utility.E)('dirZ')) {
         lightingDirection = [parseFloat((0, _utility.E)('dirX').value), parseFloat((0, _utility.E)('dirY').value), parseFloat((0, _utility.E)('dirZ').value)];
       } else {
         lightingDirection = [object.LightsData.lightingDirection.r, object.LightsData.lightingDirection.g, object.LightsData.lightingDirection.b];
       }
-
       var adjustedLD = vec3.create();
       vec3.normalize(adjustedLD, lightingDirection);
       vec3.scale(adjustedLD, adjustedLD, -1);
-
       _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightingDirectionUniform, adjustedLD);
     }
   } else {
@@ -9899,28 +8659,26 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
       if (object.shaderProgram.ambientColorUniform) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat(1), parseFloat(2), parseFloat(0));
       }
-
       if (object.shaderProgram.directionalColorUniform) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(1), parseFloat(1), parseFloat(0));
       }
     }
-  } // it's possible that the mesh doesn't contain any texture coordinates
+  }
+
+  // it's possible that the mesh doesn't contain any texture coordinates
   // in this case, the texture vertexAttribArray will need to be disabled
   // before the call to drawElements
-
-
-  if (!object.mesh.textures.length && !object.texture) {//  world.GL.gl.disableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
+  if (!object.mesh.textures.length && !object.texture) {
+    //  world.GL.gl.disableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
   } else {
     // if the texture vertexAttribArray has been previously
     // disabled, then it needs to be re-enabled
     if (object.texture) {
       _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.mesh.textureBuffer);
-
       _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
-
-      _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.textureCoordAttribute, object.mesh.textureBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0); //ori world.GL.gl.activeTexture(world.GL.gl.TEXTURE0);
+      _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.textureCoordAttribute, object.mesh.textureBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
+      //ori world.GL.gl.activeTexture(world.GL.gl.TEXTURE0);
       // ori world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.texture);
-
 
       if (object.streamTextures != null) {
         // video/webcam tex
@@ -9930,7 +8688,6 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
         } else {
           _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
         }
-
         _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
       } else if (object.FBO) {
         // Fbo staff
@@ -9957,13 +8714,14 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
         //   world.FBOS.push(object.FBO);
         // }
         _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
-
         _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.FB.texture);
+        _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
 
-        _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0); // shadow staff
+        // shadow staff
         // var target = [0, 0, 0];
         // var up = [0, 1, 0];
         // var lmat = m4.lookAt([0, 1, 0], target, up);
+
         // const viewMatrix = m4.inverse(lmat);
         // // first draw from the POV of the light
         // const lightWorldMatrix = m4.lookAt(
@@ -9984,11 +8742,13 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
         //     object.FBO.settings.projHeight / 2,  // top
         //     0.5,                      // near
         //     10);                      // far
+
         // // // draw to the depth texture
         // // world.GL.gl.bindFramebuffer(world.GL.gl.FRAMEBUFFER, object.shadows.depthFramebuffer);
         // // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.shadows.checkerboardTexture);
         // // world.GL.gl.viewport(0, 0, 512, 512);
         // // world.GL.gl.clear(world.GL.gl.COLOR_BUFFER_BIT | world.GL.gl.DEPTH_BUFFER_BIT);
+
         // // draw 
         // let textureMatrix = m4.identity();
         // textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
@@ -9997,125 +8757,102 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
         // textureMatrix = m4.multiply(
         //   textureMatrix,
         //   m4.inverse(lightWorldMatrix));
+
         // world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
         // world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.FBO.settings.bias);
-
       } else {
         for (var t = 0; t < object.textures.length; t++) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
-
           _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-
           _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-
           _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
-
           _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.NEAREST);
-
           _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
+          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
 
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE); // -- Allocate storage for the texture
+          // -- Allocate storage for the texture
           //world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
           //world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
           //world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-
-
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         }
-      } // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
-
-
+      }
+      // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
       localLooper = localLooper + 1;
-    } else {// world.GL.gl.disableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
+    } else {
+      // world.GL.gl.disableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
     }
-  } // Normals normalBuffer
+  }
+
+  // Normals normalBuffer
   //  world.GL.gl.bindBuffer(world.GL.gl.ARRAY_BUFFER, object.mesh.normalBuffer);
   //  world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexNormalAttribute, object.mesh.normalBuffer.itemSize, world.GL.gl.FLOAT, false, 0, 0);
-
 
   if (object.mesh.normalBuffer && object.shaderProgram.nMatrixUniform) {
     var normalMatrix = mat3.create();
     mat3.normalFromMat4(normalMatrix, object.mvMatrix);
     mat3.transpose(normalMatrix, normalMatrix);
-
     _matrixWorld.world.GL.gl.uniformMatrix3fv(object.shaderProgram.nMatrixUniform, false, normalMatrix);
   }
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.mesh.indexBuffer);
+  this.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
 
-  this.setMatrixUniforms(object, this.pMatrix, object.mvMatrix); // Shadows
-
+  // Shadows
   if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
     // set the light position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
-
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess); // Set the spotlight uniforms
-
-
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
+    // Set the spotlight uniforms
     {
       var target = [0, 0, 0]; // object.position.worldLocation;
-
       var up = [0, 1, 0];
-      var lmat = m4.lookAt(object.shadows.lightPosition, target, up); // var lmat = m4.lookAt(object.position.worldLocation, target, up);
-
+      var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
+      // var lmat = m4.lookAt(object.position.worldLocation, target, up);
       lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
-      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat); // get the zAxis from the matrix
+      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
+      // get the zAxis from the matrix
       // negate it because lookAt looks down the -Z axis
-
-      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]]; // object.shadows.lightDirection = [-0, -0, -1];
+      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]];
+      // object.shadows.lightDirection = [-0, -0, -1];
     }
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
-
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
-
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
   } else if (object.shadows && object.shadows.type == 'spec') {
     // global position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
   } else if (object.shadows && object.shadows.type == 'lens') {
     // Lens
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uControl, object.shadows.uControl);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uResolution, object.shadows.uResolution);
   }
-
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       // world.GL.gl.disable(world.GL.gl.DEPTH_TEST);
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
     }
-
     _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
-
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
-  } // ori this.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
+  }
 
-
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper + 1); // world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
+  // ori this.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
+  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper + 1);
+  // world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
   // update for anim
-
-
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
-
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
 };
-
 _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
-  var lighting = true; // eslint-disable-next-line no-unused-vars
-
+  var lighting = true;
+  // eslint-disable-next-line no-unused-vars
   var localLooper = 0;
   mat4.identity(object.mvMatrix);
   this.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
-
   if (object.isHUD === true) {
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
@@ -10128,58 +8865,44 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
     } else if (_manifest.default.camera.SceneController == true) {
       _events.camera.setSceneCamera(object);
     }
-
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
-  } // V
+  }
 
-
+  // V
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
     if (object.geometry.dynamicBuffer == true) {
       _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
     }
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.vertexPositionBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexPositionAttribute);
-
     localLooper = localLooper + 1;
-  } // C
+  }
 
-
+  // C
   if (object.vertexColorBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexColorAttribute, object.vertexColorBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexColorAttribute);
-
     localLooper = localLooper + 1;
-  } // L
+  }
 
-
+  // L
   if (lighting && object.shaderProgram.useLightingUniform) {
     _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.useLightingUniform, lighting);
     /* Set the normals */
-
-
     if (object.vertexNormalBuffer) {
       _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
-
       _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexNormalAttribute, object.vertexNormalBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
       _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexNormalAttribute);
-
       localLooper = localLooper + 1;
     }
+
     /* Ambient light - posible deplaced */
-
-
     if (object.shaderProgram.ambientColorUniform) {
       if ((0, _utility.E)('ambLight') && (0, _utility.E)('ambLight').color) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat((0, _utility.E)('ambLight').color.rgb[0]), parseFloat((0, _utility.E)('ambLight').color.rgb[1]), parseFloat((0, _utility.E)('ambLight').color.rgb[2]));
@@ -10187,9 +8910,8 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, object.LightsData.ambientLight.r, object.LightsData.ambientLight.g, object.LightsData.ambientLight.b);
       }
     }
+
     /* Directional light */
-
-
     if (object.shaderProgram.directionalColorUniform) {
       if ((0, _utility.E)('dirLight') && (0, _utility.E)('dirLight').color) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat((0, _utility.E)('dirLight').color.rgb[0]), parseFloat((0, _utility.E)('dirLight').color.rgb[1]), parseFloat((0, _utility.E)('dirLight').color.rgb[2]));
@@ -10197,22 +8919,18 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
       }
     }
+
     /* Normalize the direction */
-
-
     var lightingDirection = null;
-
     if (object.shaderProgram.lightingDirectionUniform) {
       if ((0, _utility.E)('dirX') && (0, _utility.E)('dirY') && (0, _utility.E)('dirZ')) {
         lightingDirection = [parseFloat((0, _utility.E)('dirX').value), parseFloat((0, _utility.E)('dirY').value), parseFloat((0, _utility.E)('dirZ').value)];
       } else {
         lightingDirection = [object.LightsData.lightingDirection.r, object.LightsData.lightingDirection.g, object.LightsData.lightingDirection.b];
       }
-
       var adjustedLD = vec3.create();
       vec3.normalize(adjustedLD, lightingDirection);
       vec3.scale(adjustedLD, adjustedLD, -1);
-
       _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightingDirectionUniform, adjustedLD);
     }
   } else {
@@ -10220,25 +8938,20 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
       if (object.shaderProgram.ambientColorUniform) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat(1), parseFloat(2), parseFloat(0));
       }
-
       if (object.shaderProgram.directionalColorUniform) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(1), parseFloat(0), parseFloat(0));
       }
     }
-  } // T
+  }
 
-
+  // T
   if (object.vertexTexCoordBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
-
     if (object.geometry.dynamicBuffer == true) {
       _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.texCoords, _matrixWorld.world.GL.gl.STATIC_DRAW);
     }
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.textureCoordAttribute, object.vertexTexCoordBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
-
     if (object.streamTextures != null) {
       // video/webcam tex
       if (object.streamTextures.videoImage) {
@@ -10246,17 +8959,19 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
       } else {
         _manifest.default.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
       }
-
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else if (object.FBO) {
       // test FBO
       // Fbo staff
       // if(!object.FBO.FB) {
+
       //   object.FBO = {
       //     name: object.name
       //   };
       //   object.FBO.FB = makeFBO(world.GL.gl, object);
+
       //   world.FBOS.push(object.FBO);
+
       //   object.FBO.settings = {
       //     cameraX: 6,
       //     cameraY: 5,
@@ -10272,16 +8987,19 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
       //     fieldOfView: 120,
       //     bias: -0.006,
       //   };
+
       // }
+
       _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
-
       _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.FB.texture);
+      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
 
-      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0); // // shadow staff
+      // // shadow staff
       // var target = [0, 0, 0];
       // var up = [0, 1, 0];
       // // var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
       // var lmat = m4.lookAt([0, 1, 0], target, up);
+
       // const viewMatrix = m4.inverse(lmat);
       // // first draw from the POV of the light
       // const lightWorldMatrix = m4.lookAt(
@@ -10302,11 +9020,13 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
       //     object.FBO.settings.projHeight / 2,  // top
       //     0.5,                      // near
       //     10);                      // far
+
       // // // draw to the depth texture
       // // world.GL.gl.bindFramebuffer(world.GL.gl.FRAMEBUFFER, object.shadows.depthFramebuffer);
       // // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.shadows.checkerboardTexture);
       // // world.GL.gl.viewport(0, 0, 512, 512);
       // // world.GL.gl.clear(world.GL.gl.COLOR_BUFFER_BIT | world.GL.gl.DEPTH_BUFFER_BIT);
+
       // // draw 
       // let textureMatrix = m4.identity();
       // textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
@@ -10315,25 +9035,23 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
       // textureMatrix = m4.multiply(
       //   textureMatrix,
       //   m4.inverse(lightWorldMatrix));
+
       // world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
       // world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.FBO.settings.bias);
-
     } else {
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
-
-          _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]); // world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-
-
+          _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
+          // world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
           if (_matrixWorld.world.GL.extTFAnisotropic) {
             _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
           }
-
           _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR); // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | world.GL.gl.REPEAT);
+          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+          // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | world.GL.gl.REPEAT);
           // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | world.GL.gl.REPEAT);
+
           // -- Allocate storage for the texture
           // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
           // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE,  object.textures[t]);
@@ -10344,163 +9062,127 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
           //   world.GL.gl.RGBA,
           //   world.GL.gl.UNSIGNED_BYTE,
           //   object.textures[t].image);
+
           // world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, 512, 512, 0, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE,  object.textures[t].image);
-
-
           _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-
           if (object.texParams.TEXTURE_MIN_FILTER) {
             _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
           }
-
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
         }
       }
     }
-
     localLooper = localLooper + 1;
   }
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
-
   _matrixWorld.world.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
-
   if (object.vertexNormalBuffer && object.shaderProgram.nMatrixUniform) {
     var normalMatrix = mat3.create();
     mat3.normalFromMat4(normalMatrix, object.mvMatrix);
     mat3.transpose(normalMatrix, normalMatrix);
-
     _matrixWorld.world.GL.gl.uniformMatrix3fv(object.shaderProgram.nMatrixUniform, false, normalMatrix);
-  } // world.disableUnusedAttr( world.GL.gl, localLooper);
+  }
 
-
+  // world.disableUnusedAttr( world.GL.gl, localLooper);
   _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 4); // ori
-
 
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
     }
-
     _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
+    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
+    // for non blend
+    _matrixWorld.world.GL.gl.depthMask(true);
+    // world.GL.gl.enable(world.GL.gl.CULL_FACE);
+  }
 
-    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST); // for non blend
-
-
-    _matrixWorld.world.GL.gl.depthMask(true); // world.GL.gl.enable(world.GL.gl.CULL_FACE);
-
-  } // shadows
-
-
+  // shadows
   if (object.shadows && object.shadows.type == 'spot') {
     // console.log(" SHADOWS -> " , object.shadows)
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
-
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess); // Set the spotlight uniforms
-
-
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
+    // Set the spotlight uniforms
     {
       var target = [0, 0, 0];
       var up = [0, 1, 0];
       var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
       lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
       lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
-      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]]; // object.shadows.lightDirection = [-0, -0, -1];
+      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]];
+      // object.shadows.lightDirection = [-0, -0, -1];
     }
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
-
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
-
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit)); // world.GL.gl.uniform1f(object.shaderProgram.u_projectedTexture, 1);
-
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
+    // world.GL.gl.uniform1f(object.shaderProgram.u_projectedTexture, 1);
   } else if (object.shadows && object.shadows.type == 'spec') {
     // global position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
   } else if (object.shadows && object.shadows.type == 'lens') {
     // Lens
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uControl, object.shadows.uControl);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uResolution, object.shadows.uResolution);
   }
-
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
-
   object.instancedDraws.overrideDrawArraysInstance(object);
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
 };
-
 _manifest.default.operation.draws.sphere = function (object, ray) {
   var lighting = true;
   var localLooper = 0;
   mat4.identity(object.mvMatrix);
   this.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
-
   if (_manifest.default.camera.FirstPersonController == true) {
     _events.camera.setCamera(object);
   } else if (_manifest.default.camera.SceneController == true) {
     _events.camera.setSceneCamera(object);
-  } // no ray for now !!!
+  }
 
-
+  // no ray for now !!!
   mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
   mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
   mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
-  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ()); // V
+  mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
 
+  // V
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
     if (object.geometry.dynamicBuffer == true) {
       _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
     }
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.vertexPositionBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexPositionAttribute);
-
     localLooper = localLooper + 1;
-  } // C
+  }
 
-
+  // C
   if (object.vertexColorBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexColorAttribute, object.vertexColorBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexColorAttribute);
-
     localLooper = localLooper + 1;
-  } // LIGHT
+  }
 
-
+  // LIGHT
   if (lighting && object.shaderProgram.useLightingUniform) {
     _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.useLightingUniform, lighting);
     /* Set the normals */
-
-
     if (object.vertexNormalBuffer) {
       _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
-
       _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexNormalAttribute, object.vertexNormalBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
       _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexNormalAttribute);
-
       localLooper = localLooper + 1;
     }
+
     /* Set the ambient light */
-
-
     if (object.shaderProgram.ambientColorUniform) {
       if ((0, _utility.E)('ambLight') && (0, _utility.E)('ambLight').color) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat((0, _utility.E)('ambLight').color.rgb[0]), parseFloat((0, _utility.E)('ambLight').color.rgb[1]), parseFloat((0, _utility.E)('ambLight').color.rgb[2]));
@@ -10508,9 +9190,8 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, object.LightsData.ambientLight.r, object.LightsData.ambientLight.g, object.LightsData.ambientLight.b);
       }
     }
+
     /* Set the directional light */
-
-
     if (object.shaderProgram.directionalColorUniform) {
       if ((0, _utility.E)('dirLight') && (0, _utility.E)('dirLight').color) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat((0, _utility.E)('dirLight').color.rgb[0]), parseFloat((0, _utility.E)('dirLight').color.rgb[1]), parseFloat((0, _utility.E)('dirLight').color.rgb[2]));
@@ -10518,22 +9199,18 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
       }
     }
+
     /* Normalize the direction */
-
-
     var lightingDirection = null;
-
     if (object.shaderProgram.lightingDirectionUniform) {
       if ((0, _utility.E)('dirX') && (0, _utility.E)('dirY') && (0, _utility.E)('dirZ')) {
         lightingDirection = [parseFloat((0, _utility.E)('dirX').value), parseFloat((0, _utility.E)('dirY').value), parseFloat((0, _utility.E)('dirZ').value)];
       } else {
         lightingDirection = [object.LightsData.lightingDirection.r, object.LightsData.lightingDirection.g, object.LightsData.lightingDirection.b];
       }
-
       var adjustedLD = vec3.create();
       vec3.normalize(adjustedLD, lightingDirection);
       vec3.scale(adjustedLD, adjustedLD, -1);
-
       _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightingDirectionUniform, adjustedLD);
     }
   } else {
@@ -10541,99 +9218,71 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
       if (object.shaderProgram.ambientColorUniform) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat(0.2), parseFloat(0.2), parseFloat(0.2));
       }
-
       if (object.shaderProgram.directionalColorUniform) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(1), parseFloat(0), parseFloat(0));
       }
     }
-  } // T
+  }
 
-
+  // T
   if (object.vertexTexCoordBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
-
     if (object.geometry.dynamicBuffer == true) {
       _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.texCoords, _matrixWorld.world.GL.gl.STATIC_DRAW);
     }
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.textureCoordAttribute, object.vertexTexCoordBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
-
     if (object.streamTextures != null) {
       if (object.streamTextures.video) {
         _manifest.default.tools.loadVideoTexture('glVideoTextureTorus', object.streamTextures.video);
       } else {
         _manifest.default.tools.loadVideoTexture('glVideoTextureTorus', object.streamTextures.videoImage);
       }
-
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else {
       for (var t = 0; t < object.textures.length; t++) {
         _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
-
         _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-
         _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-
         _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.LINEAR);
-
         _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.LINEAR);
-
         _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
-
         _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
-
         _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
       }
     }
-
     localLooper = localLooper + 1;
   }
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
-
   if (object.vertexNormalBuffer && object.shaderProgram.nMatrixUniform) {
     var normalMatrix = mat3.create();
     mat3.normalFromMat4(normalMatrix, object.mvMatrix);
     mat3.transpose(normalMatrix, normalMatrix);
-
     _matrixWorld.world.GL.gl.uniformMatrix3fv(object.shaderProgram.nMatrixUniform, false, normalMatrix);
   }
-
   try {
     _matrixWorld.world.GL.gl.useProgram(object.shaderProgram);
-
     _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uniformTime, 0.1);
   } catch (e) {
     console.warn('WTF - ERROR10001');
   }
-
   _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper);
-
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
     }
-
     _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
-
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
   }
-
   _matrixWorld.world.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
-
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
-
   object.instancedDraws.overrideDrawArraysInstance(object);
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
 };
-
 var drawsOperation = _manifest.default.operation.draws;
-var _default = drawsOperation;
-exports.default = _default;
+var _default = exports.default = drawsOperation;
 
 },{"../program/manifest":99,"./engine":61,"./events":62,"./matrix-shadows":73,"./matrix-textures":75,"./matrix-world":76,"./raycast":82,"./utility":88,"cannon":96}],67:[function(require,module,exports){
 "use strict";
@@ -10643,15 +9292,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.COLOR = COLOR;
 exports.COLOR_ALPHA = COLOR_ALPHA;
-exports.GeoOfColor = exports.customVertex_1 = exports.customVertex = exports.sphereVertex = exports.PiramideVertex = exports.CubeVertex = exports.SquareVertex = exports.TriangleVertex = exports.Position = exports.RotationVector = exports.Point = exports.Scale = void 0;
-
+exports.sphereVertex = exports.customVertex_1 = exports.customVertex = exports.TriangleVertex = exports.SquareVertex = exports.Scale = exports.RotationVector = exports.Position = exports.Point = exports.PiramideVertex = exports.GeoOfColor = exports.CubeVertex = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var _utility = require("./utility");
-
 var _engine = require("./engine");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+/**
+ * @description
+ * Networking is deep integrated in me engine.
+ * You can change network driver but this code still works (net interface).
+ * Reccommended Net2 new version based on kurento/openvidu server.
+ * @author Nikola Lukic
+ * @date oct 2024
+ */
 
 class Scale {
   constructor() {
@@ -10659,83 +9312,67 @@ class Scale {
     this.y = 1;
     this.z = 1;
   }
-
   LinearScale(scale_) {
     this.x = scale_;
     this.y = scale_;
     this.z = scale_;
   }
-
 }
-
 exports.Scale = Scale;
-
 class Point {
   constructor(x, y, z) {
     if (typeof z == "undefined") {
       z = 0;
     }
-
     this.x = x;
     this.y = y;
     this.z = z;
     this.scale = new Scale();
   }
-
   get X() {
     return parseFloat(this.x * this.scale.x);
   }
-
   get Y() {
     return parseFloat(this.y * this.scale.y);
   }
-
   get Z() {
     return parseFloat(this.z * this.scale.z);
   }
-
 }
-
 exports.Point = Point;
-
 class RotationVector {
   constructor(x, y, z, rotx, roty, rotz) {
     if (typeof x == "undefined") {
       x = 0;
     }
-
     if (typeof y == "undefined") {
       y = 0;
     }
-
     if (typeof z == "undefined") {
       z = 0;
     }
-
     if (typeof rotx == "undefined") {
       rotx = 0;
     }
-
     if (typeof roty == "undefined") {
       roty = 0;
     }
-
     if (typeof rotz == "undefined") {
       rotz = 0;
     }
-
     this.nameUniq = null;
+    this.netObjId = null;
     this.x = x;
     this.y = y;
     this.z = z;
     this.rotx = rotx;
     this.roty = roty;
     this.rotz = rotz;
+
     /**
      * Active rotation without writing code from
      * top level. Just sutup values > 0
      */
-
     this.rotationSpeed = {
       emit: false,
       x: 0,
@@ -10747,191 +9384,169 @@ class RotationVector {
       x: 0,
       y: 0,
       z: 0
-    }; // this.adapt_quaternion = () => {
+    };
+
+    // this.adapt_quaternion = () => {
     //   this.getRotDirX = () => {
     //     return this.RotationVector;
     //   }
+
     //   this.getRotDirY = () => {
     //     return this.RotationVector;
     //   }
+
     //   this.getRotDirZ = () => {
     //     return this.RotationVector;
     //   }
     // }
-
     return this;
   }
-
   get rotSpeedX() {
     return this.rotationSpeed.x;
   }
-
   get rotSpeedY() {
     return this.rotationSpeed.y;
   }
-
   get rotSpeedZ() {
     return this.rotationSpeed.z;
   }
-
   get X() {
     return this.x;
   }
-
   get Y() {
     return this.y;
   }
-
   get Z() {
     return this.z;
   }
-
   get RotationVector() {
     return [this.x, this.y, this.z];
   }
-
   SetDirection(x_, y_, z_) {
     this.x = x_;
     this.y = y_;
     this.z = z_;
     return [this.x, this.y, this.z];
   }
-
   getDirection() {
     return [this.x, this.y, this.z];
   }
-
   getDirectionX() {
     return [this.x, 0, 0];
   }
-
   getDirectionY() {
     return [0, this.y, 0];
   }
-
   getDirectionZ() {
     return [0, 0, this.z];
   }
-
   getRotDirX() {
     return [1, 0, 0];
   }
-
   getRotDirY() {
     return [0, 1, 0];
   }
-
   getRotDirZ() {
     return [0, 0, 1];
   }
-
   SetDirectionX() {
     this.x = 1;
     this.y = 0;
     this.z = 0;
   }
-
   SetDirectionY() {
     this.x = 0;
     this.y = 1;
     this.z = 0;
   }
-
   SetDirectionZ() {
     this.x = 0;
     this.y = 0;
     this.z = 1;
   }
-
   SetDirectionXY() {
     this.x = 1;
     this.y = 1;
     this.z = 0;
   }
-
   SetDirectionXZ() {
     this.x = 1;
     this.y = 0;
     this.z = 1;
   }
-
   SetDirectionYZ() {
     this.x = 0;
     this.y = 1;
     this.z = 1;
   }
-
   rotateX(x, em) {
     this.rotx = x;
-    if (_manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netRot: {
         x: this.rotx
       },
-      netObjId: this.nameUniq
+      netObjId: this.netObjId
     });
   }
-
   rotateY(y, em) {
     this.roty = y;
-    if (_manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netRot: {
         y: this.roty
       },
-      netObjId: this.nameUniq
+      netObjId: this.netObjId
     });
   }
-
   rotateZ(z, em) {
     this.rotz = z;
-    if (_manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netRot: {
         z: this.rotz
       },
-      netObjId: this.nameUniq
+      netObjId: this.netObjId
     });
   }
-
   get rx() {
     return this.rotx;
   }
-
   get ry() {
     return this.roty;
   }
-
   get rz() {
     return this.rotz;
   }
-
 }
+
 /**
  * @description Base class
  * Powered for multiplayer feature:
  * - position ref to x,y,z
+ * New case if you wanna send for some other object from uniq local
+ * See example from FPShooter. Explanation : In MultiPlayer mode 
+ * local player dont have animation character only gun classic for FPShooters.
+ * We project position values on remote computer for our character by different nameUniq (netObjId).
+ * Setup of `nameUniq` props done in initial/loading stage.
  */
-
-
 exports.RotationVector = RotationVector;
-
 class Position {
   constructor(x, y, z) {
     this.nameUniq = null;
-
+    this.netObjId = null;
     if (typeof x == 'undefined') {
       x = 0;
     }
-
     if (typeof y == 'undefined') {
       y = 0;
     }
-
     if (typeof z == 'undefined') {
       z = 0;
     }
-
     this.x = x;
     this.y = y;
     this.z = z;
+    this.xNetOffset = 0;
+    this.yNetOffset = 0;
+    this.zNetOffset = 0;
     this.velY = 0;
     this.velX = 0;
     this.velZ = 0;
@@ -10942,7 +9557,6 @@ class Position {
     this.thrust = 0.01;
     return this;
   }
-
   setSpeed(n) {
     if (typeof n === 'number') {
       this.thrust = n;
@@ -10950,51 +9564,42 @@ class Position {
       SYS.DEBUG.WARNING('Description: arguments (w, h) must be type of number.');
     }
   }
-
   translateByX = function (x) {
     this.inMove = true;
     this.targetX = x;
   };
-
   translateByY(y) {
     this.inMove = true;
     this.targetY = y;
   }
-
   translateByZ(z) {
     this.inMove = true;
     this.targetZ = z;
   }
-
   translateByXY(x, y) {
     this.inMove = true;
     this.targetX = x;
     this.targetY = y;
   }
-
   translateByXZ(x, z) {
     this.inMove = true;
     this.targetX = x;
     this.targetZ = z;
   }
-
   translateByYZ(y, z) {
     this.inMove = true;
     this.targetY = y;
     this.targetZ = z;
   }
-
   onTargetPositionReach() {}
-
   update() {
     var tx = this.targetX - this.x,
-        ty = this.targetY - this.y,
-        tz = this.targetZ - this.z,
-        dist = Math.sqrt(tx * tx + ty * ty + tz * tz);
+      ty = this.targetY - this.y,
+      tz = this.targetZ - this.z,
+      dist = Math.sqrt(tx * tx + ty * ty + tz * tz);
     this.velX = tx / dist * this.thrust;
     this.velY = ty / dist * this.thrust;
     this.velZ = tz / dist * this.thrust;
-
     if (this.inMove == true) {
       if (dist > this.thrust) {
         this.x += this.velX;
@@ -11002,11 +9607,11 @@ class Position {
         this.z += this.velZ;
         if (_manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
           netPos: {
-            x: this.x,
-            y: this.y,
-            z: this.z
+            x: this.x + this.xNetOffset,
+            y: this.y + this.yNetOffset,
+            z: this.z + this.zNetOffset
           },
-          netObjId: this.nameUniq
+          netObjId: this.netObjId
         });
       } else {
         this.x = this.targetX;
@@ -11020,61 +9625,56 @@ class Position {
             y: this.y,
             z: this.z
           },
-          netObjId: this.nameUniq
+          netObjId: this.netObjId
         });
       }
     }
   }
-
   get worldLocation() {
     return [this.x, this.y, this.z];
   }
-
   SetX(newx, em) {
     this.x = newx;
     this.targetX = newx;
-    this.inMove = false; // console.log('test setX net.connection ', net)
-
+    this.inMove = false;
+    // console.log('test setX net.connection ', net)
     if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) {
       _engine.net.connection.send({
         netPos: {
-          x: this.x,
-          y: this.y,
-          z: this.z
+          x: this.x + this.xNetOffset,
+          y: this.y + this.yNetOffset,
+          z: this.z + this.zNetOffset
         },
-        netObjId: this.nameUniq
+        netObjId: this.netObjId
       });
     }
   }
-
   SetY(newy, em) {
     this.y = newy;
     this.targetY = newy;
     this.inMove = false;
     if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
-        x: this.x,
-        y: this.y,
-        z: this.z
+        x: this.x + this.xNetOffset,
+        y: this.y + this.yNetOffset,
+        z: this.z + this.zNetOffset
       },
-      netObjId: this.nameUniq
+      netObjId: this.netObjId
     });
   }
-
   SetZ(newz, em) {
     this.z = newz;
     this.targetZ = newz;
     this.inMove = false;
     if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
-        x: this.x,
-        y: this.y,
-        z: this.z
+        x: this.x + this.xNetOffset,
+        y: this.y + this.yNetOffset,
+        z: this.z + this.zNetOffset
       },
-      netObjId: this.nameUniq
+      netObjId: this.netObjId
     });
   }
-
   setPosition(newx, newy, newz) {
     this.x = newx;
     this.y = newy;
@@ -11085,18 +9685,15 @@ class Position {
     this.inMove = false;
     if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
-        x: this.x,
-        y: this.y,
-        z: this.z
+        x: this.x + this.xNetOffset,
+        y: this.y + this.yNetOffset,
+        z: this.z + this.zNetOffset
       },
-      netObjId: this.nameUniq
+      netObjId: this.netObjId
     });
   }
-
 }
-
 exports.Position = Position;
-
 class TriangleVertex {
   constructor(root) {
     this.root = root;
@@ -11106,15 +9703,12 @@ class TriangleVertex {
     this.pointB = new Point(-1, -1, 0);
     this.pointC = new Point(1, -1, 0);
   }
-
   get vertices() {
     return new Float32Array([this.pointA.X, this.pointA.Y * this.root.size, this.pointA.Z, this.pointB.X * this.root.size, this.pointB.Y * this.root.size, this.pointB.Z, this.pointC.X * this.root.size, this.pointC.Y * this.root.size, this.pointC.Z]);
   }
-
   get indices() {
     return [0, 1, 2];
   }
-
   setScale(scale) {
     this.size = scale;
     if (typeof em === 'undefined') _engine.net.connection.send({
@@ -11124,16 +9718,11 @@ class TriangleVertex {
       netObjId: this.nameUniq
     });
     if (this.dynamicBuffer == true) return;
-
     _manifest.default.operation.triangle_buffer_procedure(this.root);
-
     return "update vertex array prototypical";
   }
-
 }
-
 exports.TriangleVertex = TriangleVertex;
-
 class SquareVertex {
   constructor(root) {
     this.root = root;
@@ -11152,26 +9741,22 @@ class SquareVertex {
       left_bottom: new Point(0.0, 0.0, 0)
     };
     this.colorData = {};
-    this.colorData.parent = this.root; // default
-
+    this.colorData.parent = this.root;
+    // default
     this.colorData.color = [new COLOR_ALPHA(1.0, 0.0, 0.0, 1.0), new COLOR_ALPHA(0.0, 1.0, 0.0, 1.0), new COLOR_ALPHA(0.5, 0.0, 1.0, 1.0), new COLOR_ALPHA(0.5, 0.5, 1.0, 1.0)];
   }
-
   get vertices() {
     return new Float32Array([this.pointA.X * this.size, this.pointA.Y * this.size, this.pointA.Z, this.pointB.X * this.size, this.pointB.Y * this.size, this.pointB.Z, this.pointC.X * this.size, this.pointC.Y * this.size, this.pointC.Z, this.pointD.X * this.size, this.pointD.Y * this.size, this.pointD.Z]);
   }
-
   get texCoords() {
     return new Float32Array([this.texCoordsPoints.right_top.X, this.texCoordsPoints.right_top.Y, this.texCoordsPoints.left_top.X, this.texCoordsPoints.left_top.Y, this.texCoordsPoints.right_bottom.X, this.texCoordsPoints.right_bottom.Y, this.texCoordsPoints.left_bottom.X, this.texCoordsPoints.left_bottom.Y]);
   }
-
   rawIndices = [0, 1, 2, 3, 2, 1];
-
   get indices() {
     return this.rawIndices;
-  } // Setters
+  }
 
-
+  // Setters
   setTexCoordScaleFactor(newScaleFactror, em) {
     this.texCoordsPoints.right_top.y = 1 + newScaleFactror;
     this.texCoordsPoints.right_top.x = 1 + newScaleFactror;
@@ -11181,34 +9766,33 @@ class SquareVertex {
     this.texCoordsPoints.left_top.y = 1 + newScaleFactror;
     this.texCoordsPoints.right_bottom.x = 1 + newScaleFactror;
     this.texCoordsPoints.right_bottom.y = 0 - newScaleFactror;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       texScaleFactor: {
         newScaleFactror: newScaleFactror
       },
       netObjId: this.nameUniq
     });
   }
-
   setTexCoordScaleXFactor(newScaleFactror, em) {
     this.texCoordsPoints.right_top.y = 1 + newScaleFactror;
     this.texCoordsPoints.left_bottom.y = 0 - newScaleFactror;
     this.texCoordsPoints.left_top.y = 1 + newScaleFactror;
-    this.texCoordsPoints.right_bottom.y = 0 - newScaleFactror; // if( typeof em === 'undefined') net.connection.send({
+    this.texCoordsPoints.right_bottom.y = 0 - newScaleFactror;
+    // if( typeof em === 'undefined') net.connection.send({
     //   texScaleFactor: {newScaleFactror: newScaleFactror},
     //   netObjId: this.nameUniq,
     // });
   }
-
   setTexCoordScaleYFactor(newScaleFactror, em) {
     this.texCoordsPoints.right_top.x = 1 + newScaleFactror;
     this.texCoordsPoints.left_bottom.x = 0 - newScaleFactror;
     this.texCoordsPoints.left_top.x = 0 - newScaleFactror;
-    this.texCoordsPoints.right_bottom.x = 1 + newScaleFactror; // if( typeof em === 'undefined') net.connection.send({
+    this.texCoordsPoints.right_bottom.x = 1 + newScaleFactror;
+    // if( typeof em === 'undefined') net.connection.send({
     //   texScaleFactor: {newScaleFactror: newScaleFactror},
     //   netObjId: this.nameUniq,
     // });
   }
-
   setScaleByX(scale, em) {
     this.pointA.x = scale;
     this.pointB.x = -scale;
@@ -11221,12 +9805,9 @@ class SquareVertex {
       netObjId: this.nameUniq
     });
     if (this.dynamicBuffer == true) return;
-
     _manifest.default.operation.square_buffer_procedure(this.root);
-
     return 'update vertex array prototypical';
   }
-
   setScaleByY(scale, em) {
     this.pointA.y = scale;
     this.pointB.y = scale;
@@ -11239,12 +9820,9 @@ class SquareVertex {
       netObjId: this.nameUniq
     });
     if (this.dynamicBuffer == true) return;
-
     _manifest.default.operation.square_buffer_procedure(this.root);
-
     return 'update vertex array prototypical';
   }
-
   setScale(scale, em) {
     this.size = scale;
     if (typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
@@ -11254,12 +9832,9 @@ class SquareVertex {
       netObjId: this.nameUniq
     });
     if (this.dynamicBuffer == true) return;
-
     _manifest.default.operation.square_buffer_procedure(this.root);
-
     return 'update vertex array prototypical';
   }
-
   get color() {
     var local = [];
     this.colorData.color.forEach(point => {
@@ -11270,50 +9845,38 @@ class SquareVertex {
     });
     return new Float32Array(local);
   }
-
   setColorSolid(red, green, blue, a) {
     if (typeof a === 'undefined') {
       var a = 1;
     }
-
     this.colorData.color.forEach((point, index, arr) => {
       arr[index].r = red;
       arr[index].g = green;
       arr[index].b = blue;
       arr[index].a = a;
     });
-
     _manifest.default.operation.square_buffer_procedure(this.root);
   }
-
   setColorComponentRed(red) {
     this.colorData.color.forEach((point, index, arr) => {
       arr[index].r = red;
     });
-
     _manifest.default.operation.square_buffer_procedure(this.root);
   }
-
   setColorComponentGreen(green) {
     this.colorData.color.forEach((point, index, arr) => {
       arr[index].g = green;
     });
-
     _manifest.default.operation.square_buffer_procedure(this.root);
   }
-
   setColorComponentBlue(blue) {
     this.colorData.color.forEach((point, index, arr) => {
       arr[index].b = blue;
     });
-
     _manifest.default.operation.square_buffer_procedure(this.root);
   }
-
 }
-
 exports.SquareVertex = SquareVertex;
-
 class CubeVertex {
   constructor(root) {
     this.root = root;
@@ -11360,8 +9923,9 @@ class CubeVertex {
         right_bottom: new Point(1.0, 1.0, 0),
         left_bottom: new Point(1.0, 0.0, 0)
       }
-    }; // for scale by ori
+    };
 
+    // for scale by ori
     this.Front = {
       pointA: new Point(0, 0, 0),
       pointB: new Point(0, 0, 0),
@@ -11436,7 +10000,6 @@ class CubeVertex {
       pointC: new COLOR_ALPHA(0.0, 1.0, 0.0, 1.0),
       pointD: new COLOR_ALPHA(0.0, 0.0, 1.0, 1.0)
     };
-
     this.colorData.SetRedForAll = function (red_) {
       this.Front.pointA.r = red_;
       this.Front.pointB.r = red_;
@@ -11462,10 +10025,8 @@ class CubeVertex {
       this.Top.pointB.r = red_;
       this.Top.pointC.r = red_;
       this.Top.pointD.r = red_;
-
       _manifest.default.operation.cube_buffer_procedure(this.parent);
     };
-
     this.colorData.SetGreenForAll = function (color_) {
       this.Front.pointA.g = color_;
       this.Front.pointB.g = color_;
@@ -11491,10 +10052,8 @@ class CubeVertex {
       this.Top.pointB.g = color_;
       this.Top.pointC.g = color_;
       this.Top.pointD.g = color_;
-
       _manifest.default.operation.cube_buffer_procedure(this.parent);
     };
-
     this.colorData.SetBlueForAll = function (color_) {
       this.Front.pointA.b = color_;
       this.Front.pointB.b = color_;
@@ -11520,15 +10079,12 @@ class CubeVertex {
       this.Top.pointB.b = color_;
       this.Top.pointC.b = color_;
       this.Top.pointD.b = color_;
-
       _manifest.default.operation.cube_buffer_procedure(this.parent);
     };
-
     this.colorData.SetFrontSolidColor = function (red, green, blue, a) {
       if (typeof a === 'undefined') {
         var a = 1;
       }
-
       this.Front.pointA.r = red;
       this.Front.pointA.g = green;
       this.Front.pointA.b = blue;
@@ -11545,15 +10101,12 @@ class CubeVertex {
       this.Front.pointD.g = green;
       this.Front.pointD.b = blue;
       this.Front.pointD.a = a;
-
       _manifest.default.operation.cube_buffer_procedure(this.parent);
     };
-
     this.colorData.SetRightSolidColor = function (red, green, blue, a) {
       if (typeof a === 'undefined') {
         var a = 1;
       }
-
       this.Right.pointA.r = red;
       this.Right.pointA.g = green;
       this.Right.pointA.b = blue;
@@ -11570,15 +10123,12 @@ class CubeVertex {
       this.Right.pointD.g = green;
       this.Right.pointD.b = blue;
       this.Right.pointD.a = a;
-
       _manifest.default.operation.cube_buffer_procedure(this.parent);
     };
-
     this.colorData.SetBackSolidColor = function (red, green, blue, a) {
       if (typeof a === 'undefined') {
         var a = 1;
       }
-
       this.Back.pointA.r = red;
       this.Back.pointA.g = green;
       this.Back.pointA.b = blue;
@@ -11595,15 +10145,12 @@ class CubeVertex {
       this.Back.pointD.g = green;
       this.Back.pointD.b = blue;
       this.Back.pointD.a = a;
-
       _manifest.default.operation.cube_buffer_procedure(this.parent);
     };
-
     this.colorData.SetLeftSolidColor = function (red, green, blue, a) {
       if (typeof a === 'undefined') {
         var a = 1;
       }
-
       this.Left.pointA.r = red;
       this.Left.pointA.g = green;
       this.Left.pointA.b = blue;
@@ -11620,15 +10167,12 @@ class CubeVertex {
       this.Left.pointD.g = green;
       this.Left.pointD.b = blue;
       this.Left.pointD.a = a;
-
       _manifest.default.operation.cube_buffer_procedure(this.parent);
     };
-
     this.colorData.SetBottomSolidColor = function (red, green, blue, a) {
       if (typeof a === 'undefined') {
         var a = 1;
       }
-
       this.Bottom.pointA.r = red;
       this.Bottom.pointA.g = green;
       this.Bottom.pointA.b = blue;
@@ -11645,15 +10189,12 @@ class CubeVertex {
       this.Bottom.pointD.g = green;
       this.Bottom.pointD.b = blue;
       this.Bottom.pointD.a = a;
-
       _manifest.default.operation.cube_buffer_procedure(this.parent);
     };
-
     this.colorData.SetTopSolidColor = function (red, green, blue, a) {
       if (typeof a === 'undefined') {
         var a = 1;
       }
-
       this.Top.pointA.r = red;
       this.Top.pointA.g = green;
       this.Top.pointA.b = blue;
@@ -11670,10 +10211,8 @@ class CubeVertex {
       this.Top.pointD.g = green;
       this.Top.pointD.b = blue;
       this.Top.pointD.a = a;
-
       _manifest.default.operation.cube_buffer_procedure(this.parent);
     };
-
     this.colorData.SetSolidColor = function (red, green, blue, a) {
       this.SetBottomSolidColor(red, green, blue, a);
       this.SetLeftSolidColor(red, green, blue, a);
@@ -11683,7 +10222,6 @@ class CubeVertex {
       this.SetTopSolidColor(red, green, blue, a);
     };
   }
-
   setScaleByX(scale, em) {
     // for scale
     this.Left.pointA.x = -scale;
@@ -11717,12 +10255,9 @@ class CubeVertex {
       netObjId: this.nameUniq
     });
     if (this.dynamicBuffer == true) return;
-
     _manifest.default.operation.cube_buffer_procedure(this.root);
-
     return "update vertex array prototypical";
   }
-
   setScaleByY(scale, em) {
     //for scale
     this.Left.pointA.y = -scale;
@@ -11756,12 +10291,9 @@ class CubeVertex {
       netObjId: this.nameUniq
     });
     if (this.dynamicBuffer == true) return;
-
     _manifest.default.operation.cube_buffer_procedure(this.root);
-
     return "update vertex array prototypical";
   }
-
   setScaleByZ(scale, em) {
     this.Left.pointA.z = -scale;
     this.Left.pointB.z = scale;
@@ -11794,29 +10326,23 @@ class CubeVertex {
       netObjId: this.nameUniq
     });
     if (this.dynamicBuffer == true) return;
-
     _manifest.default.operation.cube_buffer_procedure(this.root);
-
     return "update vertex array prototypical";
   }
-
   setScale(scale, em) {
     this.size = scale;
     this.basePoint = 1.0 * this.size;
     this.basePointNeg = -1.0 * this.size;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         scale: scale
       },
       netObjId: this.nameUniq
     });
     if (this.dynamicBuffer == true) return;
-
     _manifest.default.operation.cube_buffer_procedure(this.root);
-
     return "update vertex array prototypical";
   }
-
   setTexCoordScaleFactor(newScaleFactror, em) {
     function calculate(checkValue) {
       if (checkValue <= 0) {
@@ -11825,7 +10351,6 @@ class CubeVertex {
         return 1;
       }
     }
-
     for (var key in this.texCoordsPoints) {
       this.texCoordsPoints[key].right_top.y = this.texCoordsPoints[key].right_top.y + newScaleFactror * calculate(this.texCoordsPoints[key].right_top.y);
       this.texCoordsPoints[key].right_top.x = this.texCoordsPoints[key].right_top.x + newScaleFactror * calculate(this.texCoordsPoints[key].right_top.x);
@@ -11836,15 +10361,13 @@ class CubeVertex {
       this.texCoordsPoints[key].right_bottom.x = this.texCoordsPoints[key].right_bottom.x + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.x);
       this.texCoordsPoints[key].right_bottom.y = this.texCoordsPoints[key].right_bottom.y + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.y);
     }
-
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       texScaleFactor: {
         newScaleFactror: newScaleFactror
       },
       netObjId: this.nameUniq
     });
   }
-
   setTexCoordScaleYFactor(newScaleFactror, em) {
     function calculate(checkValue) {
       if (checkValue <= 0) {
@@ -11853,30 +10376,30 @@ class CubeVertex {
         return 1;
       }
     }
-
     for (var key in this.texCoordsPoints) {
       // this.texCoordsPoints[key].right_top.y =
       //   this.texCoordsPoints[key].right_top.y +
       //   newScaleFactror * calculate(this.texCoordsPoints[key].right_top.y);
       this.texCoordsPoints[key].right_top.x = this.texCoordsPoints[key].right_top.x + newScaleFactror * calculate(this.texCoordsPoints[key].right_top.x);
-      this.texCoordsPoints[key].left_bottom.x = this.texCoordsPoints[key].left_bottom.x + newScaleFactror * calculate(this.texCoordsPoints[key].left_bottom.x); // this.texCoordsPoints[key].left_bottom.y =
+      this.texCoordsPoints[key].left_bottom.x = this.texCoordsPoints[key].left_bottom.x + newScaleFactror * calculate(this.texCoordsPoints[key].left_bottom.x);
+      // this.texCoordsPoints[key].left_bottom.y =
       //   this.texCoordsPoints[key].left_bottom.y +
       //   newScaleFactror * calculate(this.texCoordsPoints[key].left_bottom.y);
-
-      this.texCoordsPoints[key].left_top.x = this.texCoordsPoints[key].left_top.x + newScaleFactror * calculate(this.texCoordsPoints[key].left_top.x); // this.texCoordsPoints[key].left_top.y =
+      this.texCoordsPoints[key].left_top.x = this.texCoordsPoints[key].left_top.x + newScaleFactror * calculate(this.texCoordsPoints[key].left_top.x);
+      // this.texCoordsPoints[key].left_top.y =
       //   this.texCoordsPoints[key].left_top.y +
       //   newScaleFactror * calculate(this.texCoordsPoints[key].left_top.y);
-
-      this.texCoordsPoints[key].right_bottom.x = this.texCoordsPoints[key].right_bottom.x + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.x); // this.texCoordsPoints[key].right_bottom.y =
+      this.texCoordsPoints[key].right_bottom.x = this.texCoordsPoints[key].right_bottom.x + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.x);
+      // this.texCoordsPoints[key].right_bottom.y =
       //   this.texCoordsPoints[key].right_bottom.y +
       //   newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.y);
-    } // if( typeof em === 'undefined') net.connection.send({
+    }
+
+    // if( typeof em === 'undefined') net.connection.send({
     //   texScaleFactor: {newScaleFactror: newScaleFactror},
     //   netObjId: this.nameUniq,
     // });
-
   }
-
   setTexCoordScaleXFactor(newScaleFactror, em) {
     function calculate(checkValue) {
       if (checkValue <= 0) {
@@ -11885,63 +10408,79 @@ class CubeVertex {
         return 1;
       }
     }
-
     for (var key in this.texCoordsPoints) {
       this.texCoordsPoints[key].right_top.y = this.texCoordsPoints[key].right_top.y + newScaleFactror * calculate(this.texCoordsPoints[key].right_top.y);
       this.texCoordsPoints[key].left_bottom.y = this.texCoordsPoints[key].left_bottom.y + newScaleFactror * calculate(this.texCoordsPoints[key].left_bottom.y);
       this.texCoordsPoints[key].left_top.y = this.texCoordsPoints[key].left_top.y + newScaleFactror * calculate(this.texCoordsPoints[key].left_top.y);
       this.texCoordsPoints[key].right_bottom.y = this.texCoordsPoints[key].right_bottom.y + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.y);
-    } // if( typeof em === 'undefined') net.connection.send({
+    }
+
+    // if( typeof em === 'undefined') net.connection.send({
     //   texScaleFactor: {newScaleFactror: newScaleFactror},
     //   netObjId: this.nameUniq,
     // });
-
   }
-
   get vertices() {
-    return new Float32Array([// Front face
-    this.basePointNeg + this.Front.pointA.X, this.basePointNeg + this.Front.pointA.Y, this.basePoint + this.Front.pointA.Z, this.basePoint + this.Front.pointB.X, this.basePointNeg + this.Front.pointB.Y, this.basePoint + this.Front.pointB.Z, this.basePoint + this.Front.pointC.X, this.basePoint + this.Front.pointC.Y, this.basePoint + this.Front.pointC.Z, this.basePointNeg + this.Front.pointD.X, this.basePoint + this.Front.pointD.Y, this.basePoint + this.Front.pointD.Z, // Back face
-    this.basePointNeg + this.Back.pointA.X, this.basePointNeg + this.Back.pointA.Y, this.basePointNeg + this.Back.pointA.Z, this.basePointNeg + this.Back.pointB.X, this.basePoint + this.Back.pointB.Y, this.basePointNeg + this.Back.pointB.Z, this.basePoint + this.Back.pointC.X, this.basePoint + this.Back.pointC.Y, this.basePointNeg + this.Back.pointC.Z, this.basePoint + this.Back.pointD.X, this.basePointNeg + this.Back.pointD.Y, this.basePointNeg + this.Back.pointD.Z, // Top face
-    this.basePointNeg + this.Top.pointA.X, this.basePoint + this.Top.pointA.Y, this.basePointNeg + this.Top.pointA.Z, this.basePointNeg + this.Top.pointB.X, this.basePoint + this.Top.pointB.Y, this.basePoint + this.Top.pointB.Z, this.basePoint + this.Top.pointC.X, this.basePoint + this.Top.pointC.Y, this.basePoint + this.Top.pointC.Z, this.basePoint + this.Top.pointD.X, this.basePoint + this.Top.pointD.Y, this.basePointNeg + this.Top.pointD.Z, // Bottom face
-    this.basePointNeg + this.Bottom.pointA.X, this.basePointNeg + this.Bottom.pointA.Y, this.basePointNeg + this.Bottom.pointA.Z, this.basePoint + this.Bottom.pointB.X, this.basePointNeg + this.Bottom.pointB.Y, this.basePointNeg + this.Bottom.pointB.Z, this.basePoint + this.Bottom.pointC.X, this.basePointNeg + this.Bottom.pointC.Y, this.basePoint + this.Bottom.pointC.Z, this.basePointNeg + this.Bottom.pointD.X, this.basePointNeg + this.Bottom.pointD.Y, this.basePoint + this.Bottom.pointD.Z, // Right face
-    this.basePoint + this.Right.pointA.X, this.basePointNeg + this.Right.pointA.Y, this.basePointNeg + this.Right.pointA.Z, this.basePoint + this.Right.pointB.X, this.basePoint + this.Right.pointB.Y, this.basePointNeg + this.Right.pointB.Z, this.basePoint + this.Right.pointC.X, this.basePoint + this.Right.pointC.Y, this.basePoint + this.Right.pointC.Z, this.basePoint + this.Right.pointD.X, this.basePointNeg + this.Right.pointD.Y, this.basePoint + this.Right.pointD.Z, // Left face
+    return new Float32Array([
+    // Front face
+    this.basePointNeg + this.Front.pointA.X, this.basePointNeg + this.Front.pointA.Y, this.basePoint + this.Front.pointA.Z, this.basePoint + this.Front.pointB.X, this.basePointNeg + this.Front.pointB.Y, this.basePoint + this.Front.pointB.Z, this.basePoint + this.Front.pointC.X, this.basePoint + this.Front.pointC.Y, this.basePoint + this.Front.pointC.Z, this.basePointNeg + this.Front.pointD.X, this.basePoint + this.Front.pointD.Y, this.basePoint + this.Front.pointD.Z,
+    // Back face
+    this.basePointNeg + this.Back.pointA.X, this.basePointNeg + this.Back.pointA.Y, this.basePointNeg + this.Back.pointA.Z, this.basePointNeg + this.Back.pointB.X, this.basePoint + this.Back.pointB.Y, this.basePointNeg + this.Back.pointB.Z, this.basePoint + this.Back.pointC.X, this.basePoint + this.Back.pointC.Y, this.basePointNeg + this.Back.pointC.Z, this.basePoint + this.Back.pointD.X, this.basePointNeg + this.Back.pointD.Y, this.basePointNeg + this.Back.pointD.Z,
+    // Top face
+    this.basePointNeg + this.Top.pointA.X, this.basePoint + this.Top.pointA.Y, this.basePointNeg + this.Top.pointA.Z, this.basePointNeg + this.Top.pointB.X, this.basePoint + this.Top.pointB.Y, this.basePoint + this.Top.pointB.Z, this.basePoint + this.Top.pointC.X, this.basePoint + this.Top.pointC.Y, this.basePoint + this.Top.pointC.Z, this.basePoint + this.Top.pointD.X, this.basePoint + this.Top.pointD.Y, this.basePointNeg + this.Top.pointD.Z,
+    // Bottom face
+    this.basePointNeg + this.Bottom.pointA.X, this.basePointNeg + this.Bottom.pointA.Y, this.basePointNeg + this.Bottom.pointA.Z, this.basePoint + this.Bottom.pointB.X, this.basePointNeg + this.Bottom.pointB.Y, this.basePointNeg + this.Bottom.pointB.Z, this.basePoint + this.Bottom.pointC.X, this.basePointNeg + this.Bottom.pointC.Y, this.basePoint + this.Bottom.pointC.Z, this.basePointNeg + this.Bottom.pointD.X, this.basePointNeg + this.Bottom.pointD.Y, this.basePoint + this.Bottom.pointD.Z,
+    // Right face
+    this.basePoint + this.Right.pointA.X, this.basePointNeg + this.Right.pointA.Y, this.basePointNeg + this.Right.pointA.Z, this.basePoint + this.Right.pointB.X, this.basePoint + this.Right.pointB.Y, this.basePointNeg + this.Right.pointB.Z, this.basePoint + this.Right.pointC.X, this.basePoint + this.Right.pointC.Y, this.basePoint + this.Right.pointC.Z, this.basePoint + this.Right.pointD.X, this.basePointNeg + this.Right.pointD.Y, this.basePoint + this.Right.pointD.Z,
+    // Left face
     this.basePointNeg + this.Left.pointA.X, this.basePointNeg + this.Left.pointA.Y, this.basePointNeg + this.Left.pointA.Z, this.basePointNeg + this.Left.pointB.X, this.basePointNeg + this.Left.pointB.Y, this.basePoint + this.Left.pointB.Z, this.basePointNeg + this.Left.pointC.X, this.basePoint + this.Left.pointC.Y, this.basePoint + this.Left.pointC.Z, this.basePointNeg + this.Left.pointD.X, this.basePoint + this.Left.pointD.Y, this.basePointNeg + this.Left.pointD.Z]);
   }
-
   get texCoords() {
-    return new Float32Array([// Front face
-    this.texCoordsPoints.front.right_top.X, this.texCoordsPoints.front.right_top.Y, this.texCoordsPoints.front.left_top.X, this.texCoordsPoints.front.left_top.Y, this.texCoordsPoints.front.right_bottom.X, this.texCoordsPoints.front.right_bottom.Y, this.texCoordsPoints.front.left_bottom.X, this.texCoordsPoints.front.left_bottom.Y, // Back face
-    this.texCoordsPoints.back.right_top.X, this.texCoordsPoints.back.right_top.Y, this.texCoordsPoints.back.left_top.X, this.texCoordsPoints.back.left_top.Y, this.texCoordsPoints.back.right_bottom.X, this.texCoordsPoints.back.right_bottom.Y, this.texCoordsPoints.back.left_bottom.X, this.texCoordsPoints.back.left_bottom.Y, // Top face
-    this.texCoordsPoints.top.right_top.X, this.texCoordsPoints.top.right_top.Y, this.texCoordsPoints.top.left_top.X, this.texCoordsPoints.top.left_top.Y, this.texCoordsPoints.top.right_bottom.X, this.texCoordsPoints.top.right_bottom.Y, this.texCoordsPoints.top.left_bottom.X, this.texCoordsPoints.top.left_bottom.Y, // Bottom face
-    this.texCoordsPoints.bottom.right_top.X, this.texCoordsPoints.bottom.right_top.Y, this.texCoordsPoints.bottom.left_top.X, this.texCoordsPoints.bottom.left_top.Y, this.texCoordsPoints.bottom.right_bottom.X, this.texCoordsPoints.bottom.right_bottom.Y, this.texCoordsPoints.bottom.left_bottom.X, this.texCoordsPoints.bottom.left_bottom.Y, // Right face
-    this.texCoordsPoints.right.right_top.X, this.texCoordsPoints.right.right_top.Y, this.texCoordsPoints.right.left_top.X, this.texCoordsPoints.right.left_top.Y, this.texCoordsPoints.right.right_bottom.X, this.texCoordsPoints.right.right_bottom.Y, this.texCoordsPoints.right.left_bottom.X, this.texCoordsPoints.right.left_bottom.Y, // Left face
+    return new Float32Array([
+    // Front face
+    this.texCoordsPoints.front.right_top.X, this.texCoordsPoints.front.right_top.Y, this.texCoordsPoints.front.left_top.X, this.texCoordsPoints.front.left_top.Y, this.texCoordsPoints.front.right_bottom.X, this.texCoordsPoints.front.right_bottom.Y, this.texCoordsPoints.front.left_bottom.X, this.texCoordsPoints.front.left_bottom.Y,
+    // Back face
+    this.texCoordsPoints.back.right_top.X, this.texCoordsPoints.back.right_top.Y, this.texCoordsPoints.back.left_top.X, this.texCoordsPoints.back.left_top.Y, this.texCoordsPoints.back.right_bottom.X, this.texCoordsPoints.back.right_bottom.Y, this.texCoordsPoints.back.left_bottom.X, this.texCoordsPoints.back.left_bottom.Y,
+    // Top face
+    this.texCoordsPoints.top.right_top.X, this.texCoordsPoints.top.right_top.Y, this.texCoordsPoints.top.left_top.X, this.texCoordsPoints.top.left_top.Y, this.texCoordsPoints.top.right_bottom.X, this.texCoordsPoints.top.right_bottom.Y, this.texCoordsPoints.top.left_bottom.X, this.texCoordsPoints.top.left_bottom.Y,
+    // Bottom face
+    this.texCoordsPoints.bottom.right_top.X, this.texCoordsPoints.bottom.right_top.Y, this.texCoordsPoints.bottom.left_top.X, this.texCoordsPoints.bottom.left_top.Y, this.texCoordsPoints.bottom.right_bottom.X, this.texCoordsPoints.bottom.right_bottom.Y, this.texCoordsPoints.bottom.left_bottom.X, this.texCoordsPoints.bottom.left_bottom.Y,
+    // Right face
+    this.texCoordsPoints.right.right_top.X, this.texCoordsPoints.right.right_top.Y, this.texCoordsPoints.right.left_top.X, this.texCoordsPoints.right.left_top.Y, this.texCoordsPoints.right.right_bottom.X, this.texCoordsPoints.right.right_bottom.Y, this.texCoordsPoints.right.left_bottom.X, this.texCoordsPoints.right.left_bottom.Y,
+    // Left face
     this.texCoordsPoints.left.right_top.X, this.texCoordsPoints.left.right_top.Y, this.texCoordsPoints.left.left_top.X, this.texCoordsPoints.left.left_top.Y, this.texCoordsPoints.left.right_bottom.X, this.texCoordsPoints.left.right_bottom.Y, this.texCoordsPoints.left.left_bottom.X, this.texCoordsPoints.left.left_bottom.Y]);
   }
-
   get indices() {
-    return [0, 1, 2, 0, 2, 3, // front
-    4, 5, 6, 4, 6, 7, // back
-    8, 9, 10, 8, 10, 11, // top
-    12, 13, 14, 12, 14, 15, // bottom
-    16, 17, 18, 16, 18, 19, // right
+    return [0, 1, 2, 0, 2, 3,
+    // front
+    4, 5, 6, 4, 6, 7,
+    // back
+    8, 9, 10, 8, 10, 11,
+    // top
+    12, 13, 14, 12, 14, 15,
+    // bottom
+    16, 17, 18, 16, 18, 19,
+    // right
     20, 21, 22, 20, 22, 23 // left
     ];
   }
-
   get color() {
-    return new Float32Array([// Front face
-    this.colorData.Front.pointA.r, this.colorData.Front.pointA.g, this.colorData.Front.pointA.b, this.colorData.Front.pointA.ALPHA(), this.colorData.Front.pointB.r, this.colorData.Front.pointB.g, this.colorData.Front.pointB.b, this.colorData.Front.pointB.ALPHA(), this.colorData.Front.pointC.r, this.colorData.Front.pointC.g, this.colorData.Front.pointC.b, this.colorData.Front.pointC.ALPHA(), this.colorData.Front.pointD.r, this.colorData.Front.pointD.g, this.colorData.Front.pointD.b, this.colorData.Front.pointD.ALPHA(), // Right face
-    this.colorData.Right.pointA.r, this.colorData.Right.pointA.g, this.colorData.Right.pointA.b, this.colorData.Right.pointA.ALPHA(), this.colorData.Right.pointB.r, this.colorData.Right.pointB.g, this.colorData.Right.pointB.b, this.colorData.Right.pointB.ALPHA(), this.colorData.Right.pointC.r, this.colorData.Right.pointC.g, this.colorData.Right.pointC.b, this.colorData.Right.pointC.ALPHA(), this.colorData.Right.pointD.r, this.colorData.Right.pointD.g, this.colorData.Right.pointD.b, this.colorData.Right.pointD.ALPHA(), // Back face
-    this.colorData.Back.pointA.r, this.colorData.Back.pointA.g, this.colorData.Back.pointA.b, this.colorData.Back.pointA.ALPHA(), this.colorData.Back.pointB.r, this.colorData.Back.pointB.g, this.colorData.Back.pointB.b, this.colorData.Back.pointB.ALPHA(), this.colorData.Back.pointC.r, this.colorData.Back.pointC.g, this.colorData.Back.pointC.b, this.colorData.Back.pointC.ALPHA(), this.colorData.Back.pointD.r, this.colorData.Back.pointD.g, this.colorData.Back.pointD.b, this.colorData.Back.pointD.ALPHA(), // Left face
-    this.colorData.Left.pointA.r, this.colorData.Left.pointA.g, this.colorData.Left.pointA.b, this.colorData.Left.pointA.ALPHA(), this.colorData.Left.pointB.r, this.colorData.Left.pointB.g, this.colorData.Left.pointB.b, this.colorData.Left.pointB.ALPHA(), this.colorData.Left.pointC.r, this.colorData.Left.pointC.g, this.colorData.Left.pointC.b, this.colorData.Left.pointC.ALPHA(), this.colorData.Left.pointD.r, this.colorData.Left.pointD.g, this.colorData.Left.pointD.b, this.colorData.Left.pointD.ALPHA(), // Bottom left
-    this.colorData.Bottom.pointA.r, this.colorData.Bottom.pointA.g, this.colorData.Bottom.pointA.b, this.colorData.Bottom.pointA.ALPHA(), this.colorData.Bottom.pointB.r, this.colorData.Bottom.pointB.g, this.colorData.Bottom.pointB.b, this.colorData.Bottom.pointB.ALPHA(), this.colorData.Bottom.pointC.r, this.colorData.Bottom.pointC.g, this.colorData.Bottom.pointC.b, this.colorData.Bottom.pointC.ALPHA(), this.colorData.Bottom.pointD.r, this.colorData.Bottom.pointD.g, this.colorData.Bottom.pointD.b, this.colorData.Bottom.pointD.ALPHA(), // Bottom right BottomRight
+    return new Float32Array([
+    // Front face
+    this.colorData.Front.pointA.r, this.colorData.Front.pointA.g, this.colorData.Front.pointA.b, this.colorData.Front.pointA.ALPHA(), this.colorData.Front.pointB.r, this.colorData.Front.pointB.g, this.colorData.Front.pointB.b, this.colorData.Front.pointB.ALPHA(), this.colorData.Front.pointC.r, this.colorData.Front.pointC.g, this.colorData.Front.pointC.b, this.colorData.Front.pointC.ALPHA(), this.colorData.Front.pointD.r, this.colorData.Front.pointD.g, this.colorData.Front.pointD.b, this.colorData.Front.pointD.ALPHA(),
+    // Right face
+    this.colorData.Right.pointA.r, this.colorData.Right.pointA.g, this.colorData.Right.pointA.b, this.colorData.Right.pointA.ALPHA(), this.colorData.Right.pointB.r, this.colorData.Right.pointB.g, this.colorData.Right.pointB.b, this.colorData.Right.pointB.ALPHA(), this.colorData.Right.pointC.r, this.colorData.Right.pointC.g, this.colorData.Right.pointC.b, this.colorData.Right.pointC.ALPHA(), this.colorData.Right.pointD.r, this.colorData.Right.pointD.g, this.colorData.Right.pointD.b, this.colorData.Right.pointD.ALPHA(),
+    // Back face
+    this.colorData.Back.pointA.r, this.colorData.Back.pointA.g, this.colorData.Back.pointA.b, this.colorData.Back.pointA.ALPHA(), this.colorData.Back.pointB.r, this.colorData.Back.pointB.g, this.colorData.Back.pointB.b, this.colorData.Back.pointB.ALPHA(), this.colorData.Back.pointC.r, this.colorData.Back.pointC.g, this.colorData.Back.pointC.b, this.colorData.Back.pointC.ALPHA(), this.colorData.Back.pointD.r, this.colorData.Back.pointD.g, this.colorData.Back.pointD.b, this.colorData.Back.pointD.ALPHA(),
+    // Left face
+    this.colorData.Left.pointA.r, this.colorData.Left.pointA.g, this.colorData.Left.pointA.b, this.colorData.Left.pointA.ALPHA(), this.colorData.Left.pointB.r, this.colorData.Left.pointB.g, this.colorData.Left.pointB.b, this.colorData.Left.pointB.ALPHA(), this.colorData.Left.pointC.r, this.colorData.Left.pointC.g, this.colorData.Left.pointC.b, this.colorData.Left.pointC.ALPHA(), this.colorData.Left.pointD.r, this.colorData.Left.pointD.g, this.colorData.Left.pointD.b, this.colorData.Left.pointD.ALPHA(),
+    // Bottom left
+    this.colorData.Bottom.pointA.r, this.colorData.Bottom.pointA.g, this.colorData.Bottom.pointA.b, this.colorData.Bottom.pointA.ALPHA(), this.colorData.Bottom.pointB.r, this.colorData.Bottom.pointB.g, this.colorData.Bottom.pointB.b, this.colorData.Bottom.pointB.ALPHA(), this.colorData.Bottom.pointC.r, this.colorData.Bottom.pointC.g, this.colorData.Bottom.pointC.b, this.colorData.Bottom.pointC.ALPHA(), this.colorData.Bottom.pointD.r, this.colorData.Bottom.pointD.g, this.colorData.Bottom.pointD.b, this.colorData.Bottom.pointD.ALPHA(),
+    // Bottom right BottomRight
     this.colorData.Top.pointA.r, this.colorData.Top.pointA.g, this.colorData.Top.pointA.b, this.colorData.Top.pointA.ALPHA(), this.colorData.Top.pointB.r, this.colorData.Top.pointB.g, this.colorData.Top.pointB.b, this.colorData.Top.pointB.ALPHA(), this.colorData.Top.pointC.r, this.colorData.Top.pointC.g, this.colorData.Top.pointC.b, this.colorData.Top.pointC.ALPHA(), this.colorData.Top.pointD.r, this.colorData.Top.pointD.g, this.colorData.Top.pointD.b, this.colorData.Top.pointD.ALPHA()]);
   }
-
 }
-
 exports.CubeVertex = CubeVertex;
-
 class PiramideVertex {
   constructor(root) {
     this.root = root;
@@ -11982,112 +10521,102 @@ class PiramideVertex {
       pointB: new COLOR_ALPHA(0.0, 0.0, 1.0, 1.0),
       pointC: new COLOR_ALPHA(0.0, 1.0, 0.0, 1.0)
     };
-
     this.colorData.SetRedForAll = function (red_) {
       // Front
       this.Front.pointA.r = red_;
       this.Front.pointB.r = red_;
-      this.Front.pointC.r = red_; // Right
-
+      this.Front.pointC.r = red_;
+      // Right
       this.Right.pointA.r = red_;
       this.Right.pointB.r = red_;
-      this.Right.pointC.r = red_; // Back
-
+      this.Right.pointC.r = red_;
+      // Back
       this.Back.pointA.r = red_;
       this.Back.pointB.r = red_;
-      this.Back.pointC.r = red_; // Left
-
+      this.Back.pointC.r = red_;
+      // Left
       this.Left.pointA.r = red_;
       this.Left.pointB.r = red_;
-      this.Left.pointC.r = red_; // Bottom left
-
+      this.Left.pointC.r = red_;
+      // Bottom left
       this.Bottom.pointA.r = red_;
       this.Bottom.pointB.r = red_;
-      this.Bottom.pointC.r = red_; // Bottom right
-
+      this.Bottom.pointC.r = red_;
+      // Bottom right
       this.BottomRight.pointA.r = red_;
       this.BottomRight.pointB.r = red_;
       this.BottomRight.pointC.r = red_;
-
       _manifest.default.operation.piramide_buffer_procedure(this.parent);
     };
-
     this.colorData.SetGreenForAll = function (color_) {
       // Front face
       this.Front.pointA.g = color_;
       this.Front.pointB.g = color_;
-      this.Front.pointC.g = color_; // Right face
-
+      this.Front.pointC.g = color_;
+      // Right face
       this.Right.pointA.g = color_;
       this.Right.pointB.g = color_;
-      this.Right.pointC.g = color_; // Back face
-
+      this.Right.pointC.g = color_;
+      // Back face
       this.Back.pointA.g = color_;
       this.Back.pointB.g = color_;
-      this.Back.pointC.g = color_; // Left face
-
+      this.Back.pointC.g = color_;
+      // Left face
       this.Left.pointA.g = color_;
       this.Left.pointB.g = color_;
-      this.Left.pointC.g = color_; // Bottom left
-
+      this.Left.pointC.g = color_;
+      // Bottom left
       this.Bottom.pointA.g = color_;
       this.Bottom.pointB.g = color_;
-      this.Bottom.pointC.g = color_; // Bottom right BottomRight
-
+      this.Bottom.pointC.g = color_;
+      // Bottom right BottomRight
       this.BottomRight.pointA.g = color_;
       this.BottomRight.pointB.g = color_;
       this.BottomRight.pointC.g = color_;
-
       _manifest.default.operation.piramide_buffer_procedure(this.parent);
     };
-
     this.colorData.SetBlueForAll = function (color_) {
       // Front face
       this.Front.pointA.b = color_;
       this.Front.pointB.b = color_;
-      this.Front.pointC.b = color_; // Right face
-
+      this.Front.pointC.b = color_;
+      // Right face
       this.Right.pointA.b = color_;
       this.Right.pointB.b = color_;
-      this.Right.pointC.b = color_; // Back face
-
+      this.Right.pointC.b = color_;
+      // Back face
       this.Back.pointA.b = color_;
       this.Back.pointB.b = color_;
-      this.Back.pointC.b = color_; // Left face
-
+      this.Back.pointC.b = color_;
+      // Left face
       this.Left.pointA.b = color_;
       this.Left.pointB.b = color_;
-      this.Left.pointC.b = color_; // Bottom left
-
+      this.Left.pointC.b = color_;
+      // Bottom left
       this.Bottom.pointA.b = color_;
       this.Bottom.pointB.b = color_;
-      this.Bottom.pointC.b = color_; // Bottom right BottomRight
-
+      this.Bottom.pointC.b = color_;
+      // Bottom right BottomRight
       this.BottomRight.pointA.b = color_;
       this.BottomRight.pointB.b = color_;
       this.BottomRight.pointC.b = color_;
-
       _manifest.default.operation.piramide_buffer_procedure(this.parent);
     };
   }
-
   setScale(scale, em) {
     this.size = scale;
     this.basePoint = 1.0 * this.size;
     this.basePointNeg = -1.0 * this.size;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         scale: scale
       },
       netObjId: this.nameUniq
     });
     if (this.dynamicBuffer == true) return;
-
     _manifest.default.operation.piramide_buffer_procedure(this.root);
-
     return "update vertex array prototypical";
   }
-
   setSpitz(newValueFloat, em) {
     this.spitz = newValueFloat;
     if (typeof em === 'undefined') _engine.net.connection.send({
@@ -12097,76 +10626,100 @@ class PiramideVertex {
       netObjId: this.nameUniq
     });
     if (this.dynamicBuffer == true) return;
-
     _manifest.default.operation.piramide_buffer_procedure(this.root);
-  } //from cube
-
-
+  }
+  //from cube
   get verticesC() {
-    return new Float32Array([// Front face
-    -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 0.0, 15.0, 0.0, 0.0, 15.0, 0.0, // Back face
-    -1.0, -1.0, -1.0, 0.0, 15.0, 0.0, 0.0, 15.0, 0.0, 1.0, -1.0, -1.0, // Top face
-    0.0, 15.0, 0.0, 0.0, 15.0, 0.0, 0.0, 15.0, 0.0, 0.0, 15.0, 0.0, // Bottom face
-    -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0, // Right face
-    1.0, -1.0, -1.0, 0.0, 15.0, 0.0, 0.0, 15.0, 0.0, 1.0, -1.0, 1.0, // Left face
+    return new Float32Array([
+    // Front face
+    -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 0.0, 15.0, 0.0, 0.0, 15.0, 0.0,
+    // Back face
+    -1.0, -1.0, -1.0, 0.0, 15.0, 0.0, 0.0, 15.0, 0.0, 1.0, -1.0, -1.0,
+    // Top face
+    0.0, 15.0, 0.0, 0.0, 15.0, 0.0, 0.0, 15.0, 0.0, 0.0, 15.0, 0.0,
+    // Bottom face
+    -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0,
+    // Right face
+    1.0, -1.0, -1.0, 0.0, 15.0, 0.0, 0.0, 15.0, 0.0, 1.0, -1.0, 1.0,
+    // Left face
     -1.0, -1.0, -1.0, -1.0, -1.0, 1.0, 0.0, 15.0, 0.0, 0.0, 15.0, 0.0]);
   }
-
   get normals() {
     // from cube
-    return new Float32Array([// Front face
-    0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, // Back face
-    0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, // Top face
-    0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, // Bottom face
-    0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, // Right face
-    1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, // Left face
+    return new Float32Array([
+    // Front face
+    0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
+    // Back face
+    0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0,
+    // Top face
+    0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,
+    // Bottom face
+    0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0,
+    // Right face
+    1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0,
+    // Left face
     -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0]);
-  } // from cube
-
-
+  }
+  // from cube
   get texCoords() {
-    return new Float32Array([// Front face
-    0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, // Back face
-    1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, // Top face
-    0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, // Bottom face
-    1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, // Right face
-    1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, // Left face
+    return new Float32Array([
+    // Front face
+    0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+    // Back face
+    1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0,
+    // Top face
+    0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
+    // Bottom face
+    1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,
+    // Right face
+    1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0,
+    // Left face
     0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0]);
   }
-
   get indices() {
-    return [0, 1, 2, 0, 2, 3, // Front face
-    4, 5, 6, 4, 6, 7, // Back face
-    8, 9, 10, 8, 10, 11, // Top face
-    12, 13, 14, 12, 14, 15, // Bottom face
-    16, 17, 18, 16, 18, 19, // Right face
+    return [0, 1, 2, 0, 2, 3,
+    // Front face
+    4, 5, 6, 4, 6, 7,
+    // Back face
+    8, 9, 10, 8, 10, 11,
+    // Top face
+    12, 13, 14, 12, 14, 15,
+    // Bottom face
+    16, 17, 18, 16, 18, 19,
+    // Right face
     20, 21, 22, 20, 22, 23 // Left face
     ];
   }
-
   get color() {
-    return new Float32Array([// Front face
-    this.colorData.Front.pointA.r, this.colorData.Front.pointA.g, this.colorData.Front.pointA.b, this.colorData.Front.pointA.ALPHA(), this.colorData.Front.pointB.r, this.colorData.Front.pointB.g, this.colorData.Front.pointB.b, this.colorData.Front.pointB.ALPHA(), this.colorData.Front.pointC.r, this.colorData.Front.pointC.g, this.colorData.Front.pointC.b, this.colorData.Front.pointC.ALPHA(), // Right face
-    this.colorData.Right.pointA.r, this.colorData.Right.pointA.g, this.colorData.Right.pointA.b, this.colorData.Right.pointA.ALPHA(), this.colorData.Right.pointB.r, this.colorData.Right.pointB.g, this.colorData.Right.pointB.b, this.colorData.Right.pointB.ALPHA(), this.colorData.Right.pointC.r, this.colorData.Right.pointC.g, this.colorData.Right.pointC.b, this.colorData.Right.pointC.ALPHA(), // Back face
-    this.colorData.Back.pointA.r, this.colorData.Back.pointA.g, this.colorData.Back.pointA.b, this.colorData.Back.pointA.ALPHA(), this.colorData.Back.pointB.r, this.colorData.Back.pointB.g, this.colorData.Back.pointB.b, this.colorData.Back.pointB.ALPHA(), this.colorData.Back.pointC.r, this.colorData.Back.pointC.g, this.colorData.Back.pointC.b, this.colorData.Back.pointC.ALPHA(), // Left face
-    this.colorData.Left.pointA.r, this.colorData.Left.pointA.g, this.colorData.Left.pointA.b, this.colorData.Left.pointA.ALPHA(), this.colorData.Left.pointB.r, this.colorData.Left.pointB.g, this.colorData.Left.pointB.b, this.colorData.Left.pointB.ALPHA(), this.colorData.Left.pointC.r, this.colorData.Left.pointC.g, this.colorData.Left.pointC.b, this.colorData.Left.pointC.ALPHA(), // Bottom left
-    this.colorData.Bottom.pointA.r, this.colorData.Bottom.pointA.g, this.colorData.Bottom.pointA.b, this.colorData.Bottom.pointA.ALPHA(), this.colorData.Bottom.pointB.r, this.colorData.Bottom.pointB.g, this.colorData.Bottom.pointB.b, this.colorData.Bottom.pointB.ALPHA(), this.colorData.Bottom.pointC.r, this.colorData.Bottom.pointC.g, this.colorData.Bottom.pointC.b, this.colorData.Bottom.pointC.ALPHA(), // Bottom right
+    return new Float32Array([
+    // Front face
+    this.colorData.Front.pointA.r, this.colorData.Front.pointA.g, this.colorData.Front.pointA.b, this.colorData.Front.pointA.ALPHA(), this.colorData.Front.pointB.r, this.colorData.Front.pointB.g, this.colorData.Front.pointB.b, this.colorData.Front.pointB.ALPHA(), this.colorData.Front.pointC.r, this.colorData.Front.pointC.g, this.colorData.Front.pointC.b, this.colorData.Front.pointC.ALPHA(),
+    // Right face
+    this.colorData.Right.pointA.r, this.colorData.Right.pointA.g, this.colorData.Right.pointA.b, this.colorData.Right.pointA.ALPHA(), this.colorData.Right.pointB.r, this.colorData.Right.pointB.g, this.colorData.Right.pointB.b, this.colorData.Right.pointB.ALPHA(), this.colorData.Right.pointC.r, this.colorData.Right.pointC.g, this.colorData.Right.pointC.b, this.colorData.Right.pointC.ALPHA(),
+    // Back face
+    this.colorData.Back.pointA.r, this.colorData.Back.pointA.g, this.colorData.Back.pointA.b, this.colorData.Back.pointA.ALPHA(), this.colorData.Back.pointB.r, this.colorData.Back.pointB.g, this.colorData.Back.pointB.b, this.colorData.Back.pointB.ALPHA(), this.colorData.Back.pointC.r, this.colorData.Back.pointC.g, this.colorData.Back.pointC.b, this.colorData.Back.pointC.ALPHA(),
+    // Left face
+    this.colorData.Left.pointA.r, this.colorData.Left.pointA.g, this.colorData.Left.pointA.b, this.colorData.Left.pointA.ALPHA(), this.colorData.Left.pointB.r, this.colorData.Left.pointB.g, this.colorData.Left.pointB.b, this.colorData.Left.pointB.ALPHA(), this.colorData.Left.pointC.r, this.colorData.Left.pointC.g, this.colorData.Left.pointC.b, this.colorData.Left.pointC.ALPHA(),
+    // Bottom left
+    this.colorData.Bottom.pointA.r, this.colorData.Bottom.pointA.g, this.colorData.Bottom.pointA.b, this.colorData.Bottom.pointA.ALPHA(), this.colorData.Bottom.pointB.r, this.colorData.Bottom.pointB.g, this.colorData.Bottom.pointB.b, this.colorData.Bottom.pointB.ALPHA(), this.colorData.Bottom.pointC.r, this.colorData.Bottom.pointC.g, this.colorData.Bottom.pointC.b, this.colorData.Bottom.pointC.ALPHA(),
+    // Bottom right
     this.colorData.BottomRight.pointA.r, this.colorData.BottomRight.pointA.g, this.colorData.BottomRight.pointA.b, this.colorData.BottomRight.pointA.ALPHA(), this.colorData.BottomRight.pointB.r, this.colorData.BottomRight.pointB.g, this.colorData.BottomRight.pointB.b, this.colorData.BottomRight.pointB.ALPHA(), this.colorData.BottomRight.pointC.r, this.colorData.BottomRight.pointC.g, this.colorData.BottomRight.pointC.b, this.colorData.BottomRight.pointC.ALPHA()]);
   }
-
   get vertices() {
-    return new Float32Array([0.0, this.basePoint + this.spitz, 0.0, this.basePointNeg, this.basePointNeg, this.basePoint, this.basePoint, this.basePointNeg, this.basePoint, // Right face
-    0.0, this.basePoint + this.spitz, 0.0, this.basePoint, this.basePointNeg, this.basePoint, this.basePoint, this.basePointNeg, this.basePointNeg, // Back face
-    0.0, this.basePoint + this.spitz, 0.0, this.basePoint, this.basePointNeg, this.basePointNeg, this.basePointNeg, this.basePointNeg, this.basePointNeg, // Left face
-    0.0, this.basePoint + this.spitz, 0.0, this.basePointNeg, this.basePointNeg, this.basePointNeg, this.basePointNeg, this.basePointNeg, this.basePoint, //Bottom left
-    this.basePointNeg, this.basePointNeg, this.basePoint, this.basePoint, this.basePointNeg, this.basePoint, this.basePoint, this.basePointNeg, this.basePointNeg, //Bottom right
+    return new Float32Array([0.0, this.basePoint + this.spitz, 0.0, this.basePointNeg, this.basePointNeg, this.basePoint, this.basePoint, this.basePointNeg, this.basePoint,
+    // Right face
+    0.0, this.basePoint + this.spitz, 0.0, this.basePoint, this.basePointNeg, this.basePoint, this.basePoint, this.basePointNeg, this.basePointNeg,
+    // Back face
+    0.0, this.basePoint + this.spitz, 0.0, this.basePoint, this.basePointNeg, this.basePointNeg, this.basePointNeg, this.basePointNeg, this.basePointNeg,
+    // Left face
+    0.0, this.basePoint + this.spitz, 0.0, this.basePointNeg, this.basePointNeg, this.basePointNeg, this.basePointNeg, this.basePointNeg, this.basePoint,
+    //Bottom left
+    this.basePointNeg, this.basePointNeg, this.basePoint, this.basePoint, this.basePointNeg, this.basePoint, this.basePoint, this.basePointNeg, this.basePointNeg,
+    //Bottom right
     this.basePointNeg, this.basePointNeg, this.basePoint, this.basePoint, this.basePointNeg, this.basePointNeg, this.basePointNeg, this.basePointNeg, this.basePointNeg]);
   }
-
 }
-
 exports.PiramideVertex = PiramideVertex;
-
 class sphereVertex {
   createGeoData(root) {
     this.size = root.size;
@@ -12179,12 +10732,10 @@ class sphereVertex {
     this.vertexPositionData = [];
     this.normalData = [];
     this.textureCoordData = [];
-
     for (var latNumber = 0; latNumber <= this.latitudeBands; latNumber++) {
       var theta = latNumber * Math.PI / this.latitudeBands;
       var sinTheta = Math.sin(theta);
       var cosTheta = Math.cos(theta);
-
       for (var longNumber = 0; longNumber <= this.longitudeBands; longNumber++) {
         var phi = longNumber * 2 * Math.PI / this.longitudeBands;
         var sinPhi = Math.sin(phi);
@@ -12204,9 +10755,7 @@ class sphereVertex {
         this.vertexPositionData.push(this.radius * z);
       }
     }
-
     this.indexData = [];
-
     for (var latNumber = 0; latNumber < this.latitudeBands; latNumber++) {
       for (var longNumber = 0; longNumber < this.longitudeBands; longNumber++) {
         var first = latNumber * (this.longitudeBands + 1) + longNumber;
@@ -12220,47 +10769,36 @@ class sphereVertex {
       }
     }
   }
-
   constructor(root) {
     this.root = root;
     this.createGeoData(this.root);
   }
-
   setRadius(scale) {
     this.radius = scale;
     this.root.radius = scale;
-
     if (this.dynamicBuffer == true) {
       this.createGeoData(this.root);
-
       _manifest.default.operation.sphere_buffer_procedure(this.root);
-
       return;
-    } //App.operation.sphere_buffer_procedure(this.root)
+    }
+
+    //App.operation.sphere_buffer_procedure(this.root)
     //return 'update vertex array prototypical';
-
   }
-
   get vertices() {
     return new Float32Array(this.vertexPositionData);
   }
-
   get texCoords() {
     return new Float32Array(this.textureCoordData);
   }
-
   get normals() {
     return new Float32Array(this.normalData);
   }
-
   get indices() {
     return this.indexData;
   }
-
 }
-
 exports.sphereVertex = sphereVertex;
-
 class customVertex {
   createGeoData(root) {
     this.size = root.size;
@@ -12273,13 +10811,11 @@ class customVertex {
     this.vertexPositionData = [];
     this.normalData = [];
     this.textureCoordData = [];
-
     if (this.root.custom_type == "spiral") {
       for (var latNumber = 0; latNumber <= this.latitudeBands; latNumber++) {
         var theta = latNumber * Math.PI / this.latitudeBands;
         var sinTheta = Math.sin(theta);
         var cosTheta = Math.cos(theta);
-
         for (var longNumber = 0; longNumber <= this.longitudeBands; longNumber++) {
           var phi = longNumber * 2 * Math.PI / this.longitudeBands;
           var sinPhi = Math.sin(phi);
@@ -12299,9 +10835,7 @@ class customVertex {
           this.vertexPositionData.push(this.radius * z);
         }
       }
-
       this.indexData = [];
-
       for (var latNumber = 0; latNumber < this.latitudeBands; latNumber++) {
         for (var longNumber = 0; longNumber < this.longitudeBands; longNumber++) {
           var first = latNumber * (this.longitudeBands + 1) + longNumber;
@@ -12328,9 +10862,7 @@ class customVertex {
         this.vertexPositionData.push(this.radius * y);
         this.vertexPositionData.push(this.radius * z);
       }
-
       this.indexData = [];
-
       for (var j = 0; j < 8; j++) {
         var first = 4 * (2 + 1) + j;
         var second = first + 2 + 1;
@@ -12348,7 +10880,6 @@ class customVertex {
         const cos_slices = Math.cos(slice_angle);
         const sin_slices = Math.sin(slice_angle);
         const slice_rad = this.root.outerRad + this.root.inner_rad * cos_slices;
-
         for (let loop = 0; loop <= this.root.loops; ++loop) {
           //   x=(R+r·cos(v))cos(w)
           //   y=(R+r·cos(v))sin(w)
@@ -12365,18 +10896,15 @@ class customVertex {
           this.textureCoordData.push(u);
           this.textureCoordData.push(v);
         }
-      } // 0  1  2  3  4  5
+      }
+      // 0  1  2  3  4  5
       // 6  7  8  9  10 11
       // 12 13 14 15 16 17
-
-
       this.indexData = [];
       const vertsPerSlice = this.root.loops + 1;
-
       for (let i = 0; i < this.root.slices; ++i) {
         let v1 = i * vertsPerSlice;
         let v2 = v1 + vertsPerSlice;
-
         for (let j = 0; j < this.root.loops; ++j) {
           this.indexData.push(v1);
           this.indexData.push(v1 + 1);
@@ -12390,125 +10918,96 @@ class customVertex {
       }
     }
   }
-
   constructor(root) {
     this.root = root;
     this.createGeoData(this.root);
   }
-
   setRadius(scale) {
     this.radius = scale;
     this.root.radius = scale;
-
     if (this.dynamicBuffer == true) {
       this.createGeoData(this.root);
-
       _manifest.default.operation.sphere_buffer_procedure(this.root);
-
       this.root.glDrawElements.numberOfIndicesRender = this.indices.length;
       return;
     }
-
     _manifest.default.operation.sphere_buffer_procedure(this.root);
-
     this.root.glDrawElements.numberOfIndicesRender = this.indices.length;
     return "update vertex array prototypical";
   }
-
   get vertices() {
     return new Float32Array(this.vertexPositionData);
   }
-
   get texCoords() {
     return new Float32Array(this.textureCoordData);
   }
-
   get normals() {
     return new Float32Array(this.normalData);
   }
-
   get indices() {
     return this.indexData;
   }
-
 }
-
 exports.customVertex = customVertex;
-
 function COLOR(r_, g_, b_) {
   var ROOT = this;
   ROOT.r = parseFloat(r_);
   ROOT.g = parseFloat(g_);
   ROOT.b = parseFloat(b_);
-
   ROOT.R = function () {
     return parseFloat(ROOT.r);
   };
-
   ROOT.G = function () {
     return parseFloat(ROOT.g);
   };
-
   ROOT.B = function () {
     return parseFloat(ROOT.b);
   };
-
   ROOT.set = function (r_, g_, b_) {
     ROOT.r = parseFloat(r_);
     ROOT.g = parseFloat(g_);
     ROOT.b = parseFloat(b_);
   };
-
   ROOT.print = function () {
     console.log("color data RGB format : R:" + ROOT.r + "  G:" + ROOT.g + "  B:" + ROOT.b);
   };
 }
-
 function COLOR_ALPHA(r_, g_, b_, a_) {
   var ROOT = this;
   ROOT.r = parseFloat(r_);
   ROOT.g = parseFloat(g_);
   ROOT.b = parseFloat(b_);
-
   if (typeof a_ == "undefined") {
     var a_ = 1.0;
   }
-
   ROOT.a = parseFloat(a_);
-
   ROOT.R = function () {
     return parseFloat(ROOT.r);
   };
-
   ROOT.G = function () {
     return parseFloat(ROOT.g);
   };
-
   ROOT.B = function () {
     return parseFloat(ROOT.b);
   };
-
   ROOT.ALPHA = function () {
     return parseFloat(ROOT.a);
   };
-
   ROOT.set = function (r_, g_, b_, a_) {
     ROOT.r = parseFloat(r_);
     ROOT.g = parseFloat(g_);
     ROOT.b = parseFloat(b_);
     ROOT.a = parseFloat(a_);
   };
-
   ROOT.print = function () {
     console.log("color data RGB format : R:" + ROOT.r + "  G:" + ROOT.g + "  B:" + ROOT.b + "  ALPHA:" + ROOT.ALPHA);
   };
 }
-
 class customVertex_1 {
   createGeoData(root) {
-    if (arguments.length == 0) {// console.log( "test this ?? " );
+    if (arguments.length == 0) {
+      // console.log( "test this ?? " );
     }
-
     var innerRadius = 0.25;
     var outerRadius = outerRadius || innerRadius * 2 || 0.5;
     var slices = slices || 32;
@@ -12522,7 +11021,6 @@ class customVertex_1 {
     var k = 0;
     var t = 0;
     var n = 0;
-
     if (innerRadius == 0) {
       for (i = 0; i < slices; i++) {
         var c = Math.cos(d * i);
@@ -12536,12 +11034,10 @@ class customVertex_1 {
         indices[n++] = i;
         indices[n++] = i == slices - 1 ? 0 : i + 1;
       }
-
       vertices[k++] = vertices[k++] = vertices[k++] = 0;
       texCoords[t++] = texCoords[t++] = 0;
     } else {
       var r = innerRadius / outerRadius;
-
       for (i = 0; i < slices; i++) {
         var c = Math.cos(d * i);
         var s = Math.sin(d * i);
@@ -12556,7 +11052,6 @@ class customVertex_1 {
         texCoords[t++] = 0.5 + 0.5 * c;
         texCoords[t++] = 0.5 + 0.5 * s;
       }
-
       for (i = 0; i < slices - 1; i++) {
         indices[n++] = 2 * i;
         indices[n++] = 2 * i + 1;
@@ -12565,7 +11060,6 @@ class customVertex_1 {
         indices[n++] = 2 * i + 3;
         indices[n++] = 2 * i + 2;
       }
-
       indices[n++] = 2 * i;
       indices[n++] = 2 * i + 1;
       indices[n++] = 1;
@@ -12573,11 +11067,11 @@ class customVertex_1 {
       indices[n++] = 1;
       indices[n++] = 0;
     }
-
     for (i = 0; i < vertexCount; i++) {
       normals[3 * i] = normals[3 * i + 1] = 0;
       normals[3 * i + 2] = 1;
     }
+
     /*
     return {
     vertexPositions: vertices,
@@ -12586,52 +11080,71 @@ class customVertex_1 {
     indices: indices
     };
     */
-
   }
-
 }
-
 exports.customVertex_1 = customVertex_1;
-
 class GeoOfColor {
   constructor(type_) {
     if (typeof type_ != "undefined") {
       if (type_ == "4x4" || type_ == "square") {
-        return new Float32Array([1.0, 0.0, 0.0, 1.0, //Top right
-        0.0, 1.0, 0.0, 1.0, //Top left
-        0.0, 0.0, 1.0, 1.0, //Bottom right
+        return new Float32Array([1.0, 0.0, 0.0, 1.0,
+        //Top right
+        0.0, 1.0, 0.0, 1.0,
+        //Top left
+        0.0, 0.0, 1.0, 1.0,
+        //Bottom right
         0.5, 1.0, 0.5, 1.0 //Bottom left
         ]);
       } else if (type_ == "triangle") {
-        return [1.0, 0.0, 0.0, 1.0, // Top
-        0.0, 1.0, 0.0, 1.0, // Right
+        return [1.0, 0.0, 0.0, 1.0,
+        // Top
+        0.0, 1.0, 0.0, 1.0,
+        // Right
         0.0, 0.0, 1.0, 1.0 // Bottom
         ];
       } else if (type_ == "Piramide4") {
         this.front = "test";
-        return new Float32Array([// Front face
-        1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, // Right face
-        1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, // Back face
-        1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, // Left face
-        1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, // Bottom left
-        0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, // Bottom right
+        return new Float32Array([
+        // Front face
+        1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0,
+        // Right face
+        1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0,
+        // Back face
+        1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0,
+        // Left face
+        1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0,
+        // Bottom left
+        0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0,
+        // Bottom right
         0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0]);
       } else if (type_ == "cube") {
-        return [[1.0, 1.0, 1.0, 1.0], // Front
-        [1.0, 1.0, 0.0, 1.0], // Back
-        [0.0, 1.0, 0.0, 1.0], // Top
-        [1.0, 0.5, 0.5, 1.0], // Bottom
-        [1.0, 0.0, 1.0, 1.0], // Right
+        return [[1.0, 1.0, 1.0, 1.0],
+        // Front
+        [1.0, 1.0, 0.0, 1.0],
+        // Back
+        [0.0, 1.0, 0.0, 1.0],
+        // Top
+        [1.0, 0.5, 0.5, 1.0],
+        // Bottom
+        [1.0, 0.0, 1.0, 1.0],
+        // Right
         [0.0, 0.0, 1.0, 1.0] // Left
         ];
       } else if (type_ == "cubelight" || type_ == "cube light") {
-        return new Float32Array([// F
-        0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, // B
-        0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, // T
-        0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, // Bo
-        0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, // R
-        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, // L
-        -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0]); // org
+        return new Float32Array([
+        // F
+        0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
+        // B
+        0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
+        // T
+        0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
+        // Bo
+        0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0,
+        // R
+        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,
+        // L
+        -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0]);
+        // org
         // return new Float32Array( [
         //   // Front face
         //   0.0, 0.0, 1.0, 1, 0.0, 0.0, 1.0, 1, 0.0, 0.0, 1.0, 1, 0.0, 0.0, 1.0, 1,
@@ -12648,17 +11161,19 @@ class GeoOfColor {
         // ]);
       }
     } else {
-      return [1.0, 0.0, 0.0, 1.0, // Top right
-      0.0, 1.0, 0.0, 1.0, // Top left
-      0.0, 0.0, 1.0, 1.0, // Bottom right
+      return [1.0, 0.0, 0.0, 1.0,
+      // Top right
+      0.0, 1.0, 0.0, 1.0,
+      // Top left
+      0.0, 0.0, 1.0, 1.0,
+      // Bottom right
       0.5, 1.0, 0.5, 1.0 // Bottom left
       ];
     }
   }
+}
 
-} // export function ring(innerRadius, outerRadius, slices) {}
-
-
+// export function ring(innerRadius, outerRadius, slices) {}
 exports.GeoOfColor = GeoOfColor;
 
 },{"../program/manifest":99,"./engine":61,"./utility":88}],68:[function(require,module,exports){
@@ -12667,30 +11182,28 @@ exports.GeoOfColor = GeoOfColor;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.loadShaders11 = loadShaders11;
 exports.genInitFSTriangle = genInitFSTriangle;
-exports.getInitVSTriangle = getInitVSTriangle;
-exports.getInitFSCubeTexLight = getInitFSCubeTexLight;
-exports.getInitVSCubeTexLight = getInitVSCubeTexLight;
-exports.getInitFSSquare = getInitFSSquare;
-exports.getInitVSSquare = getInitVSSquare;
 exports.getInitFSCube = getInitFSCube;
-exports.getInitVSCube = getInitVSCube;
-exports.getInitFSCubeTex = getInitFSCubeTex;
-exports.getInitVSCubeTex = getInitVSCubeTex;
-exports.getInitFSObj = getInitFSObj;
-exports.getInitVSObj = getInitVSObj;
-exports.getInitFSPyramid = getInitFSPyramid;
-exports.getInitVSPyramid = getInitVSPyramid;
-exports.getInitFSSquareTex = getInitFSSquareTex;
-exports.getInitVSSquareTex = getInitVSSquareTex;
-exports.getInitFSSphereLightTex = getInitFSSphereLightTex;
-exports.getInitVSSphereLightTex = getInitVSSphereLightTex;
 exports.getInitFSCubeMap = getInitFSCubeMap;
+exports.getInitFSCubeTex = getInitFSCubeTex;
+exports.getInitFSCubeTexLight = getInitFSCubeTexLight;
+exports.getInitFSObj = getInitFSObj;
+exports.getInitFSPyramid = getInitFSPyramid;
+exports.getInitFSSphereLightTex = getInitFSSphereLightTex;
+exports.getInitFSSquare = getInitFSSquare;
+exports.getInitFSSquareTex = getInitFSSquareTex;
+exports.getInitVSCube = getInitVSCube;
 exports.getInitVSCubeMap = getInitVSCubeMap;
-
+exports.getInitVSCubeTex = getInitVSCubeTex;
+exports.getInitVSCubeTexLight = getInitVSCubeTexLight;
+exports.getInitVSObj = getInitVSObj;
+exports.getInitVSPyramid = getInitVSPyramid;
+exports.getInitVSSphereLightTex = getInitVSSphereLightTex;
+exports.getInitVSSquare = getInitVSSquare;
+exports.getInitVSSquareTex = getInitVSSquareTex;
+exports.getInitVSTriangle = getInitVSTriangle;
+exports.loadShaders11 = loadShaders11;
 var _utility = require("./utility");
-
 /**
  * @description From 1.7.11
  * Initial Shaders coming from code.
@@ -12701,6 +11214,7 @@ var _utility = require("./utility");
  * - For textures program use regenerate shader procedure.
  * - Can be selective for optimisation.
  */
+
 function loadShaders11() {
   genInitFSTriangle();
   getInitVSTriangle();
@@ -12721,9 +11235,9 @@ function loadShaders11() {
   getInitVSCubeMap();
   getInitFSCubeMap();
   getInitFSSquareTex();
-  getInitVSSquareTex(); // console.info("Shaders ready.");
+  getInitVSSquareTex();
+  // console.info("Shaders ready.");
 }
-
 function genInitFSTriangle() {
   const f = `
   precision mediump float;
@@ -12733,10 +11247,8 @@ function genInitFSTriangle() {
     gl_FragColor = vColor;
   }
   `;
-
   _utility.scriptManager.LOAD(f, "triangle-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSTriangle() {
   const f = `
   attribute vec3 aVertexPosition;
@@ -12752,10 +11264,8 @@ function getInitVSTriangle() {
     vColor      = aVertexColor;
   }
   `;
-
   _utility.scriptManager.LOAD(f, "triangle-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSCubeTexLight() {
   const f = `
   precision mediump float;
@@ -12822,10 +11332,8 @@ function getInitFSCubeTexLight() {
     gl_FragColor.rgb += specular;
   }
   `;
-
   _utility.scriptManager.LOAD(f, "cubeLightTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSCubeTexLight() {
   const f = `
   attribute vec3 aVertexPosition;
@@ -12907,10 +11415,8 @@ function getInitVSCubeTexLight() {
       vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
     }
   } `;
-
   _utility.scriptManager.LOAD(f, "cubeLightTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSSquare() {
   const f = `
   precision mediump float;
@@ -12921,10 +11427,8 @@ function getInitFSSquare() {
     gl_FragColor = vColor;
   }
   `;
-
   _utility.scriptManager.LOAD(f, "square-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSSquare() {
   const f = `
   attribute vec3 aVertexPosition;
@@ -12939,10 +11443,8 @@ function getInitVSSquare() {
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vColor      = aVertexColor;
   }`;
-
   _utility.scriptManager.LOAD(f, "square-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSCube() {
   const f = `
   precision mediump float;
@@ -12952,10 +11454,8 @@ function getInitFSCube() {
   void main(void) {
     gl_FragColor = vColor;
   }`;
-
   _utility.scriptManager.LOAD(f, "cube-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSCube() {
   const f = `
   attribute vec3 aVertexPosition;
@@ -12970,10 +11470,8 @@ function getInitVSCube() {
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vColor      = aVertexColor;
   }`;
-
   _utility.scriptManager.LOAD(f, "cube-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSCubeTex() {
   const f = `
   precision mediump float;
@@ -12984,10 +11482,8 @@ function getInitFSCubeTex() {
   void main(void) {
     gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
   }`;
-
   _utility.scriptManager.LOAD(f, "cubeTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSCubeTex() {
   const f = `
   #version 300 es
@@ -13005,10 +11501,8 @@ function getInitVSCubeTex() {
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vTextureCoord = aTextureCoord;
   }`;
-
   _utility.scriptManager.LOAD(f, "cubeTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSObj() {
   const f = `
   precision mediump float;
@@ -13024,10 +11518,8 @@ function getInitFSObj() {
     vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
     gl_FragColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
   }`;
-
   _utility.scriptManager.LOAD(f, "obj-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSObj() {
   const f = `
   attribute vec3 aVertexPosition;
@@ -13062,10 +11554,8 @@ function getInitVSObj() {
     }
   }
 `;
-
   _utility.scriptManager.LOAD(f, "obj-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSPyramid() {
   const f = `
   precision mediump float;
@@ -13074,10 +11564,8 @@ function getInitFSPyramid() {
   void main(void) {
     gl_FragColor = vColor;
   }`;
-
   _utility.scriptManager.LOAD(f, "pyramid-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSPyramid() {
   const f = `
   attribute vec3 aVertexPosition;
@@ -13093,10 +11581,8 @@ function getInitVSPyramid() {
     vColor      = aVertexColor;
   }
 `;
-
   _utility.scriptManager.LOAD(f, "pyramid-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSSquareTex() {
   const f = `
   precision mediump float;
@@ -13144,10 +11630,8 @@ function getInitFSSquareTex() {
     // gl_FragColor.rgb += specular;
   }
   `;
-
   _utility.scriptManager.LOAD(f, "squareTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSSquareTex() {
   const f = `
   attribute vec3 aVertexPosition;
@@ -13201,11 +11685,9 @@ function getInitVSSquareTex() {
     }
   }
 `;
-
-  _utility.scriptManager.LOAD(f, "squareTex-shader-vs", "x-shader/x-vertex", "shaders"); // console.log(" squareTex-shader-vs v")
-
+  _utility.scriptManager.LOAD(f, "squareTex-shader-vs", "x-shader/x-vertex", "shaders");
+  // console.log(" squareTex-shader-vs v")
 }
-
 function getInitFSSphereLightTex() {
   const f = `// #version 300 es
   precision mediump float;
@@ -13230,10 +11712,8 @@ function getInitFSSphereLightTex() {
 
   }
   `;
-
   _utility.scriptManager.LOAD(f, "sphereLightTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSSphereLightTex() {
   const f = `
   attribute vec3 aVertexPosition;
@@ -13268,10 +11748,8 @@ function getInitVSSphereLightTex() {
     }
   }
 `;
-
   _utility.scriptManager.LOAD(f, "sphereLightTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSCubeMap() {
   const f = `
   precision mediump float;
@@ -13333,10 +11811,8 @@ function getInitFSCubeMap() {
     gl_FragColor.rgb += specular;
   }
   `;
-
   _utility.scriptManager.LOAD(f, "cubeMap-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSCubeMap() {
   const f = `
   attribute vec3 aVertexPosition;
@@ -13376,7 +11852,6 @@ function getInitVSCubeMap() {
     }
 
   } `;
-
   _utility.scriptManager.LOAD(f, "cubeMap-shader-vs", "x-shader/x-vertex", "shaders");
 }
 
@@ -13386,30 +11861,28 @@ function getInitVSCubeMap() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.loadShaders300 = loadShaders300;
 exports.genInitFSTriangle = genInitFSTriangle;
-exports.getInitVSTriangle = getInitVSTriangle;
-exports.getInitFSCubeTexLight = getInitFSCubeTexLight;
-exports.getInitVSCubeTexLight = getInitVSCubeTexLight;
-exports.getInitFSSquare = getInitFSSquare;
-exports.getInitVSSquare = getInitVSSquare;
 exports.getInitFSCube = getInitFSCube;
-exports.getInitVSCube = getInitVSCube;
-exports.getInitFSCubeTex = getInitFSCubeTex;
-exports.getInitVSCubeTex = getInitVSCubeTex;
-exports.getInitFSObj = getInitFSObj;
-exports.getInitVSObj = getInitVSObj;
-exports.getInitFSPyramid = getInitFSPyramid;
-exports.getInitVSPyramid = getInitVSPyramid;
-exports.getInitFSSquareTex = getInitFSSquareTex;
-exports.getInitVSSquareTex = getInitVSSquareTex;
-exports.getInitFSSphereLightTex = getInitFSSphereLightTex;
-exports.getInitVSSphereLightTex = getInitVSSphereLightTex;
 exports.getInitFSCubeMap = getInitFSCubeMap;
+exports.getInitFSCubeTex = getInitFSCubeTex;
+exports.getInitFSCubeTexLight = getInitFSCubeTexLight;
+exports.getInitFSObj = getInitFSObj;
+exports.getInitFSPyramid = getInitFSPyramid;
+exports.getInitFSSphereLightTex = getInitFSSphereLightTex;
+exports.getInitFSSquare = getInitFSSquare;
+exports.getInitFSSquareTex = getInitFSSquareTex;
+exports.getInitVSCube = getInitVSCube;
 exports.getInitVSCubeMap = getInitVSCubeMap;
-
+exports.getInitVSCubeTex = getInitVSCubeTex;
+exports.getInitVSCubeTexLight = getInitVSCubeTexLight;
+exports.getInitVSObj = getInitVSObj;
+exports.getInitVSPyramid = getInitVSPyramid;
+exports.getInitVSSphereLightTex = getInitVSSphereLightTex;
+exports.getInitVSSquare = getInitVSSquare;
+exports.getInitVSSquareTex = getInitVSSquareTex;
+exports.getInitVSTriangle = getInitVSTriangle;
+exports.loadShaders300 = loadShaders300;
 var _utility = require("./utility");
-
 /**
  * @description From 1.9.43
  * Opengles300 in single file.
@@ -13436,7 +11909,6 @@ function loadShaders300() {
   getInitFSSquareTex();
   getInitVSSquareTex();
 }
-
 function genInitFSTriangle() {
   const f = `#version 300 es
   precision mediump float;
@@ -13446,10 +11918,8 @@ function genInitFSTriangle() {
     outColor = vColor;
   }
   `;
-
   _utility.scriptManager.LOAD(f, "triangle-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSTriangle() {
   const f = `#version 300 es
   in vec3 aVertexPosition;
@@ -13464,10 +11934,8 @@ function getInitVSTriangle() {
     vColor      = aVertexColor;
   }
   `;
-
   _utility.scriptManager.LOAD(f, "triangle-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSCubeTexLight() {
   const f = `#version 300 es
   precision mediump float;
@@ -13531,10 +11999,8 @@ function getInitFSCubeTexLight() {
     outColor.rgb += specular;
   }
   `;
-
   _utility.scriptManager.LOAD(f, "cubeLightTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSCubeTexLight() {
   const f = `#version 300 es
   in vec3 aVertexPosition;
@@ -13615,10 +12081,8 @@ function getInitVSCubeTexLight() {
       vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
     }
   } `;
-
   _utility.scriptManager.LOAD(f, "cubeLightTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSSquare() {
   const f = `#version 300 es
   precision mediump float;
@@ -13628,10 +12092,8 @@ function getInitFSSquare() {
     outColor = vColor;
   }
   `;
-
   _utility.scriptManager.LOAD(f, "square-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSSquare() {
   const f = `#version 300 es
   in vec3 aVertexPosition;
@@ -13646,10 +12108,8 @@ function getInitVSSquare() {
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vColor      = aVertexColor;
   }`;
-
   _utility.scriptManager.LOAD(f, "square-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSCube() {
   const f = `#version 300 es
   precision mediump float;
@@ -13658,10 +12118,8 @@ function getInitFSCube() {
   void main(void) {
     outColor = vColor;
   }`;
-
   _utility.scriptManager.LOAD(f, "cube-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSCube() {
   const f = `#version 300 es
   in vec3 aVertexPosition;
@@ -13675,10 +12133,8 @@ function getInitVSCube() {
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vColor      = aVertexColor;
   }`;
-
   _utility.scriptManager.LOAD(f, "cube-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSCubeTex() {
   const f = `#version 300 es
   precision mediump float;
@@ -13688,10 +12144,8 @@ function getInitFSCubeTex() {
   void main(void) {
     outColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
   }`;
-
   _utility.scriptManager.LOAD(f, "cubeTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSCubeTex() {
   const f = `#version 300 es
   #define POSITION_LOCATION 0
@@ -13706,10 +12160,8 @@ function getInitVSCubeTex() {
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vTextureCoord = aTextureCoord;
   }`;
-
   _utility.scriptManager.LOAD(f, "cubeTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSObj() {
   const f = `#version 300 es
   precision mediump float;
@@ -13767,10 +12219,8 @@ function getInitFSObj() {
     // Just add in the specular
     outColor.rgb += specular;
   }`;
-
   _utility.scriptManager.LOAD(f, "obj-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSObj() {
   const f = `#version 300 es
   in vec3 aVertexPosition;
@@ -13852,10 +12302,8 @@ function getInitVSObj() {
     }
   } 
 `;
-
   _utility.scriptManager.LOAD(f, "obj-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSPyramid() {
   const f = `#version 300 es
   precision mediump float;
@@ -13865,10 +12313,8 @@ function getInitFSPyramid() {
   void main(void) {
     outColor = vColor;
   }`;
-
   _utility.scriptManager.LOAD(f, "pyramid-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSPyramid() {
   const f = `#version 300 es
   in vec3 aVertexPosition;
@@ -13883,10 +12329,8 @@ function getInitVSPyramid() {
     vColor      = aVertexColor;
   }
 `;
-
   _utility.scriptManager.LOAD(f, "pyramid-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSSquareTex() {
   const f = `#version 300 es
   precision mediump float;
@@ -13933,10 +12377,8 @@ function getInitFSSquareTex() {
     // gl_FragColor.rgb += specular;
   }
   `;
-
   _utility.scriptManager.LOAD(f, "squareTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSSquareTex() {
   const f = `#version 300 es
   in vec3 aVertexPosition;
@@ -14006,11 +12448,9 @@ function getInitVSSquareTex() {
     }
   }
 `;
-
-  _utility.scriptManager.LOAD(f, "squareTex-shader-vs", "x-shader/x-vertex", "shaders"); // console.log(" squareTex-shader-vs v")
-
+  _utility.scriptManager.LOAD(f, "squareTex-shader-vs", "x-shader/x-vertex", "shaders");
+  // console.log(" squareTex-shader-vs v")
 }
-
 function getInitFSSphereLightTex() {
   const f = `#version 300 es
   precision mediump float;
@@ -14029,10 +12469,8 @@ function getInitFSSphereLightTex() {
     outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
   }
   `;
-
   _utility.scriptManager.LOAD(f, "sphereLightTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSSphereLightTex() {
   const f = `#version 300 es
   in vec3 aVertexPosition;
@@ -14066,10 +12504,8 @@ function getInitVSSphereLightTex() {
     }
   }
 `;
-
   _utility.scriptManager.LOAD(f, "sphereLightTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
-
 function getInitFSCubeMap() {
   const f = `#version 300 es
   precision mediump float;
@@ -14112,10 +12548,8 @@ function getInitFSCubeMap() {
     outColor = texture(u_texture, normal);
     outColor.rgb += specular;
   }`;
-
   _utility.scriptManager.LOAD(f, "cubeMap-shader-fs", "x-shader/x-fragment", "shaders");
 }
-
 function getInitVSCubeMap() {
   const f = `#version 300 es
   in vec3 aVertexPosition;
@@ -14189,7 +12623,6 @@ function getInitVSCubeMap() {
       vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
     }
   } `;
-
   _utility.scriptManager.LOAD(f, "cubeMap-shader-vs", "x-shader/x-vertex", "shaders");
 }
 
@@ -14200,29 +12633,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.reDrawID = exports.animate = void 0;
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var _matrixWorld = require("./matrix-world");
-
 var _engine = require("./engine");
-
 var raycaster = _interopRequireWildcard(require("./raycast"));
-
 var _utility = require("./utility");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 var animate = function (sceneObject) {
   var timeNow = new Date().getTime();
-
   if (_engine.lastTime != 0) {
     var elapsed = timeNow - _engine.lastTime;
-
     if (sceneObject.rotation.rotationSpeed.emit == false) {
       sceneObject.rotation.rotx += sceneObject.rotation.rotSpeedX * elapsed / 1000.0;
       sceneObject.rotation.roty += sceneObject.rotation.rotSpeedY * elapsed / 1000.0;
@@ -14232,48 +12654,38 @@ var animate = function (sceneObject) {
       sceneObject.rotation.rotateY(sceneObject.rotation.roty + sceneObject.rotation.rotSpeedY * elapsed / 1000.0);
       sceneObject.rotation.rotateZ(sceneObject.rotation.rotz + sceneObject.rotation.rotSpeedZ * elapsed / 1000.0);
     }
-
     sceneObject.position.update();
   }
 };
-
 exports.animate = animate;
-var reDrawID = 0;
-exports.reDrawID = reDrawID;
+var reDrawID = exports.reDrawID = 0;
 var secondPass = 0;
 var physicsLooper = 0,
-    lt = 0;
-
+  lt = 0;
 _manifest.default.operation.reDrawGlobal = function (time) {
   (0, _engine.modifyLooper)(0);
   if (_manifest.default.offScreenCanvas == false) exports.reDrawID = reDrawID = requestAnimationFrame(_manifest.default.operation.reDrawGlobal);
-
   _matrixWorld.world.renderPerspective();
-
   for (var t = 0; t < _manifest.default.updateBeforeDraw.length; t++) {
     _manifest.default.updateBeforeDraw[t].UPDATE();
-  } // Physics [cannonjs-matrix engine implementation]
+  }
 
-
+  // Physics [cannonjs-matrix engine implementation]
   if (_matrixWorld.world.physics !== null) {
     var dt = (time - lt) / 1000;
-
     _matrixWorld.world.physics.world.step(1.0 / 60.0, dt, 3);
-
     lt = time;
-
     while (physicsLooper <= _matrixWorld.world.contentList.length - 1) {
       if (_matrixWorld.world.contentList[physicsLooper].physics.enabled) {
         var local = _matrixWorld.world.contentList[physicsLooper];
-
         if (local.physics.currentBody.shapeOrientations.length == 1) {
-          if (local.position.x.toFixed(2) == local.physics.currentBody.position.x.toFixed(2)) {// console.log(' TEST SLEEP RENDER local.position.x', local.position.x.toFixed(2), " VS ", local.physics.currentBody.position.x.toFixed(2))
+          if (local.position.x.toFixed(2) == local.physics.currentBody.position.x.toFixed(2)) {
+            // console.log(' TEST SLEEP RENDER local.position.x', local.position.x.toFixed(2), " VS ", local.physics.currentBody.position.x.toFixed(2))
           } else {
             local.position.SetX(local.physics.currentBody.position.x);
             local.position.SetZ(local.physics.currentBody.position.y);
             local.position.SetY(local.physics.currentBody.position.z);
           }
-
           if (_matrixWorld.world.contentList[physicsLooper].custom_type && _matrixWorld.world.contentList[physicsLooper].custom_type == 'torus') {
             _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]) + 90;
             _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
@@ -14286,12 +12698,12 @@ _manifest.default.operation.reDrawGlobal = function (time) {
             _matrixWorld.world.contentList[physicsLooper].rotation.axis.y = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].y.toFixed(2));
             _matrixWorld.world.contentList[physicsLooper].rotation.axis.z = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].z.toFixed(2));
 
-            if (_matrixWorld.world.contentList[physicsLooper].rotation.x > 0) {
-              console.log('TEST ', _matrixWorld.world.contentList[physicsLooper].rotation.x);
-            } // if(local.physics.currentBody.quaternion.x != 0) world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+            // if (world.contentList[physicsLooper].rotation.x > 0) {
+            // 	 console.log('TEST ' , world.contentList[physicsLooper].rotation.x ) 
+            // }
+            // if(local.physics.currentBody.quaternion.x != 0) world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
             // if(local.physics.currentBody.quaternion.y != 0) world.contentList[physicsLooper].rotation.roty = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
             // if(local.physics.currentBody.quaternion.z != 0) world.contentList[physicsLooper].rotation.rotz = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-
           }
         } else if (local.physics.currentBody.shapeOrientations.length > 1) {
           // subObjs
@@ -14305,27 +12717,28 @@ _manifest.default.operation.reDrawGlobal = function (time) {
           }
         }
       }
-
       physicsLooper++;
     }
-  } // reset to zero
+  }
 
+  // reset to zero
+  physicsLooper = 0;
 
-  physicsLooper = 0; // Must be override for performance 
+  // Must be override for performance 
   // - non FBO and FBO option draw coroutine
+
   // hc 512x512
   // Important camera setup must be in the first place in exe order!
   // Before FB bind
-
   if (_matrixWorld.world.FBOS.length > 0) {
     matrixEngine.Events.camera.pitchMemo = matrixEngine.Events.camera.pitch;
     matrixEngine.Events.camera.yawMemo = matrixEngine.Events.camera.yaw;
     matrixEngine.Events.camera.xPosMemo = matrixEngine.Events.camera.xPos;
     matrixEngine.Events.camera.zPosMemo = matrixEngine.Events.camera.zPos;
     matrixEngine.Events.camera.yPosMemo = matrixEngine.Events.camera.yPos;
-  } // Multi FB
+  }
 
-
+  // Multi FB
   for (var fbindex = 0; fbindex < _matrixWorld.world.FBOS.length; fbindex++) {
     // save samera pos
     // if (typeof world.FBOS[fbindex].settings.xPosMemo === 'undefined') {
@@ -14335,128 +12748,98 @@ _manifest.default.operation.reDrawGlobal = function (time) {
     matrixEngine.Events.camera.zPos = _matrixWorld.world.FBOS[fbindex].settings.cameraZ;
     matrixEngine.Events.camera.pitch = _matrixWorld.world.FBOS[fbindex].settings.pitch;
     matrixEngine.Events.camera.yaw = _matrixWorld.world.FBOS[fbindex].settings.yaw;
-
     _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, _matrixWorld.world.FBOS[fbindex].FB);
-
     _matrixWorld.world.GL.gl.viewport(0, 0, 512, 512);
-
     _matrixWorld.world.GL.gl.clearColor(0.2, 0.2, 0.4, 1.0);
-
     _matrixWorld.world.GL.gl.clear(_matrixWorld.world.GL.gl.COLOR_BUFFER_BIT | _matrixWorld.world.GL.gl.DEPTH_BUFFER_BIT);
-
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
-
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
+    _matrixWorld.world.GL.gl.depthMask(true);
 
-    _matrixWorld.world.GL.gl.depthMask(true); // - draw all `non fbo` and `no blend`
-
-
+    // - draw all `non fbo` and `no blend`
     while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
       if (_matrixWorld.world.contentList[_engine.looper].visible === true && !_matrixWorld.world.contentList[_engine.looper].FBO && _matrixWorld.world.contentList[_engine.looper].glBlend.blendEnabled == false) {
         if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawTriangle(_matrixWorld.world.contentList[_engine.looper], 'noray');
         } else if ('square' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawSquare(_matrixWorld.world.contentList[_engine.looper], 'noray');
         } else if ('cube' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeMap' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper], 'noray');
         } else if (_matrixWorld.world.contentList[_engine.looper].type.indexOf("custom-") != -1) {
           // interest part - frst time draw func taken from object inself not from world.
           // Looks like better solution.
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.contentList[_engine.looper].drawCustom(_matrixWorld.world.contentList[_engine.looper]);
-
-          _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]); //
-
+          _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+          //
         } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawPyramid(_matrixWorld.world.contentList[_engine.looper], 'noray');
         } else if ('obj' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawObj(_matrixWorld.world.contentList[_engine.looper], 'noray');
         } else if ('squareTex' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawSquareTex(_matrixWorld.world.contentList[_engine.looper], 'noray');
         } else if ('sphereLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'sphere' == _matrixWorld.world.contentList[_engine.looper].type || 'generatorLightTex' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawSphere(_matrixWorld.world.contentList[_engine.looper], 'noray');
         }
       }
-
       (0, _engine.modifyLooper)(_engine.looper + 1);
     }
+    (0, _engine.modifyLooper)(0);
 
-    (0, _engine.modifyLooper)(0); // maybe no need here
-
+    // maybe no need here
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
+    _matrixWorld.world.GL.gl.depthMask(false);
 
-    _matrixWorld.world.GL.gl.depthMask(false); // all non FBO but blended
-
-
+    // all non FBO but blended
     while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
       if (_matrixWorld.world.contentList[_engine.looper].visible === true && !_matrixWorld.world.contentList[_engine.looper].FBO && _matrixWorld.world.contentList[_engine.looper].glBlend.blendEnabled == true) {
         if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawTriangle(_matrixWorld.world.contentList[_engine.looper], 'noray');
         } else if ('square' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawSquare(_matrixWorld.world.contentList[_engine.looper], 'noray');
         } else if ('cube' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeMap' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper], 'noray');
         } else if (_matrixWorld.world.contentList[_engine.looper].type.indexOf("custom-") != -1) {
           // interest part - frst time draw func taken from object inself not from world.
           // Looks like better solution.
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.contentList[_engine.looper].drawCustom(_matrixWorld.world.contentList[_engine.looper]);
-
-          _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]); //
-
+          _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+          //
         } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawPyramid(_matrixWorld.world.contentList[_engine.looper], 'noray');
         } else if ('obj' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawObj(_matrixWorld.world.contentList[_engine.looper], 'noray');
         } else if ('squareTex' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawSquareTex(_matrixWorld.world.contentList[_engine.looper]), 'noray';
         } else if ('sphereLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'sphere' == _matrixWorld.world.contentList[_engine.looper].type || 'generatorLightTex' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
           _matrixWorld.world.drawSphere(_matrixWorld.world.contentList[_engine.looper], 'noray');
         }
       }
-
       (0, _engine.modifyLooper)(_engine.looper + 1);
     }
-
     (0, _engine.modifyLooper)(0);
+    _matrixWorld.world.GL.gl.depthMask(true);
 
-    _matrixWorld.world.GL.gl.depthMask(true); // Back to drawing on the main color buffer!
+    // Back to drawing on the main color buffer!
+    _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, null);
+    // Multi FBO camera view works but obj seq speed up - probably becouse OSC !! must be fixed
 
-
-    _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, null); // Multi FBO camera view works but obj seq speed up - probably becouse OSC !! must be fixed
     // Reset camera
-
-
     if (typeof _matrixWorld.world.FBOS[0] !== 'undefined') {
       matrixEngine.Events.camera.zPos = matrixEngine.Events.camera.zPosMemo;
       matrixEngine.Events.camera.xPos = matrixEngine.Events.camera.xPosMemo;
@@ -14465,215 +12848,157 @@ _manifest.default.operation.reDrawGlobal = function (time) {
       matrixEngine.Events.camera.yaw = matrixEngine.Events.camera.yawMemo;
     }
   }
-
   _matrixWorld.world.GL.gl.viewport(0, 0, _matrixWorld.world.GL.gl.canvas.width, _matrixWorld.world.GL.gl.canvas.height);
-
   _matrixWorld.world.GL.gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  _matrixWorld.world.GL.gl.clear(_matrixWorld.world.GL.gl.COLOR_BUFFER_BIT | _matrixWorld.world.GL.gl.DEPTH_BUFFER_BIT);
 
-  _matrixWorld.world.GL.gl.clear(_matrixWorld.world.GL.gl.COLOR_BUFFER_BIT | _matrixWorld.world.GL.gl.DEPTH_BUFFER_BIT); // Draw again all
-
-
+  // Draw again all
   _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
-
   _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
+  _matrixWorld.world.GL.gl.depthMask(true);
 
-  _matrixWorld.world.GL.gl.depthMask(true); // All but no blend
-
-
+  // All but no blend
   while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
     if (_matrixWorld.world.contentList[_engine.looper].visible === true && _matrixWorld.world.contentList[_engine.looper].glBlend.blendEnabled == false) {
       if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawTriangle(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('square' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawSquare(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('cube' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeMap' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if (_matrixWorld.world.contentList[_engine.looper].type.indexOf("custom-") != -1) {
         // interest part - frst time draw func taken from object inself not from world.
         // Looks like better solution.
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.contentList[_engine.looper].drawCustom(_matrixWorld.world.contentList[_engine.looper]);
-
-        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]); //
-
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+        //
       } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawPyramid(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('obj' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawObj(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('squareTex' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawSquareTex(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('sphereLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'sphere' == _matrixWorld.world.contentList[_engine.looper].type || 'generatorLightTex' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawSphere(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       }
     }
-
     (0, _engine.modifyLooper)(_engine.looper + 1);
   }
-
   _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
-
   _matrixWorld.world.GL.gl.depthMask(false);
+  (0, _engine.modifyLooper)(0);
 
-  (0, _engine.modifyLooper)(0); // all but blend
-
+  // all but blend
   while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
     if (_matrixWorld.world.contentList[_engine.looper].visible === true && _matrixWorld.world.contentList[_engine.looper].glBlend.blendEnabled == true) {
       if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawTriangle(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('square' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawSquare(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('cube' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeMap' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if (_matrixWorld.world.contentList[_engine.looper].type.indexOf("custom-") != -1) {
         // interest part - frst time draw func taken from object inself not from world.
         // Looks like better solution.
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.contentList[_engine.looper].drawCustom(_matrixWorld.world.contentList[_engine.looper]);
-
-        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]); //
-
+        _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+        //
       } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawPyramid(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('obj' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawObj(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('squareTex' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawSquareTex(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('sphereLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'sphere' == _matrixWorld.world.contentList[_engine.looper].type || 'generatorLightTex' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawSphere(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       }
     }
-
     (0, _engine.modifyLooper)(_engine.looper + 1);
   }
-
   (0, _engine.modifyLooper)(0);
-
   _matrixWorld.world.GL.gl.depthMask(true);
-
   if (_manifest.default.raycast) {
     if (secondPass <= 2) {
       raycaster.touchCoordinate.enabled = false;
       secondPass = 0;
     }
   }
-
   secondPass++;
   physicsLooper = 0;
   (0, _engine.updateFPS)(1);
   if (_manifest.default.offScreenCanvas == true) exports.reDrawID = reDrawID = setTimeout(() => _manifest.default.operation.reDrawGlobal(), _manifest.default.redrawInterval);
-
   if (_matrixWorld.world.animLine) {
     // animatinLine
     _matrixWorld.world.globalAnimCounter++;
-
     if (_matrixWorld.world.globalAnimCounter >= _matrixWorld.world.globalAnimSequenceSize) {
       _matrixWorld.world.globalAnimCounter = 0;
-
       if (_matrixWorld.world.timeline.commands[_matrixWorld.world.globalAnimCurSequence]) {
         // auto call
-        _matrixWorld.world.timeline.commands[_matrixWorld.world.globalAnimCurSequence](); // console.log("TIMELINE SEQ EXE");
-
-      } // VALIDACIJA
-
-
+        _matrixWorld.world.timeline.commands[_matrixWorld.world.globalAnimCurSequence]();
+        // console.log("TIMELINE SEQ EXE");
+      }
+      // VALIDACIJA
       if (_matrixWorld.world.globalAnimCurSequence >= _matrixWorld.world.globalAnimTotalSequence) {
         // for now simple reset - we can add option for reverse playing ...
         _matrixWorld.world.globalAnimCurSequence = 0;
       }
-
       _matrixWorld.world.globalAnimCurSequence++;
       document.getElementById('globalAnimCurSequence').innerText = _matrixWorld.world.globalAnimCurSequence;
     }
-
     document.getElementById('globalAnimCounter').innerText = _matrixWorld.world.globalAnimCounter;
     document.getElementById('timeline').value = _matrixWorld.world.globalAnimCounter;
   }
 };
+
 /* Field of view, Width height ratio, min distance of viewpoint, max distance of viewpoint, */
-
-
 _manifest.default.operation.CameraPerspective = function () {
   this.GL.gl.viewport(0, 0, canvas.width, canvas.height);
   this.GL.gl.clear(this.GL.gl.COLOR_BUFFER_BIT | this.GL.gl.DEPTH_BUFFER_BIT);
   mat4.perspective(this.pMatrix, (0, _engine.degToRad)(_manifest.default.camera.viewAngle), this.GL.gl.viewportWidth / this.GL.gl.viewportHeight, _manifest.default.camera.nearViewpoint, _manifest.default.camera.farViewpoint);
 };
-
 _manifest.default.operation.simplyRender = function (time) {
   (0, _engine.modifyLooper)(0);
   if (_manifest.default.offScreenCanvas == false) exports.reDrawID = reDrawID = requestAnimationFrame(_manifest.default.operation.simplyRender);
-
   _matrixWorld.world.renderPerspective();
-
   for (var t = 0; t < _manifest.default.updateBeforeDraw.length; t++) {
     _manifest.default.updateBeforeDraw[t].UPDATE();
-  } // Physics
+  }
 
-
+  // Physics
   if (_matrixWorld.world.physics !== null) {
     var dt = (time - lt) / 1000;
-
     _matrixWorld.world.physics.world.step(1.0 / 60.0, dt, 3);
-
     lt = time;
-
     while (physicsLooper <= _matrixWorld.world.contentList.length - 1) {
       if (_matrixWorld.world.contentList[physicsLooper].physics.enabled) {
         var local = _matrixWorld.world.contentList[physicsLooper];
@@ -14682,111 +13007,84 @@ _manifest.default.operation.simplyRender = function (time) {
         local.position.SetY(local.physics.currentBody.position.z);
         _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
         _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-        _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]); // matrixEngine.matrixWorld.world.physics.toDeg
+        _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+        // matrixEngine.matrixWorld.world.physics.toDeg
       }
-
       physicsLooper++;
     }
-  } // reset to zero
+  }
 
+  // reset to zero
+  physicsLooper = 0;
 
-  physicsLooper = 0; // Back to drawing on the main color buffer!
+  // Back to drawing on the main color buffer!
   // world.GL.gl.bindFramebuffer(world.GL.gl.FRAMEBUFFER, null);
-
-  _matrixWorld.world.GL.gl.viewport(0, 0, _matrixWorld.world.GL.gl.canvas.width, _matrixWorld.world.GL.gl.canvas.height); // world.GL.gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  _matrixWorld.world.GL.gl.viewport(0, 0, _matrixWorld.world.GL.gl.canvas.width, _matrixWorld.world.GL.gl.canvas.height);
+  // world.GL.gl.clearColor(0.0, 0.0, 0.0, 1.0);
   // world.GL.gl.clear(world.GL.gl.COLOR_BUFFER_BIT | world.GL.gl.DEPTH_BUFFER_BIT);
+
   // Draw again all
-
-
   _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
-
   _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
-
   _matrixWorld.world.GL.gl.depthMask(true);
-
   while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
     if (_matrixWorld.world.contentList[_engine.looper].visible === true) {
       if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawTriangle(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('square' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawSquare(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('cube' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeMap' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawPyramid(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('obj' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawObj(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('squareTex' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawSquareTex(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       } else if ('sphereLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'sphere' == _matrixWorld.world.contentList[_engine.looper].type || 'generatorLightTex' == _matrixWorld.world.contentList[_engine.looper].type) {
         _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-
         _matrixWorld.world.drawSphere(_matrixWorld.world.contentList[_engine.looper]);
-
         _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
       }
     }
-
     (0, _engine.modifyLooper)(_engine.looper + 1);
   }
-
   _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
-
   _matrixWorld.world.GL.gl.depthMask(false);
-
   (0, _engine.modifyLooper)(0);
-
   _matrixWorld.world.GL.gl.depthMask(true);
-
   if (_manifest.default.raycast) {
     if (secondPass <= 2) {
       raycaster.touchCoordinate.enabled = false;
       secondPass = 0;
     }
   }
-
   secondPass++;
   physicsLooper = 0;
   (0, _engine.updateFPS)(1);
-
   if (_matrixWorld.world.animLine) {
     // animatinLine
     _matrixWorld.world.globalAnimCounter++;
-
     if (_matrixWorld.world.globalAnimCounter >= _matrixWorld.world.globalAnimSequenceSize) {
       _matrixWorld.world.globalAnimCounter = 0;
       _matrixWorld.world.globalAnimCurSequence++;
       document.getElementById('globalAnimCurSequence').innerText = _matrixWorld.world.globalAnimCurSequence;
     }
-
     document.getElementById('globalAnimCounter').innerText = _matrixWorld.world.globalAnimCounter;
     document.getElementById('timeline').value = _matrixWorld.world.globalAnimCounter;
   }
-
   if (_manifest.default.offScreenCanvas == true) exports.reDrawID = reDrawID = setTimeout(() => _manifest.default.operation.simplyRender(), _manifest.default.redrawInterval);
 };
 
@@ -14796,14 +13094,13 @@ _manifest.default.operation.simplyRender = function (time) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.generateShaderSrc = generateShaderSrc;
-exports.generateLensDefinitions11 = generateLensDefinitions11;
-exports.generateLensMain11 = generateLensMain11;
 exports.generateCubeMapShaderSrc1 = generateCubeMapShaderSrc1;
 exports.generateCustomShaderSrc1 = generateCustomShaderSrc1;
+exports.generateLensDefinitions11 = generateLensDefinitions11;
+exports.generateLensMain11 = generateLensMain11;
+exports.generateShaderSrc = generateShaderSrc;
 exports.generateSpotLightShadowDefinitions1 = generateSpotLightShadowDefinitions1;
 exports.generateSpotLightShadowMain1 = generateSpotLightShadowMain1;
-
 /**
 * @description
 * webGL1
@@ -14873,7 +13170,6 @@ function generateShaderSrc(numTextures, mixOperand, lightType) {
 
     }`;
 }
-
 function generateSpotLightDefinitions1() {
   return `
   // inject generateSpotLightDefinitions1
@@ -14888,7 +13184,6 @@ function generateSpotLightDefinitions1() {
   // inject generateSpotLightDefinitions1 end
   `;
 }
-
 function generateSpotLightMain1() {
   return `
   vec3 normal = normalize(v_normal);
@@ -14905,7 +13200,6 @@ function generateSpotLightMain1() {
   gl_FragColor.rgb += specular;
   `;
 }
-
 function generateSpecularLightDefinitions1() {
   return `// Passed varying from the vertex shader.
   uniform mat4 uMVMatrixINTER;
@@ -14922,7 +13216,6 @@ function generateSpecularLightDefinitions1() {
   varying float vDist;
   `;
 }
-
 function generateSpecularLightMain1() {
   return `
   vec3 normal = normalize(v_normal);
@@ -14950,7 +13243,6 @@ function generateSpecularLightMain1() {
   gl_FragColor.a = textureColor.a;
   `;
 }
-
 function generateLensDefinitions11() {
   return `// lens effect
   uniform vec3 uLightPosition;
@@ -14958,7 +13250,6 @@ function generateLensDefinitions11() {
   uniform vec3 uControl;
   `;
 }
-
 function generateLensMain11(numTextures) {
   return `
   vec2 rez = vec2(uResolution.x , uResolution.y );
@@ -14981,7 +13272,6 @@ function generateLensMain11(numTextures) {
   gl_FragColor.a = textureColor.a;
   `;
 }
-
 function generateCubeMapShaderSrc1(numTextures, mixOperand, lightType) {
   return `
   precision mediump float;
@@ -14998,7 +13288,6 @@ function generateCubeMapShaderSrc1(numTextures, mixOperand, lightType) {
     gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 }`;
 }
-
 function generateCustomShaderSrc1(numTextures, mixOperand, code_) {
   return `
     // shader for ${numTextures} textures
@@ -15095,7 +13384,6 @@ function generateCustomShaderSrc1(numTextures, mixOperand, code_) {
      */
     `;
 }
-
 function generateSpotLightShadowDefinitions1() {
   return `// inject generateSpotLightShadowDefinitions
   uniform sampler2D u_projectedTexture;
@@ -15117,7 +13405,6 @@ function generateSpotLightShadowDefinitions1() {
   // inject generateSpotLightShadowDefinitions end
   `;
 }
-
 function generateSpotLightShadowMain1() {
   return `
   // vec3 normal = normalize(v_normal);
@@ -15156,15 +13443,15 @@ function generateSpotLightShadowMain1() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.generateShaderSrc3 = generateShaderSrc3;
-exports.generateLensDefinitions = generateLensDefinitions;
-exports.generateLensMain = generateLensMain;
 exports.generateCubeMapShaderSrc3 = generateCubeMapShaderSrc3;
 exports.generateCustomShaderSrc = generateCustomShaderSrc;
+exports.generateLensDefinitions = generateLensDefinitions;
+exports.generateLensMain = generateLensMain;
+exports.generateShaderSrc3 = generateShaderSrc3;
 exports.generateSpotLightShadowDefinitions = generateSpotLightShadowDefinitions;
 exports.generateSpotLightShadowMain = generateSpotLightShadowMain;
-
 // OPENGLES 300
+
 function generateShaderSrc3(numTextures, mixOperand, lightType) {
   return `#version 300 es
     // Matrix-engine 1.9.40 shader[300es] for ${numTextures} textures samples.
@@ -15226,7 +13513,6 @@ function generateShaderSrc3(numTextures, mixOperand, lightType) {
 
     }`;
 }
-
 function generateSpotLightDefinitions() {
   return `// #version 300 es
   // inject generateSpotLightDefinitions
@@ -15241,7 +13527,6 @@ function generateSpotLightDefinitions() {
   // inject generateSpotLightDefinitions end
   `;
 }
-
 function generateSpotLightMain() {
   return `vec3 normal = normalize(v_normal);
   vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
@@ -15256,7 +13541,6 @@ function generateSpotLightMain() {
   outColor.rgb += specular;
 `;
 }
-
 function generateSpecularLightDefinitions() {
   return `// Passed in from the vertex shader.
   uniform mat4 uMVMatrixINTER;
@@ -15273,7 +13557,6 @@ function generateSpecularLightDefinitions() {
   in float vDist;
   `;
 }
-
 function generateSpecularLightMain() {
   return `
   vec3 normal = normalize(v_normal);
@@ -15301,7 +13584,6 @@ function generateSpecularLightMain() {
   outColor.a = textureColor.a;
   `;
 }
-
 function generateLensDefinitions() {
   return `// lens effect
   uniform vec3 uLightPosition;
@@ -15309,7 +13591,6 @@ function generateLensDefinitions() {
   uniform vec3 uControl;
   `;
 }
-
 function generateLensMain(numTextures) {
   return `
   vec2 rez = vec2(uResolution.x , uResolution.y );
@@ -15332,7 +13613,6 @@ function generateLensMain(numTextures) {
   outColor.a = textureColor.a;
   `;
 }
-
 function generateCubeMapShaderSrc3(numTextures, mixOperand, lightType) {
   return `#version 300 es
   precision mediump float;
@@ -15352,7 +13632,6 @@ function generateCubeMapShaderSrc3(numTextures, mixOperand, lightType) {
     // outColor.rgb += texture(u_texture, normal);
 }`;
 }
-
 function generateCustomShaderSrc(numTextures, mixOperand, code_) {
   return `
     // shader for ${numTextures} textures
@@ -15449,7 +13728,6 @@ function generateCustomShaderSrc(numTextures, mixOperand, code_) {
      */
     `;
 }
-
 function generateSpotLightShadowDefinitions() {
   return `// inject generateSpotLightShadowDefinitions
   uniform sampler2D u_projectedTexture;
@@ -15471,7 +13749,6 @@ function generateSpotLightShadowDefinitions() {
   // inject generateSpotLightShadowDefinitions end
   `;
 }
-
 function generateSpotLightShadowMain() {
   return `
   vec3 normal = normalize(v_normal);
@@ -15510,14 +13787,10 @@ function generateSpotLightShadowMain() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MatrixShadowSpotShadowTest = exports.MatrixEffectLens = exports.MatrixShadowSpecular = exports.MatrixShadowSpot = void 0;
-
+exports.MatrixShadowSpotShadowTest = exports.MatrixShadowSpot = exports.MatrixShadowSpecular = exports.MatrixEffectLens = void 0;
 var _utility = require("./utility");
-
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @description MatrixShadowSpot
  * Holder for locallight data
@@ -15529,8 +13802,8 @@ class MatrixShadowSpot {
     this.lightPosition = [0, 0, 2];
     this.shininess = 150;
     this.lightRotationX = 0;
-    this.lightRotationY = 0; // this is computed in updateScene
-
+    this.lightRotationY = 0;
+    // this is computed in updateScene
     this.lightDirection = [0, 0, -1];
     this.innerLimit = degToRad(0);
     this.outerLimit = degToRad(20);
@@ -15545,21 +13818,15 @@ class MatrixShadowSpot {
     this.flyArroundByIndexs = [1, 2];
     this.centerX = 0;
     this.centerY = 0;
-
     this.activeUpdate = () => {
       this.idUpdater = _manifest.default.updateBeforeDraw.length;
-
       _manifest.default.updateBeforeDraw.push(this);
     };
-
     this.deactivateUpdate = () => {
       _manifest.default.updateBeforeDraw.splice(this.idUpdater, 1);
-
       this.UPDATE = function () {};
     };
-
     this.UPDATE = function () {};
-
     this.animateRadius = function (option) {
       if (typeof option === 'undefined') var option = {
         from: 0,
@@ -15569,7 +13836,6 @@ class MatrixShadowSpot {
       this.r = new _utility.OSCILLATOR(option.from, option.to, option.step);
       this.UPDATE = this.lightRadius;
     };
-
     this.animateInnerRadius = function (option) {
       if (typeof option === 'undefined') var option = {
         from: 0,
@@ -15579,7 +13845,6 @@ class MatrixShadowSpot {
       this.ir = new _utility.OSCILLATOR(option.from, option.to, option.step);
       this.UPDATE = this.lightInnerRadius;
     };
-
     this.animatePositionX = function (option) {
       if (typeof option === 'undefined') var option = {
         from: -2,
@@ -15589,7 +13854,6 @@ class MatrixShadowSpot {
       this.posX = new _utility.OSCILLATOR(option.from, option.to, option.step);
       this.UPDATE = this.positionXLight;
     };
-
     this.animatePositionY = function (option) {
       if (typeof option === 'undefined') var option = {
         from: -2,
@@ -15599,7 +13863,6 @@ class MatrixShadowSpot {
       this.posY = new matrixEngine.utility.OSCILLATOR(option.from, option.to, option.step);
       this.UPDATE = this.positionYLight;
     };
-
     this.animatePositionZ = function (option) {
       if (typeof option === 'undefined') var option = {
         from: -2,
@@ -15609,7 +13872,6 @@ class MatrixShadowSpot {
       this.posZ = new matrixEngine.utility.OSCILLATOR(option.from, option.to, option.step);
       this.UPDATE = this.positionZLight;
     };
-
     this.flyArround = function (option) {
       if (typeof option === 'undefined') {
         var option = {
@@ -15621,7 +13883,6 @@ class MatrixShadowSpot {
           flyArroundByIndexs: [1, 2]
         };
       }
-
       this.flyArroundByIndexs = option.flyArroundByIndexs;
       if (option.centerX) this.centerX = option.centerX;
       if (option.centerY) this.centerY = option.centerY;
@@ -15629,71 +13890,53 @@ class MatrixShadowSpot {
       this.UPDATE = this.makeFlyArround;
     };
   }
-
   makeFlyArround() {
     this.lightPosition = (0, _utility.ORBIT_FROM_ARRAY)(this.centerX, this.centerY, this.o.UPDATE(), this.lightPosition, this.flyArroundByIndexs);
   }
-
   lightRadius() {
     this.outerLimit = degToRad(this.r.UPDATE());
   }
-
   lightInnerRadius() {
     this.innerLimit = degToRad(this.ir.UPDATE());
   }
-
   positionXLight() {
     this.lightPosition[0] = this.posX.UPDATE();
   }
-
   positionYLight() {
     this.lightPosition[1] = this.posY.UPDATE();
   }
-
   positionZLight() {
     this.lightPosition[2] = this.posZ.UPDATE();
   }
-
 }
-
 exports.MatrixShadowSpot = MatrixShadowSpot;
-
 class MatrixShadowSpecular {
   constructor() {
     this.type = 'spec';
     this.uLightPosition = new Float32Array([0.0, 0.0, 0.0]);
     this.specularDATA = new Float32Array([0.0, 0.0, 0.0]);
     this.uFogColor = new Float32Array([1.0, 0.0, 0.0, 0.2]);
-    this.uFogDist = new Float32Array([10, 10]); // console.log('SPECULAR LIGHT')
-
+    this.uFogDist = new Float32Array([10, 10]);
+    // console.log('SPECULAR LIGHT')
     this.UPDATE = function () {};
-
     this.activeUpdate = () => {
       this.idUpdater = _manifest.default.updateBeforeDraw.length;
-
       _manifest.default.updateBeforeDraw.push(this);
     };
   }
-
 }
-
 exports.MatrixShadowSpecular = MatrixShadowSpecular;
-
 class MatrixEffectLens {
   constructor() {
     this.type = 'lens';
     this.uLightPosition = new Float32Array([0.0, 0.0, 0.0]);
     this.uResolution = new Float32Array([window.innerWidth, window.innerHeight, 0.0]);
     this.uControl = new Float32Array([100.05, 100.15, 100.55]);
-
     this.UPDATE = function () {};
-
     this.activeUpdate = () => {
       this.idUpdater = _manifest.default.updateBeforeDraw.length;
-
       _manifest.default.updateBeforeDraw.push(this);
     };
-
     this.animateCenterX = function (option) {
       if (typeof option === 'undefined') var option = {
         from: 0,
@@ -15703,7 +13946,6 @@ class MatrixEffectLens {
       this.rx = new _utility.OSCILLATOR(option.from, option.to, option.step);
       this.UPDATE = this.centerX;
     };
-
     this.animateCenterY = function (option) {
       if (typeof option === 'undefined') var option = {
         from: 0,
@@ -15714,24 +13956,20 @@ class MatrixEffectLens {
       this.UPDATE = this.centerX;
     };
   }
-
   centerX() {
     if (this.rx) this.uControl[0] = this.rx.UPDATE();
     if (this.ry) this.uControl[1] = this.ry.UPDATE();
   }
-
 }
-
 exports.MatrixEffectLens = MatrixEffectLens;
-
 class MatrixShadowSpotShadowTest {
   constructor() {
     this.type = 'spot-shadow';
     this.lightPosition = [0, 0, 2];
     this.shininess = 150;
     this.lightRotationX = 0;
-    this.lightRotationY = 0; // this is computed in updateScene
-
+    this.lightRotationY = 0;
+    // this is computed in updateScene
     this.lightDirection = [0, 0, -1];
     this.innerLimit = degToRad(0);
     this.outerLimit = degToRad(20);
@@ -15746,21 +13984,15 @@ class MatrixShadowSpotShadowTest {
     this.flyArroundByIndexs = [1, 2];
     this.centerX = 0;
     this.centerY = 0;
-
     this.activeUpdate = () => {
       this.idUpdater = _manifest.default.updateBeforeDraw.length;
-
       _manifest.default.updateBeforeDraw.push(this);
     };
-
     this.deactivateUpdate = () => {
       _manifest.default.updateBeforeDraw.splice(this.idUpdater, 1);
-
       this.UPDATE = function () {};
     };
-
     this.UPDATE = function () {};
-
     this.animateRadius = function (option) {
       if (typeof option === 'undefined') var option = {
         from: 0,
@@ -15770,7 +14002,6 @@ class MatrixShadowSpotShadowTest {
       this.r = new _utility.OSCILLATOR(option.from, option.to, option.step);
       this.UPDATE = this.lightRadius;
     };
-
     this.animateInnerRadius = function (option) {
       if (typeof option === 'undefined') var option = {
         from: 0,
@@ -15780,7 +14011,6 @@ class MatrixShadowSpotShadowTest {
       this.ir = new _utility.OSCILLATOR(option.from, option.to, option.step);
       this.UPDATE = this.lightInnerRadius;
     };
-
     this.animatePositionX = function (option) {
       if (typeof option === 'undefined') var option = {
         from: -2,
@@ -15790,7 +14020,6 @@ class MatrixShadowSpotShadowTest {
       this.posX = new _utility.OSCILLATOR(option.from, option.to, option.step);
       this.UPDATE = this.positionXLight;
     };
-
     this.animatePositionY = function (option) {
       if (typeof option === 'undefined') var option = {
         from: -2,
@@ -15800,7 +14029,6 @@ class MatrixShadowSpotShadowTest {
       this.posY = new matrixEngine.utility.OSCILLATOR(option.from, option.to, option.step);
       this.UPDATE = this.positionYLight;
     };
-
     this.animatePositionZ = function (option) {
       if (typeof option === 'undefined') var option = {
         from: -2,
@@ -15810,7 +14038,6 @@ class MatrixShadowSpotShadowTest {
       this.posZ = new matrixEngine.utility.OSCILLATOR(option.from, option.to, option.step);
       this.UPDATE = this.positionZLight;
     };
-
     this.flyArround = function (option) {
       if (typeof option === 'undefined') {
         var option = {
@@ -15822,7 +14049,6 @@ class MatrixShadowSpotShadowTest {
           flyArroundByIndexs: [1, 2]
         };
       }
-
       this.flyArroundByIndexs = option.flyArroundByIndexs;
       if (option.centerX) this.centerX = option.centerX;
       if (option.centerY) this.centerY = option.centerY;
@@ -15830,33 +14056,25 @@ class MatrixShadowSpotShadowTest {
       this.UPDATE = this.makeFlyArround;
     };
   }
-
   makeFlyArround() {
     this.lightPosition = (0, _utility.ORBIT_FROM_ARRAY)(this.centerX, this.centerY, this.o.UPDATE(), this.lightPosition, this.flyArroundByIndexs);
   }
-
   lightRadius() {
     this.outerLimit = degToRad(this.r.UPDATE());
   }
-
   lightInnerRadius() {
     this.innerLimit = degToRad(this.ir.UPDATE());
   }
-
   positionXLight() {
     this.lightPosition[0] = this.posX.UPDATE();
   }
-
   positionYLight() {
     this.lightPosition[1] = this.posY.UPDATE();
   }
-
   positionZLight() {
     this.lightPosition[2] = this.posZ.UPDATE();
   }
-
 }
-
 exports.MatrixShadowSpotShadowTest = MatrixShadowSpotShadowTest;
 
 },{"../program/manifest":99,"./utility":88}],74:[function(require,module,exports){
@@ -15865,7 +14083,7 @@ exports.MatrixShadowSpotShadowTest = MatrixShadowSpotShadowTest;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MatrixButton = exports.MatrixCameraController = exports.MatrixLightComponent = exports.MatrixInput = void 0;
+exports.MatrixLightComponent = exports.MatrixInput = exports.MatrixCameraController = exports.MatrixButton = void 0;
 const standardStyle = `
   width: 150px;
   font-size: 26px;
@@ -15875,8 +14093,8 @@ const standardStyle = `
   border-style: solid;
   text-align: center;
   outline: none;
-`; // not afirmated for now - but interest
-
+`;
+// not afirmated for now - but interest
 class MatrixInput extends HTMLElement {
   constructor(...args) {
     super(...args);
@@ -15888,13 +14106,14 @@ class MatrixInput extends HTMLElement {
     inputElement.setAttribute('type', this.getAttribute('type'));
     inputElement.setAttribute('value', this.getAttribute('value'));
     inputElement.setAttribute('max', this.getAttribute('max'));
-    inputElement.setAttribute('min', this.getAttribute('min')); // need trick
+    inputElement.setAttribute('min', this.getAttribute('min'));
+    // need trick
     // inputElement.setAttribute('class', this.getAttribute('class'));
     // predefined
-
     inputElement.setAttribute('style', standardStyle);
     if (this.getAttribute('style') !== null) inputElement.setAttribute('style', this.getAttribute('style'));
-    inputElement.addEventListener('focus', () => {// console.log('focus on spot input');
+    inputElement.addEventListener('focus', () => {
+      // console.log('focus on spot input');
     });
     inputElement.addEventListener('change', e => {
       console.log('changed', e.path[0].value);
@@ -15903,41 +14122,35 @@ class MatrixInput extends HTMLElement {
     if (typeof args[0] === 'function') inputElement.addEventListener('change', args[0]);
     shadowRoot.appendChild(inputElement);
   }
-
 }
-
 exports.MatrixInput = MatrixInput;
-
 class MatrixLightComponent extends MatrixInput {
   constructor(...args) {
     super(...args);
   }
-
 }
-
 exports.MatrixLightComponent = MatrixLightComponent;
-
 class MatrixCameraController extends MatrixInput {
   constructor(...args) {
     super(...args, e => {
-      this.setAttribute('value', e.path[0].value); // dispatchEvent()
-    }); // console.log("TEST ARGS ", args)
+      this.setAttribute('value', e.path[0].value);
+      // dispatchEvent()
+    });
 
+    // console.log("TEST ARGS ", args)
     let reactOnChange = this.getAttribute('id');
   }
-
 }
-
 exports.MatrixCameraController = MatrixCameraController;
-
 class MatrixButton extends HTMLButtonElement {
   constructor(...args) {
-    super(...args); // Attaches a shadow root to your custom element.
+    super(...args);
 
+    // Attaches a shadow root to your custom element.
     const shadowRoot = this.attachShadow({
       mode: 'open'
-    }); // Defines the "real" input element.
-
+    });
+    // Defines the "real" input element.
     let inputElement = document.createElement('input');
     inputElement.setAttribute('type', this.getAttribute('type'));
     shadowRoot.appendChild(inputElement);
@@ -15945,9 +14158,7 @@ class MatrixButton extends HTMLButtonElement {
       console.log('Focus on matrix-engine-btn');
     });
   }
-
 }
-
 exports.MatrixButton = MatrixButton;
 
 },{}],75:[function(require,module,exports){
@@ -15957,14 +14168,10 @@ exports.MatrixButton = MatrixButton;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.makeFBO = exports.cubeMapTextures = void 0;
-
+exports.makeFBO = exports.default = exports.cubeMapTextures = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var _matrixWorld = require("./matrix-world");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @description
  * initTextures Load image file procedure.
@@ -15973,21 +14180,18 @@ _manifest.default.tools.loadTextureImage = function (gl, src, params) {
   var texture = gl.createTexture();
   texture.image = new Image();
   texture.image.crossOrigin = 'anonymous';
-
   texture.image.onload = () => {
     // console.log("params tex: ", params)
     _matrixWorld.world.handleLoadedTexture(texture, gl, params);
   };
-
   texture.image.src = src;
   return texture;
 };
+
 /**
  * @description
  * Basic image textures
  */
-
-
 _manifest.default.tools.BasicTextures = function (texture, gl, params) {
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
@@ -15998,42 +14202,38 @@ _manifest.default.tools.BasicTextures = function (texture, gl, params) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
   gl.bindTexture(gl.TEXTURE_2D, null);
 };
+
 /**
  * @description
  * Video/Webcam textures
  */
-
-
 _manifest.default.tools.loadVideoTexture = function (name, image) {
   if (!image) return;
   if (image.width == 1) return;
   var name_ = name;
   var gl = _matrixWorld.world.GL.gl;
-
   if (typeof _manifest.default.textures[name_] === 'undefined') {
     _manifest.default.textures[name_] = gl.createTexture();
   }
-
   gl.activeTexture(gl.TEXTURE0);
   gl.bindTexture(gl.TEXTURE_2D, _manifest.default.textures[name_]);
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   // gl.texParameteri( gl.TEXTURE_2D , gl.TEXTURE_WRAP_T  , gl.CLAMP_TO_EDGE);
   // -- Allocate storage for the texture
   // gl.texStorage2D(gl.TEXTURE_2D, 1, gl.RGB8, 512, 512);
   // gl.texStorage2D(gl.TEXTURE_2D, 1, gl.RGB8, 512, 512);
   // gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, gl.RGB, gl.UNSIGNED_BYTE, image);
-
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
   gl.generateMipmap(gl.TEXTURE_2D);
 };
+
 /**
  * @description
  * Pixel textures
  */
-
-
 _manifest.default.tools.createPixelsTex = function (options) {
   if (typeof options === 'undefined') {
     var options = {
@@ -16061,21 +14261,17 @@ _manifest.default.tools.createPixelsTex = function (options) {
     options.pixels[14 + i] = 128;
     options.pixels[15 + i] = 1;
   }
-
   if (options?.style?.type == 'chessboard') {
     var I = 0,
-        localCounter = 0;
-
+      localCounter = 0;
     for (var funny = 0; funny < options.squareShema[0] * options.squareShema[1] * 4; funny += 4) {
       localCounter++;
-
       if (I == options?.style.color1) {
         I = options?.style.color2;
       } else {
         I = options?.style.color1;
-      } // if (parseInt(funny) % 32 == 0) { work also
-
-
+      }
+      // if (parseInt(funny) % 32 == 0) { work also
       if (parseInt(localCounter - 1) % options.squareShema[0] == 0) {
         if (I == options?.style.color1) {
           I = options?.style.color2;
@@ -16083,32 +14279,24 @@ _manifest.default.tools.createPixelsTex = function (options) {
           I = options?.style.color1;
         }
       }
-
       options.pixels[funny] = I;
       options.pixels[funny + 1] = I;
       options.pixels[funny + 2] = I;
       options.pixels[funny + 3] = 1;
     }
   }
-
   const texture = _matrixWorld.world.GL.gl.createTexture();
-
   _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, texture);
-
   _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.NEAREST);
-
   _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
-
   _matrixWorld.world.GL.gl.texImage2D(_matrixWorld.world.GL.gl.TEXTURE_2D, 0, _matrixWorld.world.GL.gl.RGBA, options.squareShema[0], options.squareShema[1], 0, _matrixWorld.world.GL.gl.RGBA, _matrixWorld.world.GL.gl.UNSIGNED_BYTE, options.pixels);
-
   return texture;
 };
+
 /**
  * @description
  * CubeMap textures
  */
-
-
 const cubeMapTextures = async function (sources, callback) {
   var promiseMe = [];
   sources.forEach(src => {
@@ -16124,6 +14312,7 @@ const cubeMapTextures = async function (sources, callback) {
     callback(values);
   });
 };
+
 /**
  * @description
  * FBO textures
@@ -16153,10 +14342,13 @@ const cubeMapTextures = async function (sources, callback) {
 //   ]));
 // gl.generateMipmap(gl.TEXTURE_2D);
 // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+
 // // test depth
+
 // const depthTexture = gl.createTexture();
 // const depthTextureSize = 512;
 // gl.bindTexture(gl.TEXTURE_2D, depthTexture);
+
 // {
 //   // define size and format of level 0
 //   const level = 0;
@@ -16168,11 +14360,13 @@ const cubeMapTextures = async function (sources, callback) {
 //   gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
 //                 512, 512, border,
 //                 format, type, data);
+
 //   // set the filtering so we don't need mips
 //   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 //   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 //   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 // }
+
 // const depthFramebuffer = gl.createFramebuffer();
 // gl.bindFramebuffer(gl.FRAMEBUFFER, depthFramebuffer);
 // gl.framebufferTexture2D(
@@ -16181,45 +14375,36 @@ const cubeMapTextures = async function (sources, callback) {
 //     gl.TEXTURE_2D,        // texture target
 //     depthTexture,         // texture
 //     0);                   // mip level
+
 //////////////////////////////////////////////////////
 // TEST 2 Success for now just fbo
 // gl.getParameter(gl.MAX_DRAW_BUFFERS)
 //////////////////////////////////////////////////////
-
-
 exports.cubeMapTextures = cubeMapTextures;
-
 const makeFBO = (gl, o) => {
   var framebuffer, texture, depthBuffer;
-
   if (typeof o === 'undefined') {
     var o = {
       width: 512,
       height: 512
     };
-  } // console.log('FBO MAKE FUNC');
-
-
+  }
+  // console.log('FBO MAKE FUNC');
   var error = function () {
     console.log('Error in creating FBO!');
     return null;
   };
-
   framebuffer = gl.createFramebuffer();
-
   if (!framebuffer) {
     console.log('Failed to create frame buffer object');
     return error();
   }
-
   texture = gl.createTexture();
-
   if (!texture) {
     console.log('Failed to create texture object');
     return error();
-  } // local
-
-
+  }
+  // local
   var OFFSCREEN_WIDTH = o.width;
   var OFFSCREEN_HEIGHT = o.height;
   gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -16227,36 +14412,33 @@ const makeFBO = (gl, o) => {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
   framebuffer.texture = texture;
   depthBuffer = gl.createRenderbuffer();
-
   if (!depthBuffer) {
     console.log('Failed to create renderbuffer object');
     return error();
   }
-
   gl.bindRenderbuffer(gl.RENDERBUFFER, depthBuffer);
-  gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, OFFSCREEN_WIDTH, OFFSCREEN_HEIGHT); // Attach the texture and the renderbuffer object to the FBO
+  gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, OFFSCREEN_WIDTH, OFFSCREEN_HEIGHT);
 
+  // Attach the texture and the renderbuffer object to the FBO
   gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
   gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
-  gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, depthBuffer); // Check if FBO is configured correctly
+  gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, depthBuffer);
 
+  // Check if FBO is configured correctly
   var e = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
-
   if (gl.FRAMEBUFFER_COMPLETE !== e) {
     console.log('Frame buffer object is incomplete: ' + e.toString());
     return error();
-  } // Unbind the buffer object
+  }
 
-
+  // Unbind the buffer object
   gl.bindFramebuffer(gl.FRAMEBUFFER, null);
   gl.bindTexture(gl.TEXTURE_2D, null);
   gl.bindRenderbuffer(gl.RENDERBUFFER, null);
   return framebuffer;
 };
-
 exports.makeFBO = makeFBO;
-var _default = _manifest.default.tools;
-exports.default = _default;
+var _default = exports.default = _manifest.default.tools;
 
 },{"../program/manifest":99,"./matrix-world":76}],76:[function(require,module,exports){
 "use strict";
@@ -16264,48 +14446,30 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.modifyFrames = modifyFrames;
+exports.CS4 = exports.CS3 = exports.CS2 = exports.CS1 = void 0;
 exports.defineworld = defineworld;
-exports.reDraw = exports.objListToDispose = exports.world = exports.frames = exports.CS4 = exports.CS3 = exports.CS2 = exports.CS1 = void 0;
-
+exports.frames = void 0;
+exports.modifyFrames = modifyFrames;
+exports.world = exports.reDraw = exports.objListToDispose = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var _engine = require("./engine");
-
 var _matrixRender = require("./matrix-render");
-
 var _matrixDraws = _interopRequireDefault(require("./matrix-draws"));
-
 var _matrixTags = require("./matrix-tags");
-
 var _utility = require("./utility");
-
 var _matrixGeometry = require("./matrix-geometry");
-
 var _physics = _interopRequireDefault(require("./physics"));
-
 var _matrixShadows = require("./matrix-shadows");
-
 var _matrixInitShaders = require("./matrix-init-shaders3");
-
 var _matrixInitShaders2 = require("./matrix-init-shaders1");
-
 var _loaderObj = require("./loader-obj");
-
 var _matrixTextures = require("./matrix-textures");
-
 var _overrideMatrixRender = require("./optimizer/override-matrix-render");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var CS1 = "font-family: stormfaze;color: #001100; font-size:58px;text-shadow: 2px 2px 4px #fff554, 4px 4px 4px gray, 2px 2px 4px lime, 6px 2px 0px lime;background: gray;";
-exports.CS1 = CS1;
-var CS2 = "font-family: stormfaze;color: #fd1233; font-size:20px;text-shadow: 2px 2px 2px #5321f5, 4px 4px 4px #d6fa16, 3px 0px 3px #c160a6, 6px 6px 4px #9a0de3;background: black;";
-exports.CS2 = CS2;
-var CS3 = "font-family: stormfaze;color: #f1f033; font-size:14px;text-shadow: 2px 2px 4px #f335f4, 4px 4px 4px #d64444, 2px 2px 4px #c160a6, 6px 2px 0px #123de3;background: black;";
-exports.CS3 = CS3;
-var CS4 = "font-family: verdana;color: #lime; font-size:16px;text-shadow: 2px 2px 4px orangered;background: black;";
-exports.CS4 = CS4;
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+var CS1 = exports.CS1 = "font-family: stormfaze;color: #001100; font-size:58px;text-shadow: 2px 2px 4px #fff554, 4px 4px 4px gray, 2px 2px 4px lime, 6px 2px 0px lime;background: gray;";
+var CS2 = exports.CS2 = "font-family: stormfaze;color: #fd1233; font-size:20px;text-shadow: 2px 2px 2px #5321f5, 4px 4px 4px #d6fa16, 3px 0px 3px #c160a6, 6px 6px 4px #9a0de3;background: black;";
+var CS3 = exports.CS3 = "font-family: stormfaze;color: #f1f033; font-size:14px;text-shadow: 2px 2px 4px #f335f4, 4px 4px 4px #d64444, 2px 2px 4px #c160a6, 6px 2px 0px #123de3;background: black;";
+var CS4 = exports.CS4 = "font-family: verdana;color: #lime; font-size:16px;text-shadow: 2px 2px 4px orangered;background: black;";
 window.mat4 = glMatrix.mat4;
 window.mat2 = glMatrix.mat2;
 window.mat2d = glMatrix.mat2d;
@@ -16316,9 +14480,6 @@ window.quat2 = glMatrix.quat2;
 window.vec2 = glMatrix.vec2;
 window.vec3 = glMatrix.vec3;
 window.vec4 = glMatrix.vec4;
-console.info(`%c -----------------------------`, CS3);
-console.info(`%c   -----------------------    `, CS3);
-console.info(`%c     -------------------      `, CS3);
 console.info(`%cMatrix-Engine %c 2.0.0 BETA 🛸`, CS1, CS1);
 var lastChanges = `
 [2.0.0] New networking based on kurento service and OpenVide web client
@@ -16328,18 +14489,20 @@ var lastChanges = `
  - Implemented URL param for examples-build.html?GLSL=1.1 [Affect after first demo choose.
  - [1.9.58] Improved timeline/globalAnimation feature]
 `;
-console.info(`%c ${lastChanges} `, CS4);
+console.info(`%c ${lastChanges} `, CS3);
 console.info(`%c Render switch from 'requestAnimationFrame' to 'offScreen' with URLParams '?offScreen=true&offScreenSpeed=10'.
  For now physics stuff not affected. `, CS3);
 console.info(`%c You can switch webGL ver 1/2 with ?GLSL=1.1 or ?GLSL=1.3 - EXPERIMENTAL`, CS3);
-console.info(`%c Used GL_MATRIX 3.4 ${glMatrix}`, CS3); // fbo
+console.info(`%c Used GL_MATRIX 3.4 ${glMatrix}`, CS3);
 
-_manifest.default.makeFBO = _matrixTextures.makeFBO; // define shaders from code
+// fbo
+_manifest.default.makeFBO = _matrixTextures.makeFBO;
 
+// define shaders from code
 if (_utility.QueryString.GLSL && _utility.QueryString.GLSL == 1.3) {
   // GLSL 1.30 -> opengles3
-  console.info(`%cActive cook ⚗️: GLSL 1.3. for OPENGLES30 %c webGL2`, CS3, CS3); // console.log('Active: GLSL 1.3. for OPENGLES30')
-
+  console.info(`%cActive cook ⚗️: GLSL 1.3. for OPENGLES30 %c webGL2`, CS3, CS3);
+  // console.log('Active: GLSL 1.3. for OPENGLES30')
   _manifest.default.openglesShaderVersion = 1.3;
   (0, _matrixInitShaders.loadShaders300)();
 } else if (_utility.QueryString.GLSL && (_utility.QueryString.GLSL == 1.1 || _utility.QueryString.GLSL == 1.2)) {
@@ -16353,39 +14516,32 @@ if (_utility.QueryString.GLSL && _utility.QueryString.GLSL == 1.3) {
   console.info(`%cActive: GLSL 1.3. for OPENGLES30 %c webGL2`, CS3, CS3);
   (0, _matrixInitShaders.loadShaders300)();
 }
+
 /* Width and Height variables of the browser screen  */
+var frames = exports.frames = 0;
 
-
-var frames = 0; // must be fixed
-
-exports.frames = frames;
-
+// must be fixed
 function modifyFrames(newFrames) {
   exports.frames = frames = newFrames;
 }
-
-var world = {};
-exports.world = world;
+var world = exports.world = {};
 var updateFrames = 0;
 /* Because JavaScript is third class in mouse events */
 // var mouseLoc = defineMouseLocationObject();
-
 /* Common sense to object disposition                */
-
-var objListToDispose = new Array();
+var objListToDispose = exports.objListToDispose = new Array();
 /* Need to stop the redraw when disposing            */
 
-exports.objListToDispose = objListToDispose;
 var reDraw;
+
 /**
  * @description
  * Define custom tags for new upgrade for light systems.
  */
-
-exports.reDraw = reDraw;
-window.customElements.define('matrix-camera', _matrixTags.MatrixCameraController); // window.customElements.define('matrix-light', MatrixLightComponent, {extends:'input'});
-
-window.customElements.define('matrix-light', _matrixTags.MatrixLightComponent); // var X = Object.create(HTMLInputElement.prototype);
+window.customElements.define('matrix-camera', _matrixTags.MatrixCameraController);
+// window.customElements.define('matrix-light', MatrixLightComponent, {extends:'input'});
+window.customElements.define('matrix-light', _matrixTags.MatrixLightComponent);
+// var X = Object.create(HTMLInputElement.prototype);
 // window.customElements.define('matrix-light', X);
 
 function defineworld(canvas, renderType) {
@@ -16393,10 +14549,8 @@ function defineworld(canvas, renderType) {
   // console.log("  Define the world");
   exports.world = world = new Object();
   /*  Constructor for a world                       */
-
   world.GL = new _engine.defineWebGLWorld(canvas);
   /*  Exit if WEBGL could not initialize            */
-
   if ('undefined' == typeof world.GL.gl) {
     // console.log("  Exception in Base world creation");
     delete this.GL;
@@ -16408,19 +14562,19 @@ function defineworld(canvas, renderType) {
     world.GL.gl.enable(world.GL.gl.DEPTH_TEST);
     (0, _engine.initiateFPS)();
   }
+
   /* Complete declarations if pending            */
-
-
   world.pMatrix = mat4.create();
   world.mvMatrixStack = new Array();
+
   /* Contents of the world                       */
-
   world.contentList = new Array();
+
   /* Assign to the garbage collector object      */
+  objListToDispose[objListToDispose.length] = world;
 
-  objListToDispose[objListToDispose.length] = world; // get data about gl limitation
+  // get data about gl limitation
   // Must be improved
-
   _manifest.default.limitations.maxTexturesInFragmentShader = world.GL.gl.getParameter(world.GL.gl.MAX_TEXTURE_IMAGE_UNITS);
   _manifest.default.limitations.ALIASED_POINT_SIZE_RANGE = world.GL.gl.getParameter(world.GL.gl.ALIASED_POINT_SIZE_RANGE);
   _manifest.default.limitations.DEPTH_BITS = world.GL.gl.getParameter(world.GL.gl.DEPTH_BITS);
@@ -16428,77 +14582,59 @@ function defineworld(canvas, renderType) {
   _manifest.default.limitations.MAX_TEXTURE_SIZE = world.GL.gl.getParameter(world.GL.gl.MAX_TEXTURE_SIZE);
   _manifest.default.limitations.MAX_VERTEX_ATTRIBS = world.GL.gl.getParameter(world.GL.gl.MAX_VERTEX_ATTRIBS);
   _manifest.default.limitations.MAX_ELEMENTS_VERTICES = world.GL.gl.getParameter(world.GL.gl.MAX_ELEMENTS_VERTICES);
+
   /**
    * World base functions
    * Get the fragment or vertex shader
    */
-
   world.getShader = _engine.loadShaders;
   /* Initialize shader fragment                        */
-
   world.initShaders = _engine.initShaders;
   world.handleLoadedTexture = _manifest.default.tools.BasicTextures;
   world.initTexture = _manifest.default.tools.loadTextureImage;
-
   world.disableUnusedAttr = function (gl, vertLimit) {
-    var Local_looper1 = vertLimit; // var Local_looper1 = 0;
+    var Local_looper1 = vertLimit;
+    // var Local_looper1 = 0;
     // position, color, texture and normals
-
     while (Local_looper1 < 4) {
       gl.disableVertexAttribArray(Local_looper1);
       Local_looper1 = Local_looper1 + 1;
     }
-  }; // Bind base methods
+  };
 
+  // Bind base methods
   /* Push Matrix                              */
-
-
   world.mvPushMatrix = _manifest.default.operation.PUSH_MATRIX;
   /* Pop Matrix                               */
-
   world.mvPopMatrix = _manifest.default.operation.POP_MATRIX;
   /* Set uniform Matrix                       */
-
   world.setMatrixUniforms = _manifest.default.operation.SET_MATRIX_UNIFORMS;
   /* Draw Perspective                         */
-
   world.renderPerspective = _manifest.default.operation.CameraPerspective;
   /* Calculate rotatory speed                 */
-
   world.animate = _matrixRender.animate;
   /* Buffer Triangle                          */
-
   world.bufferTriangle = _manifest.default.operation.triangle_buffer_procedure;
   /* Draw Triangle                            */
-
   world.drawTriangle = _manifest.default.operation.draws.triangle;
   /* Buffer Square                            */
-
   world.bufferSquare = _manifest.default.operation.square_buffer_procedure;
   /* Draw Square                              */
-
   world.drawSquare = _manifest.default.operation.draws.square;
   /* Buffer obj format                        */
-
   world.bufferObj = _manifest.default.operation.obj_buffer_procedure;
   /* Buffer Cube                              */
-
   world.bufferCube = _manifest.default.operation.cube_buffer_procedure;
   /* Buffer Cube                              */
-
   world.bufferCubeMap = _manifest.default.operation.cubemap_buffer_procedure;
   world.cubeMapTextures = _matrixTextures.cubeMapTextures;
   /* Draw Cube                                */
-
   world.drawCube = _manifest.default.operation.draws.cube;
   /* Buffer Pyramid                           */
-
   world.bufferPyramid = _manifest.default.operation.piramide_buffer_procedure;
   /* Draw Pyramid                             */
-
   world.drawPyramid = _manifest.default.operation.draws.piramide;
   /* Draw Obj file                            */
-
   world.drawObj = _manifest.default.operation.draws.drawObj;
   world.bufferSquareTex = _manifest.default.operation.squareTex_buffer_procedure;
   world.drawSquareTex = _manifest.default.operation.draws.drawSquareTex;
@@ -16507,18 +14643,18 @@ function defineworld(canvas, renderType) {
   world.drawSphere = _manifest.default.operation.draws.sphere;
   world.bufferSphere = _manifest.default.operation.sphere_buffer_procedure;
   world.FBOS = [];
-  /* Repeated draw functionality            */
 
+  /* Repeated draw functionality            */
   if (typeof renderType === 'undefined') {
     exports.reDraw = reDraw = _manifest.default.operation.reDrawGlobal;
   } else if (renderType == 'simply') {
     exports.reDraw = reDraw = _manifest.default.operation.simplyRender;
   }
-
   if (typeof _utility.QueryString.offScreenSpeed !== 'undefined') {
     console.log("URL param offScreenSpeed is active: ", _utility.QueryString.offScreenSpeed);
     _manifest.default.redrawInterval = _utility.QueryString.offScreenSpeed;
   }
+
   /**
    * @MatrixAnimationLine
    * @globalAnimCounter Counter - READONLY
@@ -16526,10 +14662,7 @@ function defineworld(canvas, renderType) {
    * After globalAnimCounter reach globalAnimSequenceSize value will
    * reset to the zero.
    */
-
-
   world.timeline = {};
-
   world.useAnimationLine = function (args) {
     world.animLine = true;
     world.globalAnimCounter = 0;
@@ -16545,37 +14678,33 @@ function defineworld(canvas, renderType) {
     document.getElementById('globalAnimSize').innerText = world.globalAnimSequenceSize;
     document.getElementById('matrixTimeLine').style.display = 'flex';
   };
-
   world.addCommandAtSeqIndex = function (COMMAND, INDEX) {
     world.timeline.commands[INDEX] = COMMAND;
   };
-
-  world.addSubCommand = function (COMMAND, INDEX) {// WIP
+  world.addSubCommand = function (COMMAND, INDEX) {
+    // WIP
     // world.timeline.subCommands[INDEX] = COMMAND
   };
+
   /**
    * @MatrixPhysics
    * Must be disabled on default run.
    * Return cannon world.
    */
-
-
   world.physics = null;
-
   world.loadPhysics = function (gravityVector = [0, 0, -9.82]) {
     world.physics = new _physics.default(gravityVector);
     return world.physics;
   };
+
   /**
    * @description
    * TEST GLOBAL LIGHT PARAMS
    * this.uLightPosition = new Float32Array([0.0,0.0,0.0]);
    */
-
-
   world.uLightPosition = new Float32Array([0.0, 0.0, 0.0]);
-  /* Fill world based on content           */
 
+  /* Fill world based on content           */
   world.Add = function (filler, size, nameUniq, texturesPaths, mesh_, animationConstruct_) {
     /*
     	Common conventions to be followed across
@@ -16598,35 +14727,34 @@ function defineworld(canvas, renderType) {
     if ('triangle' == filler) {
       var triangleObject = new Object();
       triangleObject.visible = true;
-
       if (typeof nameUniq != 'undefined') {
         triangleObject.name = nameUniq;
       } else {
         triangleObject.name = 'triangle_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
-
       triangleObject.streamTextures = null;
       triangleObject.type = filler;
       triangleObject.size = size;
       triangleObject.sides = 3;
       triangleObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-      triangleObject.position = new _matrixGeometry.Position(0, 0, -5.0); // update
-
+      triangleObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      // update
       triangleObject.position.nameUniq = nameUniq;
+      triangleObject.position.netObjId = nameUniq;
       triangleObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
       triangleObject.rotation.nameUniq = nameUniq;
+      triangleObject.rotation.netObjId = nameUniq;
       triangleObject.color = new _matrixGeometry.GeoOfColor('triangle');
       triangleObject.mvMatrix = mat4.create();
       triangleObject.geometry = new _matrixGeometry.TriangleVertex(triangleObject);
       triangleObject.geometry.nameUniq = nameUniq;
-      triangleObject.glBlend = new _utility._glBlend(); // destroy self
-
+      triangleObject.glBlend = new _utility._glBlend();
+      // destroy self
       triangleObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
             // destroy me
             var TEST = world.contentList[world.contentList.indexOf(triangleObject)];
-
             if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
               let objForDelete = world.contentList.splice(world.contentList.indexOf(triangleObject), 1)[0];
               _manifest.default.scene[objForDelete.name] = null;
@@ -16637,11 +14765,11 @@ function defineworld(canvas, renderType) {
           _manifest.default.scene[objForDelete.name] = null;
         }
       };
-
       triangleObject.raycast = {
         enabled: true
-      }; // Physics
+      };
 
+      // Physics
       triangleObject.physics = {
         enabled: false
       };
@@ -16657,27 +14785,24 @@ function defineworld(canvas, renderType) {
         array_of_local_offset: [12, 0, 0],
         overrideDrawArraysInstance: function (object_) {}
       };
-
       if (triangleObject.shaderProgram) {
         this.bufferTriangle(triangleObject);
         triangleObject.glDrawElements = new _utility._DrawElements(triangleObject.vertexColorBuffer.numItems);
         this.contentList[this.contentList.length] = triangleObject;
-        _manifest.default.scene[triangleObject.name] = triangleObject; // console.log("Buffer the " + filler + ":Store at:" + this.contentList.length);
+        _manifest.default.scene[triangleObject.name] = triangleObject;
+        // console.log("Buffer the " + filler + ":Store at:" + this.contentList.length);
       } else {
         console.warn("Triangle shader failure...");
       }
     }
-
     if ('square' == filler) {
       var squareObject = new Object();
       squareObject.visible = true;
-
       if (typeof nameUniq != 'undefined') {
         squareObject.name = nameUniq;
       } else {
         squareObject.name = 'square_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
-
       squareObject.streamTextures = null;
       squareObject.type = filler;
       squareObject.size = size;
@@ -16685,20 +14810,22 @@ function defineworld(canvas, renderType) {
       squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       squareObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       squareObject.position.nameUniq = nameUniq;
+      squareObject.position.netObjId = nameUniq;
       squareObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
       squareObject.rotation.nameUniq = nameUniq;
+      squareObject.rotation.netObjId = nameUniq;
       squareObject.color = true;
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
       squareObject.geometry.nameUniq = nameUniq;
-      squareObject.glBlend = new _utility._glBlend(); // destroy self
+      squareObject.glBlend = new _utility._glBlend();
 
+      // destroy self
       squareObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
             // destroy me
             var TEST = world.contentList[world.contentList.indexOf(squareObject)];
-
             if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
               let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
               _manifest.default.scene[objForDelete.name] = null;
@@ -16709,11 +14836,11 @@ function defineworld(canvas, renderType) {
           _manifest.default.scene[objForDelete.name] = null;
         }
       };
-
       squareObject.raycast = {
         enabled: true
-      }; // Physics
+      };
 
+      // Physics
       squareObject.physics = {
         enabled: false
       };
@@ -16728,7 +14855,6 @@ function defineworld(canvas, renderType) {
         array_of_local_offset: [12, 0, 0],
         overrideDrawArraysInstance: function (object_) {}
       };
-
       if (squareObject.shaderProgram) {
         // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
         this.bufferSquare(squareObject);
@@ -16740,31 +14866,29 @@ function defineworld(canvas, renderType) {
         console.warn("Square shader failure...");
       }
     }
-
     if ('squareTex' == filler) {
       // eslint-disable-next-line no-redeclare
       var squareObject = new Object();
       squareObject.visible = true;
-
       if (typeof nameUniq != 'undefined') {
         squareObject.name = nameUniq;
       } else {
         squareObject.name = 'square_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
-
       squareObject.streamTextures = null;
       squareObject.type = filler;
       squareObject.size = size;
       squareObject.sides = 4;
       squareObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       squareObject.position.nameUniq = nameUniq;
+      squareObject.position.netObjId = nameUniq;
       squareObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
       squareObject.rotation.nameUniq = nameUniq;
+      squareObject.rotation.netObjId = nameUniq;
       squareObject.mvMatrix = mat4.create();
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
       squareObject.geometry.nameUniq = nameUniq;
       squareObject.glBlend = new _utility._glBlend();
-
       squareObject.setFBO = function () {
         console.log('cubeObject set fbo ... ');
         squareObject.FBO = {
@@ -16780,19 +14904,18 @@ function defineworld(canvas, renderType) {
             pitch: typeof arg === 'undefined' || !arg.pitch ? 2.5 : arg.pitch,
             yaw: typeof arg === 'undefined' || !arg.yaw ? 4.8 : arg.yaw
           }
-        }; // for now
-
+        };
+        // for now
         world.FBOS.push(squareObject.FBO);
-      }; // destroy self
+      };
 
-
+      // destroy self
       squareObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
             // destroy me
             // destroy me
             var TEST = world.contentList[world.contentList.indexOf(squareObject)];
-
             if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
               let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
               _manifest.default.scene[objForDelete.name] = null;
@@ -16803,11 +14926,11 @@ function defineworld(canvas, renderType) {
           _manifest.default.scene[objForDelete.name] = null;
         }
       };
-
       squareObject.raycast = {
         enabled: true
-      }; // Physics
+      };
 
+      // Physics
       squareObject.physics = {
         enabled: false
       };
@@ -16823,7 +14946,6 @@ function defineworld(canvas, renderType) {
         lightingDirection: new _matrixGeometry.COLOR(1, 1, 0)
       };
       squareObject.useShadows = false;
-
       squareObject.activateShadows = t => {
         setTimeout(() => {
           if (typeof t === 'undefined' || t == 'spot') {
@@ -16840,15 +14962,13 @@ function defineworld(canvas, renderType) {
             squareObject.useShadows = true;
             squareObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
           }
-
           (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
           squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
         }, 10);
-      }; // gen tex
+      };
 
-
+      // gen tex
       squareObject.createPixelsTex = _manifest.default.tools.createPixelsTex;
-
       if (typeof texturesPaths !== 'undefined') {
         if (typeof texturesPaths == 'string') {
           // Single tex
@@ -16859,7 +14979,6 @@ function defineworld(canvas, renderType) {
           // console.info("texturesPaths is object...");
           squareObject.textures = [];
           squareObject.texture = true;
-
           if (typeof texturesPaths.params === 'undefined') {
             squareObject.texParams = {
               TEXTURE_WRAP_S: this.GL.gl.REPEAT,
@@ -16867,18 +14986,14 @@ function defineworld(canvas, renderType) {
               TEXTURE_MAG_FILTER: this.GL.gl.LINEAR,
               // NEAREST
               TEXTURE_MIN_FILTER: this.GL.gl.LINEAR // 
-
             };
           } else {
             squareObject.texParams = texturesPaths.params;
           }
-
           (0, _engine.RegenerateShader)('' + filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
-
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             squareObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
           }
-
           squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
         } else {
           alert('Exec add obj : texturePaths : path is unknow typeof');
@@ -16889,7 +15004,6 @@ function defineworld(canvas, renderType) {
         squareObject.textures[0] = squareObject.texture;
         squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       }
-
       squareObject.LightMap = new _matrixGeometry.GeoOfColor('square');
       squareObject.custom = new Object();
       squareObject.custom.gl_texture = null;
@@ -16898,7 +15012,6 @@ function defineworld(canvas, renderType) {
         array_of_local_offset: [12, 0, 0],
         overrideDrawArraysInstance: function (object_) {}
       };
-
       if (squareObject.shaderProgram) {
         // // console.info("   Buffer the " + filler + ":Store at:" + this.contentList.length);
         this.bufferSquareTex(squareObject);
@@ -16909,27 +15022,26 @@ function defineworld(canvas, renderType) {
         console.warn("Square shader failure");
       }
     }
-
     if ('cube' == filler) {
       var cubeObject = new Object();
       cubeObject.visible = true;
-
       if (typeof nameUniq != 'undefined') {
         cubeObject.name = nameUniq;
       } else {
         cubeObject.name = 'cube_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
-
       cubeObject.streamTextures = null;
       cubeObject.type = filler;
       cubeObject.size = size;
       cubeObject.sides = 12;
       cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0); // update
-
+      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      // update
       cubeObject.position.nameUniq = nameUniq;
+      cubeObject.position.netObjId = nameUniq;
       cubeObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
       cubeObject.rotation.nameUniq = nameUniq;
+      cubeObject.rotation.netObjId = nameUniq;
       cubeObject.color = true;
       cubeObject.mvMatrix = mat4.create();
       cubeObject.geometry = new _matrixGeometry.CubeVertex(cubeObject);
@@ -16940,13 +15052,11 @@ function defineworld(canvas, renderType) {
         overrideDrawArraysInstance: function (object_) {}
       };
       cubeObject.glBlend = new _utility._glBlend();
-
       cubeObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
             // destroy me
             var TEST = world.contentList[world.contentList.indexOf(cubeObject)];
-
             if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
               let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
               _manifest.default.scene[objForDelete.name] = null;
@@ -16957,11 +15067,11 @@ function defineworld(canvas, renderType) {
           _manifest.default.scene[objForDelete.name] = null;
         }
       };
-
       cubeObject.raycast = {
         enabled: true
-      }; // Physics
+      };
 
+      // Physics
       cubeObject.physics = {
         enabled: false
       };
@@ -16971,7 +15081,6 @@ function defineworld(canvas, renderType) {
           _engine.net.activateDataStream();
         }
       };
-
       if (cubeObject.shaderProgram && cubeObject.geometry) {
         // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
         this.bufferCube(cubeObject);
@@ -16982,38 +15091,38 @@ function defineworld(canvas, renderType) {
         console.warn("Cube shader failure");
       }
     }
-
     if ('sphereTex' == filler || 'sphereLightTex' == filler) {
       var sphereObject = new Object();
       sphereObject.visible = true;
-
       if (typeof nameUniq != 'undefined') {
         sphereObject.name = nameUniq;
       } else {
         sphereObject.name = 'sphereObject_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
-
       sphereObject.streamTextures = null;
       sphereObject.type = filler;
       sphereObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       sphereObject.position.nameUniq = nameUniq;
+      sphereObject.position.netObjId = nameUniq;
       sphereObject.size = size;
       sphereObject.sides = 12;
       sphereObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
-      sphereObject.rotation.nameUniq = nameUniq; //lights
+      sphereObject.rotation.nameUniq = nameUniq;
+      sphereObject.rotation.netObjId = nameUniq;
 
+      //lights
       sphereObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
         ambientLight: new _matrixGeometry.COLOR(1, 1, 1),
         lightingDirection: new _matrixGeometry.COLOR(1, 1, 0)
-      }; // destroy self
+      };
 
+      // destroy self
       sphereObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
             // destroy me
             var TEST = world.contentList[world.contentList.indexOf(sphereObject)];
-
             if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
               let objForDelete = world.contentList.splice(world.contentList.indexOf(sphereObject), 1)[0];
               _manifest.default.scene[objForDelete.name] = null;
@@ -17024,11 +15133,11 @@ function defineworld(canvas, renderType) {
           _manifest.default.scene[objForDelete.name] = null;
         }
       };
-
       sphereObject.raycast = {
         enabled: true
-      }; // Physics
+      };
 
+      // Physics
       sphereObject.physics = {
         enabled: false
       };
@@ -17041,7 +15150,6 @@ function defineworld(canvas, renderType) {
       sphereObject.custom = new Object();
       sphereObject.custom.gl_texture = null;
       sphereObject.textures = [];
-
       if (typeof texturesPaths !== 'undefined') {
         if (typeof texturesPaths == 'string') {
           //alert('path is string')
@@ -17051,7 +15159,6 @@ function defineworld(canvas, renderType) {
           // console.log("path is object");
           sphereObject.textures = [];
           sphereObject.texture = true;
-
           if (typeof texturesPaths.params === 'undefined') {
             sphereObject.texParams = {
               TEXTURE_WRAP_S: this.GL.gl.REPEAT,
@@ -17060,13 +15167,11 @@ function defineworld(canvas, renderType) {
           } else {
             sphereObject.texParams = texturesPaths.params;
           }
-
-          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles'); // eslint-disable-next-line no-redeclare
-
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
+          // eslint-disable-next-line no-redeclare
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             sphereObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
           }
-
           sphereObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
         } else {
           alert('Exec add obj : texturePaths : path is unknow typeof');
@@ -17078,30 +15183,22 @@ function defineworld(canvas, renderType) {
         sphereObject.texture = true;
         sphereObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       }
-
       sphereObject.changeMaterial = function (texturesPaths) {
         (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
-
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t], texturesPaths.params));
         }
-
         this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
       };
-
       sphereObject.changeShader = function (texturesPaths, custom_code) {
         RegenerateCustomShader(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, custom_code);
-
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t], texturesPaths.params));
         }
-
         this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
       };
-
       sphereObject.mvMatrix = mat4.create();
       sphereObject.LightMap = undefined;
-
       if (typeof mesh_ !== 'undefined') {
         sphereObject.latitudeBands = mesh_.latitudeBands;
         sphereObject.longitudeBands = mesh_.longitudeBands;
@@ -17111,17 +15208,16 @@ function defineworld(canvas, renderType) {
         sphereObject.longitudeBands = 30;
         sphereObject.radius = sphereObject.size;
       }
-
       sphereObject.geometry = new _matrixGeometry.sphereVertex(sphereObject);
       sphereObject.geometry.nameUniq = nameUniq;
       sphereObject.instancedDraws = {
         numberOfInstance: 10,
         array_of_local_offset: [12, 0, 0],
         overrideDrawArraysInstance: function (object_) {}
-      }; //draws params
+      };
 
+      //draws params
       sphereObject.glBlend = new _utility._glBlend();
-
       if (sphereObject.shaderProgram) {
         // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
         this.bufferSphere(sphereObject);
@@ -17132,17 +15228,14 @@ function defineworld(canvas, renderType) {
         console.warn("Cube shader failure");
       }
     }
-
     if ('pyramid' == filler) {
       var pyramidObject = new Object();
       pyramidObject.visible = true;
-
       if (typeof nameUniq != 'undefined') {
         pyramidObject.name = nameUniq;
       } else {
         pyramidObject.name = 'pyramid_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
-
       pyramidObject.streamTextures = null;
       pyramidObject.type = filler;
       pyramidObject.size = size;
@@ -17150,18 +15243,20 @@ function defineworld(canvas, renderType) {
       pyramidObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       pyramidObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       pyramidObject.position.nameUniq = nameUniq;
+      pyramidObject.position.netObjId = nameUniq;
       pyramidObject.rotation = new _matrixGeometry.RotationVector(1, 0, 0);
       pyramidObject.rotation.nameUniq = nameUniq;
+      pyramidObject.rotation.netObjId = nameUniq;
       pyramidObject.mvMatrix = mat4.create();
       pyramidObject.geometry = new _matrixGeometry.PiramideVertex(pyramidObject);
-      pyramidObject.geometry.nameUniq = nameUniq; // destroy self
+      pyramidObject.geometry.nameUniq = nameUniq;
 
+      // destroy self
       pyramidObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
             // destroy me
             var TEST = world.contentList[world.contentList.indexOf(pyramidObject)];
-
             if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
               let objForDelete = world.contentList.splice(world.contentList.indexOf(pyramidObject), 1)[0];
               _manifest.default.scene[objForDelete.name] = null;
@@ -17172,11 +15267,11 @@ function defineworld(canvas, renderType) {
           _manifest.default.scene[objForDelete.name] = null;
         }
       };
-
       pyramidObject.raycast = {
         enabled: true
-      }; // Physics
+      };
 
+      // Physics
       pyramidObject.physics = {
         enabled: false
       };
@@ -17192,30 +15287,26 @@ function defineworld(canvas, renderType) {
         overrideDrawArraysInstance: function (object_) {}
       };
       pyramidObject.glBlend = new _utility._glBlend();
-
       if (pyramidObject.shaderProgram) {
         // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
         this.bufferPyramid(pyramidObject);
         pyramidObject.glDrawElements = new _utility._DrawElements(pyramidObject.vertexColorBuffer.numItems); // !!!!!!!!!
-
         this.contentList[this.contentList.length] = pyramidObject;
         _manifest.default.scene[pyramidObject.name] = pyramidObject;
       } else {
         console.warn("Pyramid shader failure");
       }
-    } // no physics for now
+    }
 
-
+    // no physics for now
     if ('obj' == filler) {
       var objObject = new Object();
       objObject.visible = true;
-
       if (typeof nameUniq != 'undefined') {
         objObject.name = nameUniq;
       } else {
         objObject.name = 'obj_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
-
       objObject.streamTextures = null;
       objObject.type = filler;
       objObject.size = size;
@@ -17223,11 +15314,12 @@ function defineworld(canvas, renderType) {
       objObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       objObject.position = new _matrixGeometry.Position(0, -5, -8.0);
       objObject.position.nameUniq = nameUniq;
+      objObject.position.netObjId = nameUniq;
       objObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
       objObject.rotation.nameUniq = nameUniq;
+      objObject.rotation.netObjId = nameUniq;
       objObject.color = false; // new GeoOfColor('4x4');
       // custom textures
-
       objObject.custom = new Object();
       objObject.custom.gl_texture = null;
       objObject.glDrawElements = new _utility._DrawElements(mesh_.indexBuffer.numItems);
@@ -17236,14 +15328,14 @@ function defineworld(canvas, renderType) {
         directionLight: new _matrixGeometry.COLOR(5, 5, 5),
         ambientLight: new _matrixGeometry.COLOR(1, 1, 1),
         lightingDirection: new _matrixGeometry.COLOR(0, 1, 0)
-      }; // destroy self  MAy need more improve
+      };
 
+      // destroy self  MAy need more improve !!
       objObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
             // destroy me
             var TEST = world.contentList[world.contentList.indexOf(objObject)];
-
             if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
               let objForDelete = world.contentList.splice(world.contentList.indexOf(objObject), 1)[0];
               _manifest.default.scene[objForDelete.name] = null;
@@ -17254,11 +15346,11 @@ function defineworld(canvas, renderType) {
           _manifest.default.scene[objForDelete.name] = null;
         }
       };
-
       objObject.raycast = {
         enabled: true
-      }; // Physics
+      };
 
+      // Physics
       objObject.physics = {
         enabled: false
       };
@@ -17268,14 +15360,12 @@ function defineworld(canvas, renderType) {
           _engine.net.activateDataStream();
         }
       };
-
       objObject.setFBO = function () {
         objObject.FBO = {};
-      }; // Update others start
+      };
 
-
+      // Update others start
       objObject.useShadows = false;
-
       objObject.activateShadows = t => {
         if (typeof t === 'undefined' || t == 'spot') {
           t = 'spot';
@@ -17291,24 +15381,19 @@ function defineworld(canvas, renderType) {
           objObject.useShadows = true;
           objObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
         }
-
         (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
         objObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       };
-
       if (typeof texturesPaths !== 'undefined') {
         if (typeof texturesPaths == 'string') {
           objObject.texture = this.initTexture(this.GL.gl, texturesPaths);
           objObject.textures = [];
           objObject.textures_texParameteri = []; //new , but not in use
-
           objObject.textures[0] = objObject.texture;
         } else if (typeof texturesPaths == 'object') {
           objObject.textures = [];
           objObject.textures_texParameteri = []; //new
-
           objObject.texture = true;
-
           if (typeof texturesPaths.params === 'undefined') {
             objObject.texParams = {
               MIPMAP: false,
@@ -17324,16 +15409,15 @@ function defineworld(canvas, renderType) {
           } else {
             objObject.texParams = texturesPaths.params;
           }
-
-          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles'); // eslint-disable-next-line no-redeclare
-
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
+          // eslint-disable-next-line no-redeclare
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             objObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t], texturesPaths.params));
             objObject.textures_texParameteri.push(new _utility._glTexParameteri('TEXTURE_2D', 'TEXTURE_MAG_FILTER', 'LINEAR'));
           }
-
           objObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-        } else {// console.warn("Exec add obj : texturePaths : path is unknow typeof");
+        } else {
+          // console.warn("Exec add obj : texturePaths : path is unknow typeof");
         }
       } else {
         // no textures , use default single textures
@@ -17342,23 +15426,17 @@ function defineworld(canvas, renderType) {
         objObject.textures = [];
         objObject.textures[0] = objObject.texture;
       }
-
       objObject.LightMap = new _matrixGeometry.GeoOfColor('square');
-
       objObject.changeMaterial = function (texturesPaths) {
         (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
-
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
         }
-
         this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
       };
-
-      objObject.mvMatrix = mat4.create(); // update
-
+      objObject.mvMatrix = mat4.create();
+      // update
       objObject.meshList = {};
-
       if (typeof animationConstruct_ == 'undefined' || typeof animationConstruct_ == null) {
         objObject.animation = null;
       } else {
@@ -17369,19 +15447,24 @@ function defineworld(canvas, renderType) {
           speed: animationConstruct_.speed,
           currentDraws: 0
         };
-
         if (typeof animationConstruct_.animations !== 'undefined') {
           objObject.animation.anims = animationConstruct_.animations;
           objObject.play = _loaderObj.play;
-        } // no need for single test it in future
-
-
+        }
+        // no need for single test it in future
         objObject.meshList = animationConstruct_.meshList;
-      } // Stay like root or t pose data holder
 
+        // scale for all
+        objObject.scaleAll = function (s) {
+          for (var k in objObject.meshList) {
+            // console.log(objObject.meshList[k])
+            objObject.meshList[k].setScale(s);
+          }
+        };
+      }
 
+      // Stay like root or t pose data holder
       objObject.mesh = mesh_;
-
       if (objObject.shaderProgram) {
         // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
         this.bufferObj(objObject);
@@ -17391,34 +15474,33 @@ function defineworld(canvas, renderType) {
         console.warn('obj file shader failure');
       }
     }
-
     if ('cubeTex' == filler || 'cubeLightTex' == filler) {
       // eslint-disable-next-line no-redeclare
       var cubeObject = new Object();
       cubeObject.visible = true;
-
       if (typeof nameUniq != 'undefined') {
         cubeObject.name = nameUniq;
       } else {
         cubeObject.name = 'cube_instance_' + Math.floor(Math.random() * 1000 + 1);
       }
-
       cubeObject.streamTextures = null;
       cubeObject.type = filler;
-      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0); // update
-
+      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      // update
       cubeObject.position.nameUniq = nameUniq;
+      cubeObject.position.netObjId = nameUniq;
       cubeObject.size = size;
       cubeObject.sides = 12;
       cubeObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
-      cubeObject.rotation.nameUniq = nameUniq; //lights
+      cubeObject.rotation.nameUniq = nameUniq;
+      cubeObject.rotation.netObjId = nameUniq;
 
+      //lights
       cubeObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
         ambientLight: new _matrixGeometry.COLOR(1, 1, 1),
         lightingDirection: new _matrixGeometry.COLOR((0, _utility.radToDeg)(0.3), (0, _utility.radToDeg)(-0.3), (0, _utility.radToDeg)(-1))
       };
-
       cubeObject.setFBO = function (arg) {
         // cubeObject.FBO = {};
         // console.log('cubeObject set fbo ... ')
@@ -17433,7 +15515,8 @@ function defineworld(canvas, renderType) {
             cameraY: typeof arg === 'undefined' || !arg.cameraY ? 0 : arg.cameraY,
             cameraZ: typeof arg === 'undefined' || !arg.cameraZ ? 0 : arg.cameraZ,
             pitch: typeof arg === 'undefined' || !arg.pitch ? 2.5 : arg.pitch,
-            yaw: typeof arg === 'undefined' || !arg.yaw ? 4.8 : arg.yaw // posZ: (typeof arg === 'undefined' || !arg.posZ? 4.3 : arg.posZ),
+            yaw: typeof arg === 'undefined' || !arg.yaw ? 4.8 : arg.yaw
+            // posZ: (typeof arg === 'undefined' || !arg.posZ? 4.3 : arg.posZ),
             // targetX: (typeof arg === 'undefined' || !arg.targetX? 2.5 : arg.targetX),
             // targetY: (typeof arg === 'undefined'|| !arg.targetY ? 0 : arg.targetY),
             // targetZ: (typeof arg === 'undefined' || !arg.targetZ? 3.5 : arg.targetZ),
@@ -17444,21 +15527,19 @@ function defineworld(canvas, renderType) {
             // bias: (typeof arg === 'undefined' || !arg.bias ? -0.006 : arg.bias),
             // translate: (typeof arg === 'undefined' || !arg.translate ? [1.5, 1.5, 1.5] : [arg.translate[0], arg.translate[1], arg.translate[2]]),
             // scale  : (typeof arg === 'undefined' || !arg.scale ? [0.5 ,0.5 ,0.5] : [arg.scale[0],arg.scale[1] ,arg.scale[2] ])
-
           }
-        }; // for now
+        };
+        // for now
         // world.FBOS[0] = cubeObject.FBO;
-
         world.FBOS.push(cubeObject.FBO);
-      }; // destroy self  MAy need more improve
+      };
 
-
+      // destroy self  MAy need more improve
       cubeObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
             // destroy me
             var TEST = world.contentList[world.contentList.indexOf(cubeObject)];
-
             if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
               let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
               _manifest.default.scene[objForDelete.name] = null;
@@ -17469,11 +15550,11 @@ function defineworld(canvas, renderType) {
           _manifest.default.scene[objForDelete.name] = null;
         }
       };
-
       cubeObject.raycast = {
         enabled: true
-      }; // Physics
+      };
 
+      // Physics
       cubeObject.physics = {
         enabled: false
       };
@@ -17482,10 +15563,10 @@ function defineworld(canvas, renderType) {
         activate: () => {
           _engine.net.activateDataStream();
         }
-      }; // Update others start
+      };
 
+      // Update others start
       cubeObject.useShadows = false;
-
       cubeObject.activateShadows = t => {
         if (typeof t === 'undefined' || t == 'spot') {
           t = 'spot';
@@ -17501,27 +15582,21 @@ function defineworld(canvas, renderType) {
           cubeObject.useShadows = true;
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
         }
-
         (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
         console.log('REGEN');
         cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       };
-
       cubeObject.deactivateTex = () => {
         cubeObject.vertexTexCoordBufferRefVar = cubeObject.vertexTexCoordBuffer;
         cubeObject.vertexTexCoordBuffer = false;
       };
-
       cubeObject.createPixelsTex = _manifest.default.tools.createPixelsTex;
-
       cubeObject.activateTex = () => {
         cubeObject.vertexTexCoordBuffer = cubeObject.vertexTexCoordBufferRefVar;
       };
-
       cubeObject.textures = [];
       cubeObject.custom = new Object();
       cubeObject.custom.gl_texture = null;
-
       if (typeof texturesPaths !== 'undefined') {
         if (typeof texturesPaths == 'string') {
           cubeObject.texture = this.initTexture(this.GL.gl, texturesPaths);
@@ -17529,7 +15604,6 @@ function defineworld(canvas, renderType) {
         } else if (typeof texturesPaths == 'object') {
           cubeObject.textures = [];
           cubeObject.texture = true;
-
           if (typeof texturesPaths.params === 'undefined') {
             cubeObject.texParams = {
               MIPMAP: false,
@@ -17545,13 +15619,11 @@ function defineworld(canvas, renderType) {
           } else {
             cubeObject.texParams = texturesPaths.params;
           }
-
-          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles'); // eslint-disable-next-line no-redeclare
-
+          (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
+          // eslint-disable-next-line no-redeclare
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             cubeObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
           }
-
           cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
         } else {
           console.warn("Exec add obj : cubeObject wrong texturePaths!");
@@ -17563,17 +15635,13 @@ function defineworld(canvas, renderType) {
         cubeObject.texture = true;
         cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       }
-
       cubeObject.changeMaterial = function (texturesPaths) {
         (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
-
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
         }
-
         this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
       };
-
       cubeObject.mvMatrix = mat4.create();
       cubeObject.LightMap = new _matrixGeometry.GeoOfColor('cube light');
       cubeObject.geometry = new _matrixGeometry.CubeVertex(cubeObject);
@@ -17582,10 +15650,10 @@ function defineworld(canvas, renderType) {
         numberOfInstance: 10,
         array_of_local_offset: [12, 0, 0],
         overrideDrawArraysInstance: function (object_) {}
-      }; //draws params
+      };
 
+      //draws params
       cubeObject.glBlend = new _utility._glBlend();
-
       if (cubeObject.shaderProgram) {
         // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
         this.bufferCube(cubeObject);
@@ -17596,40 +15664,40 @@ function defineworld(canvas, renderType) {
         console.warn('Cube shader failure');
       }
     }
-
     if ('cubeMap' == filler || 'cubeMapTex' == filler) {
       // eslint-disable-next-line no-redeclare
       var cubeObject = new Object();
       cubeObject.visible = true;
-
       if (typeof nameUniq != 'undefined') {
         cubeObject.name = nameUniq;
       } else {
         cubeObject.name = 'cube_instance_' + Math.floor(Math.random() * 1000 + 1);
       }
-
       cubeObject.streamTextures = null;
       cubeObject.type = filler;
-      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0); // update
-
+      cubeObject.position = new _matrixGeometry.Position(0, 0, -5.0);
+      // update
       cubeObject.position.nameUniq = nameUniq;
+      cubeObject.position.netObjId = nameUniq;
       cubeObject.size = size;
       cubeObject.sides = 12;
       cubeObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
-      cubeObject.rotation.nameUniq = nameUniq; //lights
+      cubeObject.rotation.nameUniq = nameUniq;
+      cubeObject.rotation.netObjId = nameUniq;
 
+      //lights
       cubeObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
         ambientLight: new _matrixGeometry.COLOR(1, 1, 1),
         lightingDirection: new _matrixGeometry.COLOR((0, _utility.radToDeg)(0.3), (0, _utility.radToDeg)(-0.3), (0, _utility.radToDeg)(-1))
-      }; // destroy self  MAy need more improve
+      };
 
+      // destroy self  MAy need more improve
       cubeObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
             // destroy me
             var TEST = world.contentList[world.contentList.indexOf(cubeObject)];
-
             if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
               let objForDelete = world.contentList.splice(world.contentList.indexOf(cubeObject), 1)[0];
               _manifest.default.scene[objForDelete.name] = null;
@@ -17640,11 +15708,11 @@ function defineworld(canvas, renderType) {
           _manifest.default.scene[objForDelete.name] = null;
         }
       };
-
       cubeObject.raycast = {
         enabled: true
-      }; // Physics
+      };
 
+      // Physics
       cubeObject.physics = {
         enabled: false
       };
@@ -17653,11 +15721,11 @@ function defineworld(canvas, renderType) {
         activate: () => {
           _engine.net.activateDataStream();
         }
-      }; // Update others start NOT ACTIVE NOW
+      };
+
+      // Update others start NOT ACTIVE NOW
       // Calling with no error
-
       cubeObject.useShadows = false;
-
       cubeObject.activateShadows = t => {
         // Update others end
         if (typeof t === 'undefined' || t == 'spot') {
@@ -17674,26 +15742,20 @@ function defineworld(canvas, renderType) {
           cubeObject.useShadows = true;
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
         }
-
         (0, _engine.RegenerateCubeMapShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
         cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       };
-
       cubeObject.deactivateTex = () => {
         cubeObject.vertexTexCoordBufferRefVar = cubeObject.vertexTexCoordBuffer;
         cubeObject.vertexTexCoordBuffer = false;
       };
-
       cubeObject.createPixelsTex = _manifest.default.tools.createPixelsTex;
-
       cubeObject.activateTex = () => {
         cubeObject.vertexTexCoordBuffer = cubeObject.vertexTexCoordBufferRefVar;
       };
-
       cubeObject.textures = [];
       cubeObject.custom = new Object();
       cubeObject.custom.gl_texture = null;
-
       if (typeof texturesPaths !== 'undefined') {
         if (typeof texturesPaths == 'string') {
           console.log('tex path is string... use it...');
@@ -17702,15 +15764,14 @@ function defineworld(canvas, renderType) {
         } else if (typeof texturesPaths == 'object') {
           cubeObject.textures = [];
           cubeObject.texture = true;
-
           if (_manifest.default.openglesShaderVersion == 1.3) {
             (0, _engine.RegenerateCubeMapShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'spot');
           } else {
             (0, _engine.RegenerateCubeMapShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
           }
-
           cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
-        } else {// console.warn(" error in texturesPaths arg ...");
+        } else {
+          // console.warn(" error in texturesPaths arg ...");
         }
       } else {
         // no textures , use default single textures
@@ -17720,17 +15781,13 @@ function defineworld(canvas, renderType) {
         cubeObject.texture = true;
         cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       }
-
       cubeObject.changeMaterial = function (texturesPaths) {
         (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
-
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
         }
-
         this.shaderProgram = world.initShaders(world.GL.gl, this.type + '-shader-fs', this.type + '-shader-vs');
       };
-
       cubeObject.mvMatrix = mat4.create();
       cubeObject.LightMap = new _matrixGeometry.GeoOfColor('cube light');
       cubeObject.geometry = new _matrixGeometry.CubeVertex(cubeObject);
@@ -17741,10 +15798,8 @@ function defineworld(canvas, renderType) {
         overrideDrawArraysInstance: function (object_) {}
       };
       cubeObject.glBlend = new _utility._glBlend();
-
       if (cubeObject.shaderProgram) {
         // Only cubeMap2dCanvasSet - Get A 2D context
-
         /** @type {Canvas2DRenderingContext} */
         var T = document.createElement('canvas');
         T.id = cubeObject.name + '_cubeMap';
@@ -17754,10 +15809,8 @@ function defineworld(canvas, renderType) {
         cubeObject.cubeMap.cubeMap2dCtx = T.getContext('2d');
         cubeObject.cubeMap.cubeMap2dCtx.canvas.width = 512;
         cubeObject.cubeMap.cubeMap2dCtx.canvas.height = 512;
-
         if (texturesPaths.cubeMap) {
           cubeObject.cubeMap.type = texturesPaths.cubeMap.type;
-
           if (texturesPaths.cubeMap.type == '2dcanvas') {
             cubeObject.cubeMap.cubeMap2dCanvasSet = [{
               target: this.GL.gl.TEXTURE_CUBE_MAP_POSITIVE_X
@@ -17828,7 +15881,6 @@ function defineworld(canvas, renderType) {
             text: 'x'
           }];
         }
-
         this.bufferCubeMap(cubeObject);
         cubeObject.glDrawElements = new _utility._DrawElements(cubeObject.vertexIndexBuffer.numItems);
         this.contentList[this.contentList.length] = cubeObject;
@@ -17836,34 +15888,34 @@ function defineworld(canvas, renderType) {
       } else {
         console.warn('Cube shader failure!');
       }
-    } // No physics for now - no networking for now!
+    }
 
-
+    // No physics for now - no networking for now!
     if ('generatorTex' == filler || 'generatorLightTex' == filler) {
       var customObject = new Object();
       customObject.visible = true;
-
       if (typeof nameUniq != 'undefined') {
         customObject.name = nameUniq;
       } else {
         customObject.name = 'customObject_instance_' + Math.floor(Math.random() * 100000 + 1);
       }
-
       customObject.streamTextures = null;
       customObject.type = filler;
       customObject.position = new _matrixGeometry.Position(0, 0, -5.0);
       customObject.position.nameUniq = nameUniq;
+      customObject.position.netObjId = nameUniq;
       customObject.size = size;
       customObject.sides = 12;
       customObject.rotation = new _matrixGeometry.RotationVector(0, 1, 0);
-      customObject.rotation.nameUniq = nameUniq; // destroy self  MAy need more improve
+      customObject.rotation.nameUniq = nameUniq;
+      customObject.rotation.netObjId = nameUniq;
 
+      // destroy self  MAy need more improve
       customObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
             // destroy me
             var TEST = world.contentList[world.contentList.indexOf(customObject)];
-
             if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
               let objForDelete = world.contentList.splice(world.contentList.indexOf(customObject), 1)[0];
               _manifest.default.scene[objForDelete.name] = null;
@@ -17873,15 +15925,16 @@ function defineworld(canvas, renderType) {
           let objForDelete = world.contentList.splice(world.contentList.indexOf(customObject), 1)[0];
           _manifest.default.scene[objForDelete.name] = null;
         }
-      }; //lights
+      };
 
-
+      //lights
       customObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
         ambientLight: new _matrixGeometry.COLOR(1, 1, 1),
         lightingDirection: new _matrixGeometry.COLOR(1, 1, 0)
-      }; // Physics
+      };
 
+      // Physics
       customObject.physics = {
         enabled: false
       };
@@ -17891,7 +15944,6 @@ function defineworld(canvas, renderType) {
         overrideDrawArraysInstance: function (object_) {}
       };
       customObject.textures = [];
-
       if (typeof texturesPaths !== 'undefined') {
         if (typeof texturesPaths == 'string') {
           customObject.texture = this.initTexture(this.GL.gl, texturesPaths);
@@ -17900,11 +15952,9 @@ function defineworld(canvas, renderType) {
           customObject.textures = [];
           customObject.texture = true;
           (0, _engine.RegenerateShader)('sphereLightTex' + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
-
           for (var t = 0; t < texturesPaths.source.length; ++t) {
             customObject.textures.push(this.initTexture(this.GL.gl, texturesPaths.source[t]));
           }
-
           customObject.shaderProgram = this.initShaders(this.GL.gl, 'sphereLightTex' + '-shader-fs', 'sphereLightTex' + '-shader-vs'); //hard code
         } else {
           alert('Exec add obj : texturePaths : path is unknow typeof');
@@ -17916,26 +15966,21 @@ function defineworld(canvas, renderType) {
         customObject.texture = true;
         customObject.shaderProgram = this.initShaders(this.GL.gl, 'sphereLightTex' + '-shader-fs', 'sphereLightTex' + '-shader-vs');
       }
-
       customObject.changeMaterial = function (texturesPaths) {
         (0, _engine.RegenerateShader)('sphereLightTex' + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation);
-
         for (var t = 0; t < texturesPaths.source.length; ++t) {
           this.textures.push(world.initTexture(world.GL.gl, texturesPaths.source[t]));
         }
-
         this.shaderProgram = world.initShaders(world.GL.gl, 'sphereLightTex' + '-shader-fs', 'sphereLightTex' + '-shader-vs');
       };
-
       customObject.mvMatrix = mat4.create();
       customObject.LightMap = undefined;
-
       if (typeof mesh_ !== 'undefined') {
         customObject.latitudeBands = mesh_.latitudeBands;
         customObject.longitudeBands = mesh_.longitudeBands;
         customObject.radius = mesh_.radius;
-        customObject.custom_type = mesh_.custom_type; // torus
-
+        customObject.custom_type = mesh_.custom_type;
+        // torus
         if (mesh_.custom_type == 'torus') {
           customObject.slices = mesh_.slices;
           customObject.loops = mesh_.loops;
@@ -17946,18 +15991,16 @@ function defineworld(canvas, renderType) {
         customObject.latitudeBands = 30;
         customObject.longitudeBands = 30;
         customObject.radius = 2;
-        customObject.custom_type = 'torus'; // torus is default
-
+        customObject.custom_type = 'torus';
+        // torus is default
         customObject.slices = 8;
         customObject.loops = 20;
         customObject.inner_rad = 0.5;
         customObject.outerRad = 2;
       }
-
-      customObject.geometry = new _matrixGeometry.customVertex(customObject); //draws params
-
+      customObject.geometry = new _matrixGeometry.customVertex(customObject);
+      //draws params
       customObject.glBlend = new _utility._glBlend();
-
       if (customObject.shaderProgram) {
         // console.log("Buffer the " + filler + ":Store at:" + this.contentList.length);
         this.bufferSphere(customObject);
@@ -17969,7 +16012,6 @@ function defineworld(canvas, renderType) {
       }
     }
   };
-
   world.callReDraw = reDraw;
   world.destroy = _manifest.default.operation.destroyWorld;
   return world;
@@ -17982,25 +16024,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Broadcaster = void 0;
-
 var _utility = require("./utility");
-
 require("./rtc-multi-connection/FileBufferReader.js");
-
 var _getHTMLMediaElement = require("./rtc-multi-connection/getHTMLMediaElement");
-
 var RTCMultiConnection3 = _interopRequireWildcard(require("./rtc-multi-connection/RTCMultiConnection3"));
-
 var io = _interopRequireWildcard(require("./rtc-multi-connection/socket.io"));
-
 var _manifest = _interopRequireDefault(require("../program/manifest.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 class Broadcaster {
   constructor(config) {
     this.injector;
@@ -18016,12 +16048,9 @@ class Broadcaster {
     this.shareFileBtnthis = null;
     this.inputChatthis = null;
     this.inputRoomIdthis = null;
-
     this.openDataSession = () => {};
-
     this.multiPlayerRef = {
       root: this,
-
       init(rtcEvent) {
         console.log("rtcEvent add new net object -> ", rtcEvent.userid);
         dispatchEvent(new CustomEvent('net-new-user', {
@@ -18030,7 +16059,6 @@ class Broadcaster {
           }
         }));
       },
-
       update(e) {
         if (e.data.netPos) {
           // console.log('INFO UPDATE', e);
@@ -18061,7 +16089,6 @@ class Broadcaster {
           }
         }
       },
-
       /**
        * If someone leaves all client actions is here
        * - remove from scene
@@ -18075,21 +16102,18 @@ class Broadcaster {
           }
         }));
       }
+    };
 
-    }; // make it gloabal
-
+    // make it gloabal
     window.io = io;
     this.engineConfig = config;
-
     if (this.engineConfig.getRunBroadcasterOnInt()) {
       this.runBroadcaster();
     }
   }
-
   closeAllPeers() {
     this.connection.close();
   }
-
   openRoomBtnVisible = visible => {
     if (visible === true) {
       (0, _utility.byId)("open-room").classList.remove("hide");
@@ -18097,14 +16121,12 @@ class Broadcaster {
       (0, _utility.byId)("open-room").classList.add("hide");
     }
   };
-
   activateDataStream() {
     this.injector = this.multiPlayerRef;
     setTimeout(() => {
       this.openOrJoinBtn.click();
     }, 1000);
   }
-
   initDOM() {
     this.broadcasterUI = (0, _utility.byId)("matrix-net");
     this.titleStatus = (0, _utility.byId)("rtc3log");
@@ -18117,7 +16139,6 @@ class Broadcaster {
     this.inputRoomId = (0, _utility.byId)("room-id");
     this.openRoomBtnVisible(true);
   }
-
   streamLoaded(userId, streamAccess) {
     const broadcasterStreamLoaded = (0, _utility.createAppEvent)("stream-loaded", {
       streamId: streamAccess,
@@ -18126,19 +16147,15 @@ class Broadcaster {
     window.dispatchEvent(broadcasterStreamLoaded);
     return streamAccess;
   }
-
   initWebRtc = options => {
     const root = this;
-
     try {
       this.connection = new RTCMultiConnection3();
     } catch (err) {
       this.connection = new RTCMultiConnection3.default();
     }
-
     this.connection.socketURL = root.engineConfig.getBroadcastSockRoute();
     this.connection.socketMessageEvent = "audio-video-file-chat-demo";
-
     if (typeof options !== "undefined") {
       // by default, it is "false".
       this.connection.enableFileSharing = options.enableFileSharing;
@@ -18155,7 +16172,6 @@ class Broadcaster {
         data: root.engineConfig.getBroadcasterSessionDefaults().sessionData
       };
     }
-
     this.connection.sdpConstraints.mandatory = {
       OfferToReceiveAudio: true,
       OfferToReceiveVideo: true
@@ -18165,17 +16181,14 @@ class Broadcaster {
     }];
     this.connection.videosContainer = document.getElementById("videos-container");
     this.connection.videosContainer.setAttribute("style", "position:absolute;left:0;bottom:20%;width:320px;height:auto;");
-
     this.connection.onstream = function (event) {
       event.mediaElement.removeAttribute("src");
       event.mediaElement.removeAttribute("srcObject");
       const video = document.createElement("video");
       video.controls = true;
-
       if (event.type === "local") {
         video.muted = true;
       }
-
       video.srcObject = event.stream;
       const localNumberCW = root.connection.videosContainer.clientWidth;
       const width = parseInt(localNumberCW.toString(), 10);
@@ -18192,47 +16205,37 @@ class Broadcaster {
       mediaElement.id = event.streamid;
       root.streamLoaded(event.userid, event.streamid);
     };
-
     this.connection.onstreamended = function (event) {
       const mediaElement = document.getElementById(event.streamid);
-
       if (mediaElement) {
         mediaElement.parentNode.removeChild(mediaElement);
       }
     };
-
     this.connection.onmessage = root.appendDIV;
     this.connection.filesContainer = document.getElementById("file-container");
-
     this.connection.onopen = function (event) {
       root.shareFileBtn.disabled = false;
       root.inputChat.disabled = false;
       root.leaveRoomBtn.disabled = false;
-
       if (root.injector) {
         root.injector.init(event);
       }
-
       console.info("You are connected with: " + root.connection.getAllParticipants().join(", "));
       document.querySelector("#rtc3log").innerHTML = "You are connected with: " + root.connection.getAllParticipants().join(", ");
     };
-
     this.connection.onclose = function (dataStreamEvent) {
       if (root.injector) root.injector.leaveGamePlay(dataStreamEvent);
-
       if (root.connection.getAllParticipants().length) {
         document.querySelector("#rtc3log").value = "You are still connected with:" + root.connection.getAllParticipants().join(", ");
       } else {
         document.querySelector("#rtc3log").value = "Seems session has been closed or all participants left.";
       }
     };
-
     this.connection.onUserStatusChanged = function (event) {
       if (event.status === "offline") {
         if (root.injector) root.injector.leaveGamePlay(event);
       }
     };
-
     this.connection.onEntireSessionClosed = function (event) {
       root.shareFileBtn.disabled = true;
       root.inputChat.disabled = true;
@@ -18243,28 +16246,24 @@ class Broadcaster {
       root.inputRoomId.disabled = false;
       root.connection.attachStreams.forEach(function (stream) {
         stream.stop();
-      }); // don't display alert for moderator
+      });
 
+      // don't display alert for moderator
       if (root.connection.userid === event.userid) {
         return;
       }
-
       document.querySelector("#rtc3log").innerHTML = "Entire session has been closed by the moderator: " + event.userid;
     };
-
     this.connection.onUserIdAlreadyTaken = function (useridAlreadyTaken) {
       // seems room is already opened
       root.connection.join(useridAlreadyTaken);
     };
-
     this.postAttach();
   };
-
   showRoomURL(roomid) {
     console.info('B Entering in room: ', roomid);
     return;
   }
-
   disableInputButtons = () => {
     this.openOrJoinBtn.disabled = true;
     this.openRoomBtn.disabled = true;
@@ -18277,7 +16276,6 @@ class Broadcaster {
       this.injector.update(event);
       return;
     }
-
     const div = document.createElement("div");
     div.innerHTML = event.data || event;
     div.setAttribute('style', 'width:90%;color:white;');
@@ -18287,66 +16285,56 @@ class Broadcaster {
     div.focus();
     document.getElementById("input-text-chat").focus();
   };
-
   postAttach() {
-    const root = this; // tslint:disable-next-line:no-var-keyword
-
+    const root = this;
+    // tslint:disable-next-line:no-var-keyword
     var roomid = "";
-
     if (localStorage.getItem(root.connection.socketMessageEvent)) {
       roomid = localStorage.getItem(root.connection.socketMessageEvent);
     } else {
       roomid = root.connection.token();
     }
-
     if (root.engineConfig.getMasterServerKey()) {
       roomid = root.engineConfig.getMasterServerKey();
     }
-
     root.inputRoomId.value = roomid;
-
     root.inputRoomId.onkeyup = function () {
       localStorage.setItem(root.connection.socketMessageEvent, this.value);
     };
-
     let hashString = location.hash.replace("#", "");
-
     if (hashString.length && hashString.indexOf("comment-") === 0) {
       hashString = "";
     }
-
     roomid = window.params.roomid;
-
     if (!roomid && hashString.length) {
       roomid = hashString;
     }
-
     if (roomid && roomid.length) {
       root.inputRoomId.value = roomid;
-      localStorage.setItem(root.connection.socketMessageEvent, roomid); // auto-join-room
+      localStorage.setItem(root.connection.socketMessageEvent, roomid);
 
+      // auto-join-room
       (function reCheckRoomPresence() {
         root.connection.checkPresence(roomid, function (isRoomExists) {
           if (isRoomExists) {
             root.connection.join(roomid);
             return;
           }
-
           setTimeout(reCheckRoomPresence, 5000);
         });
       })();
-
       root.disableInputButtons();
     }
   }
-
   attachEvents() {
     const root = this;
-    window.enableAdapter = true; // Hide on start
+    window.enableAdapter = true;
 
+    // Hide on start
     root.broadcasterUI.classList.remove("network-panel-show-ver-animation");
-    root.broadcasterUI.classList.add("network-panel-hide-ver-animation"); // hide right box (broadcaster)
+    root.broadcasterUI.classList.add("network-panel-hide-ver-animation");
 
+    // hide right box (broadcaster)
     root.titleStatus.onclick = function () {
       if (root.broadcasterUI.classList.contains("network-panel-show-ver-animation")) {
         root.broadcasterUI.classList.remove("network-panel-show-ver-animation");
@@ -18356,19 +16344,16 @@ class Broadcaster {
         root.broadcasterUI.classList.remove("network-panel-ver-hide-animation");
       }
     };
-
     root.openRoomBtn.onclick = function () {
       root.disableInputButtons();
       root.connection.open(root.inputRoomId.value, function () {
         root.showRoomURL(root.connection.sessionid);
       });
     };
-
     root.joinRoomBtn.onclick = function () {
       root.disableInputButtons();
       root.connection.join(root.inputRoomId.value);
     };
-
     root.openDataSession = function () {
       root.disableInputButtons();
       root.connection.openOrJoin(root.inputRoomId.value, function (isRoomExists, roomid) {
@@ -18377,12 +16362,9 @@ class Broadcaster {
         }
       });
     };
-
     root.openOrJoinBtn.onclick = root.openDataSession;
-
     root.leaveRoomBtn.onclick = function () {
       this.disabled = true;
-
       if (root.connection.isInitiator) {
         // use this method if you did NOT set "autoCloseEntireSession===true"
         // for more info: https://github.com/muaz-khan/RTCMultiConnection#closeentiresession
@@ -18392,55 +16374,48 @@ class Broadcaster {
       } else {
         root.connection.leave();
       }
-    }; // ................FileSharing/TextChat Code.............
+    };
 
-
+    // ................FileSharing/TextChat Code.............
     root.shareFileBtn.onclick = function () {
       const fileSelector = new window.FileSelector();
       fileSelector.selectSingleFile(function (file) {
         root.connection.send(file);
       });
     };
-
     root.inputChat.onkeyup = function (e) {
       // tslint:disable-next-line:triple-equals
       if (e.keyCode != 13) {
         return;
-      } // removing trailing/leading whitespace
+      }
 
-
+      // removing trailing/leading whitespace
       this.value = this.value.replace(/^\s+|\s+$/g, "");
-
       if (!this.value.length) {
         return;
       }
-
       root.connection.send(this.value);
       root.appendDIV(this.value);
       this.value = "";
-    }; // Handling Room-ID
+    };
 
-
+    // Handling Room-ID
     (function () {
       const params = {},
-            r = /([^&=]+)=?([^&]*)/g;
-
+        r = /([^&=]+)=?([^&]*)/g;
       function d(s) {
         return decodeURIComponent(s.replace(/\+/g, " "));
-      } // tslint:disable-next-line:prefer-const
-
-
+      }
+      // tslint:disable-next-line:prefer-const
       let match,
-          search = window.location.search; // tslint:disable-next-line: no-conditional-assignment
-
+        search = window.location.search;
+      // tslint:disable-next-line: no-conditional-assignment
       while (match = r.exec(search.substring(1))) {
         params[d(match[1])] = d(match[2]);
       }
-
       window.params = params;
     })();
   }
-
   runBroadcaster = () => {
     const myInstance = this;
     fetch("./broadcaster.html", {
@@ -18451,18 +16426,15 @@ class Broadcaster {
       myInstance.popupUI = (0, _utility.byId)("matrix-net");
       myInstance.popupUI.style = 'table';
       myInstance.popupUI.innerHTML = html;
-
       if (myInstance.engineConfig.getShowBroadcasterOnInt()) {
         myInstance.popupUI.style.display = "table";
       } else {
         myInstance.popupUI.style.display = "none";
       }
-
       myInstance.initDOM();
       myInstance.attachEvents();
       myInstance.initWebRtc();
       myInstance.inputRoomId.nodeValue = myInstance.engineConfig.getMasterServerKey();
-
       if (myInstance.engineConfig.getBroadcastAutoConnect()) {
         console.log("Try auto connect for broadcaster.");
         myInstance.openOrJoinBtn.click();
@@ -18470,7 +16442,6 @@ class Broadcaster {
     });
   };
 }
-
 exports.Broadcaster = Broadcaster;
 
 },{"../program/manifest.js":99,"./rtc-multi-connection/FileBufferReader.js":83,"./rtc-multi-connection/RTCMultiConnection3":84,"./rtc-multi-connection/getHTMLMediaElement":85,"./rtc-multi-connection/socket.io":86,"./utility":88}],78:[function(require,module,exports){
@@ -18479,16 +16450,13 @@ exports.Broadcaster = Broadcaster;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.buildinShaders = void 0;
 exports.defineShader = defineShader;
 exports.defineShader1 = defineShader1;
-exports.buildinShaders = exports.standardMatrixEngineShader = void 0;
-
+exports.standardMatrixEngineShader = void 0;
 var _ = require("../..");
-
 var _matrixWorld = require("../matrix-world");
-
 var _utility = require("../utility");
-
 /**
  * @description
  * Optimisation for custom FShaders parts
@@ -18497,6 +16465,7 @@ var _utility = require("../utility");
    Interest links for explore post shader example live: 
    https://stackoverflow.com/questions/8166384/how-to-get-a-glow-shader-effect-in-opengl-es-2-0
  */
+
 function defineShader() {
   return `#version 300 es
   // Standard Matrix-engine Shaders attr
@@ -18512,9 +16481,7 @@ function defineShader() {
   out vec4 outColor;
   `;
 }
-
 ;
-
 function defineShader1() {
   return `precision highp float;
   // Standard Matrix-engine Shaders attr
@@ -18528,16 +16495,12 @@ function defineShader1() {
 
   `;
 }
-
 ;
-
 var standardMatrixEngineShader = object => {
   var lighting = true;
   var localLooper = 0;
   mat4.identity(object.mvMatrix);
-
   _matrixWorld.world.mvPushMatrix(object.mvMatrix, _matrixWorld.world.mvMatrixStack);
-
   if (object.isHUD === true) {
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (_.raycaster.checkingProcedureCalc) _.raycaster.checkingProcedureCalc(object);
@@ -18547,70 +16510,54 @@ var standardMatrixEngineShader = object => {
     } else if (App.camera.SceneController == true) {
       camera.setSceneCamera(object);
     }
-
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (_.raycaster.checkingProcedureCalc && typeof ray === 'undefined') _.raycaster.checkingProcedureCalc(object);
     mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
     mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
     mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
-  } // V
+  }
 
-
+  // V
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
     if (object.geometry.dynamicBuffer == true) {
       _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
     }
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.vertexPositionBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexPositionAttribute);
-
     localLooper = localLooper + 1;
-  } // C
+  }
 
-
+  // C
   if (object.vertexColorBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexColorAttribute, object.vertexColorBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexColorAttribute);
-
     localLooper = localLooper + 1;
-  } // L
+  }
 
-
+  // L
   if (lighting && object.shaderProgram.useLightingUniform) {
     _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.useLightingUniform, lighting);
     /* Set the normals */
-
-
     if (object.vertexNormalBuffer) {
       _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
-
       _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexNormalAttribute, object.vertexNormalBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
       _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexNormalAttribute);
-
       localLooper = localLooper + 1;
     }
     /* Set the ambient light */
-
-
     if (object.shaderProgram.ambientColorUniform) {
       if ((0, _utility.E)('ambLightR')) {
-        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat((0, _utility.E)('ambLightR').getAttribute('value')), parseFloat((0, _utility.E)('ambLightG').getAttribute('value')), parseFloat((0, _utility.E)('ambLightB').getAttribute('value'))); // console.log("LIGHTS UNIFORM AMB  B = ", parseFloat(E('ambLightB').value) )
-
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat((0, _utility.E)('ambLightR').getAttribute('value')), parseFloat((0, _utility.E)('ambLightG').getAttribute('value')), parseFloat((0, _utility.E)('ambLightB').getAttribute('value')));
+        // console.log("LIGHTS UNIFORM AMB  B = ", parseFloat(E('ambLightB').value) )
       } else {
         // object.LightsData.ambientLight
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, object.LightsData.ambientLight.r, object.LightsData.ambientLight.g, object.LightsData.ambientLight.b);
       }
     }
+
     /* Directional light */
-
-
     if (object.shaderProgram.directionalColorUniform) {
       if ((0, _utility.E)('dirLightR')) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat((0, _utility.E)('dirLightR').getAttribute('value')), parseFloat((0, _utility.E)('dirLightG').getAttribute('value')), parseFloat((0, _utility.E)('dirLightB').getAttribute('value')));
@@ -18618,11 +16565,9 @@ var standardMatrixEngineShader = object => {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
       }
     }
+
     /* Normalize the direction */
-
-
     var lightingDirection = null;
-
     if (object.shaderProgram.lightingDirectionUniform) {
       if ((0, _utility.E)('dirX') && (0, _utility.E)('dirY') && (0, _utility.E)('dirZ')) {
         // console.log("LIGHTS UNIFORM AMB  B = ",  E('dirZ').value )
@@ -18630,11 +16575,9 @@ var standardMatrixEngineShader = object => {
       } else {
         lightingDirection = [object.LightsData.lightingDirection.r, object.LightsData.lightingDirection.g, object.LightsData.lightingDirection.b];
       }
-
       var adjustedLD = vec3.create();
       vec3.normalize(adjustedLD, lightingDirection);
       vec3.scale(adjustedLD, adjustedLD, -1);
-
       _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightingDirectionUniform, adjustedLD);
     }
   } else {
@@ -18642,76 +16585,60 @@ var standardMatrixEngineShader = object => {
       if (object.shaderProgram.ambientColorUniform) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat(0.2), parseFloat(0.2), parseFloat(0.2));
       }
-
       if (object.shaderProgram.directionalColorUniform) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(1), parseFloat(0), parseFloat(0));
       }
     }
-  } // T
+  }
 
-
+  // T
   if (object.vertexTexCoordBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
-
     if (object.geometry.dynamicBuffer == true) {
       _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.texCoords, _matrixWorld.world.GL.gl.STATIC_DRAW);
     }
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.textureCoordAttribute, object.vertexTexCoordBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
-
     if (object.streamTextures != null) {
       if (object.streamTextures.video) {
         App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
       } else {
         App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
       }
-
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else if (object.FBO) {
       // test FBO
       _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
-
       _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.FB.texture);
-
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else {
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
-
           _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-
           _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-
           if (object.texParams.MIPMAP == false) {
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
-
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT); // -- Allocate storage for the texture
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
+            // -- Allocate storage for the texture
             // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
             // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
-
           } else {
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-
             _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
           }
-
           if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
             _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-          } //console.log('TEST' , object.texParams)
+          }
 
-
+          //console.log('TEST' , object.texParams)
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
         }
       }
     }
-
     localLooper = localLooper + 1;
   } else {
     if (object.shaderProgram.samplerUniform) {
@@ -18719,11 +16646,9 @@ var standardMatrixEngineShader = object => {
     } else if (object.shaderProgram.uCubeMapSampler) {
       // CUBE MAP
       _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE0']);
-
       var gl = _matrixWorld.world.GL.gl;
       if (!object.tex) object.tex = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_CUBE_MAP, object.tex);
-
       if (object.cubeMap.type == 'images') {
         object.cubeMap.cubeMap2dCanvasSet.forEach((faceInfo, index) => {
           const level = 0;
@@ -18736,13 +16661,11 @@ var standardMatrixEngineShader = object => {
       } else {
         object.cubeMap.cubeMap2dCanvasSet.forEach((faceInfo, index) => {
           var args = [];
-
           for (var key in faceInfo) {
             if (key !== 'target') {
               args.push(faceInfo[key]);
             }
           }
-
           if (object.cubeMap.drawFunc) {
             object.cubeMap.drawFunc(args);
           } else {
@@ -18753,7 +16676,6 @@ var standardMatrixEngineShader = object => {
             } = faceInfo;
             gen2DTextFace(object.cubeMap.cubeMap2dCtx, faceColor, textColor, text);
           }
-
           const level = 0;
           const internalFormat = gl.RGBA;
           const format = gl.RGBA;
@@ -18762,95 +16684,73 @@ var standardMatrixEngineShader = object => {
           gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
         });
       }
-
       gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
       gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, 0);
     }
   }
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
-
-  _matrixWorld.world.setMatrixUniforms(object, _matrixWorld.world.pMatrix); // Shadows
-
-
+  _matrixWorld.world.setMatrixUniforms(object, _matrixWorld.world.pMatrix);
+  // Shadows
   if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
     // set the light position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
-
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess); // Set the spotlight uniforms
-
-
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
+    // Set the spotlight uniforms
     {
       var target = [0, 0, 0]; // object.position.worldLocation;
-
       var up = [0, 1, 0];
-      var lmat = m4.lookAt(object.shadows.lightPosition, target, up); // var lmat = m4.lookAt(object.position.worldLocation, target, up);
-
+      var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
+      // var lmat = m4.lookAt(object.position.worldLocation, target, up);
       lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
-      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat); // get the zAxis from the matrix
+      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
+      // get the zAxis from the matrix
       // negate it because lookAt looks down the -Z axis
-
-      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]]; // object.shadows.lightDirection = [-0, -0, -1];
+      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]];
+      // object.shadows.lightDirection = [-0, -0, -1];
     }
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
-
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
-
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
   } else if (object.shadows && object.shadows.type == 'spec') {
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
   } else if (object.shadows && object.shadows.type == 'lens') {
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uControl, object.shadows.uControl);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uResolution, object.shadows.uResolution);
   }
-
   if (object.vertexNormalBuffer && object.shaderProgram.nMatrixUniform) {
     var normalMatrix = mat3.create();
     mat3.normalFromMat4(normalMatrix, object.mvMatrix);
     mat3.transpose(normalMatrix, normalMatrix);
-
     _matrixWorld.world.GL.gl.uniformMatrix3fv(object.shaderProgram.nMatrixUniform, false, normalMatrix);
   }
-
   _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper);
-
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
     }
-
     _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
+    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
+    // world.GL.gl.enable(world.GL.gl.CULL_FACE);
+  }
 
-    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST); // world.GL.gl.enable(world.GL.gl.CULL_FACE);
+  //
 
-  } //
-
-
-  if (typeof object.addExtraDrawCode != 'undefined') object.addExtraDrawCode(_matrixWorld.world, object); //
-
+  if (typeof object.addExtraDrawCode != 'undefined') object.addExtraDrawCode(_matrixWorld.world, object);
+  //
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
-
   _matrixWorld.world.mvPopMatrix(object.mvMatrix, _matrixWorld.world.mvMatrixStack);
-}; // Free shaders
+};
+
+// Free shaders
 // Personal learning...
-
-
 exports.standardMatrixEngineShader = standardMatrixEngineShader;
-var buildinShaders = {};
-exports.buildinShaders = buildinShaders;
-
+var buildinShaders = exports.buildinShaders = {};
 buildinShaders.shaderTest = () => {
   return `${defineShader()}
 
@@ -18863,25 +16763,22 @@ buildinShaders.shaderTest = () => {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.toyShaderHeader = toyShaderHeader;
+exports.standardMEShaderDrawer = exports.freeShadersToy = void 0;
 exports.toyShader1 = toyShader1;
-exports.freeShadersToy = exports.standardMEShaderDrawer = void 0;
-
+exports.toyShaderHeader = toyShaderHeader;
 var _ = require("../..");
-
 var _events = require("../events");
-
 var _matrixWorld = require("../matrix-world");
-
 var _utility = require("../utility");
-
 /**
  * @description
  * Optimisation for custom FShaders parts
  * Open source shaders
  * #pragma vscode_glsllint_stage : STAGE
  */
+
 // var now = 0, then1 = 0, time1 = 0;
+
 function toyShaderHeader() {
   return `#version 300 es
   precision highp float;
@@ -18899,7 +16796,6 @@ function toyShaderHeader() {
   out vec4 outColor;
   `;
 }
-
 function toyShader1() {
   return `precision highp float;
   // Standard matrix-engine params
@@ -18925,16 +16821,13 @@ function toyShader1() {
   // out vec4 outColor;
   `;
 }
-
 const standardMEShaderDrawer = function (object) {
   // Create a vertex array object (attribute state)
   // var world = matrixWorld.world;
   var lighting = true;
   var localLooper = 0;
   mat4.identity(object.mvMatrix);
-
   _matrixWorld.world.mvPushMatrix(object.mvMatrix, _matrixWorld.world.mvMatrixStack);
-
   if (object.isHUD === true) {
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (_.raycaster.checkingProcedureCalc) _.raycaster.checkingProcedureCalc(object);
@@ -18944,70 +16837,54 @@ const standardMEShaderDrawer = function (object) {
     } else if (App.camera.SceneController == true) {
       _events.camera.setSceneCamera(object);
     }
-
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (_.raycaster.checkingProcedureCalc && typeof ray === 'undefined') _.raycaster.checkingProcedureCalc(object);
     mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
     mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
     mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
-  } // V
+  }
 
-
+  // V
   if (object.vertexPositionBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexPositionBuffer);
-
     if (object.geometry.dynamicBuffer == true) {
       _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.vertices, _matrixWorld.world.GL.gl.STATIC_DRAW);
     }
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexPositionAttribute, object.vertexPositionBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexPositionAttribute);
-
     localLooper = localLooper + 1;
-  } // C
+  }
 
-
+  // C
   if (object.vertexColorBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexColorBuffer);
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexColorAttribute, object.vertexColorBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexColorAttribute);
-
     localLooper = localLooper + 1;
-  } // L
+  }
 
-
+  // L
   if (lighting && object.shaderProgram.useLightingUniform) {
     _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.useLightingUniform, lighting);
     /* Set the normals */
-
-
     if (object.vertexNormalBuffer) {
       _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexNormalBuffer);
-
       _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexNormalAttribute, object.vertexNormalBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
       _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexNormalAttribute);
-
       localLooper = localLooper + 1;
     }
     /* Set the ambient light */
-
-
     if (object.shaderProgram.ambientColorUniform) {
       if ((0, _utility.E)('ambLightR')) {
-        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat((0, _utility.E)('ambLightR').getAttribute('value')), parseFloat((0, _utility.E)('ambLightG').getAttribute('value')), parseFloat((0, _utility.E)('ambLightB').getAttribute('value'))); // console.log("LIGHTS UNIFORM AMB  B = ", parseFloat(E('ambLightB').value) )
-
+        _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat((0, _utility.E)('ambLightR').getAttribute('value')), parseFloat((0, _utility.E)('ambLightG').getAttribute('value')), parseFloat((0, _utility.E)('ambLightB').getAttribute('value')));
+        // console.log("LIGHTS UNIFORM AMB  B = ", parseFloat(E('ambLightB').value) )
       } else {
         // object.LightsData.ambientLight
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, object.LightsData.ambientLight.r, object.LightsData.ambientLight.g, object.LightsData.ambientLight.b);
       }
     }
+
     /* Directional light */
-
-
     if (object.shaderProgram.directionalColorUniform) {
       if ((0, _utility.E)('dirLightR')) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat((0, _utility.E)('dirLightR').getAttribute('value')), parseFloat((0, _utility.E)('dirLightG').getAttribute('value')), parseFloat((0, _utility.E)('dirLightB').getAttribute('value')));
@@ -19015,11 +16892,9 @@ const standardMEShaderDrawer = function (object) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
       }
     }
+
     /* Normalize the direction */
-
-
     var lightingDirection = null;
-
     if (object.shaderProgram.lightingDirectionUniform) {
       if ((0, _utility.E)('dirX') && (0, _utility.E)('dirY') && (0, _utility.E)('dirZ')) {
         // console.log("LIGHTS UNIFORM AMB  B = ",  E('dirZ').value )
@@ -19027,11 +16902,9 @@ const standardMEShaderDrawer = function (object) {
       } else {
         lightingDirection = [object.LightsData.lightingDirection.r, object.LightsData.lightingDirection.g, object.LightsData.lightingDirection.b];
       }
-
       var adjustedLD = vec3.create();
       vec3.normalize(adjustedLD, lightingDirection);
       vec3.scale(adjustedLD, adjustedLD, -1);
-
       _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightingDirectionUniform, adjustedLD);
     }
   } else {
@@ -19039,76 +16912,60 @@ const standardMEShaderDrawer = function (object) {
       if (object.shaderProgram.ambientColorUniform) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat(0.2), parseFloat(0.2), parseFloat(0.2));
       }
-
       if (object.shaderProgram.directionalColorUniform) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat(1), parseFloat(0), parseFloat(0));
       }
     }
-  } // T
+  }
 
-
+  // T
   if (object.vertexTexCoordBuffer) {
     _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.vertexTexCoordBuffer);
-
     if (object.geometry.dynamicBuffer == true) {
       _matrixWorld.world.GL.gl.bufferData(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.geometry.texCoords, _matrixWorld.world.GL.gl.STATIC_DRAW);
     }
-
     _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.textureCoordAttribute, object.vertexTexCoordBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
-
     _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
-
     if (object.streamTextures != null) {
       if (object.streamTextures.video) {
         App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.video);
       } else {
         App.tools.loadVideoTexture('glVideoTexture', object.streamTextures.videoImage);
       }
-
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else if (object.FBO) {
       // test FBO
       _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
-
       _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.FB.texture);
-
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else {
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
-
           _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-
           _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-
           if (object.texParams.MIPMAP == false) {
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
-
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT); // -- Allocate storage for the texture
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
+            // -- Allocate storage for the texture
             // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
             // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
-
           } else {
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-
             _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
           }
-
           if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
             _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-          } //console.log('TEST' , object.texParams)
+          }
 
-
+          //console.log('TEST' , object.texParams)
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
         }
       }
     }
-
     localLooper = localLooper + 1;
   } else {
     if (object.shaderProgram.samplerUniform) {
@@ -19116,11 +16973,9 @@ const standardMEShaderDrawer = function (object) {
     } else if (object.shaderProgram.uCubeMapSampler) {
       // CUBE MAP
       _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE0']);
-
       var gl = _matrixWorld.world.GL.gl;
       if (!object.tex) object.tex = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_CUBE_MAP, object.tex);
-
       if (object.cubeMap.type == 'images') {
         object.cubeMap.cubeMap2dCanvasSet.forEach((faceInfo, index) => {
           const level = 0;
@@ -19133,13 +16988,11 @@ const standardMEShaderDrawer = function (object) {
       } else {
         object.cubeMap.cubeMap2dCanvasSet.forEach((faceInfo, index) => {
           var args = [];
-
           for (var key in faceInfo) {
             if (key !== 'target') {
               args.push(faceInfo[key]);
             }
           }
-
           if (object.cubeMap.drawFunc) {
             object.cubeMap.drawFunc(args);
           } else {
@@ -19150,7 +17003,6 @@ const standardMEShaderDrawer = function (object) {
             } = faceInfo;
             gen2DTextFace(object.cubeMap.cubeMap2dCtx, faceColor, textColor, text);
           }
-
           const level = 0;
           const internalFormat = gl.RGBA;
           const format = gl.RGBA;
@@ -19159,95 +17011,73 @@ const standardMEShaderDrawer = function (object) {
           gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
         });
       }
-
       gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
       gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.uCubeMapSampler, 0);
     }
   }
-
   _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ELEMENT_ARRAY_BUFFER, object.vertexIndexBuffer);
-
-  _matrixWorld.world.setMatrixUniforms(object, _matrixWorld.world.pMatrix); // Shadows
-
-
+  _matrixWorld.world.setMatrixUniforms(object, _matrixWorld.world.pMatrix);
+  // Shadows
   if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
     // set the light position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
-
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess); // Set the spotlight uniforms
-
-
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
+    // Set the spotlight uniforms
     {
       var target = [0, 0, 0]; // object.position.worldLocation;
-
       var up = [0, 1, 0];
-      var lmat = m4.lookAt(object.shadows.lightPosition, target, up); // var lmat = m4.lookAt(object.position.worldLocation, target, up);
-
+      var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
+      // var lmat = m4.lookAt(object.position.worldLocation, target, up);
       lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
-      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat); // get the zAxis from the matrix
+      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
+      // get the zAxis from the matrix
       // negate it because lookAt looks down the -Z axis
-
-      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]]; // object.shadows.lightDirection = [-0, -0, -1];
+      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]];
+      // object.shadows.lightDirection = [-0, -0, -1];
     }
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
-
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
-
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
   } else if (object.shadows && object.shadows.type == 'spec') {
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
   } else if (object.shadows && object.shadows.type == 'lens') {
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uControl, object.shadows.uControl);
-
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uResolution, object.shadows.uResolution);
   }
-
   if (object.vertexNormalBuffer && object.shaderProgram.nMatrixUniform) {
     var normalMatrix = mat3.create();
     mat3.normalFromMat4(normalMatrix, object.mvMatrix);
     mat3.transpose(normalMatrix, normalMatrix);
-
     _matrixWorld.world.GL.gl.uniformMatrix3fv(object.shaderProgram.nMatrixUniform, false, normalMatrix);
   }
-
   _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper);
-
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
     }
-
     _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
+    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
+    // world.GL.gl.enable(world.GL.gl.CULL_FACE);
+  }
 
-    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST); // world.GL.gl.enable(world.GL.gl.CULL_FACE);
+  //
 
-  } //
-
-
-  if (typeof object.addExtraDrawCode != 'undefined') object.addExtraDrawCode(_matrixWorld.world, object); //
-
+  if (typeof object.addExtraDrawCode != 'undefined') object.addExtraDrawCode(_matrixWorld.world, object);
+  //
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
-
   _matrixWorld.world.mvPopMatrix(object.mvMatrix, _matrixWorld.world.mvMatrixStack);
-}; // Shaders from shadertoy web site.
+};
+
+// Shaders from shadertoy web site.
 // ONLY MIT or similar licensed scripts.
-
-
 exports.standardMEShaderDrawer = standardMEShaderDrawer;
-var freeShadersToy = {};
-exports.freeShadersToy = freeShadersToy;
-
+var freeShadersToy = exports.freeShadersToy = {};
 freeShadersToy.shaderFractalAdvanced = () => {
   return `${toyShaderHeader()}
     // The MIT License
@@ -19347,7 +17177,6 @@ freeShadersToy.shaderFractalAdvanced = () => {
     }
   `;
 };
-
 freeShadersToy.shaderCircle = () => {
   return `${toyShaderHeader()}
   // The MIT License
@@ -19401,7 +17230,6 @@ freeShadersToy.shaderCircle = () => {
   }
   `;
 };
-
 freeShadersToy.shaderSpiral = () => {
   return `${toyShaderHeader()}
   // The MIT License
@@ -19471,7 +17299,6 @@ freeShadersToy.shaderSpiral = () => {
   }
   `;
 };
-
 freeShadersToy.shaderPalettes = () => {
   return `${toyShaderHeader()}
   // The MIT License
@@ -19540,15 +17367,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
 var CANNON = _interopRequireWildcard(require("cannon"));
-
 var _matrixWorld = require("./matrix-world");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 /**
  * @MatrixPhysics
  * Used cannon.js version 0.6 library.
@@ -19556,20 +17378,19 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
  * https://schteppe.github.io/cannon.js/
  * Integrated in matrix-engine.
  */
+
 class MatrixPhysics {
   constructor(gravityVector = [0, 0, -9.82]) {
     console.info(`%cMatrixPhysics [cannon.js] running. %c`, _matrixWorld.CS3, _matrixWorld.CS1);
     this.world = new CANNON.World();
     this.world.gravity.set(gravityVector[0], gravityVector[1], gravityVector[2]);
-
     this.toDeg = q1 => {
       var x, y, z;
-      if (q1.w > 1) q1.normalise(); // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalised
-
-      var angle = 2 * Math.acos(q1.w); // assuming quaternion normalised then w is less than 1, so term always positive.
-
+      if (q1.w > 1) q1.normalise();
+      // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalised
+      var angle = 2 * Math.acos(q1.w);
+      // assuming quaternion normalised then w is less than 1, so term always positive.
       var s = Math.sqrt(1 - q1.w * q1.w);
-
       if (s < 0.001) {
         // test to avoid divide by zero, s is always positive due to sqrt
         // if s close to zero then direction of axis not important
@@ -19579,11 +17400,9 @@ class MatrixPhysics {
         z = q1.z;
       } else {
         x = q1.x / s; // normalise axis
-
         y = q1.y / s;
         z = q1.z / s;
       }
-
       return {
         x: x,
         y: y,
@@ -19591,7 +17410,6 @@ class MatrixPhysics {
       };
     };
   }
-
   addGround(App, world, tex) {
     // Create a ground
     // Makes the body static
@@ -19601,8 +17419,8 @@ class MatrixPhysics {
     });
     var groundShape = new CANNON.Plane();
     groundBody.addShape(groundShape);
-    this.world.addBody(groundBody); // matrix engine visual
-
+    this.world.addBody(groundBody);
+    // matrix engine visual
     world.Add("squareTex", 1, "FLOOR_STATIC", tex);
     App.scene.FLOOR_STATIC.geometry.setScaleByX(15);
     App.scene.FLOOR_STATIC.geometry.setScaleByY(15);
@@ -19610,9 +17428,7 @@ class MatrixPhysics {
     App.scene.FLOOR_STATIC.position.SetZ(-15);
     App.scene.FLOOR_STATIC.rotation.rotx = 90;
   }
-
 }
-
 exports.default = MatrixPhysics;
 
 },{"./matrix-world":76,"cannon":96}],82:[function(require,module,exports){
@@ -19621,14 +17437,13 @@ exports.default = MatrixPhysics;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.rayIntersectsTriangle = rayIntersectsTriangle;
-exports.unproject = unproject;
-exports.rotate2dPlot = rotate2dPlot;
 exports.checkingProcedure = checkingProcedure;
 exports.checkingProcedureCalc = checkingProcedureCalc;
 exports.checkingProcedureCalcObj = checkingProcedureCalcObj;
+exports.rayIntersectsTriangle = rayIntersectsTriangle;
+exports.rotate2dPlot = rotate2dPlot;
 exports.touchCoordinate = void 0;
-
+exports.unproject = unproject;
 /**
  * @author Nikola Lukic
  * @email zlatnaspirala@gmail.com
@@ -19637,13 +17452,15 @@ exports.touchCoordinate = void 0;
  * Inspired with original code from:
  * https://github.com/Necolo/raycaster
  */
+
 let rayHitEvent;
-let touchCoordinate = {
+let touchCoordinate = exports.touchCoordinate = {
   enabled: false,
   x: 0,
   y: 0,
   stopOnFirstDetectedHit: false
 };
+
 /**
  * @description 
  * Ray triangle intersection algorithm.
@@ -19654,20 +17471,20 @@ let touchCoordinate = {
  * @return intersects or not
  * Uses Möller–Trumbore intersection algorithm
  */
-
-exports.touchCoordinate = touchCoordinate;
-
-function rayIntersectsTriangle(rayOrigin, // vec3,
-rayVector, // vec3,
-triangle, // vec3[],
-out, // vec3,
+function rayIntersectsTriangle(rayOrigin,
+// vec3,
+rayVector,
+// vec3,
+triangle,
+// vec3[],
+out,
+// vec3,
 objPos) {
   if (matrixEngine.Events.camera.zPos < objPos.z) {
     rayOrigin[2] = matrixEngine.Events.camera.zPos - objPos.z;
   } else {
     rayOrigin[2] = matrixEngine.Events.camera.zPos + -objPos.z;
   }
-
   rayOrigin[0] = matrixEngine.Events.camera.xPos;
   rayOrigin[1] = matrixEngine.Events.camera.yPos;
   const EPSILON = 0.0000001;
@@ -19679,39 +17496,31 @@ objPos) {
   vec3.sub(edge2, v2, v0);
   vec3.cross(h, rayVector, edge2);
   const a = vec3.dot(edge1, h);
-
   if (a > -EPSILON && a < EPSILON) {
     return false;
   }
-
   const s = vec3.create();
   vec3.sub(s, rayOrigin, v0);
   const u = vec3.dot(s, h);
-
   if (u < 0 || u > a) {
     return false;
   }
-
   const q = vec3.create();
   vec3.cross(q, s, edge1);
   const v = vec3.dot(rayVector, q);
-
   if (v < 0 || u + v > a) {
     return false;
   }
-
   const t = vec3.dot(edge2, q) / a;
-
   if (t > EPSILON) {
     if (out) {
       vec3.add(out, rayOrigin, [rayVector[0] * t, rayVector[1] * t, rayVector[2] * t]);
     }
-
     return true;
   }
-
   return false;
 }
+
 /**
  * @description
  * Unproject a 2D point into a 3D world.
@@ -19721,11 +17530,12 @@ objPos) {
  * @param invView invert view matrix
  * @return 3D point position
  */
-
-
-function unproject(screenCoord, // [number, number]
-viewport, // [number, number, number, number]
-invProjection, // mat4
+function unproject(screenCoord,
+// [number, number]
+viewport,
+// [number, number, number, number]
+invProjection,
+// mat4
 invView) {
   // return vec3
   const [left, top, width, height] = viewport;
@@ -19736,21 +17546,19 @@ invView) {
   vec4.transformMat4(out, out, invView);
   return vec3.normalize(vec3.create(), out);
 }
+
 /**
  * @description 
  * Fix local rotation raycast bug test.
  */
-
-
 function rotate2dPlot(cx, cy, x, y, angle) {
   var radians = Math.PI / 180 * -angle,
-      cos = Math.cos(radians),
-      sin = Math.sin(radians),
-      nx = cos * (x - cx) + sin * (y - cy) + cx,
-      ny = cos * (y - cy) - sin * (x - cx) + cy;
+    cos = Math.cos(radians),
+    sin = Math.sin(radians),
+    nx = cos * (x - cx) + sin * (y - cy) + cx,
+    ny = cos * (y - cy) - sin * (x - cx) + cy;
   return [nx, ny];
 }
-
 function checkingProcedure(ev, customArg) {
   let {
     clientX,
@@ -19758,19 +17566,16 @@ function checkingProcedure(ev, customArg) {
     screenX,
     screenY
   } = ev;
-
   if (typeof customArg !== 'undefined') {
     clientX = customArg.clientX;
     clientY = customArg.clientY;
   }
-
   touchCoordinate.x = clientX;
   touchCoordinate.y = clientY;
   touchCoordinate.w = ev.target.width;
   touchCoordinate.h = ev.target.height;
   touchCoordinate.enabled = true;
 }
-
 function checkingProcedureCalc(object) {
   if (object.raycast.enabled == false || touchCoordinate.enabled == false) return;
   var world = matrixEngine.matrixWorld.world;
@@ -19779,15 +17584,12 @@ function checkingProcedureCalc(object) {
   let outp = mat4.create();
   let outv = mat4.create();
   let myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos);
-
   if (matrixEngine.Events.camera.zPos < object.position.z) {
     myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, -matrixEngine.Events.camera.zPos);
   }
-
   ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], mat4.invert(outp, world.pMatrix), mat4.invert(outv, mvMatrix));
   const intersectionPoint = vec3.create();
   object.raycastFace = [];
-
   for (var f = 0; f < object.geometry.indices.length; f = f + 3) {
     var a = object.geometry.indices[f];
     var b = object.geometry.indices[f + 1];
@@ -19795,15 +17597,15 @@ function checkingProcedureCalc(object) {
     let triangle = null;
     const triangleInZero = [[object.geometry.vertices[0 + a * 3], object.geometry.vertices[1 + a * 3], object.geometry.vertices[2 + a * 3]], [object.geometry.vertices[0 + b * 3], object.geometry.vertices[1 + b * 3], object.geometry.vertices[2 + b * 3]], [object.geometry.vertices[0 + c * 3], object.geometry.vertices[1 + c * 3], object.geometry.vertices[2 + c * 3]]];
     var rez0, rez1, rez2;
-
     if (object.rotation.rx != 0) {
       rez0 = rotate2dPlot(0, 0, triangleInZero[0][1], triangleInZero[0][2], object.rotation.rx);
       rez1 = rotate2dPlot(0, 0, triangleInZero[1][1], triangleInZero[1][2], object.rotation.rx);
       rez2 = rotate2dPlot(0, 0, triangleInZero[2][1], triangleInZero[2][2], object.rotation.rx);
-      triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], rez0[0] + object.position.worldLocation[1], rez0[1]], [triangleInZero[1][0] + object.position.worldLocation[0], rez1[0] + object.position.worldLocation[1], rez1[1]], [triangleInZero[2][0] + object.position.worldLocation[0], rez2[0] + object.position.worldLocation[1], rez2[1]]]; // console.log("only x rot => ", triangle);
-    } // y z changed - rez0[1] is z
+      triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], rez0[0] + object.position.worldLocation[1], rez0[1]], [triangleInZero[1][0] + object.position.worldLocation[0], rez1[0] + object.position.worldLocation[1], rez1[1]], [triangleInZero[2][0] + object.position.worldLocation[0], rez2[0] + object.position.worldLocation[1], rez2[1]]];
+      // console.log("only x rot => ", triangle);
+    }
 
-
+    // y z changed - rez0[1] is z
     if (object.rotation.ry != 0) {
       if (object.rotation.rx != 0) {
         // Y i Z
@@ -19816,8 +17618,9 @@ function checkingProcedureCalc(object) {
         const detY2 = rez2[0];
         const detZ0 = rez0[1];
         const detZ1 = rez1[1];
-        const detZ2 = rez2[1]; //                          X INITIAL             Z
+        const detZ2 = rez2[1];
 
+        //                          X INITIAL             Z
         rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], detZ0, object.rotation.ry - 90);
         rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], detZ1, object.rotation.ry - 90);
         rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], detZ2, object.rotation.ry - 90);
@@ -19835,7 +17638,6 @@ function checkingProcedureCalc(object) {
         triangle = [[rez0[0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], rez0[1]], [rez1[0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], rez1[1]], [rez2[0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], rez2[1]]];
       }
     }
-
     if (object.rotation.rz != 0) {
       if (object.rotation.ry != 0) {
         if (object.rotation.rx == 180) {
@@ -19850,7 +17652,8 @@ function checkingProcedureCalc(object) {
           rez2 = rotate2dPlot(0, 0, rez2[0], triangleInZero[2][1], object.rotation.rz);
           const detZ0 = rez0[1];
           const detZ1 = rez1[1];
-          const detZ2 = rez2[1]; // rez0 = rotate2dPlot(0, 0,rez0[0], detZ00, object.rotation.rx - 180);
+          const detZ2 = rez2[1];
+          // rez0 = rotate2dPlot(0, 0,rez0[0], detZ00, object.rotation.rx - 180);
           // rez1 = rotate2dPlot(0, 0,rez0[0], detZ11, object.rotation.rx - 180);
           // rez2 = rotate2dPlot(0, 0, rez0[0], detZ22, object.rotation.rx - 180);
           // detZ00 = rez0[1];
@@ -19858,7 +17661,8 @@ function checkingProcedureCalc(object) {
           // detZ22 = rez2[1];
 
           triangle = [[rez0[0] + object.position.worldLocation[0], detZ0 + object.position.worldLocation[1], detZ00], [rez1[0] + object.position.worldLocation[0], detZ1 + object.position.worldLocation[1], detZ11], [rez2[0] + object.position.worldLocation[0], detZ2 + object.position.worldLocation[1], detZ22]];
-        } else {// console.info('unhandled ray cast');
+        } else {
+          // console.info('unhandled ray cast');
         }
       } else {
         if (object.rotation.rx == 0) {
@@ -19866,18 +17670,17 @@ function checkingProcedureCalc(object) {
           rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][1], object.rotation.rz);
           rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][1], object.rotation.rz);
           triangle = [[rez0[0] + object.position.worldLocation[0], rez0[1] + object.position.worldLocation[1], triangleInZero[0][2]], [rez1[0] + object.position.worldLocation[0], rez1[1] + object.position.worldLocation[1], triangleInZero[1][2]], [rez2[0] + object.position.worldLocation[0], rez2[1] + object.position.worldLocation[1], triangleInZero[2][2]]];
-        } else {// console.info('must be handled rz vs rx');
+        } else {
+          // console.info('must be handled rz vs rx');
         }
       }
-    } // no rot
+    }
 
-
+    // no rot
     if (object.rotation.rx == 0 && object.rotation.ry == 0 && object.rotation.rz == 0) {
       triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], triangleInZero[0][2]], [triangleInZero[1][0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], triangleInZero[1][2]], [triangleInZero[2][0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], triangleInZero[2][2]]];
     }
-
     object.raycastFace.push(triangle);
-
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
       rayHitEvent = new CustomEvent('ray.hit.event', {
         detail: {
@@ -19892,14 +17695,12 @@ function checkingProcedureCalc(object) {
         }
       });
       dispatchEvent(rayHitEvent);
-
       if (touchCoordinate.enabled == true && touchCoordinate.stopOnFirstDetectedHit == true) {
         touchCoordinate.enabled = false;
       }
     }
   }
 }
-
 function checkingProcedureCalcObj(object) {
   if (object.raycast.enabled == false || touchCoordinate.enabled == false) return;
   var world = matrixEngine.matrixWorld.world;
@@ -19908,15 +17709,12 @@ function checkingProcedureCalcObj(object) {
   let outp = mat4.create();
   let outv = mat4.create();
   let myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos);
-
   if (matrixEngine.Events.camera.zPos < object.position.z) {
     myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, -matrixEngine.Events.camera.zPos);
   }
-
   ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], mat4.invert(outp, world.pMatrix), mat4.invert(outv, mvMatrix));
   const intersectionPoint = vec3.create();
   object.raycastFace = [];
-
   for (var f = 0; f < object.mesh.indices.length; f = f + 3) {
     var a = object.mesh.indices[f];
     var b = object.mesh.indices[f + 1];
@@ -19924,15 +17722,13 @@ function checkingProcedureCalcObj(object) {
     let triangle = null;
     const triangleInZero = [[object.mesh.vertices[0 + a * 3], object.mesh.vertices[1 + a * 3], object.mesh.vertices[2 + a * 3]], [object.mesh.vertices[0 + b * 3], object.mesh.vertices[1 + b * 3], object.mesh.vertices[2 + b * 3]], [object.mesh.vertices[0 + c * 3], object.mesh.vertices[1 + c * 3], object.mesh.vertices[2 + c * 3]]];
     var rez0, rez1, rez2;
-
     if (object.rotation.rx != 0) {
       rez0 = rotate2dPlot(0, 0, triangleInZero[0][1], triangleInZero[0][2], object.rotation.rx);
       rez1 = rotate2dPlot(0, 0, triangleInZero[1][1], triangleInZero[1][2], object.rotation.rx);
       rez2 = rotate2dPlot(0, 0, triangleInZero[2][1], triangleInZero[2][2], object.rotation.rx);
       triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], rez0[0] + object.position.worldLocation[1], rez0[1]], [triangleInZero[1][0] + object.position.worldLocation[0], rez1[0] + object.position.worldLocation[1], rez1[1]], [triangleInZero[2][0] + object.position.worldLocation[0], rez2[0] + object.position.worldLocation[1], rez2[1]]];
-    } // y z changed - rez0[1] is z
-
-
+    }
+    // y z changed - rez0[1] is z
     if (object.rotation.ry != 0) {
       if (object.rotation.rx != 0) {
         // Y i Z
@@ -19945,8 +17741,9 @@ function checkingProcedureCalcObj(object) {
         const detY2 = rez2[0];
         const detZ0 = rez0[1];
         const detZ1 = rez1[1];
-        const detZ2 = rez2[1]; //                          X INITIAL             Z
+        const detZ2 = rez2[1];
 
+        //                          X INITIAL             Z
         rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], detZ0, object.rotation.ry - 90);
         rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], detZ1, object.rotation.ry - 90);
         rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], detZ2, object.rotation.ry - 90);
@@ -19964,7 +17761,6 @@ function checkingProcedureCalcObj(object) {
         triangle = [[rez0[0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], rez0[1]], [rez1[0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], rez1[1]], [rez2[0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], rez2[1]]];
       }
     }
-
     if (object.rotation.rz != 0) {
       if (object.rotation.ry != 0) {
         if (object.rotation.rx == 180) {
@@ -19979,15 +17775,16 @@ function checkingProcedureCalcObj(object) {
           rez2 = rotate2dPlot(0, 0, rez2[0], triangleInZero[2][1], object.rotation.rz);
           const detZ0 = rez0[1];
           const detZ1 = rez1[1];
-          const detZ2 = rez2[1]; // rez0 = rotate2dPlot(0, 0,rez0[0], detZ00, object.rotation.rx - 180);
+          const detZ2 = rez2[1];
+          // rez0 = rotate2dPlot(0, 0,rez0[0], detZ00, object.rotation.rx - 180);
           // rez1 = rotate2dPlot(0, 0,rez0[0], detZ11, object.rotation.rx - 180);
           // rez2 = rotate2dPlot(0, 0, rez0[0], detZ22, object.rotation.rx - 180);
           // detZ00 = rez0[1];
           // detZ11 = rez1[1];
           // detZ22 = rez2[1];
-
           triangle = [[rez0[0] + object.position.worldLocation[0], detZ0 + object.position.worldLocation[1], detZ00], [rez1[0] + object.position.worldLocation[0], detZ1 + object.position.worldLocation[1], detZ11], [rez2[0] + object.position.worldLocation[0], detZ2 + object.position.worldLocation[1], detZ22]];
-        } else {// console.info('unhandled ray cast');
+        } else {
+          // console.info('unhandled ray cast');
         }
       } else {
         if (object.rotation.rx == 0) {
@@ -19995,19 +17792,18 @@ function checkingProcedureCalcObj(object) {
           rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][1], object.rotation.rz);
           rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][1], object.rotation.rz);
           triangle = [[rez0[0] + object.position.worldLocation[0], rez0[1] + object.position.worldLocation[1], triangleInZero[0][2]], [rez1[0] + object.position.worldLocation[0], rez1[1] + object.position.worldLocation[1], triangleInZero[1][2]], [rez2[0] + object.position.worldLocation[0], rez2[1] + object.position.worldLocation[1], triangleInZero[2][2]]];
-        } else {// var test;
+        } else {
+          // var test;
           // console.info('must be handled rz vs rx');
         }
       }
-    } // no rot
+    }
 
-
+    // no rot
     if (object.rotation.rx == 0 && object.rotation.ry == 0 && object.rotation.rz == 0) {
       triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], triangleInZero[0][2]], [triangleInZero[1][0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], triangleInZero[1][2]], [triangleInZero[2][0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], triangleInZero[2][2]]];
     }
-
     object.raycastFace.push(triangle);
-
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
       rayHitEvent = new CustomEvent('ray.hit.event', {
         detail: {
@@ -20022,11 +17818,10 @@ function checkingProcedureCalcObj(object) {
         }
       });
       dispatchEvent(rayHitEvent);
-
       if (touchCoordinate.enabled == true && touchCoordinate.stopOnFirstDetectedHit == true) {
         touchCoordinate.enabled = false;
-      } // console.info('raycast hits for Object: ' + object.name + '  -> face[/3]  : ' + f + ' -> intersectionPoint: ' + intersectionPoint);
-
+      }
+      // console.info('raycast hits for Object: ' + object.name + '  -> face[/3]  : ' + f + ' -> intersectionPoint: ' + intersectionPoint);
     }
   }
 }
@@ -27196,20 +24991,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getHTMLMediaElement = getHTMLMediaElement;
-
 // __________________
 // getHTMLMediaElement.js
+
 function getHTMLMediaElement(mediaElement, config) {
   config = config || {};
-
   if (!mediaElement.nodeName || mediaElement.nodeName.toLowerCase() != 'audio' && mediaElement.nodeName.toLowerCase() != 'video') {
     if (!mediaElement.getVideoTracks().length) {
       return getAudioElement(mediaElement, config);
     }
-
     var mediaStream = mediaElement;
     mediaElement = document.createElement(mediaStream.getVideoTracks().length ? 'video' : 'audio');
-
     try {
       mediaElement.setAttributeNode(document.createAttribute('autoplay'));
       mediaElement.setAttributeNode(document.createAttribute('playsinline'));
@@ -27217,42 +25009,34 @@ function getHTMLMediaElement(mediaElement, config) {
       mediaElement.setAttribute('autoplay', true);
       mediaElement.setAttribute('playsinline', true);
     }
-
     if ('srcObject' in mediaElement) {
       mediaElement.srcObject = mediaStream;
     } else {
       mediaElement[!!navigator.mozGetUserMedia ? 'mozSrcObject' : 'src'] = !!navigator.mozGetUserMedia ? mediaStream : (window.URL || window.webkitURL).createObjectURL(mediaStream);
     }
   }
-
   if (mediaElement.nodeName && mediaElement.nodeName.toLowerCase() == 'audio') {
     return getAudioElement(mediaElement, config);
   }
-
   var buttons = config.buttons || ['mute-audio', 'mute-video', 'full-screen', 'volume-slider', 'stop'];
-
   buttons.has = function (element) {
     return buttons.indexOf(element) !== -1;
   };
-
   config.toggle = config.toggle || [];
-
   config.toggle.has = function (element) {
     return config.toggle.indexOf(element) !== -1;
   };
-
   var mediaElementContainer = document.createElement('div');
-  mediaElementContainer.classList.add('media-container'); // mediaElementContainer.setAttribute('style', 'position:absolute;left:0;top:0;width:100px;height:100px;');
+  mediaElementContainer.classList.add('media-container');
+  // mediaElementContainer.setAttribute('style', 'position:absolute;left:0;top:0;width:100px;height:100px;');
 
   var mediaControls = document.createElement('div');
   mediaControls.className = 'media-controls';
   mediaElementContainer.appendChild(mediaControls);
-
   if (buttons.has('mute-audio')) {
     var muteAudio = document.createElement('div');
     muteAudio.className = 'control ' + (config.toggle.has('mute-audio') ? 'unmute-audio selected' : 'mute-audio');
     mediaControls.appendChild(muteAudio);
-
     muteAudio.onclick = function () {
       if (muteAudio.className.indexOf('unmute-audio') != -1) {
         muteAudio.className = muteAudio.className.replace('unmute-audio selected', 'mute-audio');
@@ -27267,12 +25051,10 @@ function getHTMLMediaElement(mediaElement, config) {
       }
     };
   }
-
   if (buttons.has('mute-video')) {
     var muteVideo = document.createElement('div');
     muteVideo.className = 'control ' + (config.toggle.has('mute-video') ? 'unmute-video selected' : 'mute-video');
     mediaControls.appendChild(muteVideo);
-
     muteVideo.onclick = function () {
       if (muteVideo.className.indexOf('unmute-video') != -1) {
         muteVideo.className = muteVideo.className.replace('unmute-video selected', 'mute-video');
@@ -27289,22 +25071,18 @@ function getHTMLMediaElement(mediaElement, config) {
       }
     };
   }
-
   if (buttons.has('take-snapshot')) {
     var takeSnapshot = document.createElement('div');
     takeSnapshot.className = 'control take-snapshot';
     mediaControls.appendChild(takeSnapshot);
-
     takeSnapshot.onclick = function () {
       if (config.onTakeSnapshot) config.onTakeSnapshot();
     };
   }
-
   if (buttons.has('stop')) {
     var stop = document.createElement('div');
     stop.className = 'control stop';
     mediaControls.appendChild(stop);
-
     stop.onclick = function () {
       mediaElementContainer.style.opacity = 0;
       setTimeout(function () {
@@ -27315,15 +25093,12 @@ function getHTMLMediaElement(mediaElement, config) {
       if (config.onStopped) config.onStopped();
     };
   }
-
   var volumeControl = document.createElement('div');
   volumeControl.className = 'volume-control';
-
   if (buttons.has('record-audio')) {
     var recordAudio = document.createElement('div');
     recordAudio.className = 'control ' + (config.toggle.has('record-audio') ? 'stop-recording-audio selected' : 'record-audio');
     volumeControl.appendChild(recordAudio);
-
     recordAudio.onclick = function () {
       if (recordAudio.className.indexOf('stop-recording-audio') != -1) {
         recordAudio.className = recordAudio.className.replace('stop-recording-audio selected', 'record-audio');
@@ -27334,12 +25109,10 @@ function getHTMLMediaElement(mediaElement, config) {
       }
     };
   }
-
   if (buttons.has('record-video')) {
     var recordVideo = document.createElement('div');
     recordVideo.className = 'control ' + (config.toggle.has('record-video') ? 'stop-recording-video selected' : 'record-video');
     volumeControl.appendChild(recordVideo);
-
     recordVideo.onclick = function () {
       if (recordVideo.className.indexOf('stop-recording-video') != -1) {
         recordVideo.className = recordVideo.className.replace('stop-recording-video selected', 'record-video');
@@ -27350,7 +25123,6 @@ function getHTMLMediaElement(mediaElement, config) {
       }
     };
   }
-
   if (buttons.has('volume-slider')) {
     var volumeSlider = document.createElement('div');
     volumeSlider.className = 'control volume-slider';
@@ -27360,22 +25132,17 @@ function getHTMLMediaElement(mediaElement, config) {
     slider.min = 0;
     slider.max = 100;
     slider.value = 100;
-
     slider.onchange = function () {
       mediaElement.volume = '.' + slider.value.toString().substr(0, 1);
     };
-
     volumeSlider.appendChild(slider);
   }
-
   if (buttons.has('full-screen')) {
     var zoom = document.createElement('div');
     zoom.className = 'control ' + (config.toggle.has('zoom-in') ? 'zoom-out selected' : 'zoom-in');
-
     if (!slider && !recordAudio && !recordVideo && zoom) {
       mediaControls.insertBefore(zoom, mediaControls.firstChild);
     } else volumeControl.appendChild(zoom);
-
     zoom.onclick = function () {
       if (zoom.className.indexOf('zoom-out') != -1) {
         zoom.className = zoom.className.replace('zoom-out selected', 'zoom-in');
@@ -27385,7 +25152,6 @@ function getHTMLMediaElement(mediaElement, config) {
         launchFullscreen(mediaElementContainer);
       }
     };
-
     function launchFullscreen(element) {
       if (element.requestFullscreen) {
         element.requestFullscreen();
@@ -27395,80 +25161,63 @@ function getHTMLMediaElement(mediaElement, config) {
         element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
       }
     }
-
     function exitFullScreen() {
       if (document.fullscreen) {
         try {
           document.cancelFullScreen();
         } catch (err) {}
       }
-
       if (document.mozFullScreen) {
         try {
           document.mozCancelFullScreen();
         } catch (err) {}
       }
-
       if (document.webkitIsFullScreen) {
         document.webkitCancelFullScreen();
       }
     }
-
     function screenStateChange(e) {
       if (e.srcElement != mediaElementContainer) return;
       var isFullScreeMode = document.webkitIsFullScreen || document.mozFullScreen || document.fullscreen;
       mediaElementContainer.style.width = (isFullScreeMode ? window.innerWidth - 20 : config.width) + 'px';
       mediaElementContainer.style.display = isFullScreeMode ? 'block' : 'inline-block';
-
       if (config.height) {
         mediaBox.style.height = (isFullScreeMode ? window.innerHeight - 20 : config.height) + 'px';
       }
-
       if (!isFullScreeMode && config.onZoomout) config.onZoomout();
       if (isFullScreeMode && config.onZoomin) config.onZoomin();
-
       if (!isFullScreeMode && zoom.className.indexOf('zoom-out') != -1) {
         zoom.className = zoom.className.replace('zoom-out selected', 'zoom-in');
         if (config.onZoomout) config.onZoomout();
       }
-
       setTimeout(adjustControls, 1000);
     }
-
     document.addEventListener('fullscreenchange', screenStateChange, false);
     document.addEventListener('mozfullscreenchange', screenStateChange, false);
     document.addEventListener('webkitfullscreenchange', screenStateChange, false);
   }
-
   if (buttons.has('volume-slider') || buttons.has('full-screen') || buttons.has('record-audio') || buttons.has('record-video')) {
     mediaElementContainer.appendChild(volumeControl);
   }
-
   var mediaBox = document.createElement('div');
   mediaBox.className = 'media-box';
   mediaElementContainer.appendChild(mediaBox);
-
   if (config.title) {
     var h2 = document.createElement('h2');
     h2.innerHTML = config.title;
     h2.setAttribute('style', 'position: absolute;color:white;font-size:17px;text-shadow: 1px 1px black;padding:0;margin:0;text-align: left; margin-top: 10px; margin-left: 10px; display: block; border: 0;line-height:1.5;z-index:1;');
     mediaBox.appendChild(h2);
   }
-
   mediaBox.appendChild(mediaElement);
   if (!config.width) config.width = innerWidth / 2 - 50;
   mediaElementContainer.style.width = config.width + 'px';
-
   if (config.height) {
     mediaBox.style.height = config.height + 'px';
   }
-
   mediaBox.querySelector('video').style.maxHeight = innerHeight + 'px';
   var times = 0;
-
   function adjustControls() {
     mediaControls.style.marginLeft = mediaElementContainer.clientWidth - mediaControls.clientWidth - 2 + 'px';
-
     if (slider) {
       slider.style.width = mediaElementContainer.clientWidth / 3 + 'px';
       volumeControl.style.marginLeft = mediaElementContainer.clientWidth / 3 - 30 + 'px';
@@ -27476,22 +25225,18 @@ function getHTMLMediaElement(mediaElement, config) {
     } else {
       volumeControl.style.marginLeft = mediaElementContainer.clientWidth - volumeControl.clientWidth - 2 + 'px';
     }
-
     volumeControl.style.marginTop = mediaElementContainer.clientHeight - volumeControl.clientHeight - 2 + 'px';
-
     if (times < 10) {
       times++;
       setTimeout(adjustControls, 1000);
     } else times = 0;
   }
-
   if (config.showOnMouseEnter || typeof config.showOnMouseEnter === 'undefined') {
     mediaElementContainer.onmouseenter = mediaElementContainer.onmousedown = function () {
       adjustControls();
       mediaControls.style.opacity = 1;
       volumeControl.style.opacity = 1;
     };
-
     mediaElementContainer.onmouseleave = function () {
       mediaControls.style.opacity = 0;
       volumeControl.style.opacity = 0;
@@ -27505,18 +25250,14 @@ function getHTMLMediaElement(mediaElement, config) {
       }, 300);
     }, 700);
   }
-
   adjustControls();
-
   mediaElementContainer.toggle = function (clasName) {
     if (typeof clasName != 'string') {
       for (var i = 0; i < clasName.length; i++) {
         mediaElementContainer.toggle(clasName[i]);
       }
-
       return;
     }
-
     if (clasName == 'mute-audio' && muteAudio) muteAudio.onclick();
     if (clasName == 'mute-video' && muteVideo) muteVideo.onclick();
     if (clasName == 'record-audio' && recordAudio) recordAudio.onclick();
@@ -27524,20 +25265,18 @@ function getHTMLMediaElement(mediaElement, config) {
     if (clasName == 'stop' && stop) stop.onclick();
     return this;
   };
-
   mediaElementContainer.media = mediaElement;
   return mediaElementContainer;
-} // __________________
-// getAudioElement.js
+}
 
+// __________________
+// getAudioElement.js
 
 function getAudioElement(mediaElement, config) {
   config = config || {};
-
   if (!mediaElement.nodeName || mediaElement.nodeName.toLowerCase() != 'audio' && mediaElement.nodeName.toLowerCase() != 'video') {
     var mediaStream = mediaElement;
     mediaElement = document.createElement('audio');
-
     try {
       mediaElement.setAttributeNode(document.createAttribute('autoplay'));
       mediaElement.setAttributeNode(document.createAttribute('controls'));
@@ -27545,20 +25284,16 @@ function getAudioElement(mediaElement, config) {
       mediaElement.setAttribute('autoplay', true);
       mediaElement.setAttribute('controls', true);
     }
-
     if ('srcObject' in mediaElement) {
       mediaElement.mediaElement = mediaStream;
     } else {
       mediaElement[!!navigator.mozGetUserMedia ? 'mozSrcObject' : 'src'] = !!navigator.mozGetUserMedia ? mediaStream : (window.URL || window.webkitURL).createObjectURL(mediaStream);
     }
   }
-
   config.toggle = config.toggle || [];
-
   config.toggle.has = function (element) {
     return config.toggle.indexOf(element) !== -1;
   };
-
   var mediaElementContainer = document.createElement('div');
   mediaElementContainer.className = 'media-container';
   var mediaControls = document.createElement('div');
@@ -27568,7 +25303,6 @@ function getAudioElement(mediaElement, config) {
   muteAudio.className = 'control ' + (config.toggle.has('mute-audio') ? 'unmute-audio selected' : 'mute-audio');
   mediaControls.appendChild(muteAudio);
   muteAudio.style['border-top-left-radius'] = '5px';
-
   muteAudio.onclick = function () {
     if (muteAudio.className.indexOf('unmute-audio') != -1) {
       muteAudio.className = muteAudio.className.replace('unmute-audio selected', 'mute-audio');
@@ -27580,12 +25314,10 @@ function getAudioElement(mediaElement, config) {
       if (config.onMuted) config.onMuted('audio');
     }
   };
-
   if (!config.buttons || config.buttons && config.buttons.indexOf('record-audio') != -1) {
     var recordAudio = document.createElement('div');
     recordAudio.className = 'control ' + (config.toggle.has('record-audio') ? 'stop-recording-audio selected' : 'record-audio');
     mediaControls.appendChild(recordAudio);
-
     recordAudio.onclick = function () {
       if (recordAudio.className.indexOf('stop-recording-audio') != -1) {
         recordAudio.className = recordAudio.className.replace('stop-recording-audio selected', 'record-audio');
@@ -27596,7 +25328,6 @@ function getAudioElement(mediaElement, config) {
       }
     };
   }
-
   var volumeSlider = document.createElement('div');
   volumeSlider.className = 'control volume-slider';
   volumeSlider.style.width = 'auto';
@@ -27604,25 +25335,20 @@ function getAudioElement(mediaElement, config) {
   var slider = document.createElement('input');
   slider.style.marginTop = '11px';
   slider.style.width = ' 200px';
-
   if (config.buttons && config.buttons.indexOf('record-audio') == -1) {
     slider.style.width = ' 241px';
   }
-
   slider.type = 'range';
   slider.min = 0;
   slider.max = 100;
   slider.value = 100;
-
   slider.onchange = function () {
     mediaElement.volume = '.' + slider.value.toString().substr(0, 1);
   };
-
   volumeSlider.appendChild(slider);
   var stop = document.createElement('div');
   stop.className = 'control stop';
   mediaControls.appendChild(stop);
-
   stop.onclick = function () {
     mediaElementContainer.style.opacity = 0;
     setTimeout(function () {
@@ -27632,7 +25358,6 @@ function getAudioElement(mediaElement, config) {
     }, 800);
     if (config.onStopped) config.onStopped();
   };
-
   stop.style['border-top-right-radius'] = '5px';
   stop.style['border-bottom-right-radius'] = '5px';
   var mediaBox = document.createElement('div');
@@ -27642,30 +25367,27 @@ function getAudioElement(mediaElement, config) {
   h2.innerHTML = config.title || 'Audio Element';
   h2.setAttribute('style', 'position: absolute;color: rgb(160, 160, 160);font-size: 20px;text-shadow: 1px 1px rgb(255, 255, 255);padding:0;margin:0;');
   mediaBox.appendChild(h2);
-  mediaBox.appendChild(mediaElement); // mediaElementContainer.style.width = '329px';
+  mediaBox.appendChild(mediaElement);
 
+  // mediaElementContainer.style.width = '329px';
   mediaBox.style.height = '90px';
   h2.style.width = mediaElementContainer.style.width;
   h2.style.height = '50px';
   h2.style.overflow = 'hidden';
   var times = 0;
-
   function adjustControls() {
     mediaControls.style.marginLeft = mediaElementContainer.clientWidth - mediaControls.clientWidth - 7 + 'px';
     mediaControls.style.marginTop = mediaElementContainer.clientHeight - mediaControls.clientHeight - 6 + 'px';
-
     if (times < 10) {
       times++;
       setTimeout(adjustControls, 1000);
     } else times = 0;
   }
-
   if (config.showOnMouseEnter || typeof config.showOnMouseEnter === 'undefined') {
     mediaElementContainer.onmouseenter = mediaElementContainer.onmousedown = function () {
       adjustControls();
       mediaControls.style.opacity = 1;
     };
-
     mediaElementContainer.onmouseleave = function () {
       mediaControls.style.opacity = 0;
     };
@@ -27677,24 +25399,19 @@ function getAudioElement(mediaElement, config) {
       }, 300);
     }, 700);
   }
-
   adjustControls();
-
   mediaElementContainer.toggle = function (clasName) {
     if (typeof clasName != 'string') {
       for (var i = 0; i < clasName.length; i++) {
         mediaElementContainer.toggle(clasName[i]);
       }
-
       return;
     }
-
     if (clasName == 'mute-audio' && muteAudio) muteAudio.onclick();
     if (clasName == 'record-audio' && recordAudio) recordAudio.onclick();
     if (clasName == 'stop' && stop) stop.onclick();
     return this;
   };
-
   mediaElementContainer.media = mediaElement;
   return mediaElementContainer;
 }
@@ -27716,13 +25433,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.MatrixSounds = void 0;
-
 class MatrixSounds {
   constructor() {
     this.volume = 0.5;
     this.audios = {};
   }
-
   createClones(c, name, path) {
     for (var x = 1; x < c; x++) {
       let a = new Audio(path);
@@ -27732,19 +25447,16 @@ class MatrixSounds {
       document.body.append(a);
     }
   }
-
   createAudio(name, path, useClones) {
     let a = new Audio(path);
     a.id = name;
     a.volume = this.volume;
     this.audios[name] = a;
     document.body.append(a);
-
     if (typeof useClones !== 'undefined') {
       this.createClones(useClones, name, path);
     }
   }
-
   play(name) {
     if (this.audios[name].paused == true) {
       this.audios[name].play();
@@ -27752,56 +25464,53 @@ class MatrixSounds {
       this.tryClone(name);
     }
   }
-
   tryClone(name) {
     var cc = 1;
-
     try {
       while (this.audios[name + cc].paused == false) {
         cc++;
       }
-
       if (this.audios[name + cc]) this.audios[name + cc].play();
     } catch (err) {}
   }
-
 }
-
 exports.MatrixSounds = MatrixSounds;
 
 },{}],88:[function(require,module,exports){
 /* eslint-disable no-unused-vars */
-
 /* eslint-disable no-undef */
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.radToDeg = radToDeg;
-exports.createAppEvent = createAppEvent;
-exports.isMobile = isMobile;
+exports.HeaderTypes = exports.ENUMERATORS = exports.E = exports.BiquadFilterType = void 0;
 exports.LOG = LOG;
-exports.OSCILLATOR = OSCILLATOR;
-exports.SWITCHER = SWITCHER;
 exports.ORBIT = ORBIT;
 exports.ORBIT_FROM_ARRAY = ORBIT_FROM_ARRAY;
+exports.OSCILLATOR = OSCILLATOR;
+exports.QueryString = void 0;
+exports.SWITCHER = SWITCHER;
+exports._DrawElements = _DrawElements;
+exports._glBlend = _glBlend;
+exports._glTexParameteri = _glTexParameteri;
+exports.byId = void 0;
+exports.createAppEvent = createAppEvent;
+exports.createDomFPSController = createDomFPSController;
+exports.gen2DTextFace = gen2DTextFace;
+exports.htmlHeader = void 0;
+exports.isMobile = isMobile;
+exports.notify = exports.loadImage = exports.jsonHeaders = void 0;
+exports.radToDeg = radToDeg;
 exports.randomFloatFromTo = randomFloatFromTo;
 exports.randomIntFromTo = randomIntFromTo;
-exports._glBlend = _glBlend;
-exports._DrawElements = _DrawElements;
-exports._glTexParameteri = _glTexParameteri;
-exports.gen2DTextFace = gen2DTextFace;
+exports.scriptManager = void 0;
 exports.showDomFPSController = showDomFPSController;
-exports.createDomFPSController = createDomFPSController;
-exports.notify = exports.BiquadFilterType = exports.ENUMERATORS = exports.QueryString = exports.byId = exports.E = exports.scriptManager = exports.loadImage = exports.supportsTouch = exports.htmlHeader = exports.jsonHeaders = exports.HeaderTypes = void 0;
-
+exports.supportsTouch = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-
 var _events = require("./events");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // Array.prototype.swap = function (x,y) {
 window.swap = function (x, y, myArray) {
   var b = myArray[x];
@@ -27809,22 +25518,19 @@ window.swap = function (x, y, myArray) {
   myArray[y] = b;
   return myArray;
 };
+
 /**
  * @description
  * Global modifier for:
  * degToRed, DETECTBROWSER, loadImage
  */
-
-
 window.degToRad = function (degrees) {
   return degrees * Math.PI / 180;
 };
-
 function radToDeg(r) {
   var pi = Math.PI;
   return r * (180 / pi);
 }
-
 function createAppEvent(name, myDetails) {
   return new CustomEvent(name, {
     detail: {
@@ -27834,8 +25540,7 @@ function createAppEvent(name, myDetails) {
     bubbles: true
   });
 }
-
-const HeaderTypes = {
+const HeaderTypes = exports.HeaderTypes = {
   textPlan: "text/plain",
   html: "text/html",
   jpeg: "image/jpeg",
@@ -27850,21 +25555,17 @@ const HeaderTypes = {
   appECMA: "application/ecmascript",
   appOctetSteam: "application/octet-stream"
 };
-exports.HeaderTypes = HeaderTypes;
-const jsonHeaders = new Headers({
+const jsonHeaders = exports.jsonHeaders = new Headers({
   "Content-Type": "application/json",
   "Accept": "application/json"
 });
-exports.jsonHeaders = jsonHeaders;
-const htmlHeader = new Headers({
+const htmlHeader = exports.htmlHeader = new Headers({
   "Content-Type": "text/html",
   "Accept": "text/plain"
 });
-exports.htmlHeader = htmlHeader;
-
 window.DETECTBROWSER = function () {
   var HREFF,
-      HREFTXT = 'unknown';
+    HREFTXT = 'unknown';
   this.NAVIGATOR = navigator.userAgent;
   var NAV = navigator.userAgent;
   var navMacintosh, gecko, navIpad, operatablet, navIphone, navFirefox, navChrome, navOpera, navSafari, navandroid, mobile, navMozilla;
@@ -27877,18 +25578,18 @@ window.DETECTBROWSER = function () {
   navMozilla = NAV.match(/mozilla/gi);
   navChrome = NAV.match(/Chrome/gi);
   navSafari = NAV.match(/safari/gi);
-  navandroid = NAV.match(/android/gi); // mobile = NAV.match(/mobile/gi);
+  navandroid = NAV.match(/android/gi);
+  // mobile = NAV.match(/mobile/gi);
+  navMacintosh = NAV.match(/Macintosh/gi);
 
-  navMacintosh = NAV.match(/Macintosh/gi); // eslint-disable-next-line no-undef
-
+  // eslint-disable-next-line no-undef
   var TYPEOFANDROID = 0;
-  window['NOMOBILE'] = 0; // eslint-disable-next-line no-redeclare
+  window['NOMOBILE'] = 0;
 
+  // eslint-disable-next-line no-redeclare
   var mobile = /iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase());
-
   if (mobile) {
     var userAgent = navigator.userAgent.toLowerCase();
-
     if (userAgent.search('android') > -1 && userAgent.search('mobile') > -1) {
       console.log('ANDROID MOBILE');
     } else if (userAgent.search('android') > -1 && !(userAgent.search('mobile') > -1)) {
@@ -27898,38 +25599,30 @@ window.DETECTBROWSER = function () {
   } else {
     // eslint-disable-next-line no-undef
     mobile = 1;
-  } // FIREFOX za android
-
-
+  }
+  // FIREFOX za android
   if (navFirefox && navandroid && TYPEOFANDROID == 0) {
     HREFF = '#';
     HREFTXT = 'mobile_firefox_android';
-  } // FIREFOX za android T
-
-
+  }
+  // FIREFOX za android T
   if (navFirefox && navandroid && TYPEOFANDROID == 1) {
     HREFF = '#';
     HREFTXT = 'mobile_firefox_android_tablet';
-  } // OPERA ZA ANDROID
-
-
+  }
+  // OPERA ZA ANDROID
   if (navOpera && navandroid) {
     HREFF = '#';
     HREFTXT = 'opera_mobile_android';
   } // provera
   // OPERA ZA ANDROID TABLET
-
-
   if (navOpera && navandroid && operatablet) {
     HREFF = '#';
     HREFTXT = 'opera_mobile_android_tablet';
   } // provera
   // safari mobile za IPHONE - i safari mobile za IPAD i CHROME za IPAD
-
-
   if (navSafari) {
     var Iphonesafari = NAV.match(/iphone/gi);
-
     if (Iphonesafari) {
       HREFF = '#';
       HREFTXT = 'safari_mobile_iphone';
@@ -27941,44 +25634,35 @@ window.DETECTBROWSER = function () {
       HREFTXT = 'desktop_safari';
     } //Macintosh
     else if (navandroid) {
-        HREFF = '#';
-        HREFTXT = 'android_native';
-      }
-  } // TEST CHROME
-
-
+      HREFF = '#';
+      HREFTXT = 'android_native';
+    }
+  }
+  // TEST CHROME
   if (navChrome && navSafari && navMozilla && TYPEOFANDROID == 1) {
     HREFF = '#';
     HREFTXT = 'mobile_chrome_android_tablet';
   }
-
   if (navChrome && navSafari && navMozilla && TYPEOFANDROID == 0) {
     HREFF = '#';
     HREFTXT = 'mobile_chrome_android';
   }
-
   if (navChrome && TYPEOFANDROID == 0) {
     HREFF = '#';
     HREFTXT = 'chrome_browser';
   }
-
   if (navMozilla && mobile == 1 && gecko && navFirefox) {
     HREFF = '#';
     HREFTXT = 'firefox_desktop';
   }
-
   if (navOpera && TYPEOFANDROID == 0 && !mobile) {
     HREFF = '#';
     HREFTXT = 'opera_desktop';
   }
-
   this.NAME = HREFTXT;
   this.NOMOBILE = mobile;
 };
-
-var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
-exports.supportsTouch = supportsTouch;
-
+var supportsTouch = exports.supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 function isMobile() {
   if (supportsTouch == true) return true;
   const toMatch = [/Android/i, /webOS/i, /iPhone/i, /iPad/i, /iPod/i, /BlackBerry/i, /Windows Phone/i];
@@ -27986,73 +25670,60 @@ function isMobile() {
     return navigator.userAgent.match(toMatchItem);
   });
 }
-
 ;
-
 const loadImage = function (url, onload) {
   var img = new Image();
   img.crossOrigin = 'anonymous';
   img.src = url;
-
   img.onload = function () {
     onload(img);
   };
-
   return img;
 };
-
 exports.loadImage = loadImage;
 window.BROWSER = new window.DETECTBROWSER();
+
 /**
  * @description LOGGER
  */
-
 function LOG() {
   this.ENABLE = false;
-
   this.LOG = function (data) {
     if (this.ENABLE == true) console.log('%c' + data, 'background: #333; color: lime');
   };
-
   this.WARNING = function (data) {
     if (this.ENABLE == true) console.log('%c Warning : ' + data, 'background: #333; color: yellow');
   };
-
   this.CRITICAL = function (data) {
     if (this.ENABLE == true) console.log('%c Critical : ' + data, 'background: #333; color: red');
   };
-
   this.NETWORK_LOG = function (data) {
     if (this.ENABLE == true) {
       console.log('%c Network view : ' + data, 'background: #333; color: #a7afaf');
     }
   };
 }
+
 /**
  * @description
  * Load script in runtime.
  */
-
-
-var scriptManager = {
+var scriptManager = exports.scriptManager = {
   SCRIPT_ID: 0,
   LOAD: function addScript(src, id, type, parent, callback) {
     var s = document.createElement('script');
-
-    s.onload = function () {// console.log('Script id loaded [src]: ' + this.src);
+    s.onload = function () {
+      // console.log('Script id loaded [src]: ' + this.src);
     };
-
     if (typeof type !== 'undefined') {
       s.setAttribute('type', type);
       s.innerHTML = src;
     } else {
       s.setAttribute('src', src);
     }
-
     if (typeof id !== 'undefined') {
       s.setAttribute('id', id);
     }
-
     if (typeof parent !== 'undefined') {
       document.getElementById(parent).appendChild(s);
       if (typeof callback != 'undefined') callback();
@@ -28064,11 +25735,9 @@ var scriptManager = {
   loadModule: function addScript(src, id, type, parent) {
     console.log('Script id load called ');
     var s = document.createElement('script');
-
     s.onload = function () {
       scriptManager.SCRIPT_ID++;
     };
-
     if (typeof type === 'undefined') {
       s.setAttribute('type', 'module');
       s.setAttribute('src', src);
@@ -28076,13 +25745,10 @@ var scriptManager = {
       s.setAttribute('type', type);
       s.innerHTML = src;
     }
-
     s.setAttribute('src', src);
-
     if (typeof id !== 'undefined') {
       s.setAttribute('id', id);
     }
-
     if (typeof parent !== 'undefined') {
       document.getElementById(parent).appendChild(s);
     } else {
@@ -28096,10 +25762,9 @@ var scriptManager = {
       });
     });
   }
-}; // GET PULSE VALUES IN REAL TIME
+};
 
-exports.scriptManager = scriptManager;
-
+// GET PULSE VALUES IN REAL TIME
 function OSCILLATOR(min, max, step) {
   if ((typeof min === 'string' || typeof min === 'number') && (typeof max === 'string' || typeof max === 'number') && (typeof step === 'string' || typeof step === 'number')) {
     var ROOT = this;
@@ -28108,32 +25773,25 @@ function OSCILLATOR(min, max, step) {
     this.step = parseFloat(step);
     this.value_ = parseFloat(min);
     this.status = 0;
-
     this.on_maximum_value = function () {};
-
     this.on_minimum_value = function () {};
-
     this.UPDATE = function (STATUS_) {
       if (STATUS_ === undefined) {
         if (this.status == 0 && this.value_ < this.max) {
           this.value_ = this.value_ + this.step;
-
           if (this.value_ >= this.max) {
             this.value_ = this.max;
             this.status = 1;
             ROOT.on_maximum_value();
           }
-
           return this.value_;
         } else if (this.status == 1 && this.value_ > this.min) {
           this.value_ = this.value_ - this.step;
-
           if (this.value_ <= this.min) {
             this.value_ = this.min;
             this.status = 0;
             ROOT.on_minimum_value();
           }
-
           return this.value_;
         }
       } else {
@@ -28144,17 +25802,14 @@ function OSCILLATOR(min, max, step) {
     _events.SYS.DEBUG.WARNING("SYS : warning for procedure 'SYS.MATH.OSCILLATOR' Desciption : Replace object with string or number, min >> " + typeof min + ' and max >>' + typeof max + ' and step >>' + typeof step + ' << must be string or number.');
   }
 }
-
 function SWITCHER() {
   var ROOT = this;
   ROOT.VALUE = 1;
-
   ROOT.GET = function () {
     ROOT.VALUE = ROOT.VALUE * -1;
     return ROOT.VALUE;
   };
 }
-
 function ORBIT(cx, cy, angle, p) {
   var s = Math.sin(angle);
   var c = Math.cos(angle);
@@ -28166,7 +25821,6 @@ function ORBIT(cx, cy, angle, p) {
   p.y = ynew + cy;
   return p;
 }
-
 function ORBIT_FROM_ARRAY(cx, cy, angle, p, byIndexs) {
   var s = Math.sin(angle);
   var c = Math.cos(angle);
@@ -28178,24 +25832,19 @@ function ORBIT_FROM_ARRAY(cx, cy, angle, p, byIndexs) {
   p[byIndexs[1]] = ynew + cy;
   return p;
 }
-
 var E = function (id) {
   return document.getElementById(id);
 };
-
 exports.E = E;
-
 var byId = function (id) {
   return document.getElementById(id);
 };
-
 exports.byId = byId;
-
 function randomFloatFromTo(min, max) {
   return Math.random() * (max - min) + min;
-} // RANDOM INT FROM-TO
+}
 
-
+// RANDOM INT FROM-TO
 function randomIntFromTo(min, max) {
   if (typeof min === 'object' || typeof max === 'object') {
     _events.SYS.DEBUG.WARNING("SYS : warning for procedure 'SYS.MATH.RANDOM_INT_FROM_TO' Desciption : Replace object with string , this >> " + typeof min + ' and ' + typeof min + ' << must be string or number.');
@@ -28205,33 +25854,29 @@ function randomIntFromTo(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 }
-
-var QueryString = function () {
+var QueryString = exports.QueryString = function () {
   // This function is anonymous, is executed immediately and
   // the return value is assigned to QueryString!
   var query_string = {};
   var query = window.location.search.substring(1);
   var vars = query.split('&');
-
   for (var i = 0; i < vars.length; i++) {
-    var pair = vars[i].split('='); // If first entry with this name
-
+    var pair = vars[i].split('=');
+    // If first entry with this name
     if (typeof query_string[pair[0]] === 'undefined') {
-      query_string[pair[0]] = decodeURIComponent(pair[1]); // If second entry with this name
+      query_string[pair[0]] = decodeURIComponent(pair[1]);
+      // If second entry with this name
     } else if (typeof query_string[pair[0]] === 'string') {
       var arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
-      query_string[pair[0]] = arr; // If third or later entry with this name
+      query_string[pair[0]] = arr;
+      // If third or later entry with this name
     } else {
       query_string[pair[0]].push(decodeURIComponent(pair[1]));
     }
   }
-
   return query_string;
 }();
-
-exports.QueryString = QueryString;
 _manifest.default.audioSystem.Assets = {};
-
 _manifest.default.audioSystem.createVideoAsset = function (name_, path_) {
   return new Promise((resolve, reject) => {
     var videoAudioAsset = {};
@@ -28241,7 +25886,6 @@ _manifest.default.audioSystem.createVideoAsset = function (name_, path_) {
     E('HOLDER_STREAMS').appendChild(videoAudioAsset.video);
     videoAudioAsset.video.setAttribute('playsInline', true);
     videoAudioAsset.video.setAttribute('src', 'res/videos/' + path_);
-
     try {
       window.AudioContext = window.AudioContext || window.AudioContext;
       videoAudioAsset.context = new AudioContext();
@@ -28249,24 +25893,20 @@ _manifest.default.audioSystem.createVideoAsset = function (name_, path_) {
       alert('Web Audio API is not supported in this browser');
       reject(e);
     }
-
-    videoAudioAsset.gainNode = videoAudioAsset.context.createGain(); // Change Gain Value to test
-
+    videoAudioAsset.gainNode = videoAudioAsset.context.createGain();
+    // Change Gain Value to test
     videoAudioAsset.gainNode.gain.value = 1;
-    videoAudioAsset.filter = videoAudioAsset.context.createBiquadFilter(); // Change Filter type to test // ENUM from UTILITY
+    videoAudioAsset.filter = videoAudioAsset.context.createBiquadFilter();
+    // Change Filter type to test // ENUM from UTILITY
     // videoAudioAsset.filter.type = 2;
     // Change frequency to test
-
     videoAudioAsset.filter.frequency.value = 5040;
-
     if (typeof name_ !== 'undefined' && typeof name_ === 'string') {
       _manifest.default.audioSystem.Assets[name_] = videoAudioAsset;
     } else {
       console.warn('No name argument in createVideoAsset call.');
     }
-
     var promise = videoAudioAsset.video.play();
-
     if (promise !== undefined) {
       promise.then(_ => {
         console.info('Autoplay started.');
@@ -28278,7 +25918,6 @@ _manifest.default.audioSystem.createVideoAsset = function (name_, path_) {
     }
   });
 };
-
 _manifest.default.audioSystem.createMusicAsset = function (name_, path_) {
   return new Promise((resolve, reject) => {
     var videoAudioAsset = {};
@@ -28288,27 +25927,22 @@ _manifest.default.audioSystem.createMusicAsset = function (name_, path_) {
     E('HOLDER_STREAMS').appendChild(videoAudioAsset.video);
     videoAudioAsset.video.setAttribute('playsInline', true);
     videoAudioAsset.video.setAttribute('src', 'res/music/' + path_);
-
     try {
       window.AudioContext = window.AudioContext || window.AudioContext;
       videoAudioAsset.context = new AudioContext();
     } catch (e) {
       alert('Web Audio API is not supported in this browser');
     }
-
     videoAudioAsset.gainNode = videoAudioAsset.context.createGain();
     videoAudioAsset.gainNode.gain.value = 1;
     videoAudioAsset.filter = videoAudioAsset.context.createBiquadFilter();
     videoAudioAsset.filter.frequency.value = 5040;
-
     if (typeof name_ !== 'undefined' && typeof name_ === 'string') {
       _manifest.default.audioSystem.Assets[name_] = videoAudioAsset;
     } else {
       console.warn('No name argument in createVideoAsset call.');
     }
-
     var promise = videoAudioAsset.video.play();
-
     if (promise !== undefined) {
       promise.then(_ => {
         console.info('intromotocooliano autoplay started');
@@ -28319,23 +25953,22 @@ _manifest.default.audioSystem.createMusicAsset = function (name_, path_) {
       });
     }
   });
-}; // Tradicional Class
+};
 
-
+// Tradicional Class
 function _glBlend() {
   var root_glblend = this;
   this.blendEnabled = false;
   this.blendParamSrc = 'ONE';
   this.blendParamDest = 'ONE';
   this.depthParam = 'NOTEQUAL';
-
   this.setBothBlendParam = function (param_) {
     root_glblend.blendParamSrc = param_;
     root_glblend.blendParamDest = param_;
   };
-} // Tradicional Class
+}
 
-
+// Tradicional Class
 function _DrawElements(numberOfItemsIndices) {
   this.mode = 'TRIANGLES';
   this.modes = ['POINTS', 'LINE_STRIP', 'LINE_LOOP', 'LINES', 'TRIANGLE_STRIP', 'TRIANGLE_FAN', 'TRIANGLES'];
@@ -28343,16 +25976,13 @@ function _DrawElements(numberOfItemsIndices) {
   this.indices = 'GL_ELEMENT_ARRAY_BUFFER';
   this.numberOfIndicesRender = numberOfItemsIndices; //mesh_.indexBuffer.numItems
 }
-
 function _glTexParameteri(_target, _pname, _param) {
   var ROOT = this;
-
   if (typeof _target == 'undefined') {
     this.target = 'TEXTURE_2D';
   } else {
     this.target = _target;
   }
-
   if (typeof _pname == 'undefined' || typeof _param == 'undefined') {
     this.pname = 'TEXTURE_MAG_FILTER';
     this.param = 'LINEAR';
@@ -28361,13 +25991,12 @@ function _glTexParameteri(_target, _pname, _param) {
     this.param = _param;
   }
 }
+
 /**
  * @description
  * ENUMERATORS FOR opegl es 2.0 and 3.0
  */
-
-
-let ENUMERATORS = {
+let ENUMERATORS = exports.ENUMERATORS = {
   glTexParameter: {
     target: {
       GL_TEXTURE_2D: 'GL_TEXTURE_2D',
@@ -28456,11 +26085,8 @@ let ENUMERATORS = {
   glDrawElements: {
     help: function () {
       _events.SYS.DEBUG.WARNING('C specification: void glDrawElements(  GLenum mode , GLsizei count , GLenum type , const GLvoid * indices ); ');
-
       _events.SYS.DEBUG.WARNING(">>>mode can be : 'POINTS' , 'LINE_STRIP', 'LINE_LOOP', 'LINES', 'TRIANGLE_STRIP', 'TRIANGLE_FAN' , 'TRIANGLES' ");
-
       _events.SYS.DEBUG.WARNING('>>>count    : Specifies the number of elements to be rendered.');
-
       _events.SYS.DEBUG.WARNING(">>>type    : 'UNSIGNED_BYTE' , 'UNSIGNED_SHORT' , 'UNSIGNED_INT' ");
     },
     mode: ['POINTS', 'LINE_STRIP', 'LINE_LOOP', 'LINES', 'TRIANGLE_STRIP', 'TRIANGLE_FAN', 'TRIANGLES'],
@@ -28503,13 +26129,12 @@ let ENUMERATORS = {
     _events.SYS.DEBUG.LOG('TEXTURE_IMMUTABLE_FORMAT VALUE : ' + world.GL.gl.getTexParameter(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_IMMUTABLE_FORMAT));
   }
 };
+
 /**
  * @description
  * Audio API Helper
  */
-
-exports.ENUMERATORS = ENUMERATORS;
-const BiquadFilterType = {
+const BiquadFilterType = exports.BiquadFilterType = {
   lowpass: 'lowpass',
   highpass: 'highpass',
   bandpass: 'bandpass',
@@ -28519,14 +26144,12 @@ const BiquadFilterType = {
   notch: 'notch',
   allpass: 'allpass'
 };
+
 /**
  * @description
  * Default cubeMap drawer
  * 2DCanvas ctx
  */
-
-exports.BiquadFilterType = BiquadFilterType;
-
 function gen2DTextFace(ctx, faceColor, textColor, text) {
   const {
     width,
@@ -28541,6 +26164,7 @@ function gen2DTextFace(ctx, faceColor, textColor, text) {
   ctx.fillText(text, width / 2, height / 2);
 }
 
+// Create DOM elements for FPS template.
 function showDomFPSController() {
   byId('mobSpace').style.display = 'grid';
   byId('mobRight').style.display = 'grid';
@@ -28548,9 +26172,10 @@ function showDomFPSController() {
   byId('mobUp').style.display = 'grid';
   byId('mobDown').style.display = 'grid';
   byId('domAngleAxis').style.display = 'grid';
-} // Create DOM elements for FPS template.
+  byId('mobFire').style.display = 'grid';
+}
 
-
+// Create DOM elements for FPS template.
 function createDomFPSController() {
   var domSpace = document.createElement('div');
   domSpace.id = 'mobSpace';
@@ -28569,7 +26194,7 @@ function createDomFPSController() {
       cursor: default;
     `);
   domSpace.innerText = `JUMP`;
-  domSpace.addEventListener('touchstart', e => {});
+  // domSpace.addEventListener('touchstart', (e) => {})
   document.body.append(domSpace);
   var domRight = document.createElement('div');
   domRight.id = 'mobRight';
@@ -28588,10 +26213,8 @@ function createDomFPSController() {
       cursor: default;
     `);
   domRight.innerText = `RIGHT`;
-  domRight.addEventListener('touchstart', e => {
-    console.log('TEST RIGHT');
-  });
-  domRight.addEventListener('touchend', e => {});
+  // domRight.addEventListener('touchstart', (e) => {console.log('TEST RIGHT')})
+  // domRight.addEventListener('touchend', (e) => {	})
   document.body.append(domRight);
   var domLeft = document.createElement('div');
   domLeft.id = 'mobLeft';
@@ -28610,10 +26233,8 @@ function createDomFPSController() {
       cursor: default;
     `);
   domLeft.innerText = `LEFT`;
-  domLeft.addEventListener('touchstart', e => {
-    console.log('TEST domLeft');
-  });
-  domLeft.addEventListener('touchend', e => {});
+  // domLeft.addEventListener('touchstart', (e) => {})
+  // domLeft.addEventListener('touchend', (e) => {})
   document.body.append(domLeft);
   var domUp = document.createElement('div');
   domUp.id = 'mobUp';
@@ -28632,13 +26253,29 @@ function createDomFPSController() {
       cursor: default;
     `);
   domUp.innerText = `UP`;
-  domUp.addEventListener('touchstart', e => {
-    console.log('TEST domUp');
-  });
-  domUp.addEventListener('touchend', e => {
-    this.moveForward = false;
-  });
+  // domUp.addEventListener('touchstart', (e) => {})
+  // domUp.addEventListener('touchend', (e) => {})
   document.body.append(domUp);
+  var domFire = document.createElement('div');
+  domFire.id = 'mobFire';
+  domFire.classList.add('noselect');
+  domFire.setAttribute('style', `
+      text-align: center;
+      display: grid;
+      position:absolute;
+      left: 64%;
+      top: 80%;
+      width: 14%;
+      height: 4%;
+      background: rgba(255,255,255,0.2);
+      margin: auto;
+      align-items: center;
+      cursor: default;
+    `);
+  domFire.innerText = `FIRE`;
+  // domFire.addEventListener('touchstart', (e) => {})
+  // domFire.addEventListener('touchend', (e) => {})
+  document.body.append(domFire);
   var domDown = document.createElement('div');
   domDown.id = 'mobDown';
   domDown.classList.add('noselect');
@@ -28656,8 +26293,8 @@ function createDomFPSController() {
       cursor: default;
     `);
   domDown.innerText = `DOWN`;
-  domDown.addEventListener('touchstart', e => {});
-  domDown.addEventListener('touchend', e => {});
+  // domDown.addEventListener('touchstart', (e) => {})
+  // domDown.addEventListener('touchend', (e) => {})
   document.body.append(domDown);
   var domAngleAxis = document.createElement('div');
   domAngleAxis.id = 'domAngleAxis';
@@ -28666,38 +26303,44 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 9%;
-      top: 82%;
-      width: 28%;
+      left: 5%;
+      top: 69%;
+      width: 45%;
       height: 28%;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.2);
       margin: auto;
       align-items: center;
       cursor: default;
     `);
   domAngleAxis.innerHTML = `    `;
-  domAngleAxis.addEventListener('touchstart', e => {});
+  // domAngleAxis.addEventListener('touchstart', (e) => {})
   document.body.append(domAngleAxis);
   showDomFPSController();
-} // DOM Notifi msg
+}
 
-
-let notify = {
+// DOM Notifi msg
+let notify = exports.notify = {
   root: () => byId('msgBox'),
   pContent: () => byId('not-content'),
   copy: function () {
     navigator.clipboard.writeText(notify.root().children[0].innerText);
   },
+  singleDom: true,
+  showTime: 3000,
+  hideTime: 1000,
   c: 0,
   ic: 0,
   t: {},
   setContent: function (content, t) {
+    if (byId(`msgbox-loc-${notify.c}`) != null) {
+      byId(`msgbox-loc-${notify.c}`).innerHTML = content;
+      return;
+    }
     var iMsg = document.createElement('div');
     iMsg.innerHTML = content;
     iMsg.id = `msgbox-loc-${notify.c}`;
     notify.root().appendChild(iMsg);
     iMsg.classList.add('animate1');
-
     if (t == 'ok') {
       iMsg.style = 'font-family: stormfaze;color:white;padding:7px;margin:2px';
     } else {
@@ -28715,17 +26358,20 @@ let notify = {
       byId(`msgbox-loc-${loc2}`).classList.remove("fadeInDown");
       byId(`msgbox-loc-${loc2}`).classList.add("fadeOut");
       setTimeout(function () {
-        byId(`msgbox-loc-${loc2}`).style.display = "none";
         byId(`msgbox-loc-${loc2}`).classList.remove("fadeOut");
-        byId(`msgbox-loc-${loc2}`).remove();
-        notify.ic++;
-
+        if (this.singleDom == false) {
+          byId(`msgbox-loc-${loc2}`).style.display = "none";
+          byId(`msgbox-loc-${loc2}`).remove();
+          notify.ic++;
+        }
         if (notify.c == notify.ic) {
           notify.root().style.display = 'none';
         }
-      }, 1000);
-    }, 3000);
-    notify.c++;
+      }, this.hideTime);
+    }, this.showTime);
+    if (this.singleDom == true) {} else {
+      notify.c++;
+    }
   },
   error: function (content) {
     notify.root().classList.remove("success");
@@ -28740,7 +26386,6 @@ let notify = {
     notify.show(content, 'ok');
   }
 };
-exports.notify = notify;
 
 },{"../program/manifest":99,"./events":62}],89:[function(require,module,exports){
 "use strict";
@@ -28749,7 +26394,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.WebGLUtils = void 0;
-
 /*
  * Copyright 2010, Google Inc.
  * All rights reserved.
@@ -28780,7 +26424,7 @@ exports.WebGLUtils = void 0;
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var WebGLUtils = function () {
+var WebGLUtils = exports.WebGLUtils = function () {
   /**
    * Creates the HTLM for a failure message
    * @param {string} canvasContainerId id of container of th
@@ -28791,19 +26435,19 @@ var WebGLUtils = function () {
     return '' + '<div style="margin: auto; width:500px;z-index:10000;margin-top:20em;text-align:center;">' + msg + '</div>';
     return '' + '<table style="background-color: #8CE; width: 100%; height: 100%;"><tr>' + '<td align="center">' + '<div style="display: table-cell; vertical-align: middle;">' + '<div style="">' + msg + '</div>' + '</div>' + '</td></tr></table>';
   };
+
   /**
    * Mesasge for getting a webgl browser
    * @type {string}
    */
-
-
   var GET_A_WEBGL_BROWSER = '' + 'This page requires a browser that supports WebGL.<br/>' + '<a href="http://get.webgl.org">Click here to upgrade your browser.</a>';
+
   /**
    * Mesasge for need better hardware
    * @type {string}
    */
-
   var OTHER_PROBLEM = '' + "It doesn't appear your computer can support WebGL.<br/>" + '<a href="http://get.webgl.org">Click here for more information.</a>';
+
   /**
    * Creates a webgl context. If creation fails it will
    * change the contents of the container of the <canvas>
@@ -28816,32 +26460,25 @@ var WebGLUtils = function () {
    *     if there is an error during creation.
    * @return {WebGLRenderingContext} The created context.
    */
-
   var setupWebGL = function (canvas, opt_attribs, opt_onError) {
     function handleCreationError(msg) {
-      var container = document.getElementsByTagName('body')[0]; //var container = canvas.parentNode;
-
+      var container = document.getElementsByTagName('body')[0];
+      //var container = canvas.parentNode;
       if (container) {
         var str = window.WebGLRenderingContext ? OTHER_PROBLEM : GET_A_WEBGL_BROWSER;
-
         if (msg) {
           str += '<br/><br/>Status: ' + msg;
         }
-
         container.innerHTML = makeFailHTML(str);
       }
     }
-
     opt_onError = opt_onError || handleCreationError;
-
     if (canvas.addEventListener) {
       canvas.addEventListener('webglcontextcreationerror', function (event) {
         opt_onError(event.statusMessage);
       }, false);
     }
-
     var context = create3DContext(canvas, opt_attribs);
-
     if (!context) {
       if (!window.WebGLRenderingContext) {
         opt_onError('');
@@ -28849,62 +26486,47 @@ var WebGLUtils = function () {
         opt_onError('');
       }
     }
-
     return context;
   };
+
   /**
    * Creates a webgl context.
    * @param {!Canvas} canvas The canvas tag to get context
    * from. If one is not passed in one will be created.
    * @return {!WebGLContext} The created context.
    */
-
-
   var create3DContext = function (canvas, opt_attribs) {
     // [  "webgl" , "experimental-webgl", "webkit-3d", "moz-webgl"]
     var names;
-
     if (App.openglesShaderVersion == 1.3) {
       var names = ['webgl2', 'experimental-webgl', 'webgl2'];
     } else {
       var names = ['experimental-webgl', 'webgl'];
     }
-
     var context = null;
-
     for (var ii = 0; ii < names.length; ++ii) {
       try {
         context = canvas.getContext(names[ii], opt_attribs);
       } catch (e) {}
-
       if (context) {
         break;
       }
     }
-
     return context;
   };
-
   return {
     create3DContext: create3DContext,
     setupWebGL: setupWebGL
   };
 }();
+
 /**
  * Provides requestAnimationFrame in a cross browser
  * way.
  */
-
-
-exports.WebGLUtils = WebGLUtils;
-
 if (!window.requestAnimationFrame) {
   window.requestAnimationFrame = function () {
-    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (
-    /* function FrameRequestCallback */
-    callback,
-    /* DOMElement Element */
-    element) {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (/* function FrameRequestCallback */callback, /* DOMElement Element */element) {
       window.setTimeout(callback, 1000 / 60);
     };
   }();
@@ -28917,34 +26539,28 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.MatrixStream = void 0;
-
 var _utility = require("../lib/utility");
-
 var _matrixStream = require("./matrix-stream");
-
 /**
  * Main instance for matrix-stream
  * version 1.0.0 beta
  */
+
 class MatrixStream {
   connection = null;
   session = null;
-
   constructor(arg) {
     if (typeof arg === 'undefined') {
       throw console.error('MatrixStream constructor must have argument : { domain: <DOMAIN_NAME> , port: <NUMBER> }');
     }
-
     _matrixStream.netConfig.NETWORKING_DOMAIN = arg.domain;
     _matrixStream.netConfig.NETWORKING_PORT = arg.port;
     _matrixStream.netConfig.sessionName = arg.sessionName;
     _matrixStream.netConfig.resolution = arg.resolution;
-
     _utility.scriptManager.LOAD('openvidu-browser-2.20.0.js', undefined, undefined, undefined, () => {
       this.loadNetHTML();
     });
   }
-
   loadNetHTML() {
     fetch("./broadcaster2.html", {
       headers: _utility.htmlHeader
@@ -28962,37 +26578,33 @@ class MatrixStream {
       console.log('[CHANNEL]' + this.sessionName.value);
       this.attachEvents();
       console.log(`%c MatrixStream constructed.`, _matrixStream.BIGLOG);
+      dispatchEvent(new CustomEvent('net-ready', {}));
     });
   }
-
   attachEvents() {
     addEventListener(`LOCAL-STREAM-READY`, e => {
       console.log('LOCAL-STREAM-READY ', e.detail.connection);
       this.connection = e.detail.connection;
-      var CHANNEL = _matrixStream.netConfig.sessionName; // console.log("ONLY ONES CHANNEL =>", CHANNEL);
-
+      var CHANNEL = _matrixStream.netConfig.sessionName;
+      // console.log("ONLY ONES CHANNEL =>", CHANNEL);
       this.connection.send = netArg => {
-        // to Array of Connection objects (optional. Broadcast to everyone if empty)
         this.session.signal({
           data: JSON.stringify(netArg),
           to: [],
           type: CHANNEL
-        }).then(() => {// console.log('emit all successfully');
+        }).then(() => {
+          // console.log('emit all successfully');
         }).catch(error => {
           console.error("Erro signal => ", error);
         });
       };
     });
     addEventListener('setupSessionObject', e => {
-      // this.connection.session = session;
       console.log("setupSessionObject=>", e.detail);
       this.session = e.detail;
       this.session.on(`signal:${_matrixStream.netConfig.sessionName}`, e => {
-        // console.log(" call update from  =>", e.from);
-        // dpont call update for self 
-        console.log(`test conn id `, this.connection.connectionId);
-
-        if (this.connection.connectionId == e.from.connectionId) {//
+        if (this.connection.connectionId == e.from.connectionId) {
+          //
         } else {
           this.multiPlayer.update(e);
         }
@@ -29012,22 +26624,22 @@ class MatrixStream {
     });
     (0, _matrixStream.byId)('netHeaderTitle').addEventListener('click', this.domManipulation.hideNetPanel);
   }
-
   multiPlayer = {
     root: this,
-
     init(rtcEvent) {
-      console.log("rtcEvent add new net object -> ", rtcEvent.userid);
+      console.log("rtcEvent add new net object -> ", rtcEvent);
       dispatchEvent(new CustomEvent('net-new-user', {
         detail: {
           data: rtcEvent
         }
       }));
     },
-
     update(e) {
-      e.data = JSON.parse(e.data); // console.log('INFO UPDATE', e);
-
+      e.data = JSON.parse(e.data);
+      dispatchEvent(new CustomEvent('network-data', {
+        detail: e.data
+      }));
+      // console.log('INFO UPDATE', e);
       if (e.data.netPos) {
         if (App.scene[e.data.netObjId]) {
           if (e.data.netPos.x) App.scene[e.data.netObjId].position.SetX(e.data.netPos.x, 'noemit');
@@ -29035,7 +26647,7 @@ class MatrixStream {
           if (e.data.netPos.z) App.scene[e.data.netObjId].position.SetZ(e.data.netPos.z, 'noemit');
         }
       } else if (e.data.netRot) {
-        console.log('ROT INFO UPDATE', e);
+        // console.log('ROT INFO UPDATE', e);
         if (e.data.netRot.x) App.scene[e.data.netObjId].rotation.rotx = e.data.netRot.x;
         if (e.data.netRot.y) App.scene[e.data.netObjId].rotation.roty = e.data.netRot.y;
         if (e.data.netRot.z) App.scene[e.data.netObjId].rotation.rotz = e.data.netRot.z;
@@ -29056,7 +26668,6 @@ class MatrixStream {
         }
       }
     },
-
     /**
      * If someone leaves all client actions is here
      * - remove from scene
@@ -29070,23 +26681,21 @@ class MatrixStream {
         }
       }));
     }
-
   };
   domManipulation = {
     hideNetPanel: () => {
       if ((0, _matrixStream.byId)('matrix-net').classList.contains('hide-by-vertical')) {
         (0, _matrixStream.byId)('matrix-net').classList.remove('hide-by-vertical');
         (0, _matrixStream.byId)('matrix-net').classList.add('show-by-vertical');
-        (0, _matrixStream.byId)('netHeaderTitle').innerText = 'SHOW';
+        (0, _matrixStream.byId)('netHeaderTitle').innerText = 'HIDE';
       } else {
         (0, _matrixStream.byId)('matrix-net').classList.remove('show-by-vertical');
         (0, _matrixStream.byId)('matrix-net').classList.add('hide-by-vertical');
-        (0, _matrixStream.byId)('netHeaderTitle').innerText = 'HIDE';
+        (0, _matrixStream.byId)('netHeaderTitle').innerText = 'SHOW';
       }
     }
   };
 }
-
 exports.MatrixStream = MatrixStream;
 
 },{"../lib/utility":88,"./matrix-stream":91}],91:[function(require,module,exports){
@@ -29095,63 +26704,56 @@ exports.MatrixStream = MatrixStream;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.REDLOG = exports.NETLOG = exports.BIGLOG = exports.ANYLOG = void 0;
 exports.byId = byId;
-exports.joinSession = joinSession;
-exports.leaveSession = leaveSession;
-exports.enableBtn = enableBtn;
-exports.getToken = getToken;
-exports.removeUser = removeUser;
-exports.closeSession = closeSession;
-exports.fetchInfo = fetchInfo;
-exports.fetchAll = fetchAll;
-exports.forceDisconnect = forceDisconnect;
-exports.forceUnpublish = forceUnpublish;
-exports.httpRequest = httpRequest;
-exports.startRecording = startRecording;
-exports.stopRecording = stopRecording;
-exports.deleteRecording = deleteRecording;
-exports.getRecording = getRecording;
-exports.listRecordings = listRecordings;
-exports.updateNumVideos = updateNumVideos;
 exports.checkBtnsForce = checkBtnsForce;
 exports.checkBtnsRecordings = checkBtnsRecordings;
-exports.pushEvent = pushEvent;
-exports.clearHttpTextarea = clearHttpTextarea;
 exports.clearEventsTextarea = clearEventsTextarea;
-exports.events = exports.session = exports.ANYLOG = exports.NETLOG = exports.REDLOG = exports.BIGLOG = exports.netConfig = void 0;
-const netConfig = {
+exports.clearHttpTextarea = clearHttpTextarea;
+exports.closeSession = closeSession;
+exports.deleteRecording = deleteRecording;
+exports.enableBtn = enableBtn;
+exports.events = void 0;
+exports.fetchAll = fetchAll;
+exports.fetchInfo = fetchInfo;
+exports.forceDisconnect = forceDisconnect;
+exports.forceUnpublish = forceUnpublish;
+exports.getRecording = getRecording;
+exports.getToken = getToken;
+exports.httpRequest = httpRequest;
+exports.joinSession = joinSession;
+exports.leaveSession = leaveSession;
+exports.listRecordings = listRecordings;
+exports.netConfig = void 0;
+exports.pushEvent = pushEvent;
+exports.removeUser = removeUser;
+exports.session = void 0;
+exports.startRecording = startRecording;
+exports.stopRecording = stopRecording;
+exports.updateNumVideos = updateNumVideos;
+const netConfig = exports.netConfig = {
   NETWORKING_DOMAIN: '',
   NETWORKING_PORT: '2020'
 };
-exports.netConfig = netConfig;
-
 function byId(d) {
   return document.getElementById(d);
 }
-
 ;
-var BIGLOG = "color: #55fd53;font-size:20px;text-shadow: 0px 0px 5px #f4fd63, -1px -1px 5px orange";
-exports.BIGLOG = BIGLOG;
-var REDLOG = "color: lime;font-size:15px;text-shadow: 0px 0px 5px red, -2px -2px 5px orangered";
-exports.REDLOG = REDLOG;
-var NETLOG = "color: orange;font-size:15px;text-shadow: 0px 0px 1px red, 0px 0px 5px orangered";
-exports.NETLOG = NETLOG;
-var ANYLOG = "color: yellow;font-size:15px;text-shadow: 1px 1px 4px red, 0px 0px 2px orangered";
-exports.ANYLOG = ANYLOG;
+var BIGLOG = exports.BIGLOG = "color: #55fd53;font-size:20px;text-shadow: 0px 0px 5px #f4fd63, -1px -1px 5px orange";
+var REDLOG = exports.REDLOG = "color: lime;font-size:15px;text-shadow: 0px 0px 5px red, -2px -2px 5px orangered";
+var NETLOG = exports.NETLOG = "color: orange;font-size:15px;text-shadow: 0px 0px 1px red, 0px 0px 5px orangered";
+var ANYLOG = exports.ANYLOG = "color: yellow;font-size:15px;text-shadow: 1px 1px 4px red, 0px 0px 2px orangered";
 var OV;
 var numVideos = 0;
 var sessionName;
 var token;
 var session;
-exports.session = session;
-
 function joinSession(options) {
   if (typeof options === 'undefined') {
     options = {
       resolution: '320x240'
     };
   }
-
   console.log('resolution:', options.resolution);
   document.getElementById("join-btn").disabled = true;
   document.getElementById("join-btn").innerHTML = "Joining...";
@@ -29170,13 +26772,15 @@ function joinSession(options) {
       console.log(`Connection destroyed ${e.connection.connectionId}`);
       dispatchEvent(new CustomEvent('connectionDestroyed', {
         detail: {
-          msg: `[disconnected][${e.connection.connectionId}]`
+          connectionId: e.connection.connectionId,
+          event: e
         }
-      })); // byId("pwa-container-2").style.display = "none";
-
+      }));
+      // byId("pwa-container-2").style.display = "none";
       pushEvent(e);
-    }); // On every new Stream received...
+    });
 
+    // On every new Stream received...
     session.on('streamCreated', event => {
       pushEvent(event);
       console.log(`%c [onStreamCreated] ${event.stream.streamId}`);
@@ -29188,25 +26792,27 @@ function joinSession(options) {
           event: event,
           msg: `[connectionId][${event.stream.connection.connectionId}]`
         }
-      })); // Subscribe to the Stream to receive it
+      }));
+      // Subscribe to the Stream to receive it
       // HTML video will be appended to element with 'video-container' id
-
-      var subscriber = session.subscribe(event.stream, 'video-container'); // When the HTML video has been appended to DOM...
-
+      var subscriber = session.subscribe(event.stream, 'video-container');
+      // When the HTML video has been appended to DOM...
       subscriber.on('videoElementCreated', event => {
         dispatchEvent(new CustomEvent(`videoElementCreatedSubscriber`, {
           detail: event
-        })); // Add a new HTML element for the user's name and nickname over its video
-
+        }));
+        // Add a new HTML element for the user's name and nickname over its video
         updateNumVideos(1);
-      }); // When the HTML video has been appended to DOM...
+      });
 
+      // When the HTML video has been appended to DOM...
       subscriber.on('videoElementDestroyed', event => {
-        pushEvent(event); // Add a new HTML element for the user's name and nickname over its video
-
+        pushEvent(event);
+        // Add a new HTML element for the user's name and nickname over its video
         updateNumVideos(-1);
-      }); // When the subscriber stream has started playing media...
+      });
 
+      // When the subscriber stream has started playing media...
       subscriber.on('streamPlaying', event => {
         dispatchEvent(new CustomEvent('streamPlaying', {
           detail: event
@@ -29218,18 +26824,16 @@ function joinSession(options) {
       pushEvent(event);
     });
     session.on('sessionDisconnected', event => {
-      console.log("Session Disconected", event); // byId("pwa-container-2").style.display = "none";
-
+      console.log("Session Disconected", event);
+      // byId("pwa-container-2").style.display = "none";
       pushEvent(event);
-
       if (event.reason !== 'disconnect') {
         removeUser();
       }
-
       if (event.reason !== 'sessionClosedByServer') {
         exports.session = session = null;
-        numVideos = 0; // $('#join').show();
-
+        numVideos = 0;
+        // $('#join').show();
         byId('join').style.display = 'block';
         byId('session').style.display = 'none';
       }
@@ -29239,8 +26843,9 @@ function joinSession(options) {
     });
     session.on('recordingStopped', event => {
       pushEvent(event);
-    }); // On every asynchronous exception...
+    });
 
+    // On every asynchronous exception...
     session.on('exception', exception => {
       console.warn(exception);
     });
@@ -29267,7 +26872,6 @@ function joinSession(options) {
         insertMode: 'APPEND',
         // How the video is inserted in the target element 'video-container'
         mirror: false // Whether to mirror your local video or not
-
       });
       publisher.on('accessAllowed', event => {
         pushEvent({
@@ -29286,43 +26890,50 @@ function joinSession(options) {
         pushEvent({
           type: 'accessDialogClosed'
         });
-      }); // When the publisher stream has started playing media...
+      });
 
+      // When the publisher stream has started playing media...
       publisher.on('streamCreated', event => {
         dispatchEvent(new CustomEvent(`LOCAL-STREAM-READY`, {
           detail: event.stream
         }));
-        console.log(`%c LOCAL STREAM READY ${event.stream.connection.connectionId}`, BIGLOG); // if(document.getElementById("pwa-container-1").style.display != 'none') {
+        console.log(`%c LOCAL STREAM READY ${event.stream.connection.connectionId}`, BIGLOG);
+        // if(document.getElementById("pwa-container-1").style.display != 'none') {
         // 	document.getElementById("pwa-container-1").style.display = 'none';
         // }
-
         pushEvent(event);
-      }); // When our HTML video has been added to DOM...
+      });
 
+      // When our HTML video has been added to DOM...
       publisher.on('videoElementCreated', event => {
         dispatchEvent(new CustomEvent(`videoElementCreated`, {
           detail: event
         }));
         updateNumVideos(1);
         console.log('NOT FIXED MUTE event.element, ', event.element);
-        event.element.mute = true; // $(event.element).prop('muted', true); // Mute local video
-      }); // When the HTML video has been appended to DOM...
+        event.element.mute = true;
+        // $(event.element).prop('muted', true); // Mute local video
+      });
 
+      // When the HTML video has been appended to DOM...
       publisher.on('videoElementDestroyed', event => {
         dispatchEvent(new CustomEvent(`videoElementDestroyed`, {
           detail: event
         }));
         pushEvent(event);
         updateNumVideos(-1);
-      }); // When the publisher stream has started playing media...
+      });
 
+      // When the publisher stream has started playing media...
       publisher.on('streamPlaying', event => {
-        console.log("publisher.on streamPlaying"); // if(document.getElementById("pwa-container-1").style.display != 'none') {
+        console.log("publisher.on streamPlaying");
+        // if(document.getElementById("pwa-container-1").style.display != 'none') {
         // 	document.getElementById("pwa-container-1").style.display = 'none';
         // }
         // pushEvent(event);
       });
-      session.publish(publisher); // console.log('SESSION CREATE NOW ', session)
+      session.publish(publisher);
+      // console.log('SESSION CREATE NOW ', session)
     }).catch(error => {
       console.warn('Error connecting to the session:', error.code, error.message);
       enableBtn();
@@ -29330,20 +26941,19 @@ function joinSession(options) {
     return false;
   });
 }
-
 function leaveSession() {
   session.disconnect();
   enableBtn();
 }
-/* OPENVIDU METHODS */
 
+/* OPENVIDU METHODS */
 
 function enableBtn() {
   document.getElementById("join-btn").disabled = false;
   document.getElementById("join-btn").innerHTML = "Join!";
 }
-/* APPLICATION REST METHODS */
 
+/* APPLICATION REST METHODS */
 
 function getToken(callback) {
   sessionName = byId("sessionName").value;
@@ -29355,7 +26965,6 @@ function getToken(callback) {
     callback(token);
   });
 }
-
 function removeUser() {
   httpRequest('POST', 'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/remove-user', {
     sessionName: sessionName,
@@ -29364,7 +26973,6 @@ function removeUser() {
     console.warn("You have been removed from session " + sessionName);
   });
 }
-
 function closeSession() {
   httpRequest('DELETE', 'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/close-session', {
     sessionName: sessionName
@@ -29372,7 +26980,6 @@ function closeSession() {
     console.warn("Session " + sessionName + " has been closed");
   });
 }
-
 function fetchInfo() {
   httpRequest('POST', 'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/fetch-info', {
     sessionName: sessionName
@@ -29381,14 +26988,12 @@ function fetchInfo() {
     byId('textarea-http').innerText = JSON.stringify(res, null, "\t");
   });
 }
-
 function fetchAll() {
   httpRequest('GET', 'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/fetch-all', {}, 'All session info couldn\'t be fetched', res => {
     console.warn("All session fetched");
     byId('textarea-http').innerText = JSON.stringify(res, null, "\t");
   });
 }
-
 function forceDisconnect() {
   httpRequest('DELETE', 'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/force-disconnect', {
     sessionName: sessionName,
@@ -29397,7 +27002,6 @@ function forceDisconnect() {
     console.warn("Connection has been closed");
   });
 }
-
 function forceUnpublish() {
   httpRequest('DELETE', 'https://' + netConfig.NETWORKING_DOMAIN + ':' + netConfig.NETWORKING_PORT + '/api/force-unpublish', {
     sessionName: sessionName,
@@ -29406,7 +27010,6 @@ function forceUnpublish() {
     console.warn("Stream has been closed");
   });
 }
-
 function httpRequest(method, url, body, errorMsg, callback) {
   byId('textarea-http').innerText = '';
   var http = new XMLHttpRequest();
@@ -29414,7 +27017,6 @@ function httpRequest(method, url, body, errorMsg, callback) {
   http.setRequestHeader('Content-type', 'application/json');
   http.addEventListener('readystatechange', processRequest, false);
   http.send(JSON.stringify(body));
-
   function processRequest() {
     if (http.readyState == 4) {
       if (http.status == 200) {
@@ -29431,7 +27033,6 @@ function httpRequest(method, url, body, errorMsg, callback) {
     }
   }
 }
-
 function startRecording() {
   // not fixed 
   var outputMode = $('input[name=outputMode]:checked').val();
@@ -29449,7 +27050,6 @@ function startRecording() {
     byId('textarea-http').innerText = JSON.stringify(res, null, "\t");
   });
 }
-
 function stopRecording() {
   var forceRecordingId = document.getElementById('forceRecordingId').value;
   httpRequest('POST', 'api/recording/stop', {
@@ -29459,7 +27059,6 @@ function stopRecording() {
     $('#textarea-http').text(JSON.stringify(res, null, "\t"));
   });
 }
-
 function deleteRecording() {
   var forceRecordingId = document.getElementById('forceRecordingId').value;
   httpRequest('DELETE', 'api/recording/delete', {
@@ -29469,7 +27068,6 @@ function deleteRecording() {
     byId('textarea-http').innerText = "DELETE ok";
   });
 }
-
 function getRecording() {
   var forceRecordingId = document.getElementById('forceRecordingId').value;
   httpRequest('GET', 'api/recording/get/' + forceRecordingId, {}, 'Get recording WRONG', res => {
@@ -29477,59 +27075,46 @@ function getRecording() {
     byId('textarea-http').innerText = JSON.stringify(res, null, "\t");
   });
 }
-
 function listRecordings() {
   httpRequest('GET', 'api/recording/list', {}, 'List recordings WRONG', res => {
     console.log(res);
     byId('textarea-http').innerText = JSON.stringify(res, null, "\t");
   });
 }
+
 /* APPLICATION REST METHODS */
-
 /* APPLICATION BROWSER METHODS */
-
-
-var events = '';
-exports.events = events;
-
+var events = exports.events = '';
 window.onbeforeunload = function () {
   if (session) {
     removeUser();
     leaveSession();
   }
 };
-
 function updateNumVideos(i) {
   numVideos += i;
   var coll = document.getElementsByTagName('video');
-
   for (var x = 0; x < coll.length; x++) {
     coll.classList = '';
   }
-
   for (var x = 0; x < coll.length; x++) {
     coll.classList = '';
-
     switch (numVideos) {
       case 1:
         coll[x].classList.add('two');
         break;
-
       case 2:
         coll[x].classList.add('two');
         break;
-
       case 3:
         coll[x].classList.add('three');
         break;
-
       case 4:
         coll[x].classList.add('four');
         break;
     }
   }
 }
-
 function checkBtnsForce() {
   if (document.getElementById("forceValue").value === "") {
     document.getElementById('buttonForceUnpublish').disabled = true;
@@ -29539,7 +27124,6 @@ function checkBtnsForce() {
     document.getElementById('buttonForceDisconnect').disabled = false;
   }
 }
-
 function checkBtnsRecordings() {
   if (document.getElementById("forceRecordingId").value === "") {
     document.getElementById('buttonGetRecording').disaevents$bled = true;
@@ -29551,16 +27135,14 @@ function checkBtnsRecordings() {
     document.getElementById('buttonDeleteRecording').disabled = false;
   }
 }
-
 function pushEvent(event) {
   exports.events = events = events + ((!events ? '' : '\n') + event.type);
-  byId('textarea-events').innerText = events; // console.info("EVENT: ", events)
+  byId('textarea-events').innerText = events;
+  // console.info("EVENT: ", events)
 }
-
 function clearHttpTextarea() {
   byId('textarea-http').innerText = '';
 }
-
 function clearEventsTextarea() {
   byId('textarea-events').innerText = '';
   exports.events = events = '';
@@ -31506,11 +29088,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
 var _bvhLoader = require("./module/bvh-loader");
-
-var _default = _bvhLoader.MEBvh;
-exports.default = _default;
+var _default = exports.default = _bvhLoader.MEBvh;
 
 },{"./module/bvh-loader":95}],95:[function(require,module,exports){
 "use strict";
@@ -31518,50 +29097,45 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.MEBvhJoint = exports.MEBvh = void 0;
 exports.dot3vs1 = dot3vs1;
-exports.multiply = multiply;
 exports.euler2mat = euler2mat;
 exports.mat2euler = mat2euler;
-exports.MEBvh = exports.MEBvhJoint = void 0;
-
+exports.multiply = multiply;
 /**
  * @description Manual convert python script BVH
  * from https://github.com/dabeschte/npybvh to the JS.
  * @author Nikola Lukic
  * @license GPL-V3
  */
+
 function arraySum3(a, b) {
   var rez1 = a[0] + b[0];
   var rez2 = a[1] + b[1];
   var rez3 = a[2] + b[2];
   return [rez1, rez2, rez3];
 }
-
 function deg2rad(degrees) {
   return degrees * (Math.PI / 180);
 }
-
 function npdeg2rad(degrees) {
   return [degrees[0] * (Math.PI / 180), degrees[1] * (Math.PI / 180), degrees[2] * (Math.PI / 180)];
 }
-
 function rad2deg(radians) {
   return radians * (180 / Math.PI);
 }
-
 function byId(id) {
   return document.getElementById(id);
-} // fix for .dot N-dim vs 1D-dim Array
+}
 
-
+// fix for .dot N-dim vs 1D-dim Array
 function dot3vs1(a, b) {
   var aNumRows = a.length,
-      aNumCols = a[0].length,
-      bNumRows = b.length;
+    aNumCols = a[0].length,
+    bNumRows = b.length;
   var REZ1 = 0,
-      REZ2 = 0,
-      REZ3 = 0;
-
+    REZ2 = 0,
+    REZ3 = 0;
   if (aNumRows == 3 && aNumCols == 3 && bNumRows == 3) {
     for (var j = 0; j < a.length; j++) {
       // First root of 3x3 a.
@@ -31569,35 +29143,30 @@ function dot3vs1(a, b) {
       REZ2 += a[1][j] * b[j];
       REZ3 += a[2][j] * b[j];
     }
-
     var finalRez = [REZ1, REZ2, REZ3];
     return finalRez;
   } else {
     console.error("Bad arguments for dot3vs1");
   }
 }
-
 function multiply(a, b) {
   var aNumRows = a.length,
-      aNumCols = a[0].length,
-      bNumRows = b.length,
-      bNumCols = b[0].length,
-      m = new Array(aNumRows);
-
+    aNumCols = a[0].length,
+    bNumRows = b.length,
+    bNumCols = b[0].length,
+    m = new Array(aNumRows);
   for (var r = 0; r < aNumRows; ++r) {
     m[r] = new Array(bNumCols);
-
     for (var c = 0; c < bNumCols; ++c) {
       m[r][c] = 0;
-
       for (var i = 0; i < aNumCols; ++i) {
         m[r][c] += a[r][i] * b[i][c];
       }
     }
   }
-
   return m;
 }
+
 /**
  * @description
  * Euler's rotation theorem tells us that any rotation in 3D can be described by 3
@@ -31608,9 +29177,8 @@ function multiply(a, b) {
  * the rotation corresponding to :Math:`alpha` is applied first).
  * @source https://github.com/matthew-brett/transforms3d/blob/master/transforms3d/euler.py
  */
+
 // map axes strings to/from tuples of inner axis, parity, repetition, frame
-
-
 var _AXES2TUPLE = {
   'sxyz': [0, 0, 0, 0],
   'sxyx': [0, 0, 1, 0],
@@ -31636,14 +29204,14 @@ var _AXES2TUPLE = {
   'rzxz': [2, 0, 1, 1],
   'rxyz': [2, 1, 0, 1],
   'rzyz': [2, 1, 1, 1]
-}; // axis sequences for Euler angles
+};
 
+// axis sequences for Euler angles
 var _NEXT_AXIS = [1, 2, 0, 1];
-
 function euler2mat(ai, aj, ak, axes) {
-  if (typeof axes === 'undefined') var axes = 'sxyz'; // Return rotation matrix from Euler angles and axis sequence.
+  if (typeof axes === 'undefined') var axes = 'sxyz';
+  // Return rotation matrix from Euler angles and axis sequence.
   // Parameters
-
   /*
   ai : float
       First rotation angle (according to `axes`).
@@ -31666,33 +29234,28 @@ function euler2mat(ai, aj, ak, axes) {
   >>> R = euler2mat(1, 2, 3, (0, 1, 0, 1))
   >>> np.allclose(np.sum(R[0]), -0.383436184)
   True */
-
   try {
     var firstaxis = _AXES2TUPLE[axes][0],
-        parity = _AXES2TUPLE[axes][1],
-        repetition = _AXES2TUPLE[axes][2],
-        frame = _AXES2TUPLE[axes][3];
+      parity = _AXES2TUPLE[axes][1],
+      repetition = _AXES2TUPLE[axes][2],
+      frame = _AXES2TUPLE[axes][3];
   } catch (AttributeError) {
     // _TUPLE2AXES[axes]  # validation
     // firstaxis, parity, repetition, frame = axes
     console.error("AttributeError: ", AttributeError);
   }
-
   var i = firstaxis;
   var j = _NEXT_AXIS[i + parity];
   var k = _NEXT_AXIS[i - parity + 1];
-
   if (frame) {
     ai = ak;
     ak = ai;
   }
-
   if (parity) {
     ai = -ai;
     aj = -aj;
     ak = -ak;
   }
-
   var si = Math.sin(ai);
   var sj = Math.sin(aj);
   var sk = Math.sin(ak);
@@ -31702,10 +29265,10 @@ function euler2mat(ai, aj, ak, axes) {
   var cc = ci * ck;
   var cs = ci * sk;
   var sc = si * ck;
-  var ss = si * sk; // M = np.eye(3)
+  var ss = si * sk;
 
+  // M = np.eye(3)
   var M = [[1., 0., 0], [0., 1., 0], [0., 0., 1]];
-
   if (repetition) {
     M[i][i] = cj;
     M[i][j] = sj * si;
@@ -31727,18 +29290,15 @@ function euler2mat(ai, aj, ak, axes) {
     M[k][j] = cj * si;
     M[k][k] = cj * ci;
   }
-
   return M;
 }
+
 /**
  * @description
  * How to calculate the angle from rotation matrix.
  */
-
-
 function mat2euler(M, rad2deg_flag) {
   var pitch_1, pitch_2, roll_1, roll_2, yaw_1, yaw_2, pitch, roll, yaw;
-
   if (M[2][0] != 1 & M[2][0] != -1) {
     pitch_1 = -1 * Math.asin(M[2][0]);
     pitch_2 = Math.PI - pitch_1;
@@ -31751,7 +29311,6 @@ function mat2euler(M, rad2deg_flag) {
     yaw = yaw_1;
   } else {
     yaw = 0;
-
     if (M[2][0] == -1) {
       pitch = Math.PI / 2;
       roll = yaw + Math.atan2(M[0][1], M[0][2]);
@@ -31760,17 +29319,14 @@ function mat2euler(M, rad2deg_flag) {
       roll = -1 * yaw + Math.atan2(-1 * M[0][1], -1 * M[0][2]);
     }
   }
-
   if (typeof rad2deg_flag !== "undefined") {
     // convert from radians to degrees
     roll = roll * 180 / Math.PI;
     pitch = pitch * 180 / Math.PI;
     yaw = yaw * 180 / Math.PI;
   }
-
   return [roll, pitch, yaw];
 }
-
 class MEBvhJoint {
   constructor(name, parent) {
     this.name = name;
@@ -31779,43 +29335,32 @@ class MEBvhJoint {
     this.channels = [];
     this.children = [];
   }
-
   add_child(child) {
     this.children.push(child);
   }
-
   __repr__() {
     return this.name;
   }
-
   position_animated() {
     var detFlag = false;
-
     for (const item in this.channels) {
       if (this.channels[item].endsWith("position") == true) {
         detFlag = true;
       }
     }
-
     return detFlag;
   }
-
   rotation_animated() {
     var detFlag = false;
-
     for (const item in this.channels) {
       if (this.channels[item].endsWith("rotation") == true) {
         detFlag = true;
       }
     }
-
     return detFlag;
   }
-
 }
-
 exports.MEBvhJoint = MEBvhJoint;
-
 class MEBvh {
   constructor() {
     this.joints = {};
@@ -31825,7 +29370,6 @@ class MEBvh {
     this.fps = 0;
     this.myName = "MATRIX-ENGINE-BVH";
   }
-
   async parse_file(link) {
     return new Promise((resolve, reject) => {
       fetch(link).then(event => {
@@ -31838,31 +29382,25 @@ class MEBvh {
           var newLog2 = document.createElement("span");
           newLog2.innerHTML += '<h2>Motion</h2>';
           newLog2.innerHTML += '<p class="paragraf fixHeight" >' + motion + '</p>';
-
           if (byId && byId('log') !== null) {
             byId('log').appendChild(newLog2);
             byId('log').appendChild(newLog);
           }
-
           this._parse_hierarchy(hierarchy);
-
           this.parse_motion(motion);
           resolve();
         });
       });
     });
   }
-
   _parse_hierarchy(text) {
     var lines = text.split(/\s*\n+\s*/);
     var joint_stack = [];
-
     for (var key in lines) {
       var line = lines[key];
       var words = line.split(/\s+/);
       var instruction = words[0];
       var parent = null;
-
       if (instruction == "JOINT" || instruction == "ROOT") {
         if (instruction == "JOINT") {
           // -1 py -> last item
@@ -31870,16 +29408,12 @@ class MEBvh {
         } else {
           parent = null;
         }
-
         var joint = new MEBvhJoint(words[1], parent);
         this.joints[joint.name] = joint;
-
         if (parent != null) {
           parent.add_child(joint);
         }
-
         joint_stack.push(joint);
-
         if (instruction == "ROOT") {
           this.root = joint;
         }
@@ -31901,7 +29435,6 @@ class MEBvh {
       }
     }
   }
-
   _add_pose_recursive(joint, offset, poses) {
     var newLog1 = document.createElement("span");
     newLog1.innerHTML += '<h2>add_pose_recursive</h2>';
@@ -31918,18 +29451,18 @@ class MEBvh {
     byId('log').appendChild(newLog1);
     var pose = arraySum3(joint.offset, offset);
     poses.push(pose);
-
     for (var c in joint.children) {
       this._add_pose_recursive(joint.children[c], pose, poses);
     }
   }
-
   plot_hierarchy() {
     // import matplotlib.pyplot as plt
     // from mpl_toolkits.mplot3d import axes3d, Axes3D
-    var poses = [];
 
-    this._add_pose_recursive(this.root, [0, 0, 0], poses); // pos = np.array(poses);
+    var poses = [];
+    this._add_pose_recursive(this.root, [0, 0, 0], poses);
+
+    // pos = np.array(poses);
 
     /* Draw staff DISABLED
         fig = plt.figure()
@@ -31939,57 +29472,43 @@ class MEBvh {
         ax.set_ylim(-30, 30)
         ax.set_zlim(-30, 30)
         plt.show() */
-
   }
-
   parse_motion(text) {
     var lines = text.split(/\s*\n+\s*/);
     var frame = 0;
-
     for (var key in lines) {
       var line = lines[key];
-
       if (line == "") {
         continue;
       }
-
       var words = line.split(/\s+/);
-
       if (line.startsWith("Frame Time:")) {
         this.fps = Math.round(1 / parseFloat(words[2]));
         continue;
       }
-
       if (line.startsWith("Frames:")) {
         this.frames = parseInt(words[1]);
         continue;
       }
-
       if (this.keyframes == null) {
         // OK this is just costruction (define) with random values.
         var localArr = Array.from(Array(this.frames), () => new Array(words.length));
         this.keyframes = localArr;
       }
-
       for (var angle_index = 0; angle_index < words.length; angle_index++) {
         this.keyframes[frame][angle_index] = parseFloat(words[angle_index]);
       }
-
       frame += 1;
     }
   }
-
   _extract_rotation(frame_pose, index_offset, joint) {
     var local_rotation = [0, 0, 0],
-        M_rotation;
-
+      M_rotation;
     for (var key in joint.channels) {
       var channel = joint.channels[key];
-
       if (channel.endsWith("position")) {
         continue;
       }
-
       if (channel == "Xrotation") {
         local_rotation[0] = frame_pose[index_offset];
       } else if (channel == "Yrotation") {
@@ -31997,24 +29516,19 @@ class MEBvh {
       } else if (channel == "Zrotation") {
         local_rotation[2] = frame_pose[index_offset];
       } else {
-        console.warn("Unknown channel {channel}"); // raise Exception(f"Unknown channel {channel}");
+        console.warn("Unknown channel {channel}");
+        // raise Exception(f"Unknown channel {channel}");
       }
-
       index_offset += 1;
     }
-
     local_rotation = npdeg2rad(local_rotation);
     M_rotation = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
-
     for (key in joint.channels) {
       var channel = joint.channels[key];
-
       if (channel.endsWith("position")) {
         continue;
       }
-
       var euler_rot;
-
       if (channel == "Xrotation") {
         // console.warn("local_rotation " + local_rotation);
         euler_rot = [local_rotation[0], 0., 0.];
@@ -32025,24 +29539,18 @@ class MEBvh {
       } else {
         console.warn("Unknown channel {channel}");
       }
-
       var M_channel = euler2mat(euler_rot[0], euler_rot[1], euler_rot[2], euler_rot[3]);
       var M_rotation = multiply(M_rotation, M_channel);
     }
-
     return [M_rotation, index_offset];
   }
-
   _extract_position(joint, frame_pose, index_offset) {
     var offset_position = [0, 0, 0];
-
     for (var key in joint.channels) {
       var channel = joint.channels[key];
-
       if (channel.endsWith("rotation")) {
         continue;
       }
-
       if (channel == "Xposition") {
         offset_position[0] = frame_pose[index_offset];
       } else if (channel == "Yposition") {
@@ -32050,85 +29558,68 @@ class MEBvh {
       } else if (channel == "Zposition") {
         offset_position[2] = frame_pose[index_offset];
       } else {
-        console.warn("Unknown channel {channel}"); // raise Exception(f"Unknown channel {channel}")
+        console.warn("Unknown channel {channel}");
+        // raise Exception(f"Unknown channel {channel}")
       }
-
       index_offset += 1;
     }
-
     return [offset_position, index_offset];
   }
-
   _recursive_apply_frame(joint, frame_pose, index_offset, p, r, M_parent, p_parent) {
     var joint_index;
-
     if (joint.position_animated()) {
       var local = this._extract_position(joint, frame_pose, index_offset);
-
       var offset_position = local[0],
-          index_offset = local[1];
+        index_offset = local[1];
     } else {
       var offset_position = [0, 0, 0];
     }
-
     if (joint.channels.length == 0) {
       var local2 = 0;
-
       for (var item in this.joints) {
         if (joint.name == item) {
           joint_index = local2;
         }
-
         local2++;
       }
-
       p[joint_index] = arraySum3(p_parent, dot3vs1(M_parent, joint.offset));
       r[joint_index] = mat2euler(M_parent);
       return index_offset;
     }
-
     if (joint.rotation_animated()) {
       var local2 = this._extract_rotation(frame_pose, index_offset, joint);
-
       var M_rotation = local2[0];
       index_offset = local2[1];
     } else {
       var M_rotation = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
     }
-
-    var M = multiply(M_parent, M_rotation); // https://www.khanacademy.org/math/precalculus/x9e81a4f98389efdf:matrices/x9e81a4f98389efdf:adding-and-subtracting-matrices/e/matrix_addition_and_subtraction
+    var M = multiply(M_parent, M_rotation);
+    // https://www.khanacademy.org/math/precalculus/x9e81a4f98389efdf:matrices/x9e81a4f98389efdf:adding-and-subtracting-matrices/e/matrix_addition_and_subtraction
 
     var position = arraySum3(p_parent, dot3vs1(M_parent, joint.offset));
     position = arraySum3(position, offset_position);
-    var rotation = mat2euler(M, "rad2deg"); // just find by id
+    var rotation = mat2euler(M, "rad2deg");
 
+    // just find by id
     var local = 0;
-
     for (const item in this.joints) {
       if (joint.name == item) {
         joint_index = local;
       }
-
       local++;
     }
-
     p[joint_index] = position;
     r[joint_index] = rotation;
-
     for (var c in joint.children) {
       index_offset = this._recursive_apply_frame(joint.children[c], frame_pose, index_offset, p, r, M, position);
     }
-
     return index_offset;
   }
-
   frame_pose(frame) {
     var jointLength = 0;
-
     for (var x in this.joints) {
       jointLength++;
     }
-
     var p = Array.from(Array(jointLength), () => [0, 0, 0]);
     var r = Array.from(Array(jointLength), () => [0, 0, 0]);
     var frame_pose = this.keyframes[frame];
@@ -32136,19 +29627,14 @@ class MEBvh {
     M_parent[0][0] = 1;
     M_parent[1][1] = 1;
     M_parent[2][2] = 1;
-
     this._recursive_apply_frame(this.root, frame_pose, 0, p, r, M_parent, [0, 0, 0]);
-
     return [p, r];
   }
-
   all_frame_poses() {
     var jointLength = 0;
-
     for (var x in this.joints) {
       jointLength++;
     }
-
     var p = Array.from({
       length: this.frames
     }, () => Array.from({
@@ -32159,16 +29645,13 @@ class MEBvh {
     }, () => Array.from({
       length: jointLength
     }, () => [0, 0, 0]));
-
     for (var frame = 0; frame < this.keyframes.length; frame++) {
       var local3 = this.frame_pose(frame);
       p[frame] = local3[0];
       r[frame] = local3[1];
     }
-
     return [p, r];
   }
-
   _plot_pose(p, r, fig, ax) {
     /* 
       _plot_pose(p, r, fig=None, ax=None) {
@@ -32186,25 +29669,22 @@ class MEBvh {
       plt.draw()
       plt.pause(0.001)
     */
-  } // Meybe helps for draw
+  }
+
+  // Meybe helps for draw
   // plot_frame(frame, fig=None, ax=None) {
-
-
-  plot_frame(frame, fig, ax) {// ????
+  plot_frame(frame, fig, ax) {
+    // ????
     // p, (r = this.frame_pose(frame));
     // this._plot_pose(p, r, fig, ax);
   }
-
   joint_names() {
     var keys = [];
-
     for (var key in this.joints) {
       keys.push(key);
     }
-
     return keys;
   }
-
   plot_all_frames() {
     /*
       import matplotlib.pyplot as plt
@@ -32216,13 +29696,10 @@ class MEBvh {
       } 
     */
   }
-
   __repr__() {
     return `BVH.JS ${this.joints.keys().length} joints, ${this.frames} frames`;
   }
-
 }
-
 exports.MEBvh = MEBvh;
 
 },{}],96:[function(require,module,exports){
@@ -46226,7 +43703,6 @@ var App = {
     canvas: "full-screen",
     // Change to any to make
     aspectRatio: 1.8 // aspectRatio system active
-
   },
   glBackgroundColor: {
     r: 0.0,
@@ -46250,7 +43726,6 @@ var App = {
   limitations: {
     // readOnly in manifest
     maxTexturesInFragmentShader: null // readOnly in manifest
-
   },
   updateBeforeDraw: [],
   audioSystem: {},
@@ -46261,8 +43736,7 @@ var App = {
   ready: false,
   onload: function () {}
 };
-var _default = App;
-exports.default = _default;
+var _default = exports.default = App;
 
 },{}],100:[function(require,module,exports){
 "use strict";
@@ -46271,7 +43745,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.geometryLines = void 0;
-
 /**
  * @description
  * Predefinited literal objects with necessary draws data
@@ -46280,7 +43753,8 @@ exports.geometryLines = void 0;
  * @type javascript float[array]
  * @returns float[] geometryLines js array
  */
-let geometryLines = {
+
+let geometryLines = exports.geometryLines = {
   charA: [0.5, 0.7, 0.62, 0.3, 0.5, 0.7, 0.38, 0.3, 0.43, 0.46, 0.57, 0.46],
   charM: [0.62, 0.7, 0.62, 0.3, 0.38, 0.7, 0.38, 0.3, 0.36, 0.65, 0.52, 0.46, 0.64, 0.65, 0.48, 0.46],
   charY: [0.5, 0.5, 0.5, 0.3, 0.36, 0.65, 0.52, 0.46, 0.64, 0.65, 0.48, 0.46],
@@ -46293,6 +43767,5 @@ let geometryLines = {
   charN: [0.6, 0.28, 0.6, 0.69, 0.4, 0.28, 0.4, 0.69, 0.6, 0.28, 0.4, 0.69],
   charI: [0.5, 0.28, 0.5, 0.69]
 };
-exports.geometryLines = geometryLines;
 
 },{}]},{},[1]);
