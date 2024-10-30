@@ -2,6 +2,29 @@
 
 # Matrix Engine [CHANGES]
 
+
+[2.0.24] New prop in App.camera (manifest)
+  
+	`App.camera.yawRateOnEdge`
+
+```js
+camera.setCamera = function(object) {
+	if(keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || App.camera.leftEdge == true) {
+		/* Left Key  or A */
+		camera.yawRate = App.camera.yawRate;
+		if(App.camera.leftEdge == true) {
+			camera.yawRate = App.camera.yawRateOnEdge;
+		}
+	} else if(keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || App.camera.rightEdge == true) {
+		/* Right Key or D */
+		camera.yawRate = -App.camera.yawRate;
+		if(App.camera.rightEdge == true) {
+			camera.yawRate = -App.camera.yawRateOnEdge;
+		}
+	}
+```
+
+
 [2.0.23] New line in EVENTS About WASD FPController
 Reason - adaptation for mobile FPController
 `	if (camera.preventSpeedZero == false) camera.speed = 0;`

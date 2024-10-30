@@ -253,19 +253,21 @@ Note: One of params `FirstPersonController` or `SceneController` must be `false`
   Mouse middle wheel change work only when `shift` is pressed.
 
 ```js
-  camera: {
-    viewAngle: 45,
-    nearViewpoint: 0.1,
-    farViewpoint: 1000,
-    edgeMarginValue: 100,
-    FirstPersonController: false,
-    SceneController: false,
-    sceneControllerDragAmp: 0.1,
-    sceneControllerDragAmp: 0.1,
-    speedAmp: 0.5,
-    sceneControllerEdgeCameraYawRate: 3,
-    sceneControllerWASDKeysAmp: 0.1
-  },
+	camera: {
+		viewAngle: 45,
+		nearViewpoint: 0.1,
+		farViewpoint: 5000,
+		edgeMarginValue: 100,
+		FirstPersonController: false,
+		SceneController: false,
+		sceneControllerDragAmp: 0.1,
+		sceneControllerDragAmp: 0.1,
+		sceneControllerEdgeCameraYawRate: 3,
+		sceneControllerWASDKeysAmp: 0.1,
+		speedAmp: 0.5,
+		yawRate: 1,
+		yawRateOnEdge: 0.2
+	},
 ```
 
 Range of `matrixEngine.Events.camera.pitch` in ForstPersonController is (-33 to 33).
