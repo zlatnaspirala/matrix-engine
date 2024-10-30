@@ -1698,6 +1698,7 @@ camera.yawAmp = 0.077;
 camera.pitchAmp = 0.017;
 camera.virtualJumpY = 2;
 camera.virtualJumpActive = false;
+camera.preventSpeedZero = false;
 
 // eslint-disable-next-line no-global-assign
 var keyboardPress = exports.keyboardPress = defineKeyBoardObject();
@@ -1725,7 +1726,7 @@ camera.setCamera = function (object) {
     /* Down Key or S */
     camera.speed = -_manifest.default.camera.speedAmp;
   } else {
-    camera.speed = 0;
+    if (camera.preventSpeedZero == false) camera.speed = 0;
   }
 
   /* Calculate yaw, pitch and roll(x,y,z) */
