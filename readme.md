@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `2.0.16` Vampire -> BETA
+### Name: `MATRIX-ENGINE` `2.0.25` Vampire
 
 #### Logo
 
@@ -35,6 +35,8 @@
 #### - Swicthing GLSL ver - webGL1 / webGL2 ✔
 
 #### - OffScreenCanvas ✔
+
+#### - Mobile optimisation ✔
 
 ### Description ℹ
 

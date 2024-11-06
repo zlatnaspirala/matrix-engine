@@ -2,6 +2,13 @@
 
 # Matrix Engine [CHANGES]
 
+[2.0.25] FIX FOR MOBILE RENDER MATERIAL/ TEXTURE
+    - Bug with white surface 
+
+```js
+	// world.disableUnusedAttr(world.GL.gl, localLooper);
+	world.disableUnusedAttr(world.GL.gl, 4);
+```
 
 [2.0.24] New prop in App.camera (manifest)
   

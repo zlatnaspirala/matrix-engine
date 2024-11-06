@@ -1415,20 +1415,23 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
 
+  console.log('TEST APP ');
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
-  _manifest.default.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
-  var oscilltor_variable = new matrixEngine.utility.OSCILLATOR(0.05, 2, 0.01);
+
+  // App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
+
+  // var oscilltor_variable = new matrixEngine.utility.OSCILLATOR(0.05, 2, 0.01);
 
   // GOOD
-  _manifest.default.updateBeforeDraw.push({
-    UPDATE: () => {
-      _manifest.default.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
-    }
-  });
+  // App.updateBeforeDraw.push({
+  //   UPDATE: () => {
+  //     App.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
+  //   }
+  // });
 
   // BAD
   // setInterval(function () {
@@ -6871,11 +6874,15 @@ camera.setCamera = function (object) {
   if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
     /* Left Key  or A */
     camera.yawRate = _manifest.default.camera.yawRate;
-    if (_manifest.default.camera.leftEdge == true) camera.yawRate = _manifest.default.camera.yawRate;
+    if (_manifest.default.camera.leftEdge == true) {
+      camera.yawRate = _manifest.default.camera.yawRateOnEdge;
+    }
   } else if (keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
     /* Right Key or D */
     camera.yawRate = -_manifest.default.camera.yawRate;
-    if (_manifest.default.camera.rightEdge == true) camera.yawRate = -_manifest.default.camera.yawRate;
+    if (_manifest.default.camera.rightEdge == true) {
+      camera.yawRate = -_manifest.default.camera.yawRateOnEdge;
+    }
   } else if (keyboardPress.getKeyStatus(32)) {
     /* Right Key or SPACE */
     if (this.virtualJumpActive != true) {
@@ -8416,7 +8423,10 @@ _manifest.default.operation.draws.cube = function (object, ray) {
     mat3.transpose(normalMatrix, normalMatrix);
     _matrixWorld.world.GL.gl.uniformMatrix3fv(object.shaderProgram.nMatrixUniform, false, normalMatrix);
   }
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper);
+
+  // world.disableUnusedAttr(world.GL.gl, localLooper);
+  // FIX FOR MOBILE - from white cube to normal texture view , good
+  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 4);
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
@@ -9267,7 +9277,9 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
   } catch (e) {
     console.warn('WTF - ERROR10001');
   }
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper);
+
+  // world.disableUnusedAttr(world.GL.gl, localLooper);
+  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 4);
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
@@ -43693,10 +43705,11 @@ var App = {
     SceneController: false,
     sceneControllerDragAmp: 0.1,
     sceneControllerDragAmp: 0.1,
+    sceneControllerEdgeCameraYawRate: 3,
+    sceneControllerWASDKeysAmp: 0.1,
     speedAmp: 0.5,
     yawRate: 1,
-    sceneControllerEdgeCameraYawRate: 3,
-    sceneControllerWASDKeysAmp: 0.1
+    yawRateOnEdge: 0.2
   },
   raycast: true,
   net: true,

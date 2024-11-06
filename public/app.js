@@ -2,7 +2,7 @@
 "use strict";
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
-var _public_3d_video_chat = require("./apps/public_3d_video_chat.js");
+var _cube_geometry = require("./apps/cube_geometry.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // CHANGE HERE IF YOU WANNA USE app-build.hmtl
@@ -12,178 +12,78 @@ var App = matrixEngine.App;
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function (e) {
     // navigator.serviceWorker.register('worker.js'); 
-    App.ready = true;
-    matrixEngine.Engine.initApp(webGLStart);
   });
 } else {
-  console.warn('Matrix Engine: No support for web workers in this browser.');
+  console.warn('Matrix Engine: No webWorkers for locahost OR No support for web workers in this browser.');
 }
+window.addEventListener('load', function (e) {
+  App.ready = true;
+  matrixEngine.Engine.initApp(webGLStart);
+});
 window.webGLStart = () => {
   window.App = App;
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
   // Make it global for dev - for easy console/debugger access
-  window.runThis = _public_3d_video_chat.runThis;
-  // setTimeout(() => { runThis(world); }, 1);
-  (0, _public_3d_video_chat.runThis)(world);
+  // window.runThis = runThis;
+  setTimeout(() => {
+    (0, _cube_geometry.runThis)(world);
+  }, 100);
+  (0, _cube_geometry.runThis)(world);
 };
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/public_3d_video_chat.js":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/cube_geometry.js":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-var _manifest = _interopRequireDefault(require("../program/manifest.js"));
+var _manifest = _interopRequireDefault(require("../program/manifest"));
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
-var _matrixStream = require("../networking2/matrix-stream.js");
-var CANNON = _interopRequireWildcard(require("cannon"));
-var _utility = require("../lib/utility.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+/* eslint-disable no-unused-vars */
+
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
- * [NEW NETWORKING]
- * public-3d-video-chat
  */
 
-let VT = matrixEngine.Engine.VT;
+/* globals world App world */
+
 var runThis = world => {
-  // SHIFT + MOUSE RD OR MOUSE MOVE + SHIFT SCROLL ZOOM
-  _manifest.default.camera.SceneController = true;
-  canvas.addEventListener('mousedown', ev => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
-  window.addEventListener('ray.hit.event', ev => {
-    console.log("You shoot the object! Nice!", ev);
-    if (ev.detail.hitObject.physics.enabled == true) {
-      // not yet supported in net2
-      // ev.detail.hitObject.physics.currentBody.force.set(0, 0, 200)
-    }
-  });
-  var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png", "res/images/logo-test.png"],
+  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
+
+  console.log('TEST APP ');
+  var textuteImageSamplers = {
+    source: ["res/images/complex_texture_1/diffuse.png"],
     mix_operation: "multiply"
   };
-  let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector);
-  // Add ground
-  physics.addGround(_manifest.default, world, tex);
-  const objGenerator = meObj => {
-    var b2 = new CANNON.Body({
-      mass: 1,
-      linearDamping: 0.01,
-      position: new CANNON.Vec3(0, -14.5, 15),
-      shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-    });
-    physics.world.addBody(b2);
-    meObj.physics.currentBody = b2;
-    meObj.physics.enabled = true;
-  };
-  matrixEngine.Engine.activateNet2(undefined, {
-    sessionName: 'public-chat-me',
-    resolution: '256x256'
-  });
-  addEventListener(`LOCAL-STREAM-READY`, e => {
-    console.log('LOCAL-STREAM-READY [app level] ', e.detail.streamManager.id);
-    console.log('LOCAL-STREAM-READY [app level] ', e.detail.connection.connectionId);
-    // test first
-    dispatchEvent(new CustomEvent(`onTitle`, {
-      detail: `🕸️${e.detail.connection.connectionId}🕸️`
-    }));
-    _utility.notify.show(`Connected 🕸️${e.detail.connection.connectionId}🕸️`, "ok");
-    var name = e.detail.connection.connectionId;
-    world.Add("cubeLightTex", 1, name, tex);
-    _manifest.default.scene[name].position.x = 0;
-    _manifest.default.scene[name].position.z = -20;
-    _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
-    _manifest.default.scene[name].net.enable = true;
-    _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT((0, _matrixStream.byId)(e.detail.streamManager.id));
-    objGenerator(_manifest.default.scene[name]);
-  });
-  addEventListener('videoElementCreated', e => {
-    console.log('videoElementCreated [app level] ', e.detail);
-  });
-  addEventListener('videoElementCreatedSubscriber', e => {
-    console.log('videoElementCreatedSubscriber [app level] ', e.detail);
-  });
-  var ONE_TIME = 0;
-  addEventListener('streamPlaying', e => {
-    if (ONE_TIME == 0) {
-      ONE_TIME = 1;
-      console.log('REMOTE-STREAM- streamPlaying [app level] ', e.detail.target.videos[0]);
-      // DIRECT REMOTE
-      var name = e.detail.target.stream.connection.connectionId;
-      _manifest.default.scene[name].streamTextures = matrixEngine.Engine.DOM_VT(e.detail.target.videos[0].video);
-    }
-  });
-  addEventListener('onStreamCreated', e => {
-    console.log('REMOTE-STREAM-READY [app level] ', e.detail.event.stream.connection.connectionId);
-    var name = e.detail.event.stream.connection.connectionId;
-    world.Add("cubeLightTex", 1, name, tex);
-    _manifest.default.scene[name].position.x = 0;
-    _manifest.default.scene[name].position.z = -20;
-    _manifest.default.scene[name].LightsData.ambientLight.set(1, 1, 1);
-    _manifest.default.scene[name].net.enable = true;
-    objGenerator(_manifest.default.scene[name]);
-  });
-  world.Add("cubeLightTex", 0.8, "outsideBox2", tex);
-  _manifest.default.scene.outsideBox2.position.x = -7;
-  _manifest.default.scene.outsideBox2.position.y = 5;
-  _manifest.default.scene.outsideBox2.position.z = -20;
-  _manifest.default.scene.outsideBox2.rotation.rotationSpeed.y = 25;
-  _manifest.default.scene.outsideBox2.rotation.rotx = 90;
-  _manifest.default.scene.outsideBox2.streamTextures = new VT("res/video-texture/me.mkv");
-  // App.scene.outsideBox2.instancedDraws.numberOfInstance = 3;
-  // App.scene.outsideBox2.instancedDraws.overrideDrawArraysInstance = function (object) {
-  //   for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
-  //     object.instancedDraws.array_of_local_offset = [0, 0, 2];
-  //     mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-  //     world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-  //     object.instancedDraws.array_of_local_offset = [2 * S1.GET(), 0, 0];
-  //     for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
-  //       mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-  //       world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-  //       world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
-  //     }
-  //   }
-  // };
+  world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
 
-  world.Add("cubeLightTex", 0.8, "outsideBox3", tex);
-  _manifest.default.scene.outsideBox3.position.x = 7;
-  _manifest.default.scene.outsideBox3.position.y = 5;
-  _manifest.default.scene.outsideBox3.position.z = -20;
-  _manifest.default.scene.outsideBox3.rotation.rotationSpeed.y = 35;
-  _manifest.default.scene.outsideBox3.rotation.rotx = 0;
-  // effect
-  // var S1 = new SWITCHER();
-  // App.scene.outsideBox3.instancedDraws.numberOfInstance = 3;
-  // App.scene.outsideBox3.instancedDraws.overrideDrawArraysInstance = function (object) {
-  //   for (var i = 0; i < object.instancedDraws.numberOfInstance; i++) {
-  //     object.instancedDraws.array_of_local_offset = [0, 0, 2];
-  //     mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-  //     world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-  //     object.instancedDraws.array_of_local_offset = [2 * S1.GET(), 0, 0];
-  //     for (var j = 0; j < object.instancedDraws.numberOfInstance; j++) {
-  //       mat4.translate(object.mvMatrix, object.mvMatrix, object.instancedDraws.array_of_local_offset);
-  //       world.setMatrixUniforms(object, world.pMatrix, object.mvMatrix);
-  //       world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
-  //     }
-  //   }
-  // };
+  // App.scene.MyCubeTex.rotation.rotationSpeed.z = 70;
 
-  // App.scene.outsideBox2.glBlend.blendEnabled = true;
-  // App.scene.outsideBox2.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
-  // App.scene.outsideBox2.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[6];
+  // var oscilltor_variable = new matrixEngine.utility.OSCILLATOR(0.05, 2, 0.01);
+
+  // GOOD
+  // App.updateBeforeDraw.push({
+  //   UPDATE: () => {
+  //     App.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
+  //   }
+  // });
+
+  // BAD
+  // setInterval(function () {
+  // App.scene.MyCubeTex.geometry.setScale(oscilltor_variable.UPDATE());
+  // }, 10);
 };
 exports.runThis = runThis;
 
-},{"../index.js":4,"../lib/utility.js":32,"../networking2/matrix-stream.js":35,"../program/manifest.js":43,"cannon":40}],3:[function(require,module,exports){
+},{"../index.js":4,"../program/manifest":43}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1708,11 +1608,15 @@ camera.setCamera = function (object) {
   if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
     /* Left Key  or A */
     camera.yawRate = _manifest.default.camera.yawRate;
-    if (_manifest.default.camera.leftEdge == true) camera.yawRate = _manifest.default.camera.yawRate;
+    if (_manifest.default.camera.leftEdge == true) {
+      camera.yawRate = _manifest.default.camera.yawRateOnEdge;
+    }
   } else if (keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
     /* Right Key or D */
     camera.yawRate = -_manifest.default.camera.yawRate;
-    if (_manifest.default.camera.rightEdge == true) camera.yawRate = -_manifest.default.camera.yawRate;
+    if (_manifest.default.camera.rightEdge == true) {
+      camera.yawRate = -_manifest.default.camera.yawRateOnEdge;
+    }
   } else if (keyboardPress.getKeyStatus(32)) {
     /* Right Key or SPACE */
     if (this.virtualJumpActive != true) {
@@ -3253,7 +3157,10 @@ _manifest.default.operation.draws.cube = function (object, ray) {
     mat3.transpose(normalMatrix, normalMatrix);
     _matrixWorld.world.GL.gl.uniformMatrix3fv(object.shaderProgram.nMatrixUniform, false, normalMatrix);
   }
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper);
+
+  // world.disableUnusedAttr(world.GL.gl, localLooper);
+  // FIX FOR MOBILE - from white cube to normal texture view , good
+  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 4);
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
@@ -4104,7 +4011,9 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
   } catch (e) {
     console.warn('WTF - ERROR10001');
   }
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper);
+
+  // world.disableUnusedAttr(world.GL.gl, localLooper);
+  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 4);
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
@@ -38530,10 +38439,11 @@ var App = {
     SceneController: false,
     sceneControllerDragAmp: 0.1,
     sceneControllerDragAmp: 0.1,
+    sceneControllerEdgeCameraYawRate: 3,
+    sceneControllerWASDKeysAmp: 0.1,
     speedAmp: 0.5,
     yawRate: 1,
-    sceneControllerEdgeCameraYawRate: 3,
-    sceneControllerWASDKeysAmp: 0.1
+    yawRateOnEdge: 0.2
   },
   raycast: true,
   net: true,
