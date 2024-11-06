@@ -38,7 +38,6 @@ export class MatrixStream {
 				console.log('[CHANNEL]' + this.sessionName.value)
 				this.attachEvents()
 				console.log(`%c MatrixStream constructed.`, BIGLOG)
-				dispatchEvent(new CustomEvent('net-ready', {}))
 			});
 	}
 
@@ -86,6 +85,8 @@ export class MatrixStream {
 		})
 
 		byId('netHeaderTitle').addEventListener('click', this.domManipulation.hideNetPanel)
+
+		setTimeout(() => dispatchEvent(new CustomEvent('net-ready', {})), 500)
 	}
 
 	multiPlayer = {

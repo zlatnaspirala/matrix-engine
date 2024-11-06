@@ -1,6 +1,6 @@
 import * as matrixEngine from './index.js';
 // CHANGE HERE IF YOU WANNA USE app-build.hmtl
-import {runThis} from './apps/cube_geometry.js';
+import {runThis} from './apps/fps_player_controller.js';
 
 var world;
 var App = matrixEngine.App;
@@ -24,7 +24,7 @@ window.webGLStart = () => {
   world.callReDraw();
   // Make it global for dev - for easy console/debugger access
   // window.runThis = runThis;
-  setTimeout(() => { runThis(world); }, 100);
+  // setTimeout(() => { runThis(world); }, 100);
   runThis(world);
 };
 
