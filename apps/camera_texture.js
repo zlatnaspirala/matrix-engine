@@ -15,7 +15,7 @@ export var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA */
 
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply",
   };
 

@@ -20,7 +20,7 @@ export var runThis = world => {
   App.camera.FirstPersonController = true;
 
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply",
   };
 
@@ -94,7 +94,7 @@ export var runThis = world => {
    */
 
   world.Add("cubeLightTex", 1, "test", {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply",
   });
   App.scene.test.position.y = 1;

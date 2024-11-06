@@ -629,7 +629,7 @@ export var runThis = (world) => {
 		// });
 		// Add ground for physics bodies.
 		var tex = {
-			source: ["res/images/complex_texture_1/diffuse.png"],
+			source: ["res/images/complex_texture_1/diffuse.webp"],
 			mix_operation: "multiply",
 			params: {
 				TEXTURE_MAG_FILTER: world.GL.gl.NEAREST,
@@ -876,7 +876,7 @@ export var runThis = (world) => {
 			activeRotation: [0, 20, 0],
 			rotation: [0, 0, 0],
 			scale: 1.1,
-			textures: ["res/images/armor.png"],
+			textures: ["res/images/armor.webp"],
 			shadows: false,
 			gamePlayItem: 'item-armor'
 		})

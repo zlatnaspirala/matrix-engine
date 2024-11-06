@@ -20,7 +20,7 @@ export var MAP = {
       position: [0, 0, -10],
       rotation: [0, 0, 0],
       activeRotation: [0, 10, 0],
-      textures: ["res/images/armor.png", "res/images/armor.png"],
+      textures: ["res/images/armor.webp", "res/images/armor.webp"],
       shadows: true
     },
     // {
@@ -36,7 +36,7 @@ export var MAP = {
     //   position: [-16, 30, -20],
     //   rotation: [0,0,0],
     //   activeRotation: [0,11,0],
-    //   textures : ["res/images/armor.png"],
+    //   textures : ["res/images/armor.webp"],
     //   shadows: true,
     //   physics: {
     //     enabled: true,
@@ -55,7 +55,7 @@ export var MAP = {
       position: [-200, 40, -200],
       rotation: [0, 0, 0],
       activeRotation: [0, 11, 0],
-      textures: ["res/images/armor.png"],
+      textures: ["res/images/armor.webp"],
       shadows: true,
       physics: {
         enabled: true,
@@ -74,7 +74,7 @@ export var MAP = {
       position: [-200, 40, 200],
       rotation: [0, 0, 0],
       activeRotation: [0, 11, 0],
-      textures: ["res/images/armor.png"],
+      textures: ["res/images/armor.webp"],
       shadows: true,
       physics: {
         enabled: true,
@@ -94,7 +94,7 @@ export var MAP = {
       position: [-200, 40, -200],
       rotation: [0, 0, 0],
       activeRotation: [0, 11, 0],
-      textures: ["res/images/armor.png"],
+      textures: ["res/images/armor.webp"],
       shadows: true,
       physics: {
         enabled: true,
@@ -113,7 +113,7 @@ export var MAP = {
       position: [200, 40, -200],
       rotation: [0, 0, 0],
       activeRotation: [0, 11, 0],
-      textures: ["res/images/armor.png"],
+      textures: ["res/images/armor.webp"],
       shadows: true,
       physics: {
         enabled: true,
@@ -137,7 +137,7 @@ export var MAP = {
     //   position: [40, 20, -40],
     //   rotation: [0, 0, 0],
     //   activeRotation: [0, 11, 0],
-    //   textures: ["res/images/armor.png"],
+    //   textures: ["res/images/armor.webp"],
     //   shadows: false,
     //   physics: {
     //     enabled: false,
@@ -158,7 +158,7 @@ export var MAP = {
       position: [40, 20, -40],
       rotation: [0, 0, 0],
       activeRotation: [0, 11, 0],
-      textures: ["res/images/armor.png"],
+      textures: ["res/images/armor.webp"],
       shadows: false,
       physics: {
         enabled: false

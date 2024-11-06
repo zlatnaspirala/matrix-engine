@@ -51,7 +51,7 @@ export var runThis = (world) => {
 
     // Add ground
     var groundTex = {
-      source: ["res/images/complex_texture_1/diffuse.png"],
+      source: ["res/images/complex_texture_1/diffuse.webp"],
       mix_operation: "multiply",
     };
     var groundMaterial = new CANNON.Material();

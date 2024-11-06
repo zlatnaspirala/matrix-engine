@@ -12,7 +12,7 @@ export var runThis = world => {
   // if you dont use obj or complex mesh you no need for this func
 
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply", // ENUM : multiply , divide ,
   };
 

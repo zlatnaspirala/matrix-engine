@@ -14,12 +14,12 @@ export var runThis = world => {
     for(let key in meshes) { matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]) }
 
     var textuteImageSamplers2 = {
-      source: ["res/images/armor.png", "res/images/armor.png"],
+      source: ["res/images/armor.webp", "res/images/armor.webp"],
       mix_operation: "multiply",
     };
 
     var textuteImageSamplers = {
-      source: ["res/images/dagger.png"],
+      source: ["res/images/dagger.webp"],
       mix_operation: "multiply",
     };
 

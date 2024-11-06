@@ -9,7 +9,7 @@ import App from "../program/manifest";
 export var runThis = world => {
   /* globals App world */
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply", // ENUM : multiply , divide
   };
 

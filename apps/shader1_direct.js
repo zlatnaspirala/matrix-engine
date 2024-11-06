@@ -14,7 +14,7 @@ const scriptManager = matrixEngine.utility.scriptManager;
 
 export var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply",
   }
   world.Add("cubeLightTex", 1, "ToyShader", textuteImageSamplers);

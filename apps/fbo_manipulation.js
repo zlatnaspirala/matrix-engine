@@ -9,7 +9,7 @@ export var runThis = (world) => {
   App.camera.SceneController = true;
   // Image texs
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply",
     params: {
       TEXTURE_MAG_FILTER: world.GL.gl.NEAREST,

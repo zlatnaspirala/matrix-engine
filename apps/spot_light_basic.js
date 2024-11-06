@@ -17,12 +17,12 @@ export var runThis = (world) => {
 
   // Image texs
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply",
   };
 
   var textuteImageSamplersTest = {
-    source: ["res/images/texture_spiral1.png", "res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/texture_spiral1.png", "res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply",
   };
 

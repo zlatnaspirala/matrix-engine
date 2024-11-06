@@ -15,7 +15,7 @@ export var runThis = world => {
 
   // eslint-disable-next-line no-unused-vars
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply",
   };
 

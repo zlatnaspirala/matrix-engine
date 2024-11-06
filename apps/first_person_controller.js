@@ -14,7 +14,7 @@ export var runThis = (world) => {
 
   // FLOOR
   var textuteImageSamplers = {
-    source: ['./res/images/beli_andjeo.jpg'],
+    source: ['./res/images/beli_andjeo.webp'],
     mix_operation: 'multiply'
   };
 

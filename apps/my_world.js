@@ -17,13 +17,13 @@ export var runThis = (world) => {
   App.camera.FirstPersonController = true;
 
   var textuteImageSamplers1 = {
-    source: ['res/images/bark.jpg'],
+    source: ['res/images/bark.webp'],
     mix_operation: 'multiply',
   };
 
   // Floor
   var textuteImageSamplers2 = {
-    source: ['res/images/grass1.jpg'],
+    source: ['res/images/grass1.webp'],
     mix_operation: 'multiply',
   };
 

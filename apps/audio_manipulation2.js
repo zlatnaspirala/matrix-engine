@@ -34,7 +34,7 @@ export var runThis = (world) => {
       paramSrc: 4
     },
     boneTex: {
-      source: ['res/images/complex_texture_1/diffuse.png'],
+      source: ['res/images/complex_texture_1/diffuse.webp'],
       mix_operation: 'multiply'
     },
     drawTypeBone: 'sphereLightTex' // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex

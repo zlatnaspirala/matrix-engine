@@ -210,7 +210,7 @@ var runThis = world => {
   _manifest.default.camera.SceneController = true;
   // eslint-disable-next-line no-unused-vars
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png", "res/images/semi_pack/gradiend_half2.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp", "res/images/semi_pack/gradiend_half2.png"],
     mix_operation: "multiply"
   };
   var texStone = {
@@ -473,13 +473,13 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 
 var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png", "res/images/texture_spiral1.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp", "res/images/texture_spiral1.png"],
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
   setTimeout(function () {
     var textuteImageSamplers = {
-      source: ["res/images/complex_texture_1/diffuse.png", "res/images/texture_spiral1.png", "res/images/icon2.png"],
+      source: ["res/images/complex_texture_1/diffuse.webp", "res/images/texture_spiral1.png", "res/images/icon2.png"],
       mix_operation: "divide"
     };
     _manifest.default.scene.MyCubeTex.changeMaterial(textuteImageSamplers);
@@ -505,7 +505,7 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 
 var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers);
@@ -529,7 +529,7 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 
 var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   world.Add("squareTex", 1, "MyColoredSquareRayObject", textuteImageSamplers);
@@ -706,7 +706,7 @@ var runThis = world => {
       paramSrc: 4
     },
     boneTex: {
-      source: ['res/images/complex_texture_1/diffuse.png'],
+      source: ['res/images/complex_texture_1/diffuse.webp'],
       mix_operation: 'multiply'
     },
     drawTypeBone: 'sphereLightTex' // pyramid | triangle | cube | square | squareTex | cubeLightTex | sphereLightTex
@@ -916,7 +916,7 @@ var runThis = world => {
 
   // Image texs
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply",
     params: {
       TEXTURE_MAG_FILTER: world.GL.gl.NEAREST,
@@ -1309,7 +1309,7 @@ var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR OBJ ACCESS_CAMERA */
 
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
 
@@ -1371,7 +1371,7 @@ var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
 
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   for (var d = -2; d < 3; d++) {
@@ -1410,7 +1410,7 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 
 var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
@@ -1446,7 +1446,7 @@ var runThis = world => {
   /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
 
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   _manifest.default.camera.SceneController = true;
@@ -1527,7 +1527,7 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 let OSCILLATOR = matrixEngine.utility.OSCILLATOR;
 var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers);
@@ -1571,7 +1571,7 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 
 var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   for (var j = -4; j < 4; j++) {
@@ -1607,7 +1607,7 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 
 var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers);
@@ -1655,7 +1655,7 @@ var runThis = world => {
   _manifest.default.camera.SceneController = true;
   // Image texs
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply",
     params: {
       TEXTURE_MAG_FILTER: world.GL.gl.NEAREST,
@@ -1811,7 +1811,7 @@ var runThis = world => {
 
   // FLOOR
   var textuteImageSamplers = {
-    source: ['./res/images/beli_andjeo.jpg'],
+    source: ['./res/images/beli_andjeo.webp'],
     mix_operation: 'multiply'
   };
   world.Add('squareTex', 4, 'floor', textuteImageSamplers);
@@ -2499,7 +2499,7 @@ var runThis = world => {
   // });
   // Add ground for physics bodies.
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply",
     params: {
       TEXTURE_MAG_FILTER: world.GL.gl.NEAREST,
@@ -2507,7 +2507,7 @@ var runThis = world => {
     }
   };
   var texNoMipmap = {
-    source: ["res/images/RustPaint.jpg"],
+    source: ["res/images/RustPaint.webp"],
     mix_operation: "multiply",
     params: {
       TEXTURE_MAG_FILTER: world.GL.gl.NEAREST,
@@ -2734,7 +2734,7 @@ var runThis = world => {
     activeRotation: [0, 20, 0],
     rotation: [0, 0, 0],
     scale: 1.1,
-    textures: ["res/images/armor.png"],
+    textures: ["res/images/armor.webp"],
     shadows: false,
     gamePlayItem: 'item-armor'
   });
@@ -2923,7 +2923,7 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 var runThis = world => {
   // Image texs
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
 
@@ -2982,11 +2982,11 @@ var runThis = world => {
       matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
     }
     var textuteImageSamplers2 = {
-      source: ["res/images/armor.png", "res/images/armor.png"],
+      source: ["res/images/armor.webp", "res/images/armor.webp"],
       mix_operation: "multiply"
     };
     var textuteImageSamplers = {
-      source: ["res/images/dagger.png"],
+      source: ["res/images/dagger.webp"],
       mix_operation: "multiply"
     };
     world.Add("obj", 1, "armor", textuteImageSamplers2, _manifest.default.meshes.armor);
@@ -3144,7 +3144,7 @@ var runThis = world => {
     }
   });
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
   };
   let gravityVector = [0, 0, -9.82];
@@ -3266,13 +3266,13 @@ var runThis = world => {
   var S1 = new SWITCHER();
   _manifest.default.camera.FirstPersonController = true;
   var textuteImageSamplers1 = {
-    source: ['res/images/bark.jpg'],
+    source: ['res/images/bark.webp'],
     mix_operation: 'multiply'
   };
 
   // Floor
   var textuteImageSamplers2 = {
-    source: ['res/images/grass1.jpg'],
+    source: ['res/images/grass1.webp'],
     mix_operation: 'multiply'
   };
   world.Add('squareTex', 1, 'floor', textuteImageSamplers2);
@@ -3457,7 +3457,7 @@ var runThis = world => {
       matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
     }
     var textuteImageSamplers2 = {
-      source: ["res/images/RustPaint.jpg"],
+      source: ["res/images/RustPaint.webp"],
       mix_operation: "multiply" // ENUM : multiply , divide
     };
     setTimeout(function () {
@@ -3545,7 +3545,7 @@ var runThis = world => {
 
     // FEMALE
     var textuteImageSamplers2 = {
-      source: ["res/images/RustPaint.jpg"],
+      source: ["res/images/RustPaint.webp"],
       mix_operation: "multiply"
     };
     var animation_construct = {
@@ -3645,7 +3645,7 @@ var runThis = world => {
   var tex = new Vjs3("app/2d1kilo/example1.html", "starter/text.js");
   _manifest.default.camera.FirstPersonController = true;
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   world.Add("squareTex", 12, "floor", textuteImageSamplers);
@@ -3682,7 +3682,7 @@ var runThis = world => {
    */
 
   world.Add("cubeLightTex", 1, "test", {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   });
   _manifest.default.scene.test.position.y = 1;
@@ -3867,7 +3867,7 @@ var runThis = world => {
     }
   });
   var groundTex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   var tex = {
@@ -3986,7 +3986,7 @@ var runThis = world => {
 
     // Add ground
     var groundTex = {
-      source: ["res/images/complex_texture_1/diffuse.png"],
+      source: ["res/images/complex_texture_1/diffuse.webp"],
       mix_operation: "multiply"
     };
     var groundMaterial = new CANNON.Material();
@@ -4043,7 +4043,7 @@ var runThis = world => {
     }
   });
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
 
@@ -4117,7 +4117,7 @@ var runThis = world => {
     }
   });
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
 
@@ -4200,7 +4200,7 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 var runThis = world => {
   _manifest.default.camera.SceneController = true;
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
 
@@ -4260,7 +4260,7 @@ var runThis = world => {
 
   // eslint-disable-next-line no-unused-vars
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
   };
   world.Add("cubeLightTex", 12, "outsideBox", tex);
@@ -4317,7 +4317,7 @@ var runThis = world => {
 
   // eslint-disable-next-line no-unused-vars
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 12, "outsideBox");
@@ -4369,7 +4369,7 @@ var runThis = world => {
 
   // eslint-disable-next-line no-unused-vars
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 12, "outsideBox", textuteImageSamplers);
@@ -4421,7 +4421,7 @@ var runThis = world => {
 
   // eslint-disable-next-line no-unused-vars
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 12, "outsideBox", tex);
@@ -4482,7 +4482,7 @@ var runThis = world => {
     }
   });
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png", "res/images/logo-test.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp", "res/images/logo-test.webp"],
     mix_operation: "multiply"
   };
   let gravityVector = [0, 0, -9.82];
@@ -5049,7 +5049,7 @@ var runThis = world => {
     }
   });
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
 
@@ -5107,7 +5107,7 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 const scriptManager = matrixEngine.utility.scriptManager;
 var runThis = world => {
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "ToyShader", textuteImageSamplers);
@@ -5602,7 +5602,7 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 var runThis = world => {
   /* globals App world */
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply" // ENUM : multiply , divide
   };
   world.Add("sphereLightTex", 2, "MySphere", textuteImageSamplers);
@@ -5636,11 +5636,11 @@ var runThis = world => {
 
   // Image texs
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   var textuteImageSamplersTest = {
-    source: ["res/images/texture_spiral1.png", "res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/texture_spiral1.png", "res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   var textuteBlanko = {
@@ -5813,7 +5813,7 @@ var runThis = world => {
   // if you dont use obj or complex mesh you no need for this func
 
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
   };
   world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers);
@@ -5892,7 +5892,7 @@ var runThis = world => {
     }
   });
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
   };
   let gravityVector = [0, 0, -9.82];
@@ -5962,7 +5962,7 @@ var runThis = world => {
 
   let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
   };
   world.Add("cubeLightTex", 12, "outsideBox", tex);
@@ -6012,7 +6012,7 @@ var runThis = world => {
   _manifest.default.camera.SceneController = true;
   let ENUMERATORS = matrixEngine.utility.ENUMERATORS;
   var tex = {
-    source: ["res/images/complex_texture_1/diffuse.png"],
+    source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply" // ENUM : multiply , divide ,
   };
   world.Add("cubeLightTex", 2, "outsideBox", tex);

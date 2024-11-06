@@ -9,7 +9,7 @@ import App from "../program/manifest";
 export var runThis = world => {
   var textuteImageSamplers = {
     source: [
-      "res/images/complex_texture_1/diffuse.png",
+      "res/images/complex_texture_1/diffuse.webp",
       "res/images/texture_spiral1.png",
     ],
     mix_operation: "multiply",
@@ -20,7 +20,7 @@ export var runThis = world => {
   setTimeout(function () {
     var textuteImageSamplers = {
       source: [
-        "res/images/complex_texture_1/diffuse.png",
+        "res/images/complex_texture_1/diffuse.webp",
         "res/images/texture_spiral1.png",
         "res/images/icon2.png",
       ],
