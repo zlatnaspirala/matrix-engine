@@ -2745,7 +2745,7 @@ var runThis = world => {
     activeRotation: [0, 20, 0],
     rotation: [0, 0, 0],
     scale: 1.1,
-    textures: ["res/images/complex_texture_1/normalmap.png"],
+    textures: ["res/images/complex_texture_1/normalmap.webp"],
     shadows: false,
     gamePlayItem: 'item-munition'
   });

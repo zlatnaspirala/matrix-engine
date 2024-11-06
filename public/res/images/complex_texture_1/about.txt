@@ -1,0 +1,9 @@
+If you search by image with `diffuse.jpg`
+you will see lot of derivate stuff.
+
+Origin jpg(free format) founded at 
+http://spiralgraphics.biz/
+
+More:
+https://blenderartists.org/t/is-spiral-graphics-genetica-dead/1446058
+
