@@ -8,6 +8,8 @@
 
 <img src="https://github.com/zlatnaspirala/matrix-engine/blob/master/public/res/icons/ms-icon.png" width="128" height="128" />
 
+(Join Slack-Rock opensource workspace)[https://join.slack.com/t/gameplay-rock/shared_invite/zt-ffcgl80x-CYu4s~YC0bD9Od9_bkqmzw]
+
 ### STATUS
 
 #### - [Integrated PWA addToHomePage/cache/] ✔
