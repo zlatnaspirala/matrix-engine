@@ -4162,7 +4162,7 @@ class RotationVector {
   }
   rotateX(x, em) {
     this.rotx = x;
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netRot: {
         x: this.rotx
       },
@@ -4171,7 +4171,7 @@ class RotationVector {
   }
   rotateY(y, em) {
     this.roty = y;
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netRot: {
         y: this.roty
       },
@@ -4180,7 +4180,7 @@ class RotationVector {
   }
   rotateZ(z, em) {
     this.rotz = z;
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netRot: {
         z: this.rotz
       },
@@ -4319,7 +4319,7 @@ class Position {
     this.targetX = newx;
     this.inMove = false;
     // console.log('test setX net.connection ', net)
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) {
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) {
       _engine.net.connection.send({
         netPos: {
           x: this.x + this.xNetOffset,
@@ -4334,7 +4334,7 @@ class Position {
     this.y = newy;
     this.targetY = newy;
     this.inMove = false;
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
         x: this.x + this.xNetOffset,
         y: this.y + this.yNetOffset,
@@ -4347,7 +4347,7 @@ class Position {
     this.z = newz;
     this.targetZ = newz;
     this.inMove = false;
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
         x: this.x + this.xNetOffset,
         y: this.y + this.yNetOffset,
@@ -4364,7 +4364,7 @@ class Position {
     this.targetY = newy;
     this.targetZ = newz;
     this.inMove = false;
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netPos: {
         x: this.x + this.xNetOffset,
         y: this.y + this.yNetOffset,
@@ -4392,7 +4392,7 @@ class TriangleVertex {
   }
   setScale(scale) {
     this.size = scale;
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         scale: scale
       },
@@ -4447,7 +4447,7 @@ class SquareVertex {
     this.texCoordsPoints.left_top.y = 1 + newScaleFactror;
     this.texCoordsPoints.right_bottom.x = 1 + newScaleFactror;
     this.texCoordsPoints.right_bottom.y = 0 - newScaleFactror;
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       texScaleFactor: {
         newScaleFactror: newScaleFactror
       },
@@ -4506,7 +4506,7 @@ class SquareVertex {
   }
   setScale(scale, em) {
     this.size = scale;
-    if (typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em === 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         scale: scale
       },
@@ -4929,7 +4929,7 @@ class CubeVertex {
     this.Back.pointB.x = -scale;
     this.Back.pointC.x = scale;
     this.Back.pointD.x = scale;
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         x: scale
       },
@@ -4965,7 +4965,7 @@ class CubeVertex {
     this.Back.pointB.y = scale;
     this.Back.pointC.y = scale;
     this.Back.pointD.y = -scale;
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         y: scale
       },
@@ -5000,7 +5000,7 @@ class CubeVertex {
     this.Back.pointB.z = -scale;
     this.Back.pointC.z = -scale;
     this.Back.pointD.z = -scale;
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         z: scale
       },
@@ -5014,7 +5014,7 @@ class CubeVertex {
     this.size = scale;
     this.basePoint = 1.0 * this.size;
     this.basePointNeg = -1.0 * this.size;
-    if (typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em === 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         scale: scale
       },
@@ -5042,7 +5042,7 @@ class CubeVertex {
       this.texCoordsPoints[key].right_bottom.x = this.texCoordsPoints[key].right_bottom.x + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.x);
       this.texCoordsPoints[key].right_bottom.y = this.texCoordsPoints[key].right_bottom.y + newScaleFactror * calculate(this.texCoordsPoints[key].right_bottom.y);
     }
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       texScaleFactor: {
         newScaleFactror: newScaleFactror
       },
@@ -5288,7 +5288,7 @@ class PiramideVertex {
     this.size = scale;
     this.basePoint = 1.0 * this.size;
     this.basePointNeg = -1.0 * this.size;
-    if (typeof em === 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em === 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         scale: scale
       },
@@ -5300,7 +5300,7 @@ class PiramideVertex {
   }
   setSpitz(newValueFloat, em) {
     this.spitz = newValueFloat;
-    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq] && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       spitz: {
         newValueFloat: newValueFloat
       },
