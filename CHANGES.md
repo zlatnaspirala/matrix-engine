@@ -2,6 +2,15 @@
 
 # Matrix Engine [CHANGES]
 
+[2.0.27] Added for CustomGeometry object entity:
+```js
+			customObject.net = {
+				enabled: false
+			};
+```
+
+[2.0.26] FIX CHECK NET ACTIVE FLAG FOR SCALE PROCEDURE
+
 [2.0.25] FIX FOR MOBILE RENDER MATERIAL/ TEXTURE
     - Bug with white surface 
 

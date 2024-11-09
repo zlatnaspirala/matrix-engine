@@ -35,6 +35,7 @@ export var runThis = (world) => {
 		let isMobile = matrixEngine.utility.isMobile;
 		let randomFloatFromTo = matrixEngine.utility.randomFloatFromTo;
 		let App = matrixEngine.App;
+		let SYS = App.sys;
 		setTimeout(() => document.querySelector('.button2').click(), 2000)
 		// Camera
 		canvas.style.cursor = 'none';
@@ -167,8 +168,8 @@ export var runThis = (world) => {
 	
 			// Disable default
 			App.events.CALCULATE_TOUCH_MOVE_OR_MOUSE_MOVE = () => {}
-			byId('domAngleAxis').style.width = innerWidth / 100 * 30 + "px";
-			byId('domAngleAxis').style.height = innerHeight / 100 * 30 + "px";
+			// byId('domAngleAxis').style.width = innerWidth / 100 * 30 + "px";
+			// byId('domAngleAxis').style.height = innerHeight / 100 * 30 + "px";
 			byId('domAngleAxis').addEventListener('touchmove', (e) => {
 				e.preventDefault()
 				var center_x = window.innerWidth / 2;

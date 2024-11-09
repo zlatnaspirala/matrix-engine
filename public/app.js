@@ -9,14 +9,12 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 
 var world;
 var App = matrixEngine.App;
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function (e) {
-    // navigator.serviceWorker.register('worker.js'); 
-  });
-} else {
-  console.warn('Matrix Engine: No webWorkers for locahost OR No support for web workers in this browser.');
-}
 window.addEventListener('load', function (e) {
+  if ('serviceWorker' in navigator) {
+    // navigator.serviceWorker.register('worker.js'); DISABLED
+  } else {
+    console.warn('Matrix Engine: No webWorkers for locahost OR No support for web workers in this browser.');
+  }
   App.ready = true;
   matrixEngine.Engine.initApp(webGLStart);
 });
@@ -24,9 +22,6 @@ window.webGLStart = () => {
   window.App = App;
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
-  // Make it global for dev - for easy console/debugger access
-  // window.runThis = runThis;
-  // setTimeout(() => { runThis(world); }, 100);
   (0, _fps_player_controller.runThis)(world);
 };
 window.matrixEngine = matrixEngine;
@@ -76,6 +71,7 @@ var runThis = world => {
   let isMobile = matrixEngine.utility.isMobile;
   let randomFloatFromTo = matrixEngine.utility.randomFloatFromTo;
   let App = matrixEngine.App;
+  let SYS = App.sys;
   setTimeout(() => document.querySelector('.button2').click(), 2000);
   // Camera
   canvas.style.cursor = 'none';
@@ -218,8 +214,8 @@ var runThis = world => {
 
     // Disable default
     App.events.CALCULATE_TOUCH_MOVE_OR_MOUSE_MOVE = () => {};
-    byId('domAngleAxis').style.width = innerWidth / 100 * 30 + "px";
-    byId('domAngleAxis').style.height = innerHeight / 100 * 30 + "px";
+    // byId('domAngleAxis').style.width = innerWidth / 100 * 30 + "px";
+    // byId('domAngleAxis').style.height = innerHeight / 100 * 30 + "px";
     byId('domAngleAxis').addEventListener('touchmove', e => {
       e.preventDefault();
       var center_x = window.innerWidth / 2;
@@ -5850,7 +5846,7 @@ class TriangleVertex {
   }
   setScale(scale) {
     this.size = scale;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         scale: scale
       },
@@ -6387,7 +6383,7 @@ class CubeVertex {
     this.Back.pointB.x = -scale;
     this.Back.pointC.x = scale;
     this.Back.pointD.x = scale;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         x: scale
       },
@@ -6423,7 +6419,7 @@ class CubeVertex {
     this.Back.pointB.y = scale;
     this.Back.pointC.y = scale;
     this.Back.pointD.y = -scale;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         y: scale
       },
@@ -6458,7 +6454,7 @@ class CubeVertex {
     this.Back.pointB.z = -scale;
     this.Back.pointC.z = -scale;
     this.Back.pointD.z = -scale;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         z: scale
       },
@@ -6758,7 +6754,7 @@ class PiramideVertex {
   }
   setSpitz(newValueFloat, em) {
     this.spitz = newValueFloat;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       spitz: {
         newValueFloat: newValueFloat
       },
@@ -22323,10 +22319,10 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 80%;
-      top: 80%;
-      width: 14%;
-      height: 4%;
+      left: 74%;
+      top: 79%;
+      width: 23%;
+      height: 5%;
       background: rgba(255,255,255,0.2);
       margin: auto;
       align-items: center;
@@ -22342,10 +22338,10 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 85%;
-      top: 90%;
-      width: 14%;
-      height: 4%;
+      left: 74%;
+      top: 89%;
+      width: 23%;
+      height: 5%;
       background: rgba(255,255,255,0.2);
       margin: auto;
       align-items: center;
@@ -22362,10 +22358,10 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 70%;
-      top: 90%;
-      width: 14%;
-      height: 4%;
+      left: 51%;
+      top: 89%;
+      width: 23%;
+      height: 5%;
       background: rgba(255,255,255,0.2);
       margin: auto;
       align-items: center;
@@ -22382,10 +22378,10 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 78%;
-      top: 86%;
-      width: 14%;
-      height: 4%;
+      left: 62%;
+      top: 84%;
+      width: 23%;
+      height: 5%;
       background: rgba(255,255,255,0.2);
       margin: auto;
       align-items: center;
@@ -22402,10 +22398,10 @@ function createDomFPSController() {
       text-align: center;
       display: grid;
       position:absolute;
-      left: 64%;
-      top: 80%;
-      width: 14%;
-      height: 4%;
+      left: 51%;
+      top: 79%;
+      width: 23%;
+      height: 5%;
       background: rgba(255,255,255,0.2);
       margin: auto;
       align-items: center;
@@ -22422,10 +22418,10 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 78%;
+      left: 62%;
       top: 94%;
-      width: 14%;
-      height: 4%;
+      width: 23%;
+      height: 5%;
       background: rgba(255,255,255,0.1);
       margin: auto;
       align-items: center;
@@ -22442,9 +22438,9 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 5%;
+      left: 3%;
       top: 69%;
-      width: 45%;
+      width: 47%;
       height: 28%;
       background: rgba(255,255,255,0.2);
       margin: auto;
