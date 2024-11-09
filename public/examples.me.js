@@ -1919,6 +1919,7 @@ var runThis = world => {
   let isMobile = matrixEngine.utility.isMobile;
   let randomFloatFromTo = matrixEngine.utility.randomFloatFromTo;
   let App = matrixEngine.App;
+  let SYS = App.sys;
   setTimeout(() => document.querySelector('.button2').click(), 2000);
   // Camera
   canvas.style.cursor = 'none';
@@ -2061,8 +2062,8 @@ var runThis = world => {
 
     // Disable default
     App.events.CALCULATE_TOUCH_MOVE_OR_MOUSE_MOVE = () => {};
-    byId('domAngleAxis').style.width = innerWidth / 100 * 30 + "px";
-    byId('domAngleAxis').style.height = innerHeight / 100 * 30 + "px";
+    // byId('domAngleAxis').style.width = innerWidth / 100 * 30 + "px";
+    // byId('domAngleAxis').style.height = innerHeight / 100 * 30 + "px";
     byId('domAngleAxis').addEventListener('touchmove', e => {
       e.preventDefault();
       var center_x = window.innerWidth / 2;
@@ -2507,7 +2508,7 @@ var runThis = world => {
     }
   };
   var texNoMipmap = {
-    source: ["res/images/RustPaint.webp"],
+    source: ["res/images/RustPaint.jpg"],
     mix_operation: "multiply",
     params: {
       TEXTURE_MAG_FILTER: world.GL.gl.NEAREST,
@@ -3457,7 +3458,7 @@ var runThis = world => {
       matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
     }
     var textuteImageSamplers2 = {
-      source: ["res/images/RustPaint.webp"],
+      source: ["res/images/RustPaint.jpg"],
       mix_operation: "multiply" // ENUM : multiply , divide
     };
     setTimeout(function () {
@@ -3545,7 +3546,7 @@ var runThis = world => {
 
     // FEMALE
     var textuteImageSamplers2 = {
-      source: ["res/images/RustPaint.webp"],
+      source: ["res/images/RustPaint.jpg"],
       mix_operation: "multiply"
     };
     var animation_construct = {
@@ -10466,7 +10467,7 @@ class TriangleVertex {
   }
   setScale(scale) {
     this.size = scale;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         scale: scale
       },
@@ -11003,7 +11004,7 @@ class CubeVertex {
     this.Back.pointB.x = -scale;
     this.Back.pointC.x = scale;
     this.Back.pointD.x = scale;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         x: scale
       },
@@ -11039,7 +11040,7 @@ class CubeVertex {
     this.Back.pointB.y = scale;
     this.Back.pointC.y = scale;
     this.Back.pointD.y = -scale;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         y: scale
       },
@@ -11074,7 +11075,7 @@ class CubeVertex {
     this.Back.pointB.z = -scale;
     this.Back.pointC.z = -scale;
     this.Back.pointD.z = -scale;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       netScale: {
         z: scale
       },
@@ -11374,7 +11375,7 @@ class PiramideVertex {
   }
   setSpitz(newValueFloat, em) {
     this.spitz = newValueFloat;
-    if (typeof em === 'undefined') _engine.net.connection.send({
+    if (typeof em == 'undefined' && _manifest.default.scene[this.nameUniq].net.enable == true) _engine.net.connection.send({
       spitz: {
         newValueFloat: newValueFloat
       },
@@ -15529,11 +15530,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       triangleObject.net = {
-        enabled: false,
-        // Old net
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       triangleObject.instancedDraws = {
         numberOfInstance: 10,
@@ -15600,10 +15597,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       squareObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       squareObject.instancedDraws = {
         numberOfInstance: 10,
@@ -15690,10 +15684,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       squareObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       squareObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
@@ -15831,10 +15822,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       cubeObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       if (cubeObject.shaderProgram && cubeObject.geometry) {
         // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
@@ -15897,10 +15885,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       sphereObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       sphereObject.custom = new Object();
       sphereObject.custom.gl_texture = null;
@@ -16031,10 +16016,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       pyramidObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       pyramidObject.instancedDraws = {
         numberOfInstance: 10,
@@ -16110,10 +16092,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       objObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       objObject.setFBO = function () {
         objObject.FBO = {};
@@ -16314,10 +16293,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       cubeObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
 
       // Update others start
@@ -16472,10 +16448,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       cubeObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
 
       // Update others start NOT ACTIVE NOW
@@ -16692,6 +16665,9 @@ function defineworld(canvas, renderType) {
       // Physics
       customObject.physics = {
         enabled: false
+      };
+      customObject.net = {
+        enable: false
       };
       customObject.instancedDraws = {
         numberOfInstance: 10,
@@ -26939,10 +26915,10 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 80%;
-      top: 80%;
-      width: 14%;
-      height: 4%;
+      left: 74%;
+      top: 79%;
+      width: 23%;
+      height: 5%;
       background: rgba(255,255,255,0.2);
       margin: auto;
       align-items: center;
@@ -26958,10 +26934,10 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 85%;
-      top: 90%;
-      width: 14%;
-      height: 4%;
+      left: 74%;
+      top: 89%;
+      width: 23%;
+      height: 5%;
       background: rgba(255,255,255,0.2);
       margin: auto;
       align-items: center;
@@ -26978,10 +26954,10 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 70%;
-      top: 90%;
-      width: 14%;
-      height: 4%;
+      left: 51%;
+      top: 89%;
+      width: 23%;
+      height: 5%;
       background: rgba(255,255,255,0.2);
       margin: auto;
       align-items: center;
@@ -26998,10 +26974,10 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 78%;
-      top: 86%;
-      width: 14%;
-      height: 4%;
+      left: 62%;
+      top: 84%;
+      width: 23%;
+      height: 5%;
       background: rgba(255,255,255,0.2);
       margin: auto;
       align-items: center;
@@ -27018,10 +26994,10 @@ function createDomFPSController() {
       text-align: center;
       display: grid;
       position:absolute;
-      left: 64%;
-      top: 80%;
-      width: 14%;
-      height: 4%;
+      left: 51%;
+      top: 79%;
+      width: 23%;
+      height: 5%;
       background: rgba(255,255,255,0.2);
       margin: auto;
       align-items: center;
@@ -27038,10 +27014,10 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 78%;
+      left: 62%;
       top: 94%;
-      width: 14%;
-      height: 4%;
+      width: 23%;
+      height: 5%;
       background: rgba(255,255,255,0.1);
       margin: auto;
       align-items: center;
@@ -27058,9 +27034,9 @@ function createDomFPSController() {
       text-align: center;
       display: none;
       position:absolute;
-      left: 5%;
+      left: 3%;
       top: 69%;
-      width: 45%;
+      width: 47%;
       height: 28%;
       background: rgba(255,255,255,0.2);
       margin: auto;

@@ -10909,11 +10909,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       triangleObject.net = {
-        enabled: false,
-        // Old net
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       triangleObject.instancedDraws = {
         numberOfInstance: 10,
@@ -10980,10 +10976,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       squareObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       squareObject.instancedDraws = {
         numberOfInstance: 10,
@@ -11070,10 +11063,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       squareObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       squareObject.LightsData = {
         directionLight: new _matrixGeometry.COLOR(1, 1, 1),
@@ -11211,10 +11201,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       cubeObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       if (cubeObject.shaderProgram && cubeObject.geometry) {
         // console.log("   Buffer the " + filler + ":Store at:" + this.contentList.length);
@@ -11277,10 +11264,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       sphereObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       sphereObject.custom = new Object();
       sphereObject.custom.gl_texture = null;
@@ -11411,10 +11395,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       pyramidObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       pyramidObject.instancedDraws = {
         numberOfInstance: 10,
@@ -11490,10 +11471,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       objObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
       objObject.setFBO = function () {
         objObject.FBO = {};
@@ -11694,10 +11672,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       cubeObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
 
       // Update others start
@@ -11852,10 +11827,7 @@ function defineworld(canvas, renderType) {
         enabled: false
       };
       cubeObject.net = {
-        enabled: false,
-        activate: () => {
-          _engine.net.activateDataStream();
-        }
+        enable: false
       };
 
       // Update others start NOT ACTIVE NOW
@@ -12072,6 +12044,9 @@ function defineworld(canvas, renderType) {
       // Physics
       customObject.physics = {
         enabled: false
+      };
+      customObject.net = {
+        enable: false
       };
       customObject.instancedDraws = {
         numberOfInstance: 10,
