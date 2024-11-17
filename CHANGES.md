@@ -2,6 +2,88 @@
 
 # Matrix Engine [CHANGES]
 
+[2.0.30]
+For FirstPersonController added move in left or right by side...
+UPDATE IN setCamera func:
+```js
+// For FirstPersonController
+camera.setCamera = function(object) {
+	if(keyboardPress.getKeyStatus(65) || App.camera.leftEdge == true) {
+		/* A */
+		camera.yawRate = App.camera.yawRate;
+		if(App.camera.leftEdge == true) {
+			camera.yawRate = App.camera.yawRateOnEdge;
+		}
+	} else if(keyboardPress.getKeyStatus(68) || App.camera.rightEdge == true) {
+		/* D */
+		camera.yawRate = -App.camera.yawRate;
+		if(App.camera.rightEdge == true) {
+			camera.yawRate = -App.camera.yawRateOnEdge;
+		}
+	} else if(keyboardPress.getKeyStatus(32)) {
+		/* Right Key or SPACE */
+		if(this.virtualJumpActive != true) {
+			this.virtualJumpActive = true;
+		}
+	}
+
+	if(keyboardPress.getKeyStatus(37)) {
+		/* Left Key  || App.camera.leftEdge == true*/
+		camera.moveLeft = true;
+		camera.speed = App.camera.speedAmp;
+	} else if(keyboardPress.getKeyStatus(39)) {
+		/* Right Key || App.camera.rightEdge == true */
+		camera.moveRight = true;
+		camera.speed = App.camera.speedAmp;
+	} else if(keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
+		/* Up Key or W */
+		camera.speed = App.camera.speedAmp;
+	} else if(keyboardPress.getKeyStatus(40) || keyboardPress.getKeyStatus(83)) {
+		/* Down Key or S */
+		camera.speed = -App.camera.speedAmp;
+	} else {
+		// if(camera.preventSpeedZero == false) camera.speed = 0;
+	}
+
+	/* Calculate yaw, pitch and roll(x,y,z) */
+	if(camera.speed != 0 && camera.moveLeft == false && camera.moveRight == false) {
+		camera.xPos -= Math.sin(degToRad(camera.yaw)) * camera.speed;
+		if(camera.fly == true) {
+			// Fly regime
+			camera.yPos += Math.sin(degToRad(camera.pitch)) * camera.speed;
+		} else {
+			// usually for fpshooter regime
+			// camera.yPos = this.virtualJumpY;
+			// camera.yPos = 0;
+			// leave it zero by default lets dirigent from top
+		}
+		camera.zPos -= Math.cos(degToRad(camera.yaw)) * camera.speed;
+	} else if(camera.moveLeft == true) {
+		// by side move left
+		camera.xPos -= Math.sin(degToRad(camera.yaw + 90)) * camera.speed;
+		camera.zPos -= Math.cos(degToRad(camera.yaw + 90)) * camera.speed;
+	} else if(camera.moveRight == true) {
+		// by side move rigth
+		camera.xPos -= Math.sin(degToRad(camera.yaw - 90)) * camera.speed;
+		camera.zPos -= Math.cos(degToRad(camera.yaw - 90)) * camera.speed;
+	}
+
+	camera.yaw += camera.yawRate * camera.yawAmp;
+	camera.pitch += camera.pitchRate * camera.pitchAmp;
+
+	mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.pitch), [1, 0, 0]);
+	mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(-camera.yaw), [0, 1, 0]);
+	mat4.translate(object.mvMatrix, object.mvMatrix, [-camera.xPos, -camera.yPos, -camera.zPos]);
+
+	camera.yawRate = 0;
+	camera.pitchRate = 0;
+	// update
+	camera.moveLeft = false;
+	camera.moveRight = false;
+	if(camera.preventSpeedZero == false) camera.speed = 0;
+};
+```
+
 [2.0.27] Added for CustomGeometry object entity:
 ```js
 			customObject.net = {

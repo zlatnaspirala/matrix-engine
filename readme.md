@@ -416,9 +416,12 @@ objGenerator(100);
 - OLD [your own server part under ./networking folder]
 - New Recommneded - Based on kurento/OpenVidu service [i run personal on maximumroulette.com:2020]
 
+ - I posted server example for OV server at:
+ https://github.com/zlatnaspirala/matrix-stream/tree/main/middleware
+
 #### [NEW] Networking Support Methods list: ✅😇
 
-Networking is deeply integrated no need for extra interventions.
+Networking is deeply integrated no need for extra interventions (send function have own interface).
 Except activation.
 
 ```js
@@ -430,8 +433,6 @@ matrixEngine.Engine.activateNet2(undefined, {
 
 ```js
 App.scene.MyColoredSquare1.net.enable = true;
-App.scene.MyColoredSquare1.net.activate();
-
 // Now MyColoredSquare1 is net replicated on others clients.
 App.scene.MyColoredSquare1.position.SetZ(-8);
 ```

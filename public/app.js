@@ -2986,21 +2986,20 @@ camera.yawAmp = 0.077;
 camera.pitchAmp = 0.017;
 camera.virtualJumpY = 2;
 camera.virtualJumpActive = false;
+camera.moveLeft = false;
 camera.preventSpeedZero = false;
-
-// eslint-disable-next-line no-global-assign
 var keyboardPress = exports.keyboardPress = defineKeyBoardObject();
 
 // For FirstPersonController
 camera.setCamera = function (object) {
-  if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
-    /* Left Key  or A */
+  if (keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
+    /* A */
     camera.yawRate = _manifest.default.camera.yawRate;
     if (_manifest.default.camera.leftEdge == true) {
       camera.yawRate = _manifest.default.camera.yawRateOnEdge;
     }
-  } else if (keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
-    /* Right Key or D */
+  } else if (keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
+    /* D */
     camera.yawRate = -_manifest.default.camera.yawRate;
     if (_manifest.default.camera.rightEdge == true) {
       camera.yawRate = -_manifest.default.camera.yawRateOnEdge;
@@ -3011,18 +3010,26 @@ camera.setCamera = function (object) {
       this.virtualJumpActive = true;
     }
   }
-  /* Up Key or W */
-  if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
+  if (keyboardPress.getKeyStatus(37)) {
+    /* Left Key  || App.camera.leftEdge == true*/
+    camera.moveLeft = true;
+    camera.speed = _manifest.default.camera.speedAmp;
+  } else if (keyboardPress.getKeyStatus(39)) {
+    /* Right Key || App.camera.rightEdge == true */
+    camera.moveRight = true;
+    camera.speed = _manifest.default.camera.speedAmp;
+  } else if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
+    /* Up Key or W */
     camera.speed = _manifest.default.camera.speedAmp;
   } else if (keyboardPress.getKeyStatus(40) || keyboardPress.getKeyStatus(83)) {
     /* Down Key or S */
     camera.speed = -_manifest.default.camera.speedAmp;
   } else {
-    if (camera.preventSpeedZero == false) camera.speed = 0;
+    // if(camera.preventSpeedZero == false) camera.speed = 0;
   }
 
   /* Calculate yaw, pitch and roll(x,y,z) */
-  if (camera.speed != 0) {
+  if (camera.speed != 0 && camera.moveLeft == false && camera.moveRight == false) {
     camera.xPos -= Math.sin(degToRad(camera.yaw)) * camera.speed;
     if (camera.fly == true) {
       // Fly regime
@@ -3034,6 +3041,14 @@ camera.setCamera = function (object) {
       // leave it zero by default lets dirigent from top
     }
     camera.zPos -= Math.cos(degToRad(camera.yaw)) * camera.speed;
+  } else if (camera.moveLeft == true) {
+    // by side move left
+    camera.xPos -= Math.sin(degToRad(camera.yaw + 90)) * camera.speed;
+    camera.zPos -= Math.cos(degToRad(camera.yaw + 90)) * camera.speed;
+  } else if (camera.moveRight == true) {
+    // by side move rigth
+    camera.xPos -= Math.sin(degToRad(camera.yaw - 90)) * camera.speed;
+    camera.zPos -= Math.cos(degToRad(camera.yaw - 90)) * camera.speed;
   }
   camera.yaw += camera.yawRate * camera.yawAmp;
   camera.pitch += camera.pitchRate * camera.pitchAmp;
@@ -3042,6 +3057,10 @@ camera.setCamera = function (object) {
   mat4.translate(object.mvMatrix, object.mvMatrix, [-camera.xPos, -camera.yPos, -camera.zPos]);
   camera.yawRate = 0;
   camera.pitchRate = 0;
+  // update
+  camera.moveLeft = false;
+  camera.moveRight = false;
+  if (camera.preventSpeedZero == false) camera.speed = 0;
 };
 
 // For sceneController
