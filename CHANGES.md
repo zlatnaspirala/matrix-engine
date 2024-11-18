@@ -2,6 +2,9 @@
 
 # Matrix Engine [CHANGES]
 
+[2.0.31] Simplify `SET_STREAM` for ACCESS CAMERA
+
+
 [2.0.30]
 For FirstPersonController added move in left or right by side...
 UPDATE IN setCamera func:
