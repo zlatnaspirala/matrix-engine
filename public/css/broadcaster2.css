@@ -712,14 +712,14 @@ h1 {
 }
 
 .form-control {
-    /* display: block;
+	/* display: block;
     font-size: 14px;
     line-height: 1.42857143;
     color: var(--thermePrimary);
     background-color: #101010;
     background-image: none;
     border: 1px solid #a52a2a; */
-		font-family: stormfaze;
+	font-family: stormfaze;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;

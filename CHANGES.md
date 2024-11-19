@@ -2,6 +2,9 @@
 
 # Matrix Engine [CHANGES]
 
+
+[2.0.34] New App flag:	App.printDevicesInfo: false
+
 [2.0.31] Simplify `SET_STREAM` for ACCESS CAMERA
 
 

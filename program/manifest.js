@@ -43,6 +43,7 @@ var App = {
 	},
 	updateBeforeDraw: [],
 	audioSystem: {},                        // readOnly in manifest
+	printDevicesInfo: false,
 	pwa: {
 		addToHomePage: true,
 	},
