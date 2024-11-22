@@ -23,7 +23,7 @@ export var runThis = world => {
       mix_operation: "multiply",
     };
 
-    world.Add("obj", 1, "armor", textuteImageSamplers2, App.meshes.armor);
+    world.Add("obj", 1, "armor", textuteImageSamplers2, meshes.armor);
     App.scene.armor.position.y = 1;
     App.scene.armor.rotation.rotationSpeed.y = 20;
     App.scene.armor.LightsData.ambientLight.set(1, 1, 1);
@@ -39,7 +39,7 @@ export var runThis = world => {
     
     // world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers2);
     // App.scene.MyCubeTex.activateShadows()
-    world.Add("obj", 1, "mac", textuteImageSamplers, App.meshes.mac);
+    world.Add("obj", 1, "mac", textuteImageSamplers, meshes.mac);
     App.scene.mac.position.y = 1;
     App.scene.mac.position.x = -2;
     App.scene.mac.rotation.rotationSpeed.y = 20;
