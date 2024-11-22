@@ -247,7 +247,7 @@ To avoid iframe from examples.html you can use `query-build.html?u=<NAME_OF_EXAM
 
 ## Features description
 
-### Camera config
+## Camera config
 
 In `./program/manifest.js`. Access is `App.camera`.
 Note: One of params `FirstPersonController` or `SceneController` must be `false`.
@@ -297,7 +297,7 @@ Typically looks:
 }
 ```
 
-### Light And Shadows [1.7.6]
+## Light And Shadows [1.7.6]
 
 `activateShadows` works only for cube for now.
 
@@ -340,7 +340,7 @@ App.scene.myCube9.textures.push(App.scene.myCube9.createPixelsTex(options));
 
 ![](https://github.com/zlatnaspirala/matrix-engine/blob/master/non-project-files/1.7.6.png)
 
-### Physics
+## Physics
 
 Physics based on cannon.js
 
@@ -696,6 +696,11 @@ matrixEngine.objLoader.downloadMeshes(
 );
 
 ```
+
+From [2.0.37] if your obj file have groups with string in name `COLLIDER` objLoader
+collect verts for group object. You can use it later for physics.
+There is no yet example with praticle use of group. [WIP]
+
 
 ### Blending:
 
