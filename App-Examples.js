@@ -57,6 +57,7 @@ import {runThis as shader2_direct} from './apps/shader2_direct';
 import {runThis as basic_timeline} from './apps/basic_timeline';
 import {runThis as networking2_basic} from './apps/networking2_basic';
 import {runThis as public_3d_video_chat} from './apps/public_3d_video_chat';
+import {runThis as custom_geometry} from './apps/custom_geometry';
 
 /**
  * @description
@@ -67,6 +68,7 @@ import {runThis as public_3d_video_chat} from './apps/public_3d_video_chat';
  * public/query-build.html?u=spot_light_shadows
  */
 var Examples = {
+	custom_geometry: custom_geometry,
 	public_3d_video_chat: public_3d_video_chat,
 	networking2_basic: networking2_basic,
 	basic_timeline: basic_timeline,

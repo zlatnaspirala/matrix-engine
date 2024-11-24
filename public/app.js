@@ -2,7 +2,7 @@
 "use strict";
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
-var _load_obj_file_groups = require("./apps/load_obj_file_groups.js");
+var _custom_geometry = require("./apps/custom_geometry.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // CHANGE HERE IF YOU WANNA USE app-build.hmtl
@@ -22,59 +22,108 @@ window.webGLStart = () => {
   window.App = App;
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
-  (0, _load_obj_file_groups.runThis)(world);
+  (0, _custom_geometry.runThis)(world);
 };
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/load_obj_file_groups.js":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/custom_geometry.js":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-var _manifest = _interopRequireDefault(require("../program/manifest"));
+var _manifest = _interopRequireDefault(require("../program/manifest.js"));
+var matrixEngine = _interopRequireWildcard(require("../index.js"));
+var CANNON = _interopRequireWildcard(require("cannon"));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
- * Test new feature for objLoader
- * Detecting groups with special name COLLIDER
  */
 
+window.App = _manifest.default;
 var runThis = world => {
-  function onLoadObj(meshes) {
-    for (let key in meshes) {
-      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
-    }
-    var textuteImageSamplers2 = {
-      source: ["res/images/armor.webp"],
-      mix_operation: "multiply"
-    };
-    world.Add("obj", 1, "armor", textuteImageSamplers2, meshes.armor);
-    _manifest.default.scene.armor.position.y = 1;
-    _manifest.default.scene.armor.LightsData.ambientLight.set(1, 1, 1);
-    _manifest.default.scene.armor.position.z = -20;
-  }
-
-  /**
-   * @description
-   * For swap (initial orientation for object) use combination of
-   * swap[0,1]
-   * swap[0,2]
-   * swap[1,3]
-   * to switch x,y,z verts.
-   */
-  matrixEngine.objLoader.downloadMeshes({
-    armor: "res/3d-objects/env/doors/door1.obj"
-  }, onLoadObj, {
-    swap: [0, 2]
+  _manifest.default.camera.SceneController = true;
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
   });
+  window.addEventListener('ray.hit.event', ev => {
+    console.log("You shoot the object! Nice!", ev);
+    if (ev.detail.hitObject.physics.enabled == true) {
+      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+    }
+  });
+  var tex = {
+    source: ["res/images/complex_texture_1/diffuse.webp"],
+    mix_operation: "multiply" // ENUM : multiply , divide ,
+  };
+  let gravityVector = [0, 0, -9.82];
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
+  physics.addGround(_manifest.default, world, tex);
+  function createTetra() {
+    var scale = 2;
+    var verts = [new CANNON.Vec3(scale * 0, scale * 0, scale * 0), new CANNON.Vec3(scale * 2, scale * 0, scale * 0), new CANNON.Vec3(scale * 0, scale * 2, scale * 0), new CANNON.Vec3(scale * 0, scale * 0, scale * 2)];
+    var offset = -0.35;
+    for (var i = 0; i < verts.length; i++) {
+      var v = verts[i];
+      v.x += offset;
+      v.y += offset;
+      v.z += offset;
+    }
+    return new CANNON.ConvexPolyhedron(verts, [[0, 3, 2],
+    // -x
+    [0, 1, 3],
+    // -y
+    [0, 2, 1],
+    // -z
+    [1, 2, 3] // +xyz
+    ]);
+  }
+  world.Add("generatorLightTex", 1, "outsideBox2", tex, {
+    radius: 1,
+    custom_type: 'testConvex',
+    custom_geometry: createTetra()
+  });
+  var testCustomBody = new CANNON.Body({
+    mass: 10,
+    type: CANNON.Body.DYNAMIC,
+    shape: createTetra(),
+    position: new CANNON.Vec3(0, -10, 2)
+  });
+  window.testCustomBody = testCustomBody;
+  physics.world.addBody(testCustomBody);
+  _manifest.default.scene.outsideBox2.physics.currentBody = testCustomBody;
+  _manifest.default.scene.outsideBox2.physics.enabled = true;
+
+  //
+  const objGenerator = n => {
+    for (var j = 0; j < n; j++) {
+      setTimeout(() => {
+        world.Add("sphereLightTex", 1, "BALL" + j, tex);
+        var b2 = new CANNON.Body({
+          mass: 1,
+          linearDamping: 0.005,
+          angularDamping: 0.5,
+          angularVelocity: new CANNON.Vec3(0.01, 0.01, 0),
+          position: new CANNON.Vec3(1, -10, 15),
+          shape: new CANNON.Sphere(1)
+        });
+        physics.world.addBody(b2);
+        _manifest.default.scene['BALL' + j].physics.currentBody = b2;
+        _manifest.default.scene['BALL' + j].physics.enabled = true;
+      }, 1000 * j);
+    }
+  };
+  objGenerator(10);
 };
 exports.runThis = runThis;
 
-},{"../program/manifest":43}],3:[function(require,module,exports){
+},{"../index.js":4,"../program/manifest.js":43,"cannon":40}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5510,6 +5559,7 @@ class sphereVertex {
   }
 }
 exports.sphereVertex = sphereVertex;
+var S1 = new _utility.SWITCHER();
 class customVertex {
   createGeoData(root) {
     this.size = root.size;
@@ -5560,13 +5610,19 @@ class customVertex {
         }
       }
     } else if (this.root.custom_type == "cubic") {
-      for (var j = 0; j < 8; j++) {
+      // console.log('??????????not work for now???????????????')
+      for (var j = 0; j < 118; j++) {
         var x = j + 1 * S1.GET();
         var y = 1;
         var z = j + 1;
         this.normalData.push(x);
         this.normalData.push(y);
         this.normalData.push(z);
+        const u = j / root.loops;
+        const loop_angle = u * 2 * Math.PI;
+        // const v = slice / this.root.slices;
+        const v = 2 / this.root.slices;
+        const slice_angle = v * 2 * Math.PI;
         this.textureCoordData.push(u);
         this.textureCoordData.push(v);
         this.vertexPositionData.push(this.radius * x);
@@ -5626,6 +5682,30 @@ class customVertex {
           v1 += 1;
           v2 += 1;
         }
+      }
+    } else if (this.root.custom_type == "testConvex") {
+      if (this.root.custom_geometry) {
+        this.indexData = [];
+        console.log('[CUSTOM-GEO][from cannonjs]', this.root.custom_geometry);
+        // try to convert direct from CANNON geometry - can be reused for diff stuff.
+        this.root.custom_geometry.vertices.forEach(point => {
+          this.textureCoordData.push(point.x);
+          this.textureCoordData.push(point.y);
+          this.vertexPositionData.push(this.radius * point.x);
+          this.vertexPositionData.push(this.radius * point.y);
+          this.vertexPositionData.push(this.radius * point.z);
+        });
+        this.root.custom_geometry.faceNormals.forEach(point => {
+          this.normalData.push(point.x);
+          this.normalData.push(point.y);
+          this.normalData.push(point.z);
+        });
+        this.root.custom_geometry.faces.forEach(face => {
+          // console.log("FACES", face)
+          face.forEach(f => {
+            this.indexData.push(f);
+          });
+        });
       }
     }
   }
@@ -10672,6 +10752,16 @@ function defineworld(canvas, renderType) {
           customObject.loops = mesh_.loops;
           customObject.inner_rad = mesh_.inner_rad;
           customObject.outerRad = mesh_.outerRad;
+        } else if (mesh_.custom_type == 'testConvex') {
+          // Little diff for this line 
+          // custom_geometry is geometry prepared for CANNONJS
+          customObject.custom_geometry = mesh_.custom_geometry;
+        } else {
+          // same for now DEFAULT
+          customObject.slices = mesh_.slices;
+          customObject.loops = mesh_.loops;
+          customObject.inner_rad = mesh_.inner_rad;
+          customObject.outerRad = mesh_.outerRad;
         }
       } else {
         customObject.latitudeBands = 30;
@@ -10694,7 +10784,7 @@ function defineworld(canvas, renderType) {
         this.contentList[this.contentList.length] = customObject;
         _manifest.default.scene[customObject.name] = customObject;
       } else {
-        console.log("   customObject shader failure");
+        console.log("customObject shader failure");
       }
     }
   };

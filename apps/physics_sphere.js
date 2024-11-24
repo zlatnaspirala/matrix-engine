@@ -26,9 +26,6 @@ export var runThis = (world) => {
 
   const objGenerator = (n) => {
     for(var j = 0;j < n;j++) {
-
-      
-
       setTimeout(() => {
         world.Add("sphereLightTex", 1, "BALL" + j, tex);
         var b2 = new CANNON.Body({
@@ -45,7 +42,6 @@ export var runThis = (world) => {
         App.scene['BALL' + j].physics.enabled = true;
       }, 1000 * j)
     }
-
   }
 
   objGenerator(10)

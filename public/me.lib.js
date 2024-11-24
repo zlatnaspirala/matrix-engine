@@ -316,7 +316,6 @@ var _matrixShaders2 = require("./matrix-shaders1");
 var _clientConfig = _interopRequireDefault(require("../client-config"));
 var _sounds = require("./sounds");
 var _app = require("../networking2/app");
-var _matrixStream = require("../networking2/matrix-stream");
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 if (_manifest.default.offScreenCanvas == true || _utility.QueryString.offScreen == 'true') {
   _manifest.default.offScreenCanvas = true;
@@ -480,14 +479,11 @@ function defineWebGLWorld(cavnas) {
   return world;
 }
 function updateFPS(elements) {
-  // console.log(" Update FPS");
   var now = new Date().getTime();
   var delta = now - lastTime;
   exports.lastTime = lastTime = now;
   exports.totalTime = totalTime = totalTime + delta;
   exports.updateTime = updateTime = updateTime + delta;
-
-  // eslint-disable-next-line no-global-assign
   (0, _matrixWorld.modifyFrames)(_matrixWorld.frames + 1);
   exports.updateFrames = updateFrames = updateFrames + 1;
   if (1000 < updateTime) {
@@ -497,13 +493,11 @@ function updateFPS(elements) {
   }
 }
 function drawCanvas() {
-  // console.log("Init the canvas...");
   var canvas = document.createElement('canvas');
   canvas.id = 'canvas';
   if (_manifest.default.resize.canvas == 'full-screen') {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    // SYS.DEBUG.LOG('SYS: fullscreen diametric resize is active. ');
   } else {
     canvas.width = window.innerHeight * _manifest.default.resize.aspectRatio;
     canvas.height = window.innerHeight;
@@ -512,7 +506,7 @@ function drawCanvas() {
   document.body.append(canvas);
 }
 
-// Degree to Radian converter 
+// Degree to Radian converter
 function degToRad(degrees) {
   return degrees * Math.PI / 180;
 }
@@ -861,59 +855,41 @@ var webcamError = function (e) {
 };
 exports.webcamError = webcamError;
 function SET_STREAM(video) {
-  var videoSrc = null;
-  navigator.mediaDevices.enumerateDevices().then(getDevices).then(getStream).catch(() => {
-    alert('ERR MEDIA');
+  let v;
+  if ((0, _utility.isMobile)() == true) {
+    v = true; // {deviceId: {exact: videoSrc}, facingMode: 'user'}
+  } else {
+    v = true;
+  }
+  navigator.mediaDevices.getUserMedia({
+    audio: false,
+    video: v
+  }).then(stream => {
+    try {
+      video.srcObject = stream;
+      console.log('[me][new-gen-device]', stream);
+    } catch (error) {
+      video.src = window.URL.createObjectURL(stream);
+      console.log('[me][old-gen-device]', stream);
+    }
+    navigator.mediaDevices.enumerateDevices().then(devices => {
+      devices.forEach(device => {
+        if (_manifest.default.printDevicesInfo == true) console.log('device.label :', device.label);
+      });
+    });
+  }).catch(error => {
+    console.log('Error :', error);
   });
-  function getDevices(deviceInfos) {
-    for (var i = 0; i !== deviceInfos.length; ++i) {
-      var deviceInfo = deviceInfos[i];
-      if (deviceInfo.kind === 'videoinput') {
-        videoSrc = deviceInfo.deviceId;
-        break;
-      }
-    }
-  }
-  function getStream() {
-    if (navigator.getUserMedia) {
-      var VIDEO__;
-      if (isMobile() == true) {
-        VIDEO__ = {
-          deviceId: {
-            exact: videoSrc
-          },
-          facingMode: 'user'
-        };
-      } else {
-        VIDEO__ = true;
-      }
-      navigator.getUserMedia({
-        audio: true,
-        video: VIDEO__
-      }, function (stream) {
-        try {
-          console.log('stream1', stream);
-          video.srcObject = stream;
-          console.log('stream2', stream);
-        } catch (error) {
-          video.src = window.URL.createObjectURL(stream);
-        }
-      }, webcamError);
-    } else if (navigator.webkitGetUserMedia) {
-      navigator.webkitGetUserMedia({
-        audio: true,
-        video: true
-      }, function (stream) {
-        try {
-          video.srcObject = stream;
-        } catch (error) {
-          video.src = window.URL.createObjectURL(stream);
-        }
-      }, webcamError);
-    } else {
-      alert('webcam broken.');
-    }
-  }
+  // var videoSrc = null;
+  // function getDevices(deviceInfos) {
+  // 	for(var i = 0;i !== deviceInfos.length;++i) {
+  // 		var deviceInfo = deviceInfos[i];
+  // 		if(deviceInfo.kind === 'videoinput') {
+  // 			videoSrc = deviceInfo.deviceId;
+  // 			break;
+  // 		}
+  // 	}
+  // }
 }
 function ACCESS_CAMERA(htmlElement) {
   var ROOT = this;
@@ -1181,7 +1157,7 @@ function DOM_VT(video, name, options) {
   };
 }
 
-},{"../client-config":1,"../networking2/app":33,"../networking2/matrix-stream":34,"../program/manifest":42,"./events":5,"./matrix-render":13,"./matrix-shaders1":14,"./matrix-shaders3":15,"./matrix-world":19,"./net":20,"./sounds":30,"./utility":31,"./webgl-utils":32}],5:[function(require,module,exports){
+},{"../client-config":1,"../networking2/app":33,"../program/manifest":42,"./events":5,"./matrix-render":13,"./matrix-shaders1":14,"./matrix-shaders3":15,"./matrix-world":19,"./net":20,"./sounds":30,"./utility":31,"./webgl-utils":32}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1532,21 +1508,20 @@ camera.yawAmp = 0.077;
 camera.pitchAmp = 0.017;
 camera.virtualJumpY = 2;
 camera.virtualJumpActive = false;
+camera.moveLeft = false;
 camera.preventSpeedZero = false;
-
-// eslint-disable-next-line no-global-assign
 var keyboardPress = exports.keyboardPress = defineKeyBoardObject();
 
 // For FirstPersonController
 camera.setCamera = function (object) {
-  if (keyboardPress.getKeyStatus(37) || keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
-    /* Left Key  or A */
+  if (keyboardPress.getKeyStatus(65) || _manifest.default.camera.leftEdge == true) {
+    /* A */
     camera.yawRate = _manifest.default.camera.yawRate;
     if (_manifest.default.camera.leftEdge == true) {
       camera.yawRate = _manifest.default.camera.yawRateOnEdge;
     }
-  } else if (keyboardPress.getKeyStatus(39) || keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
-    /* Right Key or D */
+  } else if (keyboardPress.getKeyStatus(68) || _manifest.default.camera.rightEdge == true) {
+    /* D */
     camera.yawRate = -_manifest.default.camera.yawRate;
     if (_manifest.default.camera.rightEdge == true) {
       camera.yawRate = -_manifest.default.camera.yawRateOnEdge;
@@ -1557,18 +1532,26 @@ camera.setCamera = function (object) {
       this.virtualJumpActive = true;
     }
   }
-  /* Up Key or W */
-  if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
+  if (keyboardPress.getKeyStatus(37)) {
+    /* Left Key  || App.camera.leftEdge == true*/
+    camera.moveLeft = true;
+    camera.speed = _manifest.default.camera.speedAmp;
+  } else if (keyboardPress.getKeyStatus(39)) {
+    /* Right Key || App.camera.rightEdge == true */
+    camera.moveRight = true;
+    camera.speed = _manifest.default.camera.speedAmp;
+  } else if (keyboardPress.getKeyStatus(38) || keyboardPress.getKeyStatus(87)) {
+    /* Up Key or W */
     camera.speed = _manifest.default.camera.speedAmp;
   } else if (keyboardPress.getKeyStatus(40) || keyboardPress.getKeyStatus(83)) {
     /* Down Key or S */
     camera.speed = -_manifest.default.camera.speedAmp;
   } else {
-    if (camera.preventSpeedZero == false) camera.speed = 0;
+    // if(camera.preventSpeedZero == false) camera.speed = 0;
   }
 
   /* Calculate yaw, pitch and roll(x,y,z) */
-  if (camera.speed != 0) {
+  if (camera.speed != 0 && camera.moveLeft == false && camera.moveRight == false) {
     camera.xPos -= Math.sin(degToRad(camera.yaw)) * camera.speed;
     if (camera.fly == true) {
       // Fly regime
@@ -1580,6 +1563,14 @@ camera.setCamera = function (object) {
       // leave it zero by default lets dirigent from top
     }
     camera.zPos -= Math.cos(degToRad(camera.yaw)) * camera.speed;
+  } else if (camera.moveLeft == true) {
+    // by side move left
+    camera.xPos -= Math.sin(degToRad(camera.yaw + 90)) * camera.speed;
+    camera.zPos -= Math.cos(degToRad(camera.yaw + 90)) * camera.speed;
+  } else if (camera.moveRight == true) {
+    // by side move rigth
+    camera.xPos -= Math.sin(degToRad(camera.yaw - 90)) * camera.speed;
+    camera.zPos -= Math.cos(degToRad(camera.yaw - 90)) * camera.speed;
   }
   camera.yaw += camera.yawRate * camera.yawAmp;
   camera.pitch += camera.pitchRate * camera.pitchAmp;
@@ -1588,6 +1579,10 @@ camera.setCamera = function (object) {
   mat4.translate(object.mvMatrix, object.mvMatrix, [-camera.xPos, -camera.yPos, -camera.zPos]);
   camera.yawRate = 0;
   camera.pitchRate = 0;
+  // update
+  camera.moveLeft = false;
+  camera.moveRight = false;
+  if (camera.preventSpeedZero == false) camera.speed = 0;
 };
 
 // For sceneController
@@ -1721,64 +1716,64 @@ class constructMesh {
     if (typeof callback === 'undefined') callback = function () {};
     let initOrientation = [0, 1, 2];
     /*
-      The OBJ file format does a sort of compression when saving a model in a
-      program like Blender. There are at least 3 sections (4 including textures)
-      within the file. Each line in a section begins with the same string:
-        * 'v': indicates vertex section
-        * 'vn': indicates vertex normal section
-        * 'f': indicates the faces section
-        * 'vt': indicates vertex texture section (if textures were used on the model)
-      Each of the above sections (except for the faces section) is a list/set of
-      unique vertices.
-      Each line of the faces section contains a list of
-      (vertex, [texture], normal) groups
-      Some examples:
-          // the texture index is optional, both formats are possible for models
-          // without a texture applied
-          f 1/25 18/46 12/31
-          f 1//25 18//46 12//31
-          // A 3 vertex face with texture indices
-          f 16/92/11 14/101/22 1/69/1
-          // A 4 vertex face
-          f 16/92/11 40/109/40 38/114/38 14/101/22
-      The first two lines are examples of a 3 vertex face without a texture applied.
-      The second is an example of a 3 vertex face with a texture applied.
-      The third is an example of a 4 vertex face. Note: a face can contain N
-      number of vertices.
-      Each number that appears in one of the groups is a 1-based index
-      corresponding to an item from the other sections (meaning that indexing
-      starts at one and *not* zero).
-      For example:
-          `f 16/92/11` is saying to
-            - take the 16th element from the [v] vertex array
-            - take the 92nd element from the [vt] texture array
-            - take the 11th element from the [vn] normal array
-          and together they make a unique vertex.
-      Using all 3+ unique Vertices from the face line will produce a polygon.
-      Now, you could just go through the OBJ file and create a new vertex for
-      each face line and WebGL will draw what appears to be the same model.
-      However, vertices will be overlapped and duplicated all over the place.
-      Consider a cube in 3D space centered about the origin and each side is
-      2 units long. The front face (with the positive Z-axis pointing towards
-      you) would have a Top Right vertex (looking orthogonal to its normal)
-      mapped at (1,1,1) The right face would have a Top Left vertex (looking
-      orthogonal to its normal) at (1,1,1) and the top face would have a Bottom
-      Right vertex (looking orthogonal to its normal) at (1,1,1). Each face
-      has a vertex at the same coordinates, however, three distinct vertices
-      will be drawn at the same spot.
-      To solve the issue of duplicate Vertices (the `(vertex, [texture], normal)`
-      groups), while iterating through the face lines, when a group is encountered
-      the whole group string ('16/92/11') is checked to see if it exists in the
-      packed.hashindices object, and if it doesn't, the indices it specifies
-      are used to look up each attribute in the corresponding attribute arrays
-      already created. The values are then copied to the corresponding unpacked
-      array (flattened to play nice with WebGL's ELEMENT_ARRAY_BUFFER indexing),
-      the group string is added to the hashindices set and the current unpacked
-      index is used as this hashindices value so that the group of elements can
-      be reused. The unpacked index is incremented. If the group string already
-      exists in the hashindices object, its corresponding value is the index of
-      that group and is appended to the unpacked indices array.
-      */
+    	The OBJ file format does a sort of compression when saving a model in a
+    	program like Blender. There are at least 3 sections (4 including textures)
+    	within the file. Each line in a section begins with the same string:
+    		* 'v': indicates vertex section
+    		* 'vn': indicates vertex normal section
+    		* 'f': indicates the faces section
+    		* 'vt': indicates vertex texture section (if textures were used on the model)
+    	Each of the above sections (except for the faces section) is a list/set of
+    	unique vertices.
+    	Each line of the faces section contains a list of
+    	(vertex, [texture], normal) groups
+    	Some examples:
+    			// the texture index is optional, both formats are possible for models
+    			// without a texture applied
+    			f 1/25 18/46 12/31
+    			f 1//25 18//46 12//31
+    			// A 3 vertex face with texture indices
+    			f 16/92/11 14/101/22 1/69/1
+    			// A 4 vertex face
+    			f 16/92/11 40/109/40 38/114/38 14/101/22
+    	The first two lines are examples of a 3 vertex face without a texture applied.
+    	The second is an example of a 3 vertex face with a texture applied.
+    	The third is an example of a 4 vertex face. Note: a face can contain N
+    	number of vertices.
+    	Each number that appears in one of the groups is a 1-based index
+    	corresponding to an item from the other sections (meaning that indexing
+    	starts at one and *not* zero).
+    	For example:
+    			`f 16/92/11` is saying to
+    				- take the 16th element from the [v] vertex array
+    				- take the 92nd element from the [vt] texture array
+    				- take the 11th element from the [vn] normal array
+    			and together they make a unique vertex.
+    	Using all 3+ unique Vertices from the face line will produce a polygon.
+    	Now, you could just go through the OBJ file and create a new vertex for
+    	each face line and WebGL will draw what appears to be the same model.
+    	However, vertices will be overlapped and duplicated all over the place.
+    	Consider a cube in 3D space centered about the origin and each side is
+    	2 units long. The front face (with the positive Z-axis pointing towards
+    	you) would have a Top Right vertex (looking orthogonal to its normal)
+    	mapped at (1,1,1) The right face would have a Top Left vertex (looking
+    	orthogonal to its normal) at (1,1,1) and the top face would have a Bottom
+    	Right vertex (looking orthogonal to its normal) at (1,1,1). Each face
+    	has a vertex at the same coordinates, however, three distinct vertices
+    	will be drawn at the same spot.
+    	To solve the issue of duplicate Vertices (the `(vertex, [texture], normal)`
+    	groups), while iterating through the face lines, when a group is encountered
+    	the whole group string ('16/92/11') is checked to see if it exists in the
+    	packed.hashindices object, and if it doesn't, the indices it specifies
+    	are used to look up each attribute in the corresponding attribute arrays
+    	already created. The values are then copied to the corresponding unpacked
+    	array (flattened to play nice with WebGL's ELEMENT_ARRAY_BUFFER indexing),
+    	the group string is added to the hashindices set and the current unpacked
+    	index is used as this hashindices value so that the group of elements can
+    	be reused. The unpacked index is incremented. If the group string already
+    	exists in the hashindices object, its corresponding value is the index of
+    	that group and is appended to the unpacked indices array.
+    	*/
     var verts = [],
       vertNormals = [],
       textures = [],
@@ -1793,6 +1788,8 @@ class constructMesh {
     // array of lines separated by the newline
     var lines = objectData.split('\n');
 
+    // test group catch data bpund or center
+    var objGroups = [];
     // update swap orientation
     if (inputArg.swap[0] !== null) {
       swap(inputArg.swap[0], inputArg.swap[1], initOrientation);
@@ -1809,6 +1806,9 @@ class constructMesh {
       if (VERTEX_RE.test(line)) {
         // if this is a vertex
         verts.push.apply(verts, elements);
+        if (objGroups.length > 0) {
+          objGroups[objGroups.length - 1].groupVert.push(elements);
+        }
       } else if (NORMAL_RE.test(line)) {
         // if this is a vertex normal
         vertNormals.push.apply(vertNormals, elements);
@@ -1818,12 +1818,12 @@ class constructMesh {
       } else if (FACE_RE.test(line)) {
         // if this is a face
         /*
-          split this face into an array of vertex groups
-          for example:
-            f 16/92/11 14/101/22 1/69/1
-          becomes:
-            ['16/92/11', '14/101/22', '1/69/1'];
-          */
+        	split this face into an array of vertex groups
+        	for example:
+        		f 16/92/11 14/101/22 1/69/1
+        	becomes:
+        		['16/92/11', '14/101/22', '1/69/1'];
+        	*/
         var quad = false;
         for (var j = 0, eleLen = elements.length; j < eleLen; j++) {
           // Triangulating quads
@@ -1840,35 +1840,35 @@ class constructMesh {
             unpacked.indices.push(unpacked.hashindices[elements[j]]);
           } else {
             /*
-                  Each element of the face line array is a vertex which has its
-                  attributes delimited by a forward slash. This will separate
-                  each attribute into another array:
-                      '19/92/11'
-                  becomes:
-                      vertex = ['19', '92', '11'];
-                  where
-                      vertex[0] is the vertex index
-                      vertex[1] is the texture index
-                      vertex[2] is the normal index
-                  Think of faces having Vertices which are comprised of the
-                  attributes location (v), texture (vt), and normal (vn).
-                  */
+            			Each element of the face line array is a vertex which has its
+            			attributes delimited by a forward slash. This will separate
+            			each attribute into another array:
+            					'19/92/11'
+            			becomes:
+            					vertex = ['19', '92', '11'];
+            			where
+            					vertex[0] is the vertex index
+            					vertex[1] is the texture index
+            					vertex[2] is the normal index
+            			Think of faces having Vertices which are comprised of the
+            			attributes location (v), texture (vt), and normal (vn).
+            			*/
             var vertex = elements[j].split('/');
             /*
-                  The verts, textures, and vertNormals arrays each contain a
-                  flattend array of coordinates.
-                  Because it gets confusing by referring to vertex and then
-                  vertex (both are different in my descriptions) I will explain
-                  what's going on using the vertexNormals array:
-                  vertex[2] will contain the one-based index of the vertexNormals
-                  section (vn). One is subtracted from this index number to play
-                  nice with javascript's zero-based array indexing.
-                  Because vertexNormal is a flattened array of x, y, z values,
-                  simple pointer arithmetic is used to skip to the start of the
-                  vertexNormal, then the offset is added to get the correct
-                  component: +0 is x, +1 is y, +2 is z.
-                  This same process is repeated for verts and textures.
-                  */
+            			The verts, textures, and vertNormals arrays each contain a
+            			flattend array of coordinates.
+            			Because it gets confusing by referring to vertex and then
+            			vertex (both are different in my descriptions) I will explain
+            			what's going on using the vertexNormals array:
+            			vertex[2] will contain the one-based index of the vertexNormals
+            			section (vn). One is subtracted from this index number to play
+            			nice with javascript's zero-based array indexing.
+            			Because vertexNormal is a flattened array of x, y, z values,
+            			simple pointer arithmetic is used to skip to the start of the
+            			vertexNormal, then the offset is added to get the correct
+            			component: +0 is x, +1 is y, +2 is z.
+            			This same process is repeated for verts and textures.
+            			*/
             // vertex position
             unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[0]] * inputArg.scale);
             unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[1]] * inputArg.scale);
@@ -1894,12 +1894,33 @@ class constructMesh {
             unpacked.indices.push(unpacked.hashindices[elements[0]]);
           }
         }
+      } else {
+        if (line.indexOf('# ') != -1) {
+          // console.log('obj loader comment:', line)
+        } else if (line.indexOf('mtllib') != -1) {
+          // console.log('obj loader MTL file:', line)
+        } else if (line.indexOf('g ') != -1) {
+          // console.log('obj loader group :', line)
+          var nameOFGroup = line.split(' ')[1];
+          if (nameOFGroup.indexOf('COLLIDER') != -1) {
+            console.log('obj loader group [SPECIAL CASE COLLIDER]:', nameOFGroup);
+            objGroups.push({
+              groupName: nameOFGroup,
+              groupVert: []
+            });
+          }
+        }
       }
     }
     this.vertices = unpacked.verts;
     this.vertexNormals = unpacked.norms;
     this.textures = unpacked.textures;
     this.indices = unpacked.indices;
+    if (objGroups.length > 0) {
+      this.groups = objGroups;
+    } else {
+      this.groups = null;
+    }
     callback();
     return this;
   };
@@ -2021,53 +2042,6 @@ var _buildBuffer = function (gl, type, data, itemSize) {
  * **indexBuffer**        |contains the indices of the faces
  * indexBuffer.itemSize   |is set to 1
  * indexBuffer.numItems   |the total number of indices
- *
- * A simple example (a lot of steps are missing, so don't copy and paste):
- *
- *     var gl   = canvas.getContext('webgl'),
- *         mesh = OBJ.Mesh(obj_file_data);
- *     // compile the shaders and create a shader program
- *     var shaderProgram = gl.createProgram();
- *     // compilation stuff here
- *     ...
- *     // make sure you have vertex, vertex normal, and texture coordinate
- *     // attributes located in your shaders and attach them to the shader program
- *     shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
- *     gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
- *
- *     shaderProgram.vertexNormalAttribute = gl.getAttribLocation(shaderProgram, "aVertexNormal");
- *     gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);
- *
- *     shaderProgram.textureCoordAttribute = gl.getAttribLocation(shaderProgram, "aTextureCoord");
- *     gl.enableVertexAttribArray(shaderProgram.textureCoordAttribute);
- *
- *     // create and initialize the vertex, vertex normal, and texture coordinate buffers
- *     // and save on to the mesh object
- *     OBJ.initMeshBuffers(gl, mesh);
- *
- *     // now to render the mesh
- *     gl.bindBuffer(gl.ARRAY_BUFFER, mesh.vertexBuffer);
- *     gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, mesh.vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
- *     // it's possible that the mesh doesn't contain
- *     // any texture coordinates (e.g. suzanne.obj in the development branch).
- *     // in this case, the texture vertexAttribArray will need to be disabled
- *     // before the call to drawElements
- *     if(!mesh.textures.length){
- *       gl.disableVertexAttribArray(shaderProgram.textureCoordAttribute);
- *     }
- *     else{
- *       // if the texture vertexAttribArray has been previously
- *       // disabled, then it needs to be re-enabled
- *       gl.enableVertexAttribArray(shaderProgram.textureCoordAttribute);
- *       gl.bindBuffer(gl.ARRAY_BUFFER, mesh.textureBuffer);
- *       gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, mesh.textureBuffer.itemSize, gl.FLOAT, false, 0, 0);
- *     }
- *
- *     gl.bindBuffer(gl.ARRAY_BUFFER, mesh.normalBuffer);
- *     gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, mesh.normalBuffer.itemSize, gl.FLOAT, false, 0, 0);
- *
- *     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, model.mesh.indexBuffer);
- *     gl.drawElements(gl.TRIANGLES, model.mesh.indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
  */
 var initMeshBuffers = function (gl, mesh) {
   mesh.normalBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.vertexNormals, 3);
@@ -2089,24 +2063,24 @@ var deleteMeshBuffers = function (gl, mesh) {
  * This is adaptation for blender obj animation export.
  * For example:
  *    matrixEngine.objLoader.downloadMeshes(
-      matrixEngine.objLoader.makeObjSeqArg(
-        {
-          id: objName,
-          joinMultiPahts: [
-            {
-              path: "res/bvh-skeletal-base/swat-guy/seq-walk/low/swat",
-              id: objName,
-              from: 1, to: 34
-            },
-            {
-              path: "res/bvh-skeletal-base/swat-guy/seq-walk-pistol/low/swat-walk-pistol",
-              id: objName,
-              from: 35, to: 54
-            }
-          ]
-        }),
-      onLoadObj
-    );
+			matrixEngine.objLoader.makeObjSeqArg(
+				{
+					id: objName,
+					joinMultiPahts: [
+						{
+							path: "res/bvh-skeletal-base/swat-guy/seq-walk/low/swat",
+							id: objName,
+							from: 1, to: 34
+						},
+						{
+							path: "res/bvh-skeletal-base/swat-guy/seq-walk-pistol/low/swat-walk-pistol",
+							id: objName,
+							from: 35, to: 54
+						}
+					]
+				}),
+			onLoadObj
+		);
  */
 exports.deleteMeshBuffers = deleteMeshBuffers;
 const makeObjSeqArg = arg => {
@@ -2122,7 +2096,6 @@ const makeObjSeqArg = arg => {
       } else if (z > 99 && z < 999) {
         zeros = '000';
       } // no need more then 999
-
       if (helper == arg.from && noInitial === false) {
         l[arg.id] = arg.path + '_' + zeros + z + '.obj';
       } else {
@@ -2163,7 +2136,7 @@ function play(nameAni) {
   this.animation.currentAni = this.animation.anims[this.animation.anims.active].from;
 }
 
-// TEST 
+// TEST
 // add destroy animation meshs procedure
 
 },{"./matrix-world":19}],7:[function(require,module,exports){
@@ -5480,6 +5453,7 @@ class sphereVertex {
   }
 }
 exports.sphereVertex = sphereVertex;
+var S1 = new _utility.SWITCHER();
 class customVertex {
   createGeoData(root) {
     this.size = root.size;
@@ -5530,13 +5504,19 @@ class customVertex {
         }
       }
     } else if (this.root.custom_type == "cubic") {
-      for (var j = 0; j < 8; j++) {
+      // console.log('??????????not work for now???????????????')
+      for (var j = 0; j < 118; j++) {
         var x = j + 1 * S1.GET();
         var y = 1;
         var z = j + 1;
         this.normalData.push(x);
         this.normalData.push(y);
         this.normalData.push(z);
+        const u = j / root.loops;
+        const loop_angle = u * 2 * Math.PI;
+        // const v = slice / this.root.slices;
+        const v = 2 / this.root.slices;
+        const slice_angle = v * 2 * Math.PI;
         this.textureCoordData.push(u);
         this.textureCoordData.push(v);
         this.vertexPositionData.push(this.radius * x);
@@ -5596,6 +5576,30 @@ class customVertex {
           v1 += 1;
           v2 += 1;
         }
+      }
+    } else if (this.root.custom_type == "testConvex") {
+      if (this.root.custom_geometry) {
+        this.indexData = [];
+        console.log('[CUSTOM-GEO][from cannonjs]', this.root.custom_geometry);
+        // try to convert direct from CANNON geometry - can be reused for diff stuff.
+        this.root.custom_geometry.vertices.forEach(point => {
+          this.textureCoordData.push(point.x);
+          this.textureCoordData.push(point.y);
+          this.vertexPositionData.push(this.radius * point.x);
+          this.vertexPositionData.push(this.radius * point.y);
+          this.vertexPositionData.push(this.radius * point.z);
+        });
+        this.root.custom_geometry.faceNormals.forEach(point => {
+          this.normalData.push(point.x);
+          this.normalData.push(point.y);
+          this.normalData.push(point.z);
+        });
+        this.root.custom_geometry.faces.forEach(face => {
+          // console.log("FACES", face)
+          face.forEach(f => {
+            this.indexData.push(f);
+          });
+        });
       }
     }
   }
@@ -9161,7 +9165,7 @@ window.quat2 = glMatrix.quat2;
 window.vec2 = glMatrix.vec2;
 window.vec3 = glMatrix.vec3;
 window.vec4 = glMatrix.vec4;
-console.info(`%cMatrix-Engine %c 2.0.0 BETA 🛸`, CS1, CS1);
+console.info(`%cMatrix-Engine %c 2.0.31 🛸`, CS1, CS1);
 var lastChanges = `
 [2.0.0] New networking based on kurento service and OpenVide web client
 [1.9.40] First version with both support opengles11/2 and opengles300
@@ -10642,6 +10646,16 @@ function defineworld(canvas, renderType) {
           customObject.loops = mesh_.loops;
           customObject.inner_rad = mesh_.inner_rad;
           customObject.outerRad = mesh_.outerRad;
+        } else if (mesh_.custom_type == 'testConvex') {
+          // Little diff for this line 
+          // custom_geometry is geometry prepared for CANNONJS
+          customObject.custom_geometry = mesh_.custom_geometry;
+        } else {
+          // same for now DEFAULT
+          customObject.slices = mesh_.slices;
+          customObject.loops = mesh_.loops;
+          customObject.inner_rad = mesh_.inner_rad;
+          customObject.outerRad = mesh_.outerRad;
         }
       } else {
         customObject.latitudeBands = 30;
@@ -10664,7 +10678,7 @@ function defineworld(canvas, renderType) {
         this.contentList[this.contentList.length] = customObject;
         _manifest.default.scene[customObject.name] = customObject;
       } else {
-        console.log("   customObject shader failure");
+        console.log("customObject shader failure");
       }
     }
   };
@@ -38387,6 +38401,7 @@ var App = {
   updateBeforeDraw: [],
   audioSystem: {},
   // readOnly in manifest
+  printDevicesInfo: false,
   pwa: {
     addToHomePage: true
   },
