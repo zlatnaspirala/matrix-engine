@@ -1,6 +1,6 @@
 {
   "name": "matrix-engine",
-  "version": "2.0.38",
+  "version": "2.1.1",
   "description": "Improved notify box UI. Test netPos Offset ; dispatchEvent(new CustomEvent(net-ready, {}, HOT FIX for npm  [2.0.4 BETA] Implementing new networking based on kurento/OpenVidu service. [1.9.58]Timeline improved [1.9.54] Loading shadertoy or any other custom shader - mix or not with standard matrixengine shader. Loading glsl files. [1.9.47] All examples works on android mobile browser chrome, [1.9.x Thunder] Matrix-engine is super fast webgl library based on glmatrix 2.xx engine. Features comes with matrix-engine : Blending, CameraScene, FBO, FPS, ARRAY-instanced draws, scene object transformation, obj loader, obj seq loader, Networking ,full standalone 3d video chat, active 2d textures etc...",
   "main": "index.js",
   "directories": {

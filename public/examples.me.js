@@ -1631,7 +1631,7 @@ var runThis = world => {
   physics.addGround(_manifest.default, world, tex);
   function createTetra() {
     var scale = 2;
-    var verts = [new CANNON.Vec3(scale * 0, scale * 0, scale * 0), new CANNON.Vec3(scale * 2, scale * 0, scale * 0), new CANNON.Vec3(scale * 0, scale * 2, scale * 0), new CANNON.Vec3(scale * 0, scale * 0, scale * 2)];
+    var verts = [new CANNON.Vec3(scale * 0, scale * 0, scale * 0), new CANNON.Vec3(scale * 0.3, scale * 0, scale * 0), new CANNON.Vec3(scale * 0, scale * 0.3, scale * 0), new CANNON.Vec3(scale * 0, scale * 0, scale * 0.3)];
     var offset = -0.35;
     for (var i = 0; i < verts.length; i++) {
       var v = verts[i];
@@ -8948,7 +8948,7 @@ _manifest.default.operation.draws.cube = function (object, ray) {
     if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
     var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.z, object.rotation.axis.y);
     object.rotation.axisSystem[0].normalize();
-    var AXIS = vec3.fromValues(object.rotation.axisSystem[0].x.toFixed(2), object.rotation.axisSystem[0].z.toFixed(2), object.rotation.axisSystem[0].y.toFixed(2));
+    var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), parseFloat(object.rotation.axisSystem[0].y.toFixed(2)));
     var MY_ANGLE = 2 * Math.acos(QP.w);
     // if(radToDeg(object.rotation.angle) > 90) console.log("aNGLE:" + radToDeg(object.rotation.angle) + " VS MY_ANGLE " + radToDeg(MY_ANGLE) + "  axis ++++ " + AXIS)
     // mat4.rotateX(object.mvMatrix, object.mvMatrix, (object.rotation.angle));

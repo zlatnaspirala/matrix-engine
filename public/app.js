@@ -2,7 +2,7 @@
 "use strict";
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
-var _custom_geometry = require("./apps/custom_geometry.js");
+var _physics_cube = require("./apps/physics_cube.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // CHANGE HERE IF YOU WANNA USE app-build.hmtl
@@ -22,30 +22,31 @@ window.webGLStart = () => {
   window.App = App;
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
-  (0, _custom_geometry.runThis)(world);
+  (0, _physics_cube.runThis)(world);
 };
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/custom_geometry.js":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/physics_cube.js":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-var _manifest = _interopRequireDefault(require("../program/manifest.js"));
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
+var _manifest = _interopRequireDefault(require("../program/manifest"));
 var CANNON = _interopRequireWildcard(require("cannon"));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
+ *@Author Nikola Lukic zlatnaspirala@
+ *@Description Matrix Engine Api Example
+ * WORKSHOP SCRIPT
+ * Current theme : SceneController and 
+ * physics (cannon.js) implementation.
  */
 
-window.App = _manifest.default;
 var runThis = world => {
   _manifest.default.camera.SceneController = true;
   canvas.addEventListener('mousedown', ev => {
@@ -53,77 +54,55 @@ var runThis = world => {
   });
   window.addEventListener('ray.hit.event', ev => {
     console.log("You shoot the object! Nice!", ev);
+
+    /**
+     * Physics force apply
+     */
     if (ev.detail.hitObject.physics.enabled == true) {
       ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
     }
   });
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.webp"],
-    mix_operation: "multiply" // ENUM : multiply , divide ,
+    mix_operation: "multiply"
   };
+
+  // Load Physics world!
   let gravityVector = [0, 0, -9.82];
   let physics = world.loadPhysics(gravityVector);
   // Add ground
   physics.addGround(_manifest.default, world, tex);
-  function createTetra() {
-    var scale = 2;
-    var verts = [new CANNON.Vec3(scale * 0, scale * 0, scale * 0), new CANNON.Vec3(scale * 2, scale * 0, scale * 0), new CANNON.Vec3(scale * 0, scale * 2, scale * 0), new CANNON.Vec3(scale * 0, scale * 0, scale * 2)];
-    var offset = -0.35;
-    for (var i = 0; i < verts.length; i++) {
-      var v = verts[i];
-      v.x += offset;
-      v.y += offset;
-      v.z += offset;
-    }
-    return new CANNON.ConvexPolyhedron(verts, [[0, 3, 2],
-    // -x
-    [0, 1, 3],
-    // -y
-    [0, 2, 1],
-    // -z
-    [1, 2, 3] // +xyz
-    ]);
-  }
-  world.Add("generatorLightTex", 1, "outsideBox2", tex, {
-    radius: 1,
-    custom_type: 'testConvex',
-    custom_geometry: createTetra()
+  world.Add("cubeLightTex", 1, "CUBE", tex);
+  var b = new CANNON.Body({
+    mass: 5,
+    position: new CANNON.Vec3(0, -15, 2),
+    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
   });
-  var testCustomBody = new CANNON.Body({
-    mass: 10,
-    type: CANNON.Body.DYNAMIC,
-    shape: createTetra(),
-    position: new CANNON.Vec3(0, -10, 2)
-  });
-  window.testCustomBody = testCustomBody;
-  physics.world.addBody(testCustomBody);
-  _manifest.default.scene.outsideBox2.physics.currentBody = testCustomBody;
-  _manifest.default.scene.outsideBox2.physics.enabled = true;
-
-  //
+  physics.world.addBody(b);
+  // Physics
+  _manifest.default.scene.CUBE.physics.currentBody = b;
+  _manifest.default.scene.CUBE.physics.enabled = true;
   const objGenerator = n => {
     for (var j = 0; j < n; j++) {
       setTimeout(() => {
-        world.Add("sphereLightTex", 1, "BALL" + j, tex);
+        world.Add("cubeLightTex", 1, "CUBE" + j, tex);
         var b2 = new CANNON.Body({
           mass: 1,
-          linearDamping: 0.005,
-          angularDamping: 0.5,
-          angularVelocity: new CANNON.Vec3(0.01, 0.01, 0),
-          position: new CANNON.Vec3(1, -10, 15),
-          shape: new CANNON.Sphere(1)
+          linearDamping: 0.01,
+          position: new CANNON.Vec3(1, -14.5, 15),
+          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
         });
         physics.world.addBody(b2);
-        _manifest.default.scene['BALL' + j].physics.currentBody = b2;
-        _manifest.default.scene['BALL' + j].physics.enabled = true;
+        _manifest.default.scene['CUBE' + j].physics.currentBody = b2;
+        _manifest.default.scene['CUBE' + j].physics.enabled = true;
       }, 1000 * j);
     }
   };
-  objGenerator(10);
+  objGenerator(100);
 };
 exports.runThis = runThis;
 
-},{"../index.js":4,"../program/manifest.js":43,"cannon":40}],3:[function(require,module,exports){
+},{"../program/manifest":43,"cannon":40}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2881,7 +2860,7 @@ _manifest.default.operation.draws.cube = function (object, ray) {
     if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
     var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.z, object.rotation.axis.y);
     object.rotation.axisSystem[0].normalize();
-    var AXIS = vec3.fromValues(object.rotation.axisSystem[0].x.toFixed(2), object.rotation.axisSystem[0].z.toFixed(2), object.rotation.axisSystem[0].y.toFixed(2));
+    var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), parseFloat(object.rotation.axisSystem[0].y.toFixed(2)));
     var MY_ANGLE = 2 * Math.acos(QP.w);
     // if(radToDeg(object.rotation.angle) > 90) console.log("aNGLE:" + radToDeg(object.rotation.angle) + " VS MY_ANGLE " + radToDeg(MY_ANGLE) + "  axis ++++ " + AXIS)
     // mat4.rotateX(object.mvMatrix, object.mvMatrix, (object.rotation.angle));

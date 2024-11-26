@@ -95,3 +95,40 @@ https://blendswap.com/blend/29206
         gl_FragColor = color;
     }
     */
+
+------------------------------------------------------------------
+
+	// // TEST ---------------------
+	// // TEST ---------------------
+	// // NOT WORKING PHYSICS 
+	// var vertices = [
+	// 	0, 0, 0, // vertex 0
+	// 	10, 0, 0, // vertex 1
+	// 	0, 10, 0  // vertex 2
+	// ];
+	// var indices = [
+	// 	0, 1, 2  // triangle 0
+	// ];
+	// world.Add("generatorLightTex", 1, "floorAngle", tex, {
+	// 	radius: 1,
+	// 	custom_type: 'testTrimesh',
+	// 	custom_geometry: new CANNON.Trimesh(vertices, indices),
+	// });
+	// const testCustomBody1 = new CANNON.Body({
+	// 	shape: new CANNON.Trimesh(vertices, indices),
+	// 	// type: CANNON.Body.STATIC,
+	// 	position: new CANNON.Vec3(0, 0, 0)
+	// })
+	// // testCustomBody1.fixedRotation = true;
+	// // testCustomBody1.updateMassProperties();
+	// physics.world.addBody(testCustomBody1);
+	// App.scene.floorAngle.physics.currentBody = testCustomBody1;
+	// App.scene.floorAngle.physics.enabled = true;
+	// maybe not need at all for this type of geo
+	// App.scene['floorAngle'].geometry.setScaleByX(15);
+	// App.scene['floorAngle'].geometry.setScaleByZ(15);
+	// App.scene['floorAngle'].geometry.setScaleByY(1);
+	// // TEST ---------------------
+	// // TEST ---------------------
+	// // NOT WORKING PHYSICS
+	

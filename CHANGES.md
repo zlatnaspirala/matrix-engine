@@ -2,6 +2,21 @@
 
 # Matrix Engine [CHANGES]
 
+[2.1.1] testTrimesh added , visual OK , physics need more updated.
+Cannonjs collision not work for this type of custom geo object...
+```js
+world.Add("generatorLightTex", 1, "floorAngle", tex, {
+		radius: 1,
+		custom_type: 'testTrimesh',
+		custom_geometry: new CANNON.Trimesh(vertices, indices),
+	});
+```
+
+[2.1.0] Much better physics for cube
+Line:
+```js
+var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), parseFloat(object.rotation.axisSystem[0].y.toFixed(2)))
+```
 
 [2.0.38] Full custom geometry inject cannonjs shape object for
 for CANNON.ConvexPolyhedron.

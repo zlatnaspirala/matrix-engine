@@ -34,11 +34,14 @@ export var runThis = world => {
 
 	function createTetra() {
 		var scale = 2;
-		var verts = [new CANNON.Vec3(scale * 0, scale * 0, scale * 0),
-		new CANNON.Vec3(scale * 2, scale * 0, scale * 0),
-		new CANNON.Vec3(scale * 0, scale * 2, scale * 0),
-		new CANNON.Vec3(scale * 0, scale * 0, scale * 2)];
+		var verts = [
+			new CANNON.Vec3(scale * 0, scale * 0, scale * 0),
+			new CANNON.Vec3(scale * 0.3, scale * 0, scale * 0),
+			new CANNON.Vec3(scale * 0, scale * 0.3, scale * 0),
+			new CANNON.Vec3(scale * 0, scale * 0, scale * 0.3)];
+
 		var offset = -0.35;
+
 		for(var i = 0;i < verts.length;i++) {
 			var v = verts[i];
 			v.x += offset;
@@ -73,24 +76,24 @@ export var runThis = world => {
 
 	//
 	const objGenerator = (n) => {
-    for(var j = 0;j < n;j++) {
-      setTimeout(() => {
-        world.Add("sphereLightTex", 1, "BALL" + j, tex);
-        var b2 = new CANNON.Body({
-          mass: 1,
-          linearDamping: 0.005,
-          angularDamping: 0.5,
-          angularVelocity: new CANNON.Vec3(0.01, 0.01, 0),
-          position: new CANNON.Vec3(1, -10, 15),
-          shape: new CANNON.Sphere(1)
-        });
+		for(var j = 0;j < n;j++) {
+			setTimeout(() => {
+				world.Add("sphereLightTex", 1, "BALL" + j, tex);
+				var b2 = new CANNON.Body({
+					mass: 1,
+					linearDamping: 0.005,
+					angularDamping: 0.5,
+					angularVelocity: new CANNON.Vec3(0.01, 0.01, 0),
+					position: new CANNON.Vec3(1, -10, 15),
+					shape: new CANNON.Sphere(1)
+				});
 
-        physics.world.addBody(b2);
-        App.scene['BALL' + j].physics.currentBody = b2;
-        App.scene['BALL' + j].physics.enabled = true;
-      }, 1000 * j)
-    }
-  }
+				physics.world.addBody(b2);
+				App.scene['BALL' + j].physics.currentBody = b2;
+				App.scene['BALL' + j].physics.enabled = true;
+			}, 1000 * j)
+		}
+	}
 
 	objGenerator(10)
 }
