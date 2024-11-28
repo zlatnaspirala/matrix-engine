@@ -701,6 +701,14 @@ From [2.0.37] if your obj file have groups with string in name `COLLIDER` objLoa
 collect verts for group object. You can use it later for physics.
 There is no yet example with praticle use of group. [WIP]
 
+From [2.1.2] You can scale mesh general with: 
+```js
+App.scene.armor.mesh.setScale(2)
+```
+Or by axis:
+```js
+App.scene.armor.mesh.setScale({x:1,y:2,z:2})
+```
 
 ### Blending:
 

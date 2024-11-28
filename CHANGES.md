@@ -2,6 +2,16 @@
 
 # Matrix Engine [CHANGES]
 
+
+[2.1.2]You can scale mesh general with: 
+```js
+App.scene.armor.mesh.setScale(2)
+```
+Or by axis:
+```js
+App.scene.armor.mesh.setScale({x:1,y:2,z:2})
+```
+
 [2.1.1] testTrimesh added , visual OK , physics need more updated.
 Cannonjs collision not work for this type of custom geo object...
 ```js

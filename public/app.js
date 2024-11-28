@@ -2,7 +2,7 @@
 "use strict";
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
-var _physics_cube = require("./apps/physics_cube.js");
+var _load_obj_file = require("./apps/load_obj_file.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // CHANGE HERE IF YOU WANNA USE app-build.hmtl
@@ -22,12 +22,12 @@ window.webGLStart = () => {
   window.App = App;
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
-  (0, _physics_cube.runThis)(world);
+  (0, _load_obj_file.runThis)(world);
 };
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/physics_cube.js":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/load_obj_file.js":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35,74 +35,71 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.runThis = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-var CANNON = _interopRequireWildcard(require("cannon"));
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+/* eslint-disable no-unused-vars */
+
 /**
- *@Author Nikola Lukic zlatnaspirala@
- *@Description Matrix Engine Api Example
- * WORKSHOP SCRIPT
- * Current theme : SceneController and 
- * physics (cannon.js) implementation.
+ * @Author Nikola Lukic
+ * @Description Matrix Engine Api Example.
  */
 
 var runThis = world => {
-  _manifest.default.camera.SceneController = true;
-  canvas.addEventListener('mousedown', ev => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
-  window.addEventListener('ray.hit.event', ev => {
-    console.log("You shoot the object! Nice!", ev);
-
-    /**
-     * Physics force apply
-     */
-    if (ev.detail.hitObject.physics.enabled == true) {
-      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
+  // if you dont use obj or complex mesh you no need for this func
+  function onLoadObj(meshes) {
+    for (let key in meshes) {
+      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
     }
-  });
-  var tex = {
-    source: ["res/images/complex_texture_1/diffuse.webp"],
-    mix_operation: "multiply"
-  };
+    var textuteImageSamplers2 = {
+      source: ["res/images/armor.webp", "res/images/armor.webp"],
+      mix_operation: "multiply"
+    };
+    var textuteImageSamplers = {
+      source: ["res/images/dagger.webp"],
+      mix_operation: "multiply"
+    };
+    world.Add("obj", 1, "armor", textuteImageSamplers2, meshes.armor);
+    _manifest.default.scene.armor.position.y = 1;
+    _manifest.default.scene.armor.rotation.rotationSpeed.y = 20;
+    _manifest.default.scene.armor.LightsData.ambientLight.set(1, 1, 1);
+    _manifest.default.scene.armor.position.z = -6;
+    // App.scene.armor.mesh.setScale(3)
 
-  // Load Physics world!
-  let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector);
-  // Add ground
-  physics.addGround(_manifest.default, world, tex);
-  world.Add("cubeLightTex", 1, "CUBE", tex);
-  var b = new CANNON.Body({
-    mass: 5,
-    position: new CANNON.Vec3(0, -15, 2),
-    shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+    setTimeout(() => {
+      _manifest.default.scene.armor.activateShadows('spot');
+      _manifest.default.scene.mac.activateShadows('spot');
+      // App.scene.armor.shadows.activeUpdate();
+      // App.scene.armor.shadows.animatePositionY();
+    }, 2000);
+
+    // world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers2);
+    // App.scene.MyCubeTex.activateShadows()
+    world.Add("obj", 1, "mac", textuteImageSamplers, meshes.mac);
+    _manifest.default.scene.mac.position.y = 1;
+    _manifest.default.scene.mac.position.x = -2;
+    _manifest.default.scene.mac.rotation.rotationSpeed.y = 20;
+    _manifest.default.scene.mac.LightsData.ambientLight.set(1, 1, 1);
+  }
+
+  /**
+   * @description
+   * For swap (initial orientation for object) use combination of
+   * swap[0,1]
+   * swap[0,2]
+   * swap[1,3]
+   * to switch x,y,z verts.
+   */
+  matrixEngine.objLoader.downloadMeshes({
+    armor: "res/3d-objects/armor.obj",
+    mac: "res/3d-objects/mac.obj"
+  }, onLoadObj, {
+    swap: [0, 2]
   });
-  physics.world.addBody(b);
-  // Physics
-  _manifest.default.scene.CUBE.physics.currentBody = b;
-  _manifest.default.scene.CUBE.physics.enabled = true;
-  const objGenerator = n => {
-    for (var j = 0; j < n; j++) {
-      setTimeout(() => {
-        world.Add("cubeLightTex", 1, "CUBE" + j, tex);
-        var b2 = new CANNON.Body({
-          mass: 1,
-          linearDamping: 0.01,
-          position: new CANNON.Vec3(1, -14.5, 15),
-          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-        });
-        physics.world.addBody(b2);
-        _manifest.default.scene['CUBE' + j].physics.currentBody = b2;
-        _manifest.default.scene['CUBE' + j].physics.enabled = true;
-      }, 1000 * j);
-    }
-  };
-  objGenerator(100);
+
+  //delete images_local_var;
 };
 exports.runThis = runThis;
 
-},{"../program/manifest":43,"cannon":40}],3:[function(require,module,exports){
+},{"../program/manifest":43}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1792,6 +1789,8 @@ class constructMesh {
       this.inputArg.scale = s;
       initMeshBuffers(_matrixWorld.world.GL.gl, this.create(this.objectData, this.inputArg));
     };
+
+    // Never used
     this.updateBuffers = () => {
       this.inputArg.scale = 1;
       initMeshBuffers(_matrixWorld.world.GL.gl, this.create(this.objectData, this.inputArg));
@@ -1954,10 +1953,17 @@ class constructMesh {
             			component: +0 is x, +1 is y, +2 is z.
             			This same process is repeated for verts and textures.
             			*/
-            // vertex position
-            unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[0]] * inputArg.scale);
-            unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[1]] * inputArg.scale);
-            unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[2]] * inputArg.scale);
+
+            // vertex position + scale by axis
+            if (typeof inputArg.scale == "number") {
+              unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[0]] * inputArg.scale);
+              unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[1]] * inputArg.scale);
+              unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[2]] * inputArg.scale);
+            } else {
+              unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[0]] * inputArg.scale.x);
+              unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[1]] * inputArg.scale.y);
+              unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[2]] * inputArg.scale.z);
+            }
 
             // vertex textures
             if (textures.length) {
@@ -5685,6 +5691,22 @@ class customVertex {
             this.indexData.push(f);
           });
         });
+      }
+    } else if (this.root.custom_type == "testTrimesh") {
+      if (this.root.custom_geometry) {
+        this.indexData = [];
+        // FOr trimesh is little dif cannonjs role
+        this.vertexPositionData = this.root.custom_geometry.vertices;
+        if (this.root.custom_geometry.textureCoordData) {
+          this.textureCoordData = this.root.custom_geometry.textureCoordData;
+        } else {
+          this.root.custom_geometry.vertices.forEach(point => {
+            this.textureCoordData.push(point.x);
+            this.textureCoordData.push(point.y);
+          });
+        }
+        this.normalData = this.root.custom_geometry.normals;
+        this.indexData = this.root.custom_geometry.indices;
       }
     }
   }
@@ -10731,7 +10753,7 @@ function defineworld(canvas, renderType) {
           customObject.loops = mesh_.loops;
           customObject.inner_rad = mesh_.inner_rad;
           customObject.outerRad = mesh_.outerRad;
-        } else if (mesh_.custom_type == 'testConvex') {
+        } else if (mesh_.custom_type == 'testConvex' || mesh_.custom_type == 'testTrimesh') {
           // Little diff for this line 
           // custom_geometry is geometry prepared for CANNONJS
           customObject.custom_geometry = mesh_.custom_geometry;
