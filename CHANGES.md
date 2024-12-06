@@ -2,9 +2,11 @@
 
 # Matrix Engine [CHANGES]
 
-[2.2.1] Just added example how to load maps and detect groups vertices.
+[2.1.6] Added map creator from starter project.
 
-[2.2.0] Added MapCreator web tools
+[2.1.1] Just added example how to load maps and detect groups vertices.
+
+[2.1.0] Added MapCreator web tools
  New export for npm pack `meMapLoader`
  Usage:
 Automatic load on refresh me app. MapCreator make saves on every new field.
