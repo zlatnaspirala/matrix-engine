@@ -36,6 +36,8 @@
 
 #### - Swicthing GLSL ver - webGL1 / webGL2 ✔
 
+#### - Loader/Map with collider boxs ✔
+
 #### - OffScreenCanvas ✔
 
 #### - Mobile optimisation ✔
@@ -709,6 +711,31 @@ Or by axis:
 ```js
 App.scene.armor.mesh.setScale({x:1,y:2,z:2})
 ```
+
+
+### Map loader
+[2.2.0] Added MapCreator web tools
+ New export for npm pack `meMapLoader`
+ Usage:
+Automatic load on refresh me app. MapCreator make saves on every new field.
+You need just to refresh page.
+```js
+	if (localStorage.getItem('map') != null) {
+		var t = localStorage.getItem('map');
+		t = JSON.parse(t)
+		meMapLoader.load(t, physics);
+	} else {
+		meMapLoader.load(map, physics);
+	}
+```
+If you wanna just always load map from disk/file then use:
+```js
+import {map} from "../maps/map2";
+...
+meMapLoader.load(map, physics);
+```
+To make map goto `public\tools\map-creator.html`
+
 
 ### Blending:
 

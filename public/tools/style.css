@@ -1,0 +1,198 @@
+@font-face {
+	font-family: stormfaze;
+	src: url(../res/fonts/stormfaze.ttf);
+}
+
+@font-face {
+	font-family: wargames;
+	src: url(../res/fonts/wargames.ttf);
+}
+
+
+/* Scroll bars */
+/* width */
+::-webkit-scrollbar {
+	width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px rgb(128, 128, 128);
+	border-radius: 6px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: silver;
+	border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: rgb(144, 144, 144);
+}
+
+a:link {
+  color: rgb(29, 185, 199);
+  background-color: transparent;
+  text-decoration: none;
+	font-size: smaller;
+}
+
+body {
+	color: rgb(255, 255, 255);
+	background-color: black;
+	font-family: "stormfaze";
+	font-size: 16px;
+	background-color: black;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	text-align: center;
+	-webkit-user-select: none;
+	/* Safari */
+	-ms-user-select: none;
+	/* IE 10 and IE 11 */
+	user-select: none;
+	/* Standard syntax */
+	margin: 0;
+	height: 100%;
+	overflow: hidden;
+}
+
+.root {
+	position: absolute;
+	left: 180px;
+	top: 0;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+}
+
+#paramsPopup {
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: flex;
+	flex-direction: column;
+	width: 180px;
+	height: 100%;
+	border: solid #82a5b1 1px;
+	border-radius: 5px;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+.vertical {
+	display: flex;
+}
+
+.field {
+	width: 100%;
+	border: solid #ffec0012 1px;
+	border-radius: 2px;
+}
+
+.fieldMid {
+	width: 100%;
+	border: solid #d1d1cb54 1px;
+	border-radius: 2px;
+}
+
+.btn {
+	cursor: pointer;
+	background-image: linear-gradient(to right, #1A2980 0%, #26D0CE 51%, #1A2980 100%);
+	margin: 5px;
+	padding: 5px 45px;
+	text-align: center;
+	text-transform: uppercase;
+	transition: 0.5s;
+	background-size: 200% auto;
+	color: white;
+	box-shadow: 0 0 20px #eee;
+	border-radius: 10px;
+	display: block;
+}
+
+.btn:hover {
+	background-position: right center;
+	/* change the direction of the change here */
+	color: #fff;
+	text-decoration: none;
+}
+
+.selecteElement {
+	background-image: linear-gradient(to right, #1A2980 0%, #26D0CE 51%, #1A2980 100%);
+	font-size: 9px;
+	margin: 10px;
+	padding: 5px 3px;
+	text-align: center;
+	text-transform: uppercase;
+	transition: 0.5s;
+	background-size: 200% auto;
+	color: white;
+	box-shadow: 0 0 20px #eee;
+	border-radius: 10px;
+	display: block;
+	width: 165px;
+}
+
+.selecteElementTex{
+	background-image: linear-gradient(to right, #1A2980 0%, #26D0CE 51%, #1A2980 100%);
+	font-size: smaller;
+	margin: 1px;
+	padding: 5px 2px;
+	text-align: center;
+	text-transform: uppercase;
+	transition: 0.5s;
+	background-size: 200% auto;
+	color: white;
+	box-shadow: 0 0 10px #eee;
+	border-radius: 5px;
+	display: block;
+}
+
+.btnOpt {
+	background: #1A2980;
+	padding: 15px 19px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

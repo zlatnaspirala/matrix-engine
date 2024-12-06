@@ -22,6 +22,7 @@ import * as raycaster from './lib/raycast';
 import MEBvhAnimation from './lib/matrix-bvh';
 import {standardMEShaderDrawer, toyShaderHeader, freeShadersToy} from "./lib/optimizer/buildin-shaders";
 import {defineShader} from "./lib/optimizer/buildin-my-shaders";
+import {meMapLoader} from "./lib/map-loader";
 
 export {
   App,
@@ -39,5 +40,6 @@ export {
   toyShaderHeader,
   defineShader,
   standardMEShaderDrawer,
+	meMapLoader,
   freeShadersToy
 }

@@ -5,8 +5,8 @@
  * After basci ver this will be buildin library / call.
  */
 import {ENUMERATORS, byId, isMobile, randomFloatFromTo} from "../lib/utility.js";
-import App from "../program/manifest";
-import {MAP} from "./maps/main-area.js";
+import App from "../program/manifest.js";
+import {MAP} from "./maps/main-area.js.NOT_IN_USE";
 import * as CANNON from 'cannon';
 
 export var runThis = world => {

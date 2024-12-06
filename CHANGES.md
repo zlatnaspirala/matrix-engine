@@ -2,35 +2,89 @@
 
 # Matrix Engine [CHANGES]
 
+[2.2.1] Just added example how to load maps and detect groups vertices.
 
-[2.1.2]You can scale mesh general with: 
+[2.2.0] Added MapCreator web tools
+ New export for npm pack `meMapLoader`
+ Usage:
+Automatic load on refresh me app. MapCreator make saves on every new field.
+You need just to refresh page.
 ```js
-App.scene.armor.mesh.setScale(2)
+	if (localStorage.getItem('map') != null) {
+		var t = localStorage.getItem('map');
+		t = JSON.parse(t)
+		meMapLoader.load(t, physics);
+	} else {
+		meMapLoader.load(map, physics);
+	}
 ```
-Or by axis:
+
+If you wanna just always load map from disk/file then use:
 ```js
-App.scene.armor.mesh.setScale({x:1,y:2,z:2})
+import {map} from "../maps/map2";
+
+...
+
+meMapLoader.load(map, physics);
+```
+
+To make map goto `public\tools\map-creator.html`
+
+
+[2.1.4] draObj DRAW
+
+```js
+object.instancedDraws.overrideDrawArraysInstance(object);
+
+objObject.instancedDraws = {
+  numberOfInstance: 10,
+  array_of_local_offset: [0, 0, 0],
+  overrideDrawArraysInstance: function (object_) {}
+};
+```
+
+[2.1.3] Prevent error [render file]
+
+```js
+else if(local.physics.currentBody.shapeOrientations.length > 1) {
+					// Check
+					if (local.subObjs) for(var x = 0;x < local.subObjs.length;x++) {
+```
+
+[2.1.2]You can scale mesh general with:
+
+```js
+App.scene.armor.mesh.setScale(2);
+```
+
+Or by axis:
+
+```js
+App.scene.armor.mesh.setScale({x: 1, y: 2, z: 2});
 ```
 
 [2.1.1] testTrimesh added , visual OK , physics need more updated.
 Cannonjs collision not work for this type of custom geo object...
+
 ```js
-world.Add("generatorLightTex", 1, "floorAngle", tex, {
-		radius: 1,
-		custom_type: 'testTrimesh',
-		custom_geometry: new CANNON.Trimesh(vertices, indices),
-	});
+world.Add('generatorLightTex', 1, 'floorAngle', tex, {
+  radius: 1,
+  custom_type: 'testTrimesh',
+  custom_geometry: new CANNON.Trimesh(vertices, indices)
+});
 ```
 
 [2.1.0] Much better physics for cube
 Line:
+
 ```js
-var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), parseFloat(object.rotation.axisSystem[0].y.toFixed(2)))
+var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), parseFloat(object.rotation.axisSystem[0].y.toFixed(2)));
 ```
 
 [2.0.38] Full custom geometry inject cannonjs shape object for
 for CANNON.ConvexPolyhedron.
 Example of usage:
+
 ```js
 world.Add('generatorLightTex', 1, 'outsideBox2', tex, {
   radius: 1,

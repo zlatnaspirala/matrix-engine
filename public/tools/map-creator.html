@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Matrix Engine map creator</title>
+	<meta name="description" content="How to use matrix-engine from npm. Enjoy... zlatnaspirala@gmail.com">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<link media="print" onload="this.media='all'" rel="stylesheet" href="style.css">
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://maximumroulette.com">
+	<meta property="og:title" content="Hang3D-Matrix is web multiplayer FPS - hosted on maximumroulette.com">
+	<meta property="og:description" content="Hang3D-Reborn is web multiplayer FPS template based on threejs, ammojs, kurento and openvide project. Welcome here">
+	<meta property="og:image" content="https://maximumroulette.com/apps/magic/public/assets/textures/cube/hang3d.png">
+	<!-- Twitter -->
+	<meta property="twitter:card" content="https://maximumroulette.com/apps/magic/public/assets/textures/cube/hang3d.png">
+	<meta property="twitter:url" content="https://maximumroulette.com">
+	<meta property="twitter:title" content="Hang3D-Matrix is web multiplayer FPS - hosted on maximumroulette.com">
+	<meta property="twitter:description" content="Hang3D-Reborn is web multiplayer FPS template based on threejs, ammojs, kurento and openvide project. Welcome here">
+	<meta property="twitter:image" content="https://maximumroulette.com/apps/magic/public/assets/textures/cube/hang3d.png">
+</head>
+
+<body tabindex="-1">
+	<div id="msgBox" class="msg-box animate1" onclick="mb.copy()"></div>
+	<div id="root" class="root"></div>
+
+	<div id="paramsPopup">
+		<h2 style="margin-top: 1px;margin-bottom: 0;">MatrixEngine MapCreator</h2>
+		<div style="margin-top: 0px;margin-bottom: 10px;" >v1.1.0</div>
+
+		<div id="createMapDom" style="display: block;">
+			<p>Size of map:</p>
+			<div>X:<input class="btn" id="sizeX" type="number" value="50" min="10" max="1000" /></div>
+			<div>Y:<input class="btn" id="sizeY" type="number" value="50" min="10" max="1000" /></div>
+
+			<div>
+				<button class="btn" onclick="mapCreator.run()">Create ME Map</button>
+			</div>
+		</div>
+
+		<div id="mapDom" style="display: none;">
+
+			<div>-------inputs-------</div>
+
+			<div>
+				<p>Layout Y level:</p>
+				<div>Y:<input class="btn" id="levelY" type="number" value="1" min="0" max="1000" /></div>
+			</div>
+
+			<div>
+				<p>Scale:</p>
+				<div>X:<input onchange="mapCreator.checkScale(this)" class="btn" id="scaleX" type="number" value="1" min="1" max="1000" /></div>
+				<div>Y:<input onchange="mapCreator.checkScale(this)" class="btn" id="scaleY" type="number" value="1" min="1" max="1000" /></div>
+				<div>Z:<input onchange="mapCreator.checkScale(this)" class="btn" id="scaleZ" type="number" value="1" min="1" max="1000" /></div>
+			</div>
+
+			<div>
+				<p>Scale collider:</p>
+				<span style="font-size: x-small;">Same like visual scale  <input checked onchange="mapCreator.checkSameScale(this)" type="checkbox" id="sameScale"></span>
+				<div>X:<input class="btn" id="scaleColliderX" type="number" value="1" min="1" max="1000" /></div>
+				<div>Y:<input class="btn" id="scaleColliderY" type="number" value="1" min="1" max="1000" /></div>
+				<div>Z:<input class="btn" id="scaleColliderZ" type="number" value="1" min="1" max="1000" /></div>
+			</div>
+
+			<div>
+				<p>Rotation:</p>
+				<div>X:<input class="btn" id="rotX" type="number" value="0" min="0" max="360" /></div>
+				<div>Y:<input class="btn" id="rotY" type="number" value="0" min="0" max="360" /></div>
+				<div>Z:<input class="btn" id="rotZ" type="number" value="0" min="0" max="360" /></div>
+			</div>
+
+			<div>
+				<p>Active Rotation:</p>
+				<div>X:<input class="btn" id="arotX" type="number" value="0" min="0" max="100" /></div>
+				<div>Y:<input class="btn" id="arotY" type="number" value="0" min="0" max="100" /></div>
+				<div>Z:<input class="btn" id="arotZ" type="number" value="0" min="0" max="100" /></div>
+			</div>
+
+			<div>
+				<p>Type of item:</p>
+				<select class="selecteElement" id="tinput">
+					<option class="btnOpt">ME Cube</option>
+					<option class="btnOpt">NOPHYSICS Cube</option>
+					<option class="btnOpt">Static Floor</option>
+					<option class="btnOpt">Obj group:door1</option>
+					<option class="btnOpt">res/3d-objects/env/rock1.obj</option>
+					<option class="btnOpt">res/3d-objects/env/block1.obj</option>
+					<option class="btnOpt">res/3d-objects/env/pilar1.obj</option>
+					<option class="btnOpt">res/3d-objects/env/pilar2.obj</option>
+				</select>
+			</div>
+
+			<div>
+				<p>Texture:</p>
+				<select class="selecteElement" id="texinput">
+					<option class="btnOpt">res/images/diffuse.png</option>
+					<option class="btnOpt">res/images/n-stone.png</option>
+					<option class="btnOpt">res/images/RustPaint.jpg</option>
+					<option class="btnOpt">res/images/center.png</option>
+					<option class="btnOpt">res/images/tablefeet.png</option>
+					<option class="btnOpt">res/3d-objects/env/metal1.png</option>
+					<option class="btnOpt">res/3d-objects/env/rock1.jpg</option>
+				</select>
+			</div>
+
+			<div>
+				<div>----Inputs saved----</div>
+				<select onchange="mapCreator.onSelectSavedInputParams(this)" class="selecteElement" id="savedInputParams">
+					<option class="btnOpt">DEFAULT</option>
+				</select>
+				<input id="newNameForSavedInputParams" type="text" value="MyInputs1"/>
+				<button class="btn tooltip" onclick="mapCreator.saveInputParams()">
+					<span class="tooltiptext">Save all current inputs fields values. Saved intro localstorage.</span>
+					Save current input
+				</button>
+				<div>----Output----</div>
+				<button class="btn" onclick="mapCreator.clear()">Clear Map⚠️</button>
+				<button class="btn" onclick="mapCreator.undo()">UNDO</button>
+				<button class="btn" onclick="mapCreator.copyMap()">Copy Map</button>
+				<div>
+					<p>Select & open map from file</p>
+					<input id="mapForLoad" type="file" onchange="mapCreator.loadMap(this)"/>
+					<p>----------------</p>
+					<button onclick="mapCreator.download('matrixEngineMap.js', 'text/javascript')">Prepare for export</button>
+					<p><a href="#" id="saveMap">Export map</a></p>
+				</div>
+			</div>
+		</div>
+
+		<a style="margin-top: 10px;" href="https://github.com/zlatnaspirala/matrix-engine-starter">OpenSource project: SourceCode</a>
+	</div>
+	<script src="map-creator.js"></script>
+</body>
+
+</html>
