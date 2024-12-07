@@ -2,6 +2,11 @@
 
 # Matrix Engine [CHANGES]
 
+
+[2.1.12] BVH playInverse improved/fixed.
+
+[2.1.8] playInverseAndStop added new type of  BVHAnimation class.
+
 [2.1.7] Scale by axis new feature for MEBvhAnimation class.
 See example matrix_skeletal.js
 
