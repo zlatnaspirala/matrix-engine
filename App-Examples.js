@@ -60,6 +60,7 @@ import {runThis as public_3d_video_chat} from './apps/public_3d_video_chat';
 import {runThis as custom_geometry} from './apps/custom_geometry';
 import {runThis as load_obj_file_groups} from './apps/load_obj_file_groups';
 import {runThis as maps} from './apps/maps';
+import {runThis as matrix_skeletal} from './apps/matrix_skeletal';
 
 /**
  * @description
@@ -70,6 +71,7 @@ import {runThis as maps} from './apps/maps';
  * public/query-build.html?u=spot_light_shadows
  */
 var Examples = {
+	matrix_skeletal: matrix_skeletal,
 	maps: maps,
 	load_obj_file_groups: load_obj_file_groups,
 	custom_geometry: custom_geometry,

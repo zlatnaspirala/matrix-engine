@@ -26,8 +26,9 @@ export var runThis = (world) => {
     showOnLoad: false,              // [Optimal] if autoPLay is true then showOnLoad is inactive.
     type: 'ANIMATION',              // [Optimal] 'ANIMATION' | "TPOSE'
     loop: 'playInverse',            // [Optimal] true | 'stopOnEnd' | 'playInverse' | 'stopAndReset'
-    globalOffset: [-30, -180, -155], // [Optimal]  for 1.5 diff from obj seq anim
-    skeletalBoneScale: 2,        // [Optimal]
+    globalOffset: [-30, -180, -155],// [Optimal]  for 1.5 diff from obj seq anim
+    skeletalBoneScale: 2,           // [Optimal]
+		skeletalBoneScaleXYZ: [10,1,1],       // [Optimal]
     /*skeletalBlend: {                // [Optimal] remove arg for no blend
       paramDest: 4,
       paramSrc: 4
@@ -51,7 +52,7 @@ export var runThis = (world) => {
     // New optimal arg
     // Sometime we need more optimisation
     ignoreList: ['spine1'],
-    ifNotExistDrawType: 'triangle'
+    ifNotExistDrawType: 'cubeLightTex'
   };
 
   // const filePath = "res/bvh-skeletal-base/swat-guy/bvh-export/swat.bvh";

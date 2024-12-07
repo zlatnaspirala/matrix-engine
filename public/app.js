@@ -2922,6 +2922,9 @@ class MEBvhAnimation {
     if (typeof options.skeletalBoneScale === 'undefined') {
       options.skeletalBoneScale = 0.3;
     }
+    if (typeof options.skeletalBoneScaleXYZ === 'undefined') {
+      options.skeletalBoneScaleXYZ = null;
+    }
     if (typeof options.loop === 'undefined') options.loop = true;
     if (typeof options.showOnLoad === 'undefined') options.showOnLoad = true;
     if (typeof options.type === 'undefined') options.type = 'ME-SKELETAL_POINT_BASE';
@@ -2932,7 +2935,7 @@ class MEBvhAnimation {
     if (typeof options.myFrameRate === 'undefined') options.myFrameRate = 125;
     if (typeof options.speed === 'undefined') options.speed = 5;
     if (typeof options.matrixSkeletalObjScale === 'undefined') options.matrixSkeletalObjScale = 1;
-    if (typeof options.ifNotExistDrawType === 'undefined') options.ifNotExistDrawType = 'cube';
+    if (typeof options.ifNotExistDrawType === 'undefined') options.ifNotExistDrawType = 'cubeLightTex';
 
     // passed
     this.options = options;
@@ -3012,7 +3015,7 @@ class MEBvhAnimation {
     }
   }
 
-  // Must be improved not secure 100%.
+  // Must be improved not secure 100%. <<
   accessBonesObject() {
     let onlyMine = [];
     matrixWorld.objListToDispose[0].contentList.forEach(MEObject => {
@@ -3057,6 +3060,14 @@ class MEBvhAnimation {
                     meshes[key].setScale(this.options.matrixSkeletalObjScale);
                     matrixEngine.objLoader.initMeshBuffers(this.world.GL.gl, meshes[key]);
                     this.world.Add('obj', this.options.matrixSkeletalObjScale, key, this.options.boneTex, meshes[key]);
+                    // [2.1.7]
+                    if (options.skeletalBoneScaleXYZ != null) {
+                      App.scene[key].mesh.setScale({
+                        x: this.options.skeletalBoneScaleXYZ[0],
+                        y: this.options.skeletalBoneScaleXYZ[1],
+                        z: this.options.skeletalBoneScaleXYZ[2]
+                      });
+                    }
                     resolve(key);
                   }
                 });
@@ -3064,15 +3075,25 @@ class MEBvhAnimation {
             } else {
               // Primitives mesh
               this.world.Add(this.options.ifNotExistDrawType, this.options.skeletalBoneScale, b, this.options.boneTex);
+              if (this.options.skeletalBoneScaleXYZ != null) {
+                App.scene[b].geometry.setScaleByX(this.options.skeletalBoneScaleXYZ[0]);
+                App.scene[b].geometry.setScaleByY(this.options.skeletalBoneScaleXYZ[1]);
+                App.scene[b].geometry.setScaleByZ(this.options.skeletalBoneScaleXYZ[2]);
+              }
               resolve(b);
             }
           } else {
             // Primitives mesh
             this.world.Add(detTypeOfMEObject, this.options.skeletalBoneScale, b, this.options.boneTex);
+            if (this.options.skeletalBoneScaleXYZ != null) {
+              App.scene[b].geometry.setScaleByX(this.options.skeletalBoneScaleXYZ[0]);
+              App.scene[b].geometry.setScaleByY(this.options.skeletalBoneScaleXYZ[1]);
+              App.scene[b].geometry.setScaleByZ(this.options.skeletalBoneScaleXYZ[2]);
+            }
             resolve(b);
           }
         } else {
-          // Primitives mesh
+          // Primitives mesh - not sure for exist scale by axis...
           this.world.Add('cube', this.options.skeletalBoneScale, b);
           resolve(b);
         }
@@ -9635,7 +9656,7 @@ window.quat2 = glMatrix.quat2;
 window.vec2 = glMatrix.vec2;
 window.vec3 = glMatrix.vec3;
 window.vec4 = glMatrix.vec4;
-console.info(`%cMatrix-Engine %c 2.0.31 🛸`, CS1, CS1);
+console.info(`%cMatrix-Engine %c 2.1.7 🛸`, CS1, CS1);
 var lastChanges = `
 [2.0.0] New networking based on kurento service and OpenVide web client
 [1.9.40] First version with both support opengles11/2 and opengles300

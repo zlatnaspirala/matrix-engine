@@ -2,6 +2,9 @@
 
 # Matrix Engine [CHANGES]
 
+[2.1.7] Scale by axis new feature for MEBvhAnimation class.
+See example matrix_skeletal.js
+
 [2.1.6] Added map creator from starter project.
 
 [2.1.1] Just added example how to load maps and detect groups vertices.
