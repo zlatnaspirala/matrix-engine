@@ -2,6 +2,7 @@
 
 # Matrix Engine [CHANGES]
 
+[2.1.13] BVH improved : playAnimationFromKeyframes
 
 [2.1.12] BVH playInverse improved/fixed.
 

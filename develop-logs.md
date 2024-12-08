@@ -1,3 +1,15 @@
+
+
+
+
+Possible bug with BOne vs BoneEnd children of bone
+listed in joints - both ????
+
+
+
+![alt text](non-project-files/image.png)
+
+
 /**
  * Convex composite bunny model from http://sourceforge.net/projects/hacd/
  * Specifically http://hacd.svn.sourceforge.net/viewvc/hacd/data/bowl_hacd.wrl?revision=178&view=markup
