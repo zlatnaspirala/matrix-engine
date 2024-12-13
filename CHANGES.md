@@ -2,6 +2,14 @@
 
 # Matrix Engine [CHANGES]
 
+[2.1.15] Fix custom textures for obj mesh
+
+```js
+...
+	if(object.custom.gl_texture == null) {
+...
+```
+
 [2.1.14] Fix MEBvhAnimation callback 
 
 [2.1.13] BVH improved : playAnimationFromKeyframes
