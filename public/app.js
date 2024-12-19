@@ -56,11 +56,11 @@ var runThis = world => {
 
   // // Floor
   world.Add("squareTex", 1, "floor", textuteImageSamplers);
-  // App.scene.floor.position.SetY(0);
-  // App.scene.floor.geometry.setScale(20);
-  // App.scene.floor.rotation.rotx = 90;
-  _manifest.default.scene.floor.position.y = 0;
-  // App.scene.floor.position.z = -20;
+  _manifest.default.scene.floor.position.SetY(0);
+  _manifest.default.scene.floor.geometry.setScale(20);
+  _manifest.default.scene.floor.rotation.rotx = -90;
+  _manifest.default.scene.floor.position.y = -1;
+  _manifest.default.scene.floor.position.z = -20;
 
   // App.scene.floor.custom.gl_texture = function (object, t) {
   //   world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
@@ -104,8 +104,10 @@ var runThis = world => {
   // App.scene.MyCubeTex1.rotation.roty = 45;
   // App.scene.MyCubeTex2.rotation.roty = -45;
 
-  _manifest.default.scene.MyCubeTex1.position.y = -2;
-  _manifest.default.scene.MyCubeTex2.position.y = 2;
+  _manifest.default.scene.MyCubeTex1.position.y = 0;
+  _manifest.default.scene.MyCubeTex2.position.y = 0;
+  _manifest.default.scene.MyCubeTex1.position.x = 1;
+  _manifest.default.scene.MyCubeTex2.position.x = -1;
 };
 exports.runThis = runThis;
 
@@ -3584,7 +3586,7 @@ _manifest.default.operation.draws.cube = function (object, ray) {
   if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
     // set the light position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.position.worldLocation);
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
     // Set the spotlight uniforms
     {
@@ -4312,7 +4314,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
   }
 
   // shadows
-  if (object.shadows && object.shadows.type == 'spot') {
+  if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
     // console.log(" SHADOWS -> " , object.shadows)
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
@@ -4321,7 +4323,10 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
     {
       var target = [0, 0, 0];
       var up = [0, 1, 0];
-      var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
+      // var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
+      //test
+      var lmat = m4.lookAt(object.position.worldLocation, target, up);
+      object.position.worldLocation;
       lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
       lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
       object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]];

@@ -20,11 +20,11 @@ export var runThis = world => {
 
 	// // Floor
 	world.Add("squareTex", 1, "floor", textuteImageSamplers);
-	// App.scene.floor.position.SetY(0);
-	// App.scene.floor.geometry.setScale(20);
-	// App.scene.floor.rotation.rotx = 90;
-	App.scene.floor.position.y = 0;
-	// App.scene.floor.position.z = -20;
+	App.scene.floor.position.SetY(0);
+	App.scene.floor.geometry.setScale(20);
+	App.scene.floor.rotation.rotx = -90;
+	App.scene.floor.position.y = -1;
+	App.scene.floor.position.z = -20;
 
 	// App.scene.floor.custom.gl_texture = function (object, t) {
 	//   world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
@@ -71,6 +71,8 @@ export var runThis = world => {
 	// App.scene.MyCubeTex1.rotation.roty = 45;
 	// App.scene.MyCubeTex2.rotation.roty = -45;
 
-	App.scene.MyCubeTex1.position.y = -2;
-	App.scene.MyCubeTex2.position.y = 2;
+	App.scene.MyCubeTex1.position.y = 0;
+	App.scene.MyCubeTex2.position.y = 0;
+	App.scene.MyCubeTex1.position.x = 1;
+	App.scene.MyCubeTex2.position.x = -1;
 };
