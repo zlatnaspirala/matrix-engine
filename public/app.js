@@ -2,7 +2,7 @@
 "use strict";
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
-var _load_obj_file = require("./apps/load_obj_file.js");
+var _cube_light_and_texture = require("./apps/cube_light_and_texture.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // CHANGE HERE IF YOU WANNA USE app-build.hmtl
@@ -22,12 +22,12 @@ window.webGLStart = () => {
   window.App = App;
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
-  (0, _load_obj_file.runThis)(world);
+  (0, _cube_light_and_texture.runThis)(world);
 };
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/load_obj_file.js":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/cube_light_and_texture.js":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -43,59 +43,69 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
  * @Description Matrix Engine Api Example.
  */
 
+/* globals world App world */
+
 var runThis = world => {
-  // if you dont use obj or complex mesh you no need for this func
-  function onLoadObj(meshes) {
-    for (let key in meshes) {
-      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
-    }
-    var textuteImageSamplers2 = {
-      source: ["res/images/armor.webp", "res/images/armor.webp"],
-      mix_operation: "multiply"
-    };
-    var textuteImageSamplers = {
-      source: ["res/images/dagger.webp"],
-      mix_operation: "multiply"
-    };
-    world.Add("obj", 1, "armor", textuteImageSamplers2, meshes.armor);
-    _manifest.default.scene.armor.position.y = 1;
-    _manifest.default.scene.armor.rotation.rotationSpeed.y = 20;
-    _manifest.default.scene.armor.LightsData.ambientLight.set(1, 1, 1);
-    _manifest.default.scene.armor.position.z = -6;
-    // App.scene.armor.mesh.setScale(3)
+  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
 
-    setTimeout(() => {
-      _manifest.default.scene.armor.activateShadows('spot');
-      _manifest.default.scene.mac.activateShadows('spot');
-      // App.scene.armor.shadows.activeUpdate();
-      // App.scene.armor.shadows.animatePositionY();
-    }, 2000);
+  var textuteImageSamplers = {
+    source: ["res/images/complex_texture_1/diffuse.webp"],
+    mix_operation: "multiply"
+  };
+  _manifest.default.camera.SceneController = true;
 
-    // world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers2);
-    // App.scene.MyCubeTex.activateShadows()
-    world.Add("obj", 1, "mac", textuteImageSamplers, meshes.mac);
-    _manifest.default.scene.mac.position.y = 1;
-    _manifest.default.scene.mac.position.x = -2;
-    _manifest.default.scene.mac.rotation.rotationSpeed.y = 20;
-    _manifest.default.scene.mac.LightsData.ambientLight.set(1, 1, 1);
-  }
+  // // Floor
+  world.Add("squareTex", 1, "floor", textuteImageSamplers);
+  // App.scene.floor.position.SetY(0);
+  // App.scene.floor.geometry.setScale(20);
+  // App.scene.floor.rotation.rotx = 90;
+  _manifest.default.scene.floor.position.y = 0;
+  // App.scene.floor.position.z = -20;
 
-  /**
-   * @description
-   * For swap (initial orientation for object) use combination of
-   * swap[0,1]
-   * swap[0,2]
-   * swap[1,3]
-   * to switch x,y,z verts.
-   */
-  matrixEngine.objLoader.downloadMeshes({
-    armor: "res/3d-objects/armor.obj",
-    mac: "res/3d-objects/mac.obj"
-  }, onLoadObj, {
-    swap: [0, 2]
-  });
+  // App.scene.floor.custom.gl_texture = function (object, t) {
+  //   world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
+  //   world.GL.gl.texParameteri(
+  //     world.GL.gl.TEXTURE_2D,
+  //     world.GL.gl.TEXTURE_MAG_FILTER,
+  //     world.GL.gl.LINEAR
+  //   );
+  //   world.GL.gl.texParameteri(
+  //     world.GL.gl.TEXTURE_2D,
+  //     world.GL.gl.TEXTURE_MIN_FILTER,
+  //     world.GL.gl.LINEAR
+  //   );
+  //   world.GL.gl.texParameteri(
+  //     world.GL.gl.TEXTURE_2D,
+  //     world.GL.gl.TEXTURE_WRAP_S,
+  //     world.GL.gl.REPEAT
+  //   );
+  //   world.GL.gl.texParameteri(
+  //     world.GL.gl.TEXTURE_2D,
+  //     world.GL.gl.TEXTURE_WRAP_T,
+  //     world.GL.gl.REPEAT
+  //   );
+  //   world.GL.gl.texImage2D(
+  //     world.GL.gl.TEXTURE_2D,
+  //     0,
+  //     world.GL.gl.RGBA,
+  //     world.GL.gl.RGBA,
+  //     world.GL.gl.UNSIGNED_BYTE,
+  //     object.textures[t].image
+  //   );
 
-  //delete images_local_var;
+  //   world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
+  // };
+
+  world.Add("cubeLightTex", 1, "MyCubeTex1", textuteImageSamplers);
+  world.Add("cubeLightTex", 1, "MyCubeTex2", textuteImageSamplers);
+  _manifest.default.scene.floor.activateShadows('spot');
+  _manifest.default.scene.MyCubeTex1.activateShadows('spot-shadow');
+
+  // App.scene.MyCubeTex1.rotation.roty = 45;
+  // App.scene.MyCubeTex2.rotation.roty = -45;
+
+  _manifest.default.scene.MyCubeTex1.position.y = -2;
+  _manifest.default.scene.MyCubeTex2.position.y = 2;
 };
 exports.runThis = runThis;
 
@@ -2914,10 +2924,15 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
  */
 
 class MEBvhAnimation {
-  constructor(path_, options) {
+  constructor(path_, options, callback) {
     if (typeof options === 'undefined' || typeof options.world === 'undefined') {
       console.error('MEBvhAnimation class error: No second argument options || possible world is not passed.');
       return;
+    }
+    if (typeof callback === 'undefined') {
+      options.callback = () => {};
+    } else {
+      options.callback = callback;
     }
     if (typeof options.skeletalBoneScale === 'undefined') {
       options.skeletalBoneScale = 0.3;
@@ -2933,7 +2948,7 @@ class MEBvhAnimation {
     if (typeof options.globalOffset === 'undefined') options.globalOffset = [0, 0, 0];
     if (typeof options.globalRotation === 'undefined') options.globalRotation = [0, 0, 0];
     if (typeof options.myFrameRate === 'undefined') options.myFrameRate = 125;
-    if (typeof options.speed === 'undefined') options.speed = 5;
+    if (typeof options.speed === 'undefined') options.speed = 1;
     if (typeof options.matrixSkeletalObjScale === 'undefined') options.matrixSkeletalObjScale = 1;
     if (typeof options.ifNotExistDrawType === 'undefined') options.ifNotExistDrawType = 'cubeLightTex';
 
@@ -2956,8 +2971,9 @@ class MEBvhAnimation {
       this.skeletalKeys = this.anim.joint_names();
       this.animation = this.anim.all_frame_poses();
       this.sumOfFrames = this.animation[0].length - 1;
-      this.loopInverse = new _utility.OSCILLATOR(1, this.sumOfFrames, options.speed);
+      this.loopInverse = new _utility.OSCILLATOR(-this.sumOfFrames, -1, options.speed);
       if (this.isConstructed == false) this.constructSkeletal(this.options);
+      if (this.options.callback) this.options.callback();
     }).catch(err => {
       console.warn('Bvh-loader error: ', err);
     });
@@ -3020,18 +3036,23 @@ class MEBvhAnimation {
     let onlyMine = [];
     matrixWorld.objListToDispose[0].contentList.forEach(MEObject => {
       if (MEObject.name.indexOf(this.options.boneNameBasePrefix) != -1) {
-        // console.log(MEObject)
         onlyMine.push(MEObject);
       }
     });
     return onlyMine;
   }
-
-  // cleanNames = (name) => {
-  //   const arrondissements = ['mixamorig'];
-  //   return arrondissements.reduce((acc, cur) => acc.replace(cur, ''), name);
-  // };
-
+  getInfoAboutJoints = () => {
+    let allNames = [];
+    let allEndBones = [];
+    for (var k in this.anim.joints) {
+      allNames.push(this.anim.joints[k].name);
+      if (this.anim.joints[k].name.indexOf('_end') != -1) allEndBones.push(this.anim.joints[k].name);
+    }
+    return {
+      names: allNames,
+      allEndBones: allEndBones
+    };
+  };
   async constructSkeletal(options) {
     this.skeletalKeys = this.skeletalKeys.map(item => item.replace('mixamorig:', ''));
     const promises = [];
@@ -3130,6 +3151,7 @@ class MEBvhAnimation {
   }
   playAnimation() {
     if (this.animationTimer == null) {
+      // Must be update before draw not timer any more - optimisation <<
       this.animationTimer = setInterval(() => {
         for (var x = 0; x < this.tPosition.length; x++) {
           var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
@@ -3154,8 +3176,13 @@ class MEBvhAnimation {
             }
           }
         }
-        if (this.options.loop == 'playInverse') {
-          this.actualFrame = this.loopInverse.UPDATE();
+        if (this.options.loop == 'playInverse' || this.options.loop == 'playInverseAndStop') {
+          this.actualFrame = -this.loopInverse.UPDATE();
+          if (this.actualFrame <= 1 && this.options.loop == 'playInverseAndStop') {
+            this.stopAnimation();
+            return;
+          }
+          return;
         } else {
           this.actualFrame++;
         }
@@ -3178,6 +3205,59 @@ class MEBvhAnimation {
   stopAnimation() {
     clearInterval(this.animationTimer);
     this.animationTimer = null;
+  }
+  playAnimationFromKeyframes() {
+    if (this.animationTimer == null) {
+      // Must be update before draw not timer any more - optimisation <<
+      this.animationTimer = setInterval(() => {
+        for (var x = 0; x < this.anim.joints.__0.children.length; x++) {
+          var b = this.options.boneNameBasePrefix + this.anim.joints.__0.children[x].name; //this.skeletalKeys[x];
+          // catch if not exist possible!
+          if (App.scene[b]) {
+            // 2.1.13
+            if (App.scene[b] && this.anim.keyframes[this.actualFrame]) {
+              App.scene[b].position.SetX(this.anim.keyframes[this.actualFrame][0 + x * 6] + this.globalOffset[0]);
+              App.scene[b].position.SetZ(this.anim.keyframes[this.actualFrame][1 + x * 6] + this.globalOffset[1]);
+              App.scene[b].position.SetY(this.anim.keyframes[this.actualFrame][2 + x * 6] + this.globalOffset[2]);
+              App.scene[b].rotation.rotateX(this.anim.keyframes[this.actualFrame][3 + x * 6] + this.globalRotation[0]);
+              App.scene[b].rotation.rotateY(this.anim.keyframes[this.actualFrame][4 + x * 6] + this.globalRotation[1]);
+              App.scene[b].rotation.rotateZ(this.anim.keyframes[this.actualFrame][5 + x * 6] + this.globalRotation[2]);
+            } else {
+              // for non t pose
+              App.scene[b].position.SetX(this.anim.keyframes[this.actualFrame][0] + this.globalOffset[0]);
+              App.scene[b].position.SetY(this.anim.keyframes[this.actualFrame][1] + this.globalOffset[1]);
+              App.scene[b].position.SetZ(this.anim.keyframes[this.actualFrame][2] + this.globalOffset[2]);
+              App.scene[b].rotation.rotateX(this.anim.keyframes[this.actualFrame][3] + this.globalRotation[0]);
+              App.scene[b].rotation.rotateY(this.anim.keyframes[this.actualFrame][4] + this.globalRotation[1]);
+              App.scene[b].rotation.rotateZ(this.anim.keyframes[this.actualFrame][5] + this.globalRotation[2]);
+            }
+          }
+        }
+        if (this.options.loop == 'playInverse' || this.options.loop == 'playInverseAndStop') {
+          this.actualFrame = -this.loopInverse.UPDATE();
+          if (this.actualFrame <= 1 && this.options.loop == 'playInverseAndStop') {
+            this.stopAnimation();
+            return;
+          }
+          return;
+        } else {
+          this.actualFrame++;
+        }
+        if (this.actualFrame >= this.animation[0].length - 1) {
+          if (this.options.loop == true) {
+            this.actualFrame = 1;
+          } else if (this.options.loop == 'stopOnEnd') {
+            this.stopAnimation();
+          } else if (this.options.loop == 'stopAndReset') {
+            this.constructFirstFrame();
+            this.actualFrame = 1;
+            this.stopAnimation();
+          }
+        }
+      }, this.options.myFrameRate);
+    } else {
+      console.warn('MEBvhAnimation: Animation already play.');
+    }
   }
 }
 exports.default = MEBvhAnimation;
@@ -3887,20 +3967,23 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
         // world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
         // world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.FBO.settings.bias);
       } else {
-        for (var t = 0; t < object.textures.length; t++) {
-          _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
-          _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-          _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.NEAREST);
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
-
-          // -- Allocate storage for the texture
-          //world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-          //world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
-          //world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+        if (object.custom.gl_texture == null) {
+          for (var t = 0; t < object.textures.length; t++) {
+            _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
+            _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
+            // -- Allocate storage for the texture
+            //world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+            //world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
+            //world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
+            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+          }
+        } else {
+          object.custom.gl_texture(object, t);
         }
       }
       // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
@@ -7179,6 +7262,7 @@ function getInitFSCubeTexLight() {
 }
 function getInitVSCubeTexLight() {
   const f = `#version 300 es
+	//default VS cube tex test shadows
   in vec3 aVertexPosition;
   in vec3 aVertexNormal;
   in vec2 aTextureCoord;
@@ -7212,6 +7296,15 @@ function getInitVSCubeTexLight() {
   out vec4 vPosition;
   out float vDist;
 
+	// spot-Shadow
+  uniform mat4 u_textureMatrix;
+  out vec2 v_texcoord;
+  
+
+	out vec4 v_projectedTexcoord;
+
+
+
   void main(void) {
 
     meVertexPosition = aVertexPosition;
@@ -7244,6 +7337,15 @@ function getInitVSCubeTexLight() {
     // compute the vector of the surface to the view/camera
     // and pass it to the fragment shader
     v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
+
+
+		///////////////////////////
+		// spot shadow
+    // vec4 worldPosition = u_world * a_position;
+    vec4 worldPosition = vec4(1,1,1,1) * vec4( aVertexPosition, 1.0);
+    v_texcoord = aTextureCoord;
+    v_projectedTexcoord = u_textureMatrix * worldPosition;
+		///////////////////////////
 
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vTextureCoord = aTextureCoord;
@@ -7583,33 +7685,57 @@ function getInitVSSquareTex() {
   out vec4 v_projectedTexcoord;
 
   // Specular
-  // out vec4 specularColor;
-  // out vec4 vColor;
-  // out vec3 vNormal;
-  // out vec4 vPosition;
-  // out float vDist;
+	  // Specular
+  out mat4 uMVMatrixINTER;
+  out mat3 uNMatrixINTER;
+  out mat4 uPMatrixINNTER;
+	
+  out vec4 specularColor;
+  out vec4 vColor;
+  out vec3 vNormal;
+  out vec4 vPosition;
+  out float vDist;
 
   void main(void) {
-    meVertexPosition = aVertexPosition;
+     meVertexPosition = aVertexPosition;
+    uMVMatrixINTER = uMVMatrix;
+    uNMatrixINTER = uNMatrix;
+    uPMatrixINNTER = uPMatrix;
+
     // GLOBAL POS SPECULAR
-    // vColor = specularColor;
-    // vNormal = normalize(uNMatrix * vec3(aVertexNormal));
+    vColor = specularColor;
+    vNormal = normalize(uNMatrix * vec3(aVertexNormal));
     // Calculate the modelView of the model, and set the vPosition
     // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
-    // vPosition = uMVMatrix * vec4(1,1,1,1);
-    // vDist = gl_Position.w;
+    vPosition = uMVMatrix * vec4(1,1,1,1);
+    vDist = gl_Position.w;
 
     // SPOT
+    // orient the normals and pass to the fragment shader
     v_normal = mat3(uNMatrix) * aVertexNormal;
-    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
-    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
-    v_surfaceToView = -surfaceWorldPosition;
 
-    // spot shadow
+    // normalize
+    // v_normal_cubemap = normalize(aVertexPosition.xyz);
+
+    // compute the world position of the surfoace
+    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+
+    // compute the vector of the surface to the light
+    // and pass it to the fragment shader
+    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+
+    // compute the vector of the surface to the view/camera
+    // and pass it to the fragment shader
+    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
+
+
+		///////////////////////////
+		// spot shadow
     // vec4 worldPosition = u_world * a_position;
     vec4 worldPosition = vec4(1,1,1,1) * vec4( aVertexPosition, 1.0);
     v_texcoord = aTextureCoord;
     v_projectedTexcoord = u_textureMatrix * worldPosition;
+		///////////////////////////
 
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
     vTextureCoord = aTextureCoord;
