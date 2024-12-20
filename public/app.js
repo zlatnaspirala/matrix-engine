@@ -36,31 +36,25 @@ Object.defineProperty(exports, "__esModule", {
 exports.runThis = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-/* eslint-disable no-unused-vars */
-
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
-/* globals world App world */
-
 var runThis = world => {
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
-
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
   _manifest.default.camera.SceneController = true;
 
-  // // Floor
-  world.Add("squareTex", 1, "floor", textuteImageSamplers);
-  _manifest.default.scene.floor.position.SetY(0);
-  _manifest.default.scene.floor.geometry.setScale(20);
-  _manifest.default.scene.floor.rotation.rotx = -90;
+  // Floor
+  world.Add("cubeLightTex", 1, "floor", textuteImageSamplers);
+  _manifest.default.scene.floor.geometry.setScaleByX(5);
+  _manifest.default.scene.floor.geometry.setScaleByZ(5);
+  // App.scene.floor.rotation.rotx = -90;
   _manifest.default.scene.floor.position.y = -1;
-  _manifest.default.scene.floor.position.z = -20;
+  _manifest.default.scene.floor.position.z = -9;
 
   // App.scene.floor.custom.gl_texture = function (object, t) {
   //   world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
@@ -97,17 +91,26 @@ var runThis = world => {
   // };
 
   world.Add("cubeLightTex", 1, "MyCubeTex1", textuteImageSamplers);
-  world.Add("cubeLightTex", 1, "MyCubeTex2", textuteImageSamplers);
-  _manifest.default.scene.floor.activateShadows('spot');
+  // world.Add("cubeLightTex", 1, "MyCubeTex2", textuteImageSamplers);
+
+  _manifest.default.scene.floor.activateShadows('spot-shadow');
   _manifest.default.scene.MyCubeTex1.activateShadows('spot-shadow');
+  // App.scene.MyCubeTex2.activateShadows('spot-shadow');
+  _manifest.default.scene.MyCubeTex1.shadows.outerLimit = 2;
+  // App.scene.MyCubeTex2.shadows.outerLimit = 1
+  _manifest.default.scene.floor.shadows.outerLimit = 2;
+  _manifest.default.scene.floor.shadows.lightPosition[2] = -6;
+  _manifest.default.scene.MyCubeTex1.shadows.lightPosition[2] = -6;
+  _manifest.default.scene.floor.shadows.lightPosition[1] = 10;
+  _manifest.default.scene.MyCubeTex1.shadows.lightPosition[1] = 10;
 
   // App.scene.MyCubeTex1.rotation.roty = 45;
   // App.scene.MyCubeTex2.rotation.roty = -45;
 
-  _manifest.default.scene.MyCubeTex1.position.y = 0;
-  _manifest.default.scene.MyCubeTex2.position.y = 0;
-  _manifest.default.scene.MyCubeTex1.position.x = 1;
-  _manifest.default.scene.MyCubeTex2.position.x = -1;
+  _manifest.default.scene.MyCubeTex1.position.y = 1;
+  // App.scene.MyCubeTex2.position.y = 0;
+  _manifest.default.scene.MyCubeTex1.position.x = 0;
+  // App.scene.MyCubeTex2.position.x = -1;
 };
 exports.runThis = runThis;
 
@@ -836,6 +839,10 @@ function initShaders(gl, fragment, vertex) {
       }
       if (null !== gl.getUniformLocation(shaderProgram, 'u_lightWorldPosition')) {
         shaderProgram.lightWorldPositionLocation = gl.getUniformLocation(shaderProgram, 'u_lightWorldPosition');
+      }
+      // 2.1.x
+      if (null !== gl.getUniformLocation(shaderProgram, 'u_world')) {
+        shaderProgram.viewWorldPositionLocation = gl.getUniformLocation(shaderProgram, 'u_world');
       }
       // test
       if (null !== gl.getUniformLocation(shaderProgram, 'u_textureMatrix')) {
@@ -3584,9 +3591,27 @@ _manifest.default.operation.draws.cube = function (object, ray) {
 
   // Shadows
   if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
+    // draw 
+    let textureMatrix = m4.identity();
+    textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
+    textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
+    textureMatrix = m4.multiply(textureMatrix, this.pMatrix);
+
+    // test 
+    const lightWorldMatrix = m4.lookAt([0.5, 0.5, 0.5],
+    // position
+    [0, 0, 0],
+    // target
+    [0, 1, 0] // up
+    );
+    textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
+
+    // console.log(textureMatrix.length)
+    _matrixWorld.world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
+
     // set the light position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.position.worldLocation);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, [...object.position.worldLocation, 1]);
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
     // Set the spotlight uniforms
     {
@@ -7228,6 +7253,11 @@ function getInitFSCubeTexLight() {
   uniform float u_innerLimit;
   uniform float u_outerLimit;
 
+	// spot shadow
+	uniform mat4 u_view;
+  uniform mat4 u_world;
+  uniform mat4 u_textureMatrix;
+
   out vec4 outColor;
 
   void main(void) {
@@ -7301,14 +7331,11 @@ function getInitVSCubeTexLight() {
   out vec4 vPosition;
   out float vDist;
 
-	// spot-Shadow
+	// spot-Shadow INIT
   uniform mat4 u_textureMatrix;
   out vec2 v_texcoord;
-  
-
 	out vec4 v_projectedTexcoord;
-
-
+	uniform mat4 u_world;
 
   void main(void) {
 
@@ -7345,11 +7372,13 @@ function getInitVSCubeTexLight() {
 
 
 		///////////////////////////
-		// spot shadow
-    // vec4 worldPosition = u_world * a_position;
-    vec4 worldPosition = vec4(1,1,1,1) * vec4( aVertexPosition, 1.0);
+		// spot shadow TEST nidza
+    // vec4 worldPosition = u_world * vec4( aVertexPosition, 1.0);
+    vec4 worldPosition = u_world * vec4( aVertexPosition, 1.0);
+
     v_texcoord = aTextureCoord;
     v_projectedTexcoord = u_textureMatrix * worldPosition;
+		//  v_projectedTexcoord =  vec4(1,1,1,1) * worldPosition;
 		///////////////////////////
 
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
@@ -7736,7 +7765,7 @@ function getInitVSSquareTex() {
 
 		///////////////////////////
 		// spot shadow
-    // vec4 worldPosition = u_world * a_position;
+    // vec4 worldPosition = u_world * vec4( aVertexPosition, 1.0);
     vec4 worldPosition = vec4(1,1,1,1) * vec4( aVertexPosition, 1.0);
     v_texcoord = aTextureCoord;
     v_projectedTexcoord = u_textureMatrix * worldPosition;
