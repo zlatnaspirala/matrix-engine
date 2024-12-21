@@ -842,8 +842,12 @@ function initShaders(gl, fragment, vertex) {
       }
       // 2.1.x
       if (null !== gl.getUniformLocation(shaderProgram, 'u_world')) {
-        shaderProgram.viewWorldPositionLocation = gl.getUniformLocation(shaderProgram, 'u_world');
+        shaderProgram.u_world = gl.getUniformLocation(shaderProgram, 'u_world');
       }
+      if (null !== gl.getUniformLocation(shaderProgram, 'u_reverseLightDirection')) {
+        shaderProgram.u_reverseLightDirection = gl.getUniformLocation(shaderProgram, 'u_reverseLightDirection');
+      }
+
       // test
       if (null !== gl.getUniformLocation(shaderProgram, 'u_textureMatrix')) {
         shaderProgram.u_textureMatrix = gl.getUniformLocation(shaderProgram, 'u_textureMatrix');
@@ -3595,40 +3599,45 @@ _manifest.default.operation.draws.cube = function (object, ray) {
     let textureMatrix = m4.identity();
     textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
     textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
-    textureMatrix = m4.multiply(textureMatrix, this.pMatrix);
+    textureMatrix = m4.multiply(textureMatrix, object.shadows.lightProjectionMatrix);
 
     // test 
-    const lightWorldMatrix = m4.lookAt([0.5, 0.5, 0.5],
+    const lightWorldMatrix = m4.lookAt([2.5, 4.8, 7.0],
     // position
-    [0, 0, 0],
+    [0, 3, 10],
     // target
     [0, 1, 0] // up
     );
     textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
+    const mat = m4.multiply(lightWorldMatrix, m4.inverse(object.shadows.lightProjectionMatrix));
 
     // console.log(textureMatrix.length)
     _matrixWorld.world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
 
     // set the light position
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, [...object.position.worldLocation, 1]);
+    // world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.position.worldLocation);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_world, mat);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_reverseLightDirection, lightWorldMatrix.slice(8, 11));
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, -0.01);
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
-    // Set the spotlight uniforms
-    {
-      var target = [0, 0, 0]; // object.position.worldLocation;
-      var up = [0, 1, 0];
-      var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
-      // var lmat = m4.lookAt(object.position.worldLocation, target, up);
-      lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
-      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
-      // get the zAxis from the matrix
-      // negate it because lookAt looks down the -Z axis
-      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]];
-      // object.shadows.lightDirection = [-0, -0, -1];
-    }
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
+    // // Set the spotlight uniforms
+    // {
+    // 	var target = object.position.worldLocation; // object.position.worldLocation;
+    // 	var up = [0, 1, 0];
+    // 	var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
+    // 	// var lmat = m4.lookAt(object.position.worldLocation, target, up);
+    // 	lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
+    // 	lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
+    // 	// get the zAxis from the matrix
+    // 	// negate it because lookAt looks down the -Z axis
+    // 	object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]];
+    // 	// object.shadows.lightDirection = [-0, -0, -1];
+    // }
+
+    // world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
+    // world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
+    // world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
   } else if (object.shadows && object.shadows.type == 'spec') {
     // global position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
@@ -3655,9 +3664,9 @@ _manifest.default.operation.draws.cube = function (object, ray) {
     }
     _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
   } else {
-    _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
+    // world.GL.gl.disable(world.GL.gl.BLEND);
+    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.CULL_FACE);
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
-    // TEST world.GL.gl.enable(world.GL.gl.CULL_FACE);
   }
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
   object.instancedDraws.overrideDrawArraysInstance(object);
@@ -4037,7 +4046,7 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
   if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
     // set the light position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_world, object.shadows.lightPosition);
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
     // Set the spotlight uniforms
     {
@@ -4342,7 +4351,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
   if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
     // console.log(" SHADOWS -> " , object.shadows)
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_world, object.shadows.lightPosition);
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
     // Set the spotlight uniforms
     {
@@ -7287,7 +7296,7 @@ function getInitFSCubeTexLight() {
     outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
     // Lets multiply just the color portion (not the alpha)
-    // by the light
+    // by the light - INIT
     outColor.rgb *= light;
     // Just add in the specular
     outColor.rgb += specular;
@@ -7354,7 +7363,8 @@ function getInitVSCubeTexLight() {
 
     // SPOT
     // orient the normals and pass to the fragment shader
-    v_normal = mat3(uNMatrix) * aVertexNormal;
+    // v_normal = mat3(uNMatrix) * aVertexNormal;
+		v_normal = uNMatrix  *  vec3(aVertexNormal);
 
     // normalize
     // v_normal_cubemap = normalize(aVertexPosition.xyz);
@@ -7373,12 +7383,12 @@ function getInitVSCubeTexLight() {
 
 		///////////////////////////
 		// spot shadow TEST nidza
-    // vec4 worldPosition = u_world * vec4( aVertexPosition, 1.0);
-    vec4 worldPosition = u_world * vec4( aVertexPosition, 1.0);
+    // vec4 worldPosition = mat4(u_world) * vec4( aVertexPosition, 1.0);
+    vec4 worldPosition =  uPMatrix * uMVMatrix  * vec4( aVertexPosition, 1.0);
 
     v_texcoord = aTextureCoord;
     v_projectedTexcoord = u_textureMatrix * worldPosition;
-		//  v_projectedTexcoord =  vec4(1,1,1,1) * worldPosition;
+		  // v_projectedTexcoord =  vec4(1,1,1,1) * worldPosition;
 		///////////////////////////
 
     gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
@@ -9082,6 +9092,8 @@ function generateSpotLightShadowDefinitions() {
   uniform mat4 u_view;
   uniform mat4 u_world;
   uniform mat4 u_textureMatrix;
+
+	uniform vec3 u_reverseLightDirection;
   // inject generateSpotLightShadowDefinitions end
   `;
 }
@@ -9094,7 +9106,8 @@ function generateSpotLightShadowMain() {
   float dotFromDirection = dot(surfaceToLightDirection, -u_lightDirection);
   float limitRange = u_innerLimit - u_outerLimit;
   float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-  float light = inLight * dot(normal, surfaceToLightDirection);
+  // float light = inLight * dot(normal, surfaceToLightDirection);
+	  float light = dot(normal, u_reverseLightDirection);
   float specular = inLight * pow(dot(normal, halfVector), u_shininess);
 
   vec3 projectedTexcoord = v_projectedTexcoord.xyz / v_projectedTexcoord.w;
@@ -9109,11 +9122,14 @@ function generateSpotLightShadowMain() {
   // the 'r' channel has the depth values
   float projectedDepth = texture(u_projectedTexture, projectedTexcoord.xy).r;
   float shadowLight = (inRange && projectedDepth <= currentDepth) ? 0.0 : 1.0;
+
+	 
   vec4 texColor = texture(u_texture, v_texcoord) * vec4(0.5, 0.5, 1, 1);
-  outColor = vec4(
-    texColor.rgb * light * shadowLight +
-    specular * shadowLight,
-    texColor.a);
+  // vec4 texColor = texture(u_texture, v_texcoord) * vec4(0.5, 0.5, 1, 1);
+
+  // outColor = vec4(texColor.rgb * light * shadowLight + specular * shadowLight, texColor.a);
+	outColor = vec4(texColor.rgb * light * shadowLight , texColor.a);
+
   `;
 }
 
@@ -9308,7 +9324,8 @@ class MatrixShadowSpotShadowTest {
     // this is computed in updateScene
     this.lightDirection = [0, 0, -1];
     this.innerLimit = degToRad(0);
-    this.outerLimit = degToRad(20);
+    this.outerLimit = degToRad(30);
+    this.lightProjectionMatrix = m4.perspective(degToRad(100), 50 / 49, 0.5, 10);
     this.idUpdater = null;
     this.r = null;
     this.ir = null;
@@ -12021,7 +12038,7 @@ var standardMatrixEngineShader = object => {
   if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
     // set the light position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_world, object.shadows.lightPosition);
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
     // Set the spotlight uniforms
     {
@@ -12348,7 +12365,7 @@ const standardMEShaderDrawer = function (object) {
   if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
     // set the light position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_world, object.shadows.lightPosition);
     _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
     // Set the spotlight uniforms
     {
