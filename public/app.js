@@ -3247,29 +3247,18 @@ var _matrixWorld = require("./matrix-world");
 var _events = require("./events");
 var _utility = require("./utility");
 var raycaster = _interopRequireWildcard(require("./raycast"));
-var _matrixShadows = require("./matrix-shadows");
-var _matrixTextures = require("./matrix-textures");
 var _engine = require("./engine");
 var CANNON = _interopRequireWildcard(require("cannon"));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-// import {vec2} from 'wgpu-matrix';
-
-// test override 
+// Override
 CANNON.Quaternion.prototype.toAxisAngle = function (targetAxis) {
   targetAxis = targetAxis || new CANNON.Vec3();
   if (this.w > 1) this.normalize();
-  // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalised
-
   var angle = 2 * Math.acos(this.w);
-  var s = Math.sqrt(1 - this.w * this.w); // assuming quaternion normalised then w is less than 1, so term always positive.
+  var s = Math.sqrt(1 - this.w * this.w);
   if (s < 0.00000001) {
-    // test to avoid divide by zero, s is always positive due to sqrt
-    // if s close to zero then direction of axis not important
-    // if it is important that axis is normalised then replace with x=1; y=z=0;
-    // console.log('override works: x: ', this.x + " y: ", this.y, " z: ", this.z)
-    // nikola lukic
     var max1 = [this.x, this.y, this.z];
     var getMaxValue = Math.max(...max1);
     var index = max1.indexOf(getMaxValue);
@@ -3277,7 +3266,7 @@ CANNON.Quaternion.prototype.toAxisAngle = function (targetAxis) {
     targetAxis.y = 0;
     targetAxis.z = 0;
   } else {
-    targetAxis.x = this.x / s; // normalise axis
+    targetAxis.x = this.x / s;
     targetAxis.y = this.y / s;
     targetAxis.z = this.z / s;
   }
@@ -3285,10 +3274,6 @@ CANNON.Quaternion.prototype.toAxisAngle = function (targetAxis) {
 };
 _manifest.default.operation.draws = new Object();
 _manifest.default.operation.draws.cube = function (object, ray) {
-  // if (typeof isFbo === 'undefined') {
-  // 	var isFbo = 'maybe';
-  // }
-
   var lighting = true;
   var localLooper = 0;
   mat4.identity(object.mvMatrix);
@@ -3301,17 +3286,12 @@ _manifest.default.operation.draws.cube = function (object, ray) {
     }
     var QP = object.physics.currentBody.quaternion;
     QP.normalize();
-    // mat4.translate(object.mvMatrix, object.mvMatrix, [0.0, 0.0, 0.0]);
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
     var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.z, object.rotation.axis.y);
     object.rotation.axisSystem[0].normalize();
     var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), parseFloat(object.rotation.axisSystem[0].y.toFixed(2)));
     var MY_ANGLE = 2 * Math.acos(QP.w);
-    // if(radToDeg(object.rotation.angle) > 90) console.log("aNGLE:" + radToDeg(object.rotation.angle) + " VS MY_ANGLE " + radToDeg(MY_ANGLE) + "  axis ++++ " + AXIS)
-    // mat4.rotateX(object.mvMatrix, object.mvMatrix, (object.rotation.angle));
-    // mat4.rotateY(object.mvMatrix, object.mvMatrix, (object.rotation.angle));
-    // mat4.rotateZ(object.mvMatrix, object.mvMatrix, (-object.rotation.angle));
     mat4.rotate(object.mvMatrix, object.mvMatrix, MY_ANGLE, AXIS);
   } else if (object.isHUD === true) {
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
@@ -3361,13 +3341,11 @@ _manifest.default.operation.draws.cube = function (object, ray) {
       _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexNormalAttribute);
       localLooper = localLooper + 1;
     }
-    /* Set the ambient light */
+    /* Ambient light */
     if (object.shaderProgram.ambientColorUniform) {
       if ((0, _utility.E)('ambLightR')) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat((0, _utility.E)('ambLightR').getAttribute('value')), parseFloat((0, _utility.E)('ambLightG').getAttribute('value')), parseFloat((0, _utility.E)('ambLightB').getAttribute('value')));
-        // console.log("LIGHTS UNIFORM AMB  B = ", parseFloat(E('ambLightB').value) )
       } else {
-        // object.LightsData.ambientLight
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, object.LightsData.ambientLight.r, object.LightsData.ambientLight.g, object.LightsData.ambientLight.b);
       }
     }
@@ -3377,16 +3355,14 @@ _manifest.default.operation.draws.cube = function (object, ray) {
       if ((0, _utility.E)('dirLightR')) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat((0, _utility.E)('dirLightR').getAttribute('value')), parseFloat((0, _utility.E)('dirLightG').getAttribute('value')), parseFloat((0, _utility.E)('dirLightB').getAttribute('value')));
       } else {
-        //console.log('TEST')
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
       }
     }
 
-    /* Normalize the direction */
+    /* Direction */
     var lightingDirection = null;
     if (object.shaderProgram.lightingDirectionUniform) {
       if ((0, _utility.E)('dirX') && (0, _utility.E)('dirY') && (0, _utility.E)('dirZ')) {
-        // console.log("LIGHTS UNIFORM AMB  B = ",  E('dirZ').value )
         lightingDirection = [(0, _engine.degToRad)(parseFloat((0, _utility.E)('dirX').getAttribute('value'))), (0, _engine.degToRad)(parseFloat((0, _utility.E)('dirY').getAttribute('value'))), (0, _engine.degToRad)(parseFloat((0, _utility.E)('dirZ').getAttribute('value')))];
       } else {
         lightingDirection = [object.LightsData.lightingDirection.r, object.LightsData.lightingDirection.g, object.LightsData.lightingDirection.b];
@@ -3447,13 +3423,12 @@ _manifest.default.operation.draws.cube = function (object, ray) {
         _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
         _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
         _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
-
-        // console.log('TEST')
         //-------------------------------------------
         for (var t = 1; t < object.textures.length + 1; t++) {
+          var t_index0 = 0;
           if (object.custom.gl_texture == null) {
             _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
-            _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
+            _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t_index0]);
             _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
             if (object.texParams.MIPMAP == false) {
               _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
@@ -3469,19 +3444,14 @@ _manifest.default.operation.draws.cube = function (object, ray) {
             if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
               _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
             }
-
             // console.log('TEST TEX SMAPLER ...' , object.texParams)
-            // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
             _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.u_projectedTexture, t);
           } else {
             object.custom.gl_texture(object, t);
           }
         }
-
         // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 1);
-
-        // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 1);
-        //-------------------------------------------
       } else {
         _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
         _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
@@ -4495,7 +4465,7 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
 var drawsOperation = _manifest.default.operation.draws;
 var _default = exports.default = drawsOperation;
 
-},{"../program/manifest":44,"./engine":5,"./events":6,"./matrix-shadows":18,"./matrix-textures":20,"./matrix-world":21,"./raycast":27,"./utility":33,"cannon":41}],12:[function(require,module,exports){
+},{"../program/manifest":44,"./engine":5,"./events":6,"./matrix-world":21,"./raycast":27,"./utility":33,"cannon":41}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9246,7 +9216,6 @@ class MatrixShadowSpotShadowTest {
     this.projNear = 0.1;
     this.projFar = 20;
     this.bias = -0.01;
-    // this.lightProjectionMatrix = m4.perspective(degToRad(this.angleOfView), this.projW / this.projH, this.projNear, this.projFar);
     this.updateLPM = () => {
       this.lightProjectionMatrix = m4.perspective(degToRad(this.angleOfView), this.projW / this.projH, this.projNear, this.projFar);
     };
