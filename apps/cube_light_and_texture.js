@@ -38,13 +38,13 @@ export var runThis = world => {
 	App.scene.MyCubeTex1.geometry.setScaleByX(2);
 	App.scene.MyCubeTex1.geometry.setScaleByY(2);
 
-	App.scene.MyCubeTex1.shadows.lightPosition = [0.1,-0.2,0.1]
+
 	
 	App.scene.MyCubeTex1.position.y = 3;
 	App.scene.MyCubeTex1.position.x = 0;
 
 	setTimeout(() => {
-		App.scene.MyCubeTex1.shadows.lightPosition = [0,4,-1]
+		App.scene.MyCubeTex1.shadows.lightPosition = [0.1,-0.2,0.1]
 	}, 200)
 	
 	// App.scene.MyCubeTex2.position.y = 4;

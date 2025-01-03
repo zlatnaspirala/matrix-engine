@@ -71,11 +71,10 @@ var runThis = world => {
   _manifest.default.scene.MyCubeTex1.activateShadows('spot-shadow');
   _manifest.default.scene.MyCubeTex1.geometry.setScaleByX(2);
   _manifest.default.scene.MyCubeTex1.geometry.setScaleByY(2);
-  _manifest.default.scene.MyCubeTex1.shadows.lightPosition = [0.1, -0.2, 0.1];
   _manifest.default.scene.MyCubeTex1.position.y = 3;
   _manifest.default.scene.MyCubeTex1.position.x = 0;
   setTimeout(() => {
-    _manifest.default.scene.MyCubeTex1.shadows.lightPosition = [0, 4, -1];
+    _manifest.default.scene.MyCubeTex1.shadows.lightPosition = [0.1, -0.2, 0.1];
   }, 200);
 
   // App.scene.MyCubeTex2.position.y = 4;
@@ -3600,7 +3599,6 @@ _manifest.default.operation.draws.cube = function (object, ray) {
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
-    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.CULL_FACE);
   }
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
   object.instancedDraws.overrideDrawArraysInstance(object);
@@ -4224,28 +4222,67 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
       // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
       // console.log('TEST')
       //-------------------------------------------
-      //------------
+      //------------ FROM CUBE 
+      // for(var t = 0;t < object.textures.length;t++) {
+      // 	if(object.custom.gl_texture == null) {
+      // 		world.GL.gl.activeTexture(world.GL.gl['TEXTURE' + t]);
+      // 		world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
+      // 		world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+      // 		if(object.texParams.MIPMAP == false) {
+      // 			world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | world.GL.gl.REPEAT);
+      // 			world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | world.GL.gl.REPEAT);
+      // 			// -- Allocate storage for the texture
+      // 			// world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+      // 			// world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+      // 		} else {
+      // 			world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | world.GL.gl.LINEAR);
+      // 			world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | world.GL.gl.LINEAR);
+      // 			world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
+      // 		}
+
+      // 		if(world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
+      // 			world.GL.gl.texParameterf(world.GL.gl.TEXTURE_2D,
+      // 				world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT,
+      // 				world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+      // 		}
+
+      // 		//console.log('TEST' , object.texParams)
+      // 		world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+
+      // 	} else {
+      // 		object.custom.gl_texture(object, t);
+      // 	}
+      // }
+
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
           _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-          _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-          if (object.texParams.MIPMAP == false) {
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
-            // -- Allocate storage for the texture
-            // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-            // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
-          } else {
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-            _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
-          }
-          if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
+          // world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+          if (_matrixWorld.world.GL.extTFAnisotropic) {
             _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
           }
+          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+          // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | world.GL.gl.REPEAT);
+          // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | world.GL.gl.REPEAT);
 
-          //console.log('TEST' , object.texParams)
+          // -- Allocate storage for the texture
+          // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+          // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE,  object.textures[t]);
+          // world.GL.gl.texImage2D(
+          //   world.GL.gl.TEXTURE_2D,
+          //   0,
+          //   world.GL.gl.RGBA,
+          //   world.GL.gl.RGBA,
+          //   world.GL.gl.UNSIGNED_BYTE,
+          //   object.textures[t].image);
+
+          // world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, 512, 512, 0, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE,  object.textures[t].image);
+          _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+          if (object.texParams.TEXTURE_MIN_FILTER) {
+            _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
+          }
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
@@ -4264,8 +4301,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
   }
 
   // world.disableUnusedAttr( world.GL.gl, localLooper);
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 4); // ori
-
+  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 4);
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
@@ -4274,9 +4310,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
-    // for non blend
-    _matrixWorld.world.GL.gl.depthMask(true);
-    // world.GL.gl.enable(world.GL.gl.CULL_FACE);
+    // world.GL.gl.depthMask(true);
   }
 
   // shadows
@@ -7915,13 +7949,6 @@ _manifest.default.operation.reDrawGlobal = function (time) {
             _matrixWorld.world.contentList[physicsLooper].rotation.axis.x = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].x.toFixed(2));
             _matrixWorld.world.contentList[physicsLooper].rotation.axis.y = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].y.toFixed(2));
             _matrixWorld.world.contentList[physicsLooper].rotation.axis.z = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].z.toFixed(2));
-
-            // if (world.contentList[physicsLooper].rotation.x > 0) {
-            // 	 console.log('TEST ' , world.contentList[physicsLooper].rotation.x ) 
-            // }
-            // if(local.physics.currentBody.quaternion.x != 0) world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-            // if(local.physics.currentBody.quaternion.y != 0) world.contentList[physicsLooper].rotation.roty = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-            // if(local.physics.currentBody.quaternion.z != 0) world.contentList[physicsLooper].rotation.rotz = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
           }
         } else if (local.physics.currentBody.shapeOrientations.length > 1) {
           // subObjs
@@ -7959,8 +7986,6 @@ _manifest.default.operation.reDrawGlobal = function (time) {
   // Multi FB
   for (var fbindex = 0; fbindex < _matrixWorld.world.FBOS.length; fbindex++) {
     // save samera pos
-    // if (typeof world.FBOS[fbindex].settings.xPosMemo === 'undefined') {
-    // setup by custom params
     matrixEngine.Events.camera.xPos = _matrixWorld.world.FBOS[fbindex].settings.cameraX;
     matrixEngine.Events.camera.yPos = _matrixWorld.world.FBOS[fbindex].settings.cameraY;
     matrixEngine.Events.camera.zPos = _matrixWorld.world.FBOS[fbindex].settings.cameraZ;
@@ -7971,6 +7996,8 @@ _manifest.default.operation.reDrawGlobal = function (time) {
     _matrixWorld.world.GL.gl.clearColor(_manifest.default.frameBufferBgColor.r, _manifest.default.frameBufferBgColor.g, _manifest.default.frameBufferBgColor.b, _manifest.default.frameBufferBgColor.a);
     _matrixWorld.world.GL.gl.clear(_matrixWorld.world.GL.gl.COLOR_BUFFER_BIT | _matrixWorld.world.GL.gl.DEPTH_BUFFER_BIT);
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
+    // test
+    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.CULL_FACE);
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
     _matrixWorld.world.GL.gl.depthMask(true);
 
@@ -8078,6 +8105,7 @@ _manifest.default.operation.reDrawGlobal = function (time) {
   // Draw again all
   _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
   _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
+  _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.CULL_FACE);
   _matrixWorld.world.GL.gl.depthMask(true);
 
   // All but no blend
