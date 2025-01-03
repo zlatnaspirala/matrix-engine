@@ -65,15 +65,19 @@ var runThis = world => {
   _manifest.default.scene.floor.position.z = 0;
   _manifest.default.scene.floor.setFBO();
   _manifest.default.scene.floor.activateShadows('spot-shadow');
-  world.Add("cubeLightTex", 1, "MyCubeTex1", textuteImageSamplers);
+  world.Add("squareTex", 1, "MyCubeTex1", textuteImageSamplers);
   // world.Add("cubeLightTex", 1, "MyCubeTsex2", textuteImageSamplers);
 
   _manifest.default.scene.MyCubeTex1.activateShadows('spot-shadow');
   _manifest.default.scene.MyCubeTex1.geometry.setScaleByX(2);
-  _manifest.default.scene.MyCubeTex1.geometry.setScaleByZ(2);
+  _manifest.default.scene.MyCubeTex1.geometry.setScaleByY(2);
+  _manifest.default.scene.MyCubeTex1.shadows.lightPosition = [0.1, -0.2, 0.1];
   _manifest.default.scene.MyCubeTex1.position.y = 3;
   _manifest.default.scene.MyCubeTex1.position.x = 0;
-  _manifest.default.scene.MyCubeTex1.shadows.lightPosition = [0, 4, -1];
+  setTimeout(() => {
+    _manifest.default.scene.MyCubeTex1.shadows.lightPosition = [0, 4, -1];
+  }, 200);
+
   // App.scene.MyCubeTex2.position.y = 4;
   // App.scene.MyCubeTex2.position.x = 0;
 };
@@ -4137,113 +4141,111 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
       }
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else if (object.FBO) {
-      // test FBO
-      // Fbo staff
-      // if(!object.FBO.FB) {
-
-      //   object.FBO = {
-      //     name: object.name
-      //   };
-      //   object.FBO.FB = makeFBO(world.GL.gl, object);
-
-      //   world.FBOS.push(object.FBO);
-
-      //   object.FBO.settings = {
-      //     cameraX: 6,
-      //     cameraY: 5,
-      //     posX: 2.5,
-      //     posY: 4.8,
-      //     posZ: 4.3,
-      //     targetX: 2.5,
-      //     targetY: 0,
-      //     targetZ: 3.5,
-      //     projWidth: 1,
-      //     projHeight: 1,
-      //     perspective: true,
-      //     fieldOfView: 120,
-      //     bias: -0.006,
-      //   };
-
-      // }
-
-      _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
-      _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.FB.texture);
-      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
-
-      // // shadow staff
-      // var target = [0, 0, 0];
-      // var up = [0, 1, 0];
-      // // var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
-      // var lmat = m4.lookAt([0, 1, 0], target, up);
-
-      // const viewMatrix = m4.inverse(lmat);
-      // // first draw from the POV of the light
-      // const lightWorldMatrix = m4.lookAt(
-      //   [object.FBO.settings.posX, object.FBO.settings.posY, object.FBO.settings.posZ],          // position
-      //   [object.FBO.settings.targetX, object.FBO.settings.targetY, object.FBO.settings.targetZ], // target
-      //   [0, 1, 0],                                              // up
-      // );
-      // const lightProjectionMatrix = object.FBO.settings.perspective
-      //   ? m4.perspective(
-      //     degToRad(object.FBO.settings.fieldOfView),
-      //     object.FBO.settings.projWidth / object.FBO.settings.projHeight,
-      //     0.5,  // near
-      //     10)   // far
-      //   : m4.orthographic(
-      //     -object.FBO.settings.projWidth / 2,   // left
-      //     object.FBO.settings.projWidth / 2,   // right
-      //     -object.FBO.settings.projHeight / 2,  // bottom
-      //     object.FBO.settings.projHeight / 2,  // top
-      //     0.5,                      // near
-      //     10);                      // far
-
-      // // // draw to the depth texture
-      // // world.GL.gl.bindFramebuffer(world.GL.gl.FRAMEBUFFER, object.shadows.depthFramebuffer);
-      // // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.shadows.checkerboardTexture);
-      // // world.GL.gl.viewport(0, 0, 512, 512);
-      // // world.GL.gl.clear(world.GL.gl.COLOR_BUFFER_BIT | world.GL.gl.DEPTH_BUFFER_BIT);
-
-      // // draw 
-      // let textureMatrix = m4.identity();
-      // textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
-      // textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
-      // textureMatrix = m4.multiply(textureMatrix, lightProjectionMatrix);
-      // textureMatrix = m4.multiply(
-      //   textureMatrix,
-      //   m4.inverse(lightWorldMatrix));
-
-      // world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
-      // world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.FBO.settings.bias);
+      if (object.shadows && object.shadows.type == "spot-shadow") {
+        // --------------------------------------------------------------------
+        let textureMatrix = m4.identity();
+        textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
+        textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
+        textureMatrix = m4.multiply(textureMatrix, object.shadows.lightProjectionMatrix);
+        const lightWorldMatrix = m4.lookAt([object.shadows.lightPosition[0], object.shadows.lightPosition[1], object.shadows.lightPosition[2]], [object.shadows.lightTarget[0], object.shadows.lightTarget[1], object.shadows.lightTarget[2]],
+        // target
+        [object.shadows.orientation[0], object.shadows.orientation[1], object.shadows.orientation[2]] // up
+        );
+        textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
+        const mat = m4.multiply(lightWorldMatrix, m4.inverse(object.shadows.lightProjectionMatrix));
+        _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_textureMatrix, false, textureMatrix);
+        _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+        _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, m4.translate(object.position.worldLocation[0], object.position.worldLocation[1], object.position.worldLocation[2]));
+        // world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, mat);
+        _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_reverseLightDirection, lightWorldMatrix.slice(8, 11));
+        _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.shadows.bias);
+        //---------------------------------------------------------------------
+        _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
+        _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
+        _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+        //-------------------------------------------
+        for (var t = 1; t < object.textures.length + 1; t++) {
+          var t_index0 = 0;
+          if (object.custom.gl_texture == null) {
+            _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
+            _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t_index0]);
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            if (object.texParams.MIPMAP == false) {
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
+              // -- Allocate storage for the texture
+              // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+              // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+            } else {
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+              _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
+            }
+            if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
+              _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+            }
+            // console.log('TEST TEX SMAPLER ...' , object.texParams)
+            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.u_projectedTexture, t);
+          } else {
+            object.custom.gl_texture(object, t);
+          }
+        }
+        // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 1);
+      } else {
+        _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
+        _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
+        _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+      }
     } else {
+      //------------
+      if (object.shadows && object.shadows.type == "spot-shadow") {
+        // --------------------------------------------------------------------
+        let textureMatrix = m4.identity();
+        textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
+        textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
+        textureMatrix = m4.multiply(textureMatrix, object.shadows.lightProjectionMatrix);
+        const lightWorldMatrix = m4.lookAt([object.shadows.lightPosition[0], object.shadows.lightPosition[1], object.shadows.lightPosition[2]], [object.shadows.lightTarget[0], object.shadows.lightTarget[1], object.shadows.lightTarget[2]],
+        // target
+        [object.shadows.orientation[0], object.shadows.orientation[1], object.shadows.orientation[2]] // up
+        );
+        textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
+        const mat = m4.multiply(lightWorldMatrix, m4.inverse(object.shadows.lightProjectionMatrix));
+        _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_textureMatrix, false, textureMatrix);
+        _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+        _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, m4.translate(object.position.worldLocation[0], object.position.worldLocation[1], object.position.worldLocation[2]));
+        // world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, mat);
+        _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_reverseLightDirection, lightWorldMatrix.slice(8, 11));
+        _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.shadows.bias);
+      }
+      //---------------------------------------------------------------------
+      // world.GL.gl.activeTexture(world.GL.gl.TEXTURE0);
+      // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
+      // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+      // console.log('TEST')
+      //-------------------------------------------
+      //------------
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
           _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-          // world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-          if (_matrixWorld.world.GL.extTFAnisotropic) {
-            _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-          }
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-          // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | world.GL.gl.REPEAT);
-          // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | world.GL.gl.REPEAT);
-
-          // -- Allocate storage for the texture
-          // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-          // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE,  object.textures[t]);
-          // world.GL.gl.texImage2D(
-          //   world.GL.gl.TEXTURE_2D,
-          //   0,
-          //   world.GL.gl.RGBA,
-          //   world.GL.gl.RGBA,
-          //   world.GL.gl.UNSIGNED_BYTE,
-          //   object.textures[t].image);
-
-          // world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, 512, 512, 0, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE,  object.textures[t].image);
           _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-          if (object.texParams.TEXTURE_MIN_FILTER) {
+          if (object.texParams.MIPMAP == false) {
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
+            // -- Allocate storage for the texture
+            // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+            // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+          } else {
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
             _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
           }
+          if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
+            _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+          }
+
+          //console.log('TEST' , object.texParams)
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
@@ -7114,6 +7116,7 @@ var _utility = require("./utility");
 /**
  * @description From 1.9.43
  * Opengles300 in single file.
+ * From 2.2.0 FBO mixed with shadow with two attachemnts.
  */
 function loadShaders300() {
   genInitFSTriangle();
@@ -7139,732 +7142,705 @@ function loadShaders300() {
 }
 function genInitFSTriangle() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec4 vColor;
-  out vec4 outColor;
-  void main(void) {
-    outColor = vColor;
-  }
-  `;
+	precision mediump float;
+	in vec4 vColor;
+	out vec4 outColor;
+	void main(void) {
+		outColor = vColor;
+	}
+	`;
   _utility.scriptManager.LOAD(f, "triangle-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSTriangle() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec4 aVertexColor;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  out vec3 meVertexPosition;
-  out vec4 vColor;
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vColor      = aVertexColor;
-  }
-  `;
+	in vec3 aVertexPosition;
+	in vec4 aVertexColor;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	out vec3 meVertexPosition;
+	out vec4 vColor;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vColor			= aVertexColor;
+	}
+	`;
   _utility.scriptManager.LOAD(f, "triangle-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSCubeTexLight() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec2 vTextureCoord;
-  in vec3 vLightWeighting;
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-  uniform sampler2D uSampler3;
-  uniform sampler2D uSampler4;
-  uniform sampler2D uSampler5;
-  // The CubeMap texture.
-  uniform samplerCube u_texture;
-  // cube map
-  // in vec3 v_normal_cubemap;
-  uniform float numberOfsamplers;
+	precision mediump float;
+	in vec2 vTextureCoord;
+	in vec3 vLightWeighting;
+	uniform sampler2D uSampler;
+	uniform sampler2D uSampler1;
+	uniform sampler2D uSampler2;
+	uniform sampler2D uSampler3;
+	uniform sampler2D uSampler4;
+	uniform sampler2D uSampler5;
+	// The CubeMap texture.
+	uniform samplerCube u_texture;
+	// cube map
+	// in vec3 v_normal_cubemap;
+	uniform float numberOfsamplers;
 
-  // Spot
-  // Passed in from the vertex shader.
-  in vec3 v_normal;
-  in vec3 v_surfaceToLight;
-  in vec3 v_surfaceToView;
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;
-  uniform float u_outerLimit;
+	// Spot
+	// Passed in from the vertex shader.
+	in vec3 v_normal;
+	in vec3 v_surfaceToLight;
+	in vec3 v_surfaceToView;
+	uniform vec4 u_color;
+	uniform float u_shininess;
+	uniform vec3 u_lightDirection;
+	uniform float u_innerLimit;
+	uniform float u_outerLimit;
 
-  out vec4 outColor;
+	out vec4 outColor;
 
-  void main(void) {
-    // because v_normal is a varying it's interpolated
-    // so it will not be a unit vector. Normalizing it
-    // will make it a unit vector again
-    vec3 normal = normalize(v_normal);
+	void main(void) {
+		// because v_normal is a varying it's interpolated
+		// so it will not be a unit vector. Normalizing it
+		// will make it a unit vector again
+		vec3 normal = normalize(v_normal);
 
-    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+		vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+		vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+		vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
 
-    float dotFromDirection = dot(surfaceToLightDirection,
-                                 -u_lightDirection);
-    float limitRange = u_innerLimit - u_outerLimit;
-    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-    float light = inLight * dot(normal, surfaceToLightDirection);
-    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+		float dotFromDirection = dot(surfaceToLightDirection,
+																 -u_lightDirection);
+		float limitRange = u_innerLimit - u_outerLimit;
+		float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+		float light = inLight * dot(normal, surfaceToLightDirection);
+		float specular = inLight * pow(dot(normal, halfVector), u_shininess);
 
-    // Directioin vs uAmbientColor
-    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+		// Directioin vs uAmbientColor
+		vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
 
-    vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
 
-    outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+		outColor			= vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
-    // Lets multiply just the color portion (not the alpha)
-    // by the light
-    outColor.rgb *= light;
-    // Just add in the specular
-    outColor.rgb += specular;
-  }
-  `;
+		// Lets multiply just the color portion (not the alpha)
+		// by the light
+		outColor.rgb *= light;
+		// Just add in the specular
+		outColor.rgb += specular;
+	}
+	`;
   _utility.scriptManager.LOAD(f, "cubeLightTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSCubeTexLight() {
   const f = `#version 300 es
 	// No modify in runtime for VS
-  in vec3 aVertexPosition;
-  in vec3 aVertexNormal;
-  in vec2 aTextureCoord;
+	// matrix-engine 2.2.x
+	in vec3 aVertexPosition;
+	in vec3 aVertexNormal;
+	in vec2 aTextureCoord;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
+	uniform vec3 uAmbientColor;
+	uniform vec3 uLightingDirection;
+	uniform vec3 uDirectionalColor;
+	uniform bool uUseLighting;
+	out vec2 vTextureCoord;
+	out vec3 vLightWeighting;
+	out vec3 meVertexPosition;
 
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-  uniform vec3 uAmbientColor;
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
-  out vec2 vTextureCoord;
-  out vec3 vLightWeighting;
-  out vec3 meVertexPosition;
+	// Spot
+	uniform vec3 u_lightWorldPosition;
+	out vec3 v_normal;
+	out vec3 v_surfaceToLight;
+	out vec3 v_surfaceToView;
 
-  // Spot
-  uniform vec3 u_lightWorldPosition;
-  out vec3 v_normal;
-  out vec3 v_surfaceToLight;
-  out vec3 v_surfaceToView;
+	// Specular
+	out mat4 uMVMatrixINTER;
+	out mat3 uNMatrixINTER;
+	out mat4 uPMatrixINNTER;
 
-  // Specular
-  out mat4 uMVMatrixINTER;
-  out mat3 uNMatrixINTER;
-  out mat4 uPMatrixINNTER;
+	in vec4 specularColor;
+	out vec4 vColor;
+	out vec3 vNormal;
+	out vec4 vPosition;
+	out float vDist;
 
-  in vec4 specularColor;
-  out vec4 vColor;
-  out vec3 vNormal;
-  out vec4 vPosition;
-  out float vDist;
-
-	// spot-Shadow INIT
-  uniform mat4 u_textureMatrix;
-  out vec2 v_texcoord;
+	// spot-shadow
+	uniform mat4 u_textureMatrix;
+	out vec2 v_texcoord;
 	out vec4 v_projectedTexcoord;
 	uniform mat4 u_world;
 
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    uMVMatrixINTER = uMVMatrix;
-    uNMatrixINTER = uNMatrix;
-    uPMatrixINNTER = uPMatrix;
-    vColor = specularColor;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		uMVMatrixINTER = uMVMatrix;
+		uNMatrixINTER = uNMatrix;
+		uPMatrixINNTER = uPMatrix;
+		vColor = specularColor;
 		vNormal = normalize(mat3(u_world) * vec3(aVertexNormal)); 
-		vPosition =  uMVMatrix * vec4(aVertexPosition, 1.0);
-    vDist = gl_Position.w;
+		vPosition =	uMVMatrix * vec4(aVertexPosition, 1.0);
+		vDist = gl_Position.w;
 		v_normal = normalize(uNMatrix * vec3(aVertexNormal)); 
-    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
-    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
-    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
+		vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+		v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+		v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
 
-		vec4 worldPosition =  u_world * vec4((aVertexPosition).xyz, 1.0);
-    v_texcoord = aTextureCoord;
+		vec4 worldPosition =	u_world * vec4((aVertexPosition).xyz, 1.0);
+		v_texcoord = aTextureCoord;
 		v_projectedTexcoord = u_textureMatrix * worldPosition;
 
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
+		gl_Position	 = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vTextureCoord = aTextureCoord;
 
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    } else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  }`;
+		if (!uUseLighting) {
+			vLightWeighting = vec3(1.0, 1.0, 1.0);
+		} else {
+			vec3 transformedNormal					= uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting								 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+		}
+	}`;
   _utility.scriptManager.LOAD(f, "cubeLightTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSSquare() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec4 vColor;
-  out vec4 outColor;
-  void main(void) {
-    outColor = vColor;
-  }
-  `;
+	precision mediump float;
+	in vec4 vColor;
+	out vec4 outColor;
+	void main(void) {
+		outColor = vColor;
+	}
+	`;
   _utility.scriptManager.LOAD(f, "square-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSSquare() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec4 aVertexColor;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  out vec3 meVertexPosition;
-  out vec4 vColor;
+	in vec3 aVertexPosition;
+	in vec4 aVertexColor;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	out vec3 meVertexPosition;
+	out vec4 vColor;
 
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vColor      = aVertexColor;
-  }`;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vColor			= aVertexColor;
+	}`;
   _utility.scriptManager.LOAD(f, "square-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSCube() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec4 vColor;
-  out vec4 outColor;
-  void main(void) {
-    outColor = vColor;
-  }`;
+	precision mediump float;
+	in vec4 vColor;
+	out vec4 outColor;
+	void main(void) {
+		outColor = vColor;
+	}`;
   _utility.scriptManager.LOAD(f, "cube-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSCube() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec4 aVertexColor;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  out vec3 meVertexPosition;
-  out vec4 vColor;
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vColor      = aVertexColor;
-  }`;
+	in vec3 aVertexPosition;
+	in vec4 aVertexColor;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	out vec3 meVertexPosition;
+	out vec4 vColor;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vColor			= aVertexColor;
+	}`;
   _utility.scriptManager.LOAD(f, "cube-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSCubeTex() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec2 vTextureCoord;
-  uniform sampler2D uSampler;
-  out vec4 outColor;
-  void main(void) {
-    outColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-  }`;
+	precision mediump float;
+	in vec2 vTextureCoord;
+	uniform sampler2D uSampler;
+	out vec4 outColor;
+	void main(void) {
+		outColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+	}`;
   _utility.scriptManager.LOAD(f, "cubeTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSCubeTex() {
   const f = `#version 300 es
-  #define POSITION_LOCATION 0
-  in vec3 aVertexPosition;
-  in vec2 aTextureCoord;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  out vec3 meVertexPosition;
-  out vec2 vTextureCoord;
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
-  }`;
+	#define POSITION_LOCATION 0
+	in vec3 aVertexPosition;
+	in vec2 aTextureCoord;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	out vec3 meVertexPosition;
+	out vec2 vTextureCoord;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		gl_Position	 = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vTextureCoord = aTextureCoord;
+	}`;
   _utility.scriptManager.LOAD(f, "cubeTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSObj() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec2 vTextureCoord;
-  in vec3 vLightWeighting;
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-  uniform sampler2D uSampler3;
-  uniform sampler2D uSampler4;
-  uniform sampler2D uSampler5;
-  uniform samplerCube u_texture;
-  uniform float numberOfsamplers;
+	precision mediump float;
+	in vec2 vTextureCoord;
+	in vec3 vLightWeighting;
+	uniform sampler2D uSampler;
+	uniform sampler2D uSampler1;
+	uniform sampler2D uSampler2;
+	uniform sampler2D uSampler3;
+	uniform sampler2D uSampler4;
+	uniform sampler2D uSampler5;
+	uniform samplerCube u_texture;
+	uniform float numberOfsamplers;
 
-  // Spot
-  // Passed in from the vertex shader.
-  in vec3 v_normal;
-  in vec3 v_surfaceToLight;
-  in vec3 v_surfaceToView;
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;
-  uniform float u_outerLimit;
+	// Spot
+	// Passed in from the vertex shader.
+	in vec3 v_normal;
+	in vec3 v_surfaceToLight;
+	in vec3 v_surfaceToView;
+	uniform vec4 u_color;
+	uniform float u_shininess;
+	uniform vec3 u_lightDirection;
+	uniform float u_innerLimit;
+	uniform float u_outerLimit;
 
-  out vec4 outColor;
+	out vec4 outColor;
 
-  void main(void) {
-    // because v_normal is a varying it's interpolated
-    // so it will not be a unit vector. Normalizing it
-    // will make it a unit vector again
-    vec3 normal = normalize(v_normal);
+	void main(void) {
+		// because v_normal is a varying it's interpolated
+		// so it will not be a unit vector. Normalizing it
+		// will make it a unit vector again
+		vec3 normal = normalize(v_normal);
 
-    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+		vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+		vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+		vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
 
-    float dotFromDirection = dot(surfaceToLightDirection,
-                                 -u_lightDirection);
-    float limitRange = u_innerLimit - u_outerLimit;
-    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-    float light = inLight * dot(normal, surfaceToLightDirection);
-    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+		float dotFromDirection = dot(surfaceToLightDirection,
+																 -u_lightDirection);
+		float limitRange = u_innerLimit - u_outerLimit;
+		float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+		float light = inLight * dot(normal, surfaceToLightDirection);
+		float specular = inLight * pow(dot(normal, halfVector), u_shininess);
 
-    // Directioin vs uAmbientColor
-    vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
-    vec4 textureColor1 = texture(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-    // vec4 testUnused = texture(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
+		// Directioin vs uAmbientColor
+		vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
+		vec4 textureColor1 = texture(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor2 = texture(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+		// vec4 testUnused = texture(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
 
-    outColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+		outColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
-    // Lets multiply just the color portion (not the alpha)
-    outColor.rgb *= light;
-    // Just add in the specular
-    outColor.rgb += specular;
-  }`;
+		// Lets multiply just the color portion (not the alpha)
+		outColor.rgb *= light;
+		// Just add in the specular
+		outColor.rgb += specular;
+	}`;
   _utility.scriptManager.LOAD(f, "obj-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSObj() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec3 aVertexNormal;
-  in vec2 aTextureCoord;
+	in vec3 aVertexPosition;
+	in vec3 aVertexNormal;
+	in vec2 aTextureCoord;
 
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-  uniform vec3 uAmbientColor;
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
-  out vec2 vTextureCoord;
-  out vec3 vLightWeighting;
-  out vec3 meVertexPosition;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
+	uniform vec3 uAmbientColor;
+	uniform vec3 uLightingDirection;
+	uniform vec3 uDirectionalColor;
+	uniform bool uUseLighting;
+	out vec2 vTextureCoord;
+	out vec3 vLightWeighting;
+	out vec3 meVertexPosition;
 
-  // Spot
-  uniform vec3 u_lightWorldPosition;
-  out vec3 v_normal;
-  out vec3 v_normal_cubemap;
-  out vec3 v_surfaceToLight;
-  out vec3 v_surfaceToView;
+	// Spot
+	uniform vec3 u_lightWorldPosition;
+	out vec3 v_normal;
+	out vec3 v_normal_cubemap;
+	out vec3 v_surfaceToLight;
+	out vec3 v_surfaceToView;
 
-  // Specular
-  out mat4 uMVMatrixINTER;
-  out mat3 uNMatrixINTER;
-  out mat4 uPMatrixINNTER;
+	// Specular
+	out mat4 uMVMatrixINTER;
+	out mat3 uNMatrixINTER;
+	out mat4 uPMatrixINNTER;
 
-  in vec4 specularColor;
-  out vec4 vColor;
-  out vec3 vNormal;
-  out vec4 vPosition;
-  out float vDist;
+	in vec4 specularColor;
+	out vec4 vColor;
+	out vec3 vNormal;
+	out vec4 vPosition;
+	out float vDist;
 
-  void main(void) {
-    meVertexPosition = aVertexPosition;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
 
-    uMVMatrixINTER = uMVMatrix;
-    uNMatrixINTER = uNMatrix;
-    uPMatrixINNTER = uPMatrix;
+		uMVMatrixINTER = uMVMatrix;
+		uNMatrixINTER = uNMatrix;
+		uPMatrixINNTER = uPMatrix;
 
-    // GLOBAL POS SPECULAR
-    vColor = specularColor;
-    vNormal = normalize(uNMatrix * vec3(aVertexNormal));
-    // Calculate the modelView of the model, and set the vPosition
-    // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
-    vPosition = uMVMatrix * vec4(1,1,1,1);
-    vDist = gl_Position.w;
+		// GLOBAL POS SPECULAR
+		vColor = specularColor;
+		vNormal = normalize(uNMatrix * vec3(aVertexNormal));
+		// Calculate the modelView of the model, and set the vPosition
+		// mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
+		vPosition = uMVMatrix * vec4(1,1,1,1);
+		vDist = gl_Position.w;
 
-    // SPOT
-    // orient the normals and pass to the fragment shader
-    v_normal = mat3(uNMatrix) * aVertexNormal;
+		// SPOT
+		// orient the normals and pass to the fragment shader
+		v_normal = mat3(uNMatrix) * aVertexNormal;
 
-    // normalize
-    v_normal_cubemap = normalize(aVertexPosition.xyz);
+		// normalize
+		v_normal_cubemap = normalize(aVertexPosition.xyz);
 
-    // compute the world position of the surfoace
-    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+		// compute the world position of the surfoace
+		vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
 
-    // compute the vector of the surface to the light
-    // and pass it to the fragment shader
-    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+		// compute the vector of the surface to the light
+		// and pass it to the fragment shader
+		v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
 
-    // compute the vector of the surface to the view/camera
-    // and pass it to the fragment shader
-    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
+		// compute the vector of the surface to the view/camera
+		// and pass it to the fragment shader
+		v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
 
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
+		gl_Position	 = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vTextureCoord = aTextureCoord;
 
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  } 
+		if (!uUseLighting) {
+			vLightWeighting = vec3(1.0, 1.0, 1.0);
+		}
+		else {
+			vec3 transformedNormal					= uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting								 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+		}
+	} 
 `;
   _utility.scriptManager.LOAD(f, "obj-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSPyramid() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec4 vColor;
+	precision mediump float;
+	in vec4 vColor;
 
-  out vec4 outColor;
-  void main(void) {
-    outColor = vColor;
-  }`;
+	out vec4 outColor;
+	void main(void) {
+		outColor = vColor;
+	}`;
   _utility.scriptManager.LOAD(f, "pyramid-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSPyramid() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec4 aVertexColor;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  out vec3 meVertexPosition;
-  out vec4 vColor;
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vColor      = aVertexColor;
-  }
+	in vec3 aVertexPosition;
+	in vec4 aVertexColor;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	out vec3 meVertexPosition;
+	out vec4 vColor;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vColor			= aVertexColor;
+	}
 `;
   _utility.scriptManager.LOAD(f, "pyramid-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSSquareTex() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec2 vTextureCoord;
-  in vec3 vLightWeighting;
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-  uniform sampler2D uSampler3;
-  uniform sampler2D uSampler4;
-  uniform sampler2D uSampler5;
-  uniform float numberOfsamplers;
+	precision mediump float;
+	in vec2 vTextureCoord;
+	in vec3 vLightWeighting;
+	uniform sampler2D uSampler;
+	uniform sampler2D uSampler1;
+	uniform sampler2D uSampler2;
+	uniform sampler2D uSampler3;
+	uniform sampler2D uSampler4;
+	uniform sampler2D uSampler5;
+	uniform float numberOfsamplers;
 
-  // Spot
-  // Passed in from the vertex shader.
-  in vec3 v_normal;
-  in vec3 v_surfaceToLight;
-  in vec3 v_surfaceToView;
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;
-  uniform float u_outerLimit;
+	// Spot
+	// Passed in from the vertex shader.
+	in vec3 v_normal;
+	in vec3 v_surfaceToLight;
+	in vec3 v_surfaceToView;
+	uniform vec4 u_color;
+	uniform float u_shininess;
+	uniform vec3 u_lightDirection;
+	uniform float u_innerLimit;
+	uniform float u_outerLimit;
 
-  out vec4 outColor;
+	out vec4 outColor;
 
-  void main(void) {
-    vec3 normal = normalize(v_normal);
-    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-    float dotFromDirection = dot(surfaceToLightDirection,
-                                 -u_lightDirection);
-    float limitRange = u_innerLimit - u_outerLimit;
-    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-    float light = inLight * dot(normal, surfaceToLightDirection);
-    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
-    vec4 textureColor  = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-    outColor       = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+	void main(void) {
+		vec3 normal = normalize(v_normal);
+		vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+		vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+		vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+		float dotFromDirection = dot(surfaceToLightDirection,
+																 -u_lightDirection);
+		float limitRange = u_innerLimit - u_outerLimit;
+		float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+		float light = inLight * dot(normal, surfaceToLightDirection);
+		float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+		vec4 textureColor	= texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+		outColor			 = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
-    outColor.rgb *= light;
-    // gl_FragColor.rgb += specular;
-  }
-  `;
+		outColor.rgb *= light;
+		// gl_FragColor.rgb += specular;
+	}
+	`;
   _utility.scriptManager.LOAD(f, "squareTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSSquareTex() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec3 aVertexNormal;
-  in vec2 aTextureCoord;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-  uniform vec3 uAmbientColor;
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
-  out vec2 vTextureCoord;
-  out vec3 vLightWeighting;
-  out vec3 meVertexPosition;
+	in vec3 aVertexPosition;
+	in vec3 aVertexNormal;
+	in vec2 aTextureCoord;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
+	uniform vec3 uAmbientColor;
+	uniform vec3 uLightingDirection;
+	uniform vec3 uDirectionalColor;
+	uniform bool uUseLighting;
+	out vec2 vTextureCoord;
+	out vec3 vLightWeighting;
+	out vec3 meVertexPosition;
 
-  // Spot
-  uniform vec3 u_lightWorldPosition;
-  out vec3 v_normal;
-  out vec3 v_surfaceToLight;
-  out vec3 v_surfaceToView;
+	// Spot
+	uniform vec3 u_lightWorldPosition;
+	out vec3 v_normal;
+	out vec3 v_surfaceToLight;
+	out vec3 v_surfaceToView;
 
-  // spot-Shadow
-  uniform mat4 u_textureMatrix;
-  out vec2 v_texcoord;
-  out vec4 v_projectedTexcoord;
+	// Specular
+	out mat4 uMVMatrixINTER;
+	out mat3 uNMatrixINTER;
+	out mat4 uPMatrixINNTER;
+	out vec4 specularColor;
+	out vec4 vColor;
+	out vec3 vNormal;
+	out vec4 vPosition;
+	out float vDist;
 
-  // Specular
-	  // Specular
-  out mat4 uMVMatrixINTER;
-  out mat3 uNMatrixINTER;
-  out mat4 uPMatrixINNTER;
-	
-  out vec4 specularColor;
-  out vec4 vColor;
-  out vec3 vNormal;
-  out vec4 vPosition;
-  out float vDist;
+	// spot-shadow
+	uniform mat4 u_textureMatrix;
+	out vec2 v_texcoord;
+	out vec4 v_projectedTexcoord;
+	uniform mat4 u_world;
 
-  void main(void) {
-     meVertexPosition = aVertexPosition;
-    uMVMatrixINTER = uMVMatrix;
-    uNMatrixINTER = uNMatrix;
-    uPMatrixINNTER = uPMatrix;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		uMVMatrixINTER = uMVMatrix;
+		uNMatrixINTER = uNMatrix;
+		uPMatrixINNTER = uPMatrix;
+		vColor = specularColor;
+		vNormal = normalize(mat3(u_world) * vec3(aVertexNormal)); 
+		vPosition =	uMVMatrix * vec4(aVertexPosition, 1.0);
+		vDist = gl_Position.w;
+		v_normal = normalize(uNMatrix * vec3(aVertexNormal)); 
+		vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+		v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+		v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
 
-    // GLOBAL POS SPECULAR
-    vColor = specularColor;
-    vNormal = normalize(uNMatrix * vec3(aVertexNormal));
-    // Calculate the modelView of the model, and set the vPosition
-    // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
-    vPosition = uMVMatrix * vec4(1,1,1,1);
-    vDist = gl_Position.w;
+		vec4 worldPosition =	u_world * vec4((aVertexPosition).xyz, 1.0);
+		v_texcoord = aTextureCoord;
+		v_projectedTexcoord = u_textureMatrix * worldPosition;
 
-    // SPOT
-    // orient the normals and pass to the fragment shader
-    v_normal = mat3(uNMatrix) * aVertexNormal;
+		gl_Position	 = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vTextureCoord = aTextureCoord;
 
-    // normalize
-    // v_normal_cubemap = normalize(aVertexPosition.xyz);
-
-    // compute the world position of the surfoace
-    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
-
-    // compute the vector of the surface to the light
-    // and pass it to the fragment shader
-    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
-
-    // compute the vector of the surface to the view/camera
-    // and pass it to the fragment shader
-    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
-
-
-		///////////////////////////
-		// spot shadow
-    // vec4 worldPosition = u_world * a_position;
-    vec4 worldPosition = vec4(1,1,1,1) * vec4( aVertexPosition, 1.0);
-    v_texcoord = aTextureCoord;
-    v_projectedTexcoord = u_textureMatrix * worldPosition;
-		///////////////////////////
-
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
-
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  }
-`;
+		if (!uUseLighting) {
+			vLightWeighting = vec3(1.0, 1.0, 1.0);
+		} else {
+			vec3 transformedNormal					= uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting								 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+		}
+	}`;
   _utility.scriptManager.LOAD(f, "squareTex-shader-vs", "x-shader/x-vertex", "shaders");
-  // console.log(" squareTex-shader-vs v")
 }
 function getInitFSSphereLightTex() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec2 vTextureCoord;
-  in vec3 vLightWeighting;
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-  uniform sampler2D uSampler3;
-  uniform float numberOfsamplers;
-  out vec4 outColor;
-  void main(void) {
-    vec4 textureColor = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor1 = texture(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-    outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-  }
-  `;
+	precision mediump float;
+	in vec2 vTextureCoord;
+	in vec3 vLightWeighting;
+	uniform sampler2D uSampler;
+	uniform sampler2D uSampler1;
+	uniform sampler2D uSampler2;
+	uniform sampler2D uSampler3;
+	uniform float numberOfsamplers;
+	out vec4 outColor;
+	void main(void) {
+		vec4 textureColor = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor1 = texture(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor2 = texture(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+		outColor			= vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+	}
+	`;
   _utility.scriptManager.LOAD(f, "sphereLightTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSSphereLightTex() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec3 aVertexNormal;
-  in vec2 aTextureCoord;
+	in vec3 aVertexPosition;
+	in vec3 aVertexNormal;
+	in vec2 aTextureCoord;
 
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-  uniform vec3 uAmbientColor;
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
+	uniform vec3 uAmbientColor;
+	uniform vec3 uLightingDirection;
+	uniform vec3 uDirectionalColor;
+	uniform bool uUseLighting;
 
-  out vec2 vTextureCoord;
-  out vec3 vLightWeighting;
-  out vec3 meVertexPosition;
+	out vec2 vTextureCoord;
+	out vec3 vLightWeighting;
+	out vec3 meVertexPosition;
 
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		gl_Position	 = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vTextureCoord = aTextureCoord;
 
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  }
+		if (!uUseLighting) {
+			vLightWeighting = vec3(1.0, 1.0, 1.0);
+		}
+		else {
+			vec3 transformedNormal					= uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting								 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+		}
+	}
 `;
   _utility.scriptManager.LOAD(f, "sphereLightTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSCubeMap() {
   const f = `#version 300 es
-  precision mediump float;
+	precision mediump float;
 
-  in vec2 vTextureCoord;
-  in vec3 vLightWeighting;
+	in vec2 vTextureCoord;
+	in vec3 vLightWeighting;
 
-  // The CubeMap texture test.
-  uniform samplerCube u_texture;
-  // cube map
-  in vec3 v_normal_cubemap;
-  uniform float numberOfsamplers;
+	// The CubeMap texture test.
+	uniform samplerCube u_texture;
+	// cube map
+	in vec3 v_normal_cubemap;
+	uniform float numberOfsamplers;
 
-  // Spot
-  in vec3 v_normal;
-  in vec3 v_surfaceToLight;
-  in vec3 v_surfaceToView;
+	// Spot
+	in vec3 v_normal;
+	in vec3 v_surfaceToLight;
+	in vec3 v_surfaceToView;
 
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;
-  uniform float u_outerLimit;
+	uniform vec4 u_color;
+	uniform float u_shininess;
+	uniform vec3 u_lightDirection;
+	uniform float u_innerLimit;
+	uniform float u_outerLimit;
 
-  out vec4 outColor;
+	out vec4 outColor;
 
-  void main(void) {
-    vec3 normal = normalize(v_normal);
+	void main(void) {
+		vec3 normal = normalize(v_normal);
 
-    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+		vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+		vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+		vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
 
-    float dotFromDirection = dot(surfaceToLightDirection, -u_lightDirection);
-    float limitRange = u_innerLimit - u_outerLimit;
-    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-    float light = inLight * dot(normal, surfaceToLightDirection);
-    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+		float dotFromDirection = dot(surfaceToLightDirection, -u_lightDirection);
+		float limitRange = u_innerLimit - u_outerLimit;
+		float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+		float light = inLight * dot(normal, surfaceToLightDirection);
+		float specular = inLight * pow(dot(normal, halfVector), u_shininess);
 
-    outColor = texture(u_texture, normal);
-    outColor.rgb += specular;
-  }`;
+		outColor = texture(u_texture, normal);
+		outColor.rgb += specular;
+	}`;
   _utility.scriptManager.LOAD(f, "cubeMap-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSCubeMap() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec3 aVertexNormal;
+	in vec3 aVertexPosition;
+	in vec3 aVertexNormal;
 
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
 
-  out vec3 v_normal;
-  out vec3 v_normal_cubemap;
+	out vec3 v_normal;
+	out vec3 v_normal_cubemap;
 
-  // lights
-  uniform vec3 uAmbientColor;
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
-  out vec3 vLightWeighting;
-  out vec3 meVertexPosition;
+	// lights
+	uniform vec3 uAmbientColor;
+	uniform vec3 uLightingDirection;
+	uniform vec3 uDirectionalColor;
+	uniform bool uUseLighting;
+	out vec3 vLightWeighting;
+	out vec3 meVertexPosition;
 
-  // test 
-  // Spot
-  uniform vec3 u_lightWorldPosition;
-  // out vec3 v_normal;
-  out vec3 v_surfaceToLight;
-  out vec3 v_surfaceToView;
+	// test 
+	// Spot
+	uniform vec3 u_lightWorldPosition;
+	// out vec3 v_normal;
+	out vec3 v_surfaceToLight;
+	out vec3 v_surfaceToView;
 
-  // Specular
-  out mat4 uMVMatrixINTER;
-  out mat3 uNMatrixINTER;
-  out mat4 uPMatrixINNTER;
+	// Specular
+	out mat4 uMVMatrixINTER;
+	out mat3 uNMatrixINTER;
+	out mat4 uPMatrixINNTER;
 
-  in vec4 specularColor;
-  out vec4 vColor;
-  out vec3 vNormal;
-  out vec4 vPosition;
-  out float vDist;
-  // end test
+	in vec4 specularColor;
+	out vec4 vColor;
+	out vec3 vNormal;
+	out vec4 vPosition;
+	out float vDist;
+	// end test
 
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    v_normal = mat3(uNMatrix) * aVertexNormal;
-    // v_normal_cubemap = normalize(aVertexPosition.xyz);
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		v_normal = mat3(uNMatrix) * aVertexNormal;
+		// v_normal_cubemap = normalize(aVertexPosition.xyz);
 
-    // test SPOT
-    // orient the normals and pass to the fragment shader
-    v_normal = mat3(uNMatrix) * aVertexNormal;
+		// test SPOT
+		// orient the normals and pass to the fragment shader
+		v_normal = mat3(uNMatrix) * aVertexNormal;
 
-    // normalize
-    v_normal_cubemap = normalize(aVertexPosition.xyz);
+		// normalize
+		v_normal_cubemap = normalize(aVertexPosition.xyz);
 
-    // compute the world position of the surfoace
-    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+		// compute the world position of the surfoace
+		vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
 
-    // compute the vector of the surface to the light
-    // and pass it to the fragment shader
-    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+		// compute the vector of the surface to the light
+		// and pass it to the fragment shader
+		v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
 
-    // compute the vector of the surface to the view/camera
-    // and pass it to the fragment shader
-    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
-    // end test
+		// compute the vector of the surface to the view/camera
+		// and pass it to the fragment shader
+		v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
+		// end test
 
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  } `;
+		gl_Position	 = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		if (!uUseLighting) {
+			vLightWeighting = vec3(1.0, 1.0, 1.0);
+		}
+		else {
+			vec3 transformedNormal					= uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting								 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+		}
+	} `;
   _utility.scriptManager.LOAD(f, "cubeMap-shader-vs", "x-shader/x-vertex", "shaders");
 }
 
@@ -10063,7 +10039,7 @@ function defineworld(canvas, renderType) {
       squareObject.geometry.nameUniq = nameUniq;
       squareObject.glBlend = new _utility._glBlend();
       squareObject.setFBO = function () {
-        console.log('cubeObject set fbo ... ');
+        console.log('squareObject set fbo ... ');
         squareObject.FBO = {
           name: squareObject.name,
           FB: (0, _matrixTextures.makeFBO)(world.GL.gl, {
@@ -10078,7 +10054,6 @@ function defineworld(canvas, renderType) {
             yaw: typeof arg === 'undefined' || !arg.yaw ? 4.8 : arg.yaw
           }
         };
-        // for now
         world.FBOS.push(squareObject.FBO);
       };
 
@@ -10129,6 +10104,7 @@ function defineworld(canvas, renderType) {
             squareObject.useShadows = true;
             squareObject.shadows = new _matrixShadows.MatrixEffectLens();
           } else if (t == 'spot-shadow') {
+            console.info(`%c[squareObject]  shadow - object: ${squareObject.name}.`, CS3);
             squareObject.useShadows = true;
             squareObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
           }
@@ -10169,7 +10145,7 @@ function defineworld(canvas, renderType) {
           alert('Exec add obj : texturePaths : path is unknow typeof');
         }
       } else {
-        // no textures , use default single textures
+        console.info(`%c[squareObject]  no textures , use default single textures for object: ${squareObject.name}.`, CS3);
         squareObject.texture = this.initTexture(this.GL.gl, 'res/images/icon2.jpg');
         squareObject.textures[0] = squareObject.texture;
         squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');

@@ -31,15 +31,22 @@ export var runThis = world => {
 	App.scene.floor.setFBO()
 	App.scene.floor.activateShadows('spot-shadow')
 
-	world.Add("cubeLightTex", 1, "MyCubeTex1", textuteImageSamplers);
+	world.Add("squareTex", 1, "MyCubeTex1", textuteImageSamplers);
 	// world.Add("cubeLightTex", 1, "MyCubeTsex2", textuteImageSamplers);
 
 	App.scene.MyCubeTex1.activateShadows('spot-shadow')
 	App.scene.MyCubeTex1.geometry.setScaleByX(2);
-	App.scene.MyCubeTex1.geometry.setScaleByZ(2);
+	App.scene.MyCubeTex1.geometry.setScaleByY(2);
+
+	App.scene.MyCubeTex1.shadows.lightPosition = [0.1,-0.2,0.1]
+	
 	App.scene.MyCubeTex1.position.y = 3;
 	App.scene.MyCubeTex1.position.x = 0;
-	App.scene.MyCubeTex1.shadows.lightPosition = [0,4,-1]
+
+	setTimeout(() => {
+		App.scene.MyCubeTex1.shadows.lightPosition = [0,4,-1]
+	}, 200)
+	
 	// App.scene.MyCubeTex2.position.y = 4;
 	// App.scene.MyCubeTex2.position.x = 0;
 
