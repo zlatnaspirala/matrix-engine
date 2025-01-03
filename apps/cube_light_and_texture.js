@@ -16,6 +16,7 @@ export var runThis = world => {
 		mix_operation: "multiply",
 	};
 
+	matrixEngine.Events.camera.yawAmp = 5
 	App.camera.SceneController = true;
 
 	// // Floor
@@ -28,10 +29,18 @@ export var runThis = world => {
 	App.scene.floor.position.z = -6;
 
 	App.scene.floor.setFBO()
+	App.scene.floor.activateShadows('spot-shadow')
 
 	world.Add("cubeLightTex", 1, "MyCubeTex1", textuteImageSamplers);
-	// world.Add("cubeLightTex", 1, "MyCubeTex2", textuteImageSamplers);
-	App.scene.MyCubeTex1.position.y = 2;
+	// world.Add("cubeLightTex", 1, "MyCubeTsex2", textuteImageSamplers);
+
+	App.scene.MyCubeTex1.activateShadows('spot-shadow')
+	App.scene.MyCubeTex1.geometry.setScaleByX(2);
+	App.scene.MyCubeTex1.geometry.setScaleByZ(2);
+	App.scene.MyCubeTex1.position.y = 3;
 	App.scene.MyCubeTex1.position.x = 0;
- 	App.scene.MyCubeTex1.activateShadows()
+	App.scene.MyCubeTex1.shadows.lightPosition = [0,4,-1]
+	// App.scene.MyCubeTex2.position.y = 4;
+	// App.scene.MyCubeTex2.position.x = 0;
+
 };
