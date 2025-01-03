@@ -24,9 +24,9 @@ export var runThis = world => {
 	App.scene.floor.position.SetY(0);
 	App.scene.floor.geometry.setScaleByX(31);
 	App.scene.floor.geometry.setScaleByZ(31);
-	App.scene.floor.rotation.rotx = 0;
+	App.scene.floor.rotation.roty = 90;
 	App.scene.floor.position.y = -1;
-	App.scene.floor.position.z = -6;
+	App.scene.floor.position.z = 0;
 
 	App.scene.floor.setFBO()
 	App.scene.floor.activateShadows('spot-shadow')

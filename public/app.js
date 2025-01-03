@@ -60,9 +60,9 @@ var runThis = world => {
   _manifest.default.scene.floor.position.SetY(0);
   _manifest.default.scene.floor.geometry.setScaleByX(31);
   _manifest.default.scene.floor.geometry.setScaleByZ(31);
-  _manifest.default.scene.floor.rotation.rotx = 0;
+  _manifest.default.scene.floor.rotation.roty = 90;
   _manifest.default.scene.floor.position.y = -1;
-  _manifest.default.scene.floor.position.z = -6;
+  _manifest.default.scene.floor.position.z = 0;
   _manifest.default.scene.floor.setFBO();
   _manifest.default.scene.floor.activateShadows('spot-shadow');
   world.Add("cubeLightTex", 1, "MyCubeTex1", textuteImageSamplers);
@@ -8043,8 +8043,7 @@ _manifest.default.operation.reDrawGlobal = function (time) {
           if (_matrixWorld.world.contentList[_engine.looper].shadows && _matrixWorld.world.contentList[_engine.looper].shadows.type == "spot-shadow" && _matrixWorld.world.FBOS[fbindex].name == _matrixWorld.world.contentList[_engine.looper].name) {
             console.log('PREVENT OVERRIDE FBO DRAWING....');
           } else {
-            // world.GL.gl.useProgram(world.contentList[looper].shaderProgramColor);
-            _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper], 'noray', false);
+            _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper], 'noray');
           }
         } else if (_matrixWorld.world.contentList[_engine.looper].type.indexOf("custom-") != -1) {
           // interest part - frst time draw func taken from object inself not from world.
@@ -8118,7 +8117,7 @@ _manifest.default.operation.reDrawGlobal = function (time) {
     // Multi FBO camera view works but obj seq speed up - probably becouse OSC !! must be fixed
 
     // Reset camera
-    if (typeof _matrixWorld.world.FBOS[0] !== 'undefined') {
+    if (typeof _matrixWorld.world.FBOS[fbindex] !== 'undefined') {
       matrixEngine.Events.camera.zPos = matrixEngine.Events.camera.zPosMemo;
       matrixEngine.Events.camera.xPos = matrixEngine.Events.camera.xPosMemo;
       matrixEngine.Events.camera.yPos = matrixEngine.Events.camera.yPosMemo;
