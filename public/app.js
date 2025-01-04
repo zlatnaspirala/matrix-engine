@@ -4073,7 +4073,6 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
 };
 _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
   var lighting = true;
-  // eslint-disable-next-line no-unused-vars
   var localLooper = 0;
   mat4.identity(object.mvMatrix);
   this.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);

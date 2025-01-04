@@ -300,9 +300,31 @@ Typically looks:
 }
 ```
 
-## Light And Shadows [1.7.6]
+## Light And Shadows (ME Materials) [1.7.6]
 
-`activateShadows` works only for cube for now.
+[2.2.0] Cast shadow Mixed FBO with two tex sampler attachments.
+There is local cast 'spot-shadow' i needed this to make little more darker 
+draws in framebuffer.
+
+Element who have `setFBO` called can cast shadows:
+```js
+	App.scene.floor.setFBO({
+		cameraX: 0,
+		cameraY: 0,
+		cameraZ: 20,
+		pitch: 0,
+		yaw: 0
+	})
+	App.scene.floor.activateShadows('spot-shadow')
+```
+
+Manipulate with non fbo object: 
+```js
+App.scene.MyCubeTex1.shadows.lightPosition = [0,1,1]
+```
+
+
+`activateShadows` works only for cube, square, objs for now.
 
 ```js
 world.Add('cubeLightTex', 1, 'myCube4', textuteImageSamplers);
@@ -323,7 +345,7 @@ App.scene.myCube7.geometry.colorData.SetBlueForAll(0.5);
 App.scene.myCube7.deactivateTex();
 ```
 
-Make square pattern
+Make square pattern:
 
 ```js
 // Custom generic textures. Micro Drawing.
