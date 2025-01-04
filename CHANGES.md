@@ -2,6 +2,32 @@
 
 # Matrix Engine [CHANGES]
 
+
+[2.2.0] Cast shadow 
+         Mixed FBO with two tex sampler attachments.
+
+
+There is local cast 'spot-shadow' i needed this to make little more darker 
+draws in framebuffer.
+
+Element who have `setFBO` called can cast shadows:
+```js
+	App.scene.floor.setFBO({
+		cameraX: 0,
+		cameraY: 0,
+		cameraZ: 20,
+		pitch: 0,
+		yaw: 0
+	})
+	App.scene.floor.activateShadows('spot-shadow')
+```
+
+Manipulate with non fbo object: 
+```js
+App.scene.MyCubeTex1.shadows.lightPosition = [0,1,1]
+```
+
+
 [2.1.15] Fix custom textures for obj mesh
 
 ```js

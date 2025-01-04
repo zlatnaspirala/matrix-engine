@@ -1,6 +1,6 @@
 var App = {
 	name: "Matrix Engine Manifest",
-	version: "1.1.1",
+	version: "1.1.2",
 	events: true,
 	sounds: true,
 	logs: false,
@@ -31,6 +31,8 @@ var App = {
 		aspectRatio: 1.8,                    // aspectRatio system active
 	},
 	glBackgroundColor: {r: 0.0, g: 0.0, b: 0.0, a: 1.0},
+	frameBufferBgColor: {r: 1.0, g: 1.0, b: 1.0, a: 1.0},
+	frameBufferViewPort: [512, 512],
 	textures: [],                          // readOnly in manifest
 	tools: {},                             // readOnly in manifest
 	operation: {},                         // readOnly in manifest

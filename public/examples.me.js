@@ -1441,77 +1441,83 @@ Object.defineProperty(exports, "__esModule", {
 exports.runThis = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-/* eslint-disable no-unused-vars */
-
 /**
  * @Author Nikola Lukic
+ * @license MIT
  * @Description Matrix Engine Api Example.
+ * Free for all
  */
 
-/* globals world App world */
-
 var runThis = world => {
-  /* globals world App ENUMERATORS SWITCHER OSCILLATOR */
-
   var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
+  matrixEngine.Events.camera.yawAmp = 5;
   _manifest.default.camera.SceneController = true;
+
   // Floor
-  world.Add("squareTex", 1, "floor", textuteImageSamplers);
+  world.Add("cubeLightTex", 1, "floor", textuteImageSamplers);
   _manifest.default.scene.floor.position.SetY(0);
-  _manifest.default.scene.floor.geometry.setScale(20);
-  _manifest.default.scene.floor.rotation.rotx = 90;
+  _manifest.default.scene.floor.geometry.setScaleByX(31);
+  _manifest.default.scene.floor.geometry.setScaleByZ(31);
+  // App.scene.floor.rotation.roty = 90;
   _manifest.default.scene.floor.position.y = -1;
-  _manifest.default.scene.floor.position.z = -20;
-
-  // App.scene.floor.geometry.texCoordsPoints.right_top.y = 1.4;
-  // App.scene.floor.geometry.texCoordsPoints.right_top.x = 1.4;
-  // App.scene.floor.geometry.texCoordsPoints.left_bottom.x = -0.4;
-  // App.scene.floor.geometry.texCoordsPoints.left_bottom.y = -0.4;
-  // App.scene.floor.geometry.texCoordsPoints.left_top.x = -0.4;
-  // App.scene.floor.geometry.texCoordsPoints.left_top.y = 1.4;
-  // App.scene.floor.geometry.texCoordsPoints.right_bottom.x = 1.4;
-  // App.scene.floor.geometry.texCoordsPoints.right_bottom.y = -0.4;
-
-  _manifest.default.scene.floor.custom.gl_texture = function (object, t) {
-    world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, world.GL.gl.LINEAR);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, world.GL.gl.LINEAR);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, world.GL.gl.REPEAT);
-    world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, world.GL.gl.REPEAT);
-    world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
-    world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-  };
-
-  // Cube
-  world.Add("cubeLightTex", 1, "MyCubeTex1", textuteImageSamplers);
-  world.Add("cubeLightTex", 1, "MyCubeTex2", textuteImageSamplers);
-  world.Add("cubeLightTex", 1, "MyCubeTex3", textuteImageSamplers);
-  world.Add("cubeLightTex", 1, "MyCubeTex4", textuteImageSamplers);
-
-  // App.scene.MyCubeTex.LightsData.ambientLight.r = 0.1;
-  // App.scene.MyCubeTex.LightsData.ambientLight.g = 0.2;
-  // App.scene.MyCubeTex.LightsData.ambientLight.b = 1;
-  // App.scene.MyCubeTex.LightsData.ambientLight.set(0.1, 0.2, 1);
-
-  _manifest.default.scene.MyCubeTex1.rotation.roty = 45;
-  _manifest.default.scene.MyCubeTex2.rotation.roty = -45;
-  _manifest.default.scene.MyCubeTex1.position.x = -2;
-  _manifest.default.scene.MyCubeTex2.position.x = 2;
-  _manifest.default.scene.MyCubeTex3.position.x = -2;
-  _manifest.default.scene.MyCubeTex4.position.x = -2;
-  _manifest.default.scene.MyCubeTex3.position.z = -10;
-  _manifest.default.scene.MyCubeTex4.position.z = -10;
-  _manifest.default.scene.MyCubeTex3.position.z = -12;
-  _manifest.default.scene.MyCubeTex4.position.z = -12;
-
-  // App.scene.MyCubeTex.LightsData.directionLight.r = 1;
-  // App.scene.MyCubeTex.LightsData.directionLight.g = 1;
-  // App.scene.MyCubeTex.LightsData.directionLight.b = 1;
-
-  // App.scene.MyCubeTex.LightsData.directionLight.set(1, 1, 1);
+  _manifest.default.scene.floor.position.z = 0;
+  _manifest.default.scene.floor.rotation.roty = -90;
+  _manifest.default.scene.floor.setFBO({
+    cameraX: 0,
+    cameraY: 0,
+    cameraZ: 20,
+    pitch: 0,
+    yaw: 0
+  });
+  _manifest.default.scene.floor.activateShadows('spot-shadow');
+  world.Add("squareTex", 1, "MyCubeTex1", textuteImageSamplers);
+  _manifest.default.scene.MyCubeTex1.activateShadows('spot-shadow');
+  _manifest.default.scene.MyCubeTex1.geometry.setScaleByX(2);
+  _manifest.default.scene.MyCubeTex1.geometry.setScaleByY(2);
+  _manifest.default.scene.MyCubeTex1.position.y = 3;
+  _manifest.default.scene.MyCubeTex1.position.x = 7;
+  setTimeout(() => {
+    _manifest.default.scene.MyCubeTex1.shadows.lightPosition = [0.1, -0.2, 0.1];
+  }, 200);
+  function onLoadObj(meshes) {
+    for (let key in meshes) {
+      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
+    }
+    var textuteImageSamplers2 = {
+      source: ["res/images/armor.webp", "res/images/armor.webp"],
+      mix_operation: "multiply"
+    };
+    var textuteImageSamplers = {
+      source: ["res/images/dagger.webp"],
+      mix_operation: "multiply"
+    };
+    world.Add("obj", 1, "armor", textuteImageSamplers2, meshes.armor);
+    _manifest.default.scene.armor.position.y = 3;
+    _manifest.default.scene.armor.rotation.rotationSpeed.y = 20;
+    _manifest.default.scene.armor.LightsData.ambientLight.set(1, 1, 1);
+    _manifest.default.scene.armor.position.z = -6;
+    _manifest.default.scene.armor.mesh.setScale(3);
+    setTimeout(() => {
+      _manifest.default.scene.armor.activateShadows('spot-shadow');
+      _manifest.default.scene.mac.activateShadows('spot-shadow');
+      _manifest.default.scene.armor.shadows.lightPosition = [10, 2, -1];
+    }, 200);
+    world.Add("obj", 1, "mac", textuteImageSamplers, meshes.mac);
+    _manifest.default.scene.mac.position.y = 1;
+    _manifest.default.scene.mac.position.x = -2;
+    _manifest.default.scene.mac.rotation.rotationSpeed.y = 20;
+    _manifest.default.scene.mac.LightsData.ambientLight.set(1, 1, 1);
+    _manifest.default.scene.mac.mesh.setScale(3);
+  }
+  matrixEngine.objLoader.downloadMeshes({
+    armor: "res/3d-objects/armor.obj",
+    mac: "res/3d-objects/mac.obj"
+  }, onLoadObj, {
+    swap: [0, 2]
+  });
 };
 exports.runThis = runThis;
 
@@ -7498,6 +7504,9 @@ function initShaders(gl, fragment, vertex) {
       if (null !== gl.getUniformLocation(shaderProgram, 'uDirectionalColor')) {
         shaderProgram.directionalColorUniform = gl.getUniformLocation(shaderProgram, 'uDirectionalColor');
       }
+      if (null !== gl.getUniformLocation(shaderProgram, 'u_reverseLightDirection')) {
+        shaderProgram.u_reverseLightDirection = gl.getUniformLocation(shaderProgram, 'u_reverseLightDirection');
+      }
       // Local SpotLight
       if (null !== gl.getUniformLocation(shaderProgram, 'u_shininess')) {
         shaderProgram.shininessLocation = gl.getUniformLocation(shaderProgram, 'u_shininess');
@@ -9603,10 +9612,15 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
  */
 
 class MEBvhAnimation {
-  constructor(path_, options) {
+  constructor(path_, options, callback) {
     if (typeof options === 'undefined' || typeof options.world === 'undefined') {
       console.error('MEBvhAnimation class error: No second argument options || possible world is not passed.');
       return;
+    }
+    if (typeof callback === 'undefined') {
+      options.callback = () => {};
+    } else {
+      options.callback = callback;
     }
     if (typeof options.skeletalBoneScale === 'undefined') {
       options.skeletalBoneScale = 0.3;
@@ -9622,7 +9636,7 @@ class MEBvhAnimation {
     if (typeof options.globalOffset === 'undefined') options.globalOffset = [0, 0, 0];
     if (typeof options.globalRotation === 'undefined') options.globalRotation = [0, 0, 0];
     if (typeof options.myFrameRate === 'undefined') options.myFrameRate = 125;
-    if (typeof options.speed === 'undefined') options.speed = 5;
+    if (typeof options.speed === 'undefined') options.speed = 1;
     if (typeof options.matrixSkeletalObjScale === 'undefined') options.matrixSkeletalObjScale = 1;
     if (typeof options.ifNotExistDrawType === 'undefined') options.ifNotExistDrawType = 'cubeLightTex';
 
@@ -9645,8 +9659,9 @@ class MEBvhAnimation {
       this.skeletalKeys = this.anim.joint_names();
       this.animation = this.anim.all_frame_poses();
       this.sumOfFrames = this.animation[0].length - 1;
-      this.loopInverse = new _utility.OSCILLATOR(1, this.sumOfFrames, options.speed);
+      this.loopInverse = new _utility.OSCILLATOR(-this.sumOfFrames, -1, options.speed);
       if (this.isConstructed == false) this.constructSkeletal(this.options);
+      if (this.options.callback) this.options.callback();
     }).catch(err => {
       console.warn('Bvh-loader error: ', err);
     });
@@ -9709,18 +9724,23 @@ class MEBvhAnimation {
     let onlyMine = [];
     matrixWorld.objListToDispose[0].contentList.forEach(MEObject => {
       if (MEObject.name.indexOf(this.options.boneNameBasePrefix) != -1) {
-        // console.log(MEObject)
         onlyMine.push(MEObject);
       }
     });
     return onlyMine;
   }
-
-  // cleanNames = (name) => {
-  //   const arrondissements = ['mixamorig'];
-  //   return arrondissements.reduce((acc, cur) => acc.replace(cur, ''), name);
-  // };
-
+  getInfoAboutJoints = () => {
+    let allNames = [];
+    let allEndBones = [];
+    for (var k in this.anim.joints) {
+      allNames.push(this.anim.joints[k].name);
+      if (this.anim.joints[k].name.indexOf('_end') != -1) allEndBones.push(this.anim.joints[k].name);
+    }
+    return {
+      names: allNames,
+      allEndBones: allEndBones
+    };
+  };
   async constructSkeletal(options) {
     this.skeletalKeys = this.skeletalKeys.map(item => item.replace('mixamorig:', ''));
     const promises = [];
@@ -9819,6 +9839,7 @@ class MEBvhAnimation {
   }
   playAnimation() {
     if (this.animationTimer == null) {
+      // Must be update before draw not timer any more - optimisation <<
       this.animationTimer = setInterval(() => {
         for (var x = 0; x < this.tPosition.length; x++) {
           var b = this.options.boneNameBasePrefix + this.skeletalKeys[x];
@@ -9843,8 +9864,13 @@ class MEBvhAnimation {
             }
           }
         }
-        if (this.options.loop == 'playInverse') {
-          this.actualFrame = this.loopInverse.UPDATE();
+        if (this.options.loop == 'playInverse' || this.options.loop == 'playInverseAndStop') {
+          this.actualFrame = -this.loopInverse.UPDATE();
+          if (this.actualFrame <= 1 && this.options.loop == 'playInverseAndStop') {
+            this.stopAnimation();
+            return;
+          }
+          return;
         } else {
           this.actualFrame++;
         }
@@ -9868,6 +9894,59 @@ class MEBvhAnimation {
     clearInterval(this.animationTimer);
     this.animationTimer = null;
   }
+  playAnimationFromKeyframes() {
+    if (this.animationTimer == null) {
+      // Must be update before draw not timer any more - optimisation <<
+      this.animationTimer = setInterval(() => {
+        for (var x = 0; x < this.anim.joints.__0.children.length; x++) {
+          var b = this.options.boneNameBasePrefix + this.anim.joints.__0.children[x].name; //this.skeletalKeys[x];
+          // catch if not exist possible!
+          if (App.scene[b]) {
+            // 2.1.13
+            if (App.scene[b] && this.anim.keyframes[this.actualFrame]) {
+              App.scene[b].position.SetX(this.anim.keyframes[this.actualFrame][0 + x * 6] + this.globalOffset[0]);
+              App.scene[b].position.SetZ(this.anim.keyframes[this.actualFrame][1 + x * 6] + this.globalOffset[1]);
+              App.scene[b].position.SetY(this.anim.keyframes[this.actualFrame][2 + x * 6] + this.globalOffset[2]);
+              App.scene[b].rotation.rotateX(this.anim.keyframes[this.actualFrame][3 + x * 6] + this.globalRotation[0]);
+              App.scene[b].rotation.rotateY(this.anim.keyframes[this.actualFrame][4 + x * 6] + this.globalRotation[1]);
+              App.scene[b].rotation.rotateZ(this.anim.keyframes[this.actualFrame][5 + x * 6] + this.globalRotation[2]);
+            } else {
+              // for non t pose
+              App.scene[b].position.SetX(this.anim.keyframes[this.actualFrame][0] + this.globalOffset[0]);
+              App.scene[b].position.SetY(this.anim.keyframes[this.actualFrame][1] + this.globalOffset[1]);
+              App.scene[b].position.SetZ(this.anim.keyframes[this.actualFrame][2] + this.globalOffset[2]);
+              App.scene[b].rotation.rotateX(this.anim.keyframes[this.actualFrame][3] + this.globalRotation[0]);
+              App.scene[b].rotation.rotateY(this.anim.keyframes[this.actualFrame][4] + this.globalRotation[1]);
+              App.scene[b].rotation.rotateZ(this.anim.keyframes[this.actualFrame][5] + this.globalRotation[2]);
+            }
+          }
+        }
+        if (this.options.loop == 'playInverse' || this.options.loop == 'playInverseAndStop') {
+          this.actualFrame = -this.loopInverse.UPDATE();
+          if (this.actualFrame <= 1 && this.options.loop == 'playInverseAndStop') {
+            this.stopAnimation();
+            return;
+          }
+          return;
+        } else {
+          this.actualFrame++;
+        }
+        if (this.actualFrame >= this.animation[0].length - 1) {
+          if (this.options.loop == true) {
+            this.actualFrame = 1;
+          } else if (this.options.loop == 'stopOnEnd') {
+            this.stopAnimation();
+          } else if (this.options.loop == 'stopAndReset') {
+            this.constructFirstFrame();
+            this.actualFrame = 1;
+            this.stopAnimation();
+          }
+        }
+      }, this.options.myFrameRate);
+    } else {
+      console.warn('MEBvhAnimation: Animation already play.');
+    }
+  }
 }
 exports.default = MEBvhAnimation;
 
@@ -9883,29 +9962,18 @@ var _matrixWorld = require("./matrix-world");
 var _events = require("./events");
 var _utility = require("./utility");
 var raycaster = _interopRequireWildcard(require("./raycast"));
-var _matrixShadows = require("./matrix-shadows");
-var _matrixTextures = require("./matrix-textures");
 var _engine = require("./engine");
 var CANNON = _interopRequireWildcard(require("cannon"));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-// import {vec2} from 'wgpu-matrix';
-
-// test override 
+// Override
 CANNON.Quaternion.prototype.toAxisAngle = function (targetAxis) {
   targetAxis = targetAxis || new CANNON.Vec3();
   if (this.w > 1) this.normalize();
-  // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalised
-
   var angle = 2 * Math.acos(this.w);
-  var s = Math.sqrt(1 - this.w * this.w); // assuming quaternion normalised then w is less than 1, so term always positive.
+  var s = Math.sqrt(1 - this.w * this.w);
   if (s < 0.00000001) {
-    // test to avoid divide by zero, s is always positive due to sqrt
-    // if s close to zero then direction of axis not important
-    // if it is important that axis is normalised then replace with x=1; y=z=0;
-    // console.log('override works: x: ', this.x + " y: ", this.y, " z: ", this.z)
-    // nikola lukic
     var max1 = [this.x, this.y, this.z];
     var getMaxValue = Math.max(...max1);
     var index = max1.indexOf(getMaxValue);
@@ -9913,7 +9981,7 @@ CANNON.Quaternion.prototype.toAxisAngle = function (targetAxis) {
     targetAxis.y = 0;
     targetAxis.z = 0;
   } else {
-    targetAxis.x = this.x / s; // normalise axis
+    targetAxis.x = this.x / s;
     targetAxis.y = this.y / s;
     targetAxis.z = this.z / s;
   }
@@ -9933,17 +10001,12 @@ _manifest.default.operation.draws.cube = function (object, ray) {
     }
     var QP = object.physics.currentBody.quaternion;
     QP.normalize();
-    // mat4.translate(object.mvMatrix, object.mvMatrix, [0.0, 0.0, 0.0]);
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
     var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.z, object.rotation.axis.y);
     object.rotation.axisSystem[0].normalize();
     var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), parseFloat(object.rotation.axisSystem[0].y.toFixed(2)));
     var MY_ANGLE = 2 * Math.acos(QP.w);
-    // if(radToDeg(object.rotation.angle) > 90) console.log("aNGLE:" + radToDeg(object.rotation.angle) + " VS MY_ANGLE " + radToDeg(MY_ANGLE) + "  axis ++++ " + AXIS)
-    // mat4.rotateX(object.mvMatrix, object.mvMatrix, (object.rotation.angle));
-    // mat4.rotateY(object.mvMatrix, object.mvMatrix, (object.rotation.angle));
-    // mat4.rotateZ(object.mvMatrix, object.mvMatrix, (-object.rotation.angle));
     mat4.rotate(object.mvMatrix, object.mvMatrix, MY_ANGLE, AXIS);
   } else if (object.isHUD === true) {
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
@@ -9993,13 +10056,11 @@ _manifest.default.operation.draws.cube = function (object, ray) {
       _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexNormalAttribute);
       localLooper = localLooper + 1;
     }
-    /* Set the ambient light */
+    /* Ambient light */
     if (object.shaderProgram.ambientColorUniform) {
       if ((0, _utility.E)('ambLightR')) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, parseFloat((0, _utility.E)('ambLightR').getAttribute('value')), parseFloat((0, _utility.E)('ambLightG').getAttribute('value')), parseFloat((0, _utility.E)('ambLightB').getAttribute('value')));
-        // console.log("LIGHTS UNIFORM AMB  B = ", parseFloat(E('ambLightB').value) )
       } else {
-        // object.LightsData.ambientLight
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.ambientColorUniform, object.LightsData.ambientLight.r, object.LightsData.ambientLight.g, object.LightsData.ambientLight.b);
       }
     }
@@ -10009,16 +10070,14 @@ _manifest.default.operation.draws.cube = function (object, ray) {
       if ((0, _utility.E)('dirLightR')) {
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, parseFloat((0, _utility.E)('dirLightR').getAttribute('value')), parseFloat((0, _utility.E)('dirLightG').getAttribute('value')), parseFloat((0, _utility.E)('dirLightB').getAttribute('value')));
       } else {
-        //console.log('TEST')
         _matrixWorld.world.GL.gl.uniform3f(object.shaderProgram.directionalColorUniform, object.LightsData.directionLight.R(), object.LightsData.directionLight.G(), object.LightsData.directionLight.B());
       }
     }
 
-    /* Normalize the direction */
+    /* Direction */
     var lightingDirection = null;
     if (object.shaderProgram.lightingDirectionUniform) {
       if ((0, _utility.E)('dirX') && (0, _utility.E)('dirY') && (0, _utility.E)('dirZ')) {
-        // console.log("LIGHTS UNIFORM AMB  B = ",  E('dirZ').value )
         lightingDirection = [(0, _engine.degToRad)(parseFloat((0, _utility.E)('dirX').getAttribute('value'))), (0, _engine.degToRad)(parseFloat((0, _utility.E)('dirY').getAttribute('value'))), (0, _engine.degToRad)(parseFloat((0, _utility.E)('dirZ').getAttribute('value')))];
       } else {
         lightingDirection = [object.LightsData.lightingDirection.r, object.LightsData.lightingDirection.g, object.LightsData.lightingDirection.b];
@@ -10057,58 +10116,90 @@ _manifest.default.operation.draws.cube = function (object, ray) {
       }
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else if (object.FBO) {
-      // test FBO
-      // spot light test light
-      // Fbo staff
-      _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
-      _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.FB.texture);
-      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
-
-      // // shadow staff dev
-      // var target = [0, 0, 0];
-      // var up = [0, 1, 0];
-      // // var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
-      // var lmat = m4.lookAt([0, 2, 0], target, up);
-
-      // const viewMatrix = m4.inverse(lmat);
-      // // first draw from the POV of the light
-      // const lightWorldMatrix = m4.lookAt(
-      //   [object.FBO.settings.posX, object.FBO.settings.posY, object.FBO.settings.posZ],          // position
-      //   [object.FBO.settings.targetX, object.FBO.settings.targetY, object.FBO.settings.targetZ], // target
-      //   [0, 1, 0],                                              // up
-      // );
-      // const lightProjectionMatrix = object.FBO.settings.perspective
-      //   ? m4.perspective(
-      //     degToRad(object.FBO.settings.fieldOfView),
-      //     object.FBO.settings.projWidth / object.FBO.settings.projHeight,
-      //     0.5,  // near
-      //     10)   // far
-      //   : m4.orthographic(
-      //     -object.FBO.settings.projWidth / 2,   // left
-      //     object.FBO.settings.projWidth / 2,   // right
-      //     -object.FBO.settings.projHeight / 2,  // bottom
-      //     object.FBO.settings.projHeight / 2,  // top
-      //     0.5,                      // near
-      //     10);                      // far
-
-      // // draw to the depth texture
-      // world.GL.gl.bindFramebuffer(world.GL.gl.FRAMEBUFFER, object.shadows.depthFramebuffer);
-      // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.shadows.checkerboardTexture);
-      // world.GL.gl.viewport(0, 0, 512, 512);
-      // world.GL.gl.clear(world.GL.gl.COLOR_BUFFER_BIT | world.GL.gl.DEPTH_BUFFER_BIT);
-
-      // draw 
-      // let textureMatrix = m4.identity();
-      // textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
-      // textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
-      // textureMatrix = m4.multiply(textureMatrix, lightProjectionMatrix);
-      // textureMatrix = m4.multiply(
-      //   textureMatrix,
-      //   m4.inverse(lightWorldMatrix));
-
-      // world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
-      // world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.FBO.settings.bias);
+      if (object.shadows && object.shadows.type == "spot-shadow") {
+        // --------------------------------------------------------------------
+        let textureMatrix = m4.identity();
+        textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
+        textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
+        textureMatrix = m4.multiply(textureMatrix, object.shadows.lightProjectionMatrix);
+        const lightWorldMatrix = m4.lookAt([object.shadows.lightPosition[0], object.shadows.lightPosition[1], object.shadows.lightPosition[2]], [object.shadows.lightTarget[0], object.shadows.lightTarget[1], object.shadows.lightTarget[2]],
+        // target
+        [object.shadows.orientation[0], object.shadows.orientation[1], object.shadows.orientation[2]] // up
+        );
+        textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
+        const mat = m4.multiply(lightWorldMatrix, m4.inverse(object.shadows.lightProjectionMatrix));
+        _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_textureMatrix, false, textureMatrix);
+        _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+        _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, m4.translate(object.position.worldLocation[0], object.position.worldLocation[1], object.position.worldLocation[2]));
+        // world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, mat);
+        _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_reverseLightDirection, lightWorldMatrix.slice(8, 11));
+        _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.shadows.bias);
+        //---------------------------------------------------------------------
+        _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
+        _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
+        _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+        //-------------------------------------------
+        for (var t = 1; t < object.textures.length + 1; t++) {
+          var t_index0 = 0;
+          if (object.custom.gl_texture == null) {
+            _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
+            _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t_index0]);
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            if (object.texParams.MIPMAP == false) {
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
+              // -- Allocate storage for the texture
+              // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+              // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+            } else {
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+              _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
+            }
+            if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
+              _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+            }
+            // console.log('TEST TEX SMAPLER ...' , object.texParams)
+            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.u_projectedTexture, t);
+          } else {
+            object.custom.gl_texture(object, t);
+          }
+        }
+        // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 1);
+      } else {
+        _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
+        _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
+        _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+      }
     } else {
+      //------------
+      if (object.shadows && object.shadows.type == "spot-shadow") {
+        // --------------------------------------------------------------------
+        let textureMatrix = m4.identity();
+        textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
+        textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
+        textureMatrix = m4.multiply(textureMatrix, object.shadows.lightProjectionMatrix);
+        const lightWorldMatrix = m4.lookAt([object.shadows.lightPosition[0], object.shadows.lightPosition[1], object.shadows.lightPosition[2]], [object.shadows.lightTarget[0], object.shadows.lightTarget[1], object.shadows.lightTarget[2]],
+        // target
+        [object.shadows.orientation[0], object.shadows.orientation[1], object.shadows.orientation[2]] // up
+        );
+        textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
+        const mat = m4.multiply(lightWorldMatrix, m4.inverse(object.shadows.lightProjectionMatrix));
+        _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_textureMatrix, false, textureMatrix);
+        _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+        _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, m4.translate(object.position.worldLocation[0], object.position.worldLocation[1], object.position.worldLocation[2]));
+        // world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, mat);
+        _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_reverseLightDirection, lightWorldMatrix.slice(8, 11));
+        _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.shadows.bias);
+      }
+      //---------------------------------------------------------------------
+      // world.GL.gl.activeTexture(world.GL.gl.TEXTURE0);
+      // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
+      // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+      // console.log('TEST')
+      //-------------------------------------------
+      //------------
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
@@ -10192,25 +10283,6 @@ _manifest.default.operation.draws.cube = function (object, ray) {
   // Shadows
   if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {
     // set the light position
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
-    // Set the spotlight uniforms
-    {
-      var target = [0, 0, 0]; // object.position.worldLocation;
-      var up = [0, 1, 0];
-      var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
-      // var lmat = m4.lookAt(object.position.worldLocation, target, up);
-      lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
-      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
-      // get the zAxis from the matrix
-      // negate it because lookAt looks down the -Z axis
-      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]];
-      // object.shadows.lightDirection = [-0, -0, -1];
-    }
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
   } else if (object.shadows && object.shadows.type == 'spec') {
     // global position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
@@ -10239,7 +10311,6 @@ _manifest.default.operation.draws.cube = function (object, ray) {
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
-    // TEST world.GL.gl.enable(world.GL.gl.CULL_FACE);
   }
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
   object.instancedDraws.overrideDrawArraysInstance(object);
@@ -10505,94 +10576,109 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
         }
         _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
       } else if (object.FBO) {
-        // Fbo staff
-        // if(!object.FBO.FB) {
-        //   object.FBO = {
-        //     name: object.name
-        //   };
-        //   object.FBO.FB = makeFBO(world.GL.gl, object);
-        //   object.FBO.settings = {
-        //     cameraX: 6,
-        //     cameraY: 5,
-        //     posX: 2.5,
-        //     posY: 4.8,
-        //     posZ: 4.3,
-        //     targetX: 2.5,
-        //     targetY: 0,
-        //     targetZ: 3.5,
-        //     projWidth: 1,
-        //     projHeight: 1,
-        //     perspective: true,
-        //     fieldOfView: 120,
-        //     bias: -0.006,
-        //   };
-        //   world.FBOS.push(object.FBO);
-        // }
-        _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
-        _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.FB.texture);
-        _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
-
-        // shadow staff
-        // var target = [0, 0, 0];
-        // var up = [0, 1, 0];
-        // var lmat = m4.lookAt([0, 1, 0], target, up);
-
-        // const viewMatrix = m4.inverse(lmat);
-        // // first draw from the POV of the light
-        // const lightWorldMatrix = m4.lookAt(
-        //   [object.FBO.settings.posX, object.FBO.settings.posY, object.FBO.settings.posZ],          // position
-        //   [object.FBO.settings.targetX, object.FBO.settings.targetY, object.FBO.settings.targetZ], // target
-        //   [0, 1, 0],                                              // up
-        // );
-        // const lightProjectionMatrix = object.FBO.settings.perspective
-        //   ? m4.perspective(
-        //     degToRad(object.FBO.settings.fieldOfView),
-        //     object.FBO.settings.projWidth / object.FBO.settings.projHeight,
-        //     0.5,  // near
-        //     10)   // far
-        //   : m4.orthographic(
-        //     -object.FBO.settings.projWidth / 2,   // left
-        //     object.FBO.settings.projWidth / 2,   // right
-        //     -object.FBO.settings.projHeight / 2,  // bottom
-        //     object.FBO.settings.projHeight / 2,  // top
-        //     0.5,                      // near
-        //     10);                      // far
-
-        // // // draw to the depth texture
-        // // world.GL.gl.bindFramebuffer(world.GL.gl.FRAMEBUFFER, object.shadows.depthFramebuffer);
-        // // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.shadows.checkerboardTexture);
-        // // world.GL.gl.viewport(0, 0, 512, 512);
-        // // world.GL.gl.clear(world.GL.gl.COLOR_BUFFER_BIT | world.GL.gl.DEPTH_BUFFER_BIT);
-
-        // // draw 
-        // let textureMatrix = m4.identity();
-        // textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
-        // textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
-        // textureMatrix = m4.multiply(textureMatrix, lightProjectionMatrix);
-        // textureMatrix = m4.multiply(
-        //   textureMatrix,
-        //   m4.inverse(lightWorldMatrix));
-
-        // world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
-        // world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.FBO.settings.bias);
+        if (object.shadows && object.shadows.type == "spot-shadow") {
+          // --------------------------------------------------------------------
+          let textureMatrix = m4.identity();
+          textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
+          textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
+          textureMatrix = m4.multiply(textureMatrix, object.shadows.lightProjectionMatrix);
+          const lightWorldMatrix = m4.lookAt([object.shadows.lightPosition[0], object.shadows.lightPosition[1], object.shadows.lightPosition[2]], [object.shadows.lightTarget[0], object.shadows.lightTarget[1], object.shadows.lightTarget[2]],
+          // target
+          [object.shadows.orientation[0], object.shadows.orientation[1], object.shadows.orientation[2]] // up
+          );
+          textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
+          const mat = m4.multiply(lightWorldMatrix, m4.inverse(object.shadows.lightProjectionMatrix));
+          _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_textureMatrix, false, textureMatrix);
+          _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+          _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, m4.translate(object.position.worldLocation[0], object.position.worldLocation[1], object.position.worldLocation[2]));
+          // world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, mat);
+          _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_reverseLightDirection, lightWorldMatrix.slice(8, 11));
+          _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.shadows.bias);
+          //---------------------------------------------------------------------
+          _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
+          _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
+          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+          //-------------------------------------------
+          for (var t = 1; t < object.textures.length + 1; t++) {
+            var t_index0 = 0;
+            if (object.custom.gl_texture == null) {
+              _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
+              _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t_index0]);
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+              if (object.texParams.MIPMAP == false) {
+                _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
+                _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
+                // -- Allocate storage for the texture
+                // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+                // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+              } else {
+                _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+                _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+                _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
+              }
+              if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
+                _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+              }
+              // console.log('TEST TEX SMAPLER ...' , object.texParams)
+              _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+              _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.u_projectedTexture, t);
+            } else {
+              object.custom.gl_texture(object, t);
+            }
+          }
+          // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 1);
+        } else {
+          _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
+          _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
+          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+        }
       } else {
+        //------------
+        if (object.shadows && object.shadows.type == "spot-shadow") {
+          // --------------------------------------------------------------------
+          let textureMatrix = m4.identity();
+          textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
+          textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
+          textureMatrix = m4.multiply(textureMatrix, object.shadows.lightProjectionMatrix);
+          const lightWorldMatrix = m4.lookAt([object.shadows.lightPosition[0], object.shadows.lightPosition[1], object.shadows.lightPosition[2]], [object.shadows.lightTarget[0], object.shadows.lightTarget[1], object.shadows.lightTarget[2]],
+          // target
+          [object.shadows.orientation[0], object.shadows.orientation[1], object.shadows.orientation[2]] // up
+          );
+          textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
+          const mat = m4.multiply(lightWorldMatrix, m4.inverse(object.shadows.lightProjectionMatrix));
+          _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_textureMatrix, false, textureMatrix);
+          _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+          _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, m4.translate(object.position.worldLocation[0], object.position.worldLocation[1], object.position.worldLocation[2]));
+          // world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, mat);
+          _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_reverseLightDirection, lightWorldMatrix.slice(8, 11));
+          _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.shadows.bias);
+        }
+        //------------ FROM CUBE
         for (var t = 0; t < object.textures.length; t++) {
-          _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
-          _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-          _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.NEAREST);
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.CLAMP_TO_EDGE);
-
-          // -- Allocate storage for the texture
-          //world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-          //world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, image);
-          //world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-          _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+          if (object.custom.gl_texture == null) {
+            _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
+            _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            if (object.texParams.MIPMAP == false) {
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
+              // -- Allocate storage for the texture
+              // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+              // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+            } else {
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+              _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
+            }
+            if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
+              _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+            }
+            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+          } else {
+            object.custom.gl_texture(object, t);
+          }
         }
       }
-      // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
       localLooper = localLooper + 1;
     } else {
       // world.GL.gl.disableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
@@ -10665,7 +10751,6 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
 };
 _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
   var lighting = true;
-  // eslint-disable-next-line no-unused-vars
   var localLooper = 0;
   mat4.identity(object.mvMatrix);
   this.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
@@ -10777,118 +10862,156 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
       }
       _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
     } else if (object.FBO) {
-      // test FBO
-      // Fbo staff
-      // if(!object.FBO.FB) {
-
-      //   object.FBO = {
-      //     name: object.name
-      //   };
-      //   object.FBO.FB = makeFBO(world.GL.gl, object);
-
-      //   world.FBOS.push(object.FBO);
-
-      //   object.FBO.settings = {
-      //     cameraX: 6,
-      //     cameraY: 5,
-      //     posX: 2.5,
-      //     posY: 4.8,
-      //     posZ: 4.3,
-      //     targetX: 2.5,
-      //     targetY: 0,
-      //     targetZ: 3.5,
-      //     projWidth: 1,
-      //     projHeight: 1,
-      //     perspective: true,
-      //     fieldOfView: 120,
-      //     bias: -0.006,
-      //   };
-
-      // }
-
-      _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
-      _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.FB.texture);
-      _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
-
-      // // shadow staff
-      // var target = [0, 0, 0];
-      // var up = [0, 1, 0];
-      // // var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
-      // var lmat = m4.lookAt([0, 1, 0], target, up);
-
-      // const viewMatrix = m4.inverse(lmat);
-      // // first draw from the POV of the light
-      // const lightWorldMatrix = m4.lookAt(
-      //   [object.FBO.settings.posX, object.FBO.settings.posY, object.FBO.settings.posZ],          // position
-      //   [object.FBO.settings.targetX, object.FBO.settings.targetY, object.FBO.settings.targetZ], // target
-      //   [0, 1, 0],                                              // up
-      // );
-      // const lightProjectionMatrix = object.FBO.settings.perspective
-      //   ? m4.perspective(
-      //     degToRad(object.FBO.settings.fieldOfView),
-      //     object.FBO.settings.projWidth / object.FBO.settings.projHeight,
-      //     0.5,  // near
-      //     10)   // far
-      //   : m4.orthographic(
-      //     -object.FBO.settings.projWidth / 2,   // left
-      //     object.FBO.settings.projWidth / 2,   // right
-      //     -object.FBO.settings.projHeight / 2,  // bottom
-      //     object.FBO.settings.projHeight / 2,  // top
-      //     0.5,                      // near
-      //     10);                      // far
-
-      // // // draw to the depth texture
-      // // world.GL.gl.bindFramebuffer(world.GL.gl.FRAMEBUFFER, object.shadows.depthFramebuffer);
-      // // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.shadows.checkerboardTexture);
-      // // world.GL.gl.viewport(0, 0, 512, 512);
-      // // world.GL.gl.clear(world.GL.gl.COLOR_BUFFER_BIT | world.GL.gl.DEPTH_BUFFER_BIT);
-
-      // // draw 
-      // let textureMatrix = m4.identity();
-      // textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
-      // textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
-      // textureMatrix = m4.multiply(textureMatrix, lightProjectionMatrix);
-      // textureMatrix = m4.multiply(
-      //   textureMatrix,
-      //   m4.inverse(lightWorldMatrix));
-
-      // world.GL.gl.uniform4fv(object.shaderProgram.u_textureMatrix, textureMatrix);
-      // world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.FBO.settings.bias);
+      if (object.shadows && object.shadows.type == "spot-shadow") {
+        // --------------------------------------------------------------------
+        let textureMatrix = m4.identity();
+        textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
+        textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
+        textureMatrix = m4.multiply(textureMatrix, object.shadows.lightProjectionMatrix);
+        const lightWorldMatrix = m4.lookAt([object.shadows.lightPosition[0], object.shadows.lightPosition[1], object.shadows.lightPosition[2]], [object.shadows.lightTarget[0], object.shadows.lightTarget[1], object.shadows.lightTarget[2]],
+        // target
+        [object.shadows.orientation[0], object.shadows.orientation[1], object.shadows.orientation[2]] // up
+        );
+        textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
+        const mat = m4.multiply(lightWorldMatrix, m4.inverse(object.shadows.lightProjectionMatrix));
+        _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_textureMatrix, false, textureMatrix);
+        _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+        _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, m4.translate(object.position.worldLocation[0], object.position.worldLocation[1], object.position.worldLocation[2]));
+        // world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, mat);
+        _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_reverseLightDirection, lightWorldMatrix.slice(8, 11));
+        _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.shadows.bias);
+        //---------------------------------------------------------------------
+        _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
+        _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
+        _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+        //-------------------------------------------
+        for (var t = 1; t < object.textures.length + 1; t++) {
+          var t_index0 = 0;
+          if (object.custom.gl_texture == null) {
+            _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
+            _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t_index0]);
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            if (object.texParams.MIPMAP == false) {
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
+              // -- Allocate storage for the texture
+              // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+              // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+            } else {
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+              _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
+            }
+            if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
+              _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+            }
+            // console.log('TEST TEX SMAPLER ...' , object.texParams)
+            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+            _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.u_projectedTexture, t);
+          } else {
+            object.custom.gl_texture(object, t);
+          }
+        }
+        // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 1);
+      } else {
+        _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl.TEXTURE0);
+        _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
+        _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+      }
     } else {
+      //------------
+      if (object.shadows && object.shadows.type == "spot-shadow") {
+        // --------------------------------------------------------------------
+        let textureMatrix = m4.identity();
+        textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
+        textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
+        textureMatrix = m4.multiply(textureMatrix, object.shadows.lightProjectionMatrix);
+        const lightWorldMatrix = m4.lookAt([object.shadows.lightPosition[0], object.shadows.lightPosition[1], object.shadows.lightPosition[2]], [object.shadows.lightTarget[0], object.shadows.lightTarget[1], object.shadows.lightTarget[2]],
+        // target
+        [object.shadows.orientation[0], object.shadows.orientation[1], object.shadows.orientation[2]] // up
+        );
+        textureMatrix = m4.multiply(textureMatrix, m4.inverse(lightWorldMatrix));
+        const mat = m4.multiply(lightWorldMatrix, m4.inverse(object.shadows.lightProjectionMatrix));
+        _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_textureMatrix, false, textureMatrix);
+        _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+        _matrixWorld.world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, m4.translate(object.position.worldLocation[0], object.position.worldLocation[1], object.position.worldLocation[2]));
+        // world.GL.gl.uniformMatrix4fv(object.shaderProgram.u_world, false, mat);
+        _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.u_reverseLightDirection, lightWorldMatrix.slice(8, 11));
+        _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.u_bias, object.shadows.bias);
+      }
+      //---------------------------------------------------------------------
+      // world.GL.gl.activeTexture(world.GL.gl.TEXTURE0);
+      // world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
+      // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
+      // console.log('TEST')
+      //-------------------------------------------
+      //------------ FROM CUBE 
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
           _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-          // world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-          if (_matrixWorld.world.GL.extTFAnisotropic) {
-            _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-          }
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-          _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-          // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | world.GL.gl.REPEAT);
-          // world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | world.GL.gl.REPEAT);
-
-          // -- Allocate storage for the texture
-          // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-          // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE,  object.textures[t]);
-          // world.GL.gl.texImage2D(
-          //   world.GL.gl.TEXTURE_2D,
-          //   0,
-          //   world.GL.gl.RGBA,
-          //   world.GL.gl.RGBA,
-          //   world.GL.gl.UNSIGNED_BYTE,
-          //   object.textures[t].image);
-
-          // world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, 512, 512, 0, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE,  object.textures[t].image);
           _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-          if (object.texParams.TEXTURE_MIN_FILTER) {
+          if (object.texParams.MIPMAP == false) {
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
+            // -- Allocate storage for the texture
+            // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+            // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+          } else {
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
             _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
           }
+          if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
+            _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+          }
+
+          //console.log('TEST' , object.texParams)
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
         }
       }
+
+      // for(var t = 0;t < object.textures.length;t++) {
+      // 	if(object.custom.gl_texture == null) {
+      // 		world.GL.gl.activeTexture(world.GL.gl['TEXTURE' + t]);
+      // 		world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
+      // 		// world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+      // 		if(world.GL.extTFAnisotropic) {
+      // 			world.GL.gl.texParameterf(world.GL.gl.TEXTURE_2D,
+      // 				world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT,
+      // 				world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+      // 		}
+
+      // 		world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | world.GL.gl.LINEAR);
+      // 		world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | world.GL.gl.LINEAR);
+      // 		// world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | world.GL.gl.REPEAT);
+      // 		// world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | world.GL.gl.REPEAT);
+
+      // 		// -- Allocate storage for the texture
+      // 		// world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
+      // 		// world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE,  object.textures[t]);
+      // 		// world.GL.gl.texImage2D(
+      // 		//   world.GL.gl.TEXTURE_2D,
+      // 		//   0,
+      // 		//   world.GL.gl.RGBA,
+      // 		//   world.GL.gl.RGBA,
+      // 		//   world.GL.gl.UNSIGNED_BYTE,
+      // 		//   object.textures[t].image);
+
+      // 		// world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, 512, 512, 0, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE,  object.textures[t].image);
+      // 		world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+
+      // 		if(object.texParams.TEXTURE_MIN_FILTER) {
+      // 			world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
+      // 		}
+
+      // 		world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
+      // 	} else {
+      // 		object.custom.gl_texture(object, t);
+      // 	}
+      // }
     }
     localLooper = localLooper + 1;
   }
@@ -10902,8 +11025,7 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
   }
 
   // world.disableUnusedAttr( world.GL.gl, localLooper);
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 4); // ori
-
+  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 4);
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
@@ -10912,32 +11034,11 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
   } else {
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
-    // for non blend
-    _matrixWorld.world.GL.gl.depthMask(true);
-    // world.GL.gl.enable(world.GL.gl.CULL_FACE);
+    // world.GL.gl.depthMask(true);
   }
 
   // shadows
-  if (object.shadows && object.shadows.type == 'spot') {
-    // console.log(" SHADOWS -> " , object.shadows)
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.shadows.lightPosition);
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
-    // Set the spotlight uniforms
-    {
-      var target = [0, 0, 0];
-      var up = [0, 1, 0];
-      var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
-      lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
-      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
-      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]];
-      // object.shadows.lightDirection = [-0, -0, -1];
-    }
-    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
-    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
-    // world.GL.gl.uniform1f(object.shaderProgram.u_projectedTexture, 1);
-  } else if (object.shadows && object.shadows.type == 'spec') {
+  if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {} else if (object.shadows && object.shadows.type == 'spec') {
     // global position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
@@ -11102,7 +11203,7 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
 var drawsOperation = _manifest.default.operation.draws;
 var _default = exports.default = drawsOperation;
 
-},{"../program/manifest":107,"./engine":68,"./events":69,"./matrix-shadows":81,"./matrix-textures":83,"./matrix-world":84,"./raycast":90,"./utility":96,"cannon":104}],75:[function(require,module,exports){
+},{"../program/manifest":107,"./engine":68,"./events":69,"./matrix-world":84,"./raycast":90,"./utility":96,"cannon":104}],75:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13751,6 +13852,7 @@ var _utility = require("./utility");
 /**
  * @description From 1.9.43
  * Opengles300 in single file.
+ * From 2.2.0 FBO mixed with shadow with two attachemnts.
  */
 function loadShaders300() {
   genInitFSTriangle();
@@ -13776,718 +13878,694 @@ function loadShaders300() {
 }
 function genInitFSTriangle() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec4 vColor;
-  out vec4 outColor;
-  void main(void) {
-    outColor = vColor;
-  }
-  `;
+	precision mediump float;
+	in vec4 vColor;
+	out vec4 outColor;
+	void main(void) {
+		outColor = vColor;
+	}
+	`;
   _utility.scriptManager.LOAD(f, "triangle-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSTriangle() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec4 aVertexColor;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  out vec3 meVertexPosition;
-  out vec4 vColor;
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vColor      = aVertexColor;
-  }
-  `;
+	in vec3 aVertexPosition;
+	in vec4 aVertexColor;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	out vec3 meVertexPosition;
+	out vec4 vColor;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vColor			= aVertexColor;
+	}
+	`;
   _utility.scriptManager.LOAD(f, "triangle-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSCubeTexLight() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec2 vTextureCoord;
-  in vec3 vLightWeighting;
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-  uniform sampler2D uSampler3;
-  uniform sampler2D uSampler4;
-  uniform sampler2D uSampler5;
-  // The CubeMap texture.
-  uniform samplerCube u_texture;
-  // cube map
-  // in vec3 v_normal_cubemap;
-  uniform float numberOfsamplers;
+	precision mediump float;
+	in vec2 vTextureCoord;
+	in vec3 vLightWeighting;
+	uniform sampler2D uSampler;
+	uniform sampler2D uSampler1;
+	uniform sampler2D uSampler2;
+	uniform sampler2D uSampler3;
+	uniform sampler2D uSampler4;
+	uniform sampler2D uSampler5;
+	// The CubeMap texture.
+	uniform samplerCube u_texture;
+	// cube map
+	// in vec3 v_normal_cubemap;
+	uniform float numberOfsamplers;
 
-  // Spot
-  // Passed in from the vertex shader.
-  in vec3 v_normal;
-  in vec3 v_surfaceToLight;
-  in vec3 v_surfaceToView;
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;
-  uniform float u_outerLimit;
+	// Spot
+	// Passed in from the vertex shader.
+	in vec3 v_normal;
+	in vec3 v_surfaceToLight;
+	in vec3 v_surfaceToView;
+	uniform vec4 u_color;
+	uniform float u_shininess;
+	uniform vec3 u_lightDirection;
+	uniform float u_innerLimit;
+	uniform float u_outerLimit;
 
-  out vec4 outColor;
+	out vec4 outColor;
 
-  void main(void) {
-    // because v_normal is a varying it's interpolated
-    // so it will not be a unit vector. Normalizing it
-    // will make it a unit vector again
-    vec3 normal = normalize(v_normal);
+	void main(void) {
+		// because v_normal is a varying it's interpolated
+		// so it will not be a unit vector. Normalizing it
+		// will make it a unit vector again
+		vec3 normal = normalize(v_normal);
 
-    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+		vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+		vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+		vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
 
-    float dotFromDirection = dot(surfaceToLightDirection,
-                                 -u_lightDirection);
-    float limitRange = u_innerLimit - u_outerLimit;
-    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-    float light = inLight * dot(normal, surfaceToLightDirection);
-    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+		float dotFromDirection = dot(surfaceToLightDirection,
+																 -u_lightDirection);
+		float limitRange = u_innerLimit - u_outerLimit;
+		float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+		float light = inLight * dot(normal, surfaceToLightDirection);
+		float specular = inLight * pow(dot(normal, halfVector), u_shininess);
 
-    // Directioin vs uAmbientColor
-    vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+		// Directioin vs uAmbientColor
+		vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
 
-    vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 testUnused = texture2D(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
 
-    outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+		outColor			= vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
-    // Lets multiply just the color portion (not the alpha)
-    // by the light
-    outColor.rgb *= light;
-    // Just add in the specular
-    outColor.rgb += specular;
-  }
-  `;
+		// Lets multiply just the color portion (not the alpha)
+		// by the light
+		outColor.rgb *= light;
+		// Just add in the specular
+		outColor.rgb += specular;
+	}
+	`;
   _utility.scriptManager.LOAD(f, "cubeLightTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSCubeTexLight() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec3 aVertexNormal;
-  in vec2 aTextureCoord;
+	// No modify in runtime for VS
+	// matrix-engine 2.2.x
+	in vec3 aVertexPosition;
+	in vec3 aVertexNormal;
+	in vec2 aTextureCoord;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
+	uniform vec3 uAmbientColor;
+	uniform vec3 uLightingDirection;
+	uniform vec3 uDirectionalColor;
+	uniform bool uUseLighting;
+	out vec2 vTextureCoord;
+	out vec3 vLightWeighting;
+	out vec3 meVertexPosition;
 
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-  uniform vec3 uAmbientColor;
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
-  out vec2 vTextureCoord;
-  out vec3 vLightWeighting;
-  out vec3 meVertexPosition;
+	// Spot
+	uniform vec3 u_lightWorldPosition;
+	out vec3 v_normal;
+	out vec3 v_surfaceToLight;
+	out vec3 v_surfaceToView;
 
-  // Spot
-  uniform vec3 u_lightWorldPosition;
-  out vec3 v_normal;
-  // out vec3 v_normal_cubemap;
-  out vec3 v_surfaceToLight;
-  out vec3 v_surfaceToView;
+	// Specular
+	out mat4 uMVMatrixINTER;
+	out mat3 uNMatrixINTER;
+	out mat4 uPMatrixINNTER;
 
-  // Specular
-  out mat4 uMVMatrixINTER;
-  out mat3 uNMatrixINTER;
-  out mat4 uPMatrixINNTER;
+	in vec4 specularColor;
+	out vec4 vColor;
+	out vec3 vNormal;
+	out vec4 vPosition;
+	out float vDist;
 
-  in vec4 specularColor;
-  out vec4 vColor;
-  out vec3 vNormal;
-  out vec4 vPosition;
-  out float vDist;
+	// spot-shadow
+	uniform mat4 u_textureMatrix;
+	out vec2 v_texcoord;
+	out vec4 v_projectedTexcoord;
+	uniform mat4 u_world;
 
-  void main(void) {
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		uMVMatrixINTER = uMVMatrix;
+		uNMatrixINTER = uNMatrix;
+		uPMatrixINNTER = uPMatrix;
+		vColor = specularColor;
+		vNormal = normalize(mat3(u_world) * vec3(aVertexNormal)); 
+		vPosition =	uMVMatrix * vec4(aVertexPosition, 1.0);
+		vDist = gl_Position.w;
+		v_normal = normalize(uNMatrix * vec3(aVertexNormal)); 
+		vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+		v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+		v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
 
-    meVertexPosition = aVertexPosition;
-    uMVMatrixINTER = uMVMatrix;
-    uNMatrixINTER = uNMatrix;
-    uPMatrixINNTER = uPMatrix;
+		vec4 worldPosition =	u_world * vec4((aVertexPosition).xyz, 1.0);
+		v_texcoord = aTextureCoord;
+		v_projectedTexcoord = u_textureMatrix * worldPosition;
 
-    // GLOBAL POS SPECULAR
-    vColor = specularColor;
-    vNormal = normalize(uNMatrix * vec3(aVertexNormal));
-    // Calculate the modelView of the model, and set the vPosition
-    // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
-    vPosition = uMVMatrix * vec4(1,1,1,1);
-    vDist = gl_Position.w;
+		gl_Position	 = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vTextureCoord = aTextureCoord;
 
-    // SPOT
-    // orient the normals and pass to the fragment shader
-    v_normal = mat3(uNMatrix) * aVertexNormal;
-
-    // normalize
-    // v_normal_cubemap = normalize(aVertexPosition.xyz);
-
-    // compute the world position of the surfoace
-    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
-
-    // compute the vector of the surface to the light
-    // and pass it to the fragment shader
-    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
-
-    // compute the vector of the surface to the view/camera
-    // and pass it to the fragment shader
-    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
-
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
-
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  } `;
+		if (!uUseLighting) {
+			vLightWeighting = vec3(1.0, 1.0, 1.0);
+		} else {
+			vec3 transformedNormal					= uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting								 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+		}
+	}`;
   _utility.scriptManager.LOAD(f, "cubeLightTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSSquare() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec4 vColor;
-  out vec4 outColor;
-  void main(void) {
-    outColor = vColor;
-  }
-  `;
+	precision mediump float;
+	in vec4 vColor;
+	out vec4 outColor;
+	void main(void) {
+		outColor = vColor;
+	}
+	`;
   _utility.scriptManager.LOAD(f, "square-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSSquare() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec4 aVertexColor;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  out vec3 meVertexPosition;
-  out vec4 vColor;
+	in vec3 aVertexPosition;
+	in vec4 aVertexColor;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	out vec3 meVertexPosition;
+	out vec4 vColor;
 
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vColor      = aVertexColor;
-  }`;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vColor			= aVertexColor;
+	}`;
   _utility.scriptManager.LOAD(f, "square-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSCube() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec4 vColor;
-  out vec4 outColor;
-  void main(void) {
-    outColor = vColor;
-  }`;
+	precision mediump float;
+	in vec4 vColor;
+	out vec4 outColor;
+	void main(void) {
+		outColor = vColor;
+	}`;
   _utility.scriptManager.LOAD(f, "cube-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSCube() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec4 aVertexColor;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  out vec3 meVertexPosition;
-  out vec4 vColor;
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vColor      = aVertexColor;
-  }`;
+	in vec3 aVertexPosition;
+	in vec4 aVertexColor;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	out vec3 meVertexPosition;
+	out vec4 vColor;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vColor			= aVertexColor;
+	}`;
   _utility.scriptManager.LOAD(f, "cube-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSCubeTex() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec2 vTextureCoord;
-  uniform sampler2D uSampler;
-  out vec4 outColor;
-  void main(void) {
-    outColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-  }`;
+	precision mediump float;
+	in vec2 vTextureCoord;
+	uniform sampler2D uSampler;
+	out vec4 outColor;
+	void main(void) {
+		outColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+	}`;
   _utility.scriptManager.LOAD(f, "cubeTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSCubeTex() {
   const f = `#version 300 es
-  #define POSITION_LOCATION 0
-  in vec3 aVertexPosition;
-  in vec2 aTextureCoord;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  out vec3 meVertexPosition;
-  out vec2 vTextureCoord;
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
-  }`;
+	#define POSITION_LOCATION 0
+	in vec3 aVertexPosition;
+	in vec2 aTextureCoord;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	out vec3 meVertexPosition;
+	out vec2 vTextureCoord;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		gl_Position	 = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vTextureCoord = aTextureCoord;
+	}`;
   _utility.scriptManager.LOAD(f, "cubeTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSObj() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec2 vTextureCoord;
-  in vec3 vLightWeighting;
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-  uniform sampler2D uSampler3;
-  uniform sampler2D uSampler4;
-  uniform sampler2D uSampler5;
-  uniform samplerCube u_texture;
-  uniform float numberOfsamplers;
+	precision mediump float;
+	in vec2 vTextureCoord;
+	in vec3 vLightWeighting;
+	uniform sampler2D uSampler;
+	uniform sampler2D uSampler1;
+	uniform sampler2D uSampler2;
+	uniform sampler2D uSampler3;
+	uniform sampler2D uSampler4;
+	uniform sampler2D uSampler5;
+	uniform samplerCube u_texture;
+	uniform float numberOfsamplers;
 
-  // Spot
-  // Passed in from the vertex shader.
-  in vec3 v_normal;
-  in vec3 v_surfaceToLight;
-  in vec3 v_surfaceToView;
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;
-  uniform float u_outerLimit;
+	// Spot
+	// Passed in from the vertex shader.
+	in vec3 v_normal;
+	in vec3 v_surfaceToLight;
+	in vec3 v_surfaceToView;
+	uniform vec4 u_color;
+	uniform float u_shininess;
+	uniform vec3 u_lightDirection;
+	uniform float u_innerLimit;
+	uniform float u_outerLimit;
 
-  out vec4 outColor;
+	out vec4 outColor;
 
-  void main(void) {
-    // because v_normal is a varying it's interpolated
-    // so it will not be a unit vector. Normalizing it
-    // will make it a unit vector again
-    vec3 normal = normalize(v_normal);
+	void main(void) {
+		// because v_normal is a varying it's interpolated
+		// so it will not be a unit vector. Normalizing it
+		// will make it a unit vector again
+		vec3 normal = normalize(v_normal);
 
-    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+		vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+		vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+		vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
 
-    float dotFromDirection = dot(surfaceToLightDirection,
-                                 -u_lightDirection);
-    float limitRange = u_innerLimit - u_outerLimit;
-    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-    float light = inLight * dot(normal, surfaceToLightDirection);
-    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+		float dotFromDirection = dot(surfaceToLightDirection,
+																 -u_lightDirection);
+		float limitRange = u_innerLimit - u_outerLimit;
+		float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+		float light = inLight * dot(normal, surfaceToLightDirection);
+		float specular = inLight * pow(dot(normal, halfVector), u_shininess);
 
-    // Directioin vs uAmbientColor
-    vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
-    vec4 textureColor1 = texture(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-    // vec4 testUnused = texture(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
+		// Directioin vs uAmbientColor
+		vec4 textureColor = texture(uSampler, vTextureCoord) * vec4(1,1,1,1);
+		vec4 textureColor1 = texture(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor2 = texture(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+		// vec4 testUnused = texture(u_texture, vec2(vTextureCoord.s, vTextureCoord.t));
 
-    outColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+		outColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
-    // Lets multiply just the color portion (not the alpha)
-    outColor.rgb *= light;
-    // Just add in the specular
-    outColor.rgb += specular;
-  }`;
+		// Lets multiply just the color portion (not the alpha)
+		outColor.rgb *= light;
+		// Just add in the specular
+		outColor.rgb += specular;
+	}`;
   _utility.scriptManager.LOAD(f, "obj-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSObj() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec3 aVertexNormal;
-  in vec2 aTextureCoord;
+	in vec3 aVertexPosition;
+	in vec3 aVertexNormal;
+	in vec2 aTextureCoord;
 
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-  uniform vec3 uAmbientColor;
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
-  out vec2 vTextureCoord;
-  out vec3 vLightWeighting;
-  out vec3 meVertexPosition;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
+	uniform vec3 uAmbientColor;
+	uniform vec3 uLightingDirection;
+	uniform vec3 uDirectionalColor;
+	uniform bool uUseLighting;
+	out vec2 vTextureCoord;
+	out vec3 vLightWeighting;
+	out vec3 meVertexPosition;
 
-  // Spot
-  uniform vec3 u_lightWorldPosition;
-  out vec3 v_normal;
-  out vec3 v_normal_cubemap;
-  out vec3 v_surfaceToLight;
-  out vec3 v_surfaceToView;
+	// Spot
+	uniform vec3 u_lightWorldPosition;
+	out vec3 v_normal;
+	out vec3 v_normal_cubemap;
+	out vec3 v_surfaceToLight;
+	out vec3 v_surfaceToView;
 
-  // Specular
-  out mat4 uMVMatrixINTER;
-  out mat3 uNMatrixINTER;
-  out mat4 uPMatrixINNTER;
+	// Specular
+	out mat4 uMVMatrixINTER;
+	out mat3 uNMatrixINTER;
+	out mat4 uPMatrixINNTER;
 
-  in vec4 specularColor;
-  out vec4 vColor;
-  out vec3 vNormal;
-  out vec4 vPosition;
-  out float vDist;
+	in vec4 specularColor;
+	out vec4 vColor;
+	out vec3 vNormal;
+	out vec4 vPosition;
+	out float vDist;
 
-  void main(void) {
-    meVertexPosition = aVertexPosition;
+// spot-shadow
+	uniform mat4 u_textureMatrix;
+	out vec2 v_texcoord;
+	out vec4 v_projectedTexcoord;
+	uniform mat4 u_world;
 
-    uMVMatrixINTER = uMVMatrix;
-    uNMatrixINTER = uNMatrix;
-    uPMatrixINNTER = uPMatrix;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		uMVMatrixINTER = uMVMatrix;
+		uNMatrixINTER = uNMatrix;
+		uPMatrixINNTER = uPMatrix;
+		vColor = specularColor;
+		vNormal = normalize(mat3(u_world) * vec3(aVertexNormal)); 
+		vPosition =	uMVMatrix * vec4(aVertexPosition, 1.0);
+		vDist = gl_Position.w;
+		v_normal = normalize(uNMatrix * vec3(aVertexNormal)); 
+		vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+		v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+		v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
 
-    // GLOBAL POS SPECULAR
-    vColor = specularColor;
-    vNormal = normalize(uNMatrix * vec3(aVertexNormal));
-    // Calculate the modelView of the model, and set the vPosition
-    // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
-    vPosition = uMVMatrix * vec4(1,1,1,1);
-    vDist = gl_Position.w;
+		vec4 worldPosition =	u_world * vec4((aVertexPosition).xyz, 1.0);
+		v_texcoord = aTextureCoord;
+		v_projectedTexcoord = u_textureMatrix * worldPosition;
 
-    // SPOT
-    // orient the normals and pass to the fragment shader
-    v_normal = mat3(uNMatrix) * aVertexNormal;
+		gl_Position	 = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vTextureCoord = aTextureCoord;
 
-    // normalize
-    v_normal_cubemap = normalize(aVertexPosition.xyz);
-
-    // compute the world position of the surfoace
-    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
-
-    // compute the vector of the surface to the light
-    // and pass it to the fragment shader
-    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
-
-    // compute the vector of the surface to the view/camera
-    // and pass it to the fragment shader
-    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
-
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
-
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  } 
-`;
+		if (!uUseLighting) {
+			vLightWeighting = vec3(1.0, 1.0, 1.0);
+		} else {
+			vec3 transformedNormal					= uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting								 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+		}
+	}`;
   _utility.scriptManager.LOAD(f, "obj-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSPyramid() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec4 vColor;
+	precision mediump float;
+	in vec4 vColor;
 
-  out vec4 outColor;
-  void main(void) {
-    outColor = vColor;
-  }`;
+	out vec4 outColor;
+	void main(void) {
+		outColor = vColor;
+	}`;
   _utility.scriptManager.LOAD(f, "pyramid-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSPyramid() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec4 aVertexColor;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  out vec3 meVertexPosition;
-  out vec4 vColor;
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vColor      = aVertexColor;
-  }
+	in vec3 aVertexPosition;
+	in vec4 aVertexColor;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	out vec3 meVertexPosition;
+	out vec4 vColor;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vColor			= aVertexColor;
+	}
 `;
   _utility.scriptManager.LOAD(f, "pyramid-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSSquareTex() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec2 vTextureCoord;
-  in vec3 vLightWeighting;
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-  uniform sampler2D uSampler3;
-  uniform sampler2D uSampler4;
-  uniform sampler2D uSampler5;
-  uniform float numberOfsamplers;
+	precision mediump float;
+	in vec2 vTextureCoord;
+	in vec3 vLightWeighting;
+	uniform sampler2D uSampler;
+	uniform sampler2D uSampler1;
+	uniform sampler2D uSampler2;
+	uniform sampler2D uSampler3;
+	uniform sampler2D uSampler4;
+	uniform sampler2D uSampler5;
+	uniform float numberOfsamplers;
 
-  // Spot
-  // Passed in from the vertex shader.
-  in vec3 v_normal;
-  in vec3 v_surfaceToLight;
-  in vec3 v_surfaceToView;
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;
-  uniform float u_outerLimit;
+	// Spot
+	// Passed in from the vertex shader.
+	in vec3 v_normal;
+	in vec3 v_surfaceToLight;
+	in vec3 v_surfaceToView;
+	uniform vec4 u_color;
+	uniform float u_shininess;
+	uniform vec3 u_lightDirection;
+	uniform float u_innerLimit;
+	uniform float u_outerLimit;
 
-  out vec4 outColor;
+	out vec4 outColor;
 
-  void main(void) {
-    vec3 normal = normalize(v_normal);
-    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-    float dotFromDirection = dot(surfaceToLightDirection,
-                                 -u_lightDirection);
-    float limitRange = u_innerLimit - u_outerLimit;
-    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-    float light = inLight * dot(normal, surfaceToLightDirection);
-    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
-    vec4 textureColor  = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-    outColor       = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+	void main(void) {
+		vec3 normal = normalize(v_normal);
+		vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+		vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+		vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+		float dotFromDirection = dot(surfaceToLightDirection,
+																 -u_lightDirection);
+		float limitRange = u_innerLimit - u_outerLimit;
+		float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+		float light = inLight * dot(normal, surfaceToLightDirection);
+		float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+		vec4 textureColor	= texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor1 = texture2D(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor2 = texture2D(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+		outColor			 = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
 
-    outColor.rgb *= light;
-    // gl_FragColor.rgb += specular;
-  }
-  `;
+		outColor.rgb *= light;
+		// gl_FragColor.rgb += specular;
+	}
+	`;
   _utility.scriptManager.LOAD(f, "squareTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSSquareTex() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec3 aVertexNormal;
-  in vec2 aTextureCoord;
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-  uniform vec3 uAmbientColor;
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
-  out vec2 vTextureCoord;
-  out vec3 vLightWeighting;
-  out vec3 meVertexPosition;
+	in vec3 aVertexPosition;
+	in vec3 aVertexNormal;
+	in vec2 aTextureCoord;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
+	uniform vec3 uAmbientColor;
+	uniform vec3 uLightingDirection;
+	uniform vec3 uDirectionalColor;
+	uniform bool uUseLighting;
+	out vec2 vTextureCoord;
+	out vec3 vLightWeighting;
+	out vec3 meVertexPosition;
 
-  // Spot
-  uniform vec3 u_lightWorldPosition;
-  out vec3 v_normal;
-  out vec3 v_surfaceToLight;
-  out vec3 v_surfaceToView;
+	// Spot
+	uniform vec3 u_lightWorldPosition;
+	out vec3 v_normal;
+	out vec3 v_surfaceToLight;
+	out vec3 v_surfaceToView;
 
-  // spot-Shadow
-  uniform mat4 u_textureMatrix;
-  out vec2 v_texcoord;
-  out vec4 v_projectedTexcoord;
+	// Specular
+	out mat4 uMVMatrixINTER;
+	out mat3 uNMatrixINTER;
+	out mat4 uPMatrixINNTER;
+	out vec4 specularColor;
+	out vec4 vColor;
+	out vec3 vNormal;
+	out vec4 vPosition;
+	out float vDist;
 
-  // Specular
-  // out vec4 specularColor;
-  // out vec4 vColor;
-  // out vec3 vNormal;
-  // out vec4 vPosition;
-  // out float vDist;
+	// spot-shadow
+	uniform mat4 u_textureMatrix;
+	out vec2 v_texcoord;
+	out vec4 v_projectedTexcoord;
+	uniform mat4 u_world;
 
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    // GLOBAL POS SPECULAR
-    // vColor = specularColor;
-    // vNormal = normalize(uNMatrix * vec3(aVertexNormal));
-    // Calculate the modelView of the model, and set the vPosition
-    // mat4 modelViewMatrix = uViewMatrix * uModelMatrix;
-    // vPosition = uMVMatrix * vec4(1,1,1,1);
-    // vDist = gl_Position.w;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		uMVMatrixINTER = uMVMatrix;
+		uNMatrixINTER = uNMatrix;
+		uPMatrixINNTER = uPMatrix;
+		vColor = specularColor;
+		vNormal = normalize(mat3(u_world) * vec3(aVertexNormal)); 
+		vPosition =	uMVMatrix * vec4(aVertexPosition, 1.0);
+		vDist = gl_Position.w;
+		v_normal = normalize(uNMatrix * vec3(aVertexNormal)); 
+		vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+		v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+		v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
 
-    // SPOT
-    v_normal = mat3(uNMatrix) * aVertexNormal;
-    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
-    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
-    v_surfaceToView = -surfaceWorldPosition;
+		vec4 worldPosition =	u_world * vec4((aVertexPosition).xyz, 1.0);
+		v_texcoord = aTextureCoord;
+		v_projectedTexcoord = u_textureMatrix * worldPosition;
 
-    // spot shadow
-    // vec4 worldPosition = u_world * a_position;
-    vec4 worldPosition = vec4(1,1,1,1) * vec4( aVertexPosition, 1.0);
-    v_texcoord = aTextureCoord;
-    v_projectedTexcoord = u_textureMatrix * worldPosition;
+		gl_Position	 = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vTextureCoord = aTextureCoord;
 
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
-
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  }
-`;
+		if (!uUseLighting) {
+			vLightWeighting = vec3(1.0, 1.0, 1.0);
+		} else {
+			vec3 transformedNormal					= uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting								 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+		}
+	}`;
   _utility.scriptManager.LOAD(f, "squareTex-shader-vs", "x-shader/x-vertex", "shaders");
-  // console.log(" squareTex-shader-vs v")
 }
 function getInitFSSphereLightTex() {
   const f = `#version 300 es
-  precision mediump float;
-  in vec2 vTextureCoord;
-  in vec3 vLightWeighting;
-  uniform sampler2D uSampler;
-  uniform sampler2D uSampler1;
-  uniform sampler2D uSampler2;
-  uniform sampler2D uSampler3;
-  uniform float numberOfsamplers;
-  out vec4 outColor;
-  void main(void) {
-    vec4 textureColor = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor1 = texture(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
-    vec4 textureColor2 = texture(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
-    outColor      = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-  }
-  `;
+	precision mediump float;
+	in vec2 vTextureCoord;
+	in vec3 vLightWeighting;
+	uniform sampler2D uSampler;
+	uniform sampler2D uSampler1;
+	uniform sampler2D uSampler2;
+	uniform sampler2D uSampler3;
+	uniform float numberOfsamplers;
+	out vec4 outColor;
+	void main(void) {
+		vec4 textureColor = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor1 = texture(uSampler1, vec2(vTextureCoord.s, vTextureCoord.t));
+		vec4 textureColor2 = texture(uSampler2, vec2(vTextureCoord.s, vTextureCoord.t));
+		outColor			= vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+	}
+	`;
   _utility.scriptManager.LOAD(f, "sphereLightTex-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSSphereLightTex() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec3 aVertexNormal;
-  in vec2 aTextureCoord;
+	in vec3 aVertexPosition;
+	in vec3 aVertexNormal;
+	in vec2 aTextureCoord;
 
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
-  uniform vec3 uAmbientColor;
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
+	uniform vec3 uAmbientColor;
+	uniform vec3 uLightingDirection;
+	uniform vec3 uDirectionalColor;
+	uniform bool uUseLighting;
 
-  out vec2 vTextureCoord;
-  out vec3 vLightWeighting;
-  out vec3 meVertexPosition;
+	out vec2 vTextureCoord;
+	out vec3 vLightWeighting;
+	out vec3 meVertexPosition;
 
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vTextureCoord = aTextureCoord;
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		gl_Position	 = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vTextureCoord = aTextureCoord;
 
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  }
+		if (!uUseLighting) {
+			vLightWeighting = vec3(1.0, 1.0, 1.0);
+		}
+		else {
+			vec3 transformedNormal					= uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting								 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+		}
+	}
 `;
   _utility.scriptManager.LOAD(f, "sphereLightTex-shader-vs", "x-shader/x-vertex", "shaders");
 }
 function getInitFSCubeMap() {
   const f = `#version 300 es
-  precision mediump float;
+	precision mediump float;
 
-  in vec2 vTextureCoord;
-  in vec3 vLightWeighting;
+	in vec2 vTextureCoord;
+	in vec3 vLightWeighting;
 
-  // The CubeMap texture test.
-  uniform samplerCube u_texture;
-  // cube map
-  in vec3 v_normal_cubemap;
-  uniform float numberOfsamplers;
+	// The CubeMap texture test.
+	uniform samplerCube u_texture;
+	// cube map
+	in vec3 v_normal_cubemap;
+	uniform float numberOfsamplers;
 
-  // Spot
-  in vec3 v_normal;
-  in vec3 v_surfaceToLight;
-  in vec3 v_surfaceToView;
+	// Spot
+	in vec3 v_normal;
+	in vec3 v_surfaceToLight;
+	in vec3 v_surfaceToView;
 
-  uniform vec4 u_color;
-  uniform float u_shininess;
-  uniform vec3 u_lightDirection;
-  uniform float u_innerLimit;
-  uniform float u_outerLimit;
+	uniform vec4 u_color;
+	uniform float u_shininess;
+	uniform vec3 u_lightDirection;
+	uniform float u_innerLimit;
+	uniform float u_outerLimit;
 
-  out vec4 outColor;
+	out vec4 outColor;
 
-  void main(void) {
-    vec3 normal = normalize(v_normal);
+	void main(void) {
+		vec3 normal = normalize(v_normal);
 
-    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+		vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+		vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+		vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
 
-    float dotFromDirection = dot(surfaceToLightDirection, -u_lightDirection);
-    float limitRange = u_innerLimit - u_outerLimit;
-    float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-    float light = inLight * dot(normal, surfaceToLightDirection);
-    float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+		float dotFromDirection = dot(surfaceToLightDirection, -u_lightDirection);
+		float limitRange = u_innerLimit - u_outerLimit;
+		float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+		float light = inLight * dot(normal, surfaceToLightDirection);
+		float specular = inLight * pow(dot(normal, halfVector), u_shininess);
 
-    outColor = texture(u_texture, normal);
-    outColor.rgb += specular;
-  }`;
+		outColor = texture(u_texture, normal);
+		outColor.rgb += specular;
+	}`;
   _utility.scriptManager.LOAD(f, "cubeMap-shader-fs", "x-shader/x-fragment", "shaders");
 }
 function getInitVSCubeMap() {
   const f = `#version 300 es
-  in vec3 aVertexPosition;
-  in vec3 aVertexNormal;
+	in vec3 aVertexPosition;
+	in vec3 aVertexNormal;
 
-  uniform mat4 uMVMatrix;
-  uniform mat4 uPMatrix;
-  uniform mat3 uNMatrix;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
 
-  out vec3 v_normal;
-  out vec3 v_normal_cubemap;
+	out vec3 v_normal;
+	out vec3 v_normal_cubemap;
 
-  // lights
-  uniform vec3 uAmbientColor;
-  uniform vec3 uLightingDirection;
-  uniform vec3 uDirectionalColor;
-  uniform bool uUseLighting;
-  out vec3 vLightWeighting;
-  out vec3 meVertexPosition;
+	// lights
+	uniform vec3 uAmbientColor;
+	uniform vec3 uLightingDirection;
+	uniform vec3 uDirectionalColor;
+	uniform bool uUseLighting;
+	out vec3 vLightWeighting;
+	out vec3 meVertexPosition;
 
-  // test 
-  // Spot
-  uniform vec3 u_lightWorldPosition;
-  // out vec3 v_normal;
-  out vec3 v_surfaceToLight;
-  out vec3 v_surfaceToView;
+	// test 
+	// Spot
+	uniform vec3 u_lightWorldPosition;
+	// out vec3 v_normal;
+	out vec3 v_surfaceToLight;
+	out vec3 v_surfaceToView;
 
-  // Specular
-  out mat4 uMVMatrixINTER;
-  out mat3 uNMatrixINTER;
-  out mat4 uPMatrixINNTER;
+	// Specular
+	out mat4 uMVMatrixINTER;
+	out mat3 uNMatrixINTER;
+	out mat4 uPMatrixINNTER;
 
-  in vec4 specularColor;
-  out vec4 vColor;
-  out vec3 vNormal;
-  out vec4 vPosition;
-  out float vDist;
-  // end test
+	in vec4 specularColor;
+	out vec4 vColor;
+	out vec3 vNormal;
+	out vec4 vPosition;
+	out float vDist;
+	// end test
 
-  void main(void) {
-    meVertexPosition = aVertexPosition;
-    v_normal = mat3(uNMatrix) * aVertexNormal;
-    // v_normal_cubemap = normalize(aVertexPosition.xyz);
+	void main(void) {
+		meVertexPosition = aVertexPosition;
+		v_normal = mat3(uNMatrix) * aVertexNormal;
+		// v_normal_cubemap = normalize(aVertexPosition.xyz);
 
-    // test SPOT
-    // orient the normals and pass to the fragment shader
-    v_normal = mat3(uNMatrix) * aVertexNormal;
+		// test SPOT
+		// orient the normals and pass to the fragment shader
+		v_normal = mat3(uNMatrix) * aVertexNormal;
 
-    // normalize
-    v_normal_cubemap = normalize(aVertexPosition.xyz);
+		// normalize
+		v_normal_cubemap = normalize(aVertexPosition.xyz);
 
-    // compute the world position of the surfoace
-    vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
+		// compute the world position of the surfoace
+		vec3 surfaceWorldPosition = (uNMatrix * aVertexPosition).xyz;
 
-    // compute the vector of the surface to the light
-    // and pass it to the fragment shader
-    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+		// compute the vector of the surface to the light
+		// and pass it to the fragment shader
+		v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
 
-    // compute the vector of the surface to the view/camera
-    // and pass it to the fragment shader
-    v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
-    // end test
+		// compute the vector of the surface to the view/camera
+		// and pass it to the fragment shader
+		v_surfaceToView = (uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0)).xyz - surfaceWorldPosition;
+		// end test
 
-    gl_Position   = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    if (!uUseLighting) {
-      vLightWeighting = vec3(1.0, 1.0, 1.0);
-    }
-    else {
-      vec3 transformedNormal          = uNMatrix * aVertexNormal;
-      float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-      vLightWeighting                 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-    }
-  } `;
+		gl_Position	 = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		if (!uUseLighting) {
+			vLightWeighting = vec3(1.0, 1.0, 1.0);
+		}
+		else {
+			vec3 transformedNormal					= uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting								 = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+		}
+	} `;
   _utility.scriptManager.LOAD(f, "cubeMap-shader-vs", "x-shader/x-vertex", "shaders");
 }
 
@@ -14562,13 +14640,6 @@ _manifest.default.operation.reDrawGlobal = function (time) {
             _matrixWorld.world.contentList[physicsLooper].rotation.axis.x = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].x.toFixed(2));
             _matrixWorld.world.contentList[physicsLooper].rotation.axis.y = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].y.toFixed(2));
             _matrixWorld.world.contentList[physicsLooper].rotation.axis.z = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].z.toFixed(2));
-
-            // if (world.contentList[physicsLooper].rotation.x > 0) {
-            // 	 console.log('TEST ' , world.contentList[physicsLooper].rotation.x ) 
-            // }
-            // if(local.physics.currentBody.quaternion.x != 0) world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-            // if(local.physics.currentBody.quaternion.y != 0) world.contentList[physicsLooper].rotation.roty = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
-            // if(local.physics.currentBody.quaternion.z != 0) world.contentList[physicsLooper].rotation.rotz = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]);
           }
         } else if (local.physics.currentBody.shapeOrientations.length > 1) {
           // subObjs
@@ -14606,24 +14677,25 @@ _manifest.default.operation.reDrawGlobal = function (time) {
   // Multi FB
   for (var fbindex = 0; fbindex < _matrixWorld.world.FBOS.length; fbindex++) {
     // save samera pos
-    // if (typeof world.FBOS[fbindex].settings.xPosMemo === 'undefined') {
-    // setup by custom params
     matrixEngine.Events.camera.xPos = _matrixWorld.world.FBOS[fbindex].settings.cameraX;
     matrixEngine.Events.camera.yPos = _matrixWorld.world.FBOS[fbindex].settings.cameraY;
     matrixEngine.Events.camera.zPos = _matrixWorld.world.FBOS[fbindex].settings.cameraZ;
     matrixEngine.Events.camera.pitch = _matrixWorld.world.FBOS[fbindex].settings.pitch;
     matrixEngine.Events.camera.yaw = _matrixWorld.world.FBOS[fbindex].settings.yaw;
     _matrixWorld.world.GL.gl.bindFramebuffer(_matrixWorld.world.GL.gl.FRAMEBUFFER, _matrixWorld.world.FBOS[fbindex].FB);
-    _matrixWorld.world.GL.gl.viewport(0, 0, 512, 512);
-    _matrixWorld.world.GL.gl.clearColor(0.2, 0.2, 0.4, 1.0);
+    _matrixWorld.world.GL.gl.viewport(0, 0, _manifest.default.frameBufferViewPort[0], _manifest.default.frameBufferViewPort[1]);
+    _matrixWorld.world.GL.gl.clearColor(_manifest.default.frameBufferBgColor.r, _manifest.default.frameBufferBgColor.g, _manifest.default.frameBufferBgColor.b, _manifest.default.frameBufferBgColor.a);
     _matrixWorld.world.GL.gl.clear(_matrixWorld.world.GL.gl.COLOR_BUFFER_BIT | _matrixWorld.world.GL.gl.DEPTH_BUFFER_BIT);
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
+    // test
+    _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.CULL_FACE);
     _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
     _matrixWorld.world.GL.gl.depthMask(true);
 
     // - draw all `non fbo` and `no blend`
     while (_engine.looper <= _matrixWorld.world.contentList.length - 1) {
-      if (_matrixWorld.world.contentList[_engine.looper].visible === true && !_matrixWorld.world.contentList[_engine.looper].FBO && _matrixWorld.world.contentList[_engine.looper].glBlend.blendEnabled == false) {
+      // console.log(world.FBOS[fbindex].name == world.contentList[looper].name)
+      if (_matrixWorld.world.contentList[_engine.looper].visible === true && !(_matrixWorld.world.FBOS[fbindex].name == _matrixWorld.world.contentList[_engine.looper].name) && _matrixWorld.world.contentList[_engine.looper].glBlend.blendEnabled == false) {
         if ('triangle' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
           _matrixWorld.world.drawTriangle(_matrixWorld.world.contentList[_engine.looper], 'noray');
@@ -14632,7 +14704,11 @@ _manifest.default.operation.reDrawGlobal = function (time) {
           _matrixWorld.world.drawSquare(_matrixWorld.world.contentList[_engine.looper], 'noray');
         } else if ('cube' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'cubeMap' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
-          _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper], 'noray');
+          if (_matrixWorld.world.contentList[_engine.looper].shadows && _matrixWorld.world.contentList[_engine.looper].shadows.type == "spot-shadow" && _matrixWorld.world.FBOS[fbindex].name == _matrixWorld.world.contentList[_engine.looper].name) {
+            console.log('PREVENT OVERRIDE FBO DRAWING....');
+          } else {
+            _matrixWorld.world.drawCube(_matrixWorld.world.contentList[_engine.looper], 'noray');
+          }
         } else if (_matrixWorld.world.contentList[_engine.looper].type.indexOf("custom-") != -1) {
           // interest part - frst time draw func taken from object inself not from world.
           // Looks like better solution.
@@ -14705,7 +14781,7 @@ _manifest.default.operation.reDrawGlobal = function (time) {
     // Multi FBO camera view works but obj seq speed up - probably becouse OSC !! must be fixed
 
     // Reset camera
-    if (typeof _matrixWorld.world.FBOS[0] !== 'undefined') {
+    if (typeof _matrixWorld.world.FBOS[fbindex] !== 'undefined') {
       matrixEngine.Events.camera.zPos = matrixEngine.Events.camera.zPosMemo;
       matrixEngine.Events.camera.xPos = matrixEngine.Events.camera.xPosMemo;
       matrixEngine.Events.camera.yPos = matrixEngine.Events.camera.yPosMemo;
@@ -14720,6 +14796,7 @@ _manifest.default.operation.reDrawGlobal = function (time) {
   // Draw again all
   _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
   _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.BLEND);
+  _matrixWorld.world.GL.gl.disable(_matrixWorld.world.GL.gl.CULL_FACE);
   _matrixWorld.world.GL.gl.depthMask(true);
 
   // All but no blend
@@ -15611,39 +15688,33 @@ function generateSpotLightShadowDefinitions() {
   uniform mat4 u_view;
   uniform mat4 u_world;
   uniform mat4 u_textureMatrix;
+	uniform vec3 u_reverseLightDirection;
   // inject generateSpotLightShadowDefinitions end
   `;
 }
 function generateSpotLightShadowMain() {
   return `
-  vec3 normal = normalize(v_normal);
-  vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-  vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-  vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-  float dotFromDirection = dot(surfaceToLightDirection, -u_lightDirection);
-  float limitRange = u_innerLimit - u_outerLimit;
-  float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
-  float light = inLight * dot(normal, surfaceToLightDirection);
-  float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+	vec3 normal = normalize(v_normal);
+	float light = dot(normal, u_reverseLightDirection);
+	vec3 projectedTexcoord = v_projectedTexcoord.xyz / v_projectedTexcoord.w;
+	float currentDepth = projectedTexcoord.z + u_bias;
 
-  vec3 projectedTexcoord = v_projectedTexcoord.xyz / v_projectedTexcoord.w;
-  float currentDepth = projectedTexcoord.z + u_bias;
+	bool inRange =
+			projectedTexcoord.x >= 0.0 &&
+			projectedTexcoord.x <= 1.0 &&
+			projectedTexcoord.y >= 0.0 &&
+			projectedTexcoord.y <= 1.0;
 
-  bool inRange =
-      projectedTexcoord.x >= 0.0 &&
-      projectedTexcoord.x <= 1.0 &&
-      projectedTexcoord.y >= 0.0 &&
-      projectedTexcoord.y <= 1.0;
+	// the 'r' channel has the depth values
+	float projectedDepth = texture(u_projectedTexture, projectedTexcoord.xy).r;
+	float shadowLight = (inRange && projectedDepth <= currentDepth) ? 0.0 : 1.0;
 
-  // the 'r' channel has the depth values
-  float projectedDepth = texture(u_projectedTexture, projectedTexcoord.xy).r;
-  float shadowLight = (inRange && projectedDepth <= currentDepth) ? 0.0 : 1.0;
-  vec4 texColor = texture(u_texture, v_texcoord) * vec4(0.5, 0.5, 1, 1);
-  outColor = vec4(
-    texColor.rgb * light * shadowLight +
-    specular * shadowLight,
-    texColor.a);
-  `;
+	// * textureColor1.rgb
+	vec4 texColor = texture(u_texture, v_texcoord) * vec4(1, 1, 1, 1);
+	// outColor = vec4(texColor.rgb * textureColor1.rgb * light * shadowLight + specular * shadowLight, texColor.a);
+	// outColor = vec4(texColor.rgb  * textureColor.rgb * textureColor1.rgb * light * shadowLight , texColor.a);
+	outColor = vec4(texColor.rgb * textureColor.rgb * textureColor1.rgb * light * shadowLight , texColor.a);
+	`;
 }
 
 },{}],81:[function(require,module,exports){
@@ -15830,14 +15901,20 @@ exports.MatrixEffectLens = MatrixEffectLens;
 class MatrixShadowSpotShadowTest {
   constructor() {
     this.type = 'spot-shadow';
-    this.lightPosition = [0, 0, 2];
-    this.shininess = 150;
-    this.lightRotationX = 0;
-    this.lightRotationY = 0;
-    // this is computed in updateScene
-    this.lightDirection = [0, 0, -1];
-    this.innerLimit = degToRad(0);
-    this.outerLimit = degToRad(20);
+    this.FBO_IN_DRAW_PASS = false;
+    this.lightPosition = [0, 3, -1];
+    this.lightTarget = [0, 0, 0];
+    this.orientation = [0, -1, 0];
+    this.angleOfView = 90;
+    this.projW = 50;
+    this.projH = 1;
+    this.projNear = 0.1;
+    this.projFar = 20;
+    this.bias = -0.01;
+    this.updateLPM = () => {
+      this.lightProjectionMatrix = m4.perspective(degToRad(this.angleOfView), this.projW / this.projH, this.projNear, this.projFar);
+    };
+    this.updateLPM();
     this.idUpdater = null;
     this.r = null;
     this.ir = null;
@@ -15867,14 +15944,14 @@ class MatrixShadowSpotShadowTest {
       this.r = new _utility.OSCILLATOR(option.from, option.to, option.step);
       this.UPDATE = this.lightRadius;
     };
-    this.animateInnerRadius = function (option) {
+    this.animateProjW = function (option) {
       if (typeof option === 'undefined') var option = {
-        from: 0,
-        to: 120,
+        from: 50,
+        to: 100,
         step: 1
       };
       this.ir = new _utility.OSCILLATOR(option.from, option.to, option.step);
-      this.UPDATE = this.lightInnerRadius;
+      this.UPDATE = this.projWFunc;
     };
     this.animatePositionX = function (option) {
       if (typeof option === 'undefined') var option = {
@@ -15925,10 +16002,12 @@ class MatrixShadowSpotShadowTest {
     this.lightPosition = (0, _utility.ORBIT_FROM_ARRAY)(this.centerX, this.centerY, this.o.UPDATE(), this.lightPosition, this.flyArroundByIndexs);
   }
   lightRadius() {
-    this.outerLimit = degToRad(this.r.UPDATE());
+    this.angleOfView = this.r.UPDATE();
+    this.updateLPM();
   }
-  lightInnerRadius() {
-    this.innerLimit = degToRad(this.ir.UPDATE());
+  projWFunc() {
+    this.projW = this.ir.UPDATE();
+    this.updateLPM();
   }
   positionXLight() {
     this.lightPosition[0] = this.posX.UPDATE();
@@ -16182,69 +16261,6 @@ const cubeMapTextures = async function (sources, callback) {
  * @description
  * FBO textures
  */
-// test
-// gl.activeTexture(gl.TEXTURE0);
-// const checkerboardTexture = gl.createTexture();
-// gl.bindTexture(gl.TEXTURE_2D, checkerboardTexture);
-// gl.texImage2D(
-//   gl.TEXTURE_2D,
-//   0,                // mip level
-//   gl.LUMINANCE,     // internal format
-//   8,                // width
-//   8,                // height
-//   0,                // border
-//   gl.LUMINANCE,     // format
-//   gl.UNSIGNED_BYTE, // type
-//   new Uint8Array([  // data
-//     0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC,
-//     0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF,
-//     0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC,
-//     0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF,
-//     0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC,
-//     0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF,
-//     0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC,
-//     0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF, 0xCC, 0xFF,
-//   ]));
-// gl.generateMipmap(gl.TEXTURE_2D);
-// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-
-// // test depth
-
-// const depthTexture = gl.createTexture();
-// const depthTextureSize = 512;
-// gl.bindTexture(gl.TEXTURE_2D, depthTexture);
-
-// {
-//   // define size and format of level 0
-//   const level = 0;
-//   const internalFormat = gl.RGBA;
-//   const border = 0;
-//   const format = gl.RGBA;
-//   const type = gl.UNSIGNED_BYTE;
-//   const data = null;
-//   gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
-//                 512, 512, border,
-//                 format, type, data);
-
-//   // set the filtering so we don't need mips
-//   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-//   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-//   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-// }
-
-// const depthFramebuffer = gl.createFramebuffer();
-// gl.bindFramebuffer(gl.FRAMEBUFFER, depthFramebuffer);
-// gl.framebufferTexture2D(
-//     gl.FRAMEBUFFER,       // target
-//     gl.COLOR_ATTACHMENT0, //  gl.DEPTH_ATTACHMENT,  // attachment point
-//     gl.TEXTURE_2D,        // texture target
-//     depthTexture,         // texture
-//     0);                   // mip level
-
-//////////////////////////////////////////////////////
-// TEST 2 Success for now just fbo
-// gl.getParameter(gl.MAX_DRAW_BUFFERS)
-//////////////////////////////////////////////////////
 exports.cubeMapTextures = cubeMapTextures;
 const makeFBO = (gl, o) => {
   var framebuffer, texture, depthBuffer;
@@ -16254,7 +16270,7 @@ const makeFBO = (gl, o) => {
       height: 512
     };
   }
-  // console.log('FBO MAKE FUNC');
+  console.log('[MAX_DRAW_BUFFERS]:' + gl.getParameter(gl.MAX_DRAW_BUFFERS));
   var error = function () {
     console.log('Error in creating FBO!');
     return null;
@@ -16283,24 +16299,18 @@ const makeFBO = (gl, o) => {
   }
   gl.bindRenderbuffer(gl.RENDERBUFFER, depthBuffer);
   gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, OFFSCREEN_WIDTH, OFFSCREEN_HEIGHT);
-
-  // Attach the texture and the renderbuffer object to the FBO
   gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
   gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
   gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, depthBuffer);
-
-  // Check if FBO is configured correctly
   var e = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
   if (gl.FRAMEBUFFER_COMPLETE !== e) {
     console.log('Frame buffer object is incomplete: ' + e.toString());
     return error();
   }
-
-  // Unbind the buffer object
   gl.bindFramebuffer(gl.FRAMEBUFFER, null);
   gl.bindTexture(gl.TEXTURE_2D, null);
   gl.bindRenderbuffer(gl.RENDERBUFFER, null);
-  return framebuffer;
+  return [framebuffer, texture];
 };
 exports.makeFBO = makeFBO;
 var _default = exports.default = _manifest.default.tools;
@@ -16747,24 +16757,24 @@ function defineworld(canvas, renderType) {
       squareObject.geometry = new _matrixGeometry.SquareVertex(squareObject);
       squareObject.geometry.nameUniq = nameUniq;
       squareObject.glBlend = new _utility._glBlend();
-      squareObject.setFBO = function () {
-        console.log('cubeObject set fbo ... ');
-        squareObject.FBO = {
-          name: squareObject.name,
-          FB: (0, _matrixTextures.makeFBO)(world.GL.gl, {
-            width: 512,
-            height: 512
-          }),
+      squareObject.setFBO = function (arg) {
+        var _fbshadows = (0, _matrixTextures.makeFBO)(world.GL.gl, {
+          width: 512,
+          height: 512
+        });
+        cubeObject.FBO = {
+          name: cubeObject.name,
+          FB: _fbshadows[0],
+          deepTexture: _fbshadows[1],
           settings: {
-            cameraX: typeof arg === 'undefined' || !arg.cameraX ? 6 : arg.cameraX,
-            cameraY: typeof arg === 'undefined' || !arg.cameraY ? 5 : arg.cameraY,
-            cameraZ: typeof arg === 'undefined' || !arg.cameraZ ? 5 : arg.cameraZ,
+            cameraX: typeof arg === 'undefined' || !arg.cameraX ? 0 : arg.cameraX,
+            cameraY: typeof arg === 'undefined' || !arg.cameraY ? 0 : arg.cameraY,
+            cameraZ: typeof arg === 'undefined' || !arg.cameraZ ? 0 : arg.cameraZ,
             pitch: typeof arg === 'undefined' || !arg.pitch ? 2.5 : arg.pitch,
             yaw: typeof arg === 'undefined' || !arg.yaw ? 4.8 : arg.yaw
           }
         };
-        // for now
-        world.FBOS.push(squareObject.FBO);
+        world.FBOS.push(cubeObject.FBO);
       };
 
       // destroy self
@@ -16814,6 +16824,7 @@ function defineworld(canvas, renderType) {
             squareObject.useShadows = true;
             squareObject.shadows = new _matrixShadows.MatrixEffectLens();
           } else if (t == 'spot-shadow') {
+            console.info(`%c[squareObject]  shadow - object: ${squareObject.name}.`, CS3);
             squareObject.useShadows = true;
             squareObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
           }
@@ -16854,7 +16865,7 @@ function defineworld(canvas, renderType) {
           alert('Exec add obj : texturePaths : path is unknow typeof');
         }
       } else {
-        // no textures , use default single textures
+        console.info(`%c[squareObject]  no textures , use default single textures for object: ${squareObject.name}.`, CS3);
         squareObject.texture = this.initTexture(this.GL.gl, 'res/images/icon2.jpg');
         squareObject.textures[0] = squareObject.texture;
         squareObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
@@ -17208,8 +17219,24 @@ function defineworld(canvas, renderType) {
       objObject.net = {
         enable: false
       };
-      objObject.setFBO = function () {
-        objObject.FBO = {};
+      objObject.setFBO = function (arg) {
+        var _fbshadows = (0, _matrixTextures.makeFBO)(world.GL.gl, {
+          width: 512,
+          height: 512
+        });
+        cubeObject.FBO = {
+          name: cubeObject.name,
+          FB: _fbshadows[0],
+          deepTexture: _fbshadows[1],
+          settings: {
+            cameraX: typeof arg === 'undefined' || !arg.cameraX ? 0 : arg.cameraX,
+            cameraY: typeof arg === 'undefined' || !arg.cameraY ? 0 : arg.cameraY,
+            cameraZ: typeof arg === 'undefined' || !arg.cameraZ ? 0 : arg.cameraZ,
+            pitch: typeof arg === 'undefined' || !arg.pitch ? 2.5 : arg.pitch,
+            yaw: typeof arg === 'undefined' || !arg.yaw ? 4.8 : arg.yaw
+          }
+        };
+        world.FBOS.push(cubeObject.FBO);
       };
 
       // Update others start
@@ -17350,35 +17377,22 @@ function defineworld(canvas, renderType) {
         lightingDirection: new _matrixGeometry.COLOR((0, _utility.radToDeg)(0.3), (0, _utility.radToDeg)(-0.3), (0, _utility.radToDeg)(-1))
       };
       cubeObject.setFBO = function (arg) {
-        // cubeObject.FBO = {};
-        // console.log('cubeObject set fbo ... ')
+        var _fbshadows = (0, _matrixTextures.makeFBO)(world.GL.gl, {
+          width: 512,
+          height: 512
+        });
         cubeObject.FBO = {
           name: cubeObject.name,
-          FB: (0, _matrixTextures.makeFBO)(world.GL.gl, {
-            width: 512,
-            height: 512
-          }),
+          FB: _fbshadows[0],
+          deepTexture: _fbshadows[1],
           settings: {
             cameraX: typeof arg === 'undefined' || !arg.cameraX ? 0 : arg.cameraX,
             cameraY: typeof arg === 'undefined' || !arg.cameraY ? 0 : arg.cameraY,
             cameraZ: typeof arg === 'undefined' || !arg.cameraZ ? 0 : arg.cameraZ,
             pitch: typeof arg === 'undefined' || !arg.pitch ? 2.5 : arg.pitch,
             yaw: typeof arg === 'undefined' || !arg.yaw ? 4.8 : arg.yaw
-            // posZ: (typeof arg === 'undefined' || !arg.posZ? 4.3 : arg.posZ),
-            // targetX: (typeof arg === 'undefined' || !arg.targetX? 2.5 : arg.targetX),
-            // targetY: (typeof arg === 'undefined'|| !arg.targetY ? 0 : arg.targetY),
-            // targetZ: (typeof arg === 'undefined' || !arg.targetZ? 3.5 : arg.targetZ),
-            // projWidth: (typeof arg === 'undefined' || !arg.projWidth? 1 : arg.projWidth),
-            // projHeight: (typeof arg === 'undefined'|| !arg.projHeight ? 1 : arg.projHeight),
-            // perspective:  (typeof arg === 'undefined' || !arg.perspective? true : arg.perspective),
-            // fieldOfView:  (typeof arg === 'undefined' || !arg.fieldOfView? 120 : arg.fieldOfView),
-            // bias: (typeof arg === 'undefined' || !arg.bias ? -0.006 : arg.bias),
-            // translate: (typeof arg === 'undefined' || !arg.translate ? [1.5, 1.5, 1.5] : [arg.translate[0], arg.translate[1], arg.translate[2]]),
-            // scale  : (typeof arg === 'undefined' || !arg.scale ? [0.5 ,0.5 ,0.5] : [arg.scale[0],arg.scale[1] ,arg.scale[2] ])
           }
         };
-        // for now
-        // world.FBOS[0] = cubeObject.FBO;
         world.FBOS.push(cubeObject.FBO);
       };
 
@@ -17479,6 +17493,7 @@ function defineworld(canvas, renderType) {
         cubeObject.textures.push(cubeObject.texture);
         cubeObject.texture = true;
         cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
+        cubeObject.shaderProgramColor = this.initShaders(this.GL.gl, 'cube' + '-shader-fs', 'cube' + '-shader-vs');
       }
       cubeObject.changeMaterial = function (texturesPaths) {
         (0, _engine.RegenerateShader)(this.type + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
@@ -45529,7 +45544,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var App = {
   name: "Matrix Engine Manifest",
-  version: "1.1.1",
+  version: "1.1.2",
   events: true,
   sounds: true,
   logs: false,
@@ -45566,6 +45581,13 @@ var App = {
     b: 0.0,
     a: 1.0
   },
+  frameBufferBgColor: {
+    r: 1.0,
+    g: 1.0,
+    b: 1.0,
+    a: 1.0
+  },
+  frameBufferViewPort: [512, 512],
   textures: [],
   // readOnly in manifest
   tools: {},
