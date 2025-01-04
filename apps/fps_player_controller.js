@@ -876,7 +876,7 @@ export var runThis = (world) => {
 			position: [-10, 0, -10],
 			activeRotation: [0, 20, 0],
 			rotation: [0, 0, 0],
-			scale: 1.1,
+			scale: 2.1,
 			textures: ["res/images/armor.webp"],
 			shadows: false,
 			gamePlayItem: 'item-armor'
