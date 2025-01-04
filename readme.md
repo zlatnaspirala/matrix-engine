@@ -2,7 +2,7 @@
 
 ## About Matrix Engine project
 
-### Name: `MATRIX-ENGINE` `2.0.25` Vampire
+### Name: `MATRIX-ENGINE` `2.2.0` Vampire
 
 #### Logo
 
@@ -25,6 +25,8 @@
 #### - [Migrated to the opengles300] ✔
 
 #### - [FBO implemented] ✔
+
+#### - [FBO Shadows] ✔
 
 #### - [Add cef (linux, macos) and cefSharp Visual Studio projects for building executive desktop native apps. ✔
 
@@ -58,8 +60,7 @@ Used webRTC realtime protocol TCP/UDP. Powered by webGL vs webRTC tech enjoy!
 
 ### Limitation ⚠
 
-- Basic implementation for physics (Cube, Sphere). [not perfect]
-- Only static object cast spot light in right way for now.
+- Basic implementation for physics (Cube, Sphere).
 
 ### Next Features 🔜
 
