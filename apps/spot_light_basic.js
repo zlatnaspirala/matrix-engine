@@ -38,7 +38,6 @@ export var runThis = (world) => {
   App.scene.myCube1.shadows.activeUpdate();
   App.scene.myCube1.shadows.animatePositionX();
 
-	return;
   world.Add("cubeLightTex", 1, "myCube2", textuteImageSamplers);
   App.scene.myCube2.activateShadows();
   App.scene.myCube2.shadows.lightPosition = [0, 0, 3];
