@@ -6363,13 +6363,11 @@ var runThis = world => {
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "myCube1", textuteImageSamplers);
-  // App.scene.myCube1.activateShadows();
-  // App.scene.myCube1.position.setPosition(-3,3,-11);
+  _manifest.default.scene.myCube1.activateShadows();
+  _manifest.default.scene.myCube1.position.setPosition(-3, 3, -11);
   // // Local Shadows cast must be activated!
-  // App.scene.myCube1.shadows.activeUpdate();
-  // App.scene.myCube1.shadows.animatePositionX();
-
-  return;
+  _manifest.default.scene.myCube1.shadows.activeUpdate();
+  _manifest.default.scene.myCube1.shadows.animatePositionX();
   world.Add("cubeLightTex", 1, "myCube2", textuteImageSamplers);
   _manifest.default.scene.myCube2.activateShadows();
   _manifest.default.scene.myCube2.shadows.lightPosition = [0, 0, 3];
@@ -19575,6 +19573,14 @@ function checkingProcedureCalc(object) {
     }
     object.raycastFace.push(triangle);
 
+    // triangle.forEach((a) => {
+    // 	a.forEach((b, index, array) => {
+    // 		array[index] = parseFloat(b.toFixed(2))
+    // 	})
+    // })
+
+    // non handled situation
+    if (triangle == null) return;
     // console.log('t:' + triangle)
 
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {

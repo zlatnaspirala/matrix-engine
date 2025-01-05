@@ -12795,6 +12795,14 @@ function checkingProcedureCalc(object) {
     }
     object.raycastFace.push(triangle);
 
+    // triangle.forEach((a) => {
+    // 	a.forEach((b, index, array) => {
+    // 		array[index] = parseFloat(b.toFixed(2))
+    // 	})
+    // })
+
+    // non handled situation
+    if (triangle == null) return;
     // console.log('t:' + triangle)
 
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
