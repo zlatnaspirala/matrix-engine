@@ -1118,6 +1118,8 @@ App.scene.myMirrorUP.setFBO({
 });
 ```
 
+<img width="512" src ="https://github.com/zlatnaspirala/matrix-engine/blob/master/non-project-files/1.7.6.pnghttps://github.com/zlatnaspirala/matrix-engine/blob/master/non-project-files/shadows.png"/>
+
 ## PWA Fully runned
 
 Integrated `Add to Home page` and `regular html5 page` options.
