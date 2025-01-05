@@ -34,10 +34,11 @@ export var runThis = (world) => {
   world.Add("cubeLightTex", 1, "myCube1", textuteImageSamplers);
   App.scene.myCube1.activateShadows();
   App.scene.myCube1.position.setPosition(-3,3,-11);
-  // Local Shadows cast must be activated!
+  // // Local Shadows cast must be activated!
   App.scene.myCube1.shadows.activeUpdate();
   App.scene.myCube1.shadows.animatePositionX();
 
+	return;
   world.Add("cubeLightTex", 1, "myCube2", textuteImageSamplers);
   App.scene.myCube2.activateShadows();
   App.scene.myCube2.shadows.lightPosition = [0, 0, 3];
