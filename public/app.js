@@ -70,7 +70,6 @@ var runThis = world => {
   // // Local Shadows cast must be activated!
   _manifest.default.scene.myCube1.shadows.activeUpdate();
   _manifest.default.scene.myCube1.shadows.animatePositionX();
-  return;
   world.Add("cubeLightTex", 1, "myCube2", textuteImageSamplers);
   _manifest.default.scene.myCube2.activateShadows();
   _manifest.default.scene.myCube2.shadows.lightPosition = [0, 0, 3];
