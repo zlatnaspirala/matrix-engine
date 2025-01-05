@@ -2,6 +2,9 @@
 
 # Matrix Engine [CHANGES]
 
+
+2.2.3 Just error log for non trianbulate faces error in raycast func.
+
 2.2.2 HOT FIX PRAGMATIC
 
 Unknown squareTex raycaster bug.

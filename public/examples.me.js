@@ -1455,6 +1455,8 @@ var runThis = world => {
   };
   matrixEngine.Events.camera.yawAmp = 5;
   _manifest.default.camera.SceneController = true;
+  matrixEngine.Events.camera.yPos = 13;
+  matrixEngine.Events.camera.zPos = 72;
 
   // Floor
   world.Add("cubeLightTex", 1, "floor", textuteImageSamplers);
@@ -1478,7 +1480,7 @@ var runThis = world => {
   _manifest.default.scene.MyCubeTex1.geometry.setScaleByX(2);
   _manifest.default.scene.MyCubeTex1.geometry.setScaleByY(2);
   _manifest.default.scene.MyCubeTex1.position.y = 3;
-  _manifest.default.scene.MyCubeTex1.position.x = 7;
+  _manifest.default.scene.MyCubeTex1.position.x = 6;
   setTimeout(() => {
     _manifest.default.scene.MyCubeTex1.shadows.lightPosition = [0.1, -0.2, 0.1];
   }, 200);
@@ -1507,7 +1509,7 @@ var runThis = world => {
     }, 200);
     world.Add("obj", 1, "mac", textuteImageSamplers, meshes.mac);
     _manifest.default.scene.mac.position.y = 1;
-    _manifest.default.scene.mac.position.x = -2;
+    _manifest.default.scene.mac.position.x = -3;
     _manifest.default.scene.mac.rotation.rotationSpeed.y = 20;
     _manifest.default.scene.mac.LightsData.ambientLight.set(1, 1, 1);
     _manifest.default.scene.mac.mesh.setScale(3);
@@ -19354,12 +19356,22 @@ objPos) {
   rayOrigin[0] = matrixEngine.Events.camera.xPos;
   rayOrigin[1] = matrixEngine.Events.camera.yPos;
   const EPSILON = 0.0000001;
-  const [v0, v1, v2] = triangle;
+  try {
+    const [v0, v1, v2] = triangle;
+  } catch (e) {
+    console.log('Probably your obj file have non triangulate faces vertices. Raycast support only triangulate faces not quard faces. Error log:', e);
+    return false;
+  }
   const edge1 = vec3.create();
   const edge2 = vec3.create();
   const h = vec3.create();
-  vec3.sub(edge1, v1, v0);
-  vec3.sub(edge2, v2, v0);
+  try {
+    vec3.sub(edge1, v1, v0);
+    vec3.sub(edge2, v2, v0);
+  } catch (e) {
+    console.log('Probably your obj file have non triangulate faces vertices. Raycast support only triangulate faces not quard faces. Error log:', e);
+    return false;
+  }
   vec3.cross(h, rayVector, edge2);
   const a = vec3.dot(edge1, h);
   if (a > -EPSILON && a < EPSILON) {

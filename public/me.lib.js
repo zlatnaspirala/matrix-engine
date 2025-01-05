@@ -12577,12 +12577,22 @@ objPos) {
   rayOrigin[0] = matrixEngine.Events.camera.xPos;
   rayOrigin[1] = matrixEngine.Events.camera.yPos;
   const EPSILON = 0.0000001;
-  const [v0, v1, v2] = triangle;
+  try {
+    const [v0, v1, v2] = triangle;
+  } catch (e) {
+    console.log('Probably your obj file have non triangulate faces vertices. Raycast support only triangulate faces not quard faces. Error log:', e);
+    return false;
+  }
   const edge1 = vec3.create();
   const edge2 = vec3.create();
   const h = vec3.create();
-  vec3.sub(edge1, v1, v0);
-  vec3.sub(edge2, v2, v0);
+  try {
+    vec3.sub(edge1, v1, v0);
+    vec3.sub(edge2, v2, v0);
+  } catch (e) {
+    console.log('Probably your obj file have non triangulate faces vertices. Raycast support only triangulate faces not quard faces. Error log:', e);
+    return false;
+  }
   vec3.cross(h, rayVector, edge2);
   const a = vec3.dot(edge1, h);
   if (a > -EPSILON && a < EPSILON) {
