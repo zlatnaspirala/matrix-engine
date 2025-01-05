@@ -13,7 +13,23 @@ import App from "../program/manifest";
 export var runThis = (world) => {
 
   // Camera
-  App.camera.SceneController = true;
+  // App.camera.SceneController = true;
+
+
+	  // Click event
+		canvas.addEventListener('mousedown', (ev) => {
+			matrixEngine.raycaster.checkingProcedure(ev);
+		});
+	
+		addEventListener("ray.hit.event", function(e) {
+			e.detail.hitObject.LightsData.ambientLight.r =
+				matrixEngine.utility.randomFloatFromTo(0, 10);
+			e.detail.hitObject.LightsData.ambientLight.g =
+				matrixEngine.utility.randomFloatFromTo(0, 10);
+			e.detail.hitObject.LightsData.ambientLight.b =
+				matrixEngine.utility.randomFloatFromTo(0, 10);
+			console.info(e.detail);
+		});
 
   // Image texs
   var textuteImageSamplers = {
@@ -32,11 +48,13 @@ export var runThis = (world) => {
   };
 
   world.Add("cubeLightTex", 1, "myCube1", textuteImageSamplers);
-  App.scene.myCube1.activateShadows();
-  App.scene.myCube1.position.setPosition(-3,3,-11);
+  // App.scene.myCube1.activateShadows();
+  // App.scene.myCube1.position.setPosition(-3,3,-11);
   // // Local Shadows cast must be activated!
-  App.scene.myCube1.shadows.activeUpdate();
-  App.scene.myCube1.shadows.animatePositionX();
+  // App.scene.myCube1.shadows.activeUpdate();
+  // App.scene.myCube1.shadows.animatePositionX();
+
+	return;
 
   world.Add("cubeLightTex", 1, "myCube2", textuteImageSamplers);
   App.scene.myCube2.activateShadows();
@@ -160,19 +178,6 @@ export var runThis = (world) => {
   // App.scene.myCube9.shadows.activeUpdate();
   // App.scene.myCube9.shadows.animateRadius({from: 15, to: 45, step: 0.05});
 
-  // Click event
-  canvas.addEventListener('mousedown', (ev) => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
 
-  addEventListener("ray.hit.event", function(e) {
-    e.detail.hitObject.LightsData.ambientLight.r =
-      matrixEngine.utility.randomFloatFromTo(0, 10);
-    e.detail.hitObject.LightsData.ambientLight.g =
-      matrixEngine.utility.randomFloatFromTo(0, 10);
-    e.detail.hitObject.LightsData.ambientLight.b =
-      matrixEngine.utility.randomFloatFromTo(0, 10);
-    console.info(e.detail);
-  });
 
 };

@@ -12596,12 +12596,7 @@ objPos) {
   rayOrigin[0] = matrixEngine.Events.camera.xPos;
   rayOrigin[1] = matrixEngine.Events.camera.yPos;
   const EPSILON = 0.0000001;
-  try {
-    const [v0, v1, v2] = triangle;
-  } catch (e) {
-    console.log('Probably your obj file have non triangulate faces vertices. Raycast support only triangulate faces not quard faces. Error log:', e);
-    return false;
-  }
+  const [v0, v1, v2] = triangle;
   const edge1 = vec3.create();
   const edge2 = vec3.create();
   const h = vec3.create();
@@ -12799,6 +12794,9 @@ function checkingProcedureCalc(object) {
       triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], triangleInZero[0][2]], [triangleInZero[1][0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], triangleInZero[1][2]], [triangleInZero[2][0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], triangleInZero[2][2]]];
     }
     object.raycastFace.push(triangle);
+
+    // console.log('t:' + triangle)
+
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
       rayHitEvent = new CustomEvent('ray.hit.event', {
         detail: {

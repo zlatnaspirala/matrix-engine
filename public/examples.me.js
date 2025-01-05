@@ -6336,7 +6336,18 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 
 var runThis = world => {
   // Camera
-  _manifest.default.camera.SceneController = true;
+  // App.camera.SceneController = true;
+
+  // Click event
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+  addEventListener("ray.hit.event", function (e) {
+    e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 10);
+    e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 10);
+    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 10);
+    console.info(e.detail);
+  });
 
   // Image texs
   var textuteImageSamplers = {
@@ -6352,11 +6363,13 @@ var runThis = world => {
     mix_operation: "multiply"
   };
   world.Add("cubeLightTex", 1, "myCube1", textuteImageSamplers);
-  _manifest.default.scene.myCube1.activateShadows();
-  _manifest.default.scene.myCube1.position.setPosition(-3, 3, -11);
+  // App.scene.myCube1.activateShadows();
+  // App.scene.myCube1.position.setPosition(-3,3,-11);
   // // Local Shadows cast must be activated!
-  _manifest.default.scene.myCube1.shadows.activeUpdate();
-  _manifest.default.scene.myCube1.shadows.animatePositionX();
+  // App.scene.myCube1.shadows.activeUpdate();
+  // App.scene.myCube1.shadows.animatePositionX();
+
+  return;
   world.Add("cubeLightTex", 1, "myCube2", textuteImageSamplers);
   _manifest.default.scene.myCube2.activateShadows();
   _manifest.default.scene.myCube2.shadows.lightPosition = [0, 0, 3];
@@ -6481,17 +6494,6 @@ var runThis = world => {
   // App.scene.myCube9.activateShadows();
   // App.scene.myCube9.shadows.activeUpdate();
   // App.scene.myCube9.shadows.animateRadius({from: 15, to: 45, step: 0.05});
-
-  // Click event
-  canvas.addEventListener('mousedown', ev => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
-  addEventListener("ray.hit.event", function (e) {
-    e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 10);
-    e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 10);
-    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 10);
-    console.info(e.detail);
-  });
 };
 exports.runThis = runThis;
 
@@ -19374,12 +19376,7 @@ objPos) {
   rayOrigin[0] = matrixEngine.Events.camera.xPos;
   rayOrigin[1] = matrixEngine.Events.camera.yPos;
   const EPSILON = 0.0000001;
-  try {
-    const [v0, v1, v2] = triangle;
-  } catch (e) {
-    console.log('Probably your obj file have non triangulate faces vertices. Raycast support only triangulate faces not quard faces. Error log:', e);
-    return false;
-  }
+  const [v0, v1, v2] = triangle;
   const edge1 = vec3.create();
   const edge2 = vec3.create();
   const h = vec3.create();
@@ -19577,6 +19574,9 @@ function checkingProcedureCalc(object) {
       triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], triangleInZero[0][2]], [triangleInZero[1][0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], triangleInZero[1][2]], [triangleInZero[2][0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], triangleInZero[2][2]]];
     }
     object.raycastFace.push(triangle);
+
+    // console.log('t:' + triangle)
+
     if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
       rayHitEvent = new CustomEvent('ray.hit.event', {
         detail: {
