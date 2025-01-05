@@ -2,6 +2,17 @@
 
 # Matrix Engine [CHANGES]
 
+2.2.2 HOT FIX PRAGMATIC
+
+Unknown squareTex raycaster bug.
+```js
+	try {
+		const [v0, v1, v2] = triangle;
+	} catch(e) {
+		console.log('bug "rayIntersectsTriangle" ', e)
+		return false;
+	}
+```
 
 [2.2.0] Cast shadow 
          Mixed FBO with two tex sampler attachments.

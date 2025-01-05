@@ -14,6 +14,8 @@ export var runThis = world => {
 
 	matrixEngine.Events.camera.yawAmp = 5
 	App.camera.SceneController = true;
+	matrixEngine.Events.camera.yPos = 13;
+	matrixEngine.Events.camera.zPos = 72;
 
 	// Floor
 	world.Add("cubeLightTex", 1, "floor", textuteImageSamplers);
@@ -38,7 +40,7 @@ export var runThis = world => {
 	App.scene.MyCubeTex1.geometry.setScaleByX(2);
 	App.scene.MyCubeTex1.geometry.setScaleByY(2);
 	App.scene.MyCubeTex1.position.y = 3;
-	App.scene.MyCubeTex1.position.x = 7;
+	App.scene.MyCubeTex1.position.x = 6;
 
 	setTimeout(() => {
 		App.scene.MyCubeTex1.shadows.lightPosition = [0.1, -0.2, 0.1]
@@ -71,7 +73,7 @@ export var runThis = world => {
 
 		world.Add("obj", 1, "mac", textuteImageSamplers, meshes.mac);
 		App.scene.mac.position.y = 1;
-		App.scene.mac.position.x = -2;
+		App.scene.mac.position.x = -3;
 		App.scene.mac.rotation.rotationSpeed.y = 20;
 		App.scene.mac.LightsData.ambientLight.set(1, 1, 1);
 		App.scene.mac.mesh.setScale(3)
