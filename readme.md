@@ -1173,6 +1173,7 @@ App.updateBeforeDraw.push(myFUNC);
   TheMrNgaard Creative Commons Attribution licence (reuse allowed)
 - Project Base Structure inspired by
   Copyright (C) 2014 Tappali Ekanathan Keestu (keestu@gmail.com) GNU General Public License
+- Shadows GLSL cals https://webgl2fundamentals.org/webgl/lessons/webgl-shadows.html
 - Textures download from http://textures.com
 - Dinamic texture `bitcoin` used from:
   Author:Ioannis Cherouvim
