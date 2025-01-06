@@ -656,10 +656,13 @@ function defineWebGLWorld(cavnas) {
     const available_extensions = gl.getSupportedExtensions();
     const test_depth_texture = gl.getExtension('WEBGL_depth_texture');
     if (!test_depth_texture) {
-      // console.warn('No support for WEBGL_depth_texture [opengles1.1] !', ext);
+      console.info(`%cNo support for WEBGL_depth_texture!`, _matrixWorld.CS4);
     }
-    // console.info("WEBGL base pocket: SUCCESS , Lets see list of ext : ", available_extensions);
-
+    console.info(`%cAvailable_extensions: ${available_extensions}`, _matrixWorld.CS4);
+    console.info(`%cMAX ELEMENT INDEX   : ${gl.getParameter(gl.MAX_ELEMENT_INDEX)}`, _matrixWorld.CS4);
+    console.info(`%cMAX VERTICES        : ${gl.getParameter(gl.MAX_ELEMENTS_VERTICES)}`, _matrixWorld.CS4);
+    console.info(`%cMAX INDICES         : ${gl.getParameter(gl.MAX_ELEMENTS_INDICES)}`, _matrixWorld.CS4);
+    console.info(`%cApp.limitations: ${_manifest.default.limitations}`, _matrixWorld.CS4);
     const extTFAnisotropic = gl.getExtension('EXT_texture_filter_anisotropic') || gl.getExtension('MOZ_EXT_texture_filter_anisotropic') || gl.getExtension('WEBKIT_EXT_texture_filter_anisotropic');
     if (extTFAnisotropic) {
       const max = gl.getParameter(extTFAnisotropic.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
@@ -4471,7 +4474,28 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
   }
 
   // shadows
-  if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {} else if (object.shadows && object.shadows.type == 'spec') {
+  if (object.shadows && object.shadows.type == 'spot') {
+    // set the light position
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.position.worldLocation);
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
+    // Set the spotlight uniforms
+    {
+      var target = [0, 0, 0]; // object.position.worldLocation;
+      var up = [0, 1, 0];
+      var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
+      // var lmat = m4.lookAt(object.position.worldLocation, target, up);
+      lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
+      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
+      // get the zAxis from the matrix
+      // negate it because lookAt looks down the -Z axis
+      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]];
+      // object.shadows.lightDirection = [-0, -0, -1];
+    }
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
+  } else if (object.shadows && object.shadows.type == 'spec') {
     // global position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
@@ -9754,7 +9778,7 @@ var _default = exports.default = _manifest.default.tools;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CS4 = exports.CS3 = exports.CS2 = exports.CS1 = void 0;
+exports.CS5 = exports.CS4 = exports.CS3 = exports.CS2 = exports.CS1 = void 0;
 exports.defineworld = defineworld;
 exports.frames = void 0;
 exports.modifyFrames = modifyFrames;
@@ -9777,7 +9801,8 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 var CS1 = exports.CS1 = "font-family: stormfaze;color: #001100; font-size:58px;text-shadow: 2px 2px 4px #fff554, 4px 4px 4px gray, 2px 2px 4px lime, 6px 2px 0px lime;background: gray;";
 var CS2 = exports.CS2 = "font-family: stormfaze;color: #fd1233; font-size:20px;text-shadow: 2px 2px 2px #5321f5, 4px 4px 4px #d6fa16, 3px 0px 3px #c160a6, 6px 6px 4px #9a0de3;background: black;";
 var CS3 = exports.CS3 = "font-family: stormfaze;color: #f1f033; font-size:14px;text-shadow: 2px 2px 4px #f335f4, 4px 4px 4px #d64444, 2px 2px 4px #c160a6, 6px 2px 0px #123de3;background: black;";
-var CS4 = exports.CS4 = "font-family: verdana;color: #lime; font-size:16px;text-shadow: 2px 2px 4px orangered;background: black;";
+var CS4 = exports.CS4 = "font-family: verdana;color: #lime; font-size:11px;text-shadow: 1px 1px 2px orangered;background: black;";
+var CS5 = exports.CS5 = "font-family: stormfaze;color: #lime; font-size:10px;text-shadow: 2px 1px 2px gray;background: black;";
 window.mat4 = glMatrix.mat4;
 window.mat2 = glMatrix.mat2;
 window.mat2d = glMatrix.mat2d;
@@ -9825,6 +9850,7 @@ if (_utility.QueryString.GLSL && _utility.QueryString.GLSL == 1.3) {
   console.info(`%cActive: GLSL 1.3. for OPENGLES30 %c webGL2`, CS3, CS3);
   (0, _matrixInitShaders.loadShaders300)();
 }
+console.info(`%c Welcome to collaborate on github: https://github.com/zlatnaspirala/`, CS5);
 
 /* Width and Height variables of the browser screen  */
 var frames = exports.frames = 0;
@@ -10871,7 +10897,7 @@ function defineworld(canvas, renderType) {
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
         }
         (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
-        console.log('REGEN');
+        // console.log('REGEN')
         cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       };
       cubeObject.deactivateTex = () => {
@@ -20906,9 +20932,9 @@ window.DETECTBROWSER = function () {
   if (mobile) {
     var userAgent = navigator.userAgent.toLowerCase();
     if (userAgent.search('android') > -1 && userAgent.search('mobile') > -1) {
-      console.log('ANDROID MOBILE');
+      // console.log('ANDROID MOBILE');
     } else if (userAgent.search('android') > -1 && !(userAgent.search('mobile') > -1)) {
-      console.log(' ANDROID TABLET ');
+      // console.log(' ANDROID TABLET ');
       TYPEOFANDROID = 1;
     }
   } else {
@@ -21873,7 +21899,9 @@ class MatrixStream {
     _matrixStream.netConfig.sessionName = arg.sessionName;
     _matrixStream.netConfig.resolution = arg.resolution;
     _utility.scriptManager.LOAD('openvidu-browser-2.20.0.js', undefined, undefined, undefined, () => {
-      this.loadNetHTML();
+      setTimeout(() => {
+        this.loadNetHTML();
+      }, 2500);
     });
   }
   loadNetHTML() {
@@ -21937,7 +21965,7 @@ class MatrixStream {
       (0, _matrixStream.leaveSession)();
     });
     (0, _matrixStream.byId)('netHeaderTitle').addEventListener('click', this.domManipulation.hideNetPanel);
-    setTimeout(() => dispatchEvent(new CustomEvent('net-ready', {})), 500);
+    setTimeout(() => dispatchEvent(new CustomEvent('net-ready', {})), 200);
   }
   multiPlayer = {
     root: this,

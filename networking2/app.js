@@ -3,9 +3,7 @@ import {BIGLOG, byId, closeSession, joinSession, leaveSession, netConfig, REDLOG
 
 /**
  * Main instance for matrix-stream
- * version 1.0.0 beta
  */
-
 export class MatrixStream {
 
 	connection = null;
@@ -20,7 +18,7 @@ export class MatrixStream {
 		netConfig.sessionName = arg.sessionName;
 		netConfig.resolution = arg.resolution;
 		scriptManager.LOAD('openvidu-browser-2.20.0.js', undefined, undefined, undefined, () => {
-			setTimeout(() => {this.loadNetHTML()}, 500)
+			setTimeout(() => {this.loadNetHTML()}, 2500)
 		});
 	}
 
@@ -86,7 +84,7 @@ export class MatrixStream {
 
 		byId('netHeaderTitle').addEventListener('click', this.domManipulation.hideNetPanel)
 
-		setTimeout(() => dispatchEvent(new CustomEvent('net-ready', {})), 200)
+		setTimeout(() => dispatchEvent(new CustomEvent('net-ready', {})), 1000)
 	}
 
 	multiPlayer = {
