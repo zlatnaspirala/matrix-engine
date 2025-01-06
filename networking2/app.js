@@ -20,7 +20,7 @@ export class MatrixStream {
 		netConfig.sessionName = arg.sessionName;
 		netConfig.resolution = arg.resolution;
 		scriptManager.LOAD('openvidu-browser-2.20.0.js', undefined, undefined, undefined, () => {
-			this.loadNetHTML()
+			setTimeout(() => {this.loadNetHTML()}, 500)
 		});
 	}
 
@@ -86,7 +86,7 @@ export class MatrixStream {
 
 		byId('netHeaderTitle').addEventListener('click', this.domManipulation.hideNetPanel)
 
-		setTimeout(() => dispatchEvent(new CustomEvent('net-ready', {})), 500)
+		setTimeout(() => dispatchEvent(new CustomEvent('net-ready', {})), 200)
 	}
 
 	multiPlayer = {
