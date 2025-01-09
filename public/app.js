@@ -2,7 +2,7 @@
 "use strict";
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
-var _spot_light_basic = require("./apps/spot_light_basic.js");
+var _sprite_animation_2d = require("./apps/sprite_animation_2d.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // CHANGE HERE IF YOU WANNA USE app-build.hmtl
@@ -22,193 +22,108 @@ window.webGLStart = () => {
   window.App = App;
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
-  (0, _spot_light_basic.runThis)(world);
+  (0, _sprite_animation_2d.runThis)(world);
 };
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/spot_light_basic.js":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/sprite_animation_2d.js":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-var _manifest = _interopRequireDefault(require("../program/manifest"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+var _matrixTextures = require("../lib/matrix-textures");
 /**
  *@Author Nikola Lukic
  *@Description Matrix Engine Api Example
- * From version [1.7.6]
- * Local Light/Shadows shader
- * - Spot ligth for now works perfect for fixed camera movement.
- * - Direction, ambient working fine also with spot light.
+ * Sprite Animation based on CPU / program
+ * 
  */
 
-/* globals world App */
-
 var runThis = world => {
-  // Camera
-  // App.camera.SceneController = true;
-
-  // Click event
-  canvas.addEventListener('mousedown', ev => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
-  addEventListener("ray.hit.event", function (e) {
-    e.detail.hitObject.LightsData.ambientLight.r = matrixEngine.utility.randomFloatFromTo(0, 10);
-    e.detail.hitObject.LightsData.ambientLight.g = matrixEngine.utility.randomFloatFromTo(0, 10);
-    e.detail.hitObject.LightsData.ambientLight.b = matrixEngine.utility.randomFloatFromTo(0, 10);
-    console.info(e.detail);
-  });
-
-  // Image texs
   var textuteImageSamplers = {
-    source: ["res/images/complex_texture_1/diffuse.webp"],
-    mix_operation: "multiply"
-  };
-  var textuteImageSamplersTest = {
-    source: ["res/images/texture_spiral1.png", "res/images/complex_texture_1/diffuse.webp"],
-    mix_operation: "multiply"
-  };
-  var textuteBlanko = {
-    source: ["res/images/blankoB.png"],
-    mix_operation: "multiply"
-  };
-  world.Add("cubeLightTex", 1, "myCube1", textuteImageSamplers);
-  _manifest.default.scene.myCube1.activateShadows();
-  _manifest.default.scene.myCube1.position.setPosition(-3, 3, -11);
-  // // Local Shadows cast must be activated!
-  _manifest.default.scene.myCube1.shadows.activeUpdate();
-  _manifest.default.scene.myCube1.shadows.animatePositionX();
-  world.Add("cubeLightTex", 1, "myCube2", textuteImageSamplers);
-  _manifest.default.scene.myCube2.activateShadows();
-  _manifest.default.scene.myCube2.shadows.lightPosition = [0, 0, 3];
-  _manifest.default.scene.myCube2.shadows.innerLimit = 0;
-  _manifest.default.scene.myCube2.position.SetX(-3);
-  _manifest.default.scene.myCube2.position.SetZ(-11);
-  _manifest.default.scene.myCube2.shadows.activeUpdate();
-  _manifest.default.scene.myCube2.shadows.animateRadius({
-    from: 0,
-    to: 25,
-    step: 0.5
-  });
-  world.Add("cubeLightTex", 1, "myCube3", textuteImageSamplers);
-  _manifest.default.scene.myCube3.activateShadows();
-  _manifest.default.scene.myCube3.shadows.innerLimit = 0;
-  _manifest.default.scene.myCube3.position.SetY(-3);
-  _manifest.default.scene.myCube3.position.SetZ(-11);
-  _manifest.default.scene.myCube3.position.SetX(-3);
-  _manifest.default.scene.myCube3.shadows.lightPosition = [0, 3, 3];
-  // Animate local spot
-  var option = {
-    from: 0.01,
-    to: 0.02,
-    step: 0.001,
-    centerX: 0,
-    centerY: 0,
-    flyArroundByIndexs: [1, 2] // Means that Y,Z coords are orbiting
-  };
-  _manifest.default.scene.myCube3.shadows.activeUpdate();
-  _manifest.default.scene.myCube3.shadows.flyArround(option);
-
-  // Animate by Y pos
-  world.Add("cubeLightTex", 1, "myCube4", textuteImageSamplers);
-  _manifest.default.scene.myCube4.activateShadows();
-  _manifest.default.scene.myCube4.position.SetY(3);
-  _manifest.default.scene.myCube4.position.SetZ(-11);
-  _manifest.default.scene.myCube4.shadows.activeUpdate();
-  _manifest.default.scene.myCube4.shadows.animatePositionY();
-  _manifest.default.scene.myCube4.position.SetX(0);
-
-  // Created with blanko texture or red, blue or green solid.
-  // then add new tex sampler created generic square 2x2 by default.
-  world.Add("cubeLightTex", 1, "myCube5", textuteBlanko);
-  _manifest.default.scene.myCube5.position.SetZ(-11);
-  _manifest.default.scene.myCube5.activateShadows();
-  _manifest.default.scene.myCube5.shadows.activeUpdate();
-  _manifest.default.scene.myCube5.shadows.animateRadius({
-    from: 15,
-    to: 45,
-    step: 0.05
-  });
-  _manifest.default.scene.myCube5.textures.push(_manifest.default.scene.myCube5.createPixelsTex());
-
-  // Created with blanko texture or red, blue or green solid.
-  world.Add("cubeLightTex", 1, "myCube6", textuteImageSamplersTest);
-  _manifest.default.scene.myCube6.position.SetZ(-11);
-  _manifest.default.scene.myCube6.position.SetY(-3);
-  _manifest.default.scene.myCube6.activateShadows();
-  // Animate local spot
-  var option = {
-    from: 0.01,
-    to: 0.02,
-    step: 0.001,
-    centerX: 0,
-    centerY: 0,
-    flyArroundByIndexs: [0, 2] // Means that X,Z coords are orbiting
-  };
-  _manifest.default.scene.myCube6.shadows.outerLimit = 2;
-  // Local Shadows cast must be activated!
-  _manifest.default.scene.myCube6.shadows.activeUpdate();
-  _manifest.default.scene.myCube6.shadows.flyArround(option);
-  _manifest.default.scene.myCube6.textures.push(_manifest.default.scene.myCube6.createPixelsTex());
-
-  // Simple direction light
-  world.Add("cubeLightTex", 1, "myCube7", textuteImageSamplersTest);
-  _manifest.default.scene.myCube7.position.setPosition(3, 3, -11);
-  _manifest.default.scene.myCube7.geometry.colorData.SetGreenForAll(0.5);
-  _manifest.default.scene.myCube7.geometry.colorData.SetRedForAll(0.5);
-  _manifest.default.scene.myCube7.geometry.colorData.SetBlueForAll(0.5);
-  _manifest.default.scene.myCube7.deactivateTex();
-  world.Add("cubeLightTex", 1, "myCube8", textuteImageSamplersTest);
-  _manifest.default.scene.myCube8.position.setPosition(3, 0, -11);
-
-  // Custom generic textures. Micro Drawing.
-  // Example for arg shema square for now only.
-  var options = {
-    squareShema: [8, 8],
-    pixels: new Uint8Array(8 * 8 * 4)
-  };
-  // options.pixels.fill(0);
-  var I = 0,
-    localCounter = 0;
-  for (var funny = 0; funny < 8 * 8 * 4; funny += 4) {
-    localCounter++;
-    options.pixels[funny] = I + localCounter;
-    options.pixels[funny + 1] = I + 1.5 * localCounter;
-    options.pixels[funny + 2] = I + 1.2 * localCounter;
-    options.pixels[funny + 3] = 1;
-  }
-  options.pixels[4 * 7] = 255;
-  options.pixels[4 * 7 + 1] = 1;
-  options.pixels[4 * 7 + 2] = 1;
-  _manifest.default.scene.myCube8.textures.push(_manifest.default.scene.myCube8.createPixelsTex(options));
-
-  // Custom generic textures
-  world.Add("cubeLightTex", 1, "myCube9", textuteImageSamplersTest);
-  _manifest.default.scene.myCube9.position.setPosition(3, -3, -11);
-
-  // Custom generic textures. Micro Drawing.
-  // Example for arg shema square for now only.
-  var options = {
-    squareShema: [4, 4],
-    pixels: new Uint8Array(4 * 4 * 4),
-    style: {
-      type: 'chessboard',
-      color1: 0,
-      color2: 255
+    source: ["res/images/animation-sprites/explosion2.png"],
+    mix_operation: "multiply",
+    params: {
+      MIPMAP: true,
+      spriteAnimation: new _matrixTextures.SpriteAnimation()
     }
   };
-  _manifest.default.scene.myCube9.textures.push(_manifest.default.scene.myCube9.createPixelsTex(options));
+  world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers);
+  world.Add("cubeLightTex", 1, "MyCubeTexure1", textuteImageSamplers);
+  App.scene.MyCubeTexure1.position.x = -2;
 
-  // App.scene.myCube9.activateShadows();
-  // App.scene.myCube9.shadows.activeUpdate();
-  // App.scene.myCube9.shadows.animateRadius({from: 15, to: 45, step: 0.05});
+  // Access is App.scene.MySquareTexure1.texParams.spriteAnimation
+  // this.shema = [4, 4]
+  // this.updateAfter = 20;
+
+  function onLoadObj(meshes) {
+    for (let key in meshes) {
+      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
+    }
+    var textuteImageSamplers2 = {
+      source: ["res/images/animation-sprites/explosion2.png"],
+      mix_operation: "multiply",
+      params: {
+        MIPMAP: true,
+        spriteAnimation: new _matrixTextures.SpriteAnimation()
+      }
+    };
+
+    // var textuteImageSamplers = {
+    // 	source: ["res/images/dagger.webp"],
+    // 	mix_operation: "multiply",
+    // 	params: {
+    // 		MIPMAP: true,
+    // 		spriteAnimation: new SpriteAnimation()
+    // 	}
+    // };
+
+    world.Add("obj", 1, "armor", textuteImageSamplers2, meshes.armor);
+    App.scene.armor.position.x = 3;
+    App.scene.armor.position.y = 0;
+    App.scene.armor.rotation.rotationSpeed.y = 20;
+    App.scene.armor.LightsData.ambientLight.set(1, 1, 1);
+    // App.scene.armor.position.z = -6;
+
+    // App.scene.armor.mesh.setScale(3)
+
+    setTimeout(() => {
+      App.scene.armor.activateShadows('spot');
+      App.scene.mac.activateShadows('spot');
+      // App.scene.armor.shadows.activeUpdate();
+      // App.scene.armor.shadows.animatePositionY();
+    }, 2000);
+
+    // world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers2);
+    // App.scene.MyCubeTex.activateShadows()
+    world.Add("obj", 1, "mac", textuteImageSamplers2, meshes.mac);
+    App.scene.mac.position.y = 0;
+    App.scene.mac.position.x = 4;
+    App.scene.mac.rotation.rotationSpeed.y = 50;
+    App.scene.mac.LightsData.ambientLight.set(1, 1, 1);
+  }
+
+  /**
+   * @description
+   * For swap (initial orientation for object) use combination of
+   * swap[0,1]
+   * swap[0,2]
+   * swap[1,3]
+   * to switch x,y,z verts.
+   */
+  matrixEngine.objLoader.downloadMeshes({
+    armor: "res/3d-objects/armor.obj",
+    mac: "res/3d-objects/mac.obj"
+  }, onLoadObj
+  // {swap: [0, 2]}
+  );
 };
 exports.runThis = runThis;
 
-},{"../program/manifest":44}],3:[function(require,module,exports){
+},{"../lib/matrix-textures":20}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3556,27 +3471,42 @@ _manifest.default.operation.draws.cube = function (object, ray) {
         _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
         _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
         //-------------------------------------------
-        for (var t = 1; t < object.textures.length + 1; t++) {
-          var t_index0 = 0;
+        var t_index0 = 0;
+        for (var t = 1; t < object.textures.length; t++) {
           if (object.custom.gl_texture == null) {
             _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
             _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t_index0]);
-            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            if (_matrixWorld.world.GL.extTFAnisotropic) {
+              _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+            }
             if (object.texParams.MIPMAP == false) {
-              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
-              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
-              // -- Allocate storage for the texture
-              // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-              // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.REPEAT);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.REPEAT);
             } else {
               _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
               _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+            }
+            if (object.texParams.spriteAnimation != false && object.textures[t].image.width != 0) {
+              //char * data; // data of 8-bit per sample RGBA image
+              // int w, h; // size of the image
+              // int sx, sy, sw, sh; // position and size of area you want to crop.
+              //glTexImage2D does support regions - of - interest.You do it as follows:
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+              var [XX, YY] = object.texParams.spriteAnimation.getOffsetXY();
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ROW_LENGTH, object.textures[t].image.height);
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_PIXELS, XX * (object.textures[t].image.width / object.texParams.spriteAnimation.shema[0]));
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_ROWS, YY * (object.textures[t].image.height / object.texParams.spriteAnimation.shema[1]));
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ALIGNMENT, 1);
+              // LodePNG tightly packs everything
+              // glTexImage2D(GL_TEXTURE_2D, level, internalFormat,
+              // sw, sh, border, format, type, data);
+              _matrixWorld.world.GL.gl.texImage2D(_matrixWorld.world.GL.gl.TEXTURE_2D, 0, _matrixWorld.world.GL.gl.RGBA, object.textures[t].image.width / object.texParams.spriteAnimation.shema[0], object.textures[t].image.height / object.texParams.spriteAnimation.shema[1], 0, _matrixWorld.world.GL.gl.RGBA, _matrixWorld.world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
+            }
+            if (object.texParams.MIPMAP == true) {
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.LINEAR_MIPMAP_NEAREST);
               _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
             }
-            if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
-              _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-            }
-            // console.log('TEST TEX SMAPLER ...' , object.texParams)
             _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
             _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.u_projectedTexture, t);
           } else {
@@ -3621,23 +3551,37 @@ _manifest.default.operation.draws.cube = function (object, ray) {
         if (object.custom.gl_texture == null) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
           _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-          _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+          if (_matrixWorld.world.GL.extTFAnisotropic) {
+            _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+          }
           if (object.texParams.MIPMAP == false) {
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
-            // -- Allocate storage for the texture
-            // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-            // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.REPEAT);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.REPEAT);
           } else {
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+          }
+          if (object.texParams.spriteAnimation != false && object.textures[t].image.width != 0) {
+            //char * data; // data of 8-bit per sample RGBA image
+            // int w, h; // size of the image
+            // int sx, sy, sw, sh; // position and size of area you want to crop.
+            //glTexImage2D does support regions - of - interest.You do it as follows:
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            var [XX, YY] = object.texParams.spriteAnimation.getOffsetXY();
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ROW_LENGTH, object.textures[t].image.height);
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_PIXELS, XX * (object.textures[t].image.width / object.texParams.spriteAnimation.shema[0]));
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_ROWS, YY * (object.textures[t].image.height / object.texParams.spriteAnimation.shema[1]));
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ALIGNMENT, 1);
+            // LodePNG tightly packs everything
+            // glTexImage2D(GL_TEXTURE_2D, level, internalFormat,
+            // sw, sh, border, format, type, data);
+            _matrixWorld.world.GL.gl.texImage2D(_matrixWorld.world.GL.gl.TEXTURE_2D, 0, _matrixWorld.world.GL.gl.RGBA, object.textures[t].image.width / object.texParams.spriteAnimation.shema[0], object.textures[t].image.height / object.texParams.spriteAnimation.shema[1], 0, _matrixWorld.world.GL.gl.RGBA, _matrixWorld.world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
+          }
+          if (object.texParams.MIPMAP == true) {
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.LINEAR_MIPMAP_NEAREST);
             _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
           }
-          if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
-            _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-          }
-
-          //console.log('TEST' , object.texParams)
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
@@ -4035,27 +3979,42 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
           _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
           //-------------------------------------------
-          for (var t = 1; t < object.textures.length + 1; t++) {
-            var t_index0 = 0;
+          var t_index0 = 0;
+          for (var t = 1; t < object.textures.length; t++) {
             if (object.custom.gl_texture == null) {
               _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
               _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t_index0]);
-              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+              if (_matrixWorld.world.GL.extTFAnisotropic) {
+                _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+              }
               if (object.texParams.MIPMAP == false) {
-                _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
-                _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
-                // -- Allocate storage for the texture
-                // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-                // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+                _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.REPEAT);
+                _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.REPEAT);
               } else {
                 _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
                 _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+              }
+              if (object.texParams.spriteAnimation != false && object.textures[t].image.width != 0) {
+                //char * data; // data of 8-bit per sample RGBA image
+                // int w, h; // size of the image
+                // int sx, sy, sw, sh; // position and size of area you want to crop.
+                //glTexImage2D does support regions - of - interest.You do it as follows:
+                _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+                var [XX, YY] = object.texParams.spriteAnimation.getOffsetXY();
+                _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ROW_LENGTH, object.textures[t].image.height);
+                _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_PIXELS, XX * (object.textures[t].image.width / object.texParams.spriteAnimation.shema[0]));
+                _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_ROWS, YY * (object.textures[t].image.height / object.texParams.spriteAnimation.shema[1]));
+                _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ALIGNMENT, 1);
+                // LodePNG tightly packs everything
+                // glTexImage2D(GL_TEXTURE_2D, level, internalFormat,
+                // sw, sh, border, format, type, data);
+                _matrixWorld.world.GL.gl.texImage2D(_matrixWorld.world.GL.gl.TEXTURE_2D, 0, _matrixWorld.world.GL.gl.RGBA, object.textures[t].image.width / object.texParams.spriteAnimation.shema[0], object.textures[t].image.height / object.texParams.spriteAnimation.shema[1], 0, _matrixWorld.world.GL.gl.RGBA, _matrixWorld.world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
+              }
+              if (object.texParams.MIPMAP == true) {
+                _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+                _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.LINEAR_MIPMAP_NEAREST);
                 _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
               }
-              if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
-                _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-              }
-              // console.log('TEST TEX SMAPLER ...' , object.texParams)
               _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
               _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.u_projectedTexture, t);
             } else {
@@ -4094,20 +4053,36 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
           if (object.custom.gl_texture == null) {
             _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
             _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            if (_matrixWorld.world.GL.extTFAnisotropic) {
+              _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+            }
             if (object.texParams.MIPMAP == false) {
-              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
-              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
-              // -- Allocate storage for the texture
-              // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-              // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.REPEAT);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.REPEAT);
             } else {
               _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
               _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
-              _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
             }
-            if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
-              _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+            if (object.texParams.spriteAnimation != false && object.textures[t].image.width != 0) {
+              //char * data; // data of 8-bit per sample RGBA image
+              // int w, h; // size of the image
+              // int sx, sy, sw, sh; // position and size of area you want to crop.
+              //glTexImage2D does support regions - of - interest.You do it as follows:
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+              var [XX, YY] = object.texParams.spriteAnimation.getOffsetXY();
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ROW_LENGTH, object.textures[t].image.height);
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_PIXELS, XX * (object.textures[t].image.width / object.texParams.spriteAnimation.shema[0]));
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_ROWS, YY * (object.textures[t].image.height / object.texParams.spriteAnimation.shema[1]));
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ALIGNMENT, 1);
+              // LodePNG tightly packs everything
+              // glTexImage2D(GL_TEXTURE_2D, level, internalFormat,
+              // sw, sh, border, format, type, data);
+              _matrixWorld.world.GL.gl.texImage2D(_matrixWorld.world.GL.gl.TEXTURE_2D, 0, _matrixWorld.world.GL.gl.RGBA, object.textures[t].image.width / object.texParams.spriteAnimation.shema[0], object.textures[t].image.height / object.texParams.spriteAnimation.shema[1], 0, _matrixWorld.world.GL.gl.RGBA, _matrixWorld.world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
+            }
+            if (object.texParams.MIPMAP == true) {
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.LINEAR_MIPMAP_NEAREST);
+              _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
             }
             _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
           } else {
@@ -4321,27 +4296,42 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
         _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
         _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
         //-------------------------------------------
-        for (var t = 1; t < object.textures.length + 1; t++) {
-          var t_index0 = 0;
+        var t_index0 = 0;
+        for (var t = 1; t < object.textures.length; t++) {
           if (object.custom.gl_texture == null) {
             _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
             _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t_index0]);
-            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            if (_matrixWorld.world.GL.extTFAnisotropic) {
+              _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+            }
             if (object.texParams.MIPMAP == false) {
-              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
-              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
-              // -- Allocate storage for the texture
-              // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-              // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.REPEAT);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.REPEAT);
             } else {
               _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
               _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+            }
+            if (object.texParams.spriteAnimation != false && object.textures[t].image.width != 0) {
+              //char * data; // data of 8-bit per sample RGBA image
+              // int w, h; // size of the image
+              // int sx, sy, sw, sh; // position and size of area you want to crop.
+              //glTexImage2D does support regions - of - interest.You do it as follows:
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+              var [XX, YY] = object.texParams.spriteAnimation.getOffsetXY();
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ROW_LENGTH, object.textures[t].image.height);
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_PIXELS, XX * (object.textures[t].image.width / object.texParams.spriteAnimation.shema[0]));
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_ROWS, YY * (object.textures[t].image.height / object.texParams.spriteAnimation.shema[1]));
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ALIGNMENT, 1);
+              // LodePNG tightly packs everything
+              // glTexImage2D(GL_TEXTURE_2D, level, internalFormat,
+              // sw, sh, border, format, type, data);
+              _matrixWorld.world.GL.gl.texImage2D(_matrixWorld.world.GL.gl.TEXTURE_2D, 0, _matrixWorld.world.GL.gl.RGBA, object.textures[t].image.width / object.texParams.spriteAnimation.shema[0], object.textures[t].image.height / object.texParams.spriteAnimation.shema[1], 0, _matrixWorld.world.GL.gl.RGBA, _matrixWorld.world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
+            }
+            if (object.texParams.MIPMAP == true) {
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.LINEAR_MIPMAP_NEAREST);
               _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
             }
-            if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
-              _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-            }
-            // console.log('TEST TEX SMAPLER ...' , object.texParams)
             _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
             _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.u_projectedTexture, t);
           } else {
@@ -4381,73 +4371,46 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
       // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
       // console.log('TEST')
       //-------------------------------------------
-      //------------ FROM CUBE 
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
           _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-          _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+          if (_matrixWorld.world.GL.extTFAnisotropic) {
+            _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+          }
           if (object.texParams.MIPMAP == false) {
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
-            // -- Allocate storage for the texture
-            // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-            // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.REPEAT);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.REPEAT);
           } else {
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+          }
+          if (object.texParams.spriteAnimation != false && object.textures[t].image.width != 0) {
+            //char * data; // data of 8-bit per sample RGBA image
+            // int w, h; // size of the image
+            // int sx, sy, sw, sh; // position and size of area you want to crop.
+            //glTexImage2D does support regions - of - interest.You do it as follows:
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            var [XX, YY] = object.texParams.spriteAnimation.getOffsetXY();
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ROW_LENGTH, object.textures[t].image.height);
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_PIXELS, XX * (object.textures[t].image.width / object.texParams.spriteAnimation.shema[0]));
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_ROWS, YY * (object.textures[t].image.height / object.texParams.spriteAnimation.shema[1]));
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ALIGNMENT, 1);
+            // LodePNG tightly packs everything
+            // glTexImage2D(GL_TEXTURE_2D, level, internalFormat,
+            // sw, sh, border, format, type, data);
+            _matrixWorld.world.GL.gl.texImage2D(_matrixWorld.world.GL.gl.TEXTURE_2D, 0, _matrixWorld.world.GL.gl.RGBA, object.textures[t].image.width / object.texParams.spriteAnimation.shema[0], object.textures[t].image.height / object.texParams.spriteAnimation.shema[1], 0, _matrixWorld.world.GL.gl.RGBA, _matrixWorld.world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
+          }
+          if (object.texParams.MIPMAP == true) {
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.LINEAR_MIPMAP_NEAREST);
             _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
           }
-          if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
-            _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-          }
-
-          //console.log('TEST' , object.texParams)
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
         }
       }
-
-      // for(var t = 0;t < object.textures.length;t++) {
-      // 	if(object.custom.gl_texture == null) {
-      // 		world.GL.gl.activeTexture(world.GL.gl['TEXTURE' + t]);
-      // 		world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
-      // 		// world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-      // 		if(world.GL.extTFAnisotropic) {
-      // 			world.GL.gl.texParameterf(world.GL.gl.TEXTURE_2D,
-      // 				world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT,
-      // 				world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-      // 		}
-
-      // 		world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | world.GL.gl.LINEAR);
-      // 		world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | world.GL.gl.LINEAR);
-      // 		// world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | world.GL.gl.REPEAT);
-      // 		// world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | world.GL.gl.REPEAT);
-
-      // 		// -- Allocate storage for the texture
-      // 		// world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-      // 		// world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE,  object.textures[t]);
-      // 		// world.GL.gl.texImage2D(
-      // 		//   world.GL.gl.TEXTURE_2D,
-      // 		//   0,
-      // 		//   world.GL.gl.RGBA,
-      // 		//   world.GL.gl.RGBA,
-      // 		//   world.GL.gl.UNSIGNED_BYTE,
-      // 		//   object.textures[t].image);
-
-      // 		// world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, 512, 512, 0, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE,  object.textures[t].image);
-      // 		world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-
-      // 		if(object.texParams.TEXTURE_MIN_FILTER) {
-      // 			world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-      // 		}
-
-      // 		world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
-      // 	} else {
-      // 		object.custom.gl_texture(object, t);
-      // 	}
-      // }
     }
     localLooper = localLooper + 1;
   }
@@ -9569,7 +9532,7 @@ exports.MatrixButton = MatrixButton;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.makeFBO = exports.default = exports.cubeMapTextures = void 0;
+exports.makeFBO = exports.default = exports.cubeMapTextures = exports.SpriteAnimation = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 var _matrixWorld = require("./matrix-world");
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -9770,6 +9733,32 @@ const makeFBO = (gl, o) => {
   return [framebuffer, texture];
 };
 exports.makeFBO = makeFBO;
+class SpriteAnimation {
+  constructor() {
+    this.activeFrame = 0;
+    this.shema = [4, 4];
+    this.updateAfter = 20;
+    this.X = 0;
+    this.Y = 0;
+    this.getOffsetXY = function () {
+      this.activeFrame++;
+      if (this.activeFrame > this.updateAfter) {
+        this.activeFrame = 0;
+        this.X = this.X + 1;
+        if (this.X >= this.shema[0]) {
+          this.X = 0;
+          this.Y = this.Y + 1;
+          if (this.Y >= this.shema[1]) {
+            this.Y = 0;
+          }
+        }
+        // console.log('TEST X:', this.X, " Y:", this.Y)
+      }
+      return [this.X, this.Y];
+    };
+  }
+}
+exports.SpriteAnimation = SpriteAnimation;
 var _default = exports.default = _manifest.default.tools;
 
 },{"../program/manifest":44,"./matrix-world":21}],21:[function(require,module,exports){
@@ -10190,7 +10179,7 @@ function defineworld(canvas, renderType) {
         console.warn("Square shader failure...");
       }
     }
-    if ('squareTex' == filler) {
+    if ('squareTex' == filler || 'squareLightTex' == filler) {
       var squareObject = new Object();
       squareObject.visible = true;
       if (typeof nameUniq != 'undefined') {
@@ -10236,8 +10225,6 @@ function defineworld(canvas, renderType) {
       squareObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
-            // destroy me
-            // destroy me
             var TEST = world.contentList[world.contentList.indexOf(squareObject)];
             if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
               let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
@@ -10297,19 +10284,21 @@ function defineworld(canvas, renderType) {
           squareObject.textures = [];
           squareObject.textures[0] = squareObject.texture;
         } else if (typeof texturesPaths == 'object') {
-          // console.info("texturesPaths is object...");
           squareObject.textures = [];
           squareObject.texture = true;
           if (typeof texturesPaths.params === 'undefined') {
             squareObject.texParams = {
+              spriteAnimation: false,
+              MIPMAP: false,
+              ANISOTROPY: false,
               TEXTURE_WRAP_S: this.GL.gl.REPEAT,
               TEXTURE_WRAP_T: this.GL.gl.REPEAT,
               TEXTURE_MAG_FILTER: this.GL.gl.LINEAR,
-              // NEAREST
-              TEXTURE_MIN_FILTER: this.GL.gl.LINEAR // 
+              TEXTURE_MIN_FILTER: this.GL.gl.LINEAR
             };
           } else {
             squareObject.texParams = texturesPaths.params;
+            if (typeof squareObject.texParams.MIPMAP == -1) squareObject.texParams.MIPMAP = false;
           }
           (0, _engine.RegenerateShader)('' + filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
           for (var t = 0; t < texturesPaths.source.length; ++t) {
@@ -10722,14 +10711,13 @@ function defineworld(canvas, renderType) {
           objObject.textures[0] = objObject.texture;
         } else if (typeof texturesPaths == 'object') {
           objObject.textures = [];
-          objObject.textures_texParameteri = []; //new
+          objObject.textures_texParameteri = [];
           objObject.texture = true;
           if (typeof texturesPaths.params === 'undefined') {
             objObject.texParams = {
+              spriteAnimation: false,
               MIPMAP: false,
-              // custom
               ANISOTROPY: false,
-              // custom
               TEXTURE_WRAP_S: this.GL.gl.REPEAT,
               TEXTURE_WRAP_T: this.GL.gl.REPEAT,
               TEXTURE_MAG_FILTER: this.GL.gl.LINEAR,
@@ -10920,6 +10908,7 @@ function defineworld(canvas, renderType) {
           cubeObject.texture = true;
           if (typeof texturesPaths.params === 'undefined') {
             cubeObject.texParams = {
+              spriteAnimation: false,
               MIPMAP: false,
               // custom
               ANISOTROPY: false,
@@ -21884,9 +21873,7 @@ var _utility = require("../lib/utility");
 var _matrixStream = require("./matrix-stream");
 /**
  * Main instance for matrix-stream
- * version 1.0.0 beta
  */
-
 class MatrixStream {
   connection = null;
   session = null;
@@ -21965,7 +21952,7 @@ class MatrixStream {
       (0, _matrixStream.leaveSession)();
     });
     (0, _matrixStream.byId)('netHeaderTitle').addEventListener('click', this.domManipulation.hideNetPanel);
-    setTimeout(() => dispatchEvent(new CustomEvent('net-ready', {})), 200);
+    setTimeout(() => dispatchEvent(new CustomEvent('net-ready', {})), 1000);
   }
   multiPlayer = {
     root: this,

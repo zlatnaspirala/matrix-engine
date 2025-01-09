@@ -61,6 +61,7 @@ import {runThis as custom_geometry} from './apps/custom_geometry';
 import {runThis as load_obj_file_groups} from './apps/load_obj_file_groups';
 import {runThis as maps} from './apps/maps';
 import {runThis as matrix_skeletal} from './apps/matrix_skeletal';
+import {runThis as sprite_animation_2d} from './apps/sprite_animation_2d';
 
 /**
  * @description
@@ -71,6 +72,7 @@ import {runThis as matrix_skeletal} from './apps/matrix_skeletal';
  * public/query-build.html?u=spot_light_shadows
  */
 var Examples = {
+	sprite_animation_2d: sprite_animation_2d,
 	matrix_skeletal: matrix_skeletal,
 	maps: maps,
 	load_obj_file_groups: load_obj_file_groups,

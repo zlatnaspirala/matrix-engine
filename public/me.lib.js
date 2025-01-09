@@ -465,10 +465,13 @@ function defineWebGLWorld(cavnas) {
     const available_extensions = gl.getSupportedExtensions();
     const test_depth_texture = gl.getExtension('WEBGL_depth_texture');
     if (!test_depth_texture) {
-      // console.warn('No support for WEBGL_depth_texture [opengles1.1] !', ext);
+      console.info(`%cNo support for WEBGL_depth_texture!`, _matrixWorld.CS4);
     }
-    // console.info("WEBGL base pocket: SUCCESS , Lets see list of ext : ", available_extensions);
-
+    console.info(`%cAvailable_extensions: ${available_extensions}`, _matrixWorld.CS4);
+    console.info(`%cMAX ELEMENT INDEX   : ${gl.getParameter(gl.MAX_ELEMENT_INDEX)}`, _matrixWorld.CS4);
+    console.info(`%cMAX VERTICES        : ${gl.getParameter(gl.MAX_ELEMENTS_VERTICES)}`, _matrixWorld.CS4);
+    console.info(`%cMAX INDICES         : ${gl.getParameter(gl.MAX_ELEMENTS_INDICES)}`, _matrixWorld.CS4);
+    console.info(`%cApp.limitations: ${_manifest.default.limitations}`, _matrixWorld.CS4);
     const extTFAnisotropic = gl.getExtension('EXT_texture_filter_anisotropic') || gl.getExtension('MOZ_EXT_texture_filter_anisotropic') || gl.getExtension('WEBKIT_EXT_texture_filter_anisotropic');
     if (extTFAnisotropic) {
       const max = gl.getParameter(extTFAnisotropic.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
@@ -4127,27 +4130,42 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
         _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.FBO.deepTexture);
         _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
         //-------------------------------------------
-        for (var t = 1; t < object.textures.length + 1; t++) {
-          var t_index0 = 0;
+        var t_index0 = 0;
+        for (var t = 1; t < object.textures.length; t++) {
           if (object.custom.gl_texture == null) {
             _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
             _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t_index0]);
-            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            if (_matrixWorld.world.GL.extTFAnisotropic) {
+              _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+            }
             if (object.texParams.MIPMAP == false) {
-              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
-              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
-              // -- Allocate storage for the texture
-              // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-              // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.REPEAT);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.REPEAT);
             } else {
               _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
               _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+            }
+            if (object.texParams.spriteAnimation != false && object.textures[t].image.width != 0) {
+              //char * data; // data of 8-bit per sample RGBA image
+              // int w, h; // size of the image
+              // int sx, sy, sw, sh; // position and size of area you want to crop.
+              //glTexImage2D does support regions - of - interest.You do it as follows:
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+              var [XX, YY] = object.texParams.spriteAnimation.getOffsetXY();
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ROW_LENGTH, object.textures[t].image.height);
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_PIXELS, XX * (object.textures[t].image.width / object.texParams.spriteAnimation.shema[0]));
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_ROWS, YY * (object.textures[t].image.height / object.texParams.spriteAnimation.shema[1]));
+              _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ALIGNMENT, 1);
+              // LodePNG tightly packs everything
+              // glTexImage2D(GL_TEXTURE_2D, level, internalFormat,
+              // sw, sh, border, format, type, data);
+              _matrixWorld.world.GL.gl.texImage2D(_matrixWorld.world.GL.gl.TEXTURE_2D, 0, _matrixWorld.world.GL.gl.RGBA, object.textures[t].image.width / object.texParams.spriteAnimation.shema[0], object.textures[t].image.height / object.texParams.spriteAnimation.shema[1], 0, _matrixWorld.world.GL.gl.RGBA, _matrixWorld.world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
+            }
+            if (object.texParams.MIPMAP == true) {
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+              _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.LINEAR_MIPMAP_NEAREST);
               _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
             }
-            if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
-              _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-            }
-            // console.log('TEST TEX SMAPLER ...' , object.texParams)
             _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
             _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.u_projectedTexture, t);
           } else {
@@ -4187,73 +4205,46 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
       // world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, 0);
       // console.log('TEST')
       //-------------------------------------------
-      //------------ FROM CUBE 
       for (var t = 0; t < object.textures.length; t++) {
         if (object.custom.gl_texture == null) {
           _matrixWorld.world.GL.gl.activeTexture(_matrixWorld.world.GL.gl['TEXTURE' + t]);
           _matrixWorld.world.GL.gl.bindTexture(_matrixWorld.world.GL.gl.TEXTURE_2D, object.textures[t]);
-          _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+          if (_matrixWorld.world.GL.extTFAnisotropic) {
+            _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+          }
           if (object.texParams.MIPMAP == false) {
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | _matrixWorld.world.GL.gl.REPEAT);
-            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | _matrixWorld.world.GL.gl.REPEAT);
-            // -- Allocate storage for the texture
-            // world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-            // world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0,512, 512, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE, object.textures[t]);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_S, _matrixWorld.world.GL.gl.REPEAT);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_WRAP_T, _matrixWorld.world.GL.gl.REPEAT);
           } else {
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | _matrixWorld.world.GL.gl.LINEAR);
             _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | _matrixWorld.world.GL.gl.LINEAR);
+          }
+          if (object.texParams.spriteAnimation != false && object.textures[t].image.width != 0) {
+            //char * data; // data of 8-bit per sample RGBA image
+            // int w, h; // size of the image
+            // int sx, sy, sw, sh; // position and size of area you want to crop.
+            //glTexImage2D does support regions - of - interest.You do it as follows:
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
+            var [XX, YY] = object.texParams.spriteAnimation.getOffsetXY();
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ROW_LENGTH, object.textures[t].image.height);
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_PIXELS, XX * (object.textures[t].image.width / object.texParams.spriteAnimation.shema[0]));
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_SKIP_ROWS, YY * (object.textures[t].image.height / object.texParams.spriteAnimation.shema[1]));
+            _matrixWorld.world.GL.gl.pixelStorei(_matrixWorld.world.GL.gl.UNPACK_ALIGNMENT, 1);
+            // LodePNG tightly packs everything
+            // glTexImage2D(GL_TEXTURE_2D, level, internalFormat,
+            // sw, sh, border, format, type, data);
+            _matrixWorld.world.GL.gl.texImage2D(_matrixWorld.world.GL.gl.TEXTURE_2D, 0, _matrixWorld.world.GL.gl.RGBA, object.textures[t].image.width / object.texParams.spriteAnimation.shema[0], object.textures[t].image.height / object.texParams.spriteAnimation.shema[1], 0, _matrixWorld.world.GL.gl.RGBA, _matrixWorld.world.GL.gl.UNSIGNED_BYTE, object.textures[t].image);
+          }
+          if (object.texParams.MIPMAP == true) {
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MAG_FILTER, _matrixWorld.world.GL.gl.NEAREST);
+            _matrixWorld.world.GL.gl.texParameteri(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.gl.TEXTURE_MIN_FILTER, _matrixWorld.world.GL.gl.LINEAR_MIPMAP_NEAREST);
             _matrixWorld.world.GL.gl.generateMipmap(_matrixWorld.world.GL.gl.TEXTURE_2D);
           }
-          if (_matrixWorld.world.GL.extTFAnisotropic && object.texParams.ANISOTROPIC == true) {
-            _matrixWorld.world.GL.gl.texParameterf(_matrixWorld.world.GL.gl.TEXTURE_2D, _matrixWorld.world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, _matrixWorld.world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-          }
-
-          //console.log('TEST' , object.texParams)
           _matrixWorld.world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
         } else {
           object.custom.gl_texture(object, t);
         }
       }
-
-      // for(var t = 0;t < object.textures.length;t++) {
-      // 	if(object.custom.gl_texture == null) {
-      // 		world.GL.gl.activeTexture(world.GL.gl['TEXTURE' + t]);
-      // 		world.GL.gl.bindTexture(world.GL.gl.TEXTURE_2D, object.textures[t]);
-      // 		// world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-      // 		if(world.GL.extTFAnisotropic) {
-      // 			world.GL.gl.texParameterf(world.GL.gl.TEXTURE_2D,
-      // 				world.GL.extTFAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT,
-      // 				world.GL.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-      // 		}
-
-      // 		world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MAG_FILTER, object.texParams.TEXTURE_MAG_FILTER | world.GL.gl.LINEAR);
-      // 		world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_MIN_FILTER, object.texParams.TEXTURE_MIN_FILTER | world.GL.gl.LINEAR);
-      // 		// world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_S, object.texParams.TEXTURE_WRAP_S | world.GL.gl.REPEAT);
-      // 		// world.GL.gl.texParameteri(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_WRAP_T, object.texParams.TEXTURE_WRAP_T | world.GL.gl.REPEAT);
-
-      // 		// -- Allocate storage for the texture
-      // 		// world.GL.gl.texStorage2D(world.GL.gl.TEXTURE_2D, 1, world.GL.gl.RGB8, 512, 512);
-      // 		// world.GL.gl.texSubImage2D(world.GL.gl.TEXTURE_2D, 0, 0, 0, world.GL.gl.RGB, world.GL.gl.UNSIGNED_BYTE,  object.textures[t]);
-      // 		// world.GL.gl.texImage2D(
-      // 		//   world.GL.gl.TEXTURE_2D,
-      // 		//   0,
-      // 		//   world.GL.gl.RGBA,
-      // 		//   world.GL.gl.RGBA,
-      // 		//   world.GL.gl.UNSIGNED_BYTE,
-      // 		//   object.textures[t].image);
-
-      // 		// world.GL.gl.texImage2D(world.GL.gl.TEXTURE_2D, 0, world.GL.gl.RGBA, 512, 512, 0, world.GL.gl.RGBA, world.GL.gl.UNSIGNED_BYTE,  object.textures[t].image);
-      // 		world.GL.gl.pixelStorei(world.GL.gl.UNPACK_FLIP_Y_WEBGL, false);
-
-      // 		if(object.texParams.TEXTURE_MIN_FILTER) {
-      // 			world.GL.gl.generateMipmap(world.GL.gl.TEXTURE_2D);
-      // 		}
-
-      // 		world.GL.gl.uniform1i(object.shaderProgram.samplerUniform, t);
-      // 	} else {
-      // 		object.custom.gl_texture(object, t);
-      // 	}
-      // }
     }
     localLooper = localLooper + 1;
   }
@@ -4280,7 +4271,28 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
   }
 
   // shadows
-  if (object.shadows && object.shadows.type == 'spot' || object.shadows && object.shadows.type == 'spot-shadow') {} else if (object.shadows && object.shadows.type == 'spec') {
+  if (object.shadows && object.shadows.type == 'spot') {
+    // set the light position
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightWorldPositionLocation, object.shadows.lightPosition);
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.viewWorldPositionLocation, object.position.worldLocation);
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.shininessLocation, object.shadows.shininess);
+    // Set the spotlight uniforms
+    {
+      var target = [0, 0, 0]; // object.position.worldLocation;
+      var up = [0, 1, 0];
+      var lmat = m4.lookAt(object.shadows.lightPosition, target, up);
+      // var lmat = m4.lookAt(object.position.worldLocation, target, up);
+      lmat = m4.multiply(m4.xRotation(object.shadows.lightRotationX), lmat);
+      lmat = m4.multiply(m4.yRotation(object.shadows.lightRotationY), lmat);
+      // get the zAxis from the matrix
+      // negate it because lookAt looks down the -Z axis
+      object.shadows.lightDirection = [-lmat[8], -lmat[9], -lmat[10]];
+      // object.shadows.lightDirection = [-0, -0, -1];
+    }
+    _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.lightDirectionLocation, object.shadows.lightDirection);
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.innerLimitLocation, Math.cos(object.shadows.innerLimit));
+    _matrixWorld.world.GL.gl.uniform1f(object.shaderProgram.outerLimitLocation, Math.cos(object.shadows.outerLimit));
+  } else if (object.shadows && object.shadows.type == 'spec') {
     // global position
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.specularColor, object.shadows.specularDATA);
     _matrixWorld.world.GL.gl.uniform3fv(object.shaderProgram.uLightPosition, _matrixWorld.world.uLightPosition);
@@ -9354,7 +9366,7 @@ exports.MatrixButton = MatrixButton;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.makeFBO = exports.default = exports.cubeMapTextures = void 0;
+exports.makeFBO = exports.default = exports.cubeMapTextures = exports.SpriteAnimation = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 var _matrixWorld = require("./matrix-world");
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -9555,6 +9567,32 @@ const makeFBO = (gl, o) => {
   return [framebuffer, texture];
 };
 exports.makeFBO = makeFBO;
+class SpriteAnimation {
+  constructor() {
+    this.activeFrame = 0;
+    this.shema = [4, 4];
+    this.updateAfter = 20;
+    this.X = 0;
+    this.Y = 0;
+    this.getOffsetXY = function () {
+      this.activeFrame++;
+      if (this.activeFrame > this.updateAfter) {
+        this.activeFrame = 0;
+        this.X = this.X + 1;
+        if (this.X >= this.shema[0]) {
+          this.X = 0;
+          this.Y = this.Y + 1;
+          if (this.Y >= this.shema[1]) {
+            this.Y = 0;
+          }
+        }
+        // console.log('TEST X:', this.X, " Y:", this.Y)
+      }
+      return [this.X, this.Y];
+    };
+  }
+}
+exports.SpriteAnimation = SpriteAnimation;
 var _default = exports.default = _manifest.default.tools;
 
 },{"../program/manifest":43,"./matrix-world":20}],20:[function(require,module,exports){
@@ -9563,7 +9601,7 @@ var _default = exports.default = _manifest.default.tools;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CS4 = exports.CS3 = exports.CS2 = exports.CS1 = void 0;
+exports.CS5 = exports.CS4 = exports.CS3 = exports.CS2 = exports.CS1 = void 0;
 exports.defineworld = defineworld;
 exports.frames = void 0;
 exports.modifyFrames = modifyFrames;
@@ -9586,7 +9624,8 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 var CS1 = exports.CS1 = "font-family: stormfaze;color: #001100; font-size:58px;text-shadow: 2px 2px 4px #fff554, 4px 4px 4px gray, 2px 2px 4px lime, 6px 2px 0px lime;background: gray;";
 var CS2 = exports.CS2 = "font-family: stormfaze;color: #fd1233; font-size:20px;text-shadow: 2px 2px 2px #5321f5, 4px 4px 4px #d6fa16, 3px 0px 3px #c160a6, 6px 6px 4px #9a0de3;background: black;";
 var CS3 = exports.CS3 = "font-family: stormfaze;color: #f1f033; font-size:14px;text-shadow: 2px 2px 4px #f335f4, 4px 4px 4px #d64444, 2px 2px 4px #c160a6, 6px 2px 0px #123de3;background: black;";
-var CS4 = exports.CS4 = "font-family: verdana;color: #lime; font-size:16px;text-shadow: 2px 2px 4px orangered;background: black;";
+var CS4 = exports.CS4 = "font-family: verdana;color: #lime; font-size:11px;text-shadow: 1px 1px 2px orangered;background: black;";
+var CS5 = exports.CS5 = "font-family: stormfaze;color: #lime; font-size:10px;text-shadow: 2px 1px 2px gray;background: black;";
 window.mat4 = glMatrix.mat4;
 window.mat2 = glMatrix.mat2;
 window.mat2d = glMatrix.mat2d;
@@ -9634,6 +9673,7 @@ if (_utility.QueryString.GLSL && _utility.QueryString.GLSL == 1.3) {
   console.info(`%cActive: GLSL 1.3. for OPENGLES30 %c webGL2`, CS3, CS3);
   (0, _matrixInitShaders.loadShaders300)();
 }
+console.info(`%c Welcome to collaborate on github: https://github.com/zlatnaspirala/`, CS5);
 
 /* Width and Height variables of the browser screen  */
 var frames = exports.frames = 0;
@@ -9973,7 +10013,7 @@ function defineworld(canvas, renderType) {
         console.warn("Square shader failure...");
       }
     }
-    if ('squareTex' == filler) {
+    if ('squareTex' == filler || 'squareLightTex' == filler) {
       var squareObject = new Object();
       squareObject.visible = true;
       if (typeof nameUniq != 'undefined') {
@@ -10019,8 +10059,6 @@ function defineworld(canvas, renderType) {
       squareObject.selfDestroy = after => {
         if (after) {
           setTimeout(() => {
-            // destroy me
-            // destroy me
             var TEST = world.contentList[world.contentList.indexOf(squareObject)];
             if (typeof TEST != 'undefined' && typeof _manifest.default.scene[TEST.name] != 'undefined' && _manifest.default.scene[TEST.name] != null) {
               let objForDelete = world.contentList.splice(world.contentList.indexOf(squareObject), 1)[0];
@@ -10080,19 +10118,21 @@ function defineworld(canvas, renderType) {
           squareObject.textures = [];
           squareObject.textures[0] = squareObject.texture;
         } else if (typeof texturesPaths == 'object') {
-          // console.info("texturesPaths is object...");
           squareObject.textures = [];
           squareObject.texture = true;
           if (typeof texturesPaths.params === 'undefined') {
             squareObject.texParams = {
+              spriteAnimation: false,
+              MIPMAP: false,
+              ANISOTROPY: false,
               TEXTURE_WRAP_S: this.GL.gl.REPEAT,
               TEXTURE_WRAP_T: this.GL.gl.REPEAT,
               TEXTURE_MAG_FILTER: this.GL.gl.LINEAR,
-              // NEAREST
-              TEXTURE_MIN_FILTER: this.GL.gl.LINEAR // 
+              TEXTURE_MIN_FILTER: this.GL.gl.LINEAR
             };
           } else {
             squareObject.texParams = texturesPaths.params;
+            if (typeof squareObject.texParams.MIPMAP == -1) squareObject.texParams.MIPMAP = false;
           }
           (0, _engine.RegenerateShader)('' + filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, 'opengles');
           for (var t = 0; t < texturesPaths.source.length; ++t) {
@@ -10680,7 +10720,7 @@ function defineworld(canvas, renderType) {
           cubeObject.shadows = new _matrixShadows.MatrixShadowSpotShadowTest();
         }
         (0, _engine.RegenerateShader)(filler + '-shader-fs', texturesPaths.source.length, texturesPaths.mix_operation, t);
-        console.log('REGEN');
+        // console.log('REGEN')
         cubeObject.shaderProgram = this.initShaders(this.GL.gl, filler + '-shader-fs', filler + '-shader-vs');
       };
       cubeObject.deactivateTex = () => {
@@ -20715,9 +20755,9 @@ window.DETECTBROWSER = function () {
   if (mobile) {
     var userAgent = navigator.userAgent.toLowerCase();
     if (userAgent.search('android') > -1 && userAgent.search('mobile') > -1) {
-      console.log('ANDROID MOBILE');
+      // console.log('ANDROID MOBILE');
     } else if (userAgent.search('android') > -1 && !(userAgent.search('mobile') > -1)) {
-      console.log(' ANDROID TABLET ');
+      // console.log(' ANDROID TABLET ');
       TYPEOFANDROID = 1;
     }
   } else {
@@ -21667,9 +21707,7 @@ var _utility = require("../lib/utility");
 var _matrixStream = require("./matrix-stream");
 /**
  * Main instance for matrix-stream
- * version 1.0.0 beta
  */
-
 class MatrixStream {
   connection = null;
   session = null;
@@ -21682,7 +21720,9 @@ class MatrixStream {
     _matrixStream.netConfig.sessionName = arg.sessionName;
     _matrixStream.netConfig.resolution = arg.resolution;
     _utility.scriptManager.LOAD('openvidu-browser-2.20.0.js', undefined, undefined, undefined, () => {
-      this.loadNetHTML();
+      setTimeout(() => {
+        this.loadNetHTML();
+      }, 2500);
     });
   }
   loadNetHTML() {
@@ -21746,7 +21786,7 @@ class MatrixStream {
       (0, _matrixStream.leaveSession)();
     });
     (0, _matrixStream.byId)('netHeaderTitle').addEventListener('click', this.domManipulation.hideNetPanel);
-    setTimeout(() => dispatchEvent(new CustomEvent('net-ready', {})), 500);
+    setTimeout(() => dispatchEvent(new CustomEvent('net-ready', {})), 1000);
   }
   multiPlayer = {
     root: this,

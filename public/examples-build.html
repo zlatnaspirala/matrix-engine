@@ -4,9 +4,7 @@
 			// location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 		}
 	}
-	function g(i) {
-		return document.getElementById(i)
-	}
+	function g(i) {return document.getElementById(i)}
 	// Example page load iframes
 
 	var QueryString = (function() {
@@ -119,8 +117,8 @@
 	<div id="matrix-net"></div>
 	<div id="menu" style="text-shadow: 1px 1px 1px orangered;">
 		<div id='title' class="btnShadow" style="width: 100%; height: auto;font-size: larger;">
-			Matrix Engine Demos <br />
-			version 2.2.4 - jan 2025
+			Matrix Engine Demos<br />
+			version 2.2.10 - jan 2025
 		</div>
 		<div style="width: 100%; height: auto" class="btnShadow" onclick="loadDemo('adding_color_cube')" onmousemove="">Adding color cube</div>
 		<div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_color_triangle')">Adding color triangle</div>
@@ -137,6 +135,7 @@
 		<div style="width: 100%" class="btnShadow" onclick="loadDemo('load_obj_file')">Load obj file (UV map-Blender)</div>
 		<div style="width: 100%" class="btnShadow" onclick="loadDemo('adding_more_texture_samplers')">Adding more texture samplers</div>
 		<div style="width: 100%" class="btnShadow" onclick="loadDemo('custom_texture')">Custom texture</div>
+		<div style="width: 100%" class="btnShadow" onclick="loadDemo('sprite_animation_2d')">2D Sprite animation CPU level</div>
 		<div style="width: 100%" class="btnShadow" onclick="loadDemo('texture_dinamic_manipulation')">Texture dinamic manipulation</div>
 		<div style="width: 100%" class="btnShadow" onclick="loadDemo('first_person_controller')">First person controller</div>
 		<div style="width: 100%" class="btnShadow" onclick="loadDemo('obj_animation')">Animation - obj sequence</div>
