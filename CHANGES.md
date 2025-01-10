@@ -2,6 +2,9 @@
 
 # Matrix Engine [CHANGES]
 
+2.2.12 Return for audios.play() func - return promise 
+
+2.2.10 SpriteAnimation CPU level/program
 
 2.2.3 Just error log for non trianbulate faces error in raycast func.
 

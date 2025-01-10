@@ -20,6 +20,7 @@ export var runThis = world => {
 	world.Add("cubeLightTex", 1, "MyCubeTexure1", textuteImageSamplers);
 	App.scene.MyCubeTexure1.position.x = -2;
 
+	App.scene.MySquareTexure1.texParams.spriteAnimation.updateAfter = 1;
 	// Access is App.scene.MySquareTexure1.texParams.spriteAnimation
 	// this.shema = [4, 4]
 	// this.updateAfter = 20;
