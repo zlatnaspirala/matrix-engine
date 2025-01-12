@@ -252,6 +252,10 @@ customObject.net = {
 };
 ```
 
+[2.2.15]
+  - BIG FIX FOR MOBILE OBJ RENDER
+  - // DEPLACED `world.disableUnusedAttr`
+
 [2.0.26] FIX CHECK NET ACTIVE FLAG FOR SCALE PROCEDURE
 
 [2.0.25] FIX FOR MOBILE RENDER MATERIAL/ TEXTURE - Bug with white surface

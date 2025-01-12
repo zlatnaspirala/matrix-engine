@@ -50,7 +50,7 @@ var runThis = world => {
       matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
     }
     var textuteImageSamplers2 = {
-      source: ["res/images/cube/1.png"],
+      source: ["res/images/armor.webp"],
       mix_operation: "multiply"
     };
     var textuteImageSamplers = {
@@ -63,23 +63,15 @@ var runThis = world => {
     _manifest.default.scene.armor.LightsData.ambientLight.set(1, 1, 1);
     _manifest.default.scene.armor.position.z = -6;
     // App.scene.armor.mesh.setScale(3)
-
-    _manifest.default.scene.armor.TEST = 0;
     setTimeout(() => {
-      // App.scene.armor.activateShadows('spot')
-      // App.scene.mac.activateShadows('spot')
-      // App.scene.armor.shadows.activeUpdate();
-      // App.scene.armor.shadows.animatePositionY();
+      _manifest.default.scene.armor.activateShadows('spot');
+      _manifest.default.scene.mac.activateShadows('spot');
     }, 2000);
-
-    // world.Add("cubeLightTex", 1, "MyCubeTex", textuteImageSamplers2);
-    // App.scene.MyCubeTex.activateShadows()
-
-    // world.Add("obj", 1, "mac", textuteImageSamplers, meshes.mac);
-    // App.scene.MyCubeTex.position.y = 1;
-    // App.scene.MyCubeTex.position.z = -12;
-    // App.scene.mac.rotation.rotationSpeed.y = 20;
-    // App.scene.mac.LightsData.ambientLight.set(1, 1, 1);
+    world.Add("obj", 1, "mac", textuteImageSamplers, meshes.mac);
+    _manifest.default.scene.mac.position.y = 1;
+    _manifest.default.scene.mac.position.z = -6;
+    _manifest.default.scene.mac.rotation.rotationSpeed.y = 20;
+    _manifest.default.scene.mac.LightsData.ambientLight.set(1, 1, 1);
   }
 
   /**
@@ -89,10 +81,11 @@ var runThis = world => {
    * swap[0,2]
    * swap[1,3]
    * to switch x,y,z verts.
-  *  mac: "res/3d-objects/mac.obj"
+   *  mac: "res/3d-objects/mac.obj"
    */
   matrixEngine.objLoader.downloadMeshes({
-    armor: "res/3d-objects/armor.obj"
+    armor: "res/3d-objects/armor.obj",
+    mac: "res/3d-objects/mac.obj"
   }, onLoadObj);
 
   //delete images_local_var;
@@ -2112,21 +2105,10 @@ var downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
 };
 exports.downloadMeshes = downloadMeshes;
 var _buildBuffer = function (gl, type, data, itemSize) {
-  console.log('mesh buffers');
   var buffer = gl.createBuffer();
   var arrayView = type === gl.ARRAY_BUFFER ? Float32Array : Uint16Array;
   gl.bindBuffer(type, buffer);
   gl.bufferData(type, new arrayView(data), gl.STATIC_DRAW);
-  buffer.itemSize = itemSize;
-  buffer.numItems = data.length / itemSize;
-  return buffer;
-};
-var _buildBufferTESTNormals = function (gl, type, data, itemSize) {
-  console.log('mesh buffers');
-  var buffer = gl.createBuffer();
-  // var arrayView = type === gl.ARRAY_BUFFER ? Float32Array : Uint16Array;
-  gl.bindBuffer(type, buffer);
-  gl.bufferData(type, data, gl.STATIC_DRAW);
   buffer.itemSize = itemSize;
   buffer.numItems = data.length / itemSize;
   return buffer;
@@ -2160,7 +2142,6 @@ var _buildBufferTESTNormals = function (gl, type, data, itemSize) {
  * indexBuffer.numItems   |the total number of indices
  */
 var initMeshBuffers = function (gl, mesh) {
-  console.log("PPPPPPPPPPP");
   mesh.normalBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.vertexNormals, 3);
   mesh.textureBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.textures, 2);
   mesh.vertexBuffer = _buildBuffer(gl, gl.ARRAY_BUFFER, mesh.vertices, 3);
@@ -3640,7 +3621,8 @@ _manifest.default.operation.draws.cube = function (object, ray) {
 
   // world.disableUnusedAttr(world.GL.gl, localLooper);
   // FIX FOR MOBILE - from white cube to normal texture view , good
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 4);
+  // world.disableUnusedAttr(world.GL.gl, 4);
+
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
@@ -3849,7 +3831,6 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
       _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.vertexNormalAttribute, object.mesh.normalBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
       _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.vertexNormalAttribute);
       localLooper = localLooper + 1;
-      // console.log(".norm.." + world.GL.gl.getBufferParameter(world.GL.gl.ARRAY_BUFFER, world.GL.gl.BUFFER_SIZE))
     }
     /* Set the ambient light                 */
     if (object.shaderProgram.ambientColorUniform) {
@@ -3904,7 +3885,8 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
       _matrixWorld.world.GL.gl.bindBuffer(_matrixWorld.world.GL.gl.ARRAY_BUFFER, object.mesh.textureBuffer);
       _matrixWorld.world.GL.gl.vertexAttribPointer(object.shaderProgram.textureCoordAttribute, object.mesh.textureBuffer.itemSize, _matrixWorld.world.GL.gl.FLOAT, false, 0, 0);
       _matrixWorld.world.GL.gl.enableVertexAttribArray(object.shaderProgram.textureCoordAttribute);
-      console.log(".tex.." + _matrixWorld.world.GL.gl.getBufferParameter(_matrixWorld.world.GL.gl.ARRAY_BUFFER, _matrixWorld.world.GL.gl.BUFFER_SIZE));
+      // console.log(".tex.." + world.GL.gl.getBufferParameter(world.GL.gl.ARRAY_BUFFER, world.GL.gl.BUFFER_SIZE))
+
       if (object.streamTextures != null) {
         // video/webcam tex
         if (object.streamTextures.video) {
@@ -4097,7 +4079,6 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
   }
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
-      // world.GL.gl.disable(world.GL.gl.DEPTH_TEST);
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
     }
     _matrixWorld.world.GL.gl.blendFunc(_matrixWorld.world.GL.gl[object.glBlend.blendParamSrc], _matrixWorld.world.GL.gl[object.glBlend.blendParamDest]);
@@ -4106,10 +4087,7 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
     _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.DEPTH_TEST);
   }
 
-  // ori this.setMatrixUniforms(object, this.pMatrix, object.mvMatrix);
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, localLooper + 1);
-  // world.GL.gl.drawElements(world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, world.GL.gl.UNSIGNED_SHORT, 0);
-  // update for anim
+  // world.disableUnusedAttr(world.GL.gl, 4);
   _matrixWorld.world.GL.gl.drawElements(_matrixWorld.world.GL.gl[object.glDrawElements.mode], object.glDrawElements.numberOfIndicesRender, _matrixWorld.world.GL.gl.UNSIGNED_SHORT, 0);
   object.instancedDraws.overrideDrawArraysInstance(object);
   this.mvPopMatrix(object.mvMatrix, this.mvMatrixStack);
@@ -4378,7 +4356,8 @@ _manifest.default.operation.draws.drawSquareTex = function (object, ray) {
   }
 
   // world.disableUnusedAttr( world.GL.gl, localLooper);
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 4);
+  // world.disableUnusedAttr(world.GL.gl, 4);
+
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
@@ -4558,8 +4537,8 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
     console.warn('WTF - ERROR10001');
   }
 
-  // world.disableUnusedAttr(world.GL.gl, localLooper);
-  _matrixWorld.world.disableUnusedAttr(_matrixWorld.world.GL.gl, 4);
+  // world.disableUnusedAttr(world.GL.gl, 4);
+
   if (object.glBlend.blendEnabled == true) {
     if (!_matrixWorld.world.GL.gl.isEnabled(_matrixWorld.world.GL.gl.BLEND)) {
       _matrixWorld.world.GL.gl.enable(_matrixWorld.world.GL.gl.BLEND);
@@ -9867,6 +9846,8 @@ function defineworld(canvas, renderType) {
   world.initShaders = _engine.initShaders;
   world.handleLoadedTexture = _manifest.default.tools.BasicTextures;
   world.initTexture = _manifest.default.tools.loadTextureImage;
+
+  // DEPLACED
   world.disableUnusedAttr = function (gl, vertLimit) {
     var Local_looper1 = vertLimit;
     // var Local_looper1 = 0;
@@ -9875,6 +9856,9 @@ function defineworld(canvas, renderType) {
       gl.disableVertexAttribArray(Local_looper1);
       Local_looper1 = Local_looper1 + 1;
     }
+  };
+  world.disableAttr = function (gl, current) {
+    gl.disableVertexAttribArray(current);
   };
 
   // Bind base methods
@@ -10672,8 +10656,10 @@ function defineworld(canvas, renderType) {
               spriteAnimation: false,
               MIPMAP: false,
               ANISOTROPY: false,
-              TEXTURE_WRAP_S: this.GL.gl.REPEAT,
-              TEXTURE_WRAP_T: this.GL.gl.REPEAT,
+              TEXTURE_WRAP_S: null,
+              //this.GL.gl.REPEAT,
+              TEXTURE_WRAP_T: null,
+              // this.GL.gl.REPEAT,
               TEXTURE_MAG_FILTER: this.GL.gl.LINEAR,
               // NEAREST
               TEXTURE_MIN_FILTER: this.GL.gl.LINEAR // LINEAR
