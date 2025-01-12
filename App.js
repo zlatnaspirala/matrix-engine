@@ -1,6 +1,6 @@
 import * as matrixEngine from './index.js';
 // CHANGE HERE IF YOU WANNA USE app-build.hmtl
-import {runThis} from './apps/sprite_animation_2d.js';
+import {runThis} from './apps/load_obj_file.js';
 
 var world;
 var App = matrixEngine.App;
