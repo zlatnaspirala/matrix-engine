@@ -22,58 +22,24 @@ export var runThis = world => {
 		}
 	});
 
-	var tex = {
-		source: ["res/images/complex_texture_1/diffuse.webp"],
-		mix_operation: "multiply", // ENUM : multiply , divide ,
-	};
+	var tex = {source: ["res/images/complex_texture_1/diffuse.webp"],	mix_operation: "multiply",};
 
 	let gravityVector = [0, 0, -9.82];
 	let physics = world.loadPhysics(gravityVector);
 	// Add ground
 	physics.addGround(App, world, tex);
 
-	function createTetra() {
-		var scale = 5;
-		var verts = [
-			new CANNON.Vec3(scale * 0, scale * 0, scale * 0),
-			new CANNON.Vec3(scale * 0.3, scale * 0, scale * 0),
-			new CANNON.Vec3(scale * 0, scale * 0.3, scale * 0),
-			new CANNON.Vec3(scale * 0, scale * 0, scale * 0.3)];
-
-		// var offset = -0.35;
-		 var offset = -.35;
-
-		for(var i = 0;i < verts.length;i++) {
-			var v = verts[i];
-			v.x += offset;
-			v.y += offset;
-			v.z += offset;
-		}
-		return new CANNON.ConvexPolyhedron(verts,
-			[
-				[0, 3, 2], // -x
-				[0, 1, 3], // -y
-				[0, 2, 1], // -z
-				[1, 2, 3], // +xyz
-			]);
-	}
-
-	world.Add("generatorLightTex", 1, "outsideBox2", tex, {
-		radius: 1,
-		custom_type: 'testConvex',
-		custom_geometry: createTetra(),
-	});
-
-	var testCustomBody = new CANNON.Body({
-		mass: 10,
-		type: CANNON.Body.DYNAMIC,
-		shape: createTetra(),
-		position: new CANNON.Vec3(0, -10, 2)
-	});
-	window.testCustomBody = testCustomBody;
-	physics.world.addBody(testCustomBody);
-	App.scene.outsideBox2.physics.currentBody = testCustomBody;
-	App.scene.outsideBox2.physics.enabled = true;
+	// world.Add("cubeLightTex", 1, "me_cube", tex);
+	// var testCustomBody = new CANNON.Body({
+	// 	mass: 10,
+	// 	type: CANNON.Body.DYNAMIC,
+	// 	shape: createTetra(),
+	// 	position: new CANNON.Vec3(0, -10, 2)
+	// });
+	// window.testCustomBody = testCustomBody;
+	// physics.world.addBody(testCustomBody);
+	// App.scene.me_cube.physics.currentBody = testCustomBody;
+	// App.scene.me_cube.physics.enabled = true;
 
 	//
 	const objGenerator = (n) => {
@@ -96,5 +62,24 @@ export var runThis = world => {
 		}
 	}
 
-	// objGenerator(10)
+
+	function onLoadObj(meshes) {
+		for(let key in meshes) {matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key])}
+		var textuteImageSamplers2 = {source: ["res/images/armor.webp"],	mix_operation: "multiply"};
+		world.Add("obj", 1, "me_cube_mesh", textuteImageSamplers2, meshes.me_cube_mesh);
+		App.scene.me_cube_mesh.position.y = 1;
+		App.scene.me_cube_mesh.LightsData.ambientLight.set(1, 1, 1);
+		App.scene.me_cube_mesh.position.z = -20;
+		console.log('>.>>>>.>>>>.>>>>.>>>.>')
+		App.scene.me_cube_mesh.mesh.groups.forEach((group, index) => {
+			console.log('groupName:', group.groupName)
+			setTimeout(() => {
+				
+
+
+			}, 1000 * index)
+		})
+	}
+
+	matrixEngine.objLoader.downloadMeshes({me_cube_mesh: "res/3d-objects/destructable-mesh/test.obj"}, onLoadObj);
 }

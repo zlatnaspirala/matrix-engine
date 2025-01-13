@@ -2,7 +2,7 @@
 "use strict";
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
-var _load_obj_file = require("./apps/load_obj_file.js");
+var _custom_geometry = require("./apps/custom_geometry.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // CHANGE HERE IF YOU WANNA USE app-build.hmtl
@@ -22,77 +22,111 @@ window.webGLStart = () => {
   window.App = App;
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
-  (0, _load_obj_file.runThis)(world);
+  (0, _custom_geometry.runThis)(world);
 };
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/load_obj_file.js":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/custom_geometry.js":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-var _manifest = _interopRequireDefault(require("../program/manifest"));
+var _manifest = _interopRequireDefault(require("../program/manifest.js"));
+var matrixEngine = _interopRequireWildcard(require("../index.js"));
+var CANNON = _interopRequireWildcard(require("cannon"));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-/* eslint-disable no-unused-vars */
-
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
  */
 
+window.App = _manifest.default;
 var runThis = world => {
-  // if you dont use obj or complex mesh you no need for this func
-  function onLoadObj(meshes) {
-    for (let key in meshes) {
-      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
+  _manifest.default.camera.SceneController = true;
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+  window.addEventListener('ray.hit.event', ev => {
+    console.log("You shoot the object! Nice!", ev);
+    if (ev.detail.hitObject.physics.enabled == true) {
+      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
     }
-    var textuteImageSamplers2 = {
-      source: ["res/images/armor.webp"],
-      mix_operation: "multiply"
-    };
-    var textuteImageSamplers = {
-      source: ["res/images/dagger.webp"],
-      mix_operation: "multiply"
-    };
-    world.Add("obj", 1, "armor", textuteImageSamplers2, meshes.armor);
-    _manifest.default.scene.armor.position.y = 1;
-    _manifest.default.scene.armor.rotation.rotationSpeed.y = 20;
-    _manifest.default.scene.armor.LightsData.ambientLight.set(1, 1, 1);
-    _manifest.default.scene.armor.position.z = -6;
-    // App.scene.armor.mesh.setScale(3)
-    setTimeout(() => {
-      _manifest.default.scene.armor.activateShadows('spot');
-      _manifest.default.scene.mac.activateShadows('spot');
-    }, 2000);
-    world.Add("obj", 1, "mac", textuteImageSamplers, meshes.mac);
-    _manifest.default.scene.mac.position.y = 1;
-    _manifest.default.scene.mac.position.z = -6;
-    _manifest.default.scene.mac.rotation.rotationSpeed.y = 20;
-    _manifest.default.scene.mac.LightsData.ambientLight.set(1, 1, 1);
+  });
+  var tex = {
+    source: ["res/images/complex_texture_1/diffuse.webp"],
+    mix_operation: "multiply" // ENUM : multiply , divide ,
+  };
+  let gravityVector = [0, 0, -9.82];
+  let physics = world.loadPhysics(gravityVector);
+  // Add ground
+  physics.addGround(_manifest.default, world, tex);
+  function createTetra() {
+    var scale = 5;
+    var verts = [new CANNON.Vec3(scale * 0, scale * 0, scale * 0), new CANNON.Vec3(scale * 0.3, scale * 0, scale * 0), new CANNON.Vec3(scale * 0, scale * 0.3, scale * 0), new CANNON.Vec3(scale * 0, scale * 0, scale * 0.3)];
+
+    // var offset = -0.35;
+    var offset = -.35;
+    for (var i = 0; i < verts.length; i++) {
+      var v = verts[i];
+      v.x += offset;
+      v.y += offset;
+      v.z += offset;
+    }
+    return new CANNON.ConvexPolyhedron(verts, [[0, 3, 2],
+    // -x
+    [0, 1, 3],
+    // -y
+    [0, 2, 1],
+    // -z
+    [1, 2, 3] // +xyz
+    ]);
   }
+  world.Add("generatorLightTex", 1, "outsideBox2", tex, {
+    radius: 1,
+    custom_type: 'testConvex',
+    custom_geometry: createTetra()
+  });
+  var testCustomBody = new CANNON.Body({
+    mass: 10,
+    type: CANNON.Body.DYNAMIC,
+    shape: createTetra(),
+    position: new CANNON.Vec3(0, -10, 2)
+  });
+  window.testCustomBody = testCustomBody;
+  physics.world.addBody(testCustomBody);
+  _manifest.default.scene.outsideBox2.physics.currentBody = testCustomBody;
+  _manifest.default.scene.outsideBox2.physics.enabled = true;
 
-  /**
-   * @description
-   * For swap (initial orientation for object) use combination of
-   * swap[0,1]
-   * swap[0,2]
-   * swap[1,3]
-   * to switch x,y,z verts.
-   *  mac: "res/3d-objects/mac.obj"
-   */
-  matrixEngine.objLoader.downloadMeshes({
-    armor: "res/3d-objects/armor.obj",
-    mac: "res/3d-objects/mac.obj"
-  }, onLoadObj);
+  //
+  const objGenerator = n => {
+    for (var j = 0; j < n; j++) {
+      setTimeout(() => {
+        world.Add("sphereLightTex", 1, "BALL" + j, tex);
+        var b2 = new CANNON.Body({
+          mass: 1,
+          linearDamping: 0.005,
+          angularDamping: 0.5,
+          angularVelocity: new CANNON.Vec3(0.01, 0.01, 0),
+          position: new CANNON.Vec3(1, -10, 15),
+          shape: new CANNON.Sphere(1)
+        });
+        physics.world.addBody(b2);
+        _manifest.default.scene['BALL' + j].physics.currentBody = b2;
+        _manifest.default.scene['BALL' + j].physics.enabled = true;
+      }, 1000 * j);
+    }
+  };
 
-  //delete images_local_var;
+  // objGenerator(10)
 };
 exports.runThis = runThis;
 
-},{"../program/manifest":44}],3:[function(require,module,exports){
+},{"../index.js":4,"../program/manifest.js":44,"cannon":41}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1785,6 +1819,11 @@ var _matrixWorld = require("./matrix-world");
  * @constructor
  *
  * @param {String} objectData a string representation of an OBJ file with newlines preserved.
+ * 
+ * Fro group only detect special case `mesh name`
+ *  - COLLIDER
+ *  - Destruct
+ * Generate vert , norm , texCord.
  */
 
 class constructMesh {
@@ -1903,9 +1942,19 @@ class constructMesh {
       } else if (NORMAL_RE.test(line)) {
         // if this is a vertex normal
         vertNormals.push.apply(vertNormals, elements);
+
+        // TEST 
+        if (objGroups.length > 0) {
+          objGroups[objGroups.length - 1].groupNorm.push(elements);
+        }
       } else if (TEXTURE_RE.test(line)) {
         // if this is a texture
         textures.push.apply(textures, elements);
+
+        // TEST 
+        if (objGroups.length > 0) {
+          objGroups[objGroups.length - 1].groupTexCord.push(elements);
+        }
       } else if (FACE_RE.test(line)) {
         // if this is a face
         /*
@@ -1998,13 +2047,23 @@ class constructMesh {
         } else if (line.indexOf('mtllib') != -1) {
           // console.log('obj loader MTL file:', line)
         } else if (line.indexOf('g ') != -1) {
-          // console.log('obj loader group :', line)
+          console.log('obj loader group :', line);
           var nameOFGroup = line.split(' ')[1];
           if (nameOFGroup.indexOf('COLLIDER') != -1) {
             // console.log('obj loader group [SPECIAL CASE COLLIDER]:', nameOFGroup)
             objGroups.push({
               groupName: nameOFGroup,
-              groupVert: []
+              groupVert: [],
+              groupNorm: [],
+              groupTexCord: []
+            });
+          } else if (nameOFGroup.indexOf('Destruct') != -1) {
+            // console.log('obj loader group [SPECIAL CASE Destruct]:', nameOFGroup)
+            objGroups.push({
+              groupName: nameOFGroup,
+              groupVert: [],
+              groupNorm: [],
+              groupTexCord: []
             });
           }
         }
@@ -12669,7 +12728,7 @@ class MatrixPhysics {
     // Makes the body static
     var groundBody = new CANNON.Body({
       mass: 0,
-      position: new CANNON.Vec3(0, -15, -2)
+      position: new CANNON.Vec3(0, -15, 0)
     });
     var groundShape = new CANNON.Plane();
     groundBody.addShape(groundShape);
