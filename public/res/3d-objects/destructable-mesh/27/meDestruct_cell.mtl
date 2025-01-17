@@ -1,4 +1,4 @@
-# Blender 4.1.1 MTL File: 'None'
+# Blender 4.1.1 MTL File: 'destruct.27.parent.blend'
 # www.blender.org
 
 newmtl Material
@@ -9,4 +9,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd G:/web_server/xampp/htdocs/PRIVATE_SERVER/matrix-engine-starter/projects/hang3d/res/3d-objects/env/metal1.png
+map_Kd G:/web_server/xampp/htdocs/PRIVATE_SERVER/me/me/public/res/3d-objects/destructable-mesh/env/metal1.png

@@ -36,12 +36,12 @@ export var runThis = world => {
 		var scale = 5;
 		var verts = [
 			new CANNON.Vec3(scale * 0, scale * 0, scale * 0),
-			new CANNON.Vec3(scale * 0.3, scale * 0, scale * 0),
-			new CANNON.Vec3(scale * 0, scale * 0.3, scale * 0),
-			new CANNON.Vec3(scale * 0, scale * 0, scale * 0.3)];
+			new CANNON.Vec3(scale * 1, scale * 0, scale * 0),
+			new CANNON.Vec3(scale * 0, scale * 1, scale * 0),
+			new CANNON.Vec3(scale * 0, scale * 0, scale * 1)];
 
-		// var offset = -0.35;
-		 var offset = -.35;
+		var offset = -0.35;
+		//  var offset = -1;
 
 		for(var i = 0;i < verts.length;i++) {
 			var v = verts[i];
@@ -96,5 +96,5 @@ export var runThis = world => {
 		}
 	}
 
-	// objGenerator(10)
+	  objGenerator(2)
 }

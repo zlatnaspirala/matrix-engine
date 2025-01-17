@@ -1,6 +1,7 @@
 import * as matrixEngine from './index.js';
 // CHANGE HERE IF YOU WANNA USE app-build.hmtl
-import {runThis} from './apps/custom_geometry.js';
+import {runThis} from './apps/destruct_cube.js';
+// import {runThis} from './apps/custom_geometry.js';
 
 var world;
 var App = matrixEngine.App;

@@ -6,9 +6,13 @@
 import App from "../program/manifest.js";
 import * as matrixEngine from "../index.js";
 import * as CANNON from 'cannon';
+import {byId} from "../networking2/matrix-stream.js";
+import {mesh_, meshB} from "../public/res/3d-objects/destructable-mesh/json1/test1.js";
+import {meshNIK} from "../public/res/3d-objects/destructable-mesh/json1/test2.js";
 
 window.App = App
 export var runThis = world => {
+	document.getElementsByClassName('button2')[0].click();
 	App.camera.SceneController = true;
 
 	canvas.addEventListener('mousedown', (ev) => {
@@ -16,18 +20,26 @@ export var runThis = world => {
 	});
 
 	window.addEventListener('ray.hit.event', (ev) => {
-		console.log("You shoot the object! Nice!", ev)
+		console.log("Create destruct !", ev)
+
+		loadDestructMesh27(App.scene.me_cube_mesh)
+
 		if(ev.detail.hitObject.physics.enabled == true) {
-			ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000)
+			// ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000)
 		}
 	});
 
-	var tex = {source: ["res/images/complex_texture_1/diffuse.webp"],	mix_operation: "multiply",};
+	var tex = {source: ["res/images/complex_texture_1/diffuse.webp"], mix_operation: "multiply", };
 
 	let gravityVector = [0, 0, -9.82];
 	let physics = world.loadPhysics(gravityVector);
 	// Add ground
 	physics.addGround(App, world, tex);
+
+	console.log(physics.world)
+	physics.world.solver.iterations = 20;
+	physics.world.defaultContactMaterial.contactEquationStiffness = 1e10;
+	physics.world.defaultContactMaterial.contactEquationRelaxation = 10;
 
 	// world.Add("cubeLightTex", 1, "me_cube", tex);
 	// var testCustomBody = new CANNON.Body({
@@ -40,7 +52,7 @@ export var runThis = world => {
 	// physics.world.addBody(testCustomBody);
 	// App.scene.me_cube.physics.currentBody = testCustomBody;
 	// App.scene.me_cube.physics.enabled = true;
-
+	App.scene['FLOOR_STATIC'].glDrawElements.mode = "LINE_STRIP"
 	//
 	const objGenerator = (n) => {
 		for(var j = 0;j < n;j++) {
@@ -61,25 +73,156 @@ export var runThis = world => {
 			}, 1000 * j)
 		}
 	}
+	// objGenerator(2)
 
+	function createTetra() {
+		var scale = 2;
+		var verts = [
+			new CANNON.Vec3(scale * 0, scale * 0, scale * 0),
+			new CANNON.Vec3(scale * 1, scale * 0, scale * 0),
+			new CANNON.Vec3(scale * 0, scale * 1, scale * 0),
+			new CANNON.Vec3(scale * 0, scale * 0, scale * 1)];
+
+		var offset = -0.35;
+		//  var offset = -1;
+
+		for(var i = 0;i < verts.length;i++) {
+			var v = verts[i];
+			v.x += offset;
+			v.y += offset;
+			v.z += offset;
+		}
+		return new CANNON.ConvexPolyhedron(verts,
+			[
+				[0, 3, 2], // -x
+				[0, 1, 3], // -y
+				[0, 2, 1], // -z
+				[1, 2, 3], // +xyz
+			]);
+	}
+
+	function createBoxPolyhedron(size) {
+		size = size || 1;
+		var box = new CANNON.Box(new CANNON.Vec3(size, size, size));
+		return box.convexPolyhedronRepresentation;
+	}
+
+
+	function fromObjToConvexPolyhedron(obj) {
+		var scale = 2;
+		console.log('OBJ::: ----')
+		var rawVerts = obj.mesh.vertices;
+		var rawFaces = obj.mesh.indices;
+		var rawOffset = [0, 0, 0];
+		var verts = [], faces = [], offset;
+		// Get vertices
+		for(var j = 0;j < rawVerts.length;j += 3) {
+			verts.push(new CANNON.Vec3(rawVerts[j] * scale,
+				rawVerts[j + 1] * scale,
+				rawVerts[j + 2] * scale));
+		}
+		// var offset = -0.35;
+		// //  var offset = -1;
+		// for(var i = 0;i < verts.length;i++) {
+		// 	var v = verts[i];
+		// 	v.x += offset;
+		// 	v.y += offset;
+		// 	v.z += offset;
+		// }
+		/**
+ 
+		 */
+		// Get faces
+		for(var j = 0;j < rawFaces.length;j += 3) {
+			faces.push([rawFaces[j], rawFaces[j + 1], rawFaces[j + 2]]);
+		}
+		// Get offset
+		offset = new CANNON.Vec3(rawOffset[0], rawOffset[1], rawOffset[2]);
+		// Construct polyhedron
+		 return new CANNON.ConvexPolyhedron(verts, faces);
+	}
+
+	var preventFlag = false;
+	function loadDestructMesh27(parent) {
+		if(preventFlag == true) {
+			return;
+		}
+		preventFlag = true;
+
+		function onLoadDestructMesh27(meshes) {
+			var textuteImageSamplers2 = {source: ["res/images/armor.webp"], mix_operation: "multiply"};
+			for(let key in meshes) {matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key])}
+			// parent.selfDestroy(1)
+			for(let key in meshes) {
+				console.log("meshes[key].name", meshes[key])
+				world.Add("obj", 1, meshes[key].name+'H', textuteImageSamplers2, meshes[key]);
+
+				var S = fromObjToConvexPolyhedron(App.scene[meshes[key].name+'H'])
+				// var S = createBoxPolyhedron()
+				world.Add("generatorLightTex", 1, meshes[key].name, tex, {
+					radius: 1,
+					custom_type: 'testConvex',
+					custom_geometry: S,
+				});
+
+				App.scene[meshes[key].name].LightsData.ambientLight.set(1, 1, 1);
+				App.scene[meshes[key].name].position.y = 4;
+				App.scene[meshes[key].name].position.z = -10;
+
+				var testCustomBody = new CANNON.Body({
+					mass: 1,
+					type: CANNON.Body.DYNAMIC,
+					shape: S,// fromObjToConvexPolyhedron(App.scene[meshes[key].name]),
+					position: new CANNON.Vec3(0, -10, 4)
+				});
+				// window.testCustomBody = testCustomBody;
+				physics.world.addBody(testCustomBody);
+				App.scene[meshes[key].name].physics.currentBody = testCustomBody;
+				App.scene[meshes[key].name].physics.enabled = true;
+				App.scene[meshes[key].name].glDrawElements.mode = "LINE_STRIP";
+				// App.scene[meshes[key].name + "H"].selfDestroy(1000)
+			}
+		}
+
+		function genNamesForDestruct(size) {
+			// Adapt for blender naming 001 021 ...
+			// matrixEngine.objLoader.downloadMeshes({
+			// 	["PROTO" + x]: `res/3d-objects/destructable-mesh/27/proto.obj`
+			// }, onLoadDestructMesh27);
+
+			// return;
+
+			console.log("???????")
+			var name;
+			for(var x = 1;x < size;x++) {
+				if(x < 10) {
+					name = "meDestruct_cell_00" + x;
+					matrixEngine.objLoader.downloadMeshes({
+						["meDestruct_cell_00" + x]: `res/3d-objects/destructable-mesh/27/${name}.obj`
+					}, onLoadDestructMesh27);
+				} else if(x >= 10 && x <= 99) {
+					name = "meDestruct_cell_0" + x;
+					matrixEngine.objLoader.downloadMeshes({
+						["meDestruct_cell_0" + x]: `res/3d-objects/destructable-mesh/27/${name}.obj`
+					}, onLoadDestructMesh27);
+				}
+
+			}
+		}
+
+		genNamesForDestruct(3)
+
+	}
 
 	function onLoadObj(meshes) {
 		for(let key in meshes) {matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key])}
-		var textuteImageSamplers2 = {source: ["res/images/armor.webp"],	mix_operation: "multiply"};
+		var textuteImageSamplers2 = {source: ["res/images/armor.webp"], mix_operation: "multiply"};
 		world.Add("obj", 1, "me_cube_mesh", textuteImageSamplers2, meshes.me_cube_mesh);
 		App.scene.me_cube_mesh.position.y = 1;
 		App.scene.me_cube_mesh.LightsData.ambientLight.set(1, 1, 1);
 		App.scene.me_cube_mesh.position.z = -20;
 		console.log('>.>>>>.>>>>.>>>>.>>>.>')
-		App.scene.me_cube_mesh.mesh.groups.forEach((group, index) => {
-			console.log('groupName:', group.groupName)
-			setTimeout(() => {
-				
-
-
-			}, 1000 * index)
-		})
 	}
 
-	matrixEngine.objLoader.downloadMeshes({me_cube_mesh: "res/3d-objects/destructable-mesh/test.obj"}, onLoadObj);
+	matrixEngine.objLoader.downloadMeshes({me_cube_mesh: "res/3d-objects/destructable-mesh/27/meDestruct_cell_001.obj"}, onLoadObj);
 }

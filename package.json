@@ -1,7 +1,7 @@
 {
   "name": "matrix-engine",
-  "version": "2.2.14",
-  "description": "SpriteAnimation CPU/texture solution added, Improved notify box UI. Test netPos Offset ; dispatchEvent(new CustomEvent(net-ready, {}, HOT FIX for npm  [2.0.4 BETA] Implementing new networking based on kurento/OpenVidu service. [1.9.58]Timeline improved [1.9.54] Loading shadertoy or any other custom shader - mix or not with standard matrixengine shader. Loading glsl files. [1.9.47] All examples works on android mobile browser chrome, [1.9.x Thunder] Matrix-engine is super fast webgl library based on glmatrix 2.xx engine. Features comes with matrix-engine : Blending, CameraScene, FBO, FPS, ARRAY-instanced draws, scene object transformation, obj loader, obj seq loader, Networking ,full standalone 3d video chat, active 2d textures etc...",
+  "version": "2.3.0",
+  "description": "[2.3.0] DestrucMesh solution & loading convex objs for physics, SpriteAnimation CPU/texture solution added, Improved notify box UI. Test netPos Offset ; dispatchEvent(new CustomEvent(net-ready, {}, HOT FIX for npm  [2.0.4 BETA] Implementing new networking based on kurento/OpenVidu service. [1.9.58]Timeline improved [1.9.54] Loading shadertoy or any other custom shader - mix or not with standard matrixengine shader. Loading glsl files. [1.9.47] All examples works on android mobile browser chrome, [1.9.x Thunder] Matrix-engine is super fast webgl library based on glmatrix 2.xx engine. Features comes with matrix-engine : Blending, CameraScene, FBO, FPS, ARRAY-instanced draws, scene object transformation, obj loader, obj seq loader, Networking ,full standalone 3d video chat, active 2d textures etc...",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -80,14 +80,15 @@
     "canvas",
     "textures",
     "scene",
-    "opengles",
+    "opengles1.1",
     "webgl",
     "webgl2",
     "glmatrix",
     "opengles2",
     "3d",
     "javascript",
-    "opengles3",
+		"vanilla",
+    "opengles300",
     "matrix",
     "ECMA6",
     "timeline",
@@ -103,7 +104,8 @@
 		"map-loader",
 		"map-colliders",
 		"sprite-animation",
-		"sprite-3d-texture"
+		"sprite-3d-texture",
+		"destruct-mesh"
   ],
   "author": "Nikola Lukic <zlatnaspirala@gmail.com> (https://maximumroulette.com)",
   "license": "MIT",
