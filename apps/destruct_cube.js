@@ -63,7 +63,7 @@ export var runThis = world => {
 					linearDamping: 0.005,
 					angularDamping: 0.5,
 					angularVelocity: new CANNON.Vec3(0.01, 0.01, 0),
-					position: new CANNON.Vec3(1, -10, 15),
+					position: new CANNON.Vec3(1, -10, 35),
 					shape: new CANNON.Sphere(1)
 				});
 
@@ -73,7 +73,7 @@ export var runThis = world => {
 			}, 1000 * j)
 		}
 	}
-	// objGenerator(2)
+
 
 	function createTetra() {
 		var scale = 2;
@@ -109,9 +109,10 @@ export var runThis = world => {
 
 
 	function fromObjToConvexPolyhedron(obj) {
-		var scale = 2;
+		var scale = 1;
 		console.log('OBJ::: ----')
-		var rawVerts = obj.mesh.vertices;
+		var rawVerts = obj.mesh.TEST_verts;
+		// var rawVerts = obj.mesh.vertices;
 		var rawFaces = obj.mesh.indices;
 		var rawOffset = [0, 0, 0];
 		var verts = [], faces = [], offset;
@@ -121,14 +122,14 @@ export var runThis = world => {
 				rawVerts[j + 1] * scale,
 				rawVerts[j + 2] * scale));
 		}
-		// var offset = -0.35;
-		// //  var offset = -1;
-		// for(var i = 0;i < verts.length;i++) {
-		// 	var v = verts[i];
-		// 	v.x += offset;
-		// 	v.y += offset;
-		// 	v.z += offset;
-		// }
+		var offset = -0.35;
+		//  var offset = -1;
+		for(var i = 0;i < verts.length;i++) {
+			var v = verts[i];
+			v.x += offset;
+			v.y += offset;
+			v.z += offset;
+		}
 		/**
  
 		 */
@@ -139,7 +140,22 @@ export var runThis = world => {
 		// Get offset
 		offset = new CANNON.Vec3(rawOffset[0], rawOffset[1], rawOffset[2]);
 		// Construct polyhedron
-		 return new CANNON.ConvexPolyhedron(verts, faces);
+    return new CANNON.ConvexPolyhedron(verts, faces);
+		// return new CANNON.ConvexPolyhedron(verts,
+		// 	[
+		// 		[0, 3, 2], // -x
+		// 		[0, 1, 3], // -y
+		// 		[0, 2, 1], // -z
+		// 		[1, 2, 3], // +xyz
+				
+		// 		// [0,1,2],
+		// 		// [2,1,3],
+		// 		// [3,1,0],
+		// 		// [2,3,0]
+		// 	]
+		// );
+
+
 	}
 
 	var preventFlag = false;
@@ -155,44 +171,38 @@ export var runThis = world => {
 			// parent.selfDestroy(1)
 			for(let key in meshes) {
 				console.log("meshes[key].name", meshes[key])
-				world.Add("obj", 1, meshes[key].name+'H', textuteImageSamplers2, meshes[key]);
-
-				var S = fromObjToConvexPolyhedron(App.scene[meshes[key].name+'H'])
+				world.Add("obj", 2, key, textuteImageSamplers2, meshes[key]);
+				var S = fromObjToConvexPolyhedron(App.scene[key])
 				// var S = createBoxPolyhedron()
-				world.Add("generatorLightTex", 1, meshes[key].name, tex, {
-					radius: 1,
-					custom_type: 'testConvex',
-					custom_geometry: S,
-				});
-
-				App.scene[meshes[key].name].LightsData.ambientLight.set(1, 1, 1);
-				App.scene[meshes[key].name].position.y = 4;
-				App.scene[meshes[key].name].position.z = -10;
+				// world.Add("generatorLightTex", 1, meshes[key].name, tex, {
+				// 	radius: 1,
+				// 	custom_type: 'testConvex',
+				// 	custom_geometry: S,
+				// });
+				App.scene[key].LightsData.ambientLight.set(1, 1, 1);
+				App.scene[key].position.y = 14;
+				App.scene[key].position.z = -10;
 
 				var testCustomBody = new CANNON.Body({
 					mass: 1,
 					type: CANNON.Body.DYNAMIC,
 					shape: S,// fromObjToConvexPolyhedron(App.scene[meshes[key].name]),
-					position: new CANNON.Vec3(0, -10, 4)
+					position: new CANNON.Vec3(0, -10, 14)
 				});
 				// window.testCustomBody = testCustomBody;
 				physics.world.addBody(testCustomBody);
-				App.scene[meshes[key].name].physics.currentBody = testCustomBody;
-				App.scene[meshes[key].name].physics.enabled = true;
-				App.scene[meshes[key].name].glDrawElements.mode = "LINE_STRIP";
+				App.scene[key].physics.currentBody = testCustomBody;
+				App.scene[key].physics.enabled = true;
+				App.scene[key].glDrawElements.mode = "LINE_STRIP";
 				// App.scene[meshes[key].name + "H"].selfDestroy(1000)
+
+				objGenerator(1)
+
 			}
 		}
 
 		function genNamesForDestruct(size) {
-			// Adapt for blender naming 001 021 ...
-			// matrixEngine.objLoader.downloadMeshes({
-			// 	["PROTO" + x]: `res/3d-objects/destructable-mesh/27/proto.obj`
-			// }, onLoadDestructMesh27);
-
-			// return;
-
-			console.log("???????")
+			console.log("SIZE ", size)
 			var name;
 			for(var x = 1;x < size;x++) {
 				if(x < 10) {
@@ -210,8 +220,7 @@ export var runThis = world => {
 			}
 		}
 
-		genNamesForDestruct(3)
-
+		genNamesForDestruct(2)
 	}
 
 	function onLoadObj(meshes) {
@@ -224,5 +233,6 @@ export var runThis = world => {
 		console.log('>.>>>>.>>>>.>>>>.>>>.>')
 	}
 
-	matrixEngine.objLoader.downloadMeshes({me_cube_mesh: "res/3d-objects/destructable-mesh/27/meDestruct_cell_001.obj"}, onLoadObj);
+	matrixEngine.objLoader.downloadMeshes(
+		{me_cube_mesh: "res/3d-objects/destructable-mesh/27/meDestruct_cell_001.obj"}, onLoadObj);
 }
