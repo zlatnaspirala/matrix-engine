@@ -135,11 +135,11 @@ var runThis = world => {
     return box.convexPolyhedronRepresentation;
   }
   function fromObjToConvexPolyhedron(obj) {
-    var scale = 1;
+    var scale = 2;
     console.log('OBJ::: ----');
     var rawVerts = obj.mesh.TEST_verts;
     // var rawVerts = obj.mesh.vertices;
-    var rawFaces = obj.mesh.indices;
+    var rawFaces = obj.mesh.TEST_FACES;
     var rawOffset = [0, 0, 0];
     var verts = [],
       faces = [],
@@ -167,19 +167,20 @@ var runThis = world => {
     offset = new CANNON.Vec3(rawOffset[0], rawOffset[1], rawOffset[2]);
     // Construct polyhedron
     return new CANNON.ConvexPolyhedron(verts, faces);
-    // return new CANNON.ConvexPolyhedron(verts,
-    // 	[
-    // 		[0, 3, 2], // -x
-    // 		[0, 1, 3], // -y
-    // 		[0, 2, 1], // -z
-    // 		[1, 2, 3], // +xyz
-
-    // 		// [0,1,2],
-    // 		// [2,1,3],
-    // 		// [3,1,0],
-    // 		// [2,3,0]
-    // 	]
-    // );
+    var scale = 2;
+    var verts1 = [new CANNON.Vec3(scale * 0, scale * 0, scale * 0), new CANNON.Vec3(scale * 1, scale * 0, scale * 0), new CANNON.Vec3(scale * 0, scale * 1, scale * 0), new CANNON.Vec3(scale * 0, scale * 0, scale * 1)];
+    return new CANNON.ConvexPolyhedron(verts1, [[0, 3, 2],
+    // -x
+    [0, 1, 3],
+    // -y
+    [0, 2, 1],
+    // -z
+    [1, 2, 3] // +xyz
+    ]);
+    // [2, 1, 0],
+    // [0, 3, 2],
+    // [1, 3, 0],
+    // [2, 3, 1]])
   }
   var preventFlag = false;
   function loadDestructMesh27(parent) {
@@ -198,10 +199,10 @@ var runThis = world => {
       // parent.selfDestroy(1)
       for (let key in meshes) {
         console.log("meshes[key].name", meshes[key]);
-        world.Add("obj", 2, key, textuteImageSamplers2, meshes[key]);
-        var S = fromObjToConvexPolyhedron(_manifest.default.scene[key]);
+        world.Add("obj", 0.5, key, textuteImageSamplers2, meshes[key]);
+        var S = createTetra(_manifest.default.scene[key]);
         // var S = createBoxPolyhedron()
-        // world.Add("generatorLightTex", 1, meshes[key].name, tex, {
+        // world.Add("generatorLightTex", 1, key , tex, {
         // 	radius: 1,
         // 	custom_type: 'testConvex',
         // 	custom_geometry: S,
@@ -223,7 +224,7 @@ var runThis = world => {
         _manifest.default.scene[key].glDrawElements.mode = "LINE_STRIP";
         // App.scene[meshes[key].name + "H"].selfDestroy(1000)
 
-        objGenerator(1);
+        // objGenerator(1)
       }
     }
     function genNamesForDestruct(size) {
@@ -2160,10 +2161,12 @@ class constructMesh {
               unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[1]] * inputArg.scale);
               unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[2]] * inputArg.scale);
               console.log('VERT PUSH >> (vertex[0] - 1) * 3 >>  ', (vertex[0] - 1) * 3);
+              TEST_FACES.push(vertex[0] - 1);
             } else {
               unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[0]] * inputArg.scale.x);
               unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[1]] * inputArg.scale.y);
               unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[2]] * inputArg.scale.z);
+              console.log('VERT PUSH2   >> (vertex[0] - 1) * 3 >>  ', (vertex[0] - 1) * 3);
             }
 
             // vertex textures
@@ -2175,6 +2178,7 @@ class constructMesh {
             unpacked.norms.push(+vertNormals[(vertex[2] - 1) * 3 + 0]);
             unpacked.norms.push(+vertNormals[(vertex[2] - 1) * 3 + 1]);
             unpacked.norms.push(+vertNormals[(vertex[2] - 1) * 3 + 2]);
+
             // add the newly created vertex to the list of indices
             unpacked.hashindices[elements[j]] = unpacked.index;
             unpacked.indices.push(unpacked.index);
@@ -2227,6 +2231,7 @@ class constructMesh {
       return parseFloat(item);
     });
     this.TEST_verts = verts;
+    this.TEST_FACES = TEST_FACES;
     if (objGroups.length > 0) {
       this.groups = objGroups;
     } else {
@@ -3971,12 +3976,28 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
   lighting = true;
   mat4.identity(object.mvMatrix);
   _matrixWorld.world.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
-  if (object.isHUD === true) {
+  if (object.physics.enabled == true) {
+    if (_manifest.default.camera.FirstPersonController == true) {
+      _events.camera.setCamera(object);
+    } else if (_manifest.default.camera.SceneController == true) {
+      _events.camera.setSceneCamera(object);
+    }
+    var QP = object.physics.currentBody.quaternion;
+    QP.normalize();
+    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+    if (raycaster.checkingProcedureCalcObj && typeof ray === 'undefined') raycaster.checkingProcedureCalcObj(object);
+    var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.z, object.rotation.axis.y);
+    object.rotation.axisSystem[0].normalize();
+    // TEST - Yes ultimate - MAybe even cube will be better
+    var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), -parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), -parseFloat(object.rotation.axisSystem[0].y.toFixed(2)));
+    var MY_ANGLE = 2 * Math.acos(QP.w);
+    mat4.rotate(object.mvMatrix, object.mvMatrix, MY_ANGLE, AXIS);
+  } else if (object.isHUD === true) {
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
-    if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalcObj(object);
+    if (raycaster.checkingProcedureCalcObj) raycaster.checkingProcedureCalcObj(object);
   } else {
     if (_manifest.default.camera.FirstPersonController == true) {
       _events.camera.setCamera(object);
@@ -3984,7 +4005,7 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
       _events.camera.setSceneCamera(object);
     }
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-    if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalcObj(object);
+    if (raycaster.checkingProcedureCalcObj && typeof ray === 'undefined') raycaster.checkingProcedureCalcObj(object);
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());

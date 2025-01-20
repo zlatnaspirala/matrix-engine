@@ -109,11 +109,11 @@ export var runThis = world => {
 
 
 	function fromObjToConvexPolyhedron(obj) {
-		var scale = 1;
+		var scale = 2;
 		console.log('OBJ::: ----')
 		var rawVerts = obj.mesh.TEST_verts;
 		// var rawVerts = obj.mesh.vertices;
-		var rawFaces = obj.mesh.indices;
+		var rawFaces = obj.mesh.TEST_FACES;
 		var rawOffset = [0, 0, 0];
 		var verts = [], faces = [], offset;
 		// Get vertices
@@ -140,22 +140,27 @@ export var runThis = world => {
 		// Get offset
 		offset = new CANNON.Vec3(rawOffset[0], rawOffset[1], rawOffset[2]);
 		// Construct polyhedron
-    return new CANNON.ConvexPolyhedron(verts, faces);
-		// return new CANNON.ConvexPolyhedron(verts,
-		// 	[
-		// 		[0, 3, 2], // -x
-		// 		[0, 1, 3], // -y
-		// 		[0, 2, 1], // -z
-		// 		[1, 2, 3], // +xyz
-				
-		// 		// [0,1,2],
-		// 		// [2,1,3],
-		// 		// [3,1,0],
-		// 		// [2,3,0]
-		// 	]
-		// );
+     return new CANNON.ConvexPolyhedron(verts, faces);
 
+		var scale = 2;
+		var verts1 = [
+			new CANNON.Vec3(scale * 0, scale * 0, scale * 0),
+			new CANNON.Vec3(scale * 1, scale * 0, scale * 0),
+			new CANNON.Vec3(scale * 0, scale * 1, scale * 0),
+			new CANNON.Vec3(scale * 0, scale * 0, scale * 1)];
 
+		return new CANNON.ConvexPolyhedron(verts1,
+		 	[
+				[0, 3, 2], // -x
+				[0, 1, 3], // -y
+				[0, 2, 1], // -z
+				[1, 2, 3], // +xyz
+			]
+		);
+		// [2, 1, 0],
+		// [0, 3, 2],
+		// [1, 3, 0],
+		// [2, 3, 1]])
 	}
 
 	var preventFlag = false;
@@ -171,10 +176,10 @@ export var runThis = world => {
 			// parent.selfDestroy(1)
 			for(let key in meshes) {
 				console.log("meshes[key].name", meshes[key])
-				world.Add("obj", 2, key, textuteImageSamplers2, meshes[key]);
-				var S = fromObjToConvexPolyhedron(App.scene[key])
+				world.Add("obj", 0.5, key, textuteImageSamplers2, meshes[key]);
+				var S = createTetra(App.scene[key])
 				// var S = createBoxPolyhedron()
-				// world.Add("generatorLightTex", 1, meshes[key].name, tex, {
+				// world.Add("generatorLightTex", 1, key , tex, {
 				// 	radius: 1,
 				// 	custom_type: 'testConvex',
 				// 	custom_geometry: S,
@@ -196,7 +201,7 @@ export var runThis = world => {
 				App.scene[key].glDrawElements.mode = "LINE_STRIP";
 				// App.scene[meshes[key].name + "H"].selfDestroy(1000)
 
-				objGenerator(1)
+				// objGenerator(1)
 
 			}
 		}
