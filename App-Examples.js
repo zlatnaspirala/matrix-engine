@@ -62,6 +62,7 @@ import {runThis as load_obj_file_groups} from './apps/load_obj_file_groups';
 import {runThis as maps} from './apps/maps';
 import {runThis as matrix_skeletal} from './apps/matrix_skeletal';
 import {runThis as sprite_animation_2d} from './apps/sprite_animation_2d';
+import {runThis as destruct_cube} from './apps/destruct_cube';
 
 /**
  * @description
@@ -72,6 +73,7 @@ import {runThis as sprite_animation_2d} from './apps/sprite_animation_2d';
  * public/query-build.html?u=spot_light_shadows
  */
 var Examples = {
+	destruct_cube: destruct_cube,
 	sprite_animation_2d: sprite_animation_2d,
 	matrix_skeletal: matrix_skeletal,
 	maps: maps,

@@ -2,12 +2,11 @@
 "use strict";
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
-var _destruct_cube = require("./apps/destruct_cube.js");
+var _torus_geometry = require("./apps/torus_geometry.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // CHANGE HERE IF YOU WANNA USE app-build.hmtl
-
-// import {runThis} from './apps/custom_geometry.js';
+// import {runThis} from './apps/destruct_cube.js';
 
 var world;
 var App = matrixEngine.App;
@@ -24,44 +23,41 @@ window.webGLStart = () => {
   window.App = App;
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
-  (0, _destruct_cube.runThis)(world);
+  (0, _torus_geometry.runThis)(world);
 };
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/destruct_cube.js":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/torus_geometry.js":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.runThis = void 0;
-var _manifest = _interopRequireDefault(require("../program/manifest.js"));
+var _manifest = _interopRequireDefault(require("../program/manifest"));
 var matrixEngine = _interopRequireWildcard(require("../index.js"));
 var CANNON = _interopRequireWildcard(require("cannon"));
-var _matrixStream = require("../networking2/matrix-stream.js");
-var _test = require("../public/res/3d-objects/destructable-mesh/json1/test1.js");
-var _test2 = require("../public/res/3d-objects/destructable-mesh/json1/test2.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
+ * Torus geometry with physics.
  */
 
+let VT = matrixEngine.Engine.VT;
 window.App = _manifest.default;
 var runThis = world => {
-  document.getElementsByClassName('button2')[0].click();
   _manifest.default.camera.SceneController = true;
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
   window.addEventListener('ray.hit.event', ev => {
-    console.log("Create destruct !", ev);
-    loadDestructMesh27(_manifest.default.scene.me_cube_mesh);
+    console.log("You shoot the object! Nice!", ev);
     if (ev.detail.hitObject.physics.enabled == true) {
-      // ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000)
+      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
     }
   });
   var tex = {
@@ -72,201 +68,35 @@ var runThis = world => {
   let physics = world.loadPhysics(gravityVector);
   // Add ground
   physics.addGround(_manifest.default, world, tex);
-  console.log(physics.world);
-  physics.world.solver.iterations = 20;
-  physics.world.defaultContactMaterial.contactEquationStiffness = 1e10;
-  physics.world.defaultContactMaterial.contactEquationRelaxation = 10;
+  world.Add("generatorLightTex", 1, "outsideBox2", tex, {
+    custom_type: 'torus',
+    slices: 8,
+    loops: 20,
+    inner_rad: 1.5,
+    outerRad: 2
+  });
+  // App.scene.outsideBox2.streamTextures = new VT(
+  //   "res/video-texture/me.mkv", 'mytorusStreamTex'
+  // );
+  var wheelsPoly = 32;
+  var wheelInput1 = 2;
+  var wheelInput2 = 1;
+  var bigWheel = new CANNON.Body({
+    mass: 1,
+    type: CANNON.Body.DYNAMIC,
+    shape: CANNON.Trimesh.createTorus(wheelInput1, wheelInput2, wheelsPoly, wheelsPoly),
+    position: new CANNON.Vec3(0, -10, 2)
+  });
 
-  // world.Add("cubeLightTex", 1, "me_cube", tex);
-  // var testCustomBody = new CANNON.Body({
-  // 	mass: 10,
-  // 	type: CANNON.Body.DYNAMIC,
-  // 	shape: createTetra(),
-  // 	position: new CANNON.Vec3(0, -10, 2)
-  // });
-  // window.testCustomBody = testCustomBody;
-  // physics.world.addBody(testCustomBody);
-  // App.scene.me_cube.physics.currentBody = testCustomBody;
-  // App.scene.me_cube.physics.enabled = true;
-  _manifest.default.scene['FLOOR_STATIC'].glDrawElements.mode = "LINE_STRIP";
-  //
-  const objGenerator = n => {
-    for (var j = 0; j < n; j++) {
-      setTimeout(() => {
-        world.Add("sphereLightTex", 1, "BALL" + j, tex);
-        var b2 = new CANNON.Body({
-          mass: 1,
-          linearDamping: 0.005,
-          angularDamping: 0.5,
-          angularVelocity: new CANNON.Vec3(0.01, 0.01, 0),
-          position: new CANNON.Vec3(1, -10, 35),
-          shape: new CANNON.Sphere(1)
-        });
-        physics.world.addBody(b2);
-        _manifest.default.scene['BALL' + j].physics.currentBody = b2;
-        _manifest.default.scene['BALL' + j].physics.enabled = true;
-      }, 1000 * j);
-    }
-  };
-  function createTetra() {
-    var scale = 2;
-    var verts = [new CANNON.Vec3(scale * 0, scale * 0, scale * 0), new CANNON.Vec3(scale * 1, scale * 0, scale * 0), new CANNON.Vec3(scale * 0, scale * 1, scale * 0), new CANNON.Vec3(scale * 0, scale * 0, scale * 1)];
-    var offset = -0.35;
-    //  var offset = -1;
-
-    for (var i = 0; i < verts.length; i++) {
-      var v = verts[i];
-      v.x += offset;
-      v.y += offset;
-      v.z += offset;
-    }
-    return new CANNON.ConvexPolyhedron(verts, [[0, 3, 2],
-    // -x
-    [0, 1, 3],
-    // -y
-    [0, 2, 1],
-    // -z
-    [1, 2, 3] // +xyz
-    ]);
-  }
-  function createBoxPolyhedron(size) {
-    size = size || 1;
-    var box = new CANNON.Box(new CANNON.Vec3(size, size, size));
-    return box.convexPolyhedronRepresentation;
-  }
-  function fromObjToConvexPolyhedron(obj) {
-    var scale = 2;
-    console.log('OBJ::: ----');
-    var rawVerts = obj.mesh.TEST_verts;
-    // var rawVerts = obj.mesh.vertices;
-    var rawFaces = obj.mesh.TEST_FACES;
-    var rawOffset = [0, 0, 0];
-    var verts = [],
-      faces = [],
-      offset;
-    // Get vertices
-    for (var j = 0; j < rawVerts.length; j += 3) {
-      verts.push(new CANNON.Vec3(rawVerts[j] * scale, rawVerts[j + 1] * scale, rawVerts[j + 2] * scale));
-    }
-    var offset = -0.35;
-    //  var offset = -1;
-    for (var i = 0; i < verts.length; i++) {
-      var v = verts[i];
-      v.x += offset;
-      v.y += offset;
-      v.z += offset;
-    }
-    /**
-    
-     */
-    // Get faces
-    for (var j = 0; j < rawFaces.length; j += 3) {
-      faces.push([rawFaces[j], rawFaces[j + 1], rawFaces[j + 2]]);
-    }
-    // Get offset
-    offset = new CANNON.Vec3(rawOffset[0], rawOffset[1], rawOffset[2]);
-    // Construct polyhedron
-    return new CANNON.ConvexPolyhedron(verts, faces);
-    var scale = 2;
-    var verts1 = [new CANNON.Vec3(scale * 0, scale * 0, scale * 0), new CANNON.Vec3(scale * 1, scale * 0, scale * 0), new CANNON.Vec3(scale * 0, scale * 1, scale * 0), new CANNON.Vec3(scale * 0, scale * 0, scale * 1)];
-    return new CANNON.ConvexPolyhedron(verts1, [[0, 3, 2],
-    // -x
-    [0, 1, 3],
-    // -y
-    [0, 2, 1],
-    // -z
-    [1, 2, 3] // +xyz
-    ]);
-    // [2, 1, 0],
-    // [0, 3, 2],
-    // [1, 3, 0],
-    // [2, 3, 1]])
-  }
-  var preventFlag = false;
-  function loadDestructMesh27(parent) {
-    if (preventFlag == true) {
-      return;
-    }
-    preventFlag = true;
-    function onLoadDestructMesh27(meshes) {
-      var textuteImageSamplers2 = {
-        source: ["res/images/armor.webp"],
-        mix_operation: "multiply"
-      };
-      for (let key in meshes) {
-        matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
-      }
-      // parent.selfDestroy(1)
-      for (let key in meshes) {
-        console.log("meshes[key].name", meshes[key]);
-        world.Add("obj", 0.5, key, textuteImageSamplers2, meshes[key]);
-        var S = createTetra(_manifest.default.scene[key]);
-        // var S = createBoxPolyhedron()
-        // world.Add("generatorLightTex", 1, key , tex, {
-        // 	radius: 1,
-        // 	custom_type: 'testConvex',
-        // 	custom_geometry: S,
-        // });
-        _manifest.default.scene[key].LightsData.ambientLight.set(1, 1, 1);
-        _manifest.default.scene[key].position.y = 14;
-        _manifest.default.scene[key].position.z = -10;
-        var testCustomBody = new CANNON.Body({
-          mass: 1,
-          type: CANNON.Body.DYNAMIC,
-          shape: S,
-          // fromObjToConvexPolyhedron(App.scene[meshes[key].name]),
-          position: new CANNON.Vec3(0, -10, 14)
-        });
-        // window.testCustomBody = testCustomBody;
-        physics.world.addBody(testCustomBody);
-        _manifest.default.scene[key].physics.currentBody = testCustomBody;
-        _manifest.default.scene[key].physics.enabled = true;
-        _manifest.default.scene[key].glDrawElements.mode = "LINE_STRIP";
-        // App.scene[meshes[key].name + "H"].selfDestroy(1000)
-
-        // objGenerator(1)
-      }
-    }
-    function genNamesForDestruct(size) {
-      console.log("SIZE ", size);
-      var name;
-      for (var x = 1; x < size; x++) {
-        if (x < 10) {
-          name = "meDestruct_cell_00" + x;
-          matrixEngine.objLoader.downloadMeshes({
-            ["meDestruct_cell_00" + x]: `res/3d-objects/destructable-mesh/27/${name}.obj`
-          }, onLoadDestructMesh27);
-        } else if (x >= 10 && x <= 99) {
-          name = "meDestruct_cell_0" + x;
-          matrixEngine.objLoader.downloadMeshes({
-            ["meDestruct_cell_0" + x]: `res/3d-objects/destructable-mesh/27/${name}.obj`
-          }, onLoadDestructMesh27);
-        }
-      }
-    }
-    genNamesForDestruct(2);
-  }
-  function onLoadObj(meshes) {
-    for (let key in meshes) {
-      matrixEngine.objLoader.initMeshBuffers(world.GL.gl, meshes[key]);
-    }
-    var textuteImageSamplers2 = {
-      source: ["res/images/armor.webp"],
-      mix_operation: "multiply"
-    };
-    world.Add("obj", 1, "me_cube_mesh", textuteImageSamplers2, meshes.me_cube_mesh);
-    _manifest.default.scene.me_cube_mesh.position.y = 1;
-    _manifest.default.scene.me_cube_mesh.LightsData.ambientLight.set(1, 1, 1);
-    _manifest.default.scene.me_cube_mesh.position.z = -20;
-    console.log('>.>>>>.>>>>.>>>>.>>>.>');
-  }
-  matrixEngine.objLoader.downloadMeshes({
-    me_cube_mesh: "res/3d-objects/destructable-mesh/27/meDestruct_cell_001.obj"
-  }, onLoadObj);
+  // dev
+  window.bigWheel = bigWheel;
+  physics.world.addBody(bigWheel);
+  _manifest.default.scene.outsideBox2.physics.currentBody = bigWheel;
+  _manifest.default.scene.outsideBox2.physics.enabled = true;
 };
 exports.runThis = runThis;
 
-},{"../index.js":4,"../networking2/matrix-stream.js":36,"../program/manifest.js":44,"../public/res/3d-objects/destructable-mesh/json1/test1.js":45,"../public/res/3d-objects/destructable-mesh/json1/test2.js":46,"cannon":41}],3:[function(require,module,exports){
+},{"../index.js":4,"../program/manifest":44,"cannon":41}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2122,7 +1952,7 @@ class constructMesh {
           }
           if (elements[j] in unpacked.hashindices) {
             unpacked.indices.push(unpacked.hashindices[elements[j]]);
-            console.log('HASH INDICES >>>> elements[j] ', elements[j]);
+            // console.log('HASH INDICES >>>> elements[j] ', elements[j])
           } else {
             /*
             			Each element of the face line array is a vertex which has its
@@ -2160,13 +1990,13 @@ class constructMesh {
               unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[0]] * inputArg.scale);
               unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[1]] * inputArg.scale);
               unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[2]] * inputArg.scale);
-              console.log('VERT PUSH >> (vertex[0] - 1) * 3 >>  ', (vertex[0] - 1) * 3);
+              // console.log('VERT PUSH >> (vertex[0] - 1) * 3 >>  ', (vertex[0] - 1) * 3)
               TEST_FACES.push(vertex[0] - 1);
             } else {
               unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[0]] * inputArg.scale.x);
               unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[1]] * inputArg.scale.y);
               unpacked.verts.push(+verts[(vertex[0] - 1) * 3 + initOrientation[2]] * inputArg.scale.z);
-              console.log('VERT PUSH2   >> (vertex[0] - 1) * 3 >>  ', (vertex[0] - 1) * 3);
+              // console.log('VERT PUSH2   >> (vertex[0] - 1) * 3 >>  ', (vertex[0] - 1) * 3)
             }
 
             // vertex textures
@@ -3494,7 +3324,7 @@ _manifest.default.operation.draws.cube = function (object, ray) {
     if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
     var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.z, object.rotation.axis.y);
     object.rotation.axisSystem[0].normalize();
-    var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), parseFloat(object.rotation.axisSystem[0].y.toFixed(2)));
+    var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), -parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), -parseFloat(object.rotation.axisSystem[0].y.toFixed(2)));
     var MY_ANGLE = 2 * Math.acos(QP.w);
     mat4.rotate(object.mvMatrix, object.mvMatrix, MY_ANGLE, AXIS);
   } else if (object.isHUD === true) {
@@ -4650,16 +4480,26 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
     } else if (_manifest.default.camera.SceneController == true) {
       _events.camera.setSceneCamera(object);
     }
-    var QP = object.physics.currentBody.quaternion;
-    QP.normalize();
-    mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-    if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
-    var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.z, object.rotation.axis.y);
-    object.rotation.axisSystem[0].normalize();
-    // TEST - Yes ultimate - MAybe even cube will be better
-    var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), -parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), -parseFloat(object.rotation.axisSystem[0].y.toFixed(2)));
-    var MY_ANGLE = 2 * Math.acos(QP.w);
-    mat4.rotate(object.mvMatrix, object.mvMatrix, MY_ANGLE, AXIS);
+    if (object.custom_type != 'torus') {
+      var QP = object.physics.currentBody.quaternion;
+      QP.normalize();
+      mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+      if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
+      var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.y, object.rotation.axis.z);
+      object.rotation.axisSystem[0].normalize();
+      // TEST - Yes ultimate - MAybe even cube will be better
+      // ORI 
+      // var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), -parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), -parseFloat(object.rotation.axisSystem[0].y.toFixed(2)))
+      var AXIS = vec3.fromValues(parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), parseFloat(object.rotation.axisSystem[0].y.toFixed(2)), parseFloat(object.rotation.axisSystem[0].z.toFixed(2)));
+      var MY_ANGLE = 2 * Math.acos(QP.w);
+      mat4.rotate(object.mvMatrix, object.mvMatrix, MY_ANGLE, AXIS);
+    } else if (object.custom_type == 'torus') {
+      mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
+      if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
+      mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
+      mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
+      mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
+    }
   } else if (object.isHUD === true) {
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
@@ -8238,14 +8078,17 @@ _manifest.default.operation.reDrawGlobal = function (time) {
             local.position.SetZ(local.physics.currentBody.position.y);
             local.position.SetY(local.physics.currentBody.position.z);
           }
-
-          // if(world.contentList[physicsLooper].custom_type &&
-          // 	world.contentList[physicsLooper].custom_type == 'torus') {
-          if (false) {
-            // world.contentList[physicsLooper].rotation.rotx = radToDeg(local.physics.currentBody.quaternion.toAxisAngle()[1]) + 90;
-            _matrixWorld.world.contentList[physicsLooper].rotation.rotx = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]) - 90;
-            _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]) - 0;
-            _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]) + 0;
+          if (_matrixWorld.world.contentList[physicsLooper].custom_type && _matrixWorld.world.contentList[physicsLooper].custom_type == 'torus') {
+            // [NOT PERFECT]
+            _matrixWorld.world.contentList[physicsLooper].rotation.rotx = 90 + (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+            _matrixWorld.world.contentList[physicsLooper].rotation.roty = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+            _matrixWorld.world.contentList[physicsLooper].rotation.rotz = (0, _utility.radToDeg)(local.physics.currentBody.quaternion.toAxisAngle()[1]);
+            var axisAngle = local.physics.currentBody.quaternion.toAxisAngle()[1];
+            _matrixWorld.world.contentList[physicsLooper].rotation.angle = axisAngle;
+            _matrixWorld.world.contentList[physicsLooper].rotation.axisSystem = local.physics.currentBody.quaternion.toAxisAngle();
+            _matrixWorld.world.contentList[physicsLooper].rotation.axis.x = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].x.toFixed(2));
+            _matrixWorld.world.contentList[physicsLooper].rotation.axis.z = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].y.toFixed(2));
+            _matrixWorld.world.contentList[physicsLooper].rotation.axis.y = parseFloat(local.physics.currentBody.quaternion.toAxisAngle()[0].z.toFixed(2));
           } else {
             var axisAngle = local.physics.currentBody.quaternion.toAxisAngle()[1];
             _matrixWorld.world.contentList[physicsLooper].rotation.angle = axisAngle;
@@ -8328,6 +8171,7 @@ _manifest.default.operation.reDrawGlobal = function (time) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
           _matrixWorld.world.contentList[_engine.looper].drawCustom(_matrixWorld.world.contentList[_engine.looper]);
           _matrixWorld.world.animate(_matrixWorld.world.contentList[_engine.looper]);
+
           //
         } else if ('pyramid' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
@@ -8379,7 +8223,7 @@ _manifest.default.operation.reDrawGlobal = function (time) {
         } else if ('squareTex' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
           _matrixWorld.world.drawSquareTex(_matrixWorld.world.contentList[_engine.looper]), 'noray';
-        } else if ('sphereLightTex' == _matrixWorld.world.contentList[_engine.looper].type || 'sphere' == _matrixWorld.world.contentList[_engine.looper].type || 'generatorLightTex' == _matrixWorld.world.contentList[_engine.looper].type) {
+        } else if ('sphereLighstTex' == _matrixWorld.world.contentList[_engine.looper].type || 'sphere' == _matrixWorld.world.contentList[_engine.looper].type || 'generatorLightTex' == _matrixWorld.world.contentList[_engine.looper].type) {
           _matrixWorld.world.GL.gl.useProgram(_matrixWorld.world.contentList[_engine.looper].shaderProgram);
           _matrixWorld.world.drawSphere(_matrixWorld.world.contentList[_engine.looper], 'noray');
         }
@@ -9995,8 +9839,9 @@ window.quat2 = glMatrix.quat2;
 window.vec2 = glMatrix.vec2;
 window.vec3 = glMatrix.vec3;
 window.vec4 = glMatrix.vec4;
-console.info(`%cMatrix-Engine %c 2.2.0 [beta-test-shadows] 🛸`, CS1, CS1);
+console.info(`%cMatrix-Engine %c 2.3.0 [wip-convexphys] 🛸`, CS1, CS1);
 var lastChanges = `
+[2.3.0] Look in cube_light_and_texture.js
 [2.2.0] Look in cube_light_and_texture.js
 [2.0.0] New networking based on kurento service and OpenVide web client
 [1.9.40] First version with both support opengles11/2 and opengles300
@@ -39281,36 +39126,5 @@ var App = {
   onload: function () {}
 };
 var _default = exports.default = App;
-
-},{}],45:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.mesh_ = exports.meshB = void 0;
-var mesh_ = exports.mesh_ = {
-  "scale": 1.000000,
-  "vertices": [1, 0.999992, -0.334451, 0.667607, 1, -0.667347, 0.667722, 0.667175, -0.66724, 0.667483, 0.667282, -1, 0.999704, 0.334843, -1, 0.667483, 0.667282, -1, 1, 1, -1, 0.999704, 0.334843, -1, 1, 0.999992, -0.334451, 0.667607, 1, -0.667347, 0.667334, 1, -1, 0.667334, 1, -1],
-  "normals": [-0.408856, -0.408002, 0.816279, -0.923917, -0.000214, 0.38258, -0.713492, -0.495437, 0.495407, -0.923917, -0.38258, 0.000549, -0.408551, -0.816523, 0.407849, 0, 0, -1, 0.577471, 0.577227, -0.577319, 0.707175, -0.000305, -0.707022, 0.70745, 0.706717, 0, 0, 1, 0, 0, 0.707022, -0.707175, -0.999969, -0.000427, 0.000793],
-  "uvs": [[0.870032, 2.2e-05, 0.868661, 0.868661, 0, 0, 1, 1, 0.131122, 0.131122, 1, 0.131012, 0.130624, 0.130237, 1, 0.12999, 0.58341, 0.458435, 0.625, 0.5, 0.541855, 0.499963, 0.541855, 0.5, 0.624999, 0.583194, 0.666549, 0.541582, 0.625, 0.583194, 1, 0.868661, 0.131123, 0, 1, 0, 0.625, 0.458417, 0.666583, 0.5, 0.999807, 0.869295]],
-  "faces": [8, 0, 1, 2, 0, 1, 2, 8, 2, 3, 4, 3, 4, 5, 8, 2, 4, 0, 3, 6, 7, 8, 5, 6, 7, 8, 9, 10, 8, 7, 6, 8, 11, 9, 12, 8, 6, 9, 8, 9, 13, 14, 8, 1, 3, 2, 15, 16, 17, 8, 5, 10, 6, 8, 18, 9, 8, 6, 10, 9, 9, 19, 13, 8, 1, 11, 3, 15, 20, 16]
-};
-var meshB = exports.meshB = {
-  "vertices": [-0.05742858426966302, 0.3614640449438202, -0.5847649396853932, -0.3901165842696629, 0.31258404494382036, 0.2767210603146067, 0.4567554157303372, -0.2362159550561797, 0.3372288603146067, -0.004048584269662925, -0.44041595505617964, -0.2344109396853933, -0.007838584269662774, -0.5290759550561794, 0.49204726031460666, 0.22547941573033703, 0.21710404494382035, 0.6046844603146068, 0.5147354157303372, 0.1969840449438202, -0.10327293968539322, -0.04759458426966279, 0.5234440449438205, -0.3146629396853933, 0.2973074157303371, -0.39711595505617964, -0.2067709396853933, -0.432828584269663, 0.22046404494382038, -0.4062989396853932, -0.384838584269663, -0.36917595505617945, 0.1391890603146067, -0.14053058426966292, -0.19463595505617975, -0.5184989396853933, -0.06270458426966286, 0.3586640449438205, 0.5489774603146067, 0.12872341573033697, 0.24464404494382025, -0.5897849396853933, -0.28646258426966287, 0.10466404494382037, 0.4850132603146067, 0.5699594157303371, 0.042324044943820194, 0.2133610603146067, -0.29631458426966284, 0.4644840449438203, 0.12053906031460668, 0.3487874157303371, -0.46463595505617944, 0.17465506031460667, -0.17333858426966287, 0.06500404494382012, -0.6445209396853933, -0.2969045842696628, -0.19441595505617953, -0.3925729396853932, 0.16719141573033713, -0.2205759550561796, 0.5817684603146067, 0.33441341573033717, 0.3436240449438203, -0.27650893968539325, -0.3112125842696629, 0.40228404494382025, -0.4039629396853932, 0.4905154157303371, 0.05004404494382014, 0.42739393231460665, -0.19048858426966286, -0.42533595505617955, -0.1752429396853933, -0.100920584269663, 0.06980404494382048, 0.5759724603146067, -0.009714584269662874, -0.2007759550561798, -0.5105349396853933, 0.11729541573033697, -0.49405595505617944, -0.06536093968539333, -0.39495258426966295, -0.3258559550561794, -0.04128693968539329, -0.461190584269663, 0.15196404494382015, -0.01863893968539332, 0.1910174157303371, -0.34695595505617943, 0.5503976603146067, 0.4391314157303371, 0.05966404494382033, -0.2135169396853933, 0.2546934157303371, -0.36893595505617977, -0.2865149396853932, -0.4106185842696629, 0.3563640449438203, 0.11265906031460671, -0.26327258426966305, 0.4483840449438203, 0.3221020603146067, 0.050865415730337205, 0.3124240449438202, 0.5985836603146067, 0.36892341573033716, -0.37203595505617953, -0.061882939685393296, -0.2593445842696628, 0.2915640449438202, -0.5534469396853932, -0.40987858426966295, 0.15452404494382027, 0.2632712603146067, -0.1174885842696628, -0.4191759550561795, 0.4614434603146067, 0.04471941573033722, 0.37774404494382036, -0.5475869396853932, 0.030517415730337172, 0.23870404494382041, -0.6515609396853932, -0.10939658426966303, -0.4759159550561796, -0.07148493968539335, -0.32932858426966294, -0.4183559550561798, 0.03514506031460665, 0.565701415730337, 0.09410404494382035, 0.05798906031460671, 0.4223454157303372, -0.36917595505617945, 0.16861306031460668, -0.11263658426966294, -0.3120559550561795, -0.4213129396853932, 0.3975814157303371, 0.08660404494382007, 0.5219468603146067, 0.3895374157303372, -0.2578559550561797, 0.4375793803146067, -0.2803605842696628, 0.01734404494382019, -0.5542289396853932, -0.30087058426966284, 0.20156404494382046, 0.4660688603146067, 0.46488541573033715, 0.25550404494382023, -0.1894389396853933, -0.07149458426966282, -0.20091595505617993, 0.5534104603146067, 0.02677941573033704, 0.06436404494382003, 0.6072890603146067, -0.23028658426966286, 0.5000840449438204, -0.11890493968539326, 0.26688741573033703, -0.44161595505617973, -0.19083693968539336, 0.10586141573033714, -0.47515595505617997, 0.5044486603146067, 0.12044141573033695, 0.13542404494382038, -0.5742909396853932, 0.13014941573033723, -0.4095959550561799, -0.2956409396853932, -0.07543058426966298, 0.011224044943820177, -0.6297829396853932, -0.2806145842696629, -0.34457595505617983, -0.22431293968539326, -0.394204584269663, 0.34108404494382033, -0.2744649396853932, 0.32837541573033713, -0.4519559550561795, -0.05777093968539329, -0.4461965842696628, 0.2234840449438204, 0.1220570603146067, -0.2612365842696628, -0.3810959550561797, 0.3073468603146067, -0.09941658426966304, 0.2442440449438203, 0.5679490603146067, 0.5472794157303371, 0.1526640449438203, -0.039118939685393345, -0.35450658426966275, -0.0470359550561798, 0.32651606031460667, -0.33818258426966297, 0.29534404494382044, -0.49360293968539315, 0.09564741573033708, -0.18601595505617946, 0.5885020603146066, -0.09288458426966284, 0.2554440449438204, -0.6264609396853932, 0.2655194157303371, -0.4868959550561795, 0.2234190603146067, -0.19031658426966291, 0.4049640449438204, 0.43720790031460666, -0.2023505842696628, 0.4125640449438202, -0.45876893968539323, -0.3996725842696628, 0.20018404494382042, -0.45495493968539313, 0.12832541573033718, 0.4367240449438203, -0.3275049396853933, -0.1513365842696628, -0.20065595505617967, 0.5084486603146067, 0.32158941573033717, 0.16992404494382035, -0.36519693968539324, -0.21953658426966294, -0.4589959550561799, 0.17666506031460666, 0.5102234157303371, -0.0010959550561799314, -0.014894939685393294, 0.08166141573033703, -0.19983595505617996, -0.46059093968539333, 0.3796694157303371, -0.022455955056179644, 0.5097000603146067, -0.2160065842696628, 0.33800404494382036, 0.4613738603146067, -0.41833858426966286, 0.03506404494382015, 0.18174106031460668, 0.12328741573033719, 0.015564044943820077, 0.6015348603146067, 0.13327141573033707, 0.30716404494382027, -0.5304249396853933, -0.09419458426966298, 0.4230040449438203, -0.4805789396853932, 0.2970134157303371, 0.1405640449438202, 0.5697234603146067, 0.04576741573033716, 0.009524044943820142, -0.5645089396853933],
-  "faces": [59, 57, 88, 2, 15, 23, 9, 19, 28, 9, 28, 29, 28, 10, 29, 31, 8, 32, 12, 7, 34, 33, 1, 34, 16, 33, 34, 7, 12, 35, 21, 7, 35, 0, 7, 40, 0, 40, 41, 40, 13, 41, 24, 3, 42, 3, 27, 42, 27, 4, 42, 10, 28, 43, 24, 42, 43, 36, 44, 45, 15, 2, 45, 2, 17, 45, 44, 15, 45, 19, 11, 46, 3, 24, 46, 11, 26, 46, 23, 5, 47, 20, 30, 47, 17, 2, 48, 2, 23, 48, 18, 11, 49, 11, 19, 49, 34, 1, 50, 1, 38, 50, 38, 14, 50, 5, 6, 51, 13, 21, 51, 6, 31, 51, 35, 5, 51, 21, 35, 51, 25, 14, 52, 5, 35, 53, 25, 52, 53, 7, 22, 54, 22, 16, 54, 34, 7, 54, 16, 34, 54, 27, 3, 55, 32, 8, 55, 4, 17, 56, 30, 4, 56, 48, 30, 56, 17, 48, 56, 13, 31, 57, 31, 32, 57, 41, 13, 57, 26, 32, 58, 3, 46, 58, 46, 26, 58, 55, 3, 58, 32, 55, 58, 11, 18, 59, 26, 11, 59, 18, 41, 59, 41, 57, 59, 28, 19, 60, 43, 28, 60, 24, 43, 60, 19, 46, 60, 46, 24, 60, 22, 9, 61, 16, 22, 61, 33, 16, 61, 9, 33, 61, 8, 36, 62, 36, 45, 62, 45, 17, 62, 27, 55, 62, 55, 8, 62, 9, 29, 63, 1, 33, 63, 33, 9, 63, 38, 1, 63, 10, 4, 64, 4, 39, 64, 39, 14, 64, 14, 25, 65, 35, 12, 65, 12, 50, 65, 50, 14, 65, 53, 35, 65, 25, 53, 65, 6, 5, 66, 5, 23, 66, 23, 15, 66, 31, 6, 66, 15, 44, 66, 14, 38, 67, 38, 10, 67, 10, 64, 67, 64, 14, 67, 9, 22, 68, 37, 18, 68, 22, 37, 68, 4, 30, 69, 30, 20, 69, 52, 4, 69, 53, 52, 69, 37, 0, 70, 18, 37, 70, 41, 18, 70, 0, 41, 70, 17, 4, 71, 4, 27, 71, 62, 17, 71, 27, 62, 71, 12, 34, 72, 22, 7, 73, 0, 37, 73, 37, 22, 73, 19, 9, 74, 18, 49, 74, 49, 19, 74, 9, 68, 74, 68, 18, 74, 7, 21, 75, 40, 7, 75, 21, 40, 75, 39, 4, 76, 14, 39, 76, 4, 52, 76, 52, 14, 76, 31, 13, 77, 13, 51, 77, 51, 31, 77, 4, 10, 78, 42, 4, 78, 10, 43, 78, 43, 42, 78, 8, 31, 79, 36, 8, 79, 44, 36, 79, 31, 66, 79, 66, 44, 79, 32, 26, 80, 26, 57, 80, 57, 32, 80, 23, 47, 81, 47, 30, 81, 30, 48, 81, 48, 23, 81, 50, 12, 82, 34, 50, 82, 12, 72, 82, 72, 34, 82, 29, 10, 83, 10, 38, 83, 63, 29, 83, 38, 63, 83, 20, 5, 84, 5, 53, 84, 69, 20, 84, 53, 69, 84, 21, 13, 85, 13, 40, 85, 40, 21, 85, 7, 0, 86, 0, 73, 86, 73, 7, 86, 5, 20, 87, 47, 5, 87, 20, 47, 87, 57, 26, 88, 26, 59, 88]
-};
-
-},{}],46:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.meshNIK = void 0;
-var meshNIK = exports.meshNIK = {
-  "verts": [-0.05742858426966302, 0.3614640449438202, -0.5847649396853932, -0.3901165842696629, 0.31258404494382036, 0.2767210603146067, 0.4567554157303372, -0.2362159550561797, 0.3372288603146067, -0.004048584269662925, -0.44041595505617964, -0.2344109396853933, -0.007838584269662774, -0.5290759550561794, 0.49204726031460666, 0.22547941573033703, 0.21710404494382035, 0.6046844603146068, 0.5147354157303372, 0.1969840449438202, -0.10327293968539322, -0.04759458426966279, 0.5234440449438205, -0.3146629396853933, 0.2973074157303371, -0.39711595505617964, -0.2067709396853933, -0.432828584269663, 0.22046404494382038, -0.4062989396853932, -0.384838584269663, -0.36917595505617945, 0.1391890603146067, -0.14053058426966292, -0.19463595505617975, -0.5184989396853933, -0.06270458426966286, 0.3586640449438205, 0.5489774603146067, 0.12872341573033697, 0.24464404494382025, -0.5897849396853933, -0.28646258426966287, 0.10466404494382037, 0.4850132603146067, 0.5699594157303371, 0.042324044943820194, 0.2133610603146067, -0.29631458426966284, 0.4644840449438203, 0.12053906031460668, 0.3487874157303371, -0.46463595505617944, 0.17465506031460667, -0.17333858426966287, 0.06500404494382012, -0.6445209396853933, -0.2969045842696628, -0.19441595505617953, -0.3925729396853932, 0.16719141573033713, -0.2205759550561796, 0.5817684603146067, 0.33441341573033717, 0.3436240449438203, -0.27650893968539325, -0.3112125842696629, 0.40228404494382025, -0.4039629396853932, 0.4905154157303371, 0.05004404494382014, 0.42739393231460665, -0.19048858426966286, -0.42533595505617955, -0.1752429396853933, -0.100920584269663, 0.06980404494382048, 0.5759724603146067, -0.009714584269662874, -0.2007759550561798, -0.5105349396853933, 0.11729541573033697, -0.49405595505617944, -0.06536093968539333, -0.39495258426966295, -0.3258559550561794, -0.04128693968539329, -0.461190584269663, 0.15196404494382015, -0.01863893968539332, 0.1910174157303371, -0.34695595505617943, 0.5503976603146067, 0.4391314157303371, 0.05966404494382033, -0.2135169396853933, 0.2546934157303371, -0.36893595505617977, -0.2865149396853932, -0.4106185842696629, 0.3563640449438203, 0.11265906031460671, -0.26327258426966305, 0.4483840449438203, 0.3221020603146067, 0.050865415730337205, 0.3124240449438202, 0.5985836603146067, 0.36892341573033716, -0.37203595505617953, -0.061882939685393296, -0.2593445842696628, 0.2915640449438202, -0.5534469396853932, -0.40987858426966295, 0.15452404494382027, 0.2632712603146067, -0.1174885842696628, -0.4191759550561795, 0.4614434603146067, 0.04471941573033722, 0.37774404494382036, -0.5475869396853932, 0.030517415730337172, 0.23870404494382041, -0.6515609396853932, -0.10939658426966303, -0.4759159550561796, -0.07148493968539335, -0.32932858426966294, -0.4183559550561798, 0.03514506031460665, 0.565701415730337, 0.09410404494382035, 0.05798906031460671, 0.4223454157303372, -0.36917595505617945, 0.16861306031460668, -0.11263658426966294, -0.3120559550561795, -0.4213129396853932, 0.3975814157303371, 0.08660404494382007, 0.5219468603146067, 0.3895374157303372, -0.2578559550561797, 0.4375793803146067, -0.2803605842696628, 0.01734404494382019, -0.5542289396853932, -0.30087058426966284, 0.20156404494382046, 0.4660688603146067, 0.46488541573033715, 0.25550404494382023, -0.1894389396853933, -0.07149458426966282, -0.20091595505617993, 0.5534104603146067, 0.02677941573033704, 0.06436404494382003, 0.6072890603146067, -0.23028658426966286, 0.5000840449438204, -0.11890493968539326, 0.26688741573033703, -0.44161595505617973, -0.19083693968539336, 0.10586141573033714, -0.47515595505617997, 0.5044486603146067, 0.12044141573033695, 0.13542404494382038, -0.5742909396853932, 0.13014941573033723, -0.4095959550561799, -0.2956409396853932, -0.07543058426966298, 0.011224044943820177, -0.6297829396853932, -0.2806145842696629, -0.34457595505617983, -0.22431293968539326, -0.394204584269663, 0.34108404494382033, -0.2744649396853932, 0.32837541573033713, -0.4519559550561795, -0.05777093968539329, -0.4461965842696628, 0.2234840449438204, 0.1220570603146067, -0.2612365842696628, -0.3810959550561797, 0.3073468603146067, -0.09941658426966304, 0.2442440449438203, 0.5679490603146067, 0.5472794157303371, 0.1526640449438203, -0.039118939685393345, -0.35450658426966275, -0.0470359550561798, 0.32651606031460667, -0.33818258426966297, 0.29534404494382044, -0.49360293968539315, 0.09564741573033708, -0.18601595505617946, 0.5885020603146066, -0.09288458426966284, 0.2554440449438204, -0.6264609396853932, 0.2655194157303371, -0.4868959550561795, 0.2234190603146067, -0.19031658426966291, 0.4049640449438204, 0.43720790031460666, -0.2023505842696628, 0.4125640449438202, -0.45876893968539323, -0.3996725842696628, 0.20018404494382042, -0.45495493968539313, 0.12832541573033718, 0.4367240449438203, -0.3275049396853933, -0.1513365842696628, -0.20065595505617967, 0.5084486603146067, 0.32158941573033717, 0.16992404494382035, -0.36519693968539324, -0.21953658426966294, -0.4589959550561799, 0.17666506031460666, 0.5102234157303371, -0.0010959550561799314, -0.014894939685393294, 0.08166141573033703, -0.19983595505617996, -0.46059093968539333, 0.3796694157303371, -0.022455955056179644, 0.5097000603146067, -0.2160065842696628, 0.33800404494382036, 0.4613738603146067, -0.41833858426966286, 0.03506404494382015, 0.18174106031460668, 0.12328741573033719, 0.015564044943820077, 0.6015348603146067, 0.13327141573033707, 0.30716404494382027, -0.5304249396853933, -0.09419458426966298, 0.4230040449438203, -0.4805789396853932, 0.2970134157303371, 0.1405640449438202, 0.5697234603146067, 0.04576741573033716, 0.009524044943820142, -0.5645089396853933],
-  "faces": [59, 57, 88, 2, 15, 23, 9, 19, 28, 9, 28, 29, 28, 10, 29, 31, 8, 32, 12, 7, 34, 33, 1, 34, 16, 33, 34, 7, 12, 35, 21, 7, 35, 0, 7, 40, 0, 40, 41, 40, 13, 41, 24, 3, 42, 3, 27, 42, 27, 4, 42, 10, 28, 43, 24, 42, 43, 36, 44, 45, 15, 2, 45, 2, 17, 45, 44, 15, 45, 19, 11, 46, 3, 24, 46, 11, 26, 46, 23, 5, 47, 20, 30, 47, 17, 2, 48, 2, 23, 48, 18, 11, 49, 11, 19, 49, 34, 1, 50, 1, 38, 50, 38, 14, 50, 5, 6, 51, 13, 21, 51, 6, 31, 51, 35, 5, 51, 21, 35, 51, 25, 14, 52, 5, 35, 53, 25, 52, 53, 7, 22, 54, 22, 16, 54, 34, 7, 54, 16, 34, 54, 27, 3, 55, 32, 8, 55, 4, 17, 56, 30, 4, 56, 48, 30, 56, 17, 48, 56, 13, 31, 57, 31, 32, 57, 41, 13, 57, 26, 32, 58, 3, 46, 58, 46, 26, 58, 55, 3, 58, 32, 55, 58, 11, 18, 59, 26, 11, 59, 18, 41, 59, 41, 57, 59, 28, 19, 60, 43, 28, 60, 24, 43, 60, 19, 46, 60, 46, 24, 60, 22, 9, 61, 16, 22, 61, 33, 16, 61, 9, 33, 61, 8, 36, 62, 36, 45, 62, 45, 17, 62, 27, 55, 62, 55, 8, 62, 9, 29, 63, 1, 33, 63, 33, 9, 63, 38, 1, 63, 10, 4, 64, 4, 39, 64, 39, 14, 64, 14, 25, 65, 35, 12, 65, 12, 50, 65, 50, 14, 65, 53, 35, 65, 25, 53, 65, 6, 5, 66, 5, 23, 66, 23, 15, 66, 31, 6, 66, 15, 44, 66, 14, 38, 67, 38, 10, 67, 10, 64, 67, 64, 14, 67, 9, 22, 68, 37, 18, 68, 22, 37, 68, 4, 30, 69, 30, 20, 69, 52, 4, 69, 53, 52, 69, 37, 0, 70, 18, 37, 70, 41, 18, 70, 0, 41, 70, 17, 4, 71, 4, 27, 71, 62, 17, 71, 27, 62, 71, 12, 34, 72, 22, 7, 73, 0, 37, 73, 37, 22, 73, 19, 9, 74, 18, 49, 74, 49, 19, 74, 9, 68, 74, 68, 18, 74, 7, 21, 75, 40, 7, 75, 21, 40, 75, 39, 4, 76, 14, 39, 76, 4, 52, 76, 52, 14, 76, 31, 13, 77, 13, 51, 77, 51, 31, 77, 4, 10, 78, 42, 4, 78, 10, 43, 78, 43, 42, 78, 8, 31, 79, 36, 8, 79, 44, 36, 79, 31, 66, 79, 66, 44, 79, 32, 26, 80, 26, 57, 80, 57, 32, 80, 23, 47, 81, 47, 30, 81, 30, 48, 81, 48, 23, 81, 50, 12, 82, 34, 50, 82, 12, 72, 82, 72, 34, 82, 29, 10, 83, 10, 38, 83, 63, 29, 83, 38, 63, 83, 20, 5, 84, 5, 53, 84, 69, 20, 84, 53, 69, 84, 21, 13, 85, 13, 40, 85, 40, 21, 85, 7, 0, 86, 0, 73, 86, 73, 7, 86, 5, 20, 87, 47, 5, 87, 20, 47, 87, 57, 26, 88, 26, 59, 88]
-};
 
 },{}]},{},[1]);

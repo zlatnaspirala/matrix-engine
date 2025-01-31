@@ -1,11 +1,13 @@
 /**
  * @Author Nikola Lukic
  * @Description Matrix Engine Api Example.
+ * Torus geometry with physics.
  */
 
 import App from "../program/manifest";
 import * as matrixEngine from "../index.js";
 let VT = matrixEngine.Engine.VT;
+import * as CANNON from 'cannon';
 
 window.App = App
 export var runThis = world => {
@@ -24,7 +26,7 @@ export var runThis = world => {
 
   var tex = {
     source: ["res/images/complex_texture_1/diffuse.webp"],
-    mix_operation: "multiply", // ENUM : multiply , divide ,
+    mix_operation: "multiply"
   };
 
   let gravityVector = [0, 0, -9.82];
@@ -42,7 +44,6 @@ export var runThis = world => {
   // App.scene.outsideBox2.streamTextures = new VT(
   //   "res/video-texture/me.mkv", 'mytorusStreamTex'
   // );
-
   var wheelsPoly = 32;
   var wheelInput1 = 2;
   var wheelInput2 = 1;
@@ -50,23 +51,13 @@ export var runThis = world => {
     mass: 1,
     type: CANNON.Body.DYNAMIC,
     shape: CANNON.Trimesh.createTorus(wheelInput1, wheelInput2, wheelsPoly, wheelsPoly),
-    position: new CANNON.Vec3(0, -16.5, 2)
+    position: new CANNON.Vec3(0, -10, 2)
   });
-  // var testRot = new CANNON.Quaternion(0,0,0,0);
-  // bigWheel.quaternion.setFromEuler(0, -Math.PI / 2, 0)
-  // bigWheel.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), Math.PI / 4);
+
   // dev
   window.bigWheel = bigWheel;
 
-  // console.log('TORUS TEST RENDER PHYS')
-  // App.scene.outsideBox2.physics.currentBody.force.set(0, 10000, 0);
-  
   physics.world.addBody(bigWheel);
   App.scene.outsideBox2.physics.currentBody = bigWheel;
   App.scene.outsideBox2.physics.enabled = true;
-
-  // App.scene.outsideBox2.glBlend.blendEnabled = true;
-  // App.scene.outsideBox2.glBlend.blendParamSrc = matrixEngine.utility.ENUMERATORS.glBlend.param[1];
-  // App.scene.outsideBox2.glBlend.blendParamDest = matrixEngine.utility.ENUMERATORS.glBlend.param[1];
-
 }

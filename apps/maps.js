@@ -15,9 +15,13 @@ import {map} from "./maps/map2";
 import {ENUMERATORS, isMobile} from '../lib/utility';
 
 export var runThis = world => {
-
+	canvas.style.cursor = 'none';
 	App.camera.FirstPersonController = true;
 	// matrixEngine.Events.camera.fly = true;
+	App.camera.speedAmp = 0.2;//ori 0.02
+	matrixEngine.Events.camera.yPos = 10;
+	App.camera.yawRateOnEdge = 3; //ori 3
+	App.camera.yawRate = 3; // 1
 	// Load Physics world.
 	let gravityVector = [0, 0, -29.82];
 	let physics = world.loadPhysics(gravityVector);

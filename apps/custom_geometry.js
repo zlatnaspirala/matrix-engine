@@ -10,7 +10,8 @@ import * as CANNON from 'cannon';
 window.App = App
 export var runThis = world => {
 	App.camera.SceneController = true;
-
+	matrixEngine.Events.camera.yPos = 8;
+	matrixEngine.Events.camera.zPos = 22;
 	canvas.addEventListener('mousedown', (ev) => {
 		matrixEngine.raycaster.checkingProcedure(ev);
 	});

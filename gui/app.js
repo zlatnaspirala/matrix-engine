@@ -1,6 +1,6 @@
 import * as matrixEngine from '../index.js';
 import App from "../program/manifest.js";
-import {anyCanvas} from "../lib/engine.js";
+import {anyCanvas, VT} from "../lib/engine.js";
 let Vjs3 = matrixEngine.Engine.Vjs3;
 var world;
 
@@ -39,14 +39,18 @@ var runThis = world => {
   /////////////////////////////////////////
   // CANVAS2D_SURFACE - IS TEXTURE EDITOR
   /////////////////////////////////////////
-  // E("HOLDER_STREAMS").style.display = "block";
+   E("HOLDER_STREAMS").style.display = "block";
+ 
+  setTimeout(function() {  
+ App.camera.SceneController = true;
 
-  setTimeout(function() {
-    App.scene.outsideBox.streamTextures = new anyCanvas(
-      "2DTextureEditor/templates/slot/",
+    App.scene.outsideBox.streamTextures = new Vjs3 (
+      "../2DTextureEditor/templates/slot/",
       "HELLO_WORLD")
     App.scene.outsideBox.streamTextures.showTextureEditor();
-    setTimeout(function() { E("HOLDER_STREAMS").style.display = "none" }, 10000);
+    setTimeout(function() { 
+			// E("HOLDER_STREAMS").style.display = "none" 
+			}, 10000);
   }, 500);
 };
 

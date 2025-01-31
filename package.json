@@ -66,7 +66,7 @@
     "networking",
     "physics",
     "cannon.js",
-    "bvh-glmatrx",
+    "bvh-glmatrix",
     "bvh.js",
     "bvh-skeletal",
     "bvh-webgl",
@@ -104,13 +104,14 @@
 		"map-loader",
 		"map-colliders",
 		"sprite-animation",
+		"sprite-animation-cpu",
 		"sprite-3d-texture",
 		"destruct-mesh"
   ],
   "author": "Nikola Lukic <zlatnaspirala@gmail.com> (https://maximumroulette.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zlatnaspirala/webgl2-glmatrix2-engine/issues"
+    "url": "https://github.com/zlatnaspirala/matrix-engine/issues"
   },
-  "homepage": "https://github.com/zlatnaspirala/webgl2-glmatrix2-engine#readme"
+  "homepage": "https://github.com/zlatnaspirala/matrix-engine#readme"
 }

@@ -48,18 +48,18 @@
 
 This is small but inspiring project.
 The benefits of this project is offering an overview of the entire opengles program logic,
-easy native implementations (hybrid app/ CEF), object structural. Not closed too mush inself. Thanks to Mr.Keestu i use
-(gl-program-structure) new version of glmatrix (2.0). Push&Pop matrix just like in
+easy native implementations (hybrid app/ CEF), object structural. Not closed too much inself. Thanks to Mr.Keestu i use
+(gl-program-structure) new version of glmatrix (3.4.0). Push&Pop matrix just like in
 opengles 1.1. Also can be downgraded to openGLES 1.1. webGL Lightweight library based on glmatrix engine.
 For multiplayer used webRTC done with io socket. Physics done with last version of cannon.js. I use free software Blender 2.90.1 for 3d Object mesh works. MatrixEngine is Blender frendly orientend lib (I use blender 4.1). Another frendly tools comes from mixamo.com. Mixamo is great service used for creating my 3d assets. GIMP and MsPaint also used for editing images.
 Networking is part of matrix engine, integrated whole MultyRTC lib but this is old and deplaced in ver 2 (this old part have a server part signaling server and it is under `./networking/` folder).
-New networking is under `./networking2/` folder. There is no server code for server part becouse i use kurento/openvidu service and code. I have running service under `https://maximuroullete.com:4443/` for my dev/prodc VPS server.
+New networking is under `./networking2/` folder. There is no server code for server part because i use kurento/openvidu service and code. I have running service under `https://maximuroullete.com:4443/` for my dev/prodc VPS server.
 In both cases i use webRTC protocol for stream and data flow.
 Used webRTC realtime protocol TCP/UDP. Powered by webGL vs webRTC tech enjoy!
 
 ### Limitation ⚠
 
-- Basic implementation for physics (Cube, Sphere).
+- Basic implementation for physics (Cube, Sphere, Convex BAsic WIP).
 - From [2.3.0] Much better physics for Sphere && ConvexPolyhedron
 
 ### Next Features 🔜
@@ -84,7 +84,7 @@ Used webRTC realtime protocol TCP/UDP. Powered by webGL vs webRTC tech enjoy!
 
   Project template in `matrix-engine-starter`
 
-  - Slot Mashine [WIP]
+  - Slot Mashine [STABLE+MOB]
     https://maximumroulette.com/apps/matrix-engine-starter/projects/matrix-slot/index.html
 
   - Matrix roulette [WIP]
