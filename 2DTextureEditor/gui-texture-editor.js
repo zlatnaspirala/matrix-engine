@@ -35,7 +35,7 @@ var runTextureEditor = (curTexId) => {
       // --------------------------
       //  Manual code
       // --------------------------
-      console.log('NIDZA TEST EDITOR TEST HELLO ', HELLO)
+      // console.log('NIDZA TEST EDITOR TEST HELLO ', HELLO)
       // if you setup in manifest 
       // IMAGE_LOADER_PREFIX : false , you can put full url
       // if you setup true , path have prefix /res/animations/ 
