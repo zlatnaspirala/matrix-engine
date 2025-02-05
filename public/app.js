@@ -3806,7 +3806,7 @@ _manifest.default.operation.draws.drawObj = function (object, ray) {
   lighting = true;
   mat4.identity(object.mvMatrix);
   _matrixWorld.world.mvPushMatrix(object.mvMatrix, this.mvMatrixStack);
-  if (object.physics.enabled == true) {
+  if (object.physics.enabled == true && object.rotation.axisSystem) {
     if (_manifest.default.camera.FirstPersonController == true) {
       _events.camera.setCamera(object);
     } else if (_manifest.default.camera.SceneController == true) {
@@ -4488,9 +4488,7 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
       var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.y, object.rotation.axis.z);
       object.rotation.axisSystem[0].normalize();
       // TEST - Yes ultimate - MAybe even cube will be better
-      // ORI 
-      // var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), -parseFloat(object.rotation.axisSystem[0].z.toFixed(2)), -parseFloat(object.rotation.axisSystem[0].y.toFixed(2)))
-      var AXIS = vec3.fromValues(parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), parseFloat(object.rotation.axisSystem[0].y.toFixed(2)), parseFloat(object.rotation.axisSystem[0].z.toFixed(2)));
+      var AXIS = vec3.fromValues(-parseFloat(object.rotation.axisSystem[0].x.toFixed(2)), parseFloat(object.rotation.axisSystem[0].y.toFixed(2)), parseFloat(object.rotation.axisSystem[0].z.toFixed(2)));
       var MY_ANGLE = 2 * Math.acos(QP.w);
       mat4.rotate(object.mvMatrix, object.mvMatrix, MY_ANGLE, AXIS);
     } else if (object.custom_type == 'torus') {
