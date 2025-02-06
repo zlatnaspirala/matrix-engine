@@ -325,7 +325,7 @@ var _clientConfig = _interopRequireDefault(require("../client-config"));
 var _sounds = require("./sounds");
 var _app = require("../networking2/app");
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-if (_manifest.default.offScreenCanvas == true || _utility.QueryString.offScreen == 'true') {
+if (typeof _utility.QueryString.offScreen !== 'undefined' && (_manifest.default.offScreenCanvas == true || _utility.QueryString.offScreen == 'true')) {
   _manifest.default.offScreenCanvas = true;
   console.log('[matrix-engine] offScreenCanvas activated =>', _manifest.default.offScreenCanvas);
   _utility.scriptManager.LOAD('./hacker-timer/hack-timer.js');
@@ -376,6 +376,7 @@ let activateNet2 = (CustomConfig, sessionOption) => {
     // Make run
     // -----------------------
     if (typeof sessionOption === 'undefined') {
+      var sessionOption = {};
       sessionOption.sessionName = 'matrix-engine-random';
       sessionOption.resolution = '160x240';
     }
