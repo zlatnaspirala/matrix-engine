@@ -1120,6 +1120,26 @@ App.scene.myMirrorUP.setFBO({
 
 <img width="512" src ="https://github.com/zlatnaspirala/matrix-engine/blob/master/non-project-files/shadows.png"/>
 
+## Multiplatform parts
+
+### ⚠ You need to have msbuild.exe on you computer.
+
+`msbuild.exe` typically does not come pre-installed with Windows. It is part of the Microsoft Build Tools, which are usually installed along with Visual Studio or the .NET SDK. Here's a summary of the ways to get msbuild.exe:
+
+ - Visual Studio: When you install Visual Studio, MSBuild is included as part of the installation. You can choose to install just the build tools if you don't need the full IDE.
+
+ - .NET SDK: Installing the .NET SDK also includes MSBuild. This option is useful if you're working primarily with .NET Core or .NET 5+ projects.
+
+ - Microsoft Build Tools: You can install the standalone Microsoft Build Tools package, which includes MSBuild without the full Visual Studio IDE. This is useful for build servers or CI/CD pipelines.
+
+
+For building windows exe file use `desktop-build.bat`
+ - This script will install latest version of nuget.exe in folder "multiplatform\win\cef-sharp"
+ - Install cef deps for cef in package folder (cef 118.6.80)
+ - Build exe file with msbuild.exe
+
+After running `desktop-build.bat`  goto folder `multiplatform\win\cef-sharp\bin\Release` and you can find matrix-engine.exe builded.
+
 ## PWA Fully runned
 
 Integrated `Add to Home page` and `regular html5 page` options.
