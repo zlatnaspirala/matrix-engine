@@ -29,10 +29,17 @@ echo %mypath:~0,-1%
 set PROJECT=%mypath%multiplatform\win\cef-sharp
 echo "Check packages..."
 call cd %PROJECT%
-echo Download latest Nuget.exe
-REM Standard win tool bitsadmin.exe https://www.nuget.org/downloads
-call bitsadmin.exe /transfer "GetNuget" https://dist.nuget.org/win-x86-commandline/latest/nuget.exe %PROJECT%\nuget.exe
-echo "nuget restore, please wait..."
+echo %PROJECT%
+@REM Standard win tool bitsadmin.exe https://www.nuget.org/downloads
+@REM call bitsadmin.exe /transfer "nuget" https://dist.nuget.org/win-x86-commandline/latest/nuget.exe %PROJECT%\nuget.exe
+call curl -k https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -o nuget.exe
+@REM call bitsadmin /create myDownloadJob
+@REM call bitsadmin /addfile myDownloadJob https://dist.nuget.org/win-x86-commandline/latest/nuget.exe %PROJECT%\nuget.exe
+@REM call bitsadmin /resume myDownloadJob
+@REM call bitsadmin /info myDownloadJob /verbose
+@REM call bitsadmin /complete myDownloadJob
+@REM call bitsadmin.exe /transfer myDownloadJob /download /priority normal https://dist.nuget.org/win-x86-commandline/latest/nuget.exe nuget.exe
+
 call nuget restore
 call "%msBuildDir%\msbuild.exe" "%mypath%\multiplatform\win\cef-sharp\matrix-engine.sln" /p:Configuration=Release
 
