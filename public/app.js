@@ -2,7 +2,7 @@
 "use strict";
 
 var matrixEngine = _interopRequireWildcard(require("./index.js"));
-var _torus_geometry = require("./apps/torus_geometry.js");
+var _adding_square_texture = require("./apps/adding_square_texture.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // CHANGE HERE IF YOU WANNA USE app-build.hmtl
@@ -23,12 +23,12 @@ window.webGLStart = () => {
   window.App = App;
   world = matrixEngine.matrixWorld.defineworld(canvas);
   world.callReDraw();
-  (0, _torus_geometry.runThis)(world);
+  (0, _adding_square_texture.runThis)(world);
 };
 window.matrixEngine = matrixEngine;
 var App = matrixEngine.App;
 
-},{"./apps/torus_geometry.js":2,"./index.js":4}],2:[function(require,module,exports){
+},{"./apps/adding_square_texture.js":2,"./index.js":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36,67 +36,31 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.runThis = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
-var matrixEngine = _interopRequireWildcard(require("../index.js"));
-var CANNON = _interopRequireWildcard(require("cannon"));
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
- * @Author Nikola Lukic
- * @Description Matrix Engine Api Example.
- * Torus geometry with physics.
+ *@Author Nikola Lukic
+ *@Description Matrix Engine Api Example
  */
 
-let VT = matrixEngine.Engine.VT;
-window.App = _manifest.default;
+/* globals world App world */
+
 var runThis = world => {
-  _manifest.default.camera.SceneController = true;
-  canvas.addEventListener('mousedown', ev => {
-    matrixEngine.raycaster.checkingProcedure(ev);
-  });
-  window.addEventListener('ray.hit.event', ev => {
-    console.log("You shoot the object! Nice!", ev);
-    if (ev.detail.hitObject.physics.enabled == true) {
-      ev.detail.hitObject.physics.currentBody.force.set(0, 0, 1000);
-    }
-  });
-  var tex = {
+  var textuteImageSamplers = {
     source: ["res/images/complex_texture_1/diffuse.webp"],
     mix_operation: "multiply"
   };
-  let gravityVector = [0, 0, -9.82];
-  let physics = world.loadPhysics(gravityVector);
-  // Add ground
-  physics.addGround(_manifest.default, world, tex);
-  world.Add("generatorLightTex", 1, "outsideBox2", tex, {
-    custom_type: 'torus',
-    slices: 8,
-    loops: 20,
-    inner_rad: 1.5,
-    outerRad: 2
+  world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers);
+  _manifest.default.scene.MySquareTexure1.rotation.rotationSpeed.x = 10;
+  canvas.addEventListener('mousedown', ev => {
+    matrixEngine.raycaster.checkingProcedure(ev);
   });
-  // App.scene.outsideBox2.streamTextures = new VT(
-  //   "res/video-texture/me.mkv", 'mytorusStreamTex'
-  // );
-  var wheelsPoly = 32;
-  var wheelInput1 = 2;
-  var wheelInput2 = 1;
-  var bigWheel = new CANNON.Body({
-    mass: 1,
-    type: CANNON.Body.DYNAMIC,
-    shape: CANNON.Trimesh.createTorus(wheelInput1, wheelInput2, wheelsPoly, wheelsPoly),
-    position: new CANNON.Vec3(0, -10, 2)
+  addEventListener("ray.hit.event", function (e) {
+    console.info("HIT: " + e.detail.hitObject.rotation.rotx);
   });
-
-  // dev
-  window.bigWheel = bigWheel;
-  physics.world.addBody(bigWheel);
-  _manifest.default.scene.outsideBox2.physics.currentBody = bigWheel;
-  _manifest.default.scene.outsideBox2.physics.enabled = true;
 };
 exports.runThis = runThis;
 
-},{"../index.js":4,"../program/manifest":44,"cannon":41}],3:[function(require,module,exports){
+},{"../program/manifest":44}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1100,6 +1064,7 @@ function VT(p, name, options) {
   };
   ROOT.video.addEventListener('loadeddata', ROOT.video.READY, false);
   ROOT.video.src = p;
+  ROOT.video.id = name;
   ROOT.video.load();
   ROOT.UPDATE = function () {
     if (ROOT.options.mixWithCanvas2d == false) return;
@@ -4485,7 +4450,7 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
       var QP = object.physics.currentBody.quaternion;
       QP.normalize();
       mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-      if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
+      // if(raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
       var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.y, object.rotation.axis.z);
       object.rotation.axisSystem[0].normalize();
       // TEST - Yes ultimate - MAybe even cube will be better
@@ -4494,7 +4459,7 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
       mat4.rotate(object.mvMatrix, object.mvMatrix, MY_ANGLE, AXIS);
     } else if (object.custom_type == 'torus') {
       mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-      if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
+      // if(raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
       mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
       mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
       mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
@@ -4504,7 +4469,7 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
-    if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
+    // if(raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
   } else {
     if (_manifest.default.camera.FirstPersonController == true) {
       _events.camera.setCamera(object);
@@ -4512,7 +4477,8 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
       _events.camera.setSceneCamera(object);
     }
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-    if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
+    // if(raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
+
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
@@ -4922,6 +4888,7 @@ class Position {
     this.targetY = y;
     this.targetZ = z;
     this.thrust = 0.01;
+    this.phySleepOn2digits = false;
     return this;
   }
   setSpeed(n) {
@@ -8070,7 +8037,7 @@ _manifest.default.operation.reDrawGlobal = function (time) {
       if (_matrixWorld.world.contentList[physicsLooper].physics.enabled) {
         var local = _matrixWorld.world.contentList[physicsLooper];
         if (local.physics.currentBody.shapeOrientations.length == 1) {
-          if (local.position.x.toFixed(2) == local.physics.currentBody.position.x.toFixed(2)) {
+          if (local.position.x.toFixed(2) == local.physics.currentBody.position.x.toFixed(2) && local.position.phySleepOn2digits == true) {
             // console.log(' TEST SLEEP RENDER local.position.x', local.position.x.toFixed(2), " VS ", local.physics.currentBody.position.x.toFixed(2))
           } else {
             local.position.SetX(local.physics.currentBody.position.x);

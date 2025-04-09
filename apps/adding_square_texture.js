@@ -15,4 +15,12 @@ export var runThis = world => {
   world.Add("squareTex", 1, "MySquareTexure1", textuteImageSamplers);
 
   App.scene.MySquareTexure1.rotation.rotationSpeed.x = 10;
+
+	canvas.addEventListener('mousedown', (ev) => {
+    matrixEngine.raycaster.checkingProcedure(ev);
+  });
+
+	addEventListener("ray.hit.event", function(e) {
+		console.info("HIT: " + e.detail.hitObject.rotation.rotx);
+	});
 };
