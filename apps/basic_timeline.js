@@ -65,12 +65,12 @@ export var runThis = (world) => {
 	window.character1 = character1
 	window.App = App;
 	window.matrixEngine = matrixEngine;
-	console.log(character1 + "<<<<")
+	console.log(character1 + "<")
 
 	matrixEngine.matrixWorld.world.addCommandAtSeqIndex(
 		function() {
-			console.log("WHAT EVER HERE 1")
-		} , 1
+			console.log("WHAT EVER HERE 5")
+		} , 5
 	)
 
 	matrixEngine.matrixWorld.world.addCommandAtSeqIndex(
@@ -78,5 +78,11 @@ export var runThis = (world) => {
 			console.log("WHAT EVER HERE 10 ")
 		} , 10
 	)
+
+	matrixEngine.matrixWorld.world.addSubCommand(
+		function () {
+			console.log("do it for only 100 frame on 3 seq FRAMEID!")
+		} , 100 , 3
+	) 
 
 };

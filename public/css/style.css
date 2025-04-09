@@ -257,13 +257,14 @@ span {
 .timeLineSlider {
 	display: flex;
 	flex-direction: row;
+	font-family: "stormfaze";
 }
 
 .timeLineSlider,
 p {
 	background: rgb(187 69 32 / 50%);
-	/* width:100%; */
-	padding: 5px 5px 5px 5px;
+	width:100%;
+	padding: 1px 1px 1px 1px;
 }
 
 /* For animation Line */

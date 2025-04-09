@@ -1094,14 +1094,25 @@ New args for timeline feature:
 New example script for this feature `basic_timeline.js`
 
 Add command for execute every time on sequence (for this example at index 1) reached :
-`js
+```js
 	 	matrixEngine.matrixWorld.world.addCommandAtSeqIndex(
 		function() {
 			console.log("WHAT EVER HERE")
 		} , 1
 	)
-	 `
-Commands index begin from 1.
+```
+Commands index begin from first frame from seq 1.
+
+From [2.3.63] Run on frame100 only in seq3.
+Definition: `world.addSubCommand = function(COMMAND, INDEX, onlyForSeq)`
+Defautl values for onlyForSeq, onlyForPeriod is null means `call command for every seq`
+```js
+	matrixEngine.matrixWorld.world.addSubCommand(
+		function () {
+			console.log("do it for only 100 frame on 3 seq FRAMEID!")
+		} , 100 , 3
+	) 
+```
 
 ### FBO camera
 
