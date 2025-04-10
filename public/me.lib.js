@@ -1021,6 +1021,7 @@ function VT(p, name, options) {
   };
   ROOT.video.addEventListener('loadeddata', ROOT.video.READY, false);
   ROOT.video.src = p;
+  ROOT.video.id = name;
   ROOT.video.load();
   ROOT.UPDATE = function () {
     if (ROOT.options.mixWithCanvas2d == false) return;
@@ -4406,7 +4407,7 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
       var QP = object.physics.currentBody.quaternion;
       QP.normalize();
       mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-      if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
+      // if(raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
       var t = vec3.fromValues(object.rotation.axis.x, object.rotation.axis.y, object.rotation.axis.z);
       object.rotation.axisSystem[0].normalize();
       // TEST - Yes ultimate - MAybe even cube will be better
@@ -4415,7 +4416,7 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
       mat4.rotate(object.mvMatrix, object.mvMatrix, MY_ANGLE, AXIS);
     } else if (object.custom_type == 'torus') {
       mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-      if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
+      // if(raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
       mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
       mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
       mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
@@ -4425,7 +4426,7 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
-    if (raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
+    // if(raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
   } else {
     if (_manifest.default.camera.FirstPersonController == true) {
       _events.camera.setCamera(object);
@@ -4433,7 +4434,8 @@ _manifest.default.operation.draws.sphere = function (object, ray) {
       _events.camera.setSceneCamera(object);
     }
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-    if (raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
+    // if(raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
+
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rx), object.rotation.getRotDirX());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.ry), object.rotation.getRotDirY());
     mat4.rotate(object.mvMatrix, object.mvMatrix, (0, _engine.degToRad)(object.rotation.rz), object.rotation.getRotDirZ());
@@ -4843,6 +4845,7 @@ class Position {
     this.targetY = y;
     this.targetZ = z;
     this.thrust = 0.01;
+    this.phySleepOn2digits = false;
     return this;
   }
   setSpeed(n) {
@@ -7991,7 +7994,7 @@ _manifest.default.operation.reDrawGlobal = function (time) {
       if (_matrixWorld.world.contentList[physicsLooper].physics.enabled) {
         var local = _matrixWorld.world.contentList[physicsLooper];
         if (local.physics.currentBody.shapeOrientations.length == 1) {
-          if (local.position.x.toFixed(2) == local.physics.currentBody.position.x.toFixed(2)) {
+          if (local.position.x.toFixed(2) == local.physics.currentBody.position.x.toFixed(2) && local.position.phySleepOn2digits == true) {
             // console.log(' TEST SLEEP RENDER local.position.x', local.position.x.toFixed(2), " VS ", local.physics.currentBody.position.x.toFixed(2))
           } else {
             local.position.SetX(local.physics.currentBody.position.x);
@@ -8279,22 +8282,32 @@ _manifest.default.operation.reDrawGlobal = function (time) {
   if (_matrixWorld.world.animLine) {
     // animatinLine
     _matrixWorld.world.globalAnimCounter++;
+    if (_matrixWorld.world.timeline.subCommands[_matrixWorld.world.globalAnimCounter]) {
+      if (_matrixWorld.world.timeline.subCommands[_matrixWorld.world.globalAnimCounter].onlyForSeq == null || _matrixWorld.world.timeline.subCommands[_matrixWorld.world.globalAnimCounter].onlyForSeq == _matrixWorld.world.globalAnimCurSequence) {
+        console.log("[timeline]FRAMEID EXE");
+        _matrixWorld.world.timeline.subCommands[_matrixWorld.world.globalAnimCounter].COMMAND();
+      }
+    }
     if (_matrixWorld.world.globalAnimCounter >= _matrixWorld.world.globalAnimSequenceSize) {
       _matrixWorld.world.globalAnimCounter = 0;
+      console.log("world.timeline.commands ", _matrixWorld.world.timeline.commands);
       if (_matrixWorld.world.timeline.commands[_matrixWorld.world.globalAnimCurSequence]) {
         // auto call
         _matrixWorld.world.timeline.commands[_matrixWorld.world.globalAnimCurSequence]();
-        // console.log("TIMELINE SEQ EXE");
+        console.log("TIMELINE SEQ START EXE");
       }
       // VALIDACIJA
       if (_matrixWorld.world.globalAnimCurSequence >= _matrixWorld.world.globalAnimTotalSequence) {
         // for now simple reset - we can add option for reverse playing ...
         _matrixWorld.world.globalAnimCurSequence = 0;
+        console.log("TIMELINE TOTAL SEQ ");
+        _matrixWorld.world.globalAnimPeriod++;
       }
       _matrixWorld.world.globalAnimCurSequence++;
       document.getElementById('globalAnimCurSequence').innerText = _matrixWorld.world.globalAnimCurSequence;
     }
     document.getElementById('globalAnimCounter').innerText = _matrixWorld.world.globalAnimCounter;
+    document.getElementById('globalAnimPeriod').innerText = _matrixWorld.world.globalAnimPeriod;
     document.getElementById('timeline').value = _matrixWorld.world.globalAnimCounter;
   }
 };
@@ -9954,7 +9967,9 @@ function defineworld(canvas, renderType) {
     if (typeof args.totalSequence === 'undefined') args.totalSequence = 1;
     world.globalAnimTotalSequence = args.totalSequence;
     world.globalAnimCurSequence = 1;
+    world.globalAnimPeriod = 0;
     world.timeline.commands = [];
+    world.timeline.subCommands = [];
     document.getElementById('globalAnimCurSequence').innerText = world.globalAnimCurSequence;
     document.getElementById('globalAnimCounter').innerText = world.globalAnimCounter;
     document.getElementById('timeline').value = world.globalAnimCounter;
@@ -9965,9 +9980,14 @@ function defineworld(canvas, renderType) {
   world.addCommandAtSeqIndex = function (COMMAND, INDEX) {
     world.timeline.commands[INDEX] = COMMAND;
   };
-  world.addSubCommand = function (COMMAND, INDEX) {
-    // WIP
-    // world.timeline.subCommands[INDEX] = COMMAND
+  world.addSubCommand = function (COMMAND, INDEX, onlyForSeq, onlyForPeriod) {
+    if (typeof onlyForSeq === 'undefined') onlyForSeq = null;
+    if (typeof onlyForPeriod === 'undefined') onlyForPeriod = null;
+    world.timeline.subCommands[INDEX] = {
+      onlyForPeriod: onlyForPeriod,
+      onlyForSeq: onlyForSeq,
+      COMMAND: COMMAND
+    };
   };
 
   /**

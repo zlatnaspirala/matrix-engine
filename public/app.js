@@ -8393,8 +8393,8 @@ _manifest.default.operation.reDrawGlobal = function (time) {
     _matrixWorld.world.globalAnimCounter++;
     if (_matrixWorld.world.timeline.subCommands[_matrixWorld.world.globalAnimCounter]) {
       if (_matrixWorld.world.timeline.subCommands[_matrixWorld.world.globalAnimCounter].onlyForSeq == null || _matrixWorld.world.timeline.subCommands[_matrixWorld.world.globalAnimCounter].onlyForSeq == _matrixWorld.world.globalAnimCurSequence) {
-        console.log("TIMELINE FRAMEID EXE");
-        _matrixWorld.world.timeline.subCommands[_matrixWorld.world.globalAnimCounter]();
+        console.log("[timeline]FRAMEID EXE");
+        _matrixWorld.world.timeline.subCommands[_matrixWorld.world.globalAnimCounter].COMMAND();
       }
     }
     if (_matrixWorld.world.globalAnimCounter >= _matrixWorld.world.globalAnimSequenceSize) {
