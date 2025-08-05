@@ -18964,7 +18964,7 @@ var standardMatrixEngineShader = object => {
   _matrixWorld.world.mvPushMatrix(object.mvMatrix, _matrixWorld.world.mvMatrixStack);
   if (object.isHUD === true) {
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-    if (_.raycaster.checkingProcedureCalc) _.raycaster.checkingProcedureCalc(object);
+    // if(raycaster.checkingProcedureCalc) raycaster.checkingProcedureCalc(object);
   } else {
     if (App.camera.FirstPersonController == true) {
       camera.setCamera(object);
@@ -18972,7 +18972,7 @@ var standardMatrixEngineShader = object => {
       camera.setSceneCamera(object);
     }
     mat4.translate(object.mvMatrix, object.mvMatrix, object.position.worldLocation);
-    if (_.raycaster.checkingProcedureCalc && typeof ray === 'undefined') _.raycaster.checkingProcedureCalc(object);
+    // if(raycaster.checkingProcedureCalc && typeof ray === 'undefined') raycaster.checkingProcedureCalc(object);
     mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rx), object.rotation.getRotDirX());
     mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.ry), object.rotation.getRotDirY());
     mat4.rotate(object.mvMatrix, object.mvMatrix, degToRad(object.rotation.rz), object.rotation.getRotDirZ());
