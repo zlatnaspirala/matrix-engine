@@ -638,7 +638,7 @@ var myFirstBvhAnimation = new matrixEngine.MEBvhAnimation(filePath, options);
 - cube , square, triangle, obj (ObjLoader) [1.8.4]
   From 1.8.4 raycast hit trigger works for obj's.
 
-Raycast works fine also in any camera usage.
+Raycast works fine also in any camera usage situation.
 
 - Usage:
 
