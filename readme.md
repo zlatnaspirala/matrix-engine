@@ -661,7 +661,18 @@ If you activate this flag you get fly/free camera controller by default.
 App.camera.FirstPersonController = true;
 ```
 
-### Animated female droid (morph targets):
+### Textures/image loader (buildin engine)
+
+Prevent double loading fetch for images with same paths.
+Cached intro `App.textureCache` object.
+
+### Obj loader
+
+Note:
+Func downloadMeshes checks meshDataCache object for preventing loading same paths.
+Cached intro `meshDataCache` from ObjLoader.
+
+#### Animated female droid (morph targets):
 
 ```js
 // Obj Loader

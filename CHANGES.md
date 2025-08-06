@@ -2,12 +2,16 @@
 
 # Matrix Engine [CHANGES]
 
+3.2.68 (and before)
+- Better raycaster feature optimised (rayIntersectsTriangle)
+- Prevent loading meshes with same paths (Use cached values)
+- prevent fetch image with same paths (Use cached values)
 
-2.3.0  - Physics for ConvexPolyhedron implemented BASIC.
-			 query-build.html?u=custom_geometry
-			 query-build.html?u=destruct_cube
+2.3.0 - Physics for ConvexPolyhedron implemented BASIC.
+query-build.html?u=custom_geometry
+query-build.html?u=destruct_cube
 
-2.2.12 Return for audios.play() func - return promise 
+2.2.12 Return for audios.play() func - return promise
 
 2.2.10 SpriteAnimation CPU level/program
 
@@ -16,39 +20,40 @@
 2.2.2 HOT FIX PRAGMATIC
 
 Unknown squareTex raycaster bug.
+
 ```js
-	try {
-		const [v0, v1, v2] = triangle;
-	} catch(e) {
-		console.log('bug "rayIntersectsTriangle" ', e)
-		return false;
-	}
+try {
+  const [v0, v1, v2] = triangle;
+} catch (e) {
+  console.log('bug "rayIntersectsTriangle" ', e);
+  return false;
+}
 ```
 
-[2.2.0] Cast shadow 
-         Mixed FBO with two tex sampler attachments.
+[2.2.0] Cast shadow
+Mixed FBO with two tex sampler attachments.
 
-
-There is local cast 'spot-shadow' i needed this to make little more darker 
+There is local cast 'spot-shadow' i needed this to make little more darker
 draws in framebuffer.
 
 Element who have `setFBO` called can cast shadows:
+
 ```js
-	App.scene.floor.setFBO({
-		cameraX: 0,
-		cameraY: 0,
-		cameraZ: 20,
-		pitch: 0,
-		yaw: 0
-	})
-	App.scene.floor.activateShadows('spot-shadow')
+App.scene.floor.setFBO({
+  cameraX: 0,
+  cameraY: 0,
+  cameraZ: 20,
+  pitch: 0,
+  yaw: 0
+});
+App.scene.floor.activateShadows('spot-shadow');
 ```
 
-Manipulate with non fbo object: 
-```js
-App.scene.MyCubeTex1.shadows.lightPosition = [0,1,1]
-```
+Manipulate with non fbo object:
 
+```js
+App.scene.MyCubeTex1.shadows.lightPosition = [0, 1, 1];
+```
 
 [2.1.15] Fix custom textures for obj mesh
 
@@ -58,13 +63,13 @@ App.scene.MyCubeTex1.shadows.lightPosition = [0,1,1]
 ...
 ```
 
-[2.1.14] Fix MEBvhAnimation callback 
+[2.1.14] Fix MEBvhAnimation callback
 
 [2.1.13] BVH improved : playAnimationFromKeyframes
 
 [2.1.12] BVH playInverse improved/fixed.
 
-[2.1.8] playInverseAndStop added new type of  BVHAnimation class.
+[2.1.8] playInverseAndStop added new type of BVHAnimation class.
 
 [2.1.7] Scale by axis new feature for MEBvhAnimation class.
 See example matrix_skeletal.js
@@ -74,21 +79,23 @@ See example matrix_skeletal.js
 [2.1.1] Just added example how to load maps and detect groups vertices.
 
 [2.1.0] Added MapCreator web tools
- New export for npm pack `meMapLoader`
- Usage:
+New export for npm pack `meMapLoader`
+Usage:
 Automatic load on refresh me app. MapCreator make saves on every new field.
 You need just to refresh page.
+
 ```js
-	if (localStorage.getItem('map') != null) {
-		var t = localStorage.getItem('map');
-		t = JSON.parse(t)
-		meMapLoader.load(t, physics);
-	} else {
-		meMapLoader.load(map, physics);
-	}
+if (localStorage.getItem('map') != null) {
+  var t = localStorage.getItem('map');
+  t = JSON.parse(t);
+  meMapLoader.load(t, physics);
+} else {
+  meMapLoader.load(map, physics);
+}
 ```
 
 If you wanna just always load map from disk/file then use:
+
 ```js
 import {map} from "../maps/map2";
 
@@ -98,7 +105,6 @@ meMapLoader.load(map, physics);
 ```
 
 To make map goto `public\tools\map-creator.html`
-
 
 [2.1.4] draObj DRAW
 
@@ -258,8 +264,9 @@ customObject.net = {
 ```
 
 [2.2.15]
-  - BIG FIX FOR MOBILE OBJ RENDER
-  - // DEPLACED `world.disableUnusedAttr`
+
+- BIG FIX FOR MOBILE OBJ RENDER
+- // DEPLACED `world.disableUnusedAttr`
 
 [2.0.26] FIX CHECK NET ACTIVE FLAG FOR SCALE PROCEDURE
 

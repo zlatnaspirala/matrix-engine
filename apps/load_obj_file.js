@@ -51,11 +51,21 @@ export var runThis = world => {
 	 *  mac: "res/3d-objects/mac.obj"
 	 */
 	matrixEngine.objLoader.downloadMeshes(
-		{armor: "res/3d-objects/armor.obj",
-		mac: "res/3d-objects/mac.obj"
+		{
+			armor: "res/3d-objects/armor.obj",
+			mac: "res/3d-objects/mac.obj"
 		},
 		onLoadObj
 	);
 
-	//delete images_local_var;
+	// // test prevent doubel paths fetch
+	// setTimeout(() => {
+	// 	matrixEngine.objLoader.downloadMeshes(
+	// 		{
+	// 			armor: "res/3d-objects/armor.obj",
+	// 			mac: "res/3d-objects/mac.obj"
+	// 		},
+	// 		onLoadObj
+	// 	);
+	// }, 5000)
 };
