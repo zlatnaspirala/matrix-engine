@@ -16,6 +16,7 @@ world.Add("cube", 1, "MyColoredCube3");
 canvas.addEventListener('mousedown', (ev) => {
   matrixEngine.raycaster.checkingProcedure(ev);
 });
+matrixEngine.raycaster.touchCoordinate.stopOnFirstDetectedHit = true;
 
 addEventListener("ray.hit.event", function(e) {
   console.info(e.detail);

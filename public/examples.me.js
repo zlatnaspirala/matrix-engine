@@ -356,6 +356,7 @@ var runThis = world => {
   canvas.addEventListener('mousedown', ev => {
     matrixEngine.raycaster.checkingProcedure(ev);
   });
+  matrixEngine.raycaster.touchCoordinate.stopOnFirstDetectedHit = true;
   addEventListener("ray.hit.event", function (e) {
     console.info(e.detail);
   });
@@ -3428,7 +3429,16 @@ var runThis = world => {
     mac: "res/3d-objects/mac.obj"
   }, onLoadObj);
 
-  //delete images_local_var;
+  // // test prevent doubel paths fetch
+  // setTimeout(() => {
+  // 	matrixEngine.objLoader.downloadMeshes(
+  // 		{
+  // 			armor: "res/3d-objects/armor.obj",
+  // 			mac: "res/3d-objects/mac.obj"
+  // 		},
+  // 		onLoadObj
+  // 	);
+  // }, 5000)
 };
 exports.runThis = runThis;
 
@@ -7369,6 +7379,12 @@ Object.defineProperty(exports, "defineShader", {
     return _buildinMyShaders.defineShader;
   }
 });
+Object.defineProperty(exports, "downloadMeshes", {
+  enumerable: true,
+  get: function () {
+    return _loaderObj.downloadMeshes;
+  }
+});
 Object.defineProperty(exports, "freeShadersToy", {
   enumerable: true,
   get: function () {
@@ -7380,6 +7396,12 @@ Object.defineProperty(exports, "meMapLoader", {
   enumerable: true,
   get: function () {
     return _mapLoader.meMapLoader;
+  }
+});
+Object.defineProperty(exports, "meshDataCache", {
+  enumerable: true,
+  get: function () {
+    return _loaderObj.meshDataCache;
   }
 });
 exports.objLoader = void 0;
@@ -7420,8 +7442,9 @@ var Engine = _interopRequireWildcard(require("./lib/engine"));
 exports.Engine = Engine;
 var Events = _interopRequireWildcard(require("./lib/events"));
 exports.Events = Events;
-var objLoader = _interopRequireWildcard(require("./lib/loader-obj"));
-exports.objLoader = objLoader;
+var _loaderObj = _interopRequireWildcard(require("./lib/loader-obj"));
+var objLoader = _loaderObj;
+exports.objLoader = _loaderObj;
 var _matrixBuffers = _interopRequireDefault(require("./lib/matrix-buffers"));
 var _matrixTextures = _interopRequireDefault(require("./lib/matrix-textures"));
 var utility = _interopRequireWildcard(require("./lib/utility"));
@@ -8858,7 +8881,8 @@ if (_manifest.default.pwa.addToHomePage === true) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.makeObjSeqArg = exports.initMeshBuffers = exports.downloadMeshes = exports.deleteMeshBuffers = exports.constructMesh = void 0;
+exports.clearMeshCache = clearMeshCache;
+exports.meshDataCache = exports.makeObjSeqArg = exports.initMeshBuffers = exports.downloadMeshes = exports.deleteMeshBuffers = exports.constructMesh = void 0;
 exports.play = play;
 var _matrixWorld = require("./matrix-world");
 /**
@@ -9186,16 +9210,16 @@ var Ajax = function () {
  * @param {Object} meshes In case other meshes are loaded separately or if a previously declared variable is desired to be used, pass in a (possibly empty) json object of the pattern: { '<mesh_name>': OBJ.Mesh }
  *
  */
+
+function clearMeshCache() {
+  Object.keys(meshDataCache).forEach(key => delete meshDataCache[key]);
+}
+const meshDataCache = exports.meshDataCache = {};
 var downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
-  // the total number of meshes. this is used to implement "blocking"
   var semaphore = Object.keys(nameAndURLs).length;
-  // if error is true, an alert will given
   var error = false;
-  // this is used to check if all meshes have been downloaded
-  // if meshes is supplied, then it will be populated, otherwise
-  // a new object is created. this will be passed into the completionCallback
   if (typeof inputArg === 'undefined') {
-    var inputArg = {
+    inputArg = {
       scale: 1,
       swap: [null]
     };
@@ -9203,33 +9227,40 @@ var downloadMeshes = function (nameAndURLs, completionCallback, inputArg) {
   if (typeof inputArg.scale === 'undefined') inputArg.scale = 1;
   if (typeof inputArg.swap === 'undefined') inputArg.swap = [null];
   var meshes = {};
-
-  // loop over the mesh_name,url key,value pairs
   for (var mesh_name in nameAndURLs) {
     if (nameAndURLs.hasOwnProperty(mesh_name)) {
-      new Ajax().get(nameAndURLs[mesh_name], function (name) {
-        return function (data, status) {
-          if (status === 200) {
-            meshes[name] = new constructMesh(data, inputArg);
-          } else {
-            error = true;
-            console.error('An error has occurred and the mesh "' + name + '" could not be downloaded.');
-          }
-          // the request has finished, decrement the counter
-          semaphore--;
-          if (semaphore === 0) {
-            if (error) {
-              // if an error has occurred, the user is notified here and the
-              // callback is not called
-              console.error('An error has occurred and one or meshes has not been ' + 'downloaded. The execution of the script has terminated.');
-              throw '';
+      const url = nameAndURLs[mesh_name];
+
+      // ✅ Check cache first
+      if (meshDataCache[url]) {
+        // Use cached raw data
+        meshes[mesh_name] = new constructMesh(meshDataCache[url], inputArg);
+        semaphore--;
+        if (semaphore === 0 && !error) {
+          completionCallback(meshes);
+        }
+      } else {
+        // Otherwise fetch and cache
+        new Ajax().get(url, function (name, url) {
+          return function (data, status) {
+            if (status === 200) {
+              meshDataCache[url] = data; // ✅ Save to cache
+              meshes[name] = new constructMesh(data, inputArg);
+            } else {
+              error = true;
+              console.error('An error has occurred and the mesh "' + name + '" could not be downloaded.');
             }
-            // there haven't been any errors in retrieving the meshes
-            // call the callback
-            completionCallback(meshes);
-          }
-        };
-      }(mesh_name));
+            semaphore--;
+            if (semaphore === 0) {
+              if (error) {
+                console.error('An error has occurred and one or more meshes has not been downloaded.');
+                throw '';
+              }
+              completionCallback(meshes);
+            }
+          };
+        }(mesh_name, url));
+      }
     }
   }
 };
@@ -15133,7 +15164,6 @@ var animate = function (sceneObject) {
 };
 exports.animate = animate;
 var reDrawID = exports.reDrawID = 0;
-var secondPass = 0;
 var physicsLooper = 0,
   lt = 0;
 _manifest.default.operation.reDrawGlobal = function (time) {
@@ -15428,13 +15458,9 @@ _manifest.default.operation.reDrawGlobal = function (time) {
   }
   (0, _engine.modifyLooper)(0);
   _matrixWorld.world.GL.gl.depthMask(true);
-  if (_manifest.default.raycast) {
-    if (secondPass <= 2) {
-      raycaster.touchCoordinate.enabled = false;
-      secondPass = 0;
-    }
-  }
-  secondPass++;
+
+  // // Optimised raycast
+  raycaster.touchCoordinate.enabled = false;
   physicsLooper = 0;
   (0, _engine.updateFPS)(1);
   if (_manifest.default.offScreenCanvas == true) exports.reDrawID = reDrawID = setTimeout(() => _manifest.default.operation.reDrawGlobal(), _manifest.default.redrawInterval);
@@ -15469,6 +15495,12 @@ _manifest.default.operation.reDrawGlobal = function (time) {
     document.getElementById('globalAnimPeriod').innerText = _matrixWorld.world.globalAnimPeriod;
     document.getElementById('timeline').value = _matrixWorld.world.globalAnimCounter;
   }
+
+  // if (raycaster.touchCoordinate.enabled == true) {
+  // 	raycaster.checkRay();
+
+  // 	raycaster.touchCoordinate.enabled = false;
+  // }
 };
 
 /* Field of view, Width height ratio, min distance of viewpoint, max distance of viewpoint, */
@@ -15556,13 +15588,6 @@ _manifest.default.operation.simplyRender = function (time) {
   _matrixWorld.world.GL.gl.depthMask(false);
   (0, _engine.modifyLooper)(0);
   _matrixWorld.world.GL.gl.depthMask(true);
-  if (_manifest.default.raycast) {
-    if (secondPass <= 2) {
-      raycaster.touchCoordinate.enabled = false;
-      secondPass = 0;
-    }
-  }
-  secondPass++;
   physicsLooper = 0;
   (0, _engine.updateFPS)(1);
   if (_matrixWorld.world.animLine) {
@@ -16669,15 +16694,30 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
  * @description
  * initTextures Load image file procedure.
  */
+
+_manifest.default.textureCache = {};
+_manifest.default.clearTextureCache = (gl, src) => {
+  const tex = _manifest.default.textureCache[src];
+  if (tex) {
+    gl.deleteTexture(tex);
+    delete _manifest.default.textureCache[src];
+  }
+};
 _manifest.default.tools.loadTextureImage = function (gl, src, params) {
-  var texture = gl.createTexture();
+  // Return cached texture if already loaded
+  if (_manifest.default.textureCache[src]) {
+    return _manifest.default.textureCache[src];
+  }
+  const texture = gl.createTexture();
   texture.image = new Image();
   texture.image.crossOrigin = 'anonymous';
   texture.image.onload = () => {
-    // console.log("params tex: ", params)
     _matrixWorld.world.handleLoadedTexture(texture, gl, params);
   };
   texture.image.src = src;
+
+  // Store in cache
+  _manifest.default.textureCache[src] = texture;
   return texture;
 };
 
@@ -16931,7 +16971,7 @@ window.quat2 = glMatrix.quat2;
 window.vec2 = glMatrix.vec2;
 window.vec3 = glMatrix.vec3;
 window.vec4 = glMatrix.vec4;
-console.info(`%cMatrix-Engine %c 2.3.0 [wip-convexphys] 🛸`, CS1, CS1);
+console.info(`%cMatrix-Engine %c 2.3.66 [] 🛸`, CS1, CS1);
 var lastChanges = `
 [2.3.0] Look in cube_light_and_texture.js
 [2.2.0] Look in cube_light_and_texture.js
@@ -17042,6 +17082,8 @@ function defineworld(canvas, renderType) {
   /* Initialize shader fragment                        */
   world.initShaders = _engine.initShaders;
   world.handleLoadedTexture = _manifest.default.tools.BasicTextures;
+
+  // Normal loading images
   world.initTexture = _manifest.default.tools.loadTextureImage;
 
   // DEPLACED
@@ -19902,7 +19944,7 @@ exports.checkingProcedure = checkingProcedure;
 exports.checkingProcedureCalc = checkingProcedureCalc;
 exports.checkingProcedureCalcObj = checkingProcedureCalcObj;
 exports.rayIntersectsTriangle = rayIntersectsTriangle;
-exports.rotate2dPlot = rotate2dPlot;
+exports.rayIntersectsTriangleNoDistance = rayIntersectsTriangleNoDistance;
 exports.touchCoordinate = void 0;
 exports.unproject = unproject;
 /**
@@ -19913,8 +19955,18 @@ exports.unproject = unproject;
  * Inspired with original code from:
  * https://github.com/Necolo/raycaster
  */
-
+window.mat4 = glMatrix.mat4;
+window.mat2 = glMatrix.mat2;
+window.mat2d = glMatrix.mat2d;
+window.mat3 = glMatrix.mat3;
+window.mat4 = glMatrix.mat4;
+window.quat = glMatrix.quat;
+window.quat2 = glMatrix.quat2;
+window.vec2 = glMatrix.vec2;
+window.vec3 = glMatrix.vec3;
+window.vec4 = glMatrix.vec4;
 let rayHitEvent;
+let HITS = [];
 let touchCoordinate = exports.touchCoordinate = {
   enabled: false,
   x: 0,
@@ -19922,25 +19974,38 @@ let touchCoordinate = exports.touchCoordinate = {
   stopOnFirstDetectedHit: false
 };
 
+// Reusable temp vectors and matrices for performance:
+const _edge1 = vec3.create();
+const _edge2 = vec3.create();
+const _h = vec3.create();
+const _s = vec3.create();
+const _q = vec3.create();
+const _outp = mat4.create();
+const _outv = mat4.create();
+const _intersectionPoint = vec3.create();
+
+// Cache rotation trig values:
+function calcCosSin(angleDeg) {
+  const rad = Math.PI / 180 * -angleDeg;
+  return {
+    cos: Math.cos(rad),
+    sin: Math.sin(rad)
+  };
+}
+
+// Optimized rotate2dPlot that accepts precomputed cos/sin:
+function rotate2dPlotPrecomputed(cx, cy, x, y, cos, sin) {
+  const nx = cos * (x - cx) + sin * (y - cy) + cx;
+  const ny = cos * (y - cy) - sin * (x - cx) + cy;
+  return [nx, ny];
+}
+
 /**
- * @description 
  * Ray triangle intersection algorithm.
- * @param rayOrigin ray origin point
- * @param rayVector ray direction
- * @param triangle three points of triangle, should be ccw order
- * @param out the intersection point
- * @return intersects or not
  * Uses Möller–Trumbore intersection algorithm
  */
-function rayIntersectsTriangle(rayOrigin,
-// vec3,
-rayVector,
-// vec3,
-triangle,
-// vec3[],
-out,
-// vec3,
-objPos) {
+function rayIntersectsTriangleNoDistance(rayOrigin, rayVector, triangle, out, objPos) {
+  // Update rayOrigin based on camera and object position
   if (matrixEngine.Events.camera.zPos < objPos.z) {
     rayOrigin[2] = matrixEngine.Events.camera.zPos - objPos.z;
   } else {
@@ -19948,36 +20013,33 @@ objPos) {
   }
   rayOrigin[0] = matrixEngine.Events.camera.xPos;
   rayOrigin[1] = matrixEngine.Events.camera.yPos;
-  const EPSILON = 0.0000001;
+  const EPSILON = 1e-7;
   const [v0, v1, v2] = triangle;
-  const edge1 = vec3.create();
-  const edge2 = vec3.create();
-  const h = vec3.create();
   try {
-    vec3.sub(edge1, v1, v0);
-    vec3.sub(edge2, v2, v0);
+    vec3.sub(_edge1, v1, v0);
+    vec3.sub(_edge2, v2, v0);
   } catch (e) {
-    console.log('Probably your obj file have non triangulate faces vertices. Raycast support only triangulate faces not quard faces. Error log:', e);
+    console.log('Probably your obj file has non-triangulated faces vertices. Raycast supports only triangulated faces. Error:', e);
     return false;
   }
-  vec3.cross(h, rayVector, edge2);
-  const a = vec3.dot(edge1, h);
-  if (a > -EPSILON && a < EPSILON) {
-    return false;
-  }
-  const s = vec3.create();
-  vec3.sub(s, rayOrigin, v0);
-  const u = vec3.dot(s, h);
-  if (u < 0 || u > a) {
-    return false;
-  }
-  const q = vec3.create();
-  vec3.cross(q, s, edge1);
-  const v = vec3.dot(rayVector, q);
-  if (v < 0 || u + v > a) {
-    return false;
-  }
-  const t = vec3.dot(edge2, q) / a;
+  vec3.cross(_h, rayVector, _edge2);
+  const a = vec3.dot(_edge1, _h);
+
+  // if(a > -EPSILON && a < EPSILON) return false;
+  if (Math.abs(a) < EPSILON) return false; // Only skip *parallel* rays
+
+  vec3.sub(_s, rayOrigin, v0);
+  // const u = vec3.dot(_s, _h);
+  // ------------
+  const f = 1.0 / a;
+  const u = f * vec3.dot(_s, _h);
+  if (u < 0.0 || u > 1.0) return false;
+  vec3.cross(_q, _s, _edge1);
+  const v = f * vec3.dot(rayVector, _q);
+  if (v < 0.0 || u + v > 1.0) return false;
+  const t = f * vec3.dot(_edge2, _q);
+  // const t = vec3.dot(_edge2, _q) / a;
+
   if (t > EPSILON) {
     if (out) {
       vec3.add(out, rayOrigin, [rayVector[0] * t, rayVector[1] * t, rayVector[2] * t]);
@@ -19986,24 +20048,44 @@ objPos) {
   }
   return false;
 }
+function rayIntersectsTriangle(rayOrigin, rayVector, triangle, out, objPos) {
+  const EPSILON = 1e-7;
+  const [v0, v1, v2] = triangle;
+
+  // Optional: adjust rayOrigin with objPos (if needed for world space)
+  rayOrigin[0] = matrixEngine.Events.camera.xPos;
+  rayOrigin[1] = matrixEngine.Events.camera.yPos;
+  rayOrigin[2] = matrixEngine.Events.camera.zPos;
+  try {
+    vec3.sub(_edge1, v1, v0);
+    vec3.sub(_edge2, v2, v0);
+  } catch (e) {
+    console.warn('Non-triangulated mesh? Error:', e);
+    return null;
+  }
+  vec3.cross(_h, rayVector, _edge2);
+  const a = vec3.dot(_edge1, _h);
+  if (Math.abs(a) < EPSILON) return null;
+  vec3.sub(_s, rayOrigin, v0);
+  const u = vec3.dot(_s, _h);
+  if (u < 0 || u > a) return null;
+  vec3.cross(_q, _s, _edge1);
+  const v = vec3.dot(rayVector, _q);
+  if (v < 0 || u + v > a) return null;
+  const t = vec3.dot(_edge2, _q) / a;
+  if (t > EPSILON) {
+    if (out) {
+      vec3.scaleAndAdd(out, rayOrigin, rayVector, t);
+    }
+    return t; // ← return distance
+  }
+  return null;
+}
 
 /**
- * @description
  * Unproject a 2D point into a 3D world.
- * @param screenCoord [screenX, screenY]
- * @param viewport [left, top, width, height]
- * @param invProjection invert projection matrix
- * @param invView invert view matrix
- * @return 3D point position
  */
-function unproject(screenCoord,
-// [number, number]
-viewport,
-// [number, number, number, number]
-invProjection,
-// mat4
-invView) {
-  // return vec3
+function unproject(screenCoord, viewport, invProjection, invView) {
   const [left, top, width, height] = viewport;
   const [x, y] = screenCoord;
   const out = vec4.fromValues(2 * x / width - 1 - left, 2 * (height - y - 1) / height - 1, 1, 1);
@@ -20014,23 +20096,51 @@ invView) {
 }
 
 /**
- * @description 
- * Fix local rotation raycast bug test.
+ * Rotate 2D point by angle degrees around center (cx, cy) with cached cos/sin.
  */
-function rotate2dPlot(cx, cy, x, y, angle) {
-  var radians = Math.PI / 180 * -angle,
-    cos = Math.cos(radians),
-    sin = Math.sin(radians),
-    nx = cos * (x - cx) + sin * (y - cy) + cx,
-    ny = cos * (y - cy) - sin * (x - cx) + cy;
-  return [nx, ny];
+function rotateTrianglePoints(triangle, rx, ry, rz, worldLoc) {
+  // console.log('optimised ...')
+  let rotated = triangle.map(p => [...p]); // Deep copy
+
+  if (rx !== 0) {
+    const {
+      cos,
+      sin
+    } = calcCosSin(rx);
+    rotated = rotated.map(([x, y, z]) => {
+      const [ry, rz] = rotate2dPlotPrecomputed(0, 0, y, z, cos, sin);
+      return [x, ry, rz];
+    });
+  }
+  if (ry !== 0) {
+    const {
+      cos,
+      sin
+    } = calcCosSin(ry);
+    rotated = rotated.map(([x, y, z]) => {
+      const [rx, rz] = rotate2dPlotPrecomputed(0, 0, x, z, cos, sin);
+      return [rx, y, rz];
+    });
+  }
+  if (rz !== 0) {
+    const {
+      cos,
+      sin
+    } = calcCosSin(rz);
+    rotated = rotated.map(([x, y, z]) => {
+      const [rx, ry] = rotate2dPlotPrecomputed(0, 0, x, y, cos, sin);
+      return [rx, ry, z];
+    });
+  }
+
+  // Apply world offset
+  rotated = rotated.map(([x, y, z]) => [x + worldLoc[0], y + worldLoc[1], z + worldLoc[2]]);
+  return rotated;
 }
 function checkingProcedure(ev, customArg) {
   let {
     clientX,
-    clientY,
-    screenX,
-    screenY
+    clientY
   } = ev;
   if (typeof customArg !== 'undefined') {
     clientX = customArg.clientX;
@@ -20041,124 +20151,39 @@ function checkingProcedure(ev, customArg) {
   touchCoordinate.w = ev.target.width;
   touchCoordinate.h = ev.target.height;
   touchCoordinate.enabled = true;
+  // checkRay();
 }
 function checkingProcedureCalc(object) {
-  if (object.raycast.enabled == false || touchCoordinate.enabled == false) return;
-  var world = matrixEngine.matrixWorld.world;
-  let mvMatrix = [...object.mvMatrix];
-  let ray;
-  let outp = mat4.create();
-  let outv = mat4.create();
-  let myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos);
-  if (matrixEngine.Events.camera.zPos < object.position.z) {
-    myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, -matrixEngine.Events.camera.zPos);
-  }
-  ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], mat4.invert(outp, world.pMatrix), mat4.invert(outv, mvMatrix));
-  const intersectionPoint = vec3.create();
+  if (touchCoordinate.enabled === false || object.raycast.enabled === false) return;
+  const world = matrixEngine.matrixWorld.world;
+  let mvMatrix = object.mvMatrix; // use original to avoid spread copy
+  let rayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos);
+
+  // if(matrixEngine.Events.camera.zPos < object.position.z) {
+  // 	rayOrigin[2] = -matrixEngine.Events.camera.zPos;
+  // }
+
+  const ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], mat4.invert(_outp, world.pMatrix), mat4.invert(_outv, mvMatrix));
   object.raycastFace = [];
-  for (var f = 0; f < object.geometry.indices.length; f = f + 3) {
-    var a = object.geometry.indices[f];
-    var b = object.geometry.indices[f + 1];
-    var c = object.geometry.indices[f + 2];
-    let triangle = null;
-    const triangleInZero = [[object.geometry.vertices[0 + a * 3], object.geometry.vertices[1 + a * 3], object.geometry.vertices[2 + a * 3]], [object.geometry.vertices[0 + b * 3], object.geometry.vertices[1 + b * 3], object.geometry.vertices[2 + b * 3]], [object.geometry.vertices[0 + c * 3], object.geometry.vertices[1 + c * 3], object.geometry.vertices[2 + c * 3]]];
-    var rez0, rez1, rez2;
-    if (object.rotation.rx != 0) {
-      rez0 = rotate2dPlot(0, 0, triangleInZero[0][1], triangleInZero[0][2], object.rotation.rx);
-      rez1 = rotate2dPlot(0, 0, triangleInZero[1][1], triangleInZero[1][2], object.rotation.rx);
-      rez2 = rotate2dPlot(0, 0, triangleInZero[2][1], triangleInZero[2][2], object.rotation.rx);
-      triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], rez0[0] + object.position.worldLocation[1], rez0[1]], [triangleInZero[1][0] + object.position.worldLocation[0], rez1[0] + object.position.worldLocation[1], rez1[1]], [triangleInZero[2][0] + object.position.worldLocation[0], rez2[0] + object.position.worldLocation[1], rez2[1]]];
-      // console.log("only x rot => ", triangle);
-    }
-
-    // y z changed - rez0[1] is z
-    if (object.rotation.ry != 0) {
-      if (object.rotation.rx != 0) {
-        // Y i Z
-        // get y
-        rez0 = rotate2dPlot(0, 0, triangleInZero[0][1], triangleInZero[0][2], object.rotation.rx - 90);
-        rez1 = rotate2dPlot(0, 0, triangleInZero[1][1], triangleInZero[1][2], object.rotation.rx - 90);
-        rez2 = rotate2dPlot(0, 0, triangleInZero[2][1], triangleInZero[2][2], object.rotation.rx - 90);
-        const detY0 = rez0[0];
-        const detY1 = rez1[0];
-        const detY2 = rez2[0];
-        const detZ0 = rez0[1];
-        const detZ1 = rez1[1];
-        const detZ2 = rez2[1];
-
-        //                          X INITIAL             Z
-        rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], detZ0, object.rotation.ry - 90);
-        rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], detZ1, object.rotation.ry - 90);
-        rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], detZ2, object.rotation.ry - 90);
-        const detZ00 = rez0[1];
-        const detZ11 = rez1[1];
-        const detZ22 = rez2[1];
-        rez0 = rotate2dPlot(0, 0, rez0[0], detY0, object.rotation.rz - 90);
-        rez1 = rotate2dPlot(0, 0, rez1[0], detY1, object.rotation.rz - 90);
-        rez2 = rotate2dPlot(0, 0, rez2[0], detY2, object.rotation.rz - 90);
-        triangle = [[rez0[0] + object.position.worldLocation[0], rez0[1] + object.position.worldLocation[1], detZ00], [rez1[0] + object.position.worldLocation[0], rez1[1] + object.position.worldLocation[1], detZ11], [rez2[0] + object.position.worldLocation[0], rez2[1] + object.position.worldLocation[1], detZ22]];
-      } else if (object.rotation.rz == 0) {
-        rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], triangleInZero[0][2], -object.rotation.ry);
-        rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][2], -object.rotation.ry);
-        rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][2], -object.rotation.ry);
-        triangle = [[rez0[0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], rez0[1]], [rez1[0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], rez1[1]], [rez2[0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], rez2[1]]];
-      }
-    }
-    if (object.rotation.rz != 0) {
-      if (object.rotation.ry != 0) {
-        if (object.rotation.rx == 180) {
-          rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], triangleInZero[0][2], object.rotation.ry);
-          rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][2], object.rotation.ry);
-          rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][2], object.rotation.ry);
-          let detZ00 = rez0[1];
-          let detZ11 = rez1[1];
-          let detZ22 = rez2[1];
-          rez0 = rotate2dPlot(0, 0, rez0[0], triangleInZero[0][1], object.rotation.rz);
-          rez1 = rotate2dPlot(0, 0, rez1[0], triangleInZero[1][1], object.rotation.rz);
-          rez2 = rotate2dPlot(0, 0, rez2[0], triangleInZero[2][1], object.rotation.rz);
-          const detZ0 = rez0[1];
-          const detZ1 = rez1[1];
-          const detZ2 = rez2[1];
-          // rez0 = rotate2dPlot(0, 0,rez0[0], detZ00, object.rotation.rx - 180);
-          // rez1 = rotate2dPlot(0, 0,rez0[0], detZ11, object.rotation.rx - 180);
-          // rez2 = rotate2dPlot(0, 0, rez0[0], detZ22, object.rotation.rx - 180);
-          // detZ00 = rez0[1];
-          // detZ11 = rez1[1];
-          // detZ22 = rez2[1];
-
-          triangle = [[rez0[0] + object.position.worldLocation[0], detZ0 + object.position.worldLocation[1], detZ00], [rez1[0] + object.position.worldLocation[0], detZ1 + object.position.worldLocation[1], detZ11], [rez2[0] + object.position.worldLocation[0], detZ2 + object.position.worldLocation[1], detZ22]];
-        } else {
-          // console.info('unhandled ray cast');
-        }
-      } else {
-        if (object.rotation.rx == 0) {
-          rez0 = rotate2dPlot(0, +0, triangleInZero[0][0], triangleInZero[0][1], object.rotation.rz);
-          rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][1], object.rotation.rz);
-          rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][1], object.rotation.rz);
-          triangle = [[rez0[0] + object.position.worldLocation[0], rez0[1] + object.position.worldLocation[1], triangleInZero[0][2]], [rez1[0] + object.position.worldLocation[0], rez1[1] + object.position.worldLocation[1], triangleInZero[1][2]], [rez2[0] + object.position.worldLocation[0], rez2[1] + object.position.worldLocation[1], triangleInZero[2][2]]];
-        } else {
-          // console.info('must be handled rz vs rx');
-        }
-      }
-    }
-
-    // no rot
-    if (object.rotation.rx == 0 && object.rotation.ry == 0 && object.rotation.rz == 0) {
-      triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], triangleInZero[0][2]], [triangleInZero[1][0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], triangleInZero[1][2]], [triangleInZero[2][0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], triangleInZero[2][2]]];
-    }
+  const indices = object.geometry.indices;
+  const vertices = object.geometry.vertices;
+  const worldLoc = object.position.worldLocation;
+  const rx = object.rotation.rx;
+  const ry = object.rotation.ry;
+  const rz = object.rotation.rz;
+  for (let f = 0; f < indices.length; f += 3) {
+    const a = indices[f],
+      b = indices[f + 1],
+      c = indices[f + 2];
+    const baseA = a * 3,
+      baseB = b * 3,
+      baseC = c * 3;
+    const triangleInZero = [[vertices[baseA], vertices[baseA + 1], vertices[baseA + 2]], [vertices[baseB], vertices[baseB + 1], vertices[baseB + 2]], [vertices[baseC], vertices[baseC + 1], vertices[baseC + 2]]];
+    const triangle = rotateTrianglePoints(triangleInZero, rx, ry, rz, worldLoc);
     object.raycastFace.push(triangle);
-
-    // triangle.forEach((a) => {
-    // 	a.forEach((b, index, array) => {
-    // 		array[index] = parseFloat(b.toFixed(2))
-    // 	})
-    // })
-
-    // non handled situation
-    if (triangle == null) return;
-    // console.log('t:' + triangle)
-
-    if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
+    let _intersectionPoint = vec3.create();
+    const t = rayIntersectsTriangle(rayOrigin, ray, triangle, _intersectionPoint);
+    if (t !== null) {
       rayHitEvent = new CustomEvent('ray.hit.event', {
         detail: {
           touchCoordinate: {
@@ -20166,122 +20191,48 @@ function checkingProcedureCalc(object) {
             y: touchCoordinate.y
           },
           hitObject: object,
-          intersectionPoint: intersectionPoint,
+          intersectionPoint: _intersectionPoint,
           ray: ray,
-          rayOrigin: myRayOrigin
+          rayOrigin: rayOrigin,
+          distance: t
         }
       });
       dispatchEvent(rayHitEvent);
-      if (touchCoordinate.enabled == true && touchCoordinate.stopOnFirstDetectedHit == true) {
+      if (touchCoordinate.enabled && touchCoordinate.stopOnFirstDetectedHit) {
         touchCoordinate.enabled = false;
+        break; // stop processing more triangles if flag is set
       }
     }
   }
 }
 function checkingProcedureCalcObj(object) {
-  if (object.raycast.enabled == false || touchCoordinate.enabled == false) return;
-  var world = matrixEngine.matrixWorld.world;
-  let mvMatrix = [...object.mvMatrix];
-  let ray;
-  let outp = mat4.create();
-  let outv = mat4.create();
-  let myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos);
+  if (object.raycast.enabled === false || touchCoordinate.enabled === false) return;
+  const world = matrixEngine.matrixWorld.world;
+  let mvMatrix = object.mvMatrix;
+  let rayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, matrixEngine.Events.camera.zPos);
   if (matrixEngine.Events.camera.zPos < object.position.z) {
-    myRayOrigin = vec3.fromValues(matrixEngine.Events.camera.xPos, matrixEngine.Events.camera.yPos, -matrixEngine.Events.camera.zPos);
+    rayOrigin[2] = -matrixEngine.Events.camera.zPos;
   }
-  ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], mat4.invert(outp, world.pMatrix), mat4.invert(outv, mvMatrix));
-  const intersectionPoint = vec3.create();
+  const ray = unproject([touchCoordinate.x, touchCoordinate.y], [0, 0, touchCoordinate.w, touchCoordinate.h], mat4.invert(_outp, world.pMatrix), mat4.invert(_outv, mvMatrix));
   object.raycastFace = [];
-  for (var f = 0; f < object.mesh.indices.length; f = f + 3) {
-    var a = object.mesh.indices[f];
-    var b = object.mesh.indices[f + 1];
-    var c = object.mesh.indices[f + 2];
-    let triangle = null;
-    const triangleInZero = [[object.mesh.vertices[0 + a * 3], object.mesh.vertices[1 + a * 3], object.mesh.vertices[2 + a * 3]], [object.mesh.vertices[0 + b * 3], object.mesh.vertices[1 + b * 3], object.mesh.vertices[2 + b * 3]], [object.mesh.vertices[0 + c * 3], object.mesh.vertices[1 + c * 3], object.mesh.vertices[2 + c * 3]]];
-    var rez0, rez1, rez2;
-    if (object.rotation.rx != 0) {
-      rez0 = rotate2dPlot(0, 0, triangleInZero[0][1], triangleInZero[0][2], object.rotation.rx);
-      rez1 = rotate2dPlot(0, 0, triangleInZero[1][1], triangleInZero[1][2], object.rotation.rx);
-      rez2 = rotate2dPlot(0, 0, triangleInZero[2][1], triangleInZero[2][2], object.rotation.rx);
-      triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], rez0[0] + object.position.worldLocation[1], rez0[1]], [triangleInZero[1][0] + object.position.worldLocation[0], rez1[0] + object.position.worldLocation[1], rez1[1]], [triangleInZero[2][0] + object.position.worldLocation[0], rez2[0] + object.position.worldLocation[1], rez2[1]]];
-    }
-    // y z changed - rez0[1] is z
-    if (object.rotation.ry != 0) {
-      if (object.rotation.rx != 0) {
-        // Y i Z
-        // get y
-        rez0 = rotate2dPlot(0, 0, triangleInZero[0][1], triangleInZero[0][2], object.rotation.rx - 90);
-        rez1 = rotate2dPlot(0, 0, triangleInZero[1][1], triangleInZero[1][2], object.rotation.rx - 90);
-        rez2 = rotate2dPlot(0, 0, triangleInZero[2][1], triangleInZero[2][2], object.rotation.rx - 90);
-        const detY0 = rez0[0];
-        const detY1 = rez1[0];
-        const detY2 = rez2[0];
-        const detZ0 = rez0[1];
-        const detZ1 = rez1[1];
-        const detZ2 = rez2[1];
-
-        //                          X INITIAL             Z
-        rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], detZ0, object.rotation.ry - 90);
-        rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], detZ1, object.rotation.ry - 90);
-        rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], detZ2, object.rotation.ry - 90);
-        const detZ00 = rez0[1];
-        const detZ11 = rez1[1];
-        const detZ22 = rez2[1];
-        rez0 = rotate2dPlot(0, 0, rez0[0], detY0, object.rotation.rz - 90);
-        rez1 = rotate2dPlot(0, 0, rez1[0], detY1, object.rotation.rz - 90);
-        rez2 = rotate2dPlot(0, 0, rez2[0], detY2, object.rotation.rz - 90);
-        triangle = [[rez0[0] + object.position.worldLocation[0], rez0[1] + object.position.worldLocation[1], detZ00], [rez1[0] + object.position.worldLocation[0], rez1[1] + object.position.worldLocation[1], detZ11], [rez2[0] + object.position.worldLocation[0], rez2[1] + object.position.worldLocation[1], detZ22]];
-      } else if (object.rotation.rz == 0) {
-        rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], triangleInZero[0][2], -object.rotation.ry);
-        rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][2], -object.rotation.ry);
-        rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][2], -object.rotation.ry);
-        triangle = [[rez0[0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], rez0[1]], [rez1[0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], rez1[1]], [rez2[0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], rez2[1]]];
-      }
-    }
-    if (object.rotation.rz != 0) {
-      if (object.rotation.ry != 0) {
-        if (object.rotation.rx == 180) {
-          rez0 = rotate2dPlot(0, 0, triangleInZero[0][0], triangleInZero[0][2], object.rotation.ry);
-          rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][2], object.rotation.ry);
-          rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][2], object.rotation.ry);
-          let detZ00 = rez0[1];
-          let detZ11 = rez1[1];
-          let detZ22 = rez2[1];
-          rez0 = rotate2dPlot(0, 0, rez0[0], triangleInZero[0][1], object.rotation.rz);
-          rez1 = rotate2dPlot(0, 0, rez1[0], triangleInZero[1][1], object.rotation.rz);
-          rez2 = rotate2dPlot(0, 0, rez2[0], triangleInZero[2][1], object.rotation.rz);
-          const detZ0 = rez0[1];
-          const detZ1 = rez1[1];
-          const detZ2 = rez2[1];
-          // rez0 = rotate2dPlot(0, 0,rez0[0], detZ00, object.rotation.rx - 180);
-          // rez1 = rotate2dPlot(0, 0,rez0[0], detZ11, object.rotation.rx - 180);
-          // rez2 = rotate2dPlot(0, 0, rez0[0], detZ22, object.rotation.rx - 180);
-          // detZ00 = rez0[1];
-          // detZ11 = rez1[1];
-          // detZ22 = rez2[1];
-          triangle = [[rez0[0] + object.position.worldLocation[0], detZ0 + object.position.worldLocation[1], detZ00], [rez1[0] + object.position.worldLocation[0], detZ1 + object.position.worldLocation[1], detZ11], [rez2[0] + object.position.worldLocation[0], detZ2 + object.position.worldLocation[1], detZ22]];
-        } else {
-          // console.info('unhandled ray cast');
-        }
-      } else {
-        if (object.rotation.rx == 0) {
-          rez0 = rotate2dPlot(0, +0, triangleInZero[0][0], triangleInZero[0][1], object.rotation.rz);
-          rez1 = rotate2dPlot(0, 0, triangleInZero[1][0], triangleInZero[1][1], object.rotation.rz);
-          rez2 = rotate2dPlot(0, 0, triangleInZero[2][0], triangleInZero[2][1], object.rotation.rz);
-          triangle = [[rez0[0] + object.position.worldLocation[0], rez0[1] + object.position.worldLocation[1], triangleInZero[0][2]], [rez1[0] + object.position.worldLocation[0], rez1[1] + object.position.worldLocation[1], triangleInZero[1][2]], [rez2[0] + object.position.worldLocation[0], rez2[1] + object.position.worldLocation[1], triangleInZero[2][2]]];
-        } else {
-          // var test;
-          // console.info('must be handled rz vs rx');
-        }
-      }
-    }
-
-    // no rot
-    if (object.rotation.rx == 0 && object.rotation.ry == 0 && object.rotation.rz == 0) {
-      triangle = [[triangleInZero[0][0] + object.position.worldLocation[0], triangleInZero[0][1] + object.position.worldLocation[1], triangleInZero[0][2]], [triangleInZero[1][0] + object.position.worldLocation[0], triangleInZero[1][1] + object.position.worldLocation[1], triangleInZero[1][2]], [triangleInZero[2][0] + object.position.worldLocation[0], triangleInZero[2][1] + object.position.worldLocation[1], triangleInZero[2][2]]];
-    }
+  const indices = object.mesh.indices;
+  const vertices = object.mesh.vertices;
+  const worldLoc = object.position.worldLocation;
+  const rx = object.rotation.rx;
+  const ry = object.rotation.ry;
+  const rz = object.rotation.rz;
+  for (let f = 0; f < indices.length; f += 3) {
+    const a = indices[f],
+      b = indices[f + 1],
+      c = indices[f + 2];
+    const baseA = a * 3,
+      baseB = b * 3,
+      baseC = c * 3;
+    const triangleInZero = [[vertices[baseA], vertices[baseA + 1], vertices[baseA + 2]], [vertices[baseB], vertices[baseB + 1], vertices[baseB + 2]], [vertices[baseC], vertices[baseC + 1], vertices[baseC + 2]]];
+    const triangle = rotateTrianglePoints(triangleInZero, rx, ry, rz, worldLoc);
     object.raycastFace.push(triangle);
-    if (rayIntersectsTriangle(myRayOrigin, ray, triangle, intersectionPoint, object.position)) {
+    const t = rayIntersectsTriangle(rayOrigin, ray, triangle, _intersectionPoint);
+    if (t !== null) {
       rayHitEvent = new CustomEvent('ray.hit.event', {
         detail: {
           touchCoordinate: {
@@ -20289,19 +20240,42 @@ function checkingProcedureCalcObj(object) {
             y: touchCoordinate.y
           },
           hitObject: object,
-          intersectionPoint: intersectionPoint,
+          intersectionPoint: _intersectionPoint,
           ray: ray,
-          rayOrigin: myRayOrigin
+          rayOrigin: rayOrigin,
+          distance: t
         }
       });
       dispatchEvent(rayHitEvent);
-      if (touchCoordinate.enabled == true && touchCoordinate.stopOnFirstDetectedHit == true) {
+      if (touchCoordinate.enabled && touchCoordinate.stopOnFirstDetectedHit) {
         touchCoordinate.enabled = false;
+        break;
       }
-      // console.info('raycast hits for Object: ' + object.name + '  -> face[/3]  : ' + f + ' -> intersectionPoint: ' + intersectionPoint);
     }
   }
 }
+function updateObjectMatrix(obj) {
+  const m = obj.mvMatrix;
+  mat4.identity(m);
+  mat4.translate(m, m, obj.position.worldLocation);
+  mat4.rotateX(m, m, obj.rotation.rx);
+  mat4.rotateY(m, m, obj.rotation.ry);
+  mat4.rotateZ(m, m, obj.rotation.rz);
+}
+
+// export function checkRay() {
+// 	for(let objName in matrixEngine.App.scene) {
+// 		let object = matrixEngine.App.scene[objName];
+// 		updateObjectMatrix(object)
+// 		if(object.type !== "obj") {
+// 			checkingProcedureCalc(object);
+// 			console.log("mvMatrix", JSON.stringify(object.mvMatrix));
+// 		} else {
+// 			checkingProcedureCalcObj(object);
+// 			console.log(' obj')
+// 		}
+// 	}
+// }
 
 },{}],93:[function(require,module,exports){
 (function (Buffer){(function (){
@@ -27958,7 +27932,6 @@ exports.MatrixSounds = MatrixSounds;
 },{}],98:[function(require,module,exports){
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27969,12 +27942,9 @@ exports.LOG = LOG;
 exports.ORBIT = ORBIT;
 exports.ORBIT_FROM_ARRAY = ORBIT_FROM_ARRAY;
 exports.OSCILLATOR = OSCILLATOR;
-exports.QueryString = void 0;
-exports.SWITCHER = SWITCHER;
-exports._DrawElements = _DrawElements;
+exports._DrawElements = exports.SWITCHER = exports.QueryString = void 0;
 exports._glBlend = _glBlend;
-exports._glTexParameteri = _glTexParameteri;
-exports.byId = void 0;
+exports.byId = exports._glTexParameteri = void 0;
 exports.createAppEvent = createAppEvent;
 exports.createDomFPSController = createDomFPSController;
 exports.gen2DTextFace = gen2DTextFace;
@@ -27990,12 +27960,11 @@ exports.supportsTouch = void 0;
 var _manifest = _interopRequireDefault(require("../program/manifest"));
 var _events = require("./events");
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-// Array.prototype.swap = function (x,y) {
-window.swap = function (x, y, myArray) {
-  var b = myArray[x];
-  myArray[x] = myArray[y];
-  myArray[y] = b;
-  return myArray;
+window.swap = function (x, y, arr) {
+  var t = arr[x];
+  arr[x] = arr[y];
+  arr[y] = t;
+  return arr;
 };
 
 /**
@@ -28003,8 +27972,8 @@ window.swap = function (x, y, myArray) {
  * Global modifier for:
  * degToRed, DETECTBROWSER, loadImage
  */
-window.degToRad = function (degrees) {
-  return degrees * Math.PI / 180;
+window.degToRad = function (d) {
+  return d * Math.PI / 180;
 };
 function radToDeg(r) {
   var pi = Math.PI;
@@ -28246,67 +28215,69 @@ var scriptManager = exports.scriptManager = {
 // GET PULSE VALUES IN REAL TIME
 function OSCILLATOR(min, max, step) {
   if ((typeof min === 'string' || typeof min === 'number') && (typeof max === 'string' || typeof max === 'number') && (typeof step === 'string' || typeof step === 'number')) {
-    var ROOT = this;
-    this.min = parseFloat(min);
-    this.max = parseFloat(max);
-    this.step = parseFloat(step);
-    this.value_ = parseFloat(min);
+    this.min = +min;
+    this.max = +max;
+    this.step = +step;
+    this.value_ = this.min;
     this.status = 0;
     this.on_maximum_value = function () {};
     this.on_minimum_value = function () {};
-    this.UPDATE = function (STATUS_) {
-      if (STATUS_ === undefined) {
-        if (this.status == 0 && this.value_ < this.max) {
-          this.value_ = this.value_ + this.step;
-          if (this.value_ >= this.max) {
-            this.value_ = this.max;
-            this.status = 1;
-            ROOT.on_maximum_value();
-          }
-          return this.value_;
-        } else if (this.status == 1 && this.value_ > this.min) {
-          this.value_ = this.value_ - this.step;
-          if (this.value_ <= this.min) {
-            this.value_ = this.min;
-            this.status = 0;
-            ROOT.on_minimum_value();
-          }
-          return this.value_;
-        }
-      } else {
-        return this.value_;
-      }
-    };
   } else {
-    _events.SYS.DEBUG.WARNING("SYS : warning for procedure 'SYS.MATH.OSCILLATOR' Desciption : Replace object with string or number, min >> " + typeof min + ' and max >>' + typeof max + ' and step >>' + typeof step + ' << must be string or number.');
+    console.warn("OSCILLATOR" + min + ',' + max + ',' + step);
+    return;
   }
-}
-function SWITCHER() {
-  var ROOT = this;
-  ROOT.VALUE = 1;
-  ROOT.GET = function () {
-    ROOT.VALUE = ROOT.VALUE * -1;
-    return ROOT.VALUE;
+  this.UPDATE = function (STATUS_) {
+    if (STATUS_ !== undefined) return this.value_;
+    if (this.status === 0) {
+      this.value_ += this.step;
+      if (this.value_ >= this.max) {
+        this.value_ = this.max;
+        this.status = 1;
+        this.on_maximum_value();
+      }
+    } else {
+      this.value_ -= this.step;
+      if (this.value_ <= this.min) {
+        this.value_ = this.min;
+        this.status = 0;
+        this.on_minimum_value();
+      }
+    }
+    return this.value_;
   };
 }
+class SWITCHER {
+  constructor(i = 1) {
+    this.v = i;
+  }
+  GET() {
+    this.v *= -1;
+    return this.v;
+  }
+}
+exports.SWITCHER = SWITCHER;
 function ORBIT(cx, cy, angle, p) {
-  var s = Math.sin(angle);
-  var c = Math.cos(angle);
-  p.x -= cx;
-  p.y -= cy;
-  var xnew = p.x * c - p.y * s;
-  var ynew = p.x * s + p.y * c;
+  const s = Math.sin(angle);
+  const c = Math.cos(angle);
+  let {
+    x,
+    y
+  } = p;
+  x -= cx;
+  y -= cy;
+  const xnew = x * c - y * s;
+  const ynew = x * s + y * c;
   p.x = xnew + cx;
   p.y = ynew + cy;
   return p;
 }
 function ORBIT_FROM_ARRAY(cx, cy, angle, p, byIndexs) {
-  var s = Math.sin(angle);
-  var c = Math.cos(angle);
-  p[byIndexs[0]] -= cx;
-  p[byIndexs[1]] -= cy;
-  var xnew = p[byIndexs[0]] * c - p[byIndexs[1]] * s;
-  var ynew = p[byIndexs[0]] * s + p[byIndexs[1]] * c;
+  const s = Math.sin(angle);
+  const c = Math.cos(angle);
+  let x = p[byIndexs[0]] - cx;
+  let y = p[byIndexs[1]] - cy;
+  const xnew = x * c - y * s;
+  const ynew = x * s + y * c;
   p[byIndexs[0]] = xnew + cx;
   p[byIndexs[1]] = ynew + cy;
   return p;
@@ -28326,35 +28297,32 @@ function randomFloatFromTo(min, max) {
 // RANDOM INT FROM-TO
 function randomIntFromTo(min, max) {
   if (typeof min === 'object' || typeof max === 'object') {
-    _events.SYS.DEBUG.WARNING("SYS : warning for procedure 'SYS.MATH.RANDOM_INT_FROM_TO' Desciption : Replace object with string , this >> " + typeof min + ' and ' + typeof min + ' << must be string or number.');
+    console.warn("Warning: 'randomIntFromTo' expected number/string but got object. Arguments: min = " + typeof min + ", max = " + typeof max);
   } else if (typeof min === 'undefined' || typeof max === 'undefined') {
-    _events.SYS.DEBUG.WARNING("SYS : warning for procedure 'SYS.MATH.RANDOM_INT_FROM_TO' Desciption : arguments (min, max) cant be undefined , this >> " + typeof min + ' and ' + typeof min + ' << must be string or number.');
+    console.warn("Warning: 'randomIntFromTo' arguments (min, max) cannot be undefined. Received: min = " + typeof min + ", max = " + typeof max);
   } else {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 }
-var QueryString = exports.QueryString = function () {
-  // This function is anonymous, is executed immediately and
-  // the return value is assigned to QueryString!
-  var query_string = {};
-  var query = window.location.search.substring(1);
-  var vars = query.split('&');
-  for (var i = 0; i < vars.length; i++) {
-    var pair = vars[i].split('=');
-    // If first entry with this name
-    if (typeof query_string[pair[0]] === 'undefined') {
-      query_string[pair[0]] = decodeURIComponent(pair[1]);
-      // If second entry with this name
-    } else if (typeof query_string[pair[0]] === 'string') {
-      var arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
-      query_string[pair[0]] = arr;
-      // If third or later entry with this name
+const QueryString = exports.QueryString = (() => {
+  const queryString = {};
+  const query = window.location.search.substring(1);
+  if (!query) return queryString;
+  const pairs = query.split('&');
+  for (const pair of pairs) {
+    let [key, value] = pair.split('=');
+    key = decodeURIComponent(key);
+    value = decodeURIComponent(value || '');
+    if (queryString[key] === undefined) {
+      queryString[key] = value;
+    } else if (typeof queryString[key] === 'string') {
+      queryString[key] = [queryString[key], value];
     } else {
-      query_string[pair[0]].push(decodeURIComponent(pair[1]));
+      queryString[key].push(value);
     }
   }
-  return query_string;
-}();
+  return queryString;
+})();
 _manifest.default.audioSystem.Assets = {};
 _manifest.default.audioSystem.createVideoAsset = function (name_, path_) {
   return new Promise((resolve, reject) => {
@@ -28446,28 +28414,26 @@ function _glBlend() {
     root_glblend.blendParamDest = param_;
   };
 }
-
-// Tradicional Class
-function _DrawElements(numberOfItemsIndices) {
-  this.mode = 'TRIANGLES';
-  this.modes = ['POINTS', 'LINE_STRIP', 'LINE_LOOP', 'LINES', 'TRIANGLE_STRIP', 'TRIANGLE_FAN', 'TRIANGLES'];
-  this.type = ['UNSIGNED_BYTE', 'UNSIGNED_SHORT', 'UNSIGNED_INT'];
-  this.indices = 'GL_ELEMENT_ARRAY_BUFFER';
-  this.numberOfIndicesRender = numberOfItemsIndices; //mesh_.indexBuffer.numItems
-}
-function _glTexParameteri(_target, _pname, _param) {
-  var ROOT = this;
-  if (typeof _target == 'undefined') {
-    this.target = 'TEXTURE_2D';
-  } else {
-    this.target = _target;
+class _DrawElements {
+  constructor(numberOfItemsIndices) {
+    this.mode = 'TRIANGLES';
+    this.modes = ['POINTS', 'LINE_STRIP', 'LINE_LOOP', 'LINES', 'TRIANGLE_STRIP', 'TRIANGLE_FAN', 'TRIANGLES'];
+    this.type = ['UNSIGNED_BYTE', 'UNSIGNED_SHORT', 'UNSIGNED_INT'];
+    this.indices = 'GL_ELEMENT_ARRAY_BUFFER';
+    this.numberOfIndicesRender = numberOfItemsIndices; // mesh_.indexBuffer.numItems
   }
-  if (typeof _pname == 'undefined' || typeof _param == 'undefined') {
-    this.pname = 'TEXTURE_MAG_FILTER';
-    this.param = 'LINEAR';
-  } else {
-    this.pname = _pname;
-    this.param = _param;
+}
+exports._DrawElements = _DrawElements;
+class _glTexParameteri {
+  constructor(_target, _pname, _param) {
+    this.target = typeof _target === 'undefined' ? 'TEXTURE_2D' : _target;
+    if (typeof _pname === 'undefined' || typeof _param === 'undefined') {
+      this.pname = 'TEXTURE_MAG_FILTER';
+      this.param = 'LINEAR';
+    } else {
+      this.pname = _pname;
+      this.param = _param;
+    }
   }
 }
 
@@ -28475,6 +28441,7 @@ function _glTexParameteri(_target, _pname, _param) {
  * @description
  * ENUMERATORS FOR opegl es 2.0 and 3.0
  */
+exports._glTexParameteri = _glTexParameteri;
 let ENUMERATORS = exports.ENUMERATORS = {
   glTexParameter: {
     target: {
@@ -28563,10 +28530,10 @@ let ENUMERATORS = exports.ENUMERATORS = {
   },
   glDrawElements: {
     help: function () {
-      _events.SYS.DEBUG.WARNING('C specification: void glDrawElements(  GLenum mode , GLsizei count , GLenum type , const GLvoid * indices ); ');
-      _events.SYS.DEBUG.WARNING(">>>mode can be : 'POINTS' , 'LINE_STRIP', 'LINE_LOOP', 'LINES', 'TRIANGLE_STRIP', 'TRIANGLE_FAN' , 'TRIANGLES' ");
-      _events.SYS.DEBUG.WARNING('>>>count    : Specifies the number of elements to be rendered.');
-      _events.SYS.DEBUG.WARNING(">>>type    : 'UNSIGNED_BYTE' , 'UNSIGNED_SHORT' , 'UNSIGNED_INT' ");
+      console.log('C specification: void glDrawElements(  GLenum mode , GLsizei count , GLenum type , const GLvoid * indices ); ');
+      console.log(">>>mode can be : 'POINTS' , 'LINE_STRIP', 'LINE_LOOP', 'LINES', 'TRIANGLE_STRIP', 'TRIANGLE_FAN' , 'TRIANGLES' ");
+      console.log('>>>count    : Specifies the number of elements to be rendered.');
+      console.log(">>>type    : 'UNSIGNED_BYTE' , 'UNSIGNED_SHORT' , 'UNSIGNED_INT' ");
     },
     mode: ['POINTS', 'LINE_STRIP', 'LINE_LOOP', 'LINES', 'TRIANGLE_STRIP', 'TRIANGLE_FAN', 'TRIANGLES'],
     type: ['UNSIGNED_BYTE', 'UNSIGNED_SHORT', 'UNSIGNED_INT'],
@@ -28605,7 +28572,7 @@ let ENUMERATORS = exports.ENUMERATORS = {
     }
   },
   getTexParameter: function () {
-    _events.SYS.DEBUG.LOG('TEXTURE_IMMUTABLE_FORMAT VALUE : ' + world.GL.gl.getTexParameter(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_IMMUTABLE_FORMAT));
+    console.log('TEXTURE_IMMUTABLE_FORMAT VALUE : ' + world.GL.gl.getTexParameter(world.GL.gl.TEXTURE_2D, world.GL.gl.TEXTURE_IMMUTABLE_FORMAT));
   }
 };
 
