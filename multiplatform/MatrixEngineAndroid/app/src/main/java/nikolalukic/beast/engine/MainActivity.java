@@ -1,23 +1,17 @@
-package com.nikolalukic.matrixengineandroid;
+package nikolalukic.beast.engine;
 
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
+
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
-
-import androidx.core.app.NotificationCompat;
-
-import com.nikolalukic.matrixengineandroid.databinding.ActivityMainBinding;
-
 import android.view.View;
 import android.webkit.PermissionRequest;
 import android.webkit.SslErrorHandler;
@@ -28,7 +22,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
-import android.content.Intent;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+
+import nikolalukic.beast.engine.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private String APP_STATUS = "DEV";
@@ -165,14 +164,18 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
             requestPermissions(new String[]{
-                    Manifest.permission.READ_MEDIA_IMAGES,
-                    Manifest.permission.READ_MEDIA_AUDIO,
-                    Manifest.permission.READ_MEDIA_VIDEO,
+//                    Manifest.permission.READ_MEDIA_IMAGES,
+//                    Manifest.permission.READ_MEDIA_AUDIO,
+//                    Manifest.permission.READ_MEDIA_VIDEO,
                     Manifest.permission.ACCESS_MEDIA_LOCATION,
                     Manifest.permission.CAMERA,
                     Manifest.permission.RECORD_AUDIO,
                     Manifest.permission.MODIFY_AUDIO_SETTINGS
             }, MY_CAMERA_REQUEST_CODE);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(false);
         }
 
         if (bundle != null) {
@@ -185,25 +188,8 @@ public class MainActivity extends AppCompatActivity {
         loadBtn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (APP_STATUS == "PROD") {
-                    if (WEBGL_VER == "1") {
-                        web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/gui.html?GLSL=1.1");
-                    } else {
-                        // web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/gui.html?GLSL=1.3");
-                        web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/examples-build.html");
-                    }
-                } else if (APP_STATUS == "DEV") {
-                    if (WEBGL_VER == "1") {
-                        web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/examples-build.html?GLSL=1.1");
-                        // web1.loadUrl("http://192.168.0.30/public/examples-build.html?GLSL=1.1");
-                        Log.e("app", "onCreate: http://192.168.0.30/ YEAP");
-                    } else {
-                        web1.loadUrl("https://maximumroulette.com/apps/matrix-engine/examples-build.html");
-                        // web1.loadUrl("https://192.168.0.30/public/gui.html?GLSL=1.1");
-                    }
-                } else if(APP_STATUS == "TEST-WEBGL2") {
-                    web1.loadUrl("https://webglreport.com/?v=2");
-                }
+               web1.loadUrl("https://maximumroulette.com/apps/webgpu/examples.html?demo=1");
+               Log.e("app", "onCreate: https://maximumroulette.com/apps/webgpu/examples.html?demo=30 YEAPA");
             }
         });
     }

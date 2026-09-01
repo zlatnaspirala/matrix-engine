@@ -3,15 +3,15 @@ plugins {
 }
 
 android {
-    namespace = "com.nikolalukic.matrixengineandroid"
-    compileSdk = 34
+    namespace = "nikolalukic.beast.engine"
+    compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.nikolalukic.matrixengineandroid"
+        applicationId = "nikolalukic.beast.engine"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = 36
+        versionCode = 4
+        versionName = "1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -1,4 +1,4 @@
-package com.nikolalukic.matrixengineandroid;
+package nikolalukic.beast.engine;
 
 import org.junit.Test;
 

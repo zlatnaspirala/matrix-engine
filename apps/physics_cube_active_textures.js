@@ -71,7 +71,7 @@ export var runThis = (world) => {
             if(j == 0) {
               console.log('i = ', j)
               App.scene['CUBE' + j].streamTextures = new anyCanvas(
-                "../2DTextureEditor/templates/slot/index.html",
+                "2DTextureEditor/templates/slot/index.html",
                 "HELLO_WORLD")
               App.scene['CUBE' + j].streamTextures.showTextureEditor();
             } else {

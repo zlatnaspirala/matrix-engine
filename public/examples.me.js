@@ -5167,7 +5167,7 @@ var runThis = world => {
             _manifest.default.scene['CUBE' + j].physics.enabled = true;
             if (j == 0) {
               console.log('i = ', j);
-              _manifest.default.scene['CUBE' + j].streamTextures = new anyCanvas("../2DTextureEditor/templates/slot/index.html", "HELLO_WORLD");
+              _manifest.default.scene['CUBE' + j].streamTextures = new anyCanvas("2DTextureEditor/templates/slot/index.html", "HELLO_WORLD");
               _manifest.default.scene['CUBE' + j].streamTextures.showTextureEditor();
             } else {
               // nice
