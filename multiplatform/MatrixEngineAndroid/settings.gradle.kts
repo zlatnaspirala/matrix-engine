@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "The Beast"
+rootProject.name = "Forest of hollow blood"
 include(":app")

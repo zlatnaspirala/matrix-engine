@@ -1,12 +1,10 @@
-package nikolalukic.beast.engine;
+package nikolalukic.killerengine.forestofhollowblood;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -18,7 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import nikolalukic.beast.engine.databinding.ActivityMainBinding;
+import nikolalukic.killerengine.forestofhollowblood.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private static final int MY_CAMERA_REQUEST_CODE = 50;

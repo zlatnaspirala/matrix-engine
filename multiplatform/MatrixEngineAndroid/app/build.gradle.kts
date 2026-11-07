@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "nikolalukic.beast.engine"
+    namespace = "nikolalukic.killerengine.forestofhollowblood"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "nikolalukic.beast.engine"
+        applicationId = "nikolalukic.killerengine.forestofhollowblood"
         minSdk = 24
         targetSdk = 36
         versionCode = 9
