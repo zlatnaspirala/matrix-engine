@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         loadBtn.setOnClickListener(v -> {
-            String targetUrl = "https://maximumroulette.com/apps/webgpu/examples.html?demo=1";
+            String targetUrl = "https://killer-e3l7.onrender.com/";
             web1.loadUrl(targetUrl);
             Log.d("MatrixEngine", "Loading URL: " + targetUrl);
         });

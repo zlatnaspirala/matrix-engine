@@ -6,3 +6,4 @@ networking/node_modules/**/*
 GPUCache/**/*
 DawnCache/**/*
 Manual_MSBuild_ReleaseVersion_LOG.log
+multiplatform/MatrixEngineAndroid/app/release/app-release.aab
