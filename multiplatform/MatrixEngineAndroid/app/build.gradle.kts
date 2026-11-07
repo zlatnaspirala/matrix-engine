@@ -10,8 +10,8 @@ android {
         applicationId = "nikolalukic.beast.engine"
         minSdk = 24
         targetSdk = 36
-        versionCode = 4
-        versionName = "1.4"
+        versionCode = 9
+        versionName = "1.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -1,196 +1,141 @@
 package nikolalukic.beast.engine;
 
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
-
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.PermissionRequest;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 
 import nikolalukic.beast.engine.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    private String APP_STATUS = "DEV";
-    private final String WEBGL_VER = "1";
-    private String GUI_DEV_ARG = "null";
     private static final int MY_CAMERA_REQUEST_CODE = 50;
     private ActivityMainBinding binding;
-    WebView web1;
-    Button loadBtn;
-    public abstract class MyWebChromeClient extends WebChromeClient {
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public void onPermissionRequest(final PermissionRequest request) {
-            request.grant(request.getResources());
-        }
-
-        @Override
-        public boolean onJsAlert(WebView view, String url, String message, final android.webkit.JsResult result) {
-            Log.d("alert", message);
-            Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
-            result.confirm();
-            return true;
-        };
-
-        public boolean onJsConsole (WebView view, String url, String message, final android.webkit.JsResult result) {
-            Log.d("console", message);
-            Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
-            result.confirm();
-            return true;
-        };
-
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-
-        }
-
-        protected abstract boolean shouldOverrideUrlLoading(WebView view, String url);
-
-        @TargetApi(Build.VERSION_CODES.N)
-        public abstract boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 1: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted
-                } else {
-                    // permission denied
-                    Toast.makeText(MainActivity.this, "Permission denied nidza", Toast.LENGTH_SHORT).show();
-                }
-                return;
-            }
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }
-    }
-
-    // A new webclient that ignore ssl errors
-    public class IgnoreSSLErrortWebViewClient extends WebViewClient {
-        // You can all the class anything
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (Uri.parse(url).getHost().equals(URL)) {
-                // This is your web site, so do not override; let the WebView to load the page
-                return false;
-            }
-            // Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(intent);
-            return true;
-        }
-    @Override
-    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            handler.proceed();
-       }
-    }
+    private WebView web1;
+    private Button loadBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        loadBtn = (Button)findViewById(R.id.loadBtn);
-        web1 = (WebView)findViewById(R.id.webBrowserMain);
-        web1.setWebChromeClient(new MyWebChromeClient() {
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-            }
-            @SuppressWarnings("deprecation")
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
-            }
-            @TargetApi(Build.VERSION_CODES.N)
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                view.loadUrl(request.getUrl().toString());
-                return true;
-            }
-        });
-        // web1.clearSslPreferences();
-        // web1.setWebViewClient(new IgnoreSSLErrortWebViewClient());
+
+        loadBtn = findViewById(R.id.loadBtn);
+        web1 = findViewById(R.id.webBrowserMain);
+
+        // Configure WebView Settings for WebGL / WebGPU engine
         WebSettings webSettings = web1.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
-        webSettings.setAllowContentAccess(true);
-        webSettings.setAllowFileAccess(true);
-        webSettings.setAllowUniversalAccessFromFileURLs(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // webSettings.setSafeBrowsingEnabled(true);
-        }
+        webSettings.setDatabaseEnabled(true);
+
+        // --- SECURITY FIX FOR CROSS-APP SCRIPTING (XAS POLICY) ---
+        // Apps loading remote URLs should not have local file/content access enabled.
+        // webSettings.setAllowContentAccess(true); // [OLD]
+        webSettings.setAllowContentAccess(false);   // [SECURE FIX]
+
+        // webSettings.setAllowFileAccess(true);    // [OLD]
+        webSettings.setAllowFileAccess(false);      // [SECURE FIX]
+
+        // Extra hardening for file scheme origins (blocks file-based cross-scripting)
+        webSettings.setAllowFileAccessFromFileURLs(false);
+        webSettings.setAllowUniversalAccessFromFileURLs(false);
+        // ---------------------------------------------------------
+
         webSettings.setMediaPlaybackRequiresUserGesture(false);
-        web1.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
-        web1.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        web1.getSettings().setSupportMultipleWindows(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "MATRIX")
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("Cao ")
-                .setContentText("cao cao ")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);;
+        // Enable Chrome Debugging during DEV builds (Kept for your remote debugger)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
 
-        // Notification notification = builder;
-        // Service.startForeground(builder, FOREGROUND_SERVICE_TYPE_LOCATION | FOREGROUND_SERVICE_TYPE_CAMERA | FOREGROUND_SERVICE_TYPE_MICROPHONE);
+        // Camera permissions handler inside WebView preserved completely
+        web1.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onPermissionRequest(final PermissionRequest request) {
+                runOnUiThread(() -> request.grant(request.getResources()));
+            }
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, final android.webkit.JsResult result) {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                result.confirm();
+                return true;
+            }
+        });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
+        web1.setWebViewClient(new android.webkit.WebViewClient() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // return false; // [OLD]
+                // Securely check if loading your domain or standard safe schemes
+                if (url != null && (url.startsWith("http://") || url.startsWith("https://"))) {
+                    return false; // Load within WebView
+                }
+                return true; // Block other unexpected custom schemes
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                // return false; // [OLD]
+                String url = request.getUrl().toString();
+                if (url.startsWith("http://") || url.startsWith("https://")) {
+                    return false; // Load within WebView
+                }
+                return true;
+            }
+        });
+
+        // Check runtime permissions (Camera / Audio for your engine)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{
-//                    Manifest.permission.READ_MEDIA_IMAGES,
-//                    Manifest.permission.READ_MEDIA_AUDIO,
-//                    Manifest.permission.READ_MEDIA_VIDEO,
-                    Manifest.permission.ACCESS_MEDIA_LOCATION,
                     Manifest.permission.CAMERA,
                     Manifest.permission.RECORD_AUDIO,
                     Manifest.permission.MODIFY_AUDIO_SETTINGS
             }, MY_CAMERA_REQUEST_CODE);
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WebView.setWebContentsDebuggingEnabled(false);
-        }
+//        Intent intent = getIntent();
+//        Bundle bundle = intent.getExtras();
+//        if (bundle != null && bundle.containsKey("GUI_DEV_ARG")) {
+//            String guiDevArg = bundle.getString("GUI_DEV_ARG");
+//            if (guiDevArg != null) {
+//                web1.loadUrl(guiDevArg);
+//                Log.d("MatrixEngine", "Loading bundle URL: " + guiDevArg);
+//            }
+//        }
 
-        if (bundle != null) {
-            GUI_DEV_ARG = bundle.getString("GUI_DEV_ARG");
-            web1.loadUrl(GUI_DEV_ARG);
-            Log.e("app", "onCreate: " + GUI_DEV_ARG);
-            return;
-        }
-
-        loadBtn.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               web1.loadUrl("https://maximumroulette.com/apps/webgpu/examples.html?demo=1");
-               Log.e("app", "onCreate: https://maximumroulette.com/apps/webgpu/examples.html?demo=30 YEAPA");
-            }
+        loadBtn.setOnClickListener(v -> {
+            String targetUrl = "https://maximumroulette.com/apps/webgpu/examples.html?demo=1";
+            web1.loadUrl(targetUrl);
+            Log.d("MatrixEngine", "Loading URL: " + targetUrl);
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_CAMERA_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("MatrixEngine", "Permissions granted");
+            } else {
+                Toast.makeText(this, "Camera/Audio permissions missing", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

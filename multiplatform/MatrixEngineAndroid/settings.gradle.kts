@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Matrix Engine Android"
+rootProject.name = "The Beast"
 include(":app")
