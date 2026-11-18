@@ -25,9 +25,12 @@
 
     <Button
         android:id="@+id/loadBtn"
-        android:layout_width="129dp"
-        android:layout_height="wrap_content"
-        android:text="Load"
-        app:icon="@android:drawable/ic_media_play" />
+        android:layout_width="145dp"
+        android:layout_height="33dp"
+        android:insetTop="2dp"
+        android:insetBottom="2dp"
+        android:text="Load/Reload"
+        android:textColorHighlight="#0F6570"
+        android:textColorLink="#075067" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

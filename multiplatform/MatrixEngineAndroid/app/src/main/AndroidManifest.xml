@@ -22,9 +22,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher2_background"
+        android:icon="@mipmap/ic_launcher_fohb_background"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher2"
+        android:roundIcon="@mipmap/ic_launcher_fohb"
         android:supportsRtl="true"
         android:theme="@style/Theme.MatrixEngineAndroid">
 
