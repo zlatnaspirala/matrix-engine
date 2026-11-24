@@ -1,4 +1,4 @@
-package nikolalukic.killerengine.forestofhollowblood;
+package nikolalukic.networking.sub;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("nikolalukic.killerengine.forestofhollowblood", appContext.getPackageName());
+        assertEquals("nikolalukic.networking.sub", appContext.getPackageName());
     }
 }

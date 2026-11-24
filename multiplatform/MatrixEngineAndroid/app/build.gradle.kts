@@ -3,15 +3,15 @@ plugins {
 }
 
 android {
-    namespace = "nikolalukic.killerengine.forestofhollowblood"
+    namespace = "nikolalukic.networking.sub"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "nikolalukic.killerengine.forestofhollowblood"
+        applicationId = "nikolalukic.networking.sub"
         minSdk = 24
         targetSdk = 36
-        versionCode = 10
-        versionName = "1.10"
+        versionCode = 1
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

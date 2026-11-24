@@ -1,4 +1,4 @@
-package nikolalukic.killerengine.forestofhollowblood;
+package nikolalukic.networking.sub;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import nikolalukic.killerengine.forestofhollowblood.databinding.ActivityMainBinding;
+import nikolalukic.networking.sub.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private static final int MY_CAMERA_REQUEST_CODE = 50;
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         loadBtn.setOnClickListener(v -> {
-            String targetUrl = "https://killer-e3l7.onrender.com/";
+            String targetUrl = "https://sub-co54.onrender.com/";
             web1.loadUrl(targetUrl);
             Log.d("MatrixEngine", "Loading URL: " + targetUrl);
         });
